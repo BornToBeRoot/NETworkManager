@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.Views;
@@ -11,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NETworkManager.Utilities.Enum;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
@@ -24,16 +24,17 @@ namespace NETworkManager.ViewModels
 
         private readonly bool _isLoading;
 
-        private bool _isConnectionCheckHostRunning;
-        public bool IsConnectionCheckHostRunning
+        #region Host
+        private bool _isHostCheckRunning;
+        public bool IsHostCheckRunning
         {
-            get => _isConnectionCheckHostRunning;
+            get => _isHostCheckRunning;
             set
             {
-                if(value == _isConnectionCheckHostRunning)
+                if (value == _isHostCheckRunning)
                     return;
 
-                _isConnectionCheckHostRunning = value;
+                _isHostCheckRunning = value;
                 OnPropertyChanged();
             }
         }
@@ -52,75 +53,164 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _connectionHostIPAddress;
-        public string ConnectionHostIPAddress
+        private string _hostIPAddress;
+        public string HostIPAddress
         {
-            get => _connectionHostIPAddress;
+            get => _hostIPAddress;
             set
             {
-                if (value == _connectionHostIPAddress)
+                if (value == _hostIPAddress)
                     return;
 
-                _connectionHostIPAddress = value;
+                _hostIPAddress = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _connectionHostHostname;
-        public string ConnectionHostHostname
+        private string _hostHostname;
+        public string HostHostname
         {
-            get => _connectionHostHostname;
+            get => _hostHostname;
             set
             {
-                if (value == _connectionHostHostname)
+                if (value == _hostHostname)
                     return;
 
-                _connectionHostHostname = value;
-                OnPropertyChanged();
-            }
-        }
-        
-        private List<string> _connectionHostDetails = new List<string>();
-        public List<string> ConnectionHostDetails
-        {
-            get => _connectionHostDetails;
-            set
-            {
-                if (value == _connectionHostDetails)
-                    return;
-
-                _connectionHostDetails = value;
+                _hostHostname = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _connectionGatewayIPAddress;
-        public string ConnectionGatewayIPAddress
+        private string _hostDetails;
+        public string HostDetails
         {
-            get => _connectionGatewayIPAddress;
+            get => _hostDetails;
             set
             {
-                if (value == _connectionGatewayIPAddress)
+                if (value == _hostDetails)
                     return;
 
-                _connectionGatewayIPAddress = value;
+                _hostDetails = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Host to Gateway / Gateway
+        private bool _isGatewayCheckRunning;
+        public bool IsGatewayCheckRunning
+        {
+            get => _isGatewayCheckRunning;
+            set
+            {
+                if (value == _isGatewayCheckRunning)
+                    return;
+
+                _isGatewayCheckRunning = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _connectionPublicIPAddress;
-        public string ConnectionPublicIPAddress
+        private string _gatewayDetails;
+        public string GatewayDetails
         {
-            get => _connectionPublicIPAddress;
+            get => _gatewayDetails;
             set
             {
-                if (value == _connectionPublicIPAddress)
+                if (value == _gatewayDetails)
                     return;
 
-                _connectionPublicIPAddress = value;
+                _gatewayDetails = value;
                 OnPropertyChanged();
             }
         }
+
+        private bool _isGatewayAvailable;
+        public bool IsGatewayAvailable
+        {
+            get => _isGatewayAvailable;
+            set
+            {
+                if (value == _isGatewayAvailable)
+                    return;
+
+                _isGatewayAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ConnectionState _gatewayConnectionState = ConnectionState.None;
+        public ConnectionState GatewayConnectionState
+        {
+            get => _gatewayConnectionState;
+            set
+            {
+                if (value == _gatewayConnectionState)
+                    return;
+
+                _gatewayConnectionState = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _gatewayIPAddress;
+        public string GatewayIPAddress
+        {
+            get => _gatewayIPAddress;
+            set
+            {
+                if (value == _gatewayIPAddress)
+                    return;
+
+                _gatewayIPAddress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _gatewayHostname;
+        public string GatewayHostname
+        {
+            get => _gatewayHostname;
+            set
+            {
+                if (value == _gatewayHostname)
+                    return;
+
+                _gatewayHostname = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Internet
+        private string _publicIPAddress;
+        public string PublicIPAddress
+        {
+            get => _publicIPAddress;
+            set
+            {
+                if (value == _publicIPAddress)
+                    return;
+
+                _publicIPAddress = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _publicHostname;
+        public string PublicHostname
+        {
+            get => _publicHostname;
+            set
+            {
+                if (value == _publicHostname)
+                    return;
+
+                _publicHostname = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
 
         #region Profiles
         public ICollectionView Profiles { get; }
@@ -372,18 +462,23 @@ namespace NETworkManager.ViewModels
             Task.Run(() => CheckConnection());
         }
 
-        public void CheckConnection()
+        public async void CheckConnection()
         {
             // Reset
-            IsConnectionCheckHostRunning = true;
+            IsHostCheckRunning = true;
+            HostDetails = "";
             HostConnectionState = ConnectionState.None;
-            ConnectionHostIPAddress = "";
-            ConnectionHostHostname = "";
-            ConnectionHostDetails.Clear();
-            
-            ConnectionGatewayIPAddress = "";
-            
-            ConnectionPublicIPAddress = "";
+            HostIPAddress = "";
+            HostHostname = "";
+
+            IsGatewayCheckRunning = true;
+            GatewayDetails = "";
+            IsGatewayAvailable = false;
+            GatewayConnectionState = ConnectionState.None;
+            GatewayIPAddress = "";
+            GatewayHostname = "";
+
+            PublicIPAddress = "";
 
             // 1) Check tcp/ip stack --> ICMP to 127.0.0.1
             using (var ping = new Ping())
@@ -398,10 +493,9 @@ namespace NETworkManager.ViewModels
                             continue;
 
                         HostConnectionState = ConnectionState.OK;
-                        ConnectionHostDetails.Add("[OK] tcp/ip stack - 127.0.0.1 is reachable via ICMP!");
+                        AddToHostDetails("[OK] tcp/ip stack - 127.0.0.1 is reachable via ICMP!");
 
                         break;
-
                     }
                     catch (PingException)
                     {
@@ -414,7 +508,7 @@ namespace NETworkManager.ViewModels
             if (HostConnectionState == ConnectionState.None)
             {
                 HostConnectionState = ConnectionState.Error;
-                ConnectionHostDetails.Add("[Error] tcp/ip stack - 127.0.0.1 is not reachable via ICMP! Check your network card...");
+                AddToHostDetails("[Error] tcp/ip stack - 127.0.0.1 is not reachable via ICMP! Check your network card...");
 
                 return;
             }
@@ -425,52 +519,162 @@ namespace NETworkManager.ViewModels
             if (hostIPAddressDetected == null)
             {
                 HostConnectionState = ConnectionState.Error;
-                ConnectionHostDetails.Add("[Error] ip address - Could not detect local ip address!");
+                AddToHostDetails("[Error] ip address - Could not detect local ip address!");
 
                 return;
             }
 
-            ConnectionHostDetails.Add($"[OK] ip address - Detected local ip address is {hostIPAddressDetected}");
+            AddToHostDetails($"[OK] ip address - Detected local ip address is {hostIPAddressDetected}");
 
-            ConnectionHostIPAddress = hostIPAddressDetected.ToString();
+            HostIPAddress = hostIPAddressDetected.ToString();
 
             // 3) Check local dns entry 
             // Warn if not found!
             try
             {
                 var hostHostname = Dns.GetHostEntry(hostIPAddressDetected).HostName;
-                
-                ConnectionHostHostname = hostHostname;
-                ConnectionHostDetails.Add($"[OK] dns - Hostname {hostHostname} resolved for ip address {hostIPAddressDetected}!");
+
+                HostHostname = hostHostname;
+                AddToHostDetails($"[OK] dns - Hostname {hostHostname} resolved for ip address {hostIPAddressDetected}!");
             }
             catch (SocketException)
             {
                 HostConnectionState = ConnectionState.Warning;
-                ConnectionHostDetails.Add($"[Error] dns - Could not resolve hostname for ip address {hostIPAddressDetected}!");
+                AddToHostDetails($"[Error] dns - Could not resolve hostname for ip address {hostIPAddressDetected}!");
             }
 
-            IsConnectionCheckHostRunning = false;
+            IsHostCheckRunning = false;
 
             // 4) Detect the gateway ip address
             var gatewayIPAddressDetected = NetworkInterface.DetectGatewayBasedOnLocalIPAddress(hostIPAddressDetected);
 
             if (gatewayIPAddressDetected == null)
             {
-                // new var --> HostConnectionState = ConnectionState.Error;
-                ConnectionHostDetails.Add("[Error] gateway - Could not detect gateway ip address!");
+                IsGatewayAvailable = false;
+                AddToGatewayDetails("[Error] gateway - Could not detect gateway ip address!");
+                IsGatewayCheckRunning = false;
 
                 return;
             }
 
-            ConnectionGatewayIPAddress = gatewayIPAddressDetected.ToString();
-            
+            GatewayIPAddress = gatewayIPAddressDetected.ToString();
+            AddToGatewayDetails($"[OK] gateway - Detected gateway ip is {GatewayIPAddress}");
+
             // 4) Check gateway --> ICMP to gateway ip
+            using (var ping = new Ping())
+            {
+                for (var i = 0; i < 2; i++)
+                {
+                    try
+                    {
+                        var pingReply = ping.Send(GatewayIPAddress);
+
+                        if (pingReply == null || pingReply.Status != IPStatus.Success)
+                            continue;
+
+                        IsGatewayAvailable = true;
+                        AddToGatewayDetails($"[OK] gateway - {GatewayIPAddress} is reachable via ICMP!");
+
+                        break;
+                    }
+                    catch (PingException)
+                    {
+
+                    }
+                }
+            }
+
+            if (!IsGatewayAvailable)
+            {
+                // CANCEL ??? 
+
+                return;
+            }
+
+            GatewayConnectionState = ConnectionState.OK;
+
             // 5) Check gateway dns entry?
+            try
+            {
+                var gatewayHostname = Dns.GetHostEntry(GatewayIPAddress).HostName;
+
+                GatewayHostname = gatewayHostname;
+                AddToGatewayDetails($"[OK] dns - Hostname {gatewayHostname} resolved for ip address {GatewayIPAddress}!");
+            }
+            catch (SocketException)
+            {
+                GatewayConnectionState = ConnectionState.Warning;
+                AddToGatewayDetails($"[Error] dns - Could not resolve hostname for ip address {GatewayIPAddress}!");
+            }
+
+            IsGatewayCheckRunning = false;
+
             // 6) Check public ip via icmp
-            // 7) Check public dns
+            // Error
+
+            // 7) Check public dns - Check if dns is working...
+            // Warn
+
             // 8) Check public ip address agains api.ipify
-            var webClient = new WebClient();
-            ConnectionPublicIPAddress = webClient.DownloadString("https://api.ipify.org");
+            if (SettingsManager.Current.Dashboard_CheckPublicIPAddress)
+            {
+                try
+                {
+                    var webClient = new WebClient();
+                    var publicIPAdressResult = webClient.DownloadString(SettingsManager.Current.Dashboard_PublicIPAddressAPI);
+                    var ipv4Regex = new Regex(RegexHelper.IPv4AddressRegex);
+                    var publicIPAddress = ipv4Regex.Match(publicIPAdressResult).Value;
+
+                    if (string.IsNullOrEmpty(publicIPAddress))
+                    {
+                        // warn...
+                    }
+                    
+                    PublicIPAddress = publicIPAddress;
+
+                }
+                catch (Exception ex)
+                {
+                    // warn...
+                }
+            }
+            else
+            {
+                PublicIPAddress = "Check disabled in settings!";
+            }
+
+            // 9) Resolve dns for public ip
+            if (!string.IsNullOrEmpty(PublicIPAddress))
+            {
+                try
+                {
+                    var publicHostname = Dns.GetHostEntry(PublicIPAddress).HostName;
+
+                    PublicHostname = publicHostname;
+                    //  AddToGatewayDetails($"[OK] dns - Hostname {gatewayHostname} resolved for ip address {GatewayIPAddress}!");
+                }
+                catch (SocketException)
+                {
+                    // GatewayConnectionState = ConnectionState.Warning;
+                    //                AddToGatewayDetails($"[Error] dns - Could not resolve hostname for ip address {GatewayIPAddress}!");
+                }
+            }
+        }
+
+        public void AddToHostDetails(string text)
+        {
+            if (!string.IsNullOrEmpty(HostDetails))
+                HostDetails += Environment.NewLine;
+
+            HostDetails += text;
+        }
+
+        public void AddToGatewayDetails(string text)
+        {
+            if (!string.IsNullOrEmpty(GatewayDetails))
+                GatewayDetails += Environment.NewLine;
+
+            GatewayDetails += text;
         }
 
         public void OnViewVisible()

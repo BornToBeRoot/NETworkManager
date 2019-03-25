@@ -481,9 +481,6 @@ namespace NETworkManager
             if (!refresh && _currentApplicationViewName == name)
                 return;
 
-
-            Debug.WriteLine($"Change view to: {name}");
-
             // Stop some functions on the old view
             switch (_currentApplicationViewName)
             {

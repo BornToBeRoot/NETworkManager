@@ -1,9 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mahAppsControls="http://metro.mahapps.com/winfx/xaml/controls">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="DefaultToolTip" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource MetroToolTip}">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="MaxWidth" Value="300" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />

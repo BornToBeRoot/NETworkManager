@@ -77,12 +77,12 @@
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>
-                        <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="4" IsActive="True" Width="24" Height="24" Visibility="{Binding IsConnectionCheckHostRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                        <Rectangle Grid.Column="0" Grid.Row="4" Width="24" Height="24" Style="{Binding HostConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsConnectionCheckHostRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding ConnectionHostIPAddress}" />
-                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding ConnectionHostHostname}" />
+                        <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="4" IsActive="True" Width="24" Height="24" Visibility="{Binding IsHostCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                        <Rectangle Grid.Column="0" Grid.Row="4" Width="24" Height="24" ToolTip="{Binding HostDetails}" Style="{Binding HostConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsHostCheckRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding HostIPAddress}" />
+                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding HostHostname}" />
                     </Grid>
-                    <Grid Grid.Column="3" Grid.Row="0">
+                    <Grid Grid.Column="3" Grid.Row="0" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="10" />
@@ -90,9 +90,43 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Line Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                        <Rectangle Grid.Column="2" Grid.Row="0" Width="24" Height="24" ToolTip="{Binding GatewayDetails}">
+                            <Rectangle.Resources>
+                                <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ErrorRectangle}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsGatewayCheckRunning}" Value="False" />
+                                                <Condition Binding="{Binding IsGatewayAvailable}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </MultiDataTrigger.Setters>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Resources>
+                        </Rectangle>
+                        <Line Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" Margin="-4,0">
+                            <Line.Resources>
+                                <Style TargetType="{x:Type Line}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsGatewayCheckRunning}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsGatewayAvailable}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Line.Resources>
+                        </Line>
+                        <Line Grid.Row="0" Grid.Column="0" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                        <Line Grid.Row="0" Grid.Column="4" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
                     </Grid>
-                    <Grid Grid.Column="5" Grid.Row="0">
+                    <Grid Grid.Column="5" Grid.Row="0" VerticalAlignment="Center">
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -109,6 +143,10 @@
                             <RowDefinition Height="20" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.GatewayRouter}" Style="{StaticResource MessageTextBlock}" />
@@ -127,9 +165,55 @@
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>
-                        <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding ConnectionGatewayIPAddress}" />
+                        <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="4" IsActive="True" Width="24" Height="24" Visibility="{Binding IsGatewayCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                        <Rectangle Grid.Column="0" Grid.Row="4" Width="24" Height="24" ToolTip="{Binding GatewayDetails}" Style="{Binding GatewayConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsGatewayCheckRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding GatewayIPAddress}" />
+                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding GatewayHostname}" />
                     </Grid>
-                    <Line Grid.Column="7" Grid.Row="0" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform"></Line>
+                    <Grid Grid.Column="7" Grid.Row="0" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="2" Grid.Row="0" Width="24" Height="24" ToolTip="{Binding GatewayDetails}">
+                            <Rectangle.Resources>
+                                <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ErrorRectangle}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsGatewayCheckRunning}" Value="False" />
+                                                <Condition Binding="{Binding IsGatewayAvailable}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </MultiDataTrigger.Setters>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Resources>
+                        </Rectangle>
+                        <Line Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" Margin="-4,0">
+                            <Line.Resources>
+                                <Style TargetType="{x:Type Line}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsGatewayCheckRunning}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsGatewayAvailable}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Line.Resources>
+                        </Line>
+                        <Line Grid.Row="0" Grid.Column="0" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                        <Line Grid.Row="0" Grid.Column="4" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                    </Grid>
                     <Grid Grid.Column="9" Grid.Row="0">
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
@@ -148,6 +232,10 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="10" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Internet}" Style="{StaticResource MessageTextBlock}" />
                         <Rectangle Grid.Column="0" Grid.Row="2" Width="48" Height="48" VerticalAlignment="Top">
@@ -165,7 +253,10 @@
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>
-                        <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding ConnectionPublicIPAddress}" />
+                        <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="4" IsActive="True" Width="24" Height="24" Visibility="{Binding IsGatewayCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                        <Rectangle Grid.Column="0" Grid.Row="4" Width="24" Height="24" ToolTip="{Binding GatewayDetails}" Style="{Binding GatewayConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsGatewayCheckRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding PublicIPAddress}" />
+                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding PublicHostname}" />
                     </Grid>
                 </Grid>
             </Grid>
