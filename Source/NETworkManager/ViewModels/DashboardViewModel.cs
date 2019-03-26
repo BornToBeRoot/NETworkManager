@@ -183,6 +183,63 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Internet
+        private bool _isInternetCheckRunning;
+        public bool IsInternetCheckRunning
+        {
+            get => _isInternetCheckRunning;
+            set
+            {
+                if (value == _isInternetCheckRunning)
+                    return;
+
+                _isInternetCheckRunning = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _internetDetails;
+        public string InternetDetails
+        {
+            get => _internetDetails;
+            set
+            {
+                if (value == _internetDetails)
+                    return;
+
+                _internetDetails = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isInternetAvailable;
+        public bool IsInternetAvailable
+        {
+            get => _isInternetAvailable;
+            set
+            {
+                if (value == _isInternetAvailable)
+                    return;
+
+                _isInternetAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ConnectionState _internetConnectionState = ConnectionState.None;
+        public ConnectionState InternetConnectionState
+        {
+            get => _internetConnectionState;
+            set
+            {
+                if (value == _internetConnectionState)
+                    return;
+
+                _internetConnectionState = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private string _publicIPAddress;
         public string PublicIPAddress
         {
@@ -294,6 +351,21 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
+        public ICommand CheckConnectionCommand
+        {
+            get { return new RelayCommand(p => CheckConnectionAction(), CheckConnection_CanExecute); }
+        }
+
+        private bool CheckConnection_CanExecute(object paramter)
+        {
+            return !IsInternetCheckRunning && !IsGatewayCheckRunning && !IsHostCheckRunning;
+        }
+
+        private void CheckConnectionAction()
+        {
+            CheckConnectionAsync();
+        }
+
         public ICommand AddProfileCommand
         {
             get { return new RelayCommand(p => AddProfileAction()); }
@@ -462,7 +534,7 @@ namespace NETworkManager.ViewModels
             Task.Run(() => CheckConnection());
         }
 
-        public async void CheckConnection()
+        public void CheckConnection()
         {
             // Reset
             IsHostCheckRunning = true;
@@ -478,7 +550,12 @@ namespace NETworkManager.ViewModels
             GatewayIPAddress = "";
             GatewayHostname = "";
 
+            IsInternetCheckRunning = true;
+            InternetDetails = "";
+            IsInternetAvailable = false;
+            InternetConnectionState = ConnectionState.None;
             PublicIPAddress = "";
+            PublicHostname = "";
 
             // 1) Check tcp/ip stack --> ICMP to 127.0.0.1
             using (var ping = new Ping())
@@ -548,11 +625,14 @@ namespace NETworkManager.ViewModels
             // 4) Detect the gateway ip address
             var gatewayIPAddressDetected = NetworkInterface.DetectGatewayBasedOnLocalIPAddress(hostIPAddressDetected);
 
+            // CANCEL
             if (gatewayIPAddressDetected == null)
             {
                 IsGatewayAvailable = false;
                 AddToGatewayDetails("[Error] gateway - Could not detect gateway ip address!");
+
                 IsGatewayCheckRunning = false;
+                IsInternetCheckRunning = false;
 
                 return;
             }
@@ -584,13 +664,18 @@ namespace NETworkManager.ViewModels
                 }
             }
 
+            // CANCEL
             if (!IsGatewayAvailable)
             {
-                // CANCEL ??? 
+                AddToGatewayDetails($"[Error] gateway - {GatewayIPAddress} is not reachable via ICMP!");
+
+                IsGatewayCheckRunning = false;
+                IsInternetCheckRunning = false;
 
                 return;
             }
 
+            // If gateway is reachable via icmp...
             GatewayConnectionState = ConnectionState.OK;
 
             // 5) Check gateway dns entry?
@@ -609,13 +694,85 @@ namespace NETworkManager.ViewModels
 
             IsGatewayCheckRunning = false;
 
-            // 6) Check public ip via icmp
-            // Error
+            // 6) Check a public ip via icmp
+            using (var ping = new Ping())
+            {
+                for (var i = 0; i < 2; i++)
+                {
+                    try
+                    {
+                        var pingReply = ping.Send(IPAddress.Parse("1.1.1.1"));
 
-            // 7) Check public dns - Check if dns is working...
-            // Warn
+                        if (pingReply == null || pingReply.Status != IPStatus.Success)
+                            continue;
 
-            // 8) Check public ip address agains api.ipify
+                        IsInternetAvailable = true;
+                        AddToInternetDetails($"[OK] internet - 1.1.1.1 is reachable via ICMP!");
+
+                        break;
+                    }
+                    catch (PingException)
+                    {
+
+                    }
+                }
+            }
+
+            if (!IsInternetAvailable)
+            {
+                AddToInternetDetails($"[Error] internet - 1.1.1.1 is not reachable via ICMP!");
+
+                IsInternetCheckRunning = false;
+
+                return;
+            }
+
+            // If internet is reachable via icmp
+            InternetConnectionState = ConnectionState.OK;
+
+            // 7) Check public dns (A/AAAA) - Check if dns is working...
+            try
+            {
+                var dnsCount = Dns.GetHostEntry("one.one.one.one").AddressList.Length;
+
+                if (dnsCount > 0)
+                {
+                    AddToInternetDetails($"[OK] dns - Got {dnsCount} entries for one.one.one.one!");
+                }
+                else
+                {
+                    InternetConnectionState = ConnectionState.Warning;
+                    AddToInternetDetails($"[Warn] dns - Got {dnsCount} entries for one.one.one.one!");
+                }
+            }
+            catch (SocketException)
+            {
+                InternetConnectionState = ConnectionState.Warning;
+                AddToInternetDetails($"[Error] dns/A-AAAA - Could not get dns entries for one.one.one.one!");
+            }
+
+            // 8) Check public dns (PTR) - Check if dns is working...
+            try
+            {
+                var dnsCount = Dns.GetHostEntry(IPAddress.Parse("1.1.1.1")).AddressList.Length;
+
+                if (dnsCount > 0)
+                {
+                    AddToInternetDetails($"[OK] dns - Got {dnsCount} entries for 1.1.1.1!");
+                }
+                else
+                {
+                    InternetConnectionState = ConnectionState.Warning;
+                    AddToInternetDetails($"[Warn] dns/PTR - Got {dnsCount} entries for 1.1.1.1!");
+                }
+            }
+            catch (SocketException)
+            {
+                InternetConnectionState = ConnectionState.Warning;
+                AddToInternetDetails($"[Warn] dns/PTR - Could not get dns entries for 1.1.1.1!");
+            }
+
+            // 9) Check public ip address agains api.ipify
             if (SettingsManager.Current.Dashboard_CheckPublicIPAddress)
             {
                 try
@@ -627,38 +784,42 @@ namespace NETworkManager.ViewModels
 
                     if (string.IsNullOrEmpty(publicIPAddress))
                     {
-                        // warn...
+                        InternetConnectionState = ConnectionState.Warning;
+                        AddToInternetDetails($"[Warn] public ip - Could not get public ip address, check apify.com !");
                     }
-                    
-                    PublicIPAddress = publicIPAddress;
 
+                    PublicIPAddress = publicIPAddress;
                 }
                 catch (Exception ex)
                 {
-                    // warn...
+                    InternetConnectionState = ConnectionState.Warning;
+                    AddToInternetDetails($"[Warn] public ip - Could not get public ip address, check apify.com !");
+                }
+
+                // 10) Resolve dns for public ip
+                if (!string.IsNullOrEmpty(PublicIPAddress))
+                {
+                    try
+                    {
+                        var publicHostname = Dns.GetHostEntry(PublicIPAddress).HostName;
+
+                        PublicHostname = publicHostname;
+                        AddToInternetDetails($"[OK] dns - Hostname {publicHostname} resolved for ip address {PublicIPAddress}!");
+                    }
+                    catch (SocketException)
+                    {
+                        InternetConnectionState = ConnectionState.Warning;
+                        AddToInternetDetails($"[Warning] public hostname- Could not resolve hostname for ip address {PublicIPAddress}!");
+                    }
                 }
             }
             else
             {
-                PublicIPAddress = "Check disabled in settings!";
+                PublicIPAddress = "/* Public IP address check";
+                PublicHostname = "is disabled in the settings */";
             }
-
-            // 9) Resolve dns for public ip
-            if (!string.IsNullOrEmpty(PublicIPAddress))
-            {
-                try
-                {
-                    var publicHostname = Dns.GetHostEntry(PublicIPAddress).HostName;
-
-                    PublicHostname = publicHostname;
-                    //  AddToGatewayDetails($"[OK] dns - Hostname {gatewayHostname} resolved for ip address {GatewayIPAddress}!");
-                }
-                catch (SocketException)
-                {
-                    // GatewayConnectionState = ConnectionState.Warning;
-                    //                AddToGatewayDetails($"[Error] dns - Could not resolve hostname for ip address {GatewayIPAddress}!");
-                }
-            }
+            
+            IsInternetCheckRunning = false;
         }
 
         public void AddToHostDetails(string text)
@@ -675,6 +836,14 @@ namespace NETworkManager.ViewModels
                 GatewayDetails += Environment.NewLine;
 
             GatewayDetails += text;
+        }
+
+        public void AddToInternetDetails(string text)
+        {
+            if (!string.IsNullOrEmpty(InternetDetails))
+                InternetDetails += Environment.NewLine;
+
+            InternetDetails += text;
         }
 
         public void OnViewVisible()

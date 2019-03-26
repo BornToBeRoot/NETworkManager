@@ -64,7 +64,7 @@
         <Setter Property="Fill" Value="Orange" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Check}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOutline}"/>
             </Setter.Value>
         </Setter>
     </Style>

@@ -11,6 +11,9 @@
              xmlns:mahAppsControls="http://metro.mahapps.com/winfx/xaml/controls"
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DashboardViewModel}">
+    <UserControl.InputBindings>
+        <KeyBinding Key="F5" Command="{Binding CheckConnectionCommand}" />
+    </UserControl.InputBindings>
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
@@ -178,15 +181,15 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="2" Grid.Row="0" Width="24" Height="24" ToolTip="{Binding GatewayDetails}">
+                        <Rectangle Grid.Column="2" Grid.Row="0" Width="24" Height="24" ToolTip="{Binding InternetDetails}">
                             <Rectangle.Resources>
                                 <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ErrorRectangle}">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                     <Style.Triggers>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsGatewayCheckRunning}" Value="False" />
-                                                <Condition Binding="{Binding IsGatewayAvailable}" Value="False" />
+                                                <Condition Binding="{Binding IsInternetCheckRunning}" Value="False" />
+                                                <Condition Binding="{Binding IsInternetAvailable}" Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.Setters>
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -201,10 +204,10 @@
                                 <Style TargetType="{x:Type Line}">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsGatewayCheckRunning}" Value="True">
+                                        <DataTrigger Binding="{Binding IsInternetCheckRunning}" Value="True">
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding IsGatewayAvailable}" Value="True">
+                                        <DataTrigger Binding="{Binding IsInternetAvailable}" Value="True">
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -253,8 +256,8 @@
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>
-                        <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="4" IsActive="True" Width="24" Height="24" Visibility="{Binding IsGatewayCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                        <Rectangle Grid.Column="0" Grid.Row="4" Width="24" Height="24" ToolTip="{Binding GatewayDetails}" Style="{Binding GatewayConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsGatewayCheckRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="4" IsActive="True" Width="24" Height="24" Visibility="{Binding IsInternetCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                        <Rectangle Grid.Column="0" Grid.Row="4" Width="24" Height="24" ToolTip="{Binding InternetDetails}" Style="{Binding InternetConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsInternetCheckRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
                         <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding PublicIPAddress}" />
                         <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding PublicHostname}" />
                     </Grid>
