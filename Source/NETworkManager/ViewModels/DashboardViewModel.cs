@@ -617,7 +617,7 @@ namespace NETworkManager.ViewModels
             catch (SocketException)
             {
                 HostConnectionState = ConnectionState.Warning;
-                AddToHostDetails($"[Error] dns - Could not resolve hostname for ip address {hostIPAddressDetected}!");
+                AddToHostDetails($"[Warning] dns - Could not resolve hostname for ip address {hostIPAddressDetected}!");
             }
 
             IsHostCheckRunning = false;
