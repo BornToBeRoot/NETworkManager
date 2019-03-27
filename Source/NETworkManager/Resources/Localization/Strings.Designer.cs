@@ -727,6 +727,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check your network adapter configuration (dns) and if your dns server is configured correctly..
+        /// </summary>
+        public static string CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage {
+            get {
+                return ResourceManager.GetString("CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check your network adapter configuration (dhcp, static ip) and if you are connected to a network..
+        /// </summary>
+        public static string CheckNetworkAdapterConfigurationAndNetworkConnectionMessage {
+            get {
+                return ResourceManager.GetString("CheckNetworkAdapterConfigurationAndNetworkConnectionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check public IP address.
         /// </summary>
         public static string CheckPublicIPAddress {
@@ -961,6 +979,33 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string ConnectionState_Error {
+            get {
+                return ResourceManager.GetString("ConnectionState_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string ConnectionState_OK {
+            get {
+                return ResourceManager.GetString("ConnectionState_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string ConnectionState_Warning {
+            get {
+                return ResourceManager.GetString("ConnectionState_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect the network card to a network to configure it!.
         /// </summary>
         public static string ConnectTheNetworkCardToConfigureIt {
@@ -1015,11 +1060,47 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not detect gateway ip address!.
+        /// </summary>
+        public static string CouldNotDetectGatewayIPAddressMessage {
+            get {
+                return ResourceManager.GetString("CouldNotDetectGatewayIPAddressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not detect local ip address!.
+        /// </summary>
+        public static string CouldNotDetectLocalIPAddressMessage {
+            get {
+                return ResourceManager.GetString("CouldNotDetectLocalIPAddressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not get public ip address via WebRequest (http/https) from &quot;{0}&quot;! Check your network connection (firewall, proxy, etc.)..
+        /// </summary>
+        public static string CouldNotGetPublicIPAddressFromXXXMessage {
+            get {
+                return ResourceManager.GetString("CouldNotGetPublicIPAddressFromXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not resolve hostname for: &quot;{0}&quot;.
         /// </summary>
         public static string CouldNotResolveHostnameFor {
             get {
                 return ResourceManager.GetString("CouldNotResolveHostnameFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not resolve hostname for ip address &quot;{0}&quot;!.
+        /// </summary>
+        public static string CouldNotResolveHostnameForXXXMessage {
+            get {
+                return ResourceManager.GetString("CouldNotResolveHostnameForXXXMessage", resourceCulture);
             }
         }
         
@@ -2115,6 +2196,51 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Got no A or AAAA dns records for &quot;{0}&quot;!.
+        /// </summary>
+        public static string GotNoAorAAAADNSRecordsForXXXMessage {
+            get {
+                return ResourceManager.GetString("GotNoAorAAAADNSRecordsForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Got no PTR dns records for &quot;{0}&quot;!.
+        /// </summary>
+        public static string GotNoPTRDNSRecordsForXXXMessage {
+            get {
+                return ResourceManager.GetString("GotNoPTRDNSRecordsForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Got &quot;{0}&quot; A or AAAA dns records for &quot;{1}&quot;!.
+        /// </summary>
+        public static string GotXAorAAAADNSRecordsForXXXMessage {
+            get {
+                return ResourceManager.GetString("GotXAorAAAADNSRecordsForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Got &quot;{0}&quot; PTR dns records for &quot;{1}&quot;!.
+        /// </summary>
+        public static string GotXPTRDNSRecordsForXXXMessage {
+            get {
+                return ResourceManager.GetString("GotXPTRDNSRecordsForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Got &quot;{0}&quot; as public ip address from &quot;{1}&quot;!.
+        /// </summary>
+        public static string GotXXXAsPublicIPAddressFromXXXMessage {
+            get {
+                return ResourceManager.GetString("GotXXXAsPublicIPAddressFromXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Green.
         /// </summary>
         public static string Green {
@@ -2320,6 +2446,15 @@ namespace NETworkManager.Resources.Localization {
         public static string HostnameOrIPAddress {
             get {
                 return ResourceManager.GetString("HostnameOrIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hostname &quot;{0}&quot; resolved for ip address &quot;{1}&quot;!.
+        /// </summary>
+        public static string HostnameXXXResolvedForIPAddressXXXMessage {
+            get {
+                return ResourceManager.GetString("HostnameXXXResolvedForIPAddressXXXMessage", resourceCulture);
             }
         }
         
@@ -3583,6 +3718,16 @@ namespace NETworkManager.Resources.Localization {
         public static string Protocol {
             get {
                 return ResourceManager.GetString("Protocol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public IP address check
+        ///is disabled!.
+        /// </summary>
+        public static string PublicIPAddressCheckIsDisabled {
+            get {
+                return ResourceManager.GetString("PublicIPAddressCheckIsDisabled", resourceCulture);
             }
         }
         
@@ -5046,6 +5191,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TCP/IP stack is available. &quot;{0}&quot; is reachable via ICMP!.
+        /// </summary>
+        public static string TCPIPStackIsAvailableMessage {
+            get {
+                return ResourceManager.GetString("TCPIPStackIsAvailableMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TCP/IP stack is not available... &quot;{0}&quot; is not reachable via ICMP!.
+        /// </summary>
+        public static string TCPIPStackIsNotAvailableMessage {
+            get {
+                return ResourceManager.GetString("TCPIPStackIsNotAvailableMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Closed.
         /// </summary>
         public static string TcpState_Closed {
@@ -5876,6 +6039,42 @@ namespace NETworkManager.Resources.Localization {
         public static string WrongPasswordMessage {
             get {
                 return ResourceManager.GetString("WrongPasswordMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; detected as gateway ip address!.
+        /// </summary>
+        public static string XXXDetectedAsGatewayIPAddress {
+            get {
+                return ResourceManager.GetString("XXXDetectedAsGatewayIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; detected as local ip address!.
+        /// </summary>
+        public static string XXXDetectedAsLocalIPAddressMessage {
+            get {
+                return ResourceManager.GetString("XXXDetectedAsLocalIPAddressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; is not reachable via ICMP!.
+        /// </summary>
+        public static string XXXIsNotReachableViaICMPMessage {
+            get {
+                return ResourceManager.GetString("XXXIsNotReachableViaICMPMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; is reachable via ICMP!.
+        /// </summary>
+        public static string XXXIsReachableViaICMPMessage {
+            get {
+                return ResourceManager.GetString("XXXIsReachableViaICMPMessage", resourceCulture);
             }
         }
         

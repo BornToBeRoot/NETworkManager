@@ -2081,4 +2081,71 @@ URL: https://twitter.com/BornToBeRoot_DE</value>
   <data name="Internet" xml:space="preserve">
     <value>Internet</value>
   </data>
+  <data name="CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage" xml:space="preserve">
+    <value>Check your network adapter configuration (dns) and if your dns server is configured correctly.</value>
+  </data>
+  <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
+    <value>Check your network adapter configuration (dhcp, static ip) and if you are connected to a network.</value>
+  </data>
+  <data name="ConnectionState_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ConnectionState_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ConnectionState_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
+    <value>Could not detect gateway ip address!</value>
+  </data>
+  <data name="CouldNotDetectLocalIPAddressMessage" xml:space="preserve">
+    <value>Could not detect local ip address!</value>
+  </data>
+  <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>Could not get public ip address via WebRequest (http/https) from "{0}"! Check your network connection (firewall, proxy, etc.).</value>
+  </data>
+  <data name="CouldNotResolveHostnameForXXXMessage" xml:space="preserve">
+    <value>Could not resolve hostname for ip address "{0}"!</value>
+  </data>
+  <data name="GotNoAorAAAADNSRecordsForXXXMessage" xml:space="preserve">
+    <value>Got no A or AAAA dns records for "{0}"!</value>
+  </data>
+  <data name="GotNoPTRDNSRecordsForXXXMessage" xml:space="preserve">
+    <value>Got no PTR dns records for "{0}"!</value>
+  </data>
+  <data name="GotXAorAAAADNSRecordsForXXXMessage" xml:space="preserve">
+    <value>Got "{0}" A or AAAA dns records for "{1}"!</value>
+  </data>
+  <data name="GotXPTRDNSRecordsForXXXMessage" xml:space="preserve">
+    <value>Got "{0}" PTR dns records for "{1}"!</value>
+  </data>
+  <data name="GotXXXAsPublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>Got "{0}" as public ip address from "{1}"!</value>
+  </data>
+  <data name="HostnameXXXResolvedForIPAddressXXXMessage" xml:space="preserve">
+    <value>Hostname "{0}" resolved for ip address "{1}"!</value>
+  </data>
+  <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
+    <value>Public IP address check
+is disabled!</value>
+  </data>
+  <data name="TCPIPStackIsAvailableMessage" xml:space="preserve">
+    <value>TCP/IP stack is available. "{0}" is reachable via ICMP!</value>
+  </data>
+  <data name="TCPIPStackIsNotAvailableMessage" xml:space="preserve">
+    <value>TCP/IP stack is not available... "{0}" is not reachable via ICMP!</value>
+  </data>
+  <data name="XXXDetectedAsGatewayIPAddress" xml:space="preserve">
+    <value>"{0}" detected as gateway ip address!</value>
+  </data>
+  <data name="XXXDetectedAsLocalIPAddressMessage" xml:space="preserve">
+    <value>"{0}" detected as local ip address!</value>
+  </data>
+  <data name="XXXIsNotReachableViaICMPMessage" xml:space="preserve">
+    <value>"{0}" is not reachable via ICMP!</value>
+  </data>
+  <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
+    <value>"{0}" is reachable via ICMP!</value>
+  </data>
 </root>
