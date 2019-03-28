@@ -2108,23 +2108,23 @@ URL: https://twitter.com/BornToBeRoot_DE</value>
   <data name="CouldNotResolveHostnameForXXXMessage" xml:space="preserve">
     <value>Could not resolve hostname for ip address "{0}"!</value>
   </data>
-  <data name="GotNoAorAAAADNSRecordsForXXXMessage" xml:space="preserve">
-    <value>Got no A or AAAA dns records for "{0}"!</value>
+  <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
+    <value>No A dns records resolved for "{0}"!</value>
   </data>
-  <data name="GotNoPTRDNSRecordsForXXXMessage" xml:space="preserve">
-    <value>Got no PTR dns records for "{0}"!</value>
+  <data name="NoPTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
+    <value>No PTR dns record resolved for "{0}"!</value>
   </data>
-  <data name="GotXAorAAAADNSRecordsForXXXMessage" xml:space="preserve">
-    <value>Got "{0}" A or AAAA dns records for "{1}"!</value>
+  <data name="XADNSRecordsResolvedForXXXMessage" xml:space="preserve">
+    <value>"{0}" A dns records resolved for "{1}"!</value>
   </data>
-  <data name="GotXPTRDNSRecordsForXXXMessage" xml:space="preserve">
-    <value>Got "{0}" PTR dns records for "{1}"!</value>
+  <data name="PTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
+    <value>PTR dns record resolved for "{0}"!</value>
   </data>
   <data name="GotXXXAsPublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Got "{0}" as public ip address from "{1}"!</value>
   </data>
-  <data name="HostnameXXXResolvedForIPAddressXXXMessage" xml:space="preserve">
-    <value>Hostname "{0}" resolved for ip address "{1}"!</value>
+  <data name="ResolvedXXXAsHostnameForIPAddressXXXMessage" xml:space="preserve">
+    <value>Resolved "{0}" as hostname for ip address "{1}"!</value>
   </data>
   <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
     <value>Public IP address check
@@ -2147,5 +2147,26 @@ is disabled!</value>
   </data>
   <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
     <value>"{0}" is reachable via ICMP!</value>
+  </data>
+  <data name="UseCustomAPI" xml:space="preserve">
+    <value>Use custom API</value>
+  </data>
+  <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
+    <value>URL to a web service that can be reached via http or https and returns an IP address as response.</value>
+  </data>
+  <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>Could not parse public ip address from "{0}"! Maybe try a another service or use the default... </value>
+  </data>
+  <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
+    <value>Could not connect to "{0}"!</value>
+  </data>
+  <data name="PublicDNSTestDomain" xml:space="preserve">
+    <value>Public DNS test domain</value>
+  </data>
+  <data name="PublicDNSTestIPAddress" xml:space="preserve">
+    <value>Public DNS test IP address</value>
+  </data>
+  <data name="PublicICMPTestIPAddress" xml:space="preserve">
+    <value>Public ICMP test IP address</value>
   </data>
 </root>

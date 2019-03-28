@@ -1060,6 +1060,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not connect to &quot;{0}&quot;!.
+        /// </summary>
+        public static string CouldNotConnectToXXXMessage {
+            get {
+                return ResourceManager.GetString("CouldNotConnectToXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not detect gateway ip address!.
         /// </summary>
         public static string CouldNotDetectGatewayIPAddressMessage {
@@ -1083,6 +1092,15 @@ namespace NETworkManager.Resources.Localization {
         public static string CouldNotGetPublicIPAddressFromXXXMessage {
             get {
                 return ResourceManager.GetString("CouldNotGetPublicIPAddressFromXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not parse public ip address from &quot;{0}&quot;! Maybe try a another service or use the default... .
+        /// </summary>
+        public static string CouldNotParsePublicIPAddressFromXXXMessage {
+            get {
+                return ResourceManager.GetString("CouldNotParsePublicIPAddressFromXXXMessage", resourceCulture);
             }
         }
         
@@ -2196,42 +2214,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Got no A or AAAA dns records for &quot;{0}&quot;!.
-        /// </summary>
-        public static string GotNoAorAAAADNSRecordsForXXXMessage {
-            get {
-                return ResourceManager.GetString("GotNoAorAAAADNSRecordsForXXXMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Got no PTR dns records for &quot;{0}&quot;!.
-        /// </summary>
-        public static string GotNoPTRDNSRecordsForXXXMessage {
-            get {
-                return ResourceManager.GetString("GotNoPTRDNSRecordsForXXXMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Got &quot;{0}&quot; A or AAAA dns records for &quot;{1}&quot;!.
-        /// </summary>
-        public static string GotXAorAAAADNSRecordsForXXXMessage {
-            get {
-                return ResourceManager.GetString("GotXAorAAAADNSRecordsForXXXMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Got &quot;{0}&quot; PTR dns records for &quot;{1}&quot;!.
-        /// </summary>
-        public static string GotXPTRDNSRecordsForXXXMessage {
-            get {
-                return ResourceManager.GetString("GotXPTRDNSRecordsForXXXMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Got &quot;{0}&quot; as public ip address from &quot;{1}&quot;!.
         /// </summary>
         public static string GotXXXAsPublicIPAddressFromXXXMessage {
@@ -2317,6 +2299,15 @@ namespace NETworkManager.Resources.Localization {
         public static string HelpMessage_Credentials {
             get {
                 return ResourceManager.GetString("HelpMessage_Credentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL to a web service that can be reached via http or https and returns an IP address as response..
+        /// </summary>
+        public static string HelpMessage_CustomPublicIPAddressAPI {
+            get {
+                return ResourceManager.GetString("HelpMessage_CustomPublicIPAddressAPI", resourceCulture);
             }
         }
         
@@ -2446,15 +2437,6 @@ namespace NETworkManager.Resources.Localization {
         public static string HostnameOrIPAddress {
             get {
                 return ResourceManager.GetString("HostnameOrIPAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hostname &quot;{0}&quot; resolved for ip address &quot;{1}&quot;!.
-        /// </summary>
-        public static string HostnameXXXResolvedForIPAddressXXXMessage {
-            get {
-                return ResourceManager.GetString("HostnameXXXResolvedForIPAddressXXXMessage", resourceCulture);
             }
         }
         
@@ -3116,6 +3098,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No A dns records resolved for &quot;{0}&quot;!.
+        /// </summary>
+        public static string NoADNSRecordsResolvedForXXXMessage {
+            get {
+                return ResourceManager.GetString("NoADNSRecordsResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No DNS record found for &quot;{0}&quot;! Check your input and the settings..
         /// </summary>
         public static string NoDNSRecordFoundCheckYourInputAndSettings {
@@ -3149,6 +3140,15 @@ namespace NETworkManager.Resources.Localization {
         public static string NoProfilesFoundCreateOne {
             get {
                 return ResourceManager.GetString("NoProfilesFoundCreateOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No PTR dns record resolved for &quot;{0}&quot;!.
+        /// </summary>
+        public static string NoPTRDNSRecordResolvedForXXXMessage {
+            get {
+                return ResourceManager.GetString("NoPTRDNSRecordResolvedForXXXMessage", resourceCulture);
             }
         }
         
@@ -3718,6 +3718,42 @@ namespace NETworkManager.Resources.Localization {
         public static string Protocol {
             get {
                 return ResourceManager.GetString("Protocol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PTR dns record resolved for &quot;{0}&quot;!.
+        /// </summary>
+        public static string PTRDNSRecordResolvedForXXXMessage {
+            get {
+                return ResourceManager.GetString("PTRDNSRecordResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public DNS test domain.
+        /// </summary>
+        public static string PublicDNSTestDomain {
+            get {
+                return ResourceManager.GetString("PublicDNSTestDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public DNS test IP address.
+        /// </summary>
+        public static string PublicDNSTestIPAddress {
+            get {
+                return ResourceManager.GetString("PublicDNSTestIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public ICMP test IP address.
+        /// </summary>
+        public static string PublicICMPTestIPAddress {
+            get {
+                return ResourceManager.GetString("PublicICMPTestIPAddress", resourceCulture);
             }
         }
         
@@ -4431,6 +4467,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ResolveCNAMEOnANYRequests {
             get {
                 return ResourceManager.GetString("ResolveCNAMEOnANYRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resolved &quot;{0}&quot; as hostname for ip address &quot;{1}&quot;!.
+        /// </summary>
+        public static string ResolvedXXXAsHostnameForIPAddressXXXMessage {
+            get {
+                return ResourceManager.GetString("ResolvedXXXAsHostnameForIPAddressXXXMessage", resourceCulture);
             }
         }
         
@@ -5746,6 +5791,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use custom API.
+        /// </summary>
+        public static string UseCustomAPI {
+            get {
+                return ResourceManager.GetString("UseCustomAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use custom DNS server.
         /// </summary>
         public static string UseCustomDNSServer {
@@ -6039,6 +6093,15 @@ namespace NETworkManager.Resources.Localization {
         public static string WrongPasswordMessage {
             get {
                 return ResourceManager.GetString("WrongPasswordMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; A dns records resolved for &quot;{1}&quot;!.
+        /// </summary>
+        public static string XADNSRecordsResolvedForXXXMessage {
+            get {
+                return ResourceManager.GetString("XADNSRecordsResolvedForXXXMessage", resourceCulture);
             }
         }
         

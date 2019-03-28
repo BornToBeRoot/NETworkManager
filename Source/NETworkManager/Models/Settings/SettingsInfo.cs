@@ -372,7 +372,7 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Dashboard
-        private bool _dashboard_OverrideGatewayIPAddress = true;
+       /* private bool _dashboard_OverrideGatewayIPAddress = true;
         public bool Dashboard_OverrideGatewayIPAddress
         {
             get => _dashboard_OverrideGatewayIPAddress;
@@ -387,7 +387,6 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-
         private string _dashboard_GatewayIPAddress;
         public string Dashboard_GatewayIPAddress
         {
@@ -401,23 +400,53 @@ namespace NETworkManager.Models.Settings
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
-        }
+        }*/
 
-        private string _dashboard_PublicIPAddress = GlobalStaticConfiguration.Dashboard_PublicIPAddress;
-        public string Dashboard_PublicIPAddress
+        private string _dashboard_PublicICMPTestIPAddress = GlobalStaticConfiguration.Dashboard_PublicICMPTestIPAddress;
+        public string Dashboard_PublicICMPTestIPAddress
         {
-            get => _dashboard_PublicIPAddress;
+            get => _dashboard_PublicICMPTestIPAddress;
             set
             {
-                if (value == _dashboard_PublicIPAddress)
+                if (value == _dashboard_PublicICMPTestIPAddress)
                     return;
 
-                _dashboard_PublicIPAddress = value;
+                _dashboard_PublicICMPTestIPAddress = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
+        private string _dashboard_PublicDNSTestDomain = GlobalStaticConfiguration.Dashboard_PublicDNSTestDomain;
+        public string Dashboard_PublicDNSTestDomain
+        {
+            get => _dashboard_PublicDNSTestDomain;
+            set
+            {
+                if (value == _dashboard_PublicDNSTestDomain)
+                    return;
+
+                _dashboard_PublicDNSTestDomain = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _dashboard_PublicDNSTestIPAddress = GlobalStaticConfiguration.Dashboard_PublicDNSTestIPAddress;
+        public string Dashboard_PublicDNSTestIPAddress
+        {
+            get => _dashboard_PublicDNSTestIPAddress;
+            set
+            {
+                if (value == _dashboard_PublicDNSTestIPAddress)
+                    return;
+
+                _dashboard_PublicDNSTestIPAddress = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        
         private bool _dashboard_CheckPublicIPAddress = true;
         public bool Dashboard_CheckPublicIPAddress
         {
@@ -433,21 +462,35 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _dashboard_PublicIPAddressAPI = GlobalStaticConfiguration.Dashboard_PublicIPAddressAPI;
-        public string Dashboard_PublicIPAddressAPI
+        private bool _dashboard_UseCustomPublicIPAddressAPI;
+        public bool Dashboard_UseCustomPublicIPAddressAPI
         {
-            get => _dashboard_PublicIPAddressAPI;
+            get => _dashboard_UseCustomPublicIPAddressAPI;
             set
             {
-                if (value == _dashboard_PublicIPAddressAPI)
+                if (value == _dashboard_UseCustomPublicIPAddressAPI)
                     return;
 
-                _dashboard_PublicIPAddressAPI = value;
+                _dashboard_UseCustomPublicIPAddressAPI = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
+        private string _dashboard_CustomPublicIPAddressAPI;
+        public string Dashboard_CustomPublicIPAddressAPI
+        {
+            get => _dashboard_CustomPublicIPAddressAPI;
+            set
+            {
+                if (value == _dashboard_CustomPublicIPAddressAPI)
+                    return;
+
+                _dashboard_CustomPublicIPAddressAPI = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Network Interface       

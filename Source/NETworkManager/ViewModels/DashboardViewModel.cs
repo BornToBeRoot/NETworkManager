@@ -669,7 +669,7 @@ namespace NETworkManager.ViewModels
             // 2) Detect local ip address
             try
             {
-                HostIPAddress = NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPAddress));
+                HostIPAddress = NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicICMPTestIPAddress));
             }
             catch (Exception)
             {
@@ -695,7 +695,7 @@ namespace NETworkManager.ViewModels
             {
                 HostHostname = Dns.GetHostEntry(HostIPAddress).HostName;
 
-                AddToHostDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.HostnameXXXResolvedForIPAddressXXXMessage, HostHostname, HostIPAddress));
+                AddToHostDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage, HostHostname, HostIPAddress));
             }
             catch (SocketException)
             {
@@ -771,7 +771,7 @@ namespace NETworkManager.ViewModels
             {
                 GatewayHostname = Dns.GetHostEntry(GatewayIPAddress).HostName;
 
-                AddToGatewayDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.HostnameXXXResolvedForIPAddressXXXMessage, GatewayHostname, GatewayIPAddress));
+                AddToGatewayDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage, GatewayHostname, GatewayIPAddress));
             }
             catch (SocketException)
             {
@@ -785,7 +785,7 @@ namespace NETworkManager.ViewModels
 
             #region Internet
             // 6) Check if internet is reachable via icmp to a public ip address
-            var internetIPAddress = "1.1.1.1";
+            var publicICMPTestIPAddress = SettingsManager.Current.Dashboard_PublicICMPTestIPAddress;
 
             using (var ping = new Ping())
             {
@@ -793,7 +793,7 @@ namespace NETworkManager.ViewModels
                 {
                     try
                     {
-                        var pingReply = ping.Send(IPAddress.Parse(internetIPAddress));
+                        var pingReply = ping.Send(IPAddress.Parse(publicICMPTestIPAddress));
 
                         if (pingReply == null || pingReply.Status != IPStatus.Success)
                             continue;
@@ -811,7 +811,7 @@ namespace NETworkManager.ViewModels
 
             if (!IsInternetReachable)
             {
-                AddToInternetDetails(ConnectionState.Error, string.Format(Resources.Localization.Strings.XXXIsNotReachableViaICMPMessage, internetIPAddress));
+                AddToInternetDetails(ConnectionState.Error, string.Format(Resources.Localization.Strings.XXXIsNotReachableViaICMPMessage, publicICMPTestIPAddress));
 
                 IsInternetCheckRunning = false;
 
@@ -819,15 +819,19 @@ namespace NETworkManager.ViewModels
             }
 
             InternetConnectionState = ConnectionState.OK;
-            AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.XXXIsReachableViaICMPMessage, internetIPAddress));
+            AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.XXXIsReachableViaICMPMessage, publicICMPTestIPAddress));
 
-            // 7) Check if dns is working (A/AAAA)
-            var internetDNSDomain = "one.one.one.one";
+            // 7) Check if dns is working (A)
+            var publicDNSTestDomain = SettingsManager.Current.Dashboard_PublicDNSTestDomain;
             var dnsCountForward = 0;
 
             try
             {
-                dnsCountForward = Dns.GetHostEntry(internetDNSDomain).AddressList.Length;
+                foreach (var ipAddress in Dns.GetHostEntry(publicDNSTestDomain).AddressList)
+                {
+                    if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
+                        dnsCountForward++;
+                }
             }
             catch (SocketException)
             {
@@ -836,38 +840,39 @@ namespace NETworkManager.ViewModels
 
             if (dnsCountForward > 0)
             {
-                AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.GotXAorAAAADNSRecordsForXXXMessage, dnsCountForward, internetDNSDomain));
+                AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.XADNSRecordsResolvedForXXXMessage, dnsCountForward, publicDNSTestDomain));
             }
             else
             {
                 InternetConnectionState = ConnectionState.Warning;
-                AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.GotNoAorAAAADNSRecordsForXXXMessage, internetDNSDomain) + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
+                AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.NoADNSRecordsResolvedForXXXMessage, publicDNSTestDomain) + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
             }
 
             // 8) Check if dns is working (PTR)
-            var internetDNSIPAddress = "1.1.1.1";
-            var dnsCountReverse = 0;
+            var publicDNSTestIPAddress = SettingsManager.Current.Dashboard_PublicDNSTestIPAddress;
+            var gotDnsReverseHostname = false;
 
             try
             {
-                dnsCountReverse = Dns.GetHostEntry(IPAddress.Parse(internetDNSIPAddress)).AddressList.Length;
+                gotDnsReverseHostname = !string.IsNullOrEmpty(Dns.GetHostEntry(IPAddress.Parse(publicDNSTestIPAddress)).HostName);
             }
             catch (SocketException)
             {
                 // ignore
             }
 
-            if (dnsCountReverse > 0)
+            if (gotDnsReverseHostname)
             {
-                AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.GotXPTRDNSRecordsForXXXMessage, dnsCountReverse, internetDNSIPAddress));
+                AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.PTRDNSRecordResolvedForXXXMessage, publicDNSTestIPAddress));
             }
             else
             {
                 InternetConnectionState = ConnectionState.Warning;
-                AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.GotNoPTRDNSRecordsForXXXMessage, internetDNSDomain) + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
+                AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.NoPTRDNSRecordResolvedForXXXMessage, publicDNSTestDomain) + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
             }
 
             // 9) Check public ip address via api.ipify.org
+            var publicIPAddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPAddressAPI ? SettingsManager.Current.Dashboard_CustomPublicIPAddressAPI : GlobalStaticConfiguration.Dashboard_PublicIPAddressAPI;
             var publicIPAddress = "";
 
             if (SettingsManager.Current.Dashboard_CheckPublicIPAddress)
@@ -875,9 +880,31 @@ namespace NETworkManager.ViewModels
                 try
                 {
                     var webClient = new WebClient();
-                    var publicIPAdressResult = webClient.DownloadString(SettingsManager.Current.Dashboard_PublicIPAddressAPI);
-                    var ipv4Regex = new Regex(RegexHelper.IPv4AddressRegex);
-                    publicIPAddress = ipv4Regex.Match(publicIPAdressResult).Value; // Grap the ip address from the result
+                    var result = webClient.DownloadString(publicIPAddressAPI);
+                    var match = Regex.Match(result, RegexHelper.IPv4AddressExctractRegex);
+
+                    if (match.Success)
+                    {
+                        publicIPAddress = match.Value;
+                    }
+                    else
+                    {
+                        InternetConnectionState = ConnectionState.Warning;
+                        AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.CouldNotParsePublicIPAddressFromXXXMessage, publicIPAddressAPI));
+
+                        IsInternetCheckRunning = false;
+
+                        return;
+                    }
+                }
+                catch (WebException)
+                {
+                    InternetConnectionState = ConnectionState.Warning;
+                    AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.CouldNotConnectToXXXMessage, publicIPAddressAPI));
+
+                    IsInternetCheckRunning = false;
+
+                    return;
                 }
                 catch (Exception)
                 {
@@ -887,7 +914,7 @@ namespace NETworkManager.ViewModels
                 if (string.IsNullOrEmpty(publicIPAddress))
                 {
                     InternetConnectionState = ConnectionState.Warning;
-                    AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.CouldNotGetPublicIPAddressFromXXXMessage, SettingsManager.Current.Dashboard_PublicIPAddressAPI));
+                    AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.CouldNotGetPublicIPAddressFromXXXMessage, publicIPAddressAPI));
 
                     IsInternetCheckRunning = false;
 
@@ -895,7 +922,7 @@ namespace NETworkManager.ViewModels
                 }
 
                 PublicIPAddress = IPAddress.Parse(publicIPAddress);
-                AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.GotXXXAsPublicIPAddressFromXXXMessage, PublicIPAddress, SettingsManager.Current.Dashboard_PublicIPAddressAPI));
+                AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.GotXXXAsPublicIPAddressFromXXXMessage, PublicIPAddress, publicIPAddressAPI));
 
                 // 10) Resolve dns for public ip
 
@@ -903,7 +930,7 @@ namespace NETworkManager.ViewModels
                 {
                     PublicHostname = Dns.GetHostEntry(PublicIPAddress).HostName;
                     
-                    AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.HostnameXXXResolvedForIPAddressXXXMessage, PublicHostname, PublicIPAddress));
+                    AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage, PublicHostname, PublicIPAddress));
                 }
                 catch (SocketException)
                 {

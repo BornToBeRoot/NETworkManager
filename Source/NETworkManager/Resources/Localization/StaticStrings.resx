@@ -273,4 +273,7 @@
   <data name="XML" xml:space="preserve">
     <value>XML</value>
   </data>
+  <data name="ExamplePublicIPAddressAPI" xml:space="preserve">
+    <value>https://api.ipify.org</value>
+  </data>
 </root>

@@ -385,6 +385,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://api.ipify.org.
+        /// </summary>
+        public static string ExamplePublicIPAddressAPI {
+            get {
+                return ResourceManager.GetString("ExamplePublicIPAddressAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Webserver.
         /// </summary>
         public static string ExampleRemoteDesktopProfileName {

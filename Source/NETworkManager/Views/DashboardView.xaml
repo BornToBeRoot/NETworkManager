@@ -117,6 +117,9 @@
                                 <Style TargetType="{x:Type Line}">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                     <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsHostCheckComplete}" Value="False">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
                                         <DataTrigger Binding="{Binding IsGatewayCheckRunning}" Value="True">
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger>
@@ -206,6 +209,9 @@
                                 <Style TargetType="{x:Type Line}">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                     <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsGatewayCheckComplete}" Value="False">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
                                         <DataTrigger Binding="{Binding IsInternetCheckRunning}" Value="True">
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger>

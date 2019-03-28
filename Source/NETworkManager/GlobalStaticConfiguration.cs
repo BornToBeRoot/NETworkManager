@@ -44,7 +44,9 @@ namespace NETworkManager
 
         // Application: Dashboard
         public static string Dashboard_PublicIPAddressAPI => "https://api.ipify.org";
-        public static string Dashboard_PublicIPAddress => "1.1.1.1";
+        public static string Dashboard_PublicICMPTestIPAddress => "1.1.1.1";
+        public static string Dashboard_PublicDNSTestDomain => "one.one.one.one";
+        public static string Dashboard_PublicDNSTestIPAddress => "1.1.1.1";
 
         // Application: IP Scanner
         public static int IPScanner_Threads => 256;
