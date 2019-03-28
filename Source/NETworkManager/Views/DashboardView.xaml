@@ -100,9 +100,9 @@
                                     <Style.Triggers>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsHostCheckComplete}" Value="True" />
                                                 <Condition Binding="{Binding IsGatewayCheckRunning}" Value="False" />
-                                                <Condition Binding="{Binding IsGatewayAvailable}" Value="False" />
+                                                <Condition Binding="{Binding IsHostCheckComplete}" Value="True" />
+                                                <Condition Binding="{Binding IsGatewayReachable}" Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.Setters>
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -120,10 +120,7 @@
                                         <DataTrigger Binding="{Binding IsGatewayCheckRunning}" Value="True">
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding IsGatewayAvailable}" Value="True">
-                                            <Setter Property="Visibility" Value="Visible" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding IsHostCheckComplete}" Value="False">
+                                        <DataTrigger Binding="{Binding IsGatewayReachable}" Value="True">
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -192,9 +189,9 @@
                                     <Style.Triggers>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsGatewayCheckComplete}" Value="True" />
                                                 <Condition Binding="{Binding IsInternetCheckRunning}" Value="False" />
-                                                <Condition Binding="{Binding IsInternetAvailable}" Value="False" />
+                                                <Condition Binding="{Binding IsGatewayCheckComplete}" Value="True" />
+                                                <Condition Binding="{Binding IsInternetReachable}" Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.Setters>
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -212,10 +209,7 @@
                                         <DataTrigger Binding="{Binding IsInternetCheckRunning}" Value="True">
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding IsInternetAvailable}" Value="True">
-                                            <Setter Property="Visibility" Value="Visible" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding IsGatewayCheckComplete}" Value="False">
+                                        <DataTrigger Binding="{Binding IsInternetReachable}" Value="True">
                                             <Setter Property="Visibility" Value="Visible" />
                                         </DataTrigger>
                                     </Style.Triggers>

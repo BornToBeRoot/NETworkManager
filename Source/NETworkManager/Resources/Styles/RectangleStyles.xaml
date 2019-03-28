@@ -83,6 +83,20 @@
     </Style>
 
     <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+   <!-- <Style x:Key="HelpRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=HelpCircleOutline}"/>
+            </Setter.Value>
+        </Setter>
+    </Style> -->
+
+
+    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
     <Style x:Key="HiddenRectangle" TargetType="{x:Type Rectangle}">
         <Setter Property="Visibility" Value="Hidden" />
     </Style>
