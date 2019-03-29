@@ -1096,7 +1096,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not parse public ip address from &quot;{0}&quot;! Maybe try a another service or use the default... .
+        ///   Looks up a localized string similar to Could not parse public ip address from &quot;{0}&quot;! Try another service or use the default... .
         /// </summary>
         public static string CouldNotParsePublicIPAddressFromXXXMessage {
             get {

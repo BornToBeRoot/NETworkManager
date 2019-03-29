@@ -2155,7 +2155,7 @@ is disabled!</value>
     <value>URL to a web service that can be reached via http or https and returns an IP address as response.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>Could not parse public ip address from "{0}"! Maybe try a another service or use the default... </value>
+    <value>Could not parse public ip address from "{0}"! Try another service or use the default... </value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
     <value>Could not connect to "{0}"!</value>
