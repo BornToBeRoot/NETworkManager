@@ -2675,6 +2675,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IPv4 protocol available.
+        /// </summary>
+        public static string IPv4ProtocolAvailable {
+            get {
+                return ResourceManager.GetString("IPv4ProtocolAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IPv6.
         /// </summary>
         public static string IPv6 {
@@ -2707,6 +2716,15 @@ namespace NETworkManager.Resources.Localization {
         public static string IPv6DefaultGateway {
             get {
                 return ResourceManager.GetString("IPv6DefaultGateway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPv6 protocol available.
+        /// </summary>
+        public static string IPv6ProtocolAvailable {
+            get {
+                return ResourceManager.GetString("IPv6ProtocolAvailable", resourceCulture);
             }
         }
         

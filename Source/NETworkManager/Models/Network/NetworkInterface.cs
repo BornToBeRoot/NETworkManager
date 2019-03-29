@@ -45,20 +45,22 @@ namespace NETworkManager.Models.Network
                 var dhcpLeaseObtained = new DateTime();
                 var dhcpLeaseExpires = new DateTime();
 
-                foreach (var unicastIPAddrInfo in networkInterface.GetIPProperties().UnicastAddresses)
+                var ipProperties = networkInterface.GetIPProperties();
+
+                foreach (var unicastIPAddrInfo in ipProperties.UnicastAddresses)
                 {
                     switch (unicastIPAddrInfo.Address.AddressFamily)
                     {
-                        case System.Net.Sockets.AddressFamily.InterNetwork:
+                        case AddressFamily.InterNetwork:
                             listIPv4Address.Add(unicastIPAddrInfo.Address);
                             listSubnetmask.Add(unicastIPAddrInfo.IPv4Mask);
                             dhcpLeaseExpires = (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressPreferredLifetime)).ToLocalTime();
                             dhcpLeaseObtained = (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressValidLifetime) - TimeSpan.FromSeconds(unicastIPAddrInfo.DhcpLeaseLifetime)).ToLocalTime();
                             break;
-                        case System.Net.Sockets.AddressFamily.InterNetworkV6 when unicastIPAddrInfo.Address.IsIPv6LinkLocal:
+                        case AddressFamily.InterNetworkV6 when unicastIPAddrInfo.Address.IsIPv6LinkLocal:
                             listIPv6AddressLinkLocal.Add(unicastIPAddrInfo.Address);
                             break;
-                        case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                        case AddressFamily.InterNetworkV6:
                             listIPv6Address.Add(unicastIPAddrInfo.Address);
                             break;
                     }
@@ -67,14 +69,14 @@ namespace NETworkManager.Models.Network
                 var listIPv4Gateway = new List<IPAddress>();
                 var listIPv6Gateway = new List<IPAddress>();
 
-                foreach (var gatewayIPAddrInfo in networkInterface.GetIPProperties().GatewayAddresses)
+                foreach (var gatewayIPAddrInfo in ipProperties.GatewayAddresses)
                 {
                     switch (gatewayIPAddrInfo.Address.AddressFamily)
                     {
-                        case System.Net.Sockets.AddressFamily.InterNetwork:
+                        case AddressFamily.InterNetwork:
                             listIPv4Gateway.Add(gatewayIPAddrInfo.Address);
                             break;
-                        case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                        case AddressFamily.InterNetworkV6:
                             listIPv6Gateway.Add(gatewayIPAddrInfo.Address);
                             break;
                     }
@@ -82,9 +84,9 @@ namespace NETworkManager.Models.Network
 
                 var listDhcpServer = new List<IPAddress>();
 
-                foreach (var dhcpServerIPAddress in networkInterface.GetIPProperties().DhcpServerAddresses)
+                foreach (var dhcpServerIPAddress in ipProperties.DhcpServerAddresses)
                 {
-                    if (dhcpServerIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    if (dhcpServerIPAddress.AddressFamily == AddressFamily.InterNetwork)
                         listDhcpServer.Add(dhcpServerIPAddress);
                 }
 
@@ -94,9 +96,35 @@ namespace NETworkManager.Models.Network
 
                 var listDNSServer = new List<IPAddress>();
 
-                foreach (var dnsServerIPAddress in networkInterface.GetIPProperties().DnsAddresses)
+                foreach (var dnsServerIPAddress in ipProperties.DnsAddresses)
                 {
                     listDNSServer.Add(dnsServerIPAddress);
+                }
+
+                // Check if IPv4 protocol is available
+                var ipv4ProtocolAvailable = true;
+                IPv4InterfaceProperties ipv4Properties = null;
+
+                try
+                {
+                    ipv4Properties = ipProperties.GetIPv4Properties();
+                }
+                catch (NetworkInformationException)
+                {
+                    ipv4ProtocolAvailable = false;
+                }
+
+                // Check if IPv6 protocol is available
+                var ipv6ProtocolAvailable = true;
+                IPv6InterfaceProperties ipv6Properties = null;
+
+                try
+                {
+                    ipv6Properties = ipProperties.GetIPv6Properties();
+                }
+                catch (NetworkInformationException)
+                {
+                    ipv6ProtocolAvailable = false;
                 }
 
                 listNetworkInterfaceInfo.Add(new NetworkInterfaceInfo
@@ -109,18 +137,20 @@ namespace NETworkManager.Models.Network
                     Status = networkInterface.OperationalStatus,
                     IsOperational = networkInterface.OperationalStatus == OperationalStatus.Up,
                     Speed = networkInterface.Speed,
+                    IPv4ProtocolAvailable = ipv4ProtocolAvailable,
                     IPv4Address = listIPv4Address.ToArray(),
                     Subnetmask = listSubnetmask.ToArray(),
                     IPv4Gateway = listIPv4Gateway.ToArray(),
-                    DhcpEnabled = networkInterface.GetIPProperties().GetIPv4Properties().IsDhcpEnabled,
+                    DhcpEnabled = ipv4Properties != null && ipv4Properties.IsDhcpEnabled,
                     DhcpServer = listDhcpServer.ToArray(),
                     DhcpLeaseObtained = dhcpLeaseObtained,
                     DhcpLeaseExpires = dhcpLeaseExpires,
+                    IPv6ProtocolAvailable = ipv6ProtocolAvailable,
                     IPv6AddressLinkLocal = listIPv6AddressLinkLocal.ToArray(),
                     IPv6Address = listIPv6Address.ToArray(),
                     IPv6Gateway = listIPv6Gateway.ToArray(),
                     DNSAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
-                    DNSSuffix = networkInterface.GetIPProperties().DnsSuffix,
+                    DNSSuffix = ipProperties.DnsSuffix,
                     DNSServer = listDNSServer.ToArray()
                 });
             }

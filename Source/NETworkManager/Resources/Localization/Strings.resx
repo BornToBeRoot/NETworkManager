@@ -2169,4 +2169,10 @@ is disabled!</value>
   <data name="PublicICMPTestIPAddress" xml:space="preserve">
     <value>Public ICMP test IP address</value>
   </data>
+  <data name="IPv4ProtocolAvailable" xml:space="preserve">
+    <value>IPv4 protocol available</value>
+  </data>
+  <data name="IPv6ProtocolAvailable" xml:space="preserve">
+    <value>IPv6 protocol available</value>
+  </data>
 </root>
