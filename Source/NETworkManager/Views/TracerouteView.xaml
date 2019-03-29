@@ -343,7 +343,7 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:TracerouteHopInfo.IPAddress), Converter={StaticResource IPAddressToStringConverter}}" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:TracerouteHopInfo.Hostname)}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:TracerouteHopInfo.Hostname)}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">

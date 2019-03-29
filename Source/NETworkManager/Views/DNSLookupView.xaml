@@ -247,10 +247,11 @@
             </controls:MultiSelectDataGrid.GroupStyle>
             <controls:MultiSelectDataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:DNSLookupRecordInfo.Name)}" SortMemberPath="Name" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:DNSLookupRecordInfo.Name)}" SortMemberPath="Name" MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.TTL}" Binding="{Binding (network:DNSLookupRecordInfo.TTL)}" SortMemberPath="TTL" MinWidth="80" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Class}" Binding="{Binding (network:DNSLookupRecordInfo.Class)}" SortMemberPath="Class" MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Type}" Binding="{Binding (network:DNSLookupRecordInfo.Type)}" SortMemberPath="Type" MinWidth="100" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Result}" Binding="{Binding (network:DNSLookupRecordInfo.Result)}" SortMemberPath="Result" MinWidth="200" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Result}" Binding="{Binding (network:DNSLookupRecordInfo.Result)}" SortMemberPath="Result" MinWidth="200" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">

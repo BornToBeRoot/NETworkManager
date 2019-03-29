@@ -325,7 +325,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:PortInfo.Status), Converter={StaticResource PortStatusToStringConverter}}" SortMemberPath="Status" MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (network:PortInfo.LookupInfo).Protocol}" SortMemberPath="LookupInfo.Protocol" MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Service}" Binding="{Binding (network:PortInfo.LookupInfo).Service}" SortMemberPath="LookupInfo.Service" MinWidth="100" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (network:PortInfo.LookupInfo).Description}" SortMemberPath="LookupInfo.Description" MinWidth="200" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (network:PortInfo.LookupInfo).Description}" SortMemberPath="LookupInfo.Description" MinWidth="200" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,20,0,0">
