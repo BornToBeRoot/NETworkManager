@@ -95,13 +95,13 @@ Help to improve the documentation is welcome :)
 
 Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the bug has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new) and provide as many informations as you can.
 
-<h2>Some awesome tools i use</h2>
+<h2>Tools i use</h2>
 
-- [Visual Studio](https://visualstudio.microsoft.com)
+- [Visual Studio Community](https://visualstudio.microsoft.com)
 - [ReSharper](https://www.jetbrains.com/resharper/)
-- [AppVeyor](https://www.appveyor.com/)
 - [Transifex](https://www.transifex.com/)
 - [Chocolatey](https://chocolatey.org)
+- [AppVeyor](https://www.appveyor.com/)
 
 <h2>Libaries / External services / Resources</h2>
 
