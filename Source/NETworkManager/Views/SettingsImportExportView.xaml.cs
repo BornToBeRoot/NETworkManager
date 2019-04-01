@@ -25,7 +25,7 @@ namespace NETworkManager.Views
                 _viewModel.CloseAction = window.Close;
         }
 
-        public void SaveAndCheckSettings()
+        public void OnVisible()
         {
             _viewModel.SaveAndCheckSettings();
         }

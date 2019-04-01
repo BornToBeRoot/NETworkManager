@@ -174,7 +174,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (lookup:PortLookupInfo.Number)}" SortMemberPath="Number" MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (lookup:PortLookupInfo.Protocol)}"  SortMemberPath="Protocol" MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Service}" Binding="{Binding (lookup:PortLookupInfo.Service)}" SortMemberPath="Service" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (lookup:PortLookupInfo.Description)}" SortMemberPath="Description" MinWidth="200" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (lookup:PortLookupInfo.Description)}" SortMemberPath="Description" MinWidth="200" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>

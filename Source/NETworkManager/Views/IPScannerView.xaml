@@ -403,7 +403,7 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.TTL}" Binding="{Binding (network:HostInfo.PingInfo).TTL, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:HostInfo.PingInfo).Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:HostInfo.PingInfo).Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,20,0,0">

@@ -103,6 +103,22 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public ICollectionView ExternalServicesView { get; }
+
+        private ExternalServicesInfo _selectedExternalServicesInfo;
+        public ExternalServicesInfo SelectedExternalServicesInfo
+        {
+            get => _selectedExternalServicesInfo;
+            set
+            {
+                if (value == _selectedExternalServicesInfo)
+                    return;
+
+                _selectedExternalServicesInfo = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICollectionView ResourcesView { get; }
 
         private ResourceInfo _selectedResourceInfo;
@@ -124,10 +140,13 @@ namespace NETworkManager.ViewModels
         public AboutViewModel()
         {
             LibrariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
-            LibrariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Library), ListSortDirection.Ascending));
+            LibrariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Name), ListSortDirection.Ascending));
+
+            ExternalServicesView = CollectionViewSource.GetDefaultView(ExternalServicesManager.List);
+            ExternalServicesView.SortDescriptions.Add(new SortDescription(nameof(ExternalServicesInfo.Name), ListSortDirection.Ascending));
 
             ResourcesView = CollectionViewSource.GetDefaultView(ResourceManager.List);
-            ResourcesView.SortDescriptions.Add(new SortDescription(nameof(ResourceInfo.Resource), ListSortDirection.Ascending));
+            ResourcesView.SortDescriptions.Add(new SortDescription(nameof(ResourceInfo.Name), ListSortDirection.Ascending));
         }
         #endregion
 

@@ -238,7 +238,7 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.TTL}" Binding="{Binding (network:PingInfo.TTL), Converter={StaticResource IntToStringConverter}}" MinWidth="80"/>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:PingInfo.Status), Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:PingInfo.Status), Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" />
             </controls:MultiSelectScrollingDataGrid.Columns>
             <controls:MultiSelectScrollingDataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">

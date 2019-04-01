@@ -553,7 +553,7 @@
             </controls:MultiSelectDataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPReceivedInfo.OID)}" SortMemberPath="OID" MinWidth="200" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Data}" Binding="{Binding (network:SNMPReceivedInfo.Data)}" SortMemberPath="Data" MinWidth="300" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Data}" Binding="{Binding (network:SNMPReceivedInfo.Data)}" SortMemberPath="Data" MinWidth="300" />
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <TextBox Grid.Row="5" Grid.Column="0" Text="{Binding Data}">

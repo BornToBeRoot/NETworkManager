@@ -3,6 +3,7 @@
     public enum DocumentationIdentifier
     {
         Default,
+        ApplicationDashboard,
         ApplicationNetworkInterface,
         ApplicationIpScanner,
         ApplicationPortScanner,

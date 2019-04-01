@@ -258,9 +258,6 @@
   <data name="GitHub" xml:space="preserve">
     <value>GitHub</value>
   </data>
-  <data name="Gitter" xml:space="preserve">
-    <value>Gitter</value>
-  </data>
   <data name="HiddenPassword" xml:space="preserve">
     <value>••••••••••••</value>
   </data>
@@ -275,5 +272,8 @@
   </data>
   <data name="XML" xml:space="preserve">
     <value>XML</value>
+  </data>
+  <data name="ExamplePublicIPAddressAPI" xml:space="preserve">
+    <value>https://api.ipify.org</value>
   </data>
 </root>

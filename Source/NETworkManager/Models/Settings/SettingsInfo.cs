@@ -44,6 +44,20 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _firstRun = true;
+        public bool FirstRun
+        {
+            get => _firstRun;
+            set
+            {
+                if (value == _firstRun)
+                    return;
+
+                _firstRun = value;
+                SettingsChanged = true;
+            }
+        }
+
         #region General 
         // General        
         private ApplicationViewManager.Name _general_DefaultApplicationViewName = GlobalStaticConfiguration.General_DefaultApplicationViewName;
@@ -351,6 +365,128 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _expandApplicationView = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region Dashboard
+       /* private bool _dashboard_OverrideGatewayIPAddress = true;
+        public bool Dashboard_OverrideGatewayIPAddress
+        {
+            get => _dashboard_OverrideGatewayIPAddress;
+            set
+            {
+                if (value == _dashboard_OverrideGatewayIPAddress)
+                    return;
+
+                _dashboard_OverrideGatewayIPAddress = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _dashboard_GatewayIPAddress;
+        public string Dashboard_GatewayIPAddress
+        {
+            get => _dashboard_GatewayIPAddress;
+            set
+            {
+                if (value == _dashboard_GatewayIPAddress)
+                    return;
+
+                _dashboard_GatewayIPAddress = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }*/
+
+        private string _dashboard_PublicICMPTestIPAddress = GlobalStaticConfiguration.Dashboard_PublicICMPTestIPAddress;
+        public string Dashboard_PublicICMPTestIPAddress
+        {
+            get => _dashboard_PublicICMPTestIPAddress;
+            set
+            {
+                if (value == _dashboard_PublicICMPTestIPAddress)
+                    return;
+
+                _dashboard_PublicICMPTestIPAddress = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _dashboard_PublicDNSTestDomain = GlobalStaticConfiguration.Dashboard_PublicDNSTestDomain;
+        public string Dashboard_PublicDNSTestDomain
+        {
+            get => _dashboard_PublicDNSTestDomain;
+            set
+            {
+                if (value == _dashboard_PublicDNSTestDomain)
+                    return;
+
+                _dashboard_PublicDNSTestDomain = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _dashboard_PublicDNSTestIPAddress = GlobalStaticConfiguration.Dashboard_PublicDNSTestIPAddress;
+        public string Dashboard_PublicDNSTestIPAddress
+        {
+            get => _dashboard_PublicDNSTestIPAddress;
+            set
+            {
+                if (value == _dashboard_PublicDNSTestIPAddress)
+                    return;
+
+                _dashboard_PublicDNSTestIPAddress = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        
+        private bool _dashboard_CheckPublicIPAddress = true;
+        public bool Dashboard_CheckPublicIPAddress
+        {
+            get => _dashboard_CheckPublicIPAddress;
+            set
+            {
+                if (value == _dashboard_CheckPublicIPAddress)
+                    return;
+
+                _dashboard_CheckPublicIPAddress = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _dashboard_UseCustomPublicIPAddressAPI;
+        public bool Dashboard_UseCustomPublicIPAddressAPI
+        {
+            get => _dashboard_UseCustomPublicIPAddressAPI;
+            set
+            {
+                if (value == _dashboard_UseCustomPublicIPAddressAPI)
+                    return;
+
+                _dashboard_UseCustomPublicIPAddressAPI = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _dashboard_CustomPublicIPAddressAPI;
+        public string Dashboard_CustomPublicIPAddressAPI
+        {
+            get => _dashboard_CustomPublicIPAddressAPI;
+            set
+            {
+                if (value == _dashboard_CustomPublicIPAddressAPI)
+                    return;
+
+                _dashboard_CustomPublicIPAddressAPI = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

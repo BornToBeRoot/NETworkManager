@@ -1,0 +1,276 @@
+﻿<UserControl x:Class="NETworkManager.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"          
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:converters="clr-namespace:NETworkManager.Converters"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+             xmlns:mahAppsControls="http://metro.mahapps.com/winfx/xaml/controls"
+             dialogs:DialogParticipation.Register="{Binding}"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DashboardViewModel}">
+    <UserControl.InputBindings>
+        <KeyBinding Key="F5" Command="{Binding CheckConnectionCommand}" />
+    </UserControl.InputBindings>
+    <UserControl.Resources>
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />
+    </UserControl.Resources>
+    <TabControl Style="{StaticResource DefaultTabControl}">
+        <TabItem Header="{x:Static localization:Strings.Dashboard }">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch" Margin="15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1" Grid.Row="0">
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Computer}" Style="{StaticResource MessageTextBlock}" />
+                        <Rectangle Grid.Column="0" Grid.Row="2" Width="48" Height="48">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Monitor}" />
+                            </Rectangle.OpacityMask>
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                        <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="4" IsActive="True" Width="24" Height="24" Visibility="{Binding IsHostCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                        <Rectangle Grid.Column="0" Grid.Row="4" Width="24" Height="24" ToolTip="{Binding HostDetails}" Style="{Binding HostConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsHostCheckRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding HostIPAddress}" />
+                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding HostHostname}" />
+                    </Grid>
+                    <Grid Grid.Column="3" Grid.Row="0" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="2" Grid.Row="0" Width="24" Height="24" ToolTip="{Binding GatewayDetails}">
+                            <Rectangle.Resources>
+                                <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ErrorRectangle}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsGatewayCheckRunning}" Value="False" />
+                                                <Condition Binding="{Binding IsHostCheckComplete}" Value="True" />
+                                                <Condition Binding="{Binding IsGatewayReachable}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </MultiDataTrigger.Setters>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Resources>
+                        </Rectangle>
+                        <Line Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" Margin="-4,0">
+                            <Line.Resources>
+                                <Style TargetType="{x:Type Line}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsHostCheckComplete}" Value="False">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsGatewayCheckRunning}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsGatewayReachable}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Line.Resources>
+                        </Line>
+                        <Line Grid.Row="0" Grid.Column="0" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                        <Line Grid.Row="0" Grid.Column="4" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                    </Grid>
+                    <Grid Grid.Column="5" Grid.Row="0" VerticalAlignment="Center">
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.GatewayRouter}" Style="{StaticResource MessageTextBlock}" />
+                        <Rectangle Grid.Column="0" Grid.Row="2" Width="48" Height="48" VerticalAlignment="Top">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ServerNetwork}" />
+                            </Rectangle.OpacityMask>
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                        <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="4" IsActive="True" Width="24" Height="24" Visibility="{Binding IsGatewayCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                        <Rectangle Grid.Column="0" Grid.Row="4" Width="24" Height="24" ToolTip="{Binding GatewayDetails}" Style="{Binding GatewayConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsGatewayCheckRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding GatewayIPAddress}" />
+                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding GatewayHostname}" />
+                    </Grid>
+                    <Grid Grid.Column="7" Grid.Row="0" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="2" Grid.Row="0" Width="24" Height="24" ToolTip="{Binding InternetDetails}">
+                            <Rectangle.Resources>
+                                <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ErrorRectangle}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding IsInternetCheckRunning}" Value="False" />
+                                                <Condition Binding="{Binding IsGatewayCheckComplete}" Value="True" />
+                                                <Condition Binding="{Binding IsInternetReachable}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </MultiDataTrigger.Setters>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Resources>
+                        </Rectangle>
+                        <Line Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" Margin="-4,0">
+                            <Line.Resources>
+                                <Style TargetType="{x:Type Line}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsGatewayCheckComplete}" Value="False">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsInternetCheckRunning}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsInternetReachable}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Line.Resources>
+                        </Line>
+                        <Line Grid.Row="0" Grid.Column="0" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                        <Line Grid.Row="0" Grid.Column="4" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                    </Grid>
+                    <Grid Grid.Column="9" Grid.Row="0">
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Internet}" Style="{StaticResource MessageTextBlock}" />
+                        <Rectangle Grid.Column="0" Grid.Row="2" Width="48" Height="48" VerticalAlignment="Top">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=Network}" />
+                            </Rectangle.OpacityMask>
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                        <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="4" IsActive="True" Width="24" Height="24" Visibility="{Binding IsInternetCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                        <Rectangle Grid.Column="0" Grid.Row="4" Width="24" Height="24" ToolTip="{Binding InternetDetails}" Style="{Binding InternetConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsInternetCheckRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding PublicIPAddress}" />
+                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding PublicHostname}" />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</UserControl>

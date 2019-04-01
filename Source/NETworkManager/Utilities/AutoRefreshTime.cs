@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using NETworkManager.Utilities.Enum;
 
 namespace NETworkManager.Utilities
 {
-    public class AutoRefreshTime
+    public static class AutoRefreshTime
     {
         public static List<AutoRefreshTimeInfo> Defaults => new List<AutoRefreshTimeInfo>
         {
@@ -28,13 +29,6 @@ namespace NETworkManager.Utilities
                 default:
                     return new TimeSpan(info.Value * 60, 0, 0);
             }
-        }
-
-        public enum TimeUnit
-        {
-            Second,
-            Minute,
-            Hour
         }
     }
 }

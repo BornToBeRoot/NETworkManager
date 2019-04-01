@@ -66,7 +66,7 @@
                     <TextBlock Text="{Binding UpdateText}" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
-            <Button Command="{Binding OpenDocumentationCommand}" ToolTip="{x:Static localization:Strings.Documentation}" Cursor="Hand">
+            <Button Command="{Binding OpenDocumentationCommand}" ToolTip="{x:Static localization:Strings.OpenDocumentation}" Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
@@ -75,7 +75,7 @@
                     </Rectangle>
                 </StackPanel>
             </Button>
-            <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.ForkMeOnGitHub}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}" Cursor="Hand">
+            <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}" Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>

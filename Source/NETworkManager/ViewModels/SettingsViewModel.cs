@@ -89,6 +89,7 @@ namespace NETworkManager.ViewModels
         private SettingsSettingsView _settingsSettingsView;
         private SettingsUpdateView _settingsUpdateView;
         private SettingsImportExportView _settingsImportExportView;
+        private DashboardSettingsView _dashboardSettingsView;
         private IPScannerSettingsView _ipScannerSettingsView;
         private PortScannerSettingsView _portScannerSettingsView;
         private PingSettingsView _pingSettingsViewModel;
@@ -205,7 +206,7 @@ namespace NETworkManager.ViewModels
                         _settingsSettingsView = new SettingsSettingsView();
 
                     // Save settings (if changed) and check if files exists
-                    _settingsSettingsView.SaveAndCheckSettings();
+                    _settingsSettingsView.OnVisible();
 
                     SettingsContent = _settingsSettingsView;
                     break;
@@ -220,9 +221,15 @@ namespace NETworkManager.ViewModels
                         _settingsImportExportView = new SettingsImportExportView();
 
                     // Save settings (if changed) and check if files exists
-                    _settingsImportExportView.SaveAndCheckSettings();
+                    _settingsImportExportView.OnVisible();
 
                     SettingsContent = _settingsImportExportView;
+                    break;
+                case SettingsViewManager.Name.Dashboard:
+                    if(_dashboardSettingsView == null)
+                        _dashboardSettingsView = new DashboardSettingsView();
+
+                    SettingsContent = _dashboardSettingsView;
                     break;
                 case SettingsViewManager.Name.IPScanner:
                     if (_ipScannerSettingsView == null)

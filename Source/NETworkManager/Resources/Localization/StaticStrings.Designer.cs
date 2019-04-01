@@ -385,6 +385,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://api.ipify.org.
+        /// </summary>
+        public static string ExamplePublicIPAddressAPI {
+            get {
+                return ResourceManager.GetString("ExamplePublicIPAddressAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Webserver.
         /// </summary>
         public static string ExampleRemoteDesktopProfileName {
@@ -480,15 +489,6 @@ namespace NETworkManager.Resources.Localization {
         public static string GitHub {
             get {
                 return ResourceManager.GetString("GitHub", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Gitter.
-        /// </summary>
-        public static string Gitter {
-            get {
-                return ResourceManager.GetString("Gitter", resourceCulture);
             }
         }
         

@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using NETworkManager.Models.Settings;
-using static NETworkManager.Utilities.AutoRefreshTime;
+using NETworkManager.Utilities.Enum;
 
 namespace NETworkManager.Converters
 {

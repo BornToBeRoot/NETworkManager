@@ -14,6 +14,7 @@ namespace NETworkManager.Models.Documentation
 
         public static List<DocumentationInfo> List => new List<DocumentationInfo>
         {
+            new DocumentationInfo(DocumentationIdentifier.ApplicationDashboard, @"/Application/Dashboard.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"/Application/NetworkInterface.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationIpScanner, @"/Application/IPScanner.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPortScanner, @"/Application/PortScanner.md", GetLocalizationInfoList("en-US", "de-DE")),

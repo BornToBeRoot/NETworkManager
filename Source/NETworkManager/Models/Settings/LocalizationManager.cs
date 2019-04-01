@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.NetworkInformation;
+using NETworkManager.Utilities.Enum;
 
 namespace NETworkManager.Models.Settings
 {
@@ -72,6 +73,16 @@ namespace NETworkManager.Models.Settings
             var status = Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + tcpState, Culture);
 
             return string.IsNullOrEmpty(status) ? tcpState.ToString() : status;
+        }
+
+        public static string TranslateConnectionState(object value)
+        {
+            if (!(value is ConnectionState connectionState))
+                return "-/-";
+
+            var status = Resources.Localization.Strings.ResourceManager.GetString("ConnectionState_" + connectionState, Culture);
+
+            return string.IsNullOrEmpty(status) ? connectionState.ToString() : status;
         }
     }
 }
