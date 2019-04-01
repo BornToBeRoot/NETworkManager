@@ -81,7 +81,7 @@ Help translate on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkMana
 
 <h2>Documentation</h2>
 
-You can find it [here](https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation)
+You can find it [here](https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation).
 
 Help to improve the documentation is welcome :)
 
