@@ -422,7 +422,7 @@
                                                     <DataTrigger Binding="{Binding IPScanner_InheritHost}" Value="False">
                                                         <Setter Property="TextBox.Text">
                                                             <Setter.Value>
-                                                                <Binding Path="IPScanner_IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding Path="IPScanner_HostOrIPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                                                         <validators:MultipleHostsRangeValidator ValidatesOnTargetUpdated="True" />

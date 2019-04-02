@@ -275,10 +275,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand TraceCommand
-        {
-            get { return new RelayCommand(p => TraceAction(), Trace_CanExecute); }
-        }
+        public ICommand TraceCommand => new RelayCommand(p => TraceAction(), Trace_CanExecute);
 
         private bool Trace_CanExecute(object paramter)
         {
@@ -293,12 +290,9 @@ namespace NETworkManager.ViewModels
                 StartTrace();
         }
 
-        public ICommand RedirectToApplicationCommand
-        {
-            get { return new RelayCommand(p => RedirectToApplicationAction(p)); }
-        }
+        public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
 
-        private void RedirectToApplicationAction(object name)
+        private void RedirectDataToApplicationAction(object name)
         {
             if (!(name is string appName))
                 return;
@@ -309,127 +303,70 @@ namespace NETworkManager.ViewModels
             var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname) ? SelectedTraceResult.Hostname : SelectedTraceResult
                 .IPAddress.ToString();
 
-            EventSystem.RedirectToApplication(app, host);
+            EventSystem.RedirectDataToApplication(app, host);
         }
 
-        public ICommand PerformDNSLookupIPAddressCommand
-        {
-            get { return new RelayCommand(p => PerformDNSLookupIPAddressAction()); }
-        }
+        public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(p => PerformDNSLookupIPAddressAction());
 
         private void PerformDNSLookupIPAddressAction()
         {
-            EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.IPAddress.ToString());
+            EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.IPAddress.ToString());
         }
 
-        public ICommand PerformDNSLookupHostnameCommand
-        {
-            get { return new RelayCommand(p => PerformDNSLookupHostnameAction()); }
-        }
+        public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
 
         private void PerformDNSLookupHostnameAction()
         {
-            EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.Hostname);
+            EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.Hostname);
         }
 
-        public ICommand CopySelectedHopCommand
-        {
-            get { return new RelayCommand(p => CopySelectedHopAction()); }
-        }
+        public ICommand CopySelectedHopCommand => new RelayCommand(p => CopySelectedHopAction());
 
         private void CopySelectedHopAction()
         {
             CommonMethods.SetClipboard(SelectedTraceResult.Hop.ToString());
         }
 
-        public ICommand CopySelectedTime1Command
-        {
-            get { return new RelayCommand(p => CopySelectedTime1Action()); }
-        }
+        public ICommand CopySelectedTime1Command => new RelayCommand(p => CopySelectedTime1Action());
 
         private void CopySelectedTime1Action()
         {
             CommonMethods.SetClipboard(SelectedTraceResult.Time1.ToString(CultureInfo.CurrentCulture));
         }
 
-        public ICommand CopySelectedTime2Command
-        {
-            get { return new RelayCommand(p => CopySelectedTime2Action()); }
-        }
+        public ICommand CopySelectedTime2Command => new RelayCommand(p => CopySelectedTime2Action());
 
         private void CopySelectedTime2Action()
         {
             CommonMethods.SetClipboard(SelectedTraceResult.Time2.ToString(CultureInfo.CurrentCulture));
         }
 
-        public ICommand CopySelectedTime3Command
-        {
-            get { return new RelayCommand(p => CopySelectedTime3Action()); }
-        }
+        public ICommand CopySelectedTime3Command => new RelayCommand(p => CopySelectedTime3Action());
 
         private void CopySelectedTime3Action()
         {
             CommonMethods.SetClipboard(SelectedTraceResult.Time3.ToString(CultureInfo.CurrentCulture));
         }
 
-        public ICommand CopySelectedIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
-        }
+        public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
             CommonMethods.SetClipboard(SelectedTraceResult.IPAddress.ToString());
         }
 
-        public ICommand CopySelectedHostnameCommand
-        {
-            get { return new RelayCommand(p => CopySelectedHostnameAction()); }
-        }
+        public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
             CommonMethods.SetClipboard(SelectedTraceResult.Hostname);
         }
 
-        public ICommand ExportCommand
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private void ExportAction()
         {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
-
-        private async void ExportAction()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.Export
-            };
-
-            var exportViewModel = new ExportViewModel(async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? TraceResults : new ObservableCollection<TracerouteHopInfo>(SelectedTraceResults.Cast<TracerouteHopInfo>().ToArray()));
-                }
-                catch (Exception ex)
-                {
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
-
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
-
-                SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
-                SettingsManager.Current.Traceroute_ExportFilePath = instance.FilePath;
-            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Traceroute_ExportFileType, SettingsManager.Current.Traceroute_ExportFilePath);
-
-            customDialog.Content = new ExportDialog
-            {
-                DataContext = exportViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            Export();
         }
         #endregion
 
@@ -551,6 +488,41 @@ namespace NETworkManager.ViewModels
 
             CancelTrace = false;
             IsTraceRunning = false;
+        }
+
+        private async void Export()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? TraceResults : new ObservableCollection<TracerouteHopInfo>(SelectedTraceResults.Cast<TracerouteHopInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
+                SettingsManager.Current.Traceroute_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Traceroute_ExportFileType, SettingsManager.Current.Traceroute_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         private void AddHostToHistory(string host)

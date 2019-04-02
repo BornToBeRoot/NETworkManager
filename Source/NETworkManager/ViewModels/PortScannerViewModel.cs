@@ -346,10 +346,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand ScanCommand
-        {
-            get { return new RelayCommand(p => ScanAction(), Scan_CanExecute); }
-        }
+        public ICommand ScanCommand => new RelayCommand(p => ScanAction(), Scan_CanExecute);
 
         private bool Scan_CanExecute(object paramter)
         {
@@ -364,114 +361,60 @@ namespace NETworkManager.ViewModels
                 StartScan();
         }
 
-        public ICommand CopySelectedIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
-        }
+        public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
             CommonMethods.SetClipboard(SelectedPortScanResult.IPAddress.ToString());
         }
 
-        public ICommand CopySelectedHostnameCommand
-        {
-            get { return new RelayCommand(p => CopySelectedHostnameAction()); }
-        }
+        public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
             CommonMethods.SetClipboard(SelectedPortScanResult.Hostname);
         }
 
-        public ICommand CopySelectedPortCommand
-        {
-            get { return new RelayCommand(p => CopySelectedPortAction()); }
-        }
+        public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
 
         private void CopySelectedPortAction()
         {
             CommonMethods.SetClipboard(SelectedPortScanResult.Port.ToString());
         }
 
-        public ICommand CopySelectedStatusCommand
-        {
-            get { return new RelayCommand(p => CopySelectedStatusAction()); }
-        }
+        public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
         {
             CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString(SelectedPortScanResult.Status.ToString(), LocalizationManager.Culture));
         }
 
-        public ICommand CopySelectedProtocolCommand
-        {
-            get { return new RelayCommand(p => CopySelectedProtocolAction()); }
-        }
+        public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
 
         private void CopySelectedProtocolAction()
         {
             CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Protocol.ToString());
         }
 
-        public ICommand CopySelectedServiceCommand
-        {
-            get { return new RelayCommand(p => CopySelectedServiceAction()); }
-        }
+        public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
 
         private void CopySelectedServiceAction()
         {
             CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Service);
         }
 
-        public ICommand CopySelectedDescriptionCommand
-        {
-            get { return new RelayCommand(p => CopySelectedDescriptionAction()); }
-        }
+        public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
 
         private void CopySelectedDescriptionAction()
         {
             CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Description);
         }
 
-        public ICommand ExportCommand
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private void ExportAction()
         {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
-
-        private async void ExportAction()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.Export
-            };
-
-            var exportViewModel = new ExportViewModel(async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? PortScanResult : new ObservableCollection<PortInfo>(SelectedPortScanResults.Cast<PortInfo>().ToArray()));
-                }
-                catch (Exception ex)
-                {
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
-
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
-
-                SettingsManager.Current.PortScanner_ExportFileType = instance.FileType;
-                SettingsManager.Current.PortScanner_ExportFilePath = instance.FilePath;
-            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.PortScanner_ExportFileType, SettingsManager.Current.PortScanner_ExportFilePath);
-
-            customDialog.Content = new ExportDialog
-            {
-                DataContext = exportViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            Export();
         }
         #endregion
 
@@ -589,6 +532,41 @@ namespace NETworkManager.ViewModels
 
             CancelScan = false;
             IsScanRunning = false;
+        }
+
+        private async void Export()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? PortScanResult : new ObservableCollection<PortInfo>(SelectedPortScanResults.Cast<PortInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.PortScanner_ExportFileType = instance.FileType;
+                SettingsManager.Current.PortScanner_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.PortScanner_ExportFileType, SettingsManager.Current.PortScanner_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         private void AddHostToHistory(string host)

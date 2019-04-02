@@ -123,6 +123,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
         #endregion
 
         #region Gateway / Router
@@ -298,6 +299,7 @@ namespace NETworkManager.ViewModels
         }
 
         private string _publicHostname;
+
         public string PublicHostname
         {
             get => _publicHostname;
@@ -312,6 +314,7 @@ namespace NETworkManager.ViewModels
         }
 
         private string _internetDetails;
+
         public string InternetDetails
         {
             get => _internetDetails;
@@ -325,8 +328,8 @@ namespace NETworkManager.ViewModels
             }
         }
         #endregion
-
         #endregion
+
         #region Profiles
         public ICollectionView Profiles { get; }
 
@@ -363,6 +366,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
+
         public DashboardViewModel(IDialogCoordinator instance)
         {
             _isLoading = true;
@@ -379,7 +383,7 @@ namespace NETworkManager.ViewModels
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
-                    return info.WakeOnLAN_Enabled;
+                    return true;
 
                 var search = Search.Trim();
 
@@ -412,10 +416,8 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand CheckConnectionCommand
-        {
-            get { return new RelayCommand(p => CheckConnectionAction(), CheckConnection_CanExecute); }
-        }
+
+        public ICommand CheckConnectionCommand => new RelayCommand(p => CheckConnectionAction(), CheckConnection_CanExecute);
 
         private bool CheckConnection_CanExecute(object paramter)
         {
@@ -427,165 +429,52 @@ namespace NETworkManager.ViewModels
             CheckConnectionAsync();
         }
 
-        public ICommand AddProfileCommand
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
+
+        private void EditProfileAction()
         {
-            get { return new RelayCommand(p => AddProfileAction()); }
+            EditProfile();
         }
 
-        private async void AddProfileAction()
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
+
+        private void CopyAsProfileAction()
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.AddProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups());
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            CopyAsProfile();
         }
 
-        public ICommand EditProfileCommand
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
+
+        private void DeleteProfileAction()
         {
-            get { return new RelayCommand(p => EditProfileAction()); }
-        }
-
-        private async void EditProfileAction()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.EditProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.RemoveProfile(SelectedProfile);
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), true, SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand CopyAsProfileCommand
-        {
-            get { return new RelayCommand(p => CopyAsProfileAction()); }
-        }
-
-        private async void CopyAsProfileAction()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.CopyProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), false, SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand DeleteProfileCommand
-        {
-            get { return new RelayCommand(p => DeleteProfileAction()); }
-        }
-
-        private async void DeleteProfileAction()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.DeleteProfile
-            };
-
-            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.RemoveProfile(SelectedProfile);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Resources.Localization.Strings.DeleteProfileMessage);
-
-            customDialog.Content = new ConfirmRemoveDialog
-            {
-                DataContext = confirmRemoveViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            DeleteProfile();
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
-        private async void EditGroupAction(object group)
+        private void EditGroupAction(object group)
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.EditGroup
-            };
-
-            var editGroupViewModel = new GroupViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
-
-                Profiles.Refresh();
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, group.ToString(), ProfileManager.GetGroups());
-
-            customDialog.Content = new GroupDialog
-            {
-                DataContext = editGroupViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            EditGroup(group);
         }
 
-        public ICommand ClearSearchCommand
-        {
-            get { return new RelayCommand(p => ClearSearchAction()); }
-        }
+        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
         {
             Search = string.Empty;
+        }
+
+        public ICommand RedirectProfileToApplicationCommand => new RelayCommand(RedirectProfileToApplicationAction);
+
+        private void RedirectProfileToApplicationAction(object name)
+        {
+            if (!(name is string appName))
+                return;
+
+            if (!Enum.TryParse(appName, out ApplicationViewManager.Name applicationName))
+                return;
+            
+            EventSystem.RedirectProfileToApplication(applicationName, SelectedProfile);
         }
         #endregion
 
@@ -626,6 +515,7 @@ namespace NETworkManager.ViewModels
             PublicHostname = "";
 
             #region Host
+
             // 1) Check tcp/ip stack --> Ping to 127.0.0.1
             var hostIPAddress = "127.0.0.1";
 
@@ -654,7 +544,8 @@ namespace NETworkManager.ViewModels
             if (!IsHostReachable)
             {
                 HostConnectionState = ConnectionState.Error;
-                AddToHostDetails(ConnectionState.Error, string.Format(Resources.Localization.Strings.TCPIPStackIsNotAvailableMessage, hostIPAddress));
+                AddToHostDetails(ConnectionState.Error,
+                    string.Format(Resources.Localization.Strings.TCPIPStackIsNotAvailableMessage, hostIPAddress));
 
                 IsHostCheckRunning = false;
                 IsGatewayCheckRunning = false;
@@ -664,12 +555,15 @@ namespace NETworkManager.ViewModels
             }
 
             HostConnectionState = ConnectionState.OK;
-            AddToHostDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.TCPIPStackIsAvailableMessage, hostIPAddress));
+            AddToHostDetails(ConnectionState.OK,
+                string.Format(Resources.Localization.Strings.TCPIPStackIsAvailableMessage, hostIPAddress));
 
             // 2) Detect local ip address
             try
             {
-                HostIPAddress = NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicICMPTestIPAddress));
+                HostIPAddress =
+                    NetworkInterface.DetectLocalIPAddressBasedOnRouting(
+                        IPAddress.Parse(SettingsManager.Current.Dashboard_PublicICMPTestIPAddress));
             }
             catch (Exception)
             {
@@ -679,7 +573,9 @@ namespace NETworkManager.ViewModels
             if (HostIPAddress == null)
             {
                 HostConnectionState = ConnectionState.Error;
-                AddToHostDetails(ConnectionState.Error, Resources.Localization.Strings.CouldNotDetectLocalIPAddressMessage + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndNetworkConnectionMessage);
+                AddToHostDetails(ConnectionState.Error,
+                    Resources.Localization.Strings.CouldNotDetectLocalIPAddressMessage + " " + Resources.Localization
+                        .Strings.CheckNetworkAdapterConfigurationAndNetworkConnectionMessage);
 
                 IsHostCheckRunning = false;
                 IsGatewayCheckRunning = false;
@@ -688,26 +584,34 @@ namespace NETworkManager.ViewModels
                 return;
             }
 
-            AddToHostDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.XXXDetectedAsLocalIPAddressMessage, HostIPAddress));
+            AddToHostDetails(ConnectionState.OK,
+                string.Format(Resources.Localization.Strings.XXXDetectedAsLocalIPAddressMessage, HostIPAddress));
 
             // 3) Check dns for local host
             try
             {
                 HostHostname = Dns.GetHostEntry(HostIPAddress).HostName;
 
-                AddToHostDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage, HostHostname, HostIPAddress));
+                AddToHostDetails(ConnectionState.OK,
+                    string.Format(Resources.Localization.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage,
+                        HostHostname, HostIPAddress));
             }
             catch (SocketException)
             {
                 HostConnectionState = ConnectionState.Warning;
-                AddToHostDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.CouldNotResolveHostnameForXXXMessage, HostIPAddress) + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
+                AddToHostDetails(ConnectionState.Warning,
+                    string.Format(Resources.Localization.Strings.CouldNotResolveHostnameForXXXMessage, HostIPAddress) +
+                    " " + Resources.Localization.Strings
+                        .CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
             }
 
             IsHostCheckRunning = false;
             IsHostCheckComplete = true;
+
             #endregion
 
             #region Gateway / Router
+
             // 4) Detect gateway ip address
             try
             {
@@ -720,7 +624,9 @@ namespace NETworkManager.ViewModels
 
             if (GatewayIPAddress == null)
             {
-                AddToGatewayDetails(ConnectionState.Error, Resources.Localization.Strings.CouldNotDetectGatewayIPAddressMessage + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndNetworkConnectionMessage);
+                AddToGatewayDetails(ConnectionState.Error,
+                    Resources.Localization.Strings.CouldNotDetectGatewayIPAddressMessage + " " + Resources.Localization
+                        .Strings.CheckNetworkAdapterConfigurationAndNetworkConnectionMessage);
 
                 IsGatewayCheckRunning = false;
                 IsInternetCheckRunning = false;
@@ -728,7 +634,8 @@ namespace NETworkManager.ViewModels
                 return;
             }
 
-            AddToGatewayDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.XXXDetectedAsGatewayIPAddress, GatewayIPAddress));
+            AddToGatewayDetails(ConnectionState.OK,
+                string.Format(Resources.Localization.Strings.XXXDetectedAsGatewayIPAddress, GatewayIPAddress));
 
             // 4) Check if gateway is reachable via ICMP
             using (var ping = new Ping())
@@ -755,7 +662,8 @@ namespace NETworkManager.ViewModels
 
             if (!IsGatewayReachable)
             {
-                AddToGatewayDetails(ConnectionState.Error, string.Format(Resources.Localization.Strings.XXXIsNotReachableViaICMPMessage, GatewayIPAddress));
+                AddToGatewayDetails(ConnectionState.Error,
+                    string.Format(Resources.Localization.Strings.XXXIsNotReachableViaICMPMessage, GatewayIPAddress));
 
                 IsGatewayCheckRunning = false;
                 IsInternetCheckRunning = false;
@@ -764,26 +672,34 @@ namespace NETworkManager.ViewModels
             }
 
             GatewayConnectionState = ConnectionState.OK;
-            AddToGatewayDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.XXXIsReachableViaICMPMessage, GatewayIPAddress));
+            AddToGatewayDetails(ConnectionState.OK,
+                string.Format(Resources.Localization.Strings.XXXIsReachableViaICMPMessage, GatewayIPAddress));
 
             // 5) Check dns for gateway
             try
             {
                 GatewayHostname = Dns.GetHostEntry(GatewayIPAddress).HostName;
 
-                AddToGatewayDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage, GatewayHostname, GatewayIPAddress));
+                AddToGatewayDetails(ConnectionState.OK,
+                    string.Format(Resources.Localization.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage,
+                        GatewayHostname, GatewayIPAddress));
             }
             catch (SocketException)
             {
                 GatewayConnectionState = ConnectionState.Warning;
-                AddToGatewayDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.CouldNotResolveHostnameForXXXMessage, GatewayIPAddress) + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
+                AddToGatewayDetails(ConnectionState.Warning,
+                    string.Format(Resources.Localization.Strings.CouldNotResolveHostnameForXXXMessage,
+                        GatewayIPAddress) + " " + Resources.Localization.Strings
+                        .CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
             }
 
             IsGatewayCheckRunning = false;
             IsGatewayCheckComplete = true;
+
             #endregion
 
             #region Internet
+
             // 6) Check if internet is reachable via icmp to a public ip address
             var publicICMPTestIPAddress = SettingsManager.Current.Dashboard_PublicICMPTestIPAddress;
 
@@ -811,7 +727,9 @@ namespace NETworkManager.ViewModels
 
             if (!IsInternetReachable)
             {
-                AddToInternetDetails(ConnectionState.Error, string.Format(Resources.Localization.Strings.XXXIsNotReachableViaICMPMessage, publicICMPTestIPAddress));
+                AddToInternetDetails(ConnectionState.Error,
+                    string.Format(Resources.Localization.Strings.XXXIsNotReachableViaICMPMessage,
+                        publicICMPTestIPAddress));
 
                 IsInternetCheckRunning = false;
 
@@ -819,7 +737,8 @@ namespace NETworkManager.ViewModels
             }
 
             InternetConnectionState = ConnectionState.OK;
-            AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.XXXIsReachableViaICMPMessage, publicICMPTestIPAddress));
+            AddToInternetDetails(ConnectionState.OK,
+                string.Format(Resources.Localization.Strings.XXXIsReachableViaICMPMessage, publicICMPTestIPAddress));
 
             // 7) Check if dns is working (A)
             var publicDNSTestDomain = SettingsManager.Current.Dashboard_PublicDNSTestDomain;
@@ -840,12 +759,17 @@ namespace NETworkManager.ViewModels
 
             if (dnsCountForward > 0)
             {
-                AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.XADNSRecordsResolvedForXXXMessage, dnsCountForward, publicDNSTestDomain));
+                AddToInternetDetails(ConnectionState.OK,
+                    string.Format(Resources.Localization.Strings.XADNSRecordsResolvedForXXXMessage, dnsCountForward,
+                        publicDNSTestDomain));
             }
             else
             {
                 InternetConnectionState = ConnectionState.Warning;
-                AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.NoADNSRecordsResolvedForXXXMessage, publicDNSTestDomain) + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
+                AddToInternetDetails(ConnectionState.Warning,
+                    string.Format(Resources.Localization.Strings.NoADNSRecordsResolvedForXXXMessage,
+                        publicDNSTestDomain) + " " + Resources.Localization.Strings
+                        .CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
             }
 
             // 8) Check if dns is working (PTR)
@@ -854,7 +778,8 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                gotDnsReverseHostname = !string.IsNullOrEmpty(Dns.GetHostEntry(IPAddress.Parse(publicDNSTestIPAddress)).HostName);
+                gotDnsReverseHostname =
+                    !string.IsNullOrEmpty(Dns.GetHostEntry(IPAddress.Parse(publicDNSTestIPAddress)).HostName);
             }
             catch (SocketException)
             {
@@ -863,16 +788,23 @@ namespace NETworkManager.ViewModels
 
             if (gotDnsReverseHostname)
             {
-                AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.PTRDNSRecordResolvedForXXXMessage, publicDNSTestIPAddress));
+                AddToInternetDetails(ConnectionState.OK,
+                    string.Format(Resources.Localization.Strings.PTRDNSRecordResolvedForXXXMessage,
+                        publicDNSTestIPAddress));
             }
             else
             {
                 InternetConnectionState = ConnectionState.Warning;
-                AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.NoPTRDNSRecordResolvedForXXXMessage, publicDNSTestDomain) + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
+                AddToInternetDetails(ConnectionState.Warning,
+                    string.Format(Resources.Localization.Strings.NoPTRDNSRecordResolvedForXXXMessage,
+                        publicDNSTestDomain) + " " + Resources.Localization.Strings
+                        .CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
             }
 
             // 9) Check public ip address via api.ipify.org
-            var publicIPAddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPAddressAPI ? SettingsManager.Current.Dashboard_CustomPublicIPAddressAPI : GlobalStaticConfiguration.Dashboard_PublicIPAddressAPI;
+            var publicIPAddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPAddressAPI
+                ? SettingsManager.Current.Dashboard_CustomPublicIPAddressAPI
+                : GlobalStaticConfiguration.Dashboard_PublicIPAddressAPI;
             var publicIPAddress = "";
 
             if (SettingsManager.Current.Dashboard_CheckPublicIPAddress)
@@ -890,7 +822,9 @@ namespace NETworkManager.ViewModels
                     else
                     {
                         InternetConnectionState = ConnectionState.Warning;
-                        AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.CouldNotParsePublicIPAddressFromXXXMessage, publicIPAddressAPI));
+                        AddToInternetDetails(ConnectionState.Warning,
+                            string.Format(Resources.Localization.Strings.CouldNotParsePublicIPAddressFromXXXMessage,
+                                publicIPAddressAPI));
 
                         IsInternetCheckRunning = false;
 
@@ -900,7 +834,8 @@ namespace NETworkManager.ViewModels
                 catch (WebException)
                 {
                     InternetConnectionState = ConnectionState.Warning;
-                    AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.CouldNotConnectToXXXMessage, publicIPAddressAPI));
+                    AddToInternetDetails(ConnectionState.Warning,
+                        string.Format(Resources.Localization.Strings.CouldNotConnectToXXXMessage, publicIPAddressAPI));
 
                     IsInternetCheckRunning = false;
 
@@ -922,15 +857,17 @@ namespace NETworkManager.ViewModels
                 }
 
                 PublicIPAddress = IPAddress.Parse(publicIPAddress);
-                AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.GotXXXAsPublicIPAddressFromXXXMessage, PublicIPAddress, publicIPAddressAPI));
+                AddToInternetDetails(ConnectionState.OK,
+                    string.Format(Resources.Localization.Strings.GotXXXAsPublicIPAddressFromXXXMessage, PublicIPAddress, publicIPAddressAPI));
 
                 // 10) Resolve dns for public ip
-
                 try
                 {
                     PublicHostname = Dns.GetHostEntry(PublicIPAddress).HostName;
-                    
-                    AddToInternetDetails(ConnectionState.OK, string.Format(Resources.Localization.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage, PublicHostname, PublicIPAddress));
+
+                    AddToInternetDetails(ConnectionState.OK,
+                        string.Format(Resources.Localization.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage,
+                            PublicHostname, PublicIPAddress));
                 }
                 catch (SocketException)
                 {
@@ -945,6 +882,7 @@ namespace NETworkManager.ViewModels
 
             IsInternetCheckRunning = false;
             IsInternetCheckComplete = true;
+
             #endregion
         }
 
@@ -972,10 +910,108 @@ namespace NETworkManager.ViewModels
             InternetDetails += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
         }
 
+        public async void EditProfile()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.EditProfile
+            };
+
+            var profileViewModel = new ProfileViewModel(instance =>
+                {
+                    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                    ProfileManager.RemoveProfile(SelectedProfile);
+
+                    ProfileManager.AddProfile(instance);
+                }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+                ProfileManager.GetGroups(),
+                true, SelectedProfile);
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = profileViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public async void CopyAsProfile()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.CopyProfile
+            };
+
+            var profileViewModel = new ProfileViewModel(instance =>
+                {
+                    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                    ProfileManager.AddProfile(instance);
+                }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+                ProfileManager.GetGroups(),
+                false, SelectedProfile);
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = profileViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public async void DeleteProfile()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.DeleteProfile
+            };
+
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+                {
+                    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                    ProfileManager.RemoveProfile(SelectedProfile);
+                }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
+                Resources.Localization.Strings.DeleteProfileMessage);
+
+            customDialog.Content = new ConfirmRemoveDialog
+            {
+                DataContext = confirmRemoveViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public async void EditGroup(object group)
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.EditGroup
+            };
+
+            var editGroupViewModel = new GroupViewModel(instance =>
+                {
+                    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                    ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+
+                    Profiles.Refresh();
+                }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, group.ToString(),
+                ProfileManager.GetGroups());
+
+            customDialog.Content = new GroupDialog
+            {
+                DataContext = editGroupViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
         public void OnViewVisible()
         {
             // Refresh profiles
-            // Profiles.Refresh();
+            Profiles.Refresh();
         }
 
         public void OnViewHide()

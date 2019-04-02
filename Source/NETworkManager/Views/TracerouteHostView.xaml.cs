@@ -2,6 +2,7 @@
 using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Views
 {
@@ -32,6 +33,11 @@ namespace NETworkManager.Views
         public void AddTab(string host)
         {
             _viewModel.AddTab(host);
+        }
+
+        public void AddTab(ProfileInfo profile)
+        {
+            _viewModel.AddTab(profile);
         }
 
         public void OnViewHide()

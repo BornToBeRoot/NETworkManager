@@ -125,7 +125,7 @@ namespace NETworkManager.Models.Settings
 
                 IPScanner_Enabled = instance.IPScanner_Enabled,
                 IPScanner_InheritHost = instance.IPScanner_InheritHost,
-                IPScanner_IPRange = instance.IPScanner_InheritHost ? instance.Host?.Trim() : instance.IPScanner_IPRange?.Trim(),
+                IPScanner_HostOrIPRange = instance.IPScanner_InheritHost ? instance.Host?.Trim() : instance.IPScanner_HostOrIPRange?.Trim(),
 
                 PortScanner_Enabled = instance.PortScanner_Enabled,
                 PortScanner_InheritHost = instance.PortScanner_InheritHost,

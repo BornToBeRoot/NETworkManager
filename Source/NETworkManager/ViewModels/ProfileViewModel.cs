@@ -299,16 +299,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _ipScanner_IPRange;
-        public string IPScanner_IPRange
+        private string _ipScanner_HostOrIPRange;
+        public string IPScanner_HostOrIPRange
         {
-            get => _ipScanner_IPRange;
+            get => _ipScanner_HostOrIPRange;
             set
             {
-                if (value == _ipScanner_IPRange)
+                if (value == _ipScanner_HostOrIPRange)
                     return;
 
-                _ipScanner_IPRange = value;
+                _ipScanner_HostOrIPRange = value;
                 OnPropertyChanged();
             }
         }
@@ -1679,7 +1679,7 @@ namespace NETworkManager.ViewModels
             // IP Scanner
             IPScanner_Enabled = profileInfo.IPScanner_Enabled;
             IPScanner_InheritHost = profileInfo.IPScanner_InheritHost;
-            IPScanner_IPRange = profileInfo.IPScanner_IPRange;
+            IPScanner_HostOrIPRange = profileInfo.IPScanner_HostOrIPRange;
 
             // Port Scanner
             PortScanner_Enabled = profileInfo.PortScanner_Enabled;
@@ -1811,10 +1811,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand CancelCommand { get; }
 
-        public ICommand ResolveHostCommand
-        {
-            get { return new RelayCommand(async p => await ResolveHostActionAsync()); }
-        }
+        public ICommand ResolveHostCommand => new RelayCommand(async p => await ResolveHostActionAsync());
 
         private async System.Threading.Tasks.Task ResolveHostActionAsync()
         {
@@ -1834,10 +1831,7 @@ namespace NETworkManager.ViewModels
             { }
         }
 
-        public ICommand UnselectCredentialCommand
-        {
-            get { return new RelayCommand(p => UnselectCredentialAction()); }
-        }
+        public ICommand UnselectCredentialCommand => new RelayCommand(p => UnselectCredentialAction());
 
         private void UnselectCredentialAction()
         {

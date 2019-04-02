@@ -77,7 +77,7 @@ namespace NETworkManager
             switch (name)
             {
                 case Name.Dashboard:
-                    canvas.Children.Add(new PackIconOcticons() { Kind = PackIconOcticonsKind.Dashboard });
+                    canvas.Children.Add(new PackIconOcticons { Kind = PackIconOcticonsKind.Dashboard });
                     break;
                 case Name.NetworkInterface:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Network });

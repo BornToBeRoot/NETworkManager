@@ -2,6 +2,7 @@
 using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace NETworkManager.Views
 {
@@ -29,6 +30,12 @@ namespace NETworkManager.Views
         public void OnViewVisible()
         {
             _viewModel.OnViewVisible();
+        }
+
+        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                _viewModel.EditProfile();
         }
     }
 }

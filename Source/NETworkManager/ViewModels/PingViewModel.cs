@@ -344,10 +344,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand PingCommand
-        {
-            get { return new RelayCommand(p => PingAction(), Ping_CanExecute); }
-        }
+        public ICommand PingCommand => new RelayCommand(p => PingAction(), Ping_CanExecute);
 
         private bool Ping_CanExecute(object paramter)
         {
@@ -362,114 +359,60 @@ namespace NETworkManager.ViewModels
                 StartPing();
         }
 
-        public ICommand CopySelectedTimestampCommand
-        {
-            get { return new RelayCommand(p => CopySelectedTimestampAction()); }
-        }
+        public ICommand CopySelectedTimestampCommand => new RelayCommand(p => CopySelectedTimestampAction());
 
         private void CopySelectedTimestampAction()
         {
             CommonMethods.SetClipboard(SelectedPingResult.Timestamp.ToString(CultureInfo.CurrentCulture));
         }
 
-        public ICommand CopySelectedIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
-        }
+        public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
             CommonMethods.SetClipboard(SelectedPingResult.IPAddress.ToString());
         }
 
-        public ICommand CopySelectedHostnameCommand
-        {
-            get { return new RelayCommand(p => CopySelectedHostnameAction()); }
-        }
+        public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
             CommonMethods.SetClipboard(SelectedPingResult.Hostname);
         }
 
-        public ICommand CopySelectedBytesCommand
-        {
-            get { return new RelayCommand(p => CopySelectedBytesAction()); }
-        }
+        public ICommand CopySelectedBytesCommand => new RelayCommand(p => CopySelectedBytesAction());
 
         private void CopySelectedBytesAction()
         {
             CommonMethods.SetClipboard(SelectedPingResult.Bytes.ToString());
         }
 
-        public ICommand CopySelectedTimeCommand
-        {
-            get { return new RelayCommand(p => CopySelectedTimeAction()); }
-        }
+        public ICommand CopySelectedTimeCommand => new RelayCommand(p => CopySelectedTimeAction());
 
         private void CopySelectedTimeAction()
         {
             CommonMethods.SetClipboard(SelectedPingResult.Time.ToString());
         }
 
-        public ICommand CopySelectedTTLCommand
-        {
-            get { return new RelayCommand(p => CopySelectedTTLAction()); }
-        }
+        public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
 
         private void CopySelectedTTLAction()
         {
             CommonMethods.SetClipboard(SelectedPingResult.TTL.ToString());
         }
 
-        public ICommand CopySelectedStatusCommand
-        {
-            get { return new RelayCommand(p => CopySelectedStatusAction()); }
-        }
+        public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
         {
             CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedPingResult.Status, LocalizationManager.Culture));
         }
 
-        public ICommand ExportCommand
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private void ExportAction()
         {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
-
-        private async void ExportAction()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.Export
-            };
-
-            var exportViewModel = new ExportViewModel(async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? PingResults : new ObservableCollection<PingInfo>(SelectedPingResults.Cast<PingInfo>().ToArray()));
-                }
-                catch (Exception ex)
-                {
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
-
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
-
-                SettingsManager.Current.Ping_ExportFileType = instance.FileType;
-                SettingsManager.Current.Ping_ExportFilePath = instance.FilePath;
-            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Ping_ExportFileType, SettingsManager.Current.Ping_ExportFilePath);
-
-            customDialog.Content = new ExportDialog
-            {
-                DataContext = exportViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            Export();
         }
         #endregion
 
@@ -604,6 +547,41 @@ namespace NETworkManager.ViewModels
             EndTime = DateTime.Now;
 
             _stopwatch.Reset();
+        }
+
+        private async void Export()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? PingResults : new ObservableCollection<PingInfo>(SelectedPingResults.Cast<PingInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Ping_ExportFileType = instance.FileType;
+                SettingsManager.Current.Ping_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Ping_ExportFileType, SettingsManager.Current.Ping_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         private void AddHostToHistory(string host)

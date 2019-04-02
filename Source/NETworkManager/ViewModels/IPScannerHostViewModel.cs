@@ -154,7 +154,7 @@ namespace NETworkManager.ViewModels
                     return !string.IsNullOrEmpty(info.Tags) && info.IPScanner_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
                 // Search by: Name, IPScanner_IPRange
-                return info.IPScanner_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.IPScanner_IPRange.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                return info.IPScanner_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.IPScanner_HostOrIPRange.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             // This will select the first entry as selected item...
@@ -176,20 +176,21 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddTabCommand
-        {
-            get { return new RelayCommand(p => AddTabAction()); }
-        }
+        public ICommand AddTabCommand => new RelayCommand(p => AddTabAction());
 
         private void AddTabAction()
         {
             AddTab();
         }
 
-        public ICommand AddProfileCommand
+        public ICommand ScanProfileCommand => new RelayCommand(p => ScanProfileAction());
+
+        private void ScanProfileAction()
         {
-            get { return new RelayCommand(p => AddProfileAction()); }
+            AddTab(SelectedProfile);
         }
+
+        public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
         private async void AddProfileAction()
         {
@@ -216,10 +217,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditProfileCommand
-        {
-            get { return new RelayCommand(p => EditProfileAction()); }
-        }
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private async void EditProfileAction()
         {
@@ -278,10 +276,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteProfileCommand
-        {
-            get { return new RelayCommand(p => DeleteProfileAction()); }
-        }
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private async void DeleteProfileAction()
         {
@@ -307,17 +302,7 @@ namespace NETworkManager.ViewModels
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-
-        public ICommand ScanProfileCommand
-        {
-            get { return new RelayCommand(p => ScanProfileAction()); }
-        }
-
-        private void ScanProfileAction()
-        {
-            AddTab(SelectedProfile.IPScanner_IPRange);
-        }
-
+        
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private async void EditGroupAction(object group)
@@ -347,10 +332,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand ClearSearchCommand
-        {
-            get { return new RelayCommand(p => ClearSearchAction()); }
-        }
+        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
         {
@@ -390,13 +372,18 @@ namespace NETworkManager.ViewModels
             _canProfileWidthChange = true;
         }
 
-        public void AddTab(string host = null)
+        public void AddTab(string hostOrIPRange = null)
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(Resources.Localization.Strings.NewTab, new IPScannerView(_tabId, host), _tabId));
+            TabItems.Add(new DragablzTabItem(Resources.Localization.Strings.NewTab, new IPScannerView(_tabId, hostOrIPRange), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
+        }
+
+        public void AddTab(ProfileInfo profile)
+        {
+            AddTab(profile.IPScanner_HostOrIPRange);
         }
 
         public void OnViewVisible()

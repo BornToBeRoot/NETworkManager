@@ -46,7 +46,12 @@
                     </TextBlock>
                     <TextBlock Text="Developed and maintained by GitHub.com/BornToBeRoot" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.GithubUrl}" Cursor="Hand" Style="{StaticResource CleanButton}">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                <Setter Property="Cursor" Value="Hand"></Setter>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.GithubUrl}">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:SimpleIcons Kind=GitHub}" />
@@ -63,7 +68,7 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_TransifexProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.TransifexUrl}" Cursor="Hand" Style="{StaticResource CleanButton}" Margin="10,0,0,0">
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_TransifexProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.TransifexUrl}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24" >
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Translate}" />
@@ -80,7 +85,7 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_TwitterContact}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.TransifexUrl}" Cursor="Hand" Style="{StaticResource CleanButton}" Margin="10,0,0,0">
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_TwitterContact}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.TransifexUrl}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24" >
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Twitter}" />

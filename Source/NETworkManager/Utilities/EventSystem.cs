@@ -1,15 +1,24 @@
 ﻿using System;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Utilities
 {
     public class EventSystem
     {
-        // This will notify the mail window, to change the view to another application and redirect some data (hostname, ip)
-        public static event EventHandler RedirectToApplicationEvent;
+        // This will notify the mail window, to change the view to another application and redirect a profile
+        public static event EventHandler RedirectProfileToApplicationEvent;
 
-        public static void RedirectToApplication(ApplicationViewManager.Name application, string data)
+        public static void RedirectProfileToApplication(ApplicationViewManager.Name application, ProfileInfo profile)
         {
-            RedirectToApplicationEvent?.Invoke(typeof(string), new EventSystemRedirectApplicationArgs(application, data));
+            RedirectProfileToApplicationEvent?.Invoke(typeof(string), new EventSystemRedirectProfileApplicationArgs(application, profile));
+        }
+
+        // This will notify the mail window, to change the view to another application and redirect some data (hostname, ip)
+        public static event EventHandler RedirectDataToApplicationEvent;
+
+        public static void RedirectDataToApplication(ApplicationViewManager.Name application, string data)
+        {
+            RedirectDataToApplicationEvent?.Invoke(typeof(string), new EventSystemRedirectDataApplicationArgs(application, data));
         }
 
         // This will notify the main window, to change the view to the settings...

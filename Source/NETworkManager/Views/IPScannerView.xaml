@@ -169,7 +169,7 @@
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.PortScanner}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="PortScanner">
+                    <MenuItem Header="{x:Static localization:Strings.PortScanner}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PortScanner">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -178,7 +178,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.Ping}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="Ping">
+                    <MenuItem Header="{x:Static localization:Strings.Ping}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="Ping">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -187,7 +187,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.Traceroute}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="Traceroute">
+                    <MenuItem Header="{x:Static localization:Strings.Traceroute}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="Traceroute">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -223,7 +223,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.RemoteDesktop}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="RemoteDesktop">
+                    <MenuItem Header="{x:Static localization:Strings.RemoteDesktop}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="RemoteDesktop">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -232,7 +232,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PowerShell}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="PowerShell">
+                    <MenuItem Header="{x:Static localization:Strings.PowerShell}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PowerShell">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -241,7 +241,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PuTTY}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="PuTTY">
+                    <MenuItem Header="{x:Static localization:Strings.PuTTY}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PuTTY">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -250,7 +250,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.TigerVNC}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="TigerVNC">
+                    <MenuItem Header="{x:Static localization:Strings.TigerVNC}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="TigerVNC">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -259,7 +259,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.SNMP}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="SNMP">
+                    <MenuItem Header="{x:Static localization:Strings.SNMP}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="SNMP">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>

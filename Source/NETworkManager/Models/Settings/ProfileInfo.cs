@@ -24,7 +24,7 @@ namespace NETworkManager.Models.Settings
 
         public bool IPScanner_Enabled { get; set; }
         public bool IPScanner_InheritHost { get; set; } = true;
-        public string IPScanner_IPRange { get; set; }
+        public string IPScanner_HostOrIPRange { get; set; }
 
         public bool PortScanner_Enabled { get; set; }
         public bool PortScanner_InheritHost { get; set; } = true;

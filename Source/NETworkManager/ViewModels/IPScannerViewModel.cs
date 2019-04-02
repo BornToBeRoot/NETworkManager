@@ -276,14 +276,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings, shutdown
-        public IPScannerViewModel(IDialogCoordinator instance, int tabId, string ipRange)
+        public IPScannerViewModel(IDialogCoordinator instance, int tabId, string hostOrIPRange)
         {
             _isLoading = true;
 
             _dialogCoordinator = instance;
 
             _tabId = tabId;
-            Host = ipRange;
+            Host = hostOrIPRange;
 
             // Set collection view
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostHistory);
@@ -321,10 +321,7 @@ namespace NETworkManager.ViewModels
 
         #region ICommands & Actions
 
-        public ICommand ScanCommand
-        {
-            get { return new RelayCommand(p => ScanAction(), Scan_CanExecute); }
-        }
+        public ICommand ScanCommand => new RelayCommand(p => ScanAction(), Scan_CanExecute);
 
         private bool Scan_CanExecute(object paramter)
         {
@@ -339,162 +336,96 @@ namespace NETworkManager.ViewModels
                 StartScan();
         }
 
-        public ICommand RedirectToApplicationCommand
-        {
-            get { return new RelayCommand(p => RedirectToApplicationAction(p)); }
-        }
+        public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
 
-        private void RedirectToApplicationAction(object name)
+        private void RedirectDataToApplicationAction(object name)
         {
             if (!(name is string appName))
                 return;
 
-            if (!Enum.TryParse(appName, out ApplicationViewManager.Name app))
+            if (!Enum.TryParse(appName, out ApplicationViewManager.Name applicationName))
                 return;
 
             var host = !string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.Hostname : SelectedHostResult.PingInfo.IPAddress.ToString();
 
-            EventSystem.RedirectToApplication(app, host);
+            EventSystem.RedirectDataToApplication(applicationName, host);
         }
 
-        public ICommand PerformDNSLookupIPAddressCommand
-        {
-            get { return new RelayCommand(p => PerformDNSLookupIPAddressAction()); }
-        }
+        public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(p => PerformDNSLookupIPAddressAction());
 
         private void PerformDNSLookupIPAddressAction()
         {
-            EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedHostResult.PingInfo.IPAddress.ToString());
+            EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedHostResult.PingInfo.IPAddress.ToString());
         }
 
-        public ICommand PerformDNSLookupHostnameCommand
-        {
-            get { return new RelayCommand(p => PerformDNSLookupHostnameAction()); }
-        }
+        public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
 
         private void PerformDNSLookupHostnameAction()
         {
-            EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedHostResult.Hostname);
+            EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedHostResult.Hostname);
         }
 
-        public ICommand CopySelectedIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
-        }
+        public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
             CommonMethods.SetClipboard(SelectedHostResult.PingInfo.IPAddress.ToString());
         }
 
-        public ICommand CopySelectedHostnameCommand
-        {
-            get { return new RelayCommand(p => CopySelectedHostnameAction()); }
-        }
+        public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
             CommonMethods.SetClipboard(SelectedHostResult.Hostname);
         }
 
-        public ICommand CopySelectedMACAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedMACAddressAction()); }
-        }
+        public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
 
         private void CopySelectedMACAddressAction()
         {
             CommonMethods.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedHostResult.MACAddress.ToString()));
         }
 
-        public ICommand CopySelectedVendorCommand
-        {
-            get { return new RelayCommand(p => CopySelectedVendorAction()); }
-        }
+        public ICommand CopySelectedVendorCommand => new RelayCommand(p => CopySelectedVendorAction());
 
         private void CopySelectedVendorAction()
         {
             CommonMethods.SetClipboard(SelectedHostResult.Vendor);
         }
 
-        public ICommand CopySelectedBytesCommand
-        {
-            get { return new RelayCommand(p => CopySelectedBytesAction()); }
-        }
+        public ICommand CopySelectedBytesCommand => new RelayCommand(p => CopySelectedBytesAction());
 
         private void CopySelectedBytesAction()
         {
             CommonMethods.SetClipboard(SelectedHostResult.PingInfo.Bytes.ToString());
         }
 
-        public ICommand CopySelectedTimeCommand
-        {
-            get { return new RelayCommand(p => CopySelectedTimeAction()); }
-        }
+        public ICommand CopySelectedTimeCommand => new RelayCommand(p => CopySelectedTimeAction());
 
         private void CopySelectedTimeAction()
         {
             CommonMethods.SetClipboard(SelectedHostResult.PingInfo.Time.ToString());
         }
 
-        public ICommand CopySelectedTTLCommand
-        {
-            get { return new RelayCommand(p => CopySelectedTTLAction()); }
-        }
+        public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
 
         private void CopySelectedTTLAction()
         {
             CommonMethods.SetClipboard(SelectedHostResult.PingInfo.TTL.ToString());
         }
 
-        public ICommand CopySelectedStatusCommand
-        {
-            get { return new RelayCommand(p => CopySelectedStatusAction()); }
-        }
+        public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
         {
             CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedHostResult.PingInfo.Status, LocalizationManager.Culture));
         }
 
-        public ICommand ExportCommand
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private void ExportAction()
         {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
-
-        private async void ExportAction()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.Export
-            };
-
-            var exportViewModel = new ExportViewModel(async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                try
-                {
-                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? HostResults : new ObservableCollection<HostInfo>(SelectedHostResults.Cast<HostInfo>().ToArray()));
-                }
-                catch (Exception ex)
-                {
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
-
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
-                }
-                
-                SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
-                SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
-            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
-
-            customDialog.Content = new ExportDialog
-            {
-                DataContext = exportViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            Export();
         }
         #endregion
 
@@ -628,6 +559,41 @@ namespace NETworkManager.ViewModels
 
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.IPScanner_HostHistory.Add(x));
+        }
+
+        private async void Export()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? HostResults : new ObservableCollection<HostInfo>(SelectedHostResults.Cast<HostInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
+                SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public void OnClose()

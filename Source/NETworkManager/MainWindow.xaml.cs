@@ -288,7 +288,8 @@ namespace NETworkManager
 
             // Register some events
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-            EventSystem.RedirectToApplicationEvent += EventSystem_RedirectToApplicationEvent;
+            EventSystem.RedirectProfileToApplicationEvent += EventSystem_RedirectProfileToApplicationEvent;
+            EventSystem.RedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
             EventSystem.RedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
 
             _isLoading = false;
@@ -666,8 +667,6 @@ namespace NETworkManager
             _currentApplicationViewName = name;
         }
 
-
-
         private void ClearSearchOnApplicationListMinimize()
         {
             if (ExpandApplicationView)
@@ -685,9 +684,71 @@ namespace NETworkManager
             ListViewApplication.ScrollIntoView(SelectedApplication);
         }
 
-        private void EventSystem_RedirectToApplicationEvent(object sender, EventArgs e)
+        private void EventSystem_RedirectProfileToApplicationEvent(object sender, EventArgs e)
         {
-            if (!(e is EventSystemRedirectApplicationArgs data))
+            if (!(e is EventSystemRedirectProfileApplicationArgs profile))
+                return;
+
+            // Change view
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == profile.Application);
+
+            // Crate a new tab / perform action
+            switch (profile.Application)
+            {
+                case ApplicationViewManager.Name.None:
+                    break;
+                case ApplicationViewManager.Name.Dashboard:
+                    break;
+                case ApplicationViewManager.Name.NetworkInterface:
+                    break;
+                case ApplicationViewManager.Name.IPScanner:
+                    _ipScannerHostView.AddTab(profile.Profile);
+                    break;
+                case ApplicationViewManager.Name.PortScanner:
+                    _portScannerHostView.AddTab(profile.Profile);
+                    break;
+                case ApplicationViewManager.Name.Ping:
+                    _pingHostView.AddTab(profile.Profile);
+                    break;
+                case ApplicationViewManager.Name.Traceroute:
+                    _tracerouteHostView.AddTab(profile.Profile);
+                    break;
+                case ApplicationViewManager.Name.DNSLookup:
+                    break;
+                case ApplicationViewManager.Name.RemoteDesktop:
+                    break;
+                case ApplicationViewManager.Name.PowerShell:
+                    break;
+                case ApplicationViewManager.Name.PuTTY:
+                    break;
+                case ApplicationViewManager.Name.TigerVNC:
+                    break;
+                case ApplicationViewManager.Name.SNMP:
+                    break;
+                case ApplicationViewManager.Name.WakeOnLAN:
+                    break;
+                case ApplicationViewManager.Name.HTTPHeaders:
+                    break;
+                case ApplicationViewManager.Name.Whois:
+                    break;
+                case ApplicationViewManager.Name.SubnetCalculator:
+                    break;
+                case ApplicationViewManager.Name.Lookup:
+                    break;
+                case ApplicationViewManager.Name.Connections:
+                    break;
+                case ApplicationViewManager.Name.Listeners:
+                    break;
+                case ApplicationViewManager.Name.ARPTable:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void EventSystem_RedirectDataToApplicationEvent(object sender, EventArgs e)
+        {
+            if (!(e is EventSystemRedirectDataApplicationArgs data))
                 return;
 
             // Change view

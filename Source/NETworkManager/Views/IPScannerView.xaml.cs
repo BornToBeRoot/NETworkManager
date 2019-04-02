@@ -9,11 +9,11 @@ namespace NETworkManager.Views
     {
         private readonly IPScannerViewModel _viewModel;
 
-        public IPScannerView(int tabId, string ipRange = null)
+        public IPScannerView(int tabId, string hostOrIPRange = null)
         {
             InitializeComponent();
 
-            _viewModel = new IPScannerViewModel(DialogCoordinator.Instance, tabId, ipRange);
+            _viewModel = new IPScannerViewModel(DialogCoordinator.Instance, tabId, hostOrIPRange);
 
             DataContext = _viewModel;
 
