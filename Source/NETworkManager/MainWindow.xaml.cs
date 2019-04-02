@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using NETworkManager.Utilities;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
+using NETworkManager.Controls;
 using NETworkManager.Models.Update;
 using NETworkManager.Models.Documentation;
 using NETworkManager.ViewModels;
@@ -362,7 +363,7 @@ namespace NETworkManager
         {
             // Need to add items here... if in SettingsInfo/Constructor --> same item will appear multiple times...
             if (SettingsManager.Current.General_ApplicationList.Count == 0)
-                SettingsManager.Current.General_ApplicationList = new ObservableCollection<ApplicationViewInfo>(ApplicationViewManager.GetList());
+                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationViewInfo>(ApplicationViewManager.GetList());
 
             Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
 

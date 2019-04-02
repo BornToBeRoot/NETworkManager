@@ -231,6 +231,7 @@
       <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzTabItem.cs" />
+    <Compile Include="Controls\ObservableSetCollection.cs" />
     <Compile Include="Controls\PowerShellControl.xaml.cs">
       <DependentUpon>PowerShellControl.xaml</DependentUpon>
     </Compile>

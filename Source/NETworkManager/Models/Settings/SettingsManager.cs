@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using NETworkManager.Controls;
 
 namespace NETworkManager.Models.Settings
 {
@@ -235,7 +236,7 @@ namespace NETworkManager.Models.Settings
 
                 // Reorder application view
                 if (reorderApplications)
-                    Current.General_ApplicationList = new ObservableCollection<ApplicationViewInfo>(Current.General_ApplicationList.OrderBy(info => info.Name));
+                    Current.General_ApplicationList = new ObservableSetCollection<ApplicationViewInfo>(Current.General_ApplicationList.OrderBy(info => info.Name));
             }
 
             // Update settings version

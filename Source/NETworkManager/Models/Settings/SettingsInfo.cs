@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using Heijden.DNS;
 using Lextm.SharpSnmpLib.Messaging;
+using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
@@ -105,8 +106,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ObservableCollection<ApplicationViewInfo> _general_ApplicationList = new ObservableCollection<ApplicationViewInfo>();
-        public ObservableCollection<ApplicationViewInfo> General_ApplicationList
+        private ObservableSetCollection<ApplicationViewInfo> _general_ApplicationList = new ObservableSetCollection<ApplicationViewInfo>();
+        public ObservableSetCollection<ApplicationViewInfo> General_ApplicationList
         {
             get => _general_ApplicationList;
             set
