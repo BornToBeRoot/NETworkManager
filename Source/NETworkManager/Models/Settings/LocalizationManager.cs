@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.NetworkInformation;
+using NETworkManager.Models.Network;
 using NETworkManager.Utilities.Enum;
 
 namespace NETworkManager.Models.Settings
@@ -13,8 +14,8 @@ namespace NETworkManager.Models.Settings
         {
             new LocalizationInfo("English", "English", new Uri("/Resources/Localization/Flags/en-US.png", UriKind.Relative), "BornToBeRoot", "en-US",100),
             new LocalizationInfo("German", "Deutsch", new Uri("/Resources/Localization/Flags/de-DE.png", UriKind.Relative), "BornToBeRoot", "de-DE",100),
-            new LocalizationInfo("Russian", "Русский", new Uri("/Resources/Localization/Flags/ru-RU.png", UriKind.Relative), "LaXe", "ru-RU", 94.13),
-            new LocalizationInfo("Spanish", "Español", new Uri("/Resources/Localization/Flags/es-ES.png", UriKind.Relative), "MS-PC", "es-ES", 97.78) /*,
+            new LocalizationInfo("Russian", "Русский", new Uri("/Resources/Localization/Flags/ru-RU.png", UriKind.Relative), "LaXe", "ru-RU", 100),
+            new LocalizationInfo("Spanish", "Español", new Uri("/Resources/Localization/Flags/es-ES.png", UriKind.Relative), "MS-PC", "es-ES", 100) /*,
             new LocalizationInfo("French", "Français", new Uri("/Resources/Localization/Flags/fr-FR.png", UriKind.Relative), "f4alm", "fr-FR", 18.56, false) */
         };
 
@@ -63,6 +64,16 @@ namespace NETworkManager.Models.Settings
             var status = Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + ipStatus, Culture);
 
             return string.IsNullOrEmpty(status) ? ipStatus.ToString() : status;
+        }
+
+        public static string TranslatePortStatus(object value)
+        {
+            if (!(value is PortInfo.PortStatus portStatus))
+                return "-/-";
+
+            var status = Resources.Localization.Strings.ResourceManager.GetString("PortState_" + portStatus, Culture);
+
+            return string.IsNullOrEmpty(status) ? portStatus.ToString() : status;
         }
 
         public static string TranslateTcpState(object value)

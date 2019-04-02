@@ -13,7 +13,7 @@ namespace NETworkManager.Converters
             if (!(value is PortStatus portStatus))
                 return "-/-";
 
-            var status = Resources.Localization.Strings.ResourceManager.GetString("PortState_" + portStatus, LocalizationManager.Culture);
+            var status = LocalizationManager.TranslatePortStatus(portStatus);
 
             return string.IsNullOrEmpty(status) ? portStatus.ToString() : status;
         }

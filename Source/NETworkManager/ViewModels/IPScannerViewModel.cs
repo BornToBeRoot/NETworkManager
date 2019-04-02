@@ -418,7 +418,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedHostResult.PingInfo.Status, LocalizationManager.Culture));
+            CommonMethods.SetClipboard(LocalizationManager.TranslateIPStatus(SelectedHostResult.PingInfo.Status));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

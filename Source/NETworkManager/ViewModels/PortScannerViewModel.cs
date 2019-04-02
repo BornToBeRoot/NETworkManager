@@ -386,7 +386,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString(SelectedPortScanResult.Status.ToString(), LocalizationManager.Culture));
+            CommonMethods.SetClipboard(LocalizationManager.TranslatePortStatus(SelectedPortScanResult.Status));
         }
 
         public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());

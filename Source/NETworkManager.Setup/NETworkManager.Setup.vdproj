@@ -33,6 +33,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_1D00A5D31BA5FD9263E69AD244EF5DCC"
+        "OwnerKey" = "8:_48ACD967FDBF43AEAF73122414146A86"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_287F82846E33E6F26968C7B256EF09F8"
         "OwnerKey" = "8:_9A8619402B1C850D44680EEA483C9C4A"
         "MsmSig" = "8:_UNDEFINED"
@@ -69,14 +75,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_48ACD967FDBF43AEAF73122414146A86"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_44B804318D0349D6012EEB5DDACB53E8"
+        "OwnerKey" = "8:_48ACD967FDBF43AEAF73122414146A86"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_48E4F121D4FAA3CDDFC9B836C3B72F81"
-        "OwnerKey" = "8:_48ACD967FDBF43AEAF73122414146A86"
+        "MsmKey" = "8:_48ACD967FDBF43AEAF73122414146A86"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -118,12 +124,6 @@
         "Entry"
         {
         "MsmKey" = "8:_B2D12C55ED7E4372B6238A6AE059FF72"
-        "OwnerKey" = "8:_48ACD967FDBF43AEAF73122414146A86"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C60E547DBC64DB526B11FA3DF600A81B"
         "OwnerKey" = "8:_48ACD967FDBF43AEAF73122414146A86"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -214,13 +214,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_48E4F121D4FAA3CDDFC9B836C3B72F81"
+        "OwnerKey" = "8:_1D00A5D31BA5FD9263E69AD244EF5DCC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C60E547DBC64DB526B11FA3DF600A81B"
+        "OwnerKey" = "8:_44B804318D0349D6012EEB5DDACB53E8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -465,6 +465,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1D00A5D31BA5FD9263E69AD244EF5DCC"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:SharpSnmpLib, Version=11.1.0.0, Culture=neutral, PublicKeyToken=4c00852d3788e005, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_1D00A5D31BA5FD9263E69AD244EF5DCC"
+                    {
+                    "Name" = "8:SharpSnmpLib.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:SharpSnmpLib.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3C29CB23A70F44D4B1A9F285AFF37644"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_287F82846E33E6F26968C7B256EF09F8"
             {
             "AssemblyRegister" = "3:1"
@@ -558,20 +589,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_48E4F121D4FAA3CDDFC9B836C3B72F81"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_44B804318D0349D6012EEB5DDACB53E8"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SharpSnmpLib, Version=11.0.0.0, Culture=neutral, PublicKeyToken=4c00852d3788e005, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:System.Net.IPNetwork, Version=2.2.0.94, Culture=neutral, PublicKeyToken=717343cc2c25edcf, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_48E4F121D4FAA3CDDFC9B836C3B72F81"
+                    "_44B804318D0349D6012EEB5DDACB53E8"
                     {
-                    "Name" = "8:SharpSnmpLib.dll"
+                    "Name" = "8:System.Net.IPNetwork.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:SharpSnmpLib.dll"
+            "SourcePath" = "8:System.Net.IPNetwork.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3C29CB23A70F44D4B1A9F285AFF37644"
@@ -727,37 +758,6 @@
                     }
                 }
             "SourcePath" = "8:AirspaceFixer.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3C29CB23A70F44D4B1A9F285AFF37644"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C60E547DBC64DB526B11FA3DF600A81B"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Net.IPNetwork, Version=2.2.0.78, Culture=neutral, PublicKeyToken=717343cc2c25edcf, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_C60E547DBC64DB526B11FA3DF600A81B"
-                    {
-                    "Name" = "8:System.Net.IPNetwork.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Net.IPNetwork.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3C29CB23A70F44D4B1A9F285AFF37644"
@@ -986,15 +986,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:NETworkManager"
-        "ProductCode" = "8:{1BFAFEB4-E9EE-4DD0-ACDE-6D3132CB9778}"
-        "PackageCode" = "8:{C4C7CC5A-C02B-4487-9E86-14ED32DC5134}"
+        "ProductCode" = "8:{FA0F4081-1A4D-4319-8E34-83A537F07007}"
+        "PackageCode" = "8:{7310778B-314F-47DB-8007-0984515D277B}"
         "UpgradeCode" = "8:{FBE04B49-929D-4FB1-9A85-4F83A13E2E10}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.9.1"
+        "ProductVersion" = "8:1.10.0"
         "Manufacturer" = "8:BornToBeRoot"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
