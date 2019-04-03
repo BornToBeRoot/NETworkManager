@@ -3288,6 +3288,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Official.
+        /// </summary>
+        public static string Official {
+            get {
+                return ResourceManager.GetString("Official", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OID.
         /// </summary>
         public static string OID {

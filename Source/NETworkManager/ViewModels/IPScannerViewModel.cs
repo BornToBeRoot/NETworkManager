@@ -290,9 +290,7 @@ namespace NETworkManager.ViewModels
 
             // Result view
             HostResultsView = CollectionViewSource.GetDefaultView(HostResults);
-            HostResultsView.SortDescriptions.Add(new SortDescription(
-                nameof(HostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32),
-                ListSortDirection.Ascending));
+            HostResultsView.SortDescriptions.Add(new SortDescription(nameof(HostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
 
             LoadSettings();
 
@@ -459,7 +457,7 @@ namespace NETworkManager.ViewModels
             }
 
             _cancellationTokenSource = new CancellationTokenSource();
-            
+
             // Resolve hostnames
             List<string> ipRanges;
 

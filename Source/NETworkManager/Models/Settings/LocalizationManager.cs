@@ -12,11 +12,16 @@ namespace NETworkManager.Models.Settings
     {
         public static List<LocalizationInfo> List => new List<LocalizationInfo>
         {
-            new LocalizationInfo("English", "English", new Uri("/Resources/Localization/Flags/en-US.png", UriKind.Relative), "BornToBeRoot", "en-US",100),
-            new LocalizationInfo("German", "Deutsch", new Uri("/Resources/Localization/Flags/de-DE.png", UriKind.Relative), "BornToBeRoot", "de-DE",100),
-            new LocalizationInfo("Russian", "Русский", new Uri("/Resources/Localization/Flags/ru-RU.png", UriKind.Relative), "LaXe", "ru-RU", 100),
-            new LocalizationInfo("Spanish", "Español", new Uri("/Resources/Localization/Flags/es-ES.png", UriKind.Relative), "MS-PC", "es-ES", 100) /*,
-            new LocalizationInfo("French", "Français", new Uri("/Resources/Localization/Flags/fr-FR.png", UriKind.Relative), "f4alm", "fr-FR", 18.56, false) */
+            new LocalizationInfo("English", "English", new Uri("/Resources/Localization/Flags/en-US.png", UriKind.Relative), "BornToBeRoot", "en-US",100,true),
+            new LocalizationInfo("German", "Deutsch", new Uri("/Resources/Localization/Flags/de-DE.png", UriKind.Relative), "BornToBeRoot", "de-DE",100, true),
+            new LocalizationInfo("Russian", "Русский", new Uri("/Resources/Localization/Flags/ru-RU.png", UriKind.Relative), "LaXe", "ru-RU", 100, true),
+            new LocalizationInfo("Spanish", "Español", new Uri("/Resources/Localization/Flags/es-ES.png", UriKind.Relative), "MS-PC", "es-ES", 100, false), 
+            /*,
+            new LocalizationInfo("French", "", new Uri("/Resources/Localization/Flags/fr-FR.png", UriKind.Relative), "", "fr-FR", 0, false),
+            new LocalizationInfo("Dutch", "", new Uri("/Resources/Localization/Flags/nl-NL.png", UriKind.Relative), "", "nl-NL", 0, false),
+            new LocalizationInfo("Latvian", "", new Uri("/Resources/Localization/Flags/lv-LV.png", UriKind.Relative), "", "lv-LV", 0, false),
+            new LocalizationInfo("Portuguese", "", new Uri("/Resources/Localization/Flags/pt-BR.png", UriKind.Relative), "", "pt-BR", 0, false),
+            */
         };
 
         public static LocalizationInfo Current { get; set; } = new LocalizationInfo();

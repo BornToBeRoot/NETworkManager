@@ -2178,4 +2178,7 @@ is disabled!</value>
   <data name="CopyNoun" xml:space="preserve">
     <value>Copy</value>
   </data>
+  <data name="Official" xml:space="preserve">
+    <value>Official</value>
+  </data>
 </root>

@@ -8,10 +8,11 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsLanguageViewModel}">
     <UserControl.Resources>
+        <converters:BooleanReverseToVisibilityHiddenConverter x:Key="BooleanReverseToVisibilityHiddenConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityHiddenConverter x:Key="BooleanToVisibilityHiddenConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -38,6 +39,8 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0" Width="Auto" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding (settings:LocalizationInfo.Flag)}" />
                         <Grid Grid.Column="1" Margin="10,5,0,5">
@@ -57,7 +60,39 @@
                             </Grid>
                             <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding (settings:LocalizationInfo.Translator)}" Style="{StaticResource DefaultTextBlock}" />
                         </Grid>
-                        <TextBlock Grid.Column="3" Grid.Row="0" Text="{Binding (settings:LocalizationInfo.PercentTranslated), StringFormat={}{0} %}" Style="{StaticResource CenterTextBlock}" />
+                        <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="#badc58" Padding="10,5" VerticalAlignment="Center" HorizontalAlignment="Right" Visibility="{Binding (settings:LocalizationInfo.IsOfficial), Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+                           <StackPanel Orientation="Horizontal">
+                               <Rectangle Width="20" Height="20">
+                                   <Rectangle.Resources>
+                                       <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Material Kind=CheckAll}" />
+                                   </Rectangle.Resources>
+                                   <Rectangle.Style>
+                                       <Style TargetType="{x:Type Rectangle}">
+                                           <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
+                                            <Setter Property="Fill" Value="#badc58" />
+                                       </Style>
+                                   </Rectangle.Style>
+                               </Rectangle>
+                                <TextBlock Text="{x:Static localization:Strings.Official}" VerticalAlignment="Center" Foreground="#badc58" Style="{StaticResource DefaultTextBlock}" Margin="10,0,0,0" />
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="{DynamicResource GrayBrush3}" Padding="10,5" VerticalAlignment="Center" Visibility="{Binding (settings:LocalizationInfo.IsOfficial), Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}">
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="20" Height="20">
+                                    <Rectangle.Resources>
+                                        <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Modern Kind=PeopleMultiple}" />
+                                    </Rectangle.Resources>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                                <TextBlock Text="{x:Static localization:Strings.Community}" VerticalAlignment="Center" Foreground="{DynamicResource GrayBrush3}" Style="{StaticResource DefaultTextBlock}" Margin="10,0,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Grid.Column="5" Grid.Row="0" Text="{Binding (settings:LocalizationInfo.PercentTranslated), StringFormat={}{0} %}" Style="{StaticResource CenterTextBlock}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -84,7 +119,7 @@
             </Grid.Style>
             <StackPanel>
                 <Button HorizontalAlignment="Center" Focusable="False" ToolTip="{x:Static localization:Strings.ClearFilter}" Command="{Binding ClearSearchCommand}" Margin="0,0,0,10" Style="{StaticResource CleanButton}">
-                    <Rectangle Width="20" Height="20">
+                    <Rectangle Width="24" Height="24">
                         <Rectangle.Resources>
                             <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
                         </Rectangle.Resources>

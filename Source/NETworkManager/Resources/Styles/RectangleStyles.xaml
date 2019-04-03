@@ -48,7 +48,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="LimeGreen" />
+        <Setter Property="Fill" Value="#badc58" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Check}"/>

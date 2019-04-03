@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Input;
-using System.Net;
 using System.Net.NetworkInformation;
 using System;
 using System.Linq;
