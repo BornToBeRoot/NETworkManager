@@ -32,7 +32,7 @@ namespace NETworkManager.Models.Lookup
                     continue;
 
                 int.TryParse(node.SelectSingleNode("Number")?.InnerText, out var port);
-                Enum.TryParse<Protocol>(node.SelectSingleNode("Protocol")?.InnerText, true, out var protocol);
+                System.Enum.TryParse<Protocol>(node.SelectSingleNode("Protocol")?.InnerText, true, out var protocol);
 
                 PortList.Add(new PortLookupInfo(port, protocol, node.SelectSingleNode("Name")?.InnerText, node.SelectSingleNode("Description")?.InnerText));
             }

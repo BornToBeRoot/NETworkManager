@@ -10,7 +10,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Threading;
-using NETworkManager.Utilities.Enum;
+using NETworkManager.Enum;
 
 namespace NETworkManager.ViewModels
 {

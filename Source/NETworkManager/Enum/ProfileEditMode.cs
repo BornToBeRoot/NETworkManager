@@ -1,4 +1,4 @@
-﻿namespace NETworkManager.Utilities.Enum
+﻿namespace NETworkManager.Enum
 {
     public enum ProfileEditMode
     {

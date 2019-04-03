@@ -297,11 +297,10 @@ namespace NETworkManager.ViewModels
             if (!(name is string appName))
                 return;
 
-            if (!Enum.TryParse(appName, out ApplicationViewManager.Name app))
+            if (!System.Enum.TryParse(appName, out ApplicationViewManager.Name app))
                 return;
 
-            var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname) ? SelectedTraceResult.Hostname : SelectedTraceResult
-                .IPAddress.ToString();
+            var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname) ? SelectedTraceResult.Hostname : SelectedTraceResult.IPAddress.ToString();
 
             EventSystem.RedirectDataToApplication(app, host);
         }

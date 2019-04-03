@@ -343,7 +343,7 @@ namespace NETworkManager.ViewModels
             if (!(name is string appName))
                 return;
 
-            if (!Enum.TryParse(appName, out ApplicationViewManager.Name applicationName))
+            if (!System.Enum.TryParse(appName, out ApplicationViewManager.Name applicationName))
                 return;
 
             var host = !string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.Hostname : SelectedHostResult.PingInfo.IPAddress.ToString();

@@ -9,7 +9,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Utilities;
-using NETworkManager.Utilities.Enum;
+using NETworkManager.Enum;
 
 // ReSharper disable InconsistentNaming
 

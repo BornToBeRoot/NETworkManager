@@ -13,7 +13,7 @@ using System.Diagnostics;
 using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.Utilities.Enum;
+using NETworkManager.Enum;
 
 namespace NETworkManager.ViewModels
 {

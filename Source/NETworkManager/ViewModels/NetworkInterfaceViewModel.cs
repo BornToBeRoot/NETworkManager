@@ -18,7 +18,7 @@ using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
 using MahApps.Metro.Controls;
-using NETworkManager.Utilities.Enum;
+using NETworkManager.Enum;
 
 namespace NETworkManager.ViewModels
 {

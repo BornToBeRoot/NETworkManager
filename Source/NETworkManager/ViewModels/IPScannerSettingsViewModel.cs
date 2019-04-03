@@ -313,7 +313,7 @@ namespace NETworkManager.ViewModels
             DNSPort = SettingsManager.Current.IPScanner_DNSPort;
             DNSRecursion = SettingsManager.Current.IPScanner_DNSRecursion;
             DNSUseResolverCache = SettingsManager.Current.IPScanner_DNSUseResolverCache;
-            DNSTransportTypes = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().OrderBy(x => x.ToString()).ToList();
+            DNSTransportTypes = System.Enum.GetValues(typeof(TransportType)).Cast<TransportType>().OrderBy(x => x.ToString()).ToList();
             DNSTransportType = DNSTransportTypes.First(x => x == SettingsManager.Current.IPScanner_DNSTransportType);
             DNSAttempts = SettingsManager.Current.IPScanner_DNSAttempts;
             DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout;

@@ -14,7 +14,7 @@ using System.Linq;
 using System.Windows;
 using MahApps.Metro.Controls;
 using NETworkManager.Models.Export;
-using NETworkManager.Utilities.Enum;
+using NETworkManager.Enum;
 
 namespace NETworkManager.ViewModels
 {

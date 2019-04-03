@@ -12,7 +12,7 @@ using NETworkManager.Utilities;
 using System.Threading.Tasks;
 using System.Linq;
 using MahApps.Metro.Controls;
-using NETworkManager.Utilities.Enum;
+using NETworkManager.Enum;
 
 namespace NETworkManager.ViewModels
 {

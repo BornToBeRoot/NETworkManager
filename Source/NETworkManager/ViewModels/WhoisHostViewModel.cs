@@ -11,7 +11,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
-using NETworkManager.Utilities.Enum;
+using NETworkManager.Enum;
 
 namespace NETworkManager.ViewModels
 {

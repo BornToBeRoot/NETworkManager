@@ -308,9 +308,9 @@
     <Compile Include="Utilities\ArrayHelper.cs" />
     <Compile Include="Utilities\AutoRefreshTime.cs" />
     <Compile Include="Utilities\AutoRefreshTimeInfo.cs" />
-    <Compile Include="Utilities\Enum\ProfileEditMode.cs" />
-    <Compile Include="Utilities\Enum\ConnectionState.cs" />
-    <Compile Include="Utilities\Enum\TimeUnit.cs" />
+    <Compile Include="Enum\ProfileEditMode.cs" />
+    <Compile Include="Enum\ConnectionState.cs" />
+    <Compile Include="Enum\TimeUnit.cs" />
     <Compile Include="Utilities\EventSystemRedirectProfileApplicationArgs.cs" />
     <Compile Include="Utilities\EventSystemRedirectDataApplicationArgs.cs" />
     <Compile Include="Utilities\EventSystem.cs" />

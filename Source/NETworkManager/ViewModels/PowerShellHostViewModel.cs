@@ -14,7 +14,7 @@ using System.IO;
 using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Models.PowerShell;
-using NETworkManager.Utilities.Enum;
+using NETworkManager.Enum;
 
 namespace NETworkManager.ViewModels
 {

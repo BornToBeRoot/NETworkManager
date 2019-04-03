@@ -415,7 +415,7 @@ namespace NETworkManager.ViewModels
             QueryResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
 
             // Versions (v1, v2c, v3)
-            Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
+            Versions = System.Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
 
             // Modes
             Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };

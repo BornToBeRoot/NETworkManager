@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.NetworkInformation;
 using NETworkManager.Models.Network;
-using NETworkManager.Utilities.Enum;
+using NETworkManager.Enum;
 
 namespace NETworkManager.Models.Settings
 {

@@ -14,7 +14,7 @@ using NETworkManager.Utilities;
 using System.Diagnostics;
 using NETworkManager.Models.PuTTY;
 using System.Windows;
-using NETworkManager.Utilities.Enum;
+using NETworkManager.Enum;
 
 namespace NETworkManager.ViewModels
 {

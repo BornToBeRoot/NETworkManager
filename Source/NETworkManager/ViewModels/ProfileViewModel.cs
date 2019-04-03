@@ -9,7 +9,7 @@ using System.Net.Sockets;
 using System.Windows.Data;
 using System.Windows.Input;
 using NETworkManager.Models.PowerShell;
-using NETworkManager.Utilities.Enum;
+using NETworkManager.Enum;
 using static NETworkManager.Models.PuTTY.PuTTY;
 // ReSharper disable InconsistentNaming
 
@@ -1733,7 +1733,7 @@ namespace NETworkManager.ViewModels
             PowerShell_Host = profileInfo.PowerShell_Host;
             PowerShell_OverrideAdditionalCommandLine = profileInfo.PowerShell_OverrideAdditionalCommandLine;
             PowerShell_AdditionalCommandLine = profileInfo.PowerShell_AdditionalCommandLine;
-            PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
+            PowerShell_ExecutionPolicies = System.Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
             PowerShell_OverrideExecutionPolicy = profileInfo.PowerShell_OverrideExecutionPolicy;
             PowerShell_ExecutionPolicy = editMode != ProfileEditMode.Add ? profileInfo.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
 

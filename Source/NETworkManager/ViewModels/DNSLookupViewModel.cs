@@ -303,7 +303,7 @@ namespace NETworkManager.ViewModels
         private void LoadTypes()
         {
             // Filter by common types...
-            Types = SettingsManager.Current.DNSLookup_ShowMostCommonQueryTypes ? Enum.GetValues(typeof(QType)).Cast<QType>().Where(x => (x == QType.A || x == QType.AAAA || x == QType.ANY || x == QType.CNAME || x == QType.MX || x == QType.NS || x == QType.PTR || x == QType.SOA || x == QType.LOC || x == QType.TXT)).OrderBy(x => x.ToString()).ToList() : Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
+            Types = SettingsManager.Current.DNSLookup_ShowMostCommonQueryTypes ? System.Enum.GetValues(typeof(QType)).Cast<QType>().Where(x => (x == QType.A || x == QType.AAAA || x == QType.ANY || x == QType.CNAME || x == QType.MX || x == QType.NS || x == QType.PTR || x == QType.SOA || x == QType.LOC || x == QType.TXT)).OrderBy(x => x.ToString()).ToList() : System.Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
             Type = Types.FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_Type);
 
             // Fallback

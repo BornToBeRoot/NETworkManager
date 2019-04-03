@@ -12,7 +12,7 @@ namespace NETworkManager
         {
             var list = new List<ApplicationViewInfo>();
 
-            foreach (Name name in Enum.GetValues(typeof(Name)))
+            foreach (Name name in System.Enum.GetValues(typeof(Name)))
             {
                 if (name != Name.None)
                     list.Add(new ApplicationViewInfo(name));

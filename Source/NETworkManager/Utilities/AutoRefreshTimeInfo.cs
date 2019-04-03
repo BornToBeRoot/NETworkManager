@@ -1,4 +1,4 @@
-﻿using NETworkManager.Utilities.Enum;
+﻿using NETworkManager.Enum;
 
 namespace NETworkManager.Utilities
 {

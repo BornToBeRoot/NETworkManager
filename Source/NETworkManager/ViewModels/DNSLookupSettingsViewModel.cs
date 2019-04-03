@@ -275,10 +275,10 @@ namespace NETworkManager.ViewModels
             ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
             Recursion = SettingsManager.Current.DNSLookup_Recursion;
             UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
-            Classes = Enum.GetValues(typeof(QClass)).Cast<QClass>().OrderBy(x => x.ToString()).ToList();
+            Classes = System.Enum.GetValues(typeof(QClass)).Cast<QClass>().OrderBy(x => x.ToString()).ToList();
             Class = Classes.First(x => x == SettingsManager.Current.DNSLookup_Class);
             ShowMostCommonQueryTypes = SettingsManager.Current.DNSLookup_ShowMostCommonQueryTypes;
-            TransportTypes = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().OrderBy(x => x.ToString()).ToList();
+            TransportTypes = System.Enum.GetValues(typeof(TransportType)).Cast<TransportType>().OrderBy(x => x.ToString()).ToList();
             TransportType = TransportTypes.First(x => x == SettingsManager.Current.DNSLookup_TransportType);
             Attempts = SettingsManager.Current.DNSLookup_Attempts;
             Timeout = SettingsManager.Current.DNSLookup_Timeout;

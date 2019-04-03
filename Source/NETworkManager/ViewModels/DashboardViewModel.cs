@@ -9,7 +9,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using NETworkManager.Utilities.Enum;
+using NETworkManager.Enum;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 
 namespace NETworkManager.ViewModels
