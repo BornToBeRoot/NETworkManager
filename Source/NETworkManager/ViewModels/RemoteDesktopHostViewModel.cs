@@ -13,6 +13,7 @@ using System.Diagnostics;
 using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.Utilities.Enum;
 
 namespace NETworkManager.ViewModels
 {
@@ -296,7 +297,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, ProfileManager.GetGroups(), true, SelectedProfile);
+            }, ProfileManager.GetGroups(), ProfileEditMode.Edit, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -329,7 +330,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, ProfileManager.GetGroups(), false, SelectedProfile);
+            }, ProfileManager.GetGroups(), ProfileEditMode.Copy, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {

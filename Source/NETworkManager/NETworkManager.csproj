@@ -308,6 +308,7 @@
     <Compile Include="Utilities\ArrayHelper.cs" />
     <Compile Include="Utilities\AutoRefreshTime.cs" />
     <Compile Include="Utilities\AutoRefreshTimeInfo.cs" />
+    <Compile Include="Utilities\Enum\ProfileEditMode.cs" />
     <Compile Include="Utilities\Enum\ConnectionState.cs" />
     <Compile Include="Utilities\Enum\TimeUnit.cs" />
     <Compile Include="Utilities\EventSystemRedirectProfileApplicationArgs.cs" />
@@ -350,7 +351,6 @@
     <Compile Include="Validators\MultipleIPAddressesValidator.cs" />
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
-    <Compile Include="Validators\IsProfileNameUnique.cs" />
     <Compile Include="ViewModels\FirstRunViewModel.cs" />
     <Compile Include="ViewModels\NetworkInterfaceAddIPAddressViewModel.cs" />
     <Compile Include="ViewModels\ExportViewModel.cs" />

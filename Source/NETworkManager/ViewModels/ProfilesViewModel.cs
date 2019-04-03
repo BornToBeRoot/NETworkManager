@@ -10,6 +10,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Threading;
+using NETworkManager.Utilities.Enum;
 
 namespace NETworkManager.ViewModels
 {
@@ -172,32 +173,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), false);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async void CopyAsProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.CopyProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), false, SelectedProfile);
+            }, ProfileManager.GetGroups());
 
             customDialog.Content = new ProfileDialog
             {
@@ -224,7 +200,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), true, SelectedProfile);
+            }, ProfileManager.GetGroups(), ProfileEditMode.Edit, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -234,6 +210,31 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
+        public async void CopyAsProfile()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.CopyProfile
+            };
+
+            var profileViewModel = new ProfileViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                ProfileManager.AddProfile(instance);
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, ProfileManager.GetGroups(), ProfileEditMode.Copy, SelectedProfile);
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = profileViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+        
         public async void DeleteProfile()
         {
             var customDialog = new CustomDialog

@@ -11,6 +11,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.Enum;
 
 namespace NETworkManager.ViewModels
 {
@@ -239,7 +240,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), true, SelectedProfile);
+            }, ProfileManager.GetGroups(), ProfileEditMode.Edit, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -269,7 +270,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), false, SelectedProfile);
+            }, ProfileManager.GetGroups(), ProfileEditMode.Copy, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {

@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Windows.Data;
 using System.Windows.Input;
 using NETworkManager.Models.PowerShell;
+using NETworkManager.Utilities.Enum;
 using static NETworkManager.Models.PuTTY.PuTTY;
 // ReSharper disable InconsistentNaming
 
@@ -104,20 +105,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _showUnlockCredentialsHint = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isEdited;
-        public bool IsEdited
-        {
-            get => _isEdited;
-            set
-            {
-                if (value == _isEdited)
-                    return;
-
-                _isEdited = value;
                 OnPropertyChanged();
             }
         }
@@ -1629,7 +1616,7 @@ namespace NETworkManager.ViewModels
         #endregion
         #endregion
 
-        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, bool isEdited = false, ProfileInfo profile = null)
+        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null)
         {
             // Load the view
             ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
@@ -1638,11 +1625,13 @@ namespace NETworkManager.ViewModels
             SaveCommand = new RelayCommand(p => saveCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            IsEdited = isEdited;
-
             var profileInfo = profile ?? new ProfileInfo();
 
             Name = profileInfo.Name;
+
+            if (editMode == ProfileEditMode.Copy)
+                Name += " - " + Resources.Localization.Strings.CopyNoun;
+
             Host = profileInfo.Host;
 
             if (CredentialManager.IsLoaded)
@@ -1746,7 +1735,7 @@ namespace NETworkManager.ViewModels
             PowerShell_AdditionalCommandLine = profileInfo.PowerShell_AdditionalCommandLine;
             PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
             PowerShell_OverrideExecutionPolicy = profileInfo.PowerShell_OverrideExecutionPolicy;
-            PowerShell_ExecutionPolicy = IsEdited ? profileInfo.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
+            PowerShell_ExecutionPolicy = editMode != ProfileEditMode.Add ? profileInfo.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
 
             // PuTTY
             PuTTY_Enabled = profileInfo.PuTTY_Enabled;

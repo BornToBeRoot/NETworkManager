@@ -1051,6 +1051,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string CopyNoun {
+            get {
+                return ResourceManager.GetString("CopyNoun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy profile.
         /// </summary>
         public static string CopyProfile {

@@ -2175,4 +2175,7 @@ is disabled!</value>
   <data name="IPv6ProtocolAvailable" xml:space="preserve">
     <value>IPv6 protocol available</value>
   </data>
+  <data name="CopyNoun" xml:space="preserve">
+    <value>Copy</value>
+  </data>
 </root>
