@@ -730,6 +730,7 @@
     <Resource Include="Resources\Localization\Flags\es-ES.png" />
     <SplashScreen Include="Resources\Images\SplashScreen.png" />
     <Resource Include="Resources\Localization\Flags\fr-FR.png" />
+    <Resource Include="Resources\Localization\Flags\nl-NL.png" />
     <Content Include="Resources\WhoisServers.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
