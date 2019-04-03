@@ -13,7 +13,6 @@ using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
-using NETworkManager.Utilities.Enum;
 using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels

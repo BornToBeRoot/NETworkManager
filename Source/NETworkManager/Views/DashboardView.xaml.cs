@@ -31,11 +31,5 @@ namespace NETworkManager.Views
         {
             _viewModel.OnViewVisible();
         }
-
-        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                _viewModel.EditProfile();
-        }
     }
 }

@@ -2,11 +2,7 @@
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using System;
-using System.ComponentModel;
-using System.Windows.Data;
-using NETworkManager.Views;
 using NETworkManager.Utilities;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -21,8 +17,6 @@ namespace NETworkManager.ViewModels
     {
         #region  Variables 
         private readonly IDialogCoordinator _dialogCoordinator;
-
-        private readonly bool _isLoading;
 
         #region Host
         private bool _isHostCheckRunning;
@@ -330,73 +324,11 @@ namespace NETworkManager.ViewModels
         #endregion
         #endregion
 
-        #region Profiles
-        public ICollectionView Profiles { get; }
-
-        private ProfileInfo _selectedProfile;
-        public ProfileInfo SelectedProfile
-        {
-            get => _selectedProfile;
-            set
-            {
-                if (value == _selectedProfile)
-                    return;
-
-                _selectedProfile = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _search;
-        public string Search
-        {
-            get => _search;
-            set
-            {
-                if (value == _search)
-                    return;
-
-                _search = value;
-
-                Profiles.Refresh();
-
-                OnPropertyChanged();
-            }
-        }
-        #endregion
-
         #region Constructor, load settings
 
         public DashboardViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true;
-
             _dialogCoordinator = instance;
-
-            Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
-            Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
-            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
-            Profiles.Filter = o =>
-            {
-                if (!(o is ProfileInfo info))
-                    return false;
-
-                if (string.IsNullOrEmpty(Search))
-                    return true;
-
-                var search = Search.Trim();
-
-                // Search by: Tag=xxx (exact match, ignore case)
-                if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                    return !string.IsNullOrEmpty(info.Tags) && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
-
-                // Search by: Name
-                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-            };
-
-            // This will select the first entry as selected item...
-            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
             // Detect if network address or status changed...
             NetworkChange.NetworkAvailabilityChanged += (sender, args) => CheckConnectionAsync();
@@ -405,8 +337,6 @@ namespace NETworkManager.ViewModels
             LoadSettings();
 
             CheckConnectionAsync();
-
-            _isLoading = false;
         }
 
         private void LoadSettings()
@@ -427,54 +357,6 @@ namespace NETworkManager.ViewModels
         private void CheckConnectionAction()
         {
             CheckConnectionAsync();
-        }
-
-        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
-
-        private void EditProfileAction()
-        {
-            EditProfile();
-        }
-
-        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
-
-        private void CopyAsProfileAction()
-        {
-            CopyAsProfile();
-        }
-
-        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
-
-        private void DeleteProfileAction()
-        {
-            DeleteProfile();
-        }
-
-        public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
-
-        private void EditGroupAction(object group)
-        {
-            EditGroup(group);
-        }
-
-        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
-
-        private void ClearSearchAction()
-        {
-            Search = string.Empty;
-        }
-
-        public ICommand RedirectProfileToApplicationCommand => new RelayCommand(RedirectProfileToApplicationAction);
-
-        private void RedirectProfileToApplicationAction(object name)
-        {
-            if (!(name is string appName))
-                return;
-
-            if (!Enum.TryParse(appName, out ApplicationViewManager.Name applicationName))
-                return;
-            
-            EventSystem.RedirectProfileToApplication(applicationName, SelectedProfile);
         }
         #endregion
 
@@ -886,7 +768,7 @@ namespace NETworkManager.ViewModels
             #endregion
         }
 
-        public void AddToHostDetails(ConnectionState state, string message)
+        private void AddToHostDetails(ConnectionState state, string message)
         {
             if (!string.IsNullOrEmpty(HostDetails))
                 HostDetails += Environment.NewLine;
@@ -894,7 +776,7 @@ namespace NETworkManager.ViewModels
             HostDetails += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
         }
 
-        public void AddToGatewayDetails(ConnectionState state, string message)
+        private void AddToGatewayDetails(ConnectionState state, string message)
         {
             if (!string.IsNullOrEmpty(GatewayDetails))
                 GatewayDetails += Environment.NewLine;
@@ -902,7 +784,7 @@ namespace NETworkManager.ViewModels
             GatewayDetails += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
         }
 
-        public void AddToInternetDetails(ConnectionState state, string message)
+        private void AddToInternetDetails(ConnectionState state, string message)
         {
             if (!string.IsNullOrEmpty(InternetDetails))
                 InternetDetails += Environment.NewLine;
@@ -910,108 +792,9 @@ namespace NETworkManager.ViewModels
             InternetDetails += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
         }
 
-        public async void EditProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.EditProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-                {
-                    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                    ProfileManager.RemoveProfile(SelectedProfile);
-
-                    ProfileManager.AddProfile(instance);
-                }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-                ProfileManager.GetGroups(),
-                true, SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async void CopyAsProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.CopyProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-                {
-                    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                    ProfileManager.AddProfile(instance);
-                }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-                ProfileManager.GetGroups(),
-                false, SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async void DeleteProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.DeleteProfile
-            };
-
-            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
-                {
-                    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                    ProfileManager.RemoveProfile(SelectedProfile);
-                }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); },
-                Resources.Localization.Strings.DeleteProfileMessage);
-
-            customDialog.Content = new ConfirmRemoveDialog
-            {
-                DataContext = confirmRemoveViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async void EditGroup(object group)
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.EditGroup
-            };
-
-            var editGroupViewModel = new GroupViewModel(instance =>
-                {
-                    _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                    ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
-
-                    Profiles.Refresh();
-                }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, group.ToString(),
-                ProfileManager.GetGroups());
-
-            customDialog.Content = new GroupDialog
-            {
-                DataContext = editGroupViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
         public void OnViewVisible()
         {
-            // Refresh profiles
-            Profiles.Refresh();
+          
         }
 
         public void OnViewHide()
