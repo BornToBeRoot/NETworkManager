@@ -139,7 +139,7 @@ namespace NETworkManager
             get => _selectedApplication;
             set
             {
-                if (value == _selectedApplication)
+                if (Equals(value, _selectedApplication))
                     return;
 
                 if (value != null)
@@ -685,6 +685,7 @@ namespace NETworkManager
             ListViewApplication.ScrollIntoView(SelectedApplication);
         }
 
+        // This works, but is not used :) 
         private void EventSystem_RedirectProfileToApplicationEvent(object sender, EventArgs e)
         {
             if (!(e is EventSystemRedirectProfileApplicationArgs profile))

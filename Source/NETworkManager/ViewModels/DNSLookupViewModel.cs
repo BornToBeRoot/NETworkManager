@@ -313,10 +313,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand LookupCommand
-        {
-            get { return new RelayCommand(p => LookupAction(), Lookup_CanExecute); }
-        }
+        public ICommand LookupCommand => new RelayCommand(p => LookupAction(), Lookup_CanExecute);
 
         private bool Lookup_CanExecute(object paramter)
         {
@@ -329,60 +326,42 @@ namespace NETworkManager.ViewModels
                 StartLookup();
         }
 
-        public ICommand CopySelectedNameCommand
-        {
-            get { return new RelayCommand(p => CopySelectedNameAction()); }
-        }
+        public ICommand CopySelectedNameCommand => new RelayCommand(p => CopySelectedNameAction());
 
         private void CopySelectedNameAction()
         {
             CommonMethods.SetClipboard(SelectedLookupResult.Name);
         }
 
-        public ICommand CopySelectedTTLCommand
-        {
-            get { return new RelayCommand(p => CopySelectedTTLAction()); }
-        }
+        public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
 
         private void CopySelectedTTLAction()
         {
             CommonMethods.SetClipboard(SelectedLookupResult.TTL.ToString());
         }
 
-        public ICommand CopySelectedClassCommand
-        {
-            get { return new RelayCommand(p => CopySelectedClassAction()); }
-        }
+        public ICommand CopySelectedClassCommand => new RelayCommand(p => CopySelectedClassAction());
 
         private void CopySelectedClassAction()
         {
             CommonMethods.SetClipboard(SelectedLookupResult.Class);
         }
 
-        public ICommand CopySelectedTypeCommand
-        {
-            get { return new RelayCommand(p => CopySelectedTypeAction()); }
-        }
+        public ICommand CopySelectedTypeCommand => new RelayCommand(p => CopySelectedTypeAction());
 
         private void CopySelectedTypeAction()
         {
             CommonMethods.SetClipboard(SelectedLookupResult.Type);
         }
 
-        public ICommand CopySelectedResultCommand
-        {
-            get { return new RelayCommand(p => CopySelectedResultAction()); }
-        }
+        public ICommand CopySelectedResultCommand => new RelayCommand(p => CopySelectedResultAction());
 
         private void CopySelectedResultAction()
         {
             CommonMethods.SetClipboard(SelectedLookupResult.Result);
         }
 
-        public ICommand ExportCommand
-        {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
         private async void ExportAction()
         {

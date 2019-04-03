@@ -17,8 +17,6 @@ namespace NETworkManager.ViewModels
     public class DashboardViewModel : ViewModelBase
     {
         #region  Variables 
-        private readonly IDialogCoordinator _dialogCoordinator;
-
         #region Host
         private bool _isHostCheckRunning;
         public bool IsHostCheckRunning
@@ -105,16 +103,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _hostDetails;
-        public string HostDetails
+        private string _hostStatus;
+        public string HostStatus
         {
-            get => _hostDetails;
+            get => _hostStatus;
             set
             {
-                if (value == _hostDetails)
+                if (value == _hostStatus)
                     return;
 
-                _hostDetails = value;
+                _hostStatus = value;
                 OnPropertyChanged();
             }
         }
@@ -206,16 +204,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _gatewayDetails;
-        public string GatewayDetails
+        private string _gatewayStatus;
+        public string GatewayStatus
         {
-            get => _gatewayDetails;
+            get => _gatewayStatus;
             set
             {
-                if (value == _gatewayDetails)
+                if (value == _gatewayStatus)
                     return;
 
-                _gatewayDetails = value;
+                _gatewayStatus = value;
                 OnPropertyChanged();
             }
         }
@@ -307,16 +305,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _internetDetails;
-        public string InternetDetails
+        private string _internetStatus;
+        public string InternetStatus
         {
-            get => _internetDetails;
+            get => _internetStatus;
             set
             {
-                if (value == _internetDetails)
+                if (value == _internetStatus)
                     return;
 
-                _internetDetails = value;
+                _internetStatus = value;
                 OnPropertyChanged();
             }
         }
@@ -349,16 +347,14 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         public bool CheckPublicIPAddress => SettingsManager.Current.Dashboard_CheckPublicIPAddress;
         #endregion
 
         #region Constructor, load settings
 
-        public DashboardViewModel(IDialogCoordinator instance)
+        public DashboardViewModel()
         {
-            _dialogCoordinator = instance;
-
             // Detect if network address or status changed...
             NetworkChange.NetworkAvailabilityChanged += (sender, args) => CheckConnectionAsync();
             NetworkChange.NetworkAddressChanged += (sender, args) => CheckConnectionAsync();
@@ -378,7 +374,6 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-
         public ICommand CheckConnectionCommand => new RelayCommand(p => CheckConnectionAction(), CheckConnection_CanExecute);
 
         private bool CheckConnection_CanExecute(object paramter)
@@ -389,6 +384,72 @@ namespace NETworkManager.ViewModels
         private void CheckConnectionAction()
         {
             CheckConnectionAsync();
+        }
+
+        public ICommand CopyHostIPAddressCommand => new RelayCommand(p => CopyHostIPAddressAction());
+
+        private void CopyHostIPAddressAction()
+        {
+            if (HostIPAddress != null)
+                CommonMethods.SetClipboard(HostIPAddress.ToString());
+        }
+
+        public ICommand CopyHostHostnameCommand => new RelayCommand(p => CopyHostHostnameAction());
+
+        private void CopyHostHostnameAction()
+        {
+            CommonMethods.SetClipboard(HostHostname);
+        }
+
+        public ICommand CopyHostStatusCommand => new RelayCommand(p => CopyHostStatusAction());
+
+        private void CopyHostStatusAction()
+        {
+            CommonMethods.SetClipboard(HostStatus);
+        }
+
+        public ICommand CopyGatewayIPAddressCommand => new RelayCommand(p => CopyGatewayIPAddressAction());
+
+        private void CopyGatewayIPAddressAction()
+        {
+            if (GatewayIPAddress != null)
+                CommonMethods.SetClipboard(GatewayIPAddress.ToString());
+        }
+
+        public ICommand CopyGatewayHostnameCommand => new RelayCommand(p => CopyGatewayHostnameAction());
+
+        private void CopyGatewayHostnameAction()
+        {
+            CommonMethods.SetClipboard(GatewayHostname);
+        }
+
+        public ICommand CopyGatewayStatusCommand => new RelayCommand(p => CopyGatewayStatusAction());
+
+        private void CopyGatewayStatusAction()
+        {
+            CommonMethods.SetClipboard(GatewayStatus);
+        }
+
+        public ICommand CopyPublicIPAddressCommand => new RelayCommand(p => CopyPublicIPAddressAction());
+
+        private void CopyPublicIPAddressAction()
+        {
+            if (PublicIPAddress != null)
+                CommonMethods.SetClipboard(PublicIPAddress.ToString());
+        }
+
+        public ICommand CopyPublicHostnameCommand => new RelayCommand(p => CopyPublicHostnameAction());
+
+        private void CopyPublicHostnameAction()
+        {
+            CommonMethods.SetClipboard(PublicHostname);
+        }
+
+        public ICommand CopyInternetStatusCommand => new RelayCommand(p => CopyInternetStatusAction());
+
+        private void CopyInternetStatusAction()
+        {
+            CommonMethods.SetClipboard(InternetStatus);
         }
         #endregion
 
@@ -406,7 +467,7 @@ namespace NETworkManager.ViewModels
             // Reset
             IsHostCheckRunning = true;
             IsHostCheckComplete = false;
-            HostDetails = "";
+            HostStatus = "";
             IsHostReachable = false;
             HostConnectionState = ConnectionState.None;
             HostIPAddress = null;
@@ -414,7 +475,7 @@ namespace NETworkManager.ViewModels
 
             IsGatewayCheckRunning = true;
             IsGatewayCheckComplete = false;
-            GatewayDetails = "";
+            GatewayStatus = "";
             IsGatewayReachable = false;
             GatewayConnectionState = ConnectionState.None;
             GatewayIPAddress = null;
@@ -422,7 +483,7 @@ namespace NETworkManager.ViewModels
 
             IsInternetCheckRunning = true;
             IsInternetCheckComplete = false;
-            InternetDetails = "";
+            InternetStatus = "";
             IsInternetReachable = false;
             InternetConnectionState = ConnectionState.None;
             PublicIPAddress = null;
@@ -795,7 +856,7 @@ namespace NETworkManager.ViewModels
             }
             else
             {
-                var note = Resources.Localization.Strings.PublicIPAddressCheckIsDisabled.Replace("\n","").Split('\r');
+                var note = Resources.Localization.Strings.PublicIPAddressCheckIsDisabled.Replace("\n", "").Split('\r');
 
                 PublicIPAddressCheckDisabledNote1 = note[0];
                 PublicIPAddressCheckDisabledNote2 = note[1];
@@ -809,27 +870,27 @@ namespace NETworkManager.ViewModels
 
         private void AddToHostDetails(ConnectionState state, string message)
         {
-            if (!string.IsNullOrEmpty(HostDetails))
-                HostDetails += Environment.NewLine;
+            if (!string.IsNullOrEmpty(HostStatus))
+                HostStatus += Environment.NewLine;
 
-            HostDetails += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
+            HostStatus += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
         }
 
         private void AddToGatewayDetails(ConnectionState state, string message)
         {
-            if (!string.IsNullOrEmpty(GatewayDetails))
-                GatewayDetails += Environment.NewLine;
+            if (!string.IsNullOrEmpty(GatewayStatus))
+                GatewayStatus += Environment.NewLine;
 
-            GatewayDetails += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
+            GatewayStatus += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
         }
 
         private void AddToInternetDetails(ConnectionState state, string message)
         {
-            if (!string.IsNullOrEmpty(InternetDetails))
-                InternetDetails += Environment.NewLine;
+            if (!string.IsNullOrEmpty(InternetStatus))
+                InternetStatus += Environment.NewLine;
 
             if (state != ConnectionState.None)
-                InternetDetails += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
+                InternetStatus += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
         }
 
         public void OnViewVisible()
