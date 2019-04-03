@@ -151,10 +151,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Commands & Actions
-        public ICommand CheckForUpdatesCommand
-        {
-            get { return new RelayCommand(p => CheckForUpdatesAction()); }
-        }
+        public ICommand CheckForUpdatesCommand => new RelayCommand(p => CheckForUpdatesAction());
 
         private void CheckForUpdatesAction()
         {
@@ -168,10 +165,7 @@ namespace NETworkManager.ViewModels
             Process.Start((string)url);
         }
 
-        public ICommand OpenLicenseFolderCommand
-        {
-            get { return new RelayCommand(p => OpenLicenseFolderAction()); }
-        }
+        public ICommand OpenLicenseFolderCommand => new RelayCommand(p => OpenLicenseFolderAction());
 
         private void OpenLicenseFolderAction()
         {

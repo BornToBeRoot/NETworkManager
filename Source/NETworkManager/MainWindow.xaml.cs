@@ -14,7 +14,6 @@ using NETworkManager.Models.Settings;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using NETworkManager.Utilities;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
@@ -685,7 +684,7 @@ namespace NETworkManager
             ListViewApplication.ScrollIntoView(SelectedApplication);
         }
 
-        // This works, but is not used :) 
+        // This works, but is currently not used :) 
         private void EventSystem_RedirectProfileToApplicationEvent(object sender, EventArgs e)
         {
             if (!(e is EventSystemRedirectProfileApplicationArgs profile))
