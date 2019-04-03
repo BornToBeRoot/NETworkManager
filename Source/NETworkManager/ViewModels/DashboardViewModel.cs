@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using System;
+using System.ComponentModel;
 using NETworkManager.Utilities;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -293,7 +294,6 @@ namespace NETworkManager.ViewModels
         }
 
         private string _publicHostname;
-
         public string PublicHostname
         {
             get => _publicHostname;
@@ -308,7 +308,6 @@ namespace NETworkManager.ViewModels
         }
 
         private string _internetDetails;
-
         public string InternetDetails
         {
             get => _internetDetails;
@@ -322,6 +321,36 @@ namespace NETworkManager.ViewModels
             }
         }
         #endregion
+
+        private string _publicIPAddressCheckDisabledNote1;
+        public string PublicIPAddressCheckDisabledNote1
+        {
+            get => _publicIPAddressCheckDisabledNote1;
+            set
+            {
+                if (value == _publicIPAddressCheckDisabledNote1)
+                    return;
+
+                _publicIPAddressCheckDisabledNote1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _publicIPAddressCheckDisabledNote2;
+        public string PublicIPAddressCheckDisabledNote2
+        {
+            get => _publicIPAddressCheckDisabledNote2;
+            set
+            {
+                if (value == _publicIPAddressCheckDisabledNote2)
+                    return;
+
+                _publicIPAddressCheckDisabledNote2 = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        public bool CheckPublicIPAddress => SettingsManager.Current.Dashboard_CheckPublicIPAddress;
         #endregion
 
         #region Constructor, load settings
@@ -335,6 +364,9 @@ namespace NETworkManager.ViewModels
             NetworkChange.NetworkAddressChanged += (sender, args) => CheckConnectionAsync();
 
             LoadSettings();
+
+            // Detect if settings have changed...
+            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
             CheckConnectionAsync();
         }
@@ -761,6 +793,13 @@ namespace NETworkManager.ViewModels
                     return;
                 }
             }
+            else
+            {
+                var note = Resources.Localization.Strings.PublicIPAddressCheckIsDisabled.Replace("\n","").Split('\r');
+
+                PublicIPAddressCheckDisabledNote1 = note[0];
+                PublicIPAddressCheckDisabledNote2 = note[1];
+            }
 
             IsInternetCheckRunning = false;
             IsInternetCheckComplete = true;
@@ -789,17 +828,30 @@ namespace NETworkManager.ViewModels
             if (!string.IsNullOrEmpty(InternetDetails))
                 InternetDetails += Environment.NewLine;
 
-            InternetDetails += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
+            if (state != ConnectionState.None)
+                InternetDetails += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
         }
 
         public void OnViewVisible()
         {
-          
+
         }
 
         public void OnViewHide()
         {
 
+        }
+        #endregion
+
+        #region Events
+        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(SettingsInfo.Dashboard_CheckPublicIPAddress):
+                    OnPropertyChanged(nameof(CheckPublicIPAddress));
+                    break;
+            }
         }
         #endregion
     }

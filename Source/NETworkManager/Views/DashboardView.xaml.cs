@@ -1,8 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace NETworkManager.Views
 {
@@ -14,12 +11,6 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
             DataContext = _viewModel;
-        }
-
-        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-        {
-            if (sender is ContextMenu menu)
-                menu.DataContext = _viewModel;
         }
 
         public void OnViewHide()

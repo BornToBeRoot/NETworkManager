@@ -267,8 +267,10 @@
                         </Rectangle>
                         <mahAppsControls:ProgressRing Grid.Column="0" Grid.Row="4" IsActive="True" Width="24" Height="24" Visibility="{Binding IsInternetCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                         <Rectangle Grid.Column="0" Grid.Row="4" Width="24" Height="24" ToolTip="{Binding InternetDetails}" Style="{Binding InternetConnectionState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsInternetCheckRunning, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding PublicIPAddress}" />
-                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding PublicHostname}" />
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding PublicIPAddress}" Visibility="{Binding CheckPublicIPAddress, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"  />
+                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding PublicHostname}"  Visibility="{Binding CheckPublicIPAddress, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"  />
+                        <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding PublicIPAddressCheckDisabledNote1}" Visibility="{Binding CheckPublicIPAddress, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding PublicIPAddressCheckDisabledNote2}" Visibility="{Binding CheckPublicIPAddress, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"  />
                     </Grid>
                 </Grid>     
             </Grid>
