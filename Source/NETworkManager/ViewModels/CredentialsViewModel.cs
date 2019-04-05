@@ -178,50 +178,35 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Commands & Actions
-        public ICommand SetMasterPasswordCommand
-        {
-            get { return new RelayCommand(p => SetMasterPasswordAction()); }
-        }
+        public ICommand SetMasterPasswordCommand => new RelayCommand(p => SetMasterPasswordAction());
 
         private void SetMasterPasswordAction()
         {
             SetMasterPassword();
         }
 
-        public ICommand DecryptAndLoadCommand
-        {
-            get { return new RelayCommand(p => DecryptAndLoadAction()); }
-        }
+        public ICommand DecryptAndLoadCommand => new RelayCommand(p => DecryptAndLoadAction());
 
         private void DecryptAndLoadAction()
         {
             DecryptAndLoad();
         }
 
-        public ICommand ChangeMasterPasswordCommand
-        {
-            get { return new RelayCommand(p => ChangeMasterPasswordAction()); }
-        }
+        public ICommand ChangeMasterPasswordCommand => new RelayCommand(p => ChangeMasterPasswordAction());
 
         private void ChangeMasterPasswordAction()
         {
             ChangeMasterPassword();
         }
 
-        public ICommand AddCommand
-        {
-            get { return new RelayCommand(p => AddAction()); }
-        }
+        public ICommand AddCommand => new RelayCommand(p => AddAction());
 
         private void AddAction()
         {
             Add();
         }
 
-        public ICommand EditCommand
-        {
-            get { return new RelayCommand(p => EditAction(), Edit_CanExecute); }
-        }
+        public ICommand EditCommand => new RelayCommand(p => EditAction(), Edit_CanExecute);
 
         private bool Edit_CanExecute(object paramter)
         {
@@ -233,20 +218,14 @@ namespace NETworkManager.ViewModels
             Edit();
         }
 
-        public ICommand DeleteCommand
-        {
-            get { return new RelayCommand(p => DeleteAction()); }
-        }
+        public ICommand DeleteCommand => new RelayCommand(p => DeleteAction());
 
         private void DeleteAction()
         {
             Delete();
         }
 
-        public ICommand LockUnlockCommand
-        {
-            get { return new RelayCommand(p => LockUnlockAction()); }
-        }
+        public ICommand LockUnlockCommand => new RelayCommand(p => LockUnlockAction());
 
         private void LockUnlockAction()
         {
@@ -320,7 +299,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialogSetMasterPassword = new CustomDialog
             {
-                Title = Resources.Localization.Strings.SetMasterPassword
+                Title = Strings.SetMasterPassword
             };
 
             var credentialsSetMasterPasswordViewModel = new CredentialsSetMasterPasswordViewModel(instance =>

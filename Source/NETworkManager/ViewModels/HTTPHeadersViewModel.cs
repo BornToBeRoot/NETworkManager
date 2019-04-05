@@ -220,10 +220,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand CheckCommand
-        {
-            get { return new RelayCommand(p => CheckAction(), Check_CanExecute); }
-        }
+        public ICommand CheckCommand => new RelayCommand(p => CheckAction(), Check_CanExecute);
 
         private bool Check_CanExecute(object paramter)
         {
@@ -235,10 +232,7 @@ namespace NETworkManager.ViewModels
             Check();
         }
 
-        public ICommand ExportCommand
-        {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
         private async void ExportAction()
         {

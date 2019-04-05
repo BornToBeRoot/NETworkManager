@@ -135,15 +135,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand PortLookupCommand
-        {
-            get { return new RelayCommand(p => PortLookupAction(), PortLookup_CanExecute); }
-        }
+        public ICommand PortLookupCommand => new RelayCommand(p => PortLookupAction(), PortLookup_CanExecute);
 
-        private bool PortLookup_CanExecute(object parameter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !PortOrServiceHasError;
-        }
+        private bool PortLookup_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !PortOrServiceHasError;
 
         private async void PortLookupAction()
         {
@@ -225,50 +219,35 @@ namespace NETworkManager.ViewModels
             IsLookupRunning = false;
         }
 
-        public ICommand CopySelectedPortCommand
-        {
-            get { return new RelayCommand(p => CopySelectedPortAction()); }
-        }
+        public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
 
         private void CopySelectedPortAction()
         {
             CommonMethods.SetClipboard(SelectedPortLookupResult.Number.ToString());
         }
 
-        public ICommand CopySelectedProtocolCommand
-        {
-            get { return new RelayCommand(p => CopySelectedProtocolAction()); }
-        }
+        public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
 
         private void CopySelectedProtocolAction()
         {
             CommonMethods.SetClipboard(SelectedPortLookupResult.Protocol.ToString());
         }
 
-        public ICommand CopySelectedServiceCommand
-        {
-            get { return new RelayCommand(p => CopySelectedServiceAction()); }
-        }
+        public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
 
         private void CopySelectedServiceAction()
         {
             CommonMethods.SetClipboard(SelectedPortLookupResult.Service);
         }
 
-        public ICommand CopySelectedDescriptionCommand
-        {
-            get { return new RelayCommand(p => CopySelectedDescriptionAction()); }
-        }
+        public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
 
         private void CopySelectedDescriptionAction()
         {
             CommonMethods.SetClipboard(SelectedPortLookupResult.Description);
         }
 
-        public ICommand ExportCommand
-        {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
         private async void ExportAction()
         {

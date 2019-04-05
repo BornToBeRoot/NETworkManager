@@ -178,20 +178,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddTabCommand
-        {
-            get { return new RelayCommand(p => AddTabAction()); }
-        }
+        public ICommand AddTabCommand => new RelayCommand(p => AddTabAction());
 
         private void AddTabAction()
         {
             AddTab();
         }
 
-        public ICommand AddProfileCommand
-        {
-            get { return new RelayCommand(p => AddProfileAction()); }
-        }
+        public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
         private async void AddProfileAction()
         {
@@ -218,10 +212,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditProfileCommand
-        {
-            get { return new RelayCommand(p => EditProfileAction()); }
-        }
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private async void EditProfileAction()
         {
@@ -250,10 +241,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand CopyAsProfileCommand
-        {
-            get { return new RelayCommand(p => CopyAsProfileAction()); }
-        }
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private async void CopyAsProfileAction()
         {
@@ -280,10 +268,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteProfileCommand
-        {
-            get { return new RelayCommand(p => DeleteProfileAction()); }
-        }
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private async void DeleteProfileAction()
         {
@@ -310,10 +295,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand QueryProfileCommand
-        {
-            get { return new RelayCommand(p => QueryProfileAction()); }
-        }
+        public ICommand QueryProfileCommand => new RelayCommand(p => QueryProfileAction());
 
         private void QueryProfileAction()
         {
@@ -349,10 +331,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand ClearSearchCommand
-        {
-            get { return new RelayCommand(p => ClearSearchAction()); }
-        }
+        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
         {

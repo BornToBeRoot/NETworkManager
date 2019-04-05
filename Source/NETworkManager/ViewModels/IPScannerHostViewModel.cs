@@ -247,10 +247,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand CopyAsProfileCommand
-        {
-            get { return new RelayCommand(p => CopyAsProfileAction()); }
-        }
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private async void CopyAsProfileAction()
         {

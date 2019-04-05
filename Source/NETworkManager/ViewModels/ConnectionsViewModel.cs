@@ -13,7 +13,6 @@ using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
-using NETworkManager.Enum;
 using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
@@ -223,10 +222,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand RefreshCommand
-        {
-            get { return new RelayCommand(p => RefreshAction(), Refresh_CanExecute); }
-        }
+        public ICommand RefreshCommand => new RelayCommand(p => RefreshAction(), Refresh_CanExecute);
 
         private bool Refresh_CanExecute(object paramter)
         {
@@ -240,70 +236,49 @@ namespace NETworkManager.ViewModels
             Refresh();
         }
 
-        public ICommand CopySelectedLocalIpAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedLocalIpAddressAction()); }
-        }
+        public ICommand CopySelectedLocalIpAddressCommand => new RelayCommand(p => CopySelectedLocalIpAddressAction());
 
         private void CopySelectedLocalIpAddressAction()
         {
             CommonMethods.SetClipboard(SelectedConnectionInfo.LocalIPAddress.ToString());
         }
 
-        public ICommand CopySelectedLocalPortCommand
-        {
-            get { return new RelayCommand(p => CopySelectedLocalPortAction()); }
-        }
+        public ICommand CopySelectedLocalPortCommand => new RelayCommand(p => CopySelectedLocalPortAction());
 
         private void CopySelectedLocalPortAction()
         {
             CommonMethods.SetClipboard(SelectedConnectionInfo.LocalPort.ToString());
         }
 
-        public ICommand CopySelectedRemoteIpAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedRemoteIpAddressAction()); }
-        }
+        public ICommand CopySelectedRemoteIpAddressCommand => new RelayCommand(p => CopySelectedRemoteIpAddressAction());
 
         private void CopySelectedRemoteIpAddressAction()
         {
             CommonMethods.SetClipboard(SelectedConnectionInfo.RemoteIPAddress.ToString());
         }
 
-        public ICommand CopySelectedRemotePortCommand
-        {
-            get { return new RelayCommand(p => CopySelectedRemotePortAction()); }
-        }
+        public ICommand CopySelectedRemotePortCommand => new RelayCommand(p => CopySelectedRemotePortAction());
 
         private void CopySelectedRemotePortAction()
         {
             CommonMethods.SetClipboard(SelectedConnectionInfo.RemotePort.ToString());
         }
 
-        public ICommand CopySelectedProtocolCommand
-        {
-            get { return new RelayCommand(p => CopySelectedProtocolAction()); }
-        }
+        public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
 
         private void CopySelectedProtocolAction()
         {
             CommonMethods.SetClipboard(SelectedConnectionInfo.Protocol.ToString());
         }
 
-        public ICommand CopySelectedStateCommand
-        {
-            get { return new RelayCommand(p => CopySelectedStateAction()); }
-        }
+        public ICommand CopySelectedStateCommand => new RelayCommand(p => CopySelectedStateAction());
 
         private void CopySelectedStateAction()
         {
             CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + SelectedConnectionInfo.TcpState, LocalizationManager.Culture));
         }
 
-        public ICommand ExportCommand
-        {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
         private async void ExportAction()
         {

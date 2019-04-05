@@ -175,105 +175,72 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand CalculateCommand
-        {
-            get { return new RelayCommand(p => CalculateAction(), Calculate_CanExecute); }
-        }
+        public ICommand CalculateCommand => new RelayCommand(p => CalculateAction(), Calculate_CanExecute);
 
-        private bool Calculate_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool Calculate_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void CalculateAction()
         {
             Calculate();
         }
-        
-        public ICommand CopySelectedNetworkAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedNetworkAddressAction()); }
-        }
+
+        public ICommand CopySelectedNetworkAddressCommand => new RelayCommand(p => CopySelectedNetworkAddressAction());
 
         private void CopySelectedNetworkAddressAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Network.ToString());
         }
 
-        public ICommand CopySelectedBroadcastCommand
-        {
-            get { return new RelayCommand(p => CopySelectedBroadcastAction()); }
-        }
+        public ICommand CopySelectedBroadcastCommand => new RelayCommand(p => CopySelectedBroadcastAction());
 
         private void CopySelectedBroadcastAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Broadcast.ToString());
         }
 
-        public ICommand CopySelectedIPAddressesCommand
-        {
-            get { return new RelayCommand(p => CopySelectedIPAddressesAction()); }
-        }
+        public ICommand CopySelectedIPAddressesCommand => new RelayCommand(p => CopySelectedIPAddressesAction());
 
         private void CopySelectedIPAddressesAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Total.ToString());
         }
 
-        public ICommand CopySelectedSubnetmaskCommand
-        {
-            get { return new RelayCommand(p => CopySelectedSubnetmaskAction()); }
-        }
+        public ICommand CopySelectedSubnetmaskCommand => new RelayCommand(p => CopySelectedSubnetmaskAction());
 
         private void CopySelectedSubnetmaskAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Netmask.ToString());
         }
 
-        public ICommand CopySelectedCIDRCommand
-        {
-            get { return new RelayCommand(p => CopySelectedCIDRAction()); }
-        }
+        public ICommand CopySelectedCIDRCommand => new RelayCommand(p => CopySelectedCIDRAction());
 
         private void CopySelectedCIDRAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Cidr.ToString());
         }
 
-        public ICommand CopySelectedFirstIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedFirstIPAddressAction()); }
-        }
+        public ICommand CopySelectedFirstIPAddressCommand => new RelayCommand(p => CopySelectedFirstIPAddressAction());
 
         private void CopySelectedFirstIPAddressAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.FirstUsable.ToString());
         }
 
-        public ICommand CopySelectedLastIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedLastIPAddressAction()); }
-        }
+        public ICommand CopySelectedLastIPAddressCommand => new RelayCommand(p => CopySelectedLastIPAddressAction());
 
         private void CopySelectedLastIPAddressAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.LastUsable.ToString());
         }
 
-        public ICommand CopySelectedHostCommand
-        {
-            get { return new RelayCommand(p => CopySelectedHostAction()); }
-        }
+        public ICommand CopySelectedHostCommand => new RelayCommand(p => CopySelectedHostAction());
 
         private void CopySelectedHostAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Usable.ToString());
         }
 
-        public ICommand ExportCommand
-        {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
         private async void ExportAction()
         {

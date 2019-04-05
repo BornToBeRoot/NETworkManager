@@ -287,15 +287,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand WakeUpCommand
-        {
-            get { return new RelayCommand(p => WakeUpAction(), WakeUpAction_CanExecute); }
-        }
+        public ICommand WakeUpCommand => new RelayCommand(p => WakeUpAction(), WakeUpAction_CanExecute);
 
-        private bool WakeUpAction_CanExecute(object parameter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !MACAddressHasError && !BroadcastHasError && !PortHasError;
-        }
+        private bool WakeUpAction_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !MACAddressHasError && !BroadcastHasError && !PortHasError;
 
         private void WakeUpAction()
         {
@@ -309,20 +303,14 @@ namespace NETworkManager.ViewModels
             WakeUp(info);
         }
 
-        public ICommand WakeUpProfileCommand
-        {
-            get { return new RelayCommand(p => WakeUpProfileAction()); }
-        }
+        public ICommand WakeUpProfileCommand => new RelayCommand(p => WakeUpProfileAction());
 
         private void WakeUpProfileAction()
         {
             WakeUp(WakeOnLAN.CreateWakeOnLANInfo(SelectedProfile));
         }
 
-        public ICommand AddProfileCommand
-        {
-            get { return new RelayCommand(p => AddProfileAction()); }
-        }
+        public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
         private async void AddProfileAction()
         {
@@ -349,10 +337,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditProfileCommand
-        {
-            get { return new RelayCommand(p => EditProfileAction()); }
-        }
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private async void EditProfileAction()
         {
@@ -381,10 +366,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand CopyAsProfileCommand
-        {
-            get { return new RelayCommand(p => CopyAsProfileAction()); }
-        }
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private async void CopyAsProfileAction()
         {
@@ -411,10 +393,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteProfileCommand
-        {
-            get { return new RelayCommand(p => DeleteProfileAction()); }
-        }
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private async void DeleteProfileAction()
         {
@@ -470,10 +449,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand ClearSearchCommand
-        {
-            get { return new RelayCommand(p => ClearSearchAction()); }
-        }
+        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
         {

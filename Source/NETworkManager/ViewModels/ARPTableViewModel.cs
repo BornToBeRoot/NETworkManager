@@ -14,7 +14,6 @@ using System.Linq;
 using System.Windows;
 using MahApps.Metro.Controls;
 using NETworkManager.Models.Export;
-using NETworkManager.Enum;
 
 namespace NETworkManager.ViewModels
 {
@@ -225,10 +224,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand RefreshCommand
-        {
-            get { return new RelayCommand(p => RefreshAction(), Refresh_CanExecute); }
-        }
+        public ICommand RefreshCommand => new RelayCommand(p => RefreshAction(), Refresh_CanExecute);
 
         private bool Refresh_CanExecute(object paramter)
         {
@@ -242,10 +238,7 @@ namespace NETworkManager.ViewModels
             Refresh();
         }
 
-        public ICommand DeleteTableCommand
-        {
-            get { return new RelayCommand(p => DeleteTableAction(), DeleteTable_CanExecute); }
-        }
+        public ICommand DeleteTableCommand => new RelayCommand(p => DeleteTableAction(), DeleteTable_CanExecute);
 
         private bool DeleteTable_CanExecute(object paramter)
         {
@@ -273,15 +266,9 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICommand DeleteEntryCommand
-        {
-            get { return new RelayCommand(p => DeleteEntryAction(), DeleteEntry_CanExecute); }
-        }
-        
-        private bool DeleteEntry_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        public ICommand DeleteEntryCommand => new RelayCommand(p => DeleteEntryAction(), DeleteEntry_CanExecute);
+
+        private bool DeleteEntry_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private async void DeleteEntryAction()
         {
@@ -304,15 +291,9 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICommand AddEntryCommand
-        {
-            get { return new RelayCommand(p => AddEntryAction(), AddEntry_CanExecute); }
-        }
+        public ICommand AddEntryCommand => new RelayCommand(p => AddEntryAction(), AddEntry_CanExecute);
 
-        private bool AddEntry_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool AddEntry_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private async void AddEntryAction()
         {
@@ -355,40 +336,28 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand CopySelectedIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
-        }
+        public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
             CommonMethods.SetClipboard(SelectedARPInfo.IPAddress.ToString());
         }
 
-        public ICommand CopySelectedMACAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedMACAddressAction()); }
-        }
+        public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
 
         private void CopySelectedMACAddressAction()
         {
             CommonMethods.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedARPInfo.MACAddress.ToString()));
         }
 
-        public ICommand CopySelectedMulticastCommand
-        {
-            get { return new RelayCommand(p => CopySelectedMulticastAction()); }
-        }
+        public ICommand CopySelectedMulticastCommand => new RelayCommand(p => CopySelectedMulticastAction());
 
         private void CopySelectedMulticastAction()
         {
             CommonMethods.SetClipboard(SelectedARPInfo.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No);
         }
 
-        public ICommand ExportCommand
-        {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
         private async void ExportAction()
         {

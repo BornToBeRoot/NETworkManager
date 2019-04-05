@@ -447,45 +447,30 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand WorkCommand
-        {
-            get { return new RelayCommand(p => WorkAction(), Work_CanExecute); }
-        }
+        public ICommand WorkCommand => new RelayCommand(p => WorkAction(), Work_CanExecute);
 
-        private bool Work_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool Work_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void WorkAction()
         {
             Work();
         }
 
-        public ICommand CopySelectedOIDCommand
-        {
-            get { return new RelayCommand(p => CopySelectedOIDAction()); }
-        }
+        public ICommand CopySelectedOIDCommand => new RelayCommand(p => CopySelectedOIDAction());
 
         private void CopySelectedOIDAction()
         {
             CommonMethods.SetClipboard(SelectedQueryResult.OID);
         }
 
-        public ICommand CopySelectedDataCommand
-        {
-            get { return new RelayCommand(p => CopySelectedDataAction()); }
-        }
+        public ICommand CopySelectedDataCommand => new RelayCommand(p => CopySelectedDataAction());
 
         private void CopySelectedDataAction()
         {
             CommonMethods.SetClipboard(SelectedQueryResult.Data);
         }
 
-        public ICommand ExportCommand
-        {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
         private async void ExportAction()
         {

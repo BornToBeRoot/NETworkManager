@@ -277,10 +277,7 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand TraceCommand => new RelayCommand(p => TraceAction(), Trace_CanExecute);
 
-        private bool Trace_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool Trace_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void TraceAction()
         {

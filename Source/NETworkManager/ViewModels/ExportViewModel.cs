@@ -181,11 +181,8 @@ namespace NETworkManager.ViewModels
                     throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
             }
         }
-       
-        public ICommand BrowseFileCommand
-        {
-            get { return new RelayCommand(p => BrowseFileAction()); }
-        }
+
+        public ICommand BrowseFileCommand => new RelayCommand(p => BrowseFileAction());
 
         private void BrowseFileAction()
         {

@@ -315,10 +315,7 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand LookupCommand => new RelayCommand(p => LookupAction(), Lookup_CanExecute);
 
-        private bool Lookup_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool Lookup_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void LookupAction()
         {

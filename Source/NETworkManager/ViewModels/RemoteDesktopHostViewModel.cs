@@ -195,55 +195,37 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions        
-        public ICommand ConnectCommand
-        {
-            get { return new RelayCommand(p => ConnectAction(), Connect_CanExecute); }
-        }
+        public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
 
-        private bool Connect_CanExecute(object parameter)
-        {
-            return IsRDP8Dot1Available && !ConfigurationManager.Current.IsTransparencyEnabled;
-        }
+        private bool Connect_CanExecute(object parameter) => IsRDP8Dot1Available && !ConfigurationManager.Current.IsTransparencyEnabled;
 
         private void ConnectAction()
         {
             Connect();
         }
 
-        public ICommand ConnectProfileCommand
-        {
-            get { return new RelayCommand(p => ConnectProfileAction()); }
-        }
+        public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction());
 
         private void ConnectProfileAction()
         {
             ConnectProfile();
         }
 
-        public ICommand ConnectProfileAsCommand
-        {
-            get { return new RelayCommand(p => ConnectProfileAsAction()); }
-        }
+        public ICommand ConnectProfileAsCommand => new RelayCommand(p => ConnectProfileAsAction());
 
         private void ConnectProfileAsAction()
         {
             ConnectProfileAs();
         }
 
-        public ICommand ConnectProfileExternalCommand
-        {
-            get { return new RelayCommand(p => ConnectProfileExternalAction()); }
-        }
+        public ICommand ConnectProfileExternalCommand => new RelayCommand(p => ConnectProfileExternalAction());
 
         private void ConnectProfileExternalAction()
         {
             Process.Start("mstsc.exe", $"/V:{SelectedProfile.RemoteDesktop_Host}");
         }
 
-        public ICommand AddProfileCommand
-        {
-            get { return new RelayCommand(p => AddProfileAction()); }
-        }
+        public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
         private async void AddProfileAction()
         {
@@ -273,10 +255,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditProfileCommand
-        {
-            get { return new RelayCommand(p => EditProfileAction()); }
-        }
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private async void EditProfileAction()
         {
@@ -308,10 +287,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand CopyAsProfileCommand
-        {
-            get { return new RelayCommand(p => CopyAsProfileAction()); }
-        }
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private async void CopyAsProfileAction()
         {
@@ -341,10 +317,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteProfileCommand
-        {
-            get { return new RelayCommand(p => DeleteProfileAction()); }
-        }
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private async void DeleteProfileAction()
         {
@@ -406,10 +379,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand ClearSearchCommand
-        {
-            get { return new RelayCommand(p => ClearSearchAction()); }
-        }
+        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
         {
@@ -423,10 +393,7 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem)?.View as RemoteDesktopControl)?.CloseTab();
         }
 
-        public ICommand OpenSettingsCommand
-        {
-            get { return new RelayCommand(p => OpenSettingsAction()); }
-        }
+        public ICommand OpenSettingsCommand => new RelayCommand(p => OpenSettingsAction());
 
         private static void OpenSettingsAction()
         {

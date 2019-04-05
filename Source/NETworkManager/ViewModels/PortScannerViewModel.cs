@@ -348,10 +348,7 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand ScanCommand => new RelayCommand(p => ScanAction(), Scan_CanExecute);
 
-        private bool Scan_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool Scan_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void ScanAction()
         {

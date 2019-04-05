@@ -109,10 +109,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand ClearSearchCommand
-        {
-            get { return new RelayCommand(p => ClearSearchAction()); }
-        }
+        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
         {

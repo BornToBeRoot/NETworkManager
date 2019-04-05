@@ -43,10 +43,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddTabCommand
-        {
-            get { return new RelayCommand(p => AddTabAction()); }
-        }
+        public ICommand AddTabCommand => new RelayCommand(p => AddTabAction());
 
         private void AddTabAction()
         {

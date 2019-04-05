@@ -75,12 +75,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_44B804318D0349D6012EEB5DDACB53E8"
-        "OwnerKey" = "8:_48ACD967FDBF43AEAF73122414146A86"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_48ACD967FDBF43AEAF73122414146A86"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -94,6 +88,12 @@
         "Entry"
         {
         "MsmKey" = "8:_59613EA19958AC501CE05CC92FF31748"
+        "OwnerKey" = "8:_48ACD967FDBF43AEAF73122414146A86"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_650724BE2C6A73626C59721BB5A7AA68"
         "OwnerKey" = "8:_48ACD967FDBF43AEAF73122414146A86"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -220,7 +220,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_44B804318D0349D6012EEB5DDACB53E8"
+        "OwnerKey" = "8:_650724BE2C6A73626C59721BB5A7AA68"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -589,37 +589,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_44B804318D0349D6012EEB5DDACB53E8"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Net.IPNetwork, Version=2.2.0.94, Culture=neutral, PublicKeyToken=717343cc2c25edcf, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_44B804318D0349D6012EEB5DDACB53E8"
-                    {
-                    "Name" = "8:System.Net.IPNetwork.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Net.IPNetwork.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3C29CB23A70F44D4B1A9F285AFF37644"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4D64F059BE1802EEF044CE73194E762B"
             {
             "AssemblyRegister" = "3:1"
@@ -665,6 +634,37 @@
                     }
                 }
             "SourcePath" = "8:Newtonsoft.Json.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3C29CB23A70F44D4B1A9F285AFF37644"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_650724BE2C6A73626C59721BB5A7AA68"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.Net.IPNetwork, Version=2.4.0.99, Culture=neutral, PublicKeyToken=717343cc2c25edcf, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_650724BE2C6A73626C59721BB5A7AA68"
+                    {
+                    "Name" = "8:System.Net.IPNetwork.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.Net.IPNetwork.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3C29CB23A70F44D4B1A9F285AFF37644"
@@ -957,17 +957,6 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_6527B2E0C8E74EEC92CF3129DE6BEB9B"
-                    {
-                    "Name" = "8:NETworkManager"
-                    "AlwaysCreate" = "11:TRUE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_5A21708B03994016AC7597DB51DA3EDB"
-                        "Folders"
-                        {
-                        }
-                    }
                 }
             }
         }
@@ -1130,7 +1119,7 @@
             "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
             "Target" = "8:_48ACD967FDBF43AEAF73122414146A86"
-            "Folder" = "8:_6527B2E0C8E74EEC92CF3129DE6BEB9B"
+            "Folder" = "8:_EC8D1876085B42DE966689AC5A122D37"
             "WorkingFolder" = "8:_3C29CB23A70F44D4B1A9F285AFF37644"
             "Icon" = "8:_48ACD967FDBF43AEAF73122414146A86"
             "Feature" = "8:"

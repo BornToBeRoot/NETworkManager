@@ -203,15 +203,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand CalculateCommand
-        {
-            get { return new RelayCommand(p => CalculateAction(), Calculate_CanExecute); }
-        }
+        public ICommand CalculateCommand => new RelayCommand(p => CalculateAction(), Calculate_CanExecute);
 
-        private bool Calculate_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool Calculate_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void CalculateAction()
         {

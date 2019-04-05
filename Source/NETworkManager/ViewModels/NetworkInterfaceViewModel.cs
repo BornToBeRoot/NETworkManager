@@ -559,15 +559,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand ReloadNetworkInterfacesCommand
-        {
-            get { return new RelayCommand(p => ReloadNetworkInterfacesAction(), ReloadNetworkInterfaces_CanExecute); }
-        }
+        public ICommand ReloadNetworkInterfacesCommand => new RelayCommand(p => ReloadNetworkInterfacesAction(), ReloadNetworkInterfaces_CanExecute);
 
-        private bool ReloadNetworkInterfaces_CanExecute(object obj)
-        {
-            return !IsNetworkInterfaceLoading && Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool ReloadNetworkInterfaces_CanExecute(object obj) => !IsNetworkInterfaceLoading && Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private async void ReloadNetworkInterfacesAction()
         {
@@ -588,15 +582,9 @@ namespace NETworkManager.ViewModels
             IsNetworkInterfaceLoading = false;
         }
 
-        public ICommand OpenNetworkConnectionsCommand
-        {
-            get { return new RelayCommand(p => OpenNetworkConnectionsAction(), OpenNetworkConnections_CanExecute); }
-        }
+        public ICommand OpenNetworkConnectionsCommand => new RelayCommand(p => OpenNetworkConnectionsAction(), OpenNetworkConnections_CanExecute);
 
-        private bool OpenNetworkConnections_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool OpenNetworkConnections_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         public async void OpenNetworkConnectionsAction()
         {
@@ -610,35 +598,23 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICommand ApplyConfigCommand
-        {
-            get { return new RelayCommand(p => ApplyConfigAction(), ApplyConfig_CanExecute); }
-        }
+        public ICommand ApplyConfigCommand => new RelayCommand(p => ApplyConfigAction(), ApplyConfig_CanExecute);
 
-        private bool ApplyConfig_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool ApplyConfig_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         public void ApplyConfigAction()
         {
             ApplyConfig();
         }
 
-        public ICommand ApplyProfileConfigCommand
-        {
-            get { return new RelayCommand(p => ApplyProfileProfileAction()); }
-        }
-        
+        public ICommand ApplyProfileConfigCommand => new RelayCommand(p => ApplyProfileProfileAction());
+
         private void ApplyProfileProfileAction()
         {
             ApplyProfileConfig();
         }
 
-        public ICommand AddProfileCommand
-        {
-            get { return new RelayCommand(p => AddProfileAction()); }
-        }
+        public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
         private async void AddProfileAction()
         {
@@ -665,10 +641,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand EditProfileCommand
-        {
-            get { return new RelayCommand(p => EditProfileAction()); }
-        }
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private async void EditProfileAction()
         {
@@ -697,10 +670,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand CopyAsProfileCommand
-        {
-            get { return new RelayCommand(p => CopyAsProfileAction()); }
-        }
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private async void CopyAsProfileAction()
         {
@@ -727,10 +697,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteProfileCommand
-        {
-            get { return new RelayCommand(p => DeleteProfileAction()); }
-        }
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private async void DeleteProfileAction()
         {
@@ -786,15 +753,9 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand FlushDNSCommand
-        {
-            get { return new RelayCommand(p => FlushDNSAction(), FlushDNS_CanExecute); }
-        }
+        public ICommand FlushDNSCommand => new RelayCommand(p => FlushDNSAction(), FlushDNS_CanExecute);
 
-        private bool FlushDNS_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool FlushDNS_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private async void FlushDNSAction()
         {
@@ -806,25 +767,16 @@ namespace NETworkManager.ViewModels
             IsConfigurationRunning = false;
         }
 
-        public ICommand ClearSearchCommand
-        {
-            get { return new RelayCommand(p => ClearSearchAction()); }
-        }
+        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
         {
             Search = string.Empty;
         }
 
-        public ICommand ReleaseRenewCommand
-        {
-            get { return new RelayCommand(p => ReleaseRenewAction(), ReleaseRenew_CanExecute); }
-        }
+        public ICommand ReleaseRenewCommand => new RelayCommand(p => ReleaseRenewAction(), ReleaseRenew_CanExecute);
 
-        private bool ReleaseRenew_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool ReleaseRenew_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private async void ReleaseRenewAction()
         {
@@ -835,15 +787,9 @@ namespace NETworkManager.ViewModels
             IsConfigurationRunning = false;
         }
 
-        public ICommand ReleaseCommand
-        {
-            get { return new RelayCommand(p => ReleaseAction(), Release_CanExecute); }
-        }
-        
-        private bool Release_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        public ICommand ReleaseCommand => new RelayCommand(p => ReleaseAction(), Release_CanExecute);
+
+        private bool Release_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private async void ReleaseAction()
         {
@@ -854,15 +800,9 @@ namespace NETworkManager.ViewModels
             IsConfigurationRunning = false;
         }
 
-        public ICommand RenewCommand
-        {
-            get { return new RelayCommand(p => RenewAction(), Renew_CanExecute); }
-        }
+        public ICommand RenewCommand => new RelayCommand(p => RenewAction(), Renew_CanExecute);
 
-        private bool Renew_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool Renew_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private async void RenewAction()
         {
@@ -873,15 +813,9 @@ namespace NETworkManager.ViewModels
             IsConfigurationRunning = false;
         }
 
-        public ICommand AddIPv4AddressCommand
-        {
-            get { return new RelayCommand(p => AddIPv4AddressAction(), AddIPv4Address_CanExecute); }
-        }
+        public ICommand AddIPv4AddressCommand => new RelayCommand(p => AddIPv4AddressAction(), AddIPv4Address_CanExecute);
 
-        private bool AddIPv4Address_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool AddIPv4Address_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private async void AddIPv4AddressAction()
         {

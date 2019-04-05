@@ -376,10 +376,7 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand CheckConnectionCommand => new RelayCommand(p => CheckConnectionAction(), CheckConnection_CanExecute);
 
-        private bool CheckConnection_CanExecute(object paramter)
-        {
-            return !IsInternetCheckRunning;
-        }
+        private bool CheckConnection_CanExecute(object paramter) => !IsInternetCheckRunning;
 
         private void CheckConnectionAction()
         {

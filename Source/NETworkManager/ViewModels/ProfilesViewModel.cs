@@ -104,45 +104,30 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Commands & Actions
-        public ICommand AddProfileCommand
-        {
-            get { return new RelayCommand(p => AddProfileAction()); }
-        }
+        public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
         private void AddProfileAction()
         {
             AddProfile();
         }
 
-        public ICommand EditProfileCommand
-        {
-            get { return new RelayCommand(p => EditProfileAction(), EditProfile_CanExecute); }
-        }
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), EditProfile_CanExecute);
 
-        private bool EditProfile_CanExecute(object paramter)
-        {
-            return SelectedProfiles.Count == 1;
-        }
+        private bool EditProfile_CanExecute(object paramter) => SelectedProfiles.Count == 1;
 
         private void EditProfileAction()
         {
             EditProfile();
         }
 
-        public ICommand CopyAsProfileCommand
-        {
-            get { return new RelayCommand(p => CopyAsProfileAction()); }
-        }
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
             CopyAsProfile();
         }
 
-        public ICommand DeleteProfileCommand
-        {
-            get { return new RelayCommand(p => DeleteProfileAction()); }
-        }
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private void DeleteProfileAction()
         {

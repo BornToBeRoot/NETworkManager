@@ -214,10 +214,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand BrowseFileCommand
-        {
-            get { return new RelayCommand(p => BrowseFileAction()); }
-        }
+        public ICommand BrowseFileCommand => new RelayCommand(p => BrowseFileAction());
 
         private void BrowseFileAction()
         {
@@ -230,10 +227,7 @@ namespace NETworkManager.ViewModels
                 ImportFilePath = openFileDialog.FileName;
         }
 
-        public ICommand ValidateImportSettingsCommand
-        {
-            get { return new RelayCommand(p => ValidateImportSettingsAction()); }
-        }
+        public ICommand ValidateImportSettingsCommand => new RelayCommand(p => ValidateImportSettingsAction());
 
         private async void ValidateImportSettingsAction()
         {
@@ -251,10 +245,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICommand ImportSettingsCommand
-        {
-            get { return new RelayCommand(p => ImportSettingsAction()); }
-        }
+        public ICommand ImportSettingsCommand => new RelayCommand(p => ImportSettingsAction());
 
         private async void ImportSettingsAction()
         {
@@ -313,10 +304,7 @@ namespace NETworkManager.ViewModels
             CloseAction();
         }
 
-        public ICommand ExportSettingsCommand
-        {
-            get { return new RelayCommand(p => ExportSettingsAction()); }
-        }
+        public ICommand ExportSettingsCommand => new RelayCommand(p => ExportSettingsAction());
 
         private async void ExportSettingsAction()
         {

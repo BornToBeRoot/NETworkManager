@@ -319,10 +319,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand BrowseFileCommand
-        {
-            get { return new RelayCommand(p => BrowseFileAction()); }
-        }
+        public ICommand BrowseFileCommand => new RelayCommand(p => BrowseFileAction());
 
         private void BrowseFileAction()
         {
@@ -335,10 +332,7 @@ namespace NETworkManager.ViewModels
                 ApplicationFilePath = openFileDialog.FileName;
         }
 
-        public ICommand ConfigureCommand
-        {
-            get { return new RelayCommand(p => ConfigureAction()); }
-        }
+        public ICommand ConfigureCommand => new RelayCommand(p => ConfigureAction());
 
         private void ConfigureAction()
         {

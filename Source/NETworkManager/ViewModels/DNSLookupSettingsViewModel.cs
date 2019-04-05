@@ -287,30 +287,21 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddDNSServerCommand
-        {
-            get { return new RelayCommand(p => AddDNSServerAction()); }
-        }
+        public ICommand AddDNSServerCommand => new RelayCommand(p => AddDNSServerAction());
 
         private void AddDNSServerAction()
         {
             AddDNSServer();
         }
 
-        public ICommand EditDNSServerCommand
-        {
-            get { return new RelayCommand(p => EditDNSServerAction()); }
-        }
+        public ICommand EditDNSServerCommand => new RelayCommand(p => EditDNSServerAction());
 
         private void EditDNSServerAction()
         {
             EditDNSServer();
         }
 
-        public ICommand DeleteDNSServerCommand
-        {
-            get { return new RelayCommand(p => DeleteDNSServerAction()); }
-        }
+        public ICommand DeleteDNSServerCommand => new RelayCommand(p => DeleteDNSServerAction());
 
         private void DeleteDNSServerAction()
         {

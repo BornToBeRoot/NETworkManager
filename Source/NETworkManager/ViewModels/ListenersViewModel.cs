@@ -289,15 +289,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand RefreshCommand
-        {
-            get { return new RelayCommand(p => RefreshAction(), Refresh_CanExecute); }
-        }
+        public ICommand RefreshCommand => new RelayCommand(p => RefreshAction(), Refresh_CanExecute);
 
-        private bool Refresh_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool Refresh_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void RefreshAction()
         {
@@ -306,40 +300,28 @@ namespace NETworkManager.ViewModels
             Refresh();
         }
 
-        public ICommand CopySelectedProtocolCommand
-        {
-            get { return new RelayCommand(p => CopySelectedProtocolAction()); }
-        }
+        public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
 
         private void CopySelectedProtocolAction()
         {
             CommonMethods.SetClipboard(SelectedListenerInfo.Protocol.ToString());
         }
 
-        public ICommand CopySelectedIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
-        }
+        public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
             CommonMethods.SetClipboard(SelectedListenerInfo.IPAddress.ToString());
         }
 
-        public ICommand CopySelectedPortCommand
-        {
-            get { return new RelayCommand(p => CopySelectedPortAction()); }
-        }
+        public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
 
         private void CopySelectedPortAction()
         {
             CommonMethods.SetClipboard(SelectedListenerInfo.Port.ToString());
         }
 
-        public ICommand ExportCommand
-        {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
         private async void ExportAction()
         {

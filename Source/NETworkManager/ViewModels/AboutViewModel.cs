@@ -190,11 +190,8 @@ namespace NETworkManager.ViewModels
 
             updater.Check();
         }
-        
-        public void OpenLicenseFolder()
-        {
-            Process.Start(LibraryManager.GetLicenseLocation());
-        }
+
+        public void OpenLicenseFolder() => Process.Start(LibraryManager.GetLicenseLocation());
         #endregion
 
         #region Events

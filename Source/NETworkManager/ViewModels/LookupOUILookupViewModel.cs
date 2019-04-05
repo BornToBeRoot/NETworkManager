@@ -137,15 +137,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand OUILookupCommand
-        {
-            get { return new RelayCommand(p => OUILookupAction(), OUILookup_CanExecute); }
-        }
+        public ICommand OUILookupCommand => new RelayCommand(p => OUILookupAction(), OUILookup_CanExecute);
 
-        private bool OUILookup_CanExecute(object parameter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !MACAddressOrVendorHasError;
-        }
+        private bool OUILookup_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !MACAddressOrVendorHasError;
 
         private async void OUILookupAction()
         {
@@ -190,30 +184,21 @@ namespace NETworkManager.ViewModels
             IsLookupRunning = false;
         }
 
-        public ICommand CopySelectedMACAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedMACAddressAction()); }
-        }
+        public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
 
         private void CopySelectedMACAddressAction()
         {
             CommonMethods.SetClipboard(SelectedOUILookupResult.MACAddress);
         }
 
-        public ICommand CopySelectedVendorCommand
-        {
-            get { return new RelayCommand(p => CopySelectedVendorAction()); }
-        }
+        public ICommand CopySelectedVendorCommand => new RelayCommand(p => CopySelectedVendorAction());
 
         private void CopySelectedVendorAction()
         {
             CommonMethods.SetClipboard(SelectedOUILookupResult.Vendor);
         }
 
-        public ICommand ExportCommand
-        {
-            get { return new RelayCommand(p => ExportAction()); }
-        }
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
         private async void ExportAction()
         {

@@ -346,10 +346,7 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand PingCommand => new RelayCommand(p => PingAction(), Ping_CanExecute);
 
-        private bool Ping_CanExecute(object paramter)
-        {
-            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-        }
+        private bool Ping_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void PingAction()
         {
