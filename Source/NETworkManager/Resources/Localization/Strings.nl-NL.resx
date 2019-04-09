@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -118,85 +118,85 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>About</value>
+    <value>Wat betreft</value>
   </data>
   <data name="Accent" xml:space="preserve">
     <value>Accent</value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
-    <value>Add credentials</value>
+    <value>Voeg inloggegevens toe</value>
   </data>
   <data name="AddEntry" xml:space="preserve">
-    <value>Add entry</value>
+    <value>Voeg een item toe</value>
   </data>
   <data name="AddProfile" xml:space="preserve">
-    <value>Add profile</value>
+    <value>Voeg profiel toe</value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
-    <value>Are you sure?</value>
+    <value>Weet je het zeker?</value>
   </data>
   <data name="ARP" xml:space="preserve">
     <value>ARP</value>
   </data>
   <data name="ARPTable" xml:space="preserve">
-    <value>ARP Table</value>
+    <value>ARP Tafel</value>
   </data>
   <data name="Authentication" xml:space="preserve">
-    <value>Authentication</value>
+    <value>Authenticatie</value>
   </data>
   <data name="Autostart" xml:space="preserve">
-    <value>Autostart</value>
+    <value>Automatische start</value>
   </data>
   <data name="Calculator" xml:space="preserve">
-    <value>Calculator</value>
+    <value>Rekenmachine</value>
   </data>
   <data name="CommandLineArguments" xml:space="preserve">
-    <value>Command Line Arguments</value>
+    <value>Command line argumenten</value>
   </data>
   <data name="Configure" xml:space="preserve">
-    <value>Configure</value>
+    <value>Configureren</value>
   </data>
   <data name="Confirm" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Bevestigen</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>Connect</value>
+    <value>Aansluiten</value>
   </data>
   <data name="ConnectAs" xml:space="preserve">
-    <value>Connect as</value>
+    <value>Aansluiten als</value>
   </data>
   <data name="CopyProfile" xml:space="preserve">
-    <value>Copy profile</value>
+    <value>Kopieer profiel</value>
   </data>
   <data name="CredentialNotFound" xml:space="preserve">
-    <value>Credential not found!</value>
+    <value>Geloofsbrieven niet gevonden!</value>
   </data>
   <data name="Credentials" xml:space="preserve">
-    <value>Credentials</value>
+    <value>Geloofsbrieven</value>
   </data>
   <data name="Data" xml:space="preserve">
-    <value>Data</value>
+    <value>Gegevens</value>
   </data>
   <data name="DefaultApplication" xml:space="preserve">
-    <value>Default application</value>
+    <value>Standaard applicatie</value>
   </data>
   <data name="DeleteCredentials" xml:space="preserve">
-    <value>Delete credentials</value>
+    <value>Geloofsbrieven verwijderen</value>
   </data>
   <data name="DeleteProfile" xml:space="preserve">
-    <value>Delete profile</value>
+    <value>Verwijder profiel</value>
   </data>
   <data name="Destination" xml:space="preserve">
-    <value>Destination</value>
+    <value>Bestemming</value>
   </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
   <data name="Disconnected" xml:space="preserve">
-    <value>Disconnected</value>
+    <value>Verbinding verbroken</value>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Display</value>
+    <value>Tonen</value>
   </data>
   <data name="DNS" xml:space="preserve">
     <value>DNS</value>
@@ -205,34 +205,34 @@
     <value>DNS Lookup</value>
   </data>
   <data name="DontFragment" xml:space="preserve">
-    <value>Don't fragment</value>
+    <value>Niet fragmenteren</value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
-    <value>Edit credentials</value>
+    <value>Aanmeldingsgegevens bewerken</value>
   </data>
   <data name="EditGroup" xml:space="preserve">
-    <value>Edit group</value>
+    <value>Bewerk Groep</value>
   </data>
   <data name="EditProfile" xml:space="preserve">
-    <value>Edit profile</value>
+    <value>Bewerk profiel</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Fout</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>Export</value>
+    <value>Exporteren</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>Algemeen</value>
   </data>
   <data name="Headers" xml:space="preserve">
     <value>Headers</value>
   </data>
   <data name="History" xml:space="preserve">
-    <value>History</value>
+    <value>Geschiedenis</value>
   </data>
   <data name="HotKeys" xml:space="preserve">
     <value>HotKeys</value>
@@ -241,10 +241,10 @@
     <value>HTTP Headers</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>Import</value>
+    <value>Importeren</value>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>Information</value>
+    <value>Informatie</value>
   </data>
   <data name="Interface" xml:space="preserve">
     <value>Interface</value>
@@ -253,49 +253,49 @@
     <value>IP Scanner</value>
   </data>
   <data name="Keyboard" xml:space="preserve">
-    <value>Keyboard</value>
+    <value>Toetsenbord</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Taal</value>
   </data>
   <data name="Libraries" xml:space="preserve">
-    <value>Libraries</value>
+    <value>Bibliotheken</value>
   </data>
   <data name="License" xml:space="preserve">
-    <value>License</value>
+    <value>Licentie</value>
   </data>
   <data name="LocalDevicesAndResources" xml:space="preserve">
-    <value>Local devices and resources</value>
+    <value>Lokale apparaten en bronnen</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>Plaats</value>
   </data>
   <data name="Lookup" xml:space="preserve">
-    <value>Lookup</value>
+    <value>Opzoeken</value>
   </data>
   <data name="MACAddress" xml:space="preserve">
-    <value>MAC Address</value>
+    <value>Mac adres</value>
   </data>
   <data name="MasterPassword" xml:space="preserve">
-    <value>Master Password</value>
+    <value>Master wachtwoord</value>
   </data>
   <data name="Multithreading" xml:space="preserve">
     <value>Multithreading</value>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Network</value>
+    <value>Netwerk</value>
   </data>
   <data name="NetworkInterface" xml:space="preserve">
-    <value>Network Interface</value>
+    <value>Netwerkinterface</value>
   </data>
   <data name="NewTab" xml:space="preserve">
-    <value>New tab</value>
+    <value>Nieuw tabblad</value>
   </data>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
   </data>
   <data name="OverwriteQuestion" xml:space="preserve">
-    <value>Overwrite?</value>
+    <value>Overschrijven?</value>
   </data>
   <data name="Ping" xml:space="preserve">
     <value>Ping</value>
@@ -304,19 +304,19 @@
     <value>Port</value>
   </data>
   <data name="Portable" xml:space="preserve">
-    <value>Portable</value>
+    <value>Draagbaar</value>
   </data>
   <data name="PortScanner" xml:space="preserve">
     <value>Port Scanner</value>
   </data>
   <data name="Profiles" xml:space="preserve">
-    <value>Profiles</value>
+    <value>Profielen</value>
   </data>
   <data name="PuTTY" xml:space="preserve">
     <value>PuTTY</value>
   </data>
   <data name="Query" xml:space="preserve">
-    <value>Query</value>
+    <value>Vraag</value>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
     <value>Remote Desktop</value>
@@ -328,31 +328,31 @@
     <value>Resolve PTR</value>
   </data>
   <data name="Resources" xml:space="preserve">
-    <value>Resources</value>
+    <value>Middelen</value>
   </data>
   <data name="Result" xml:space="preserve">
-    <value>Result</value>
+    <value>Resultaat</value>
   </data>
   <data name="Route" xml:space="preserve">
     <value>Route</value>
   </data>
   <data name="Scan" xml:space="preserve">
-    <value>Scan</value>
+    <value>Scannen</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Search</value>
+    <value>Zoeken</value>
   </data>
   <data name="SelectAProfileDots" xml:space="preserve">
-    <value>Select a profile...</value>
+    <value>Selecteer een profiel...</value>
   </data>
   <data name="SetMasterPassword" xml:space="preserve">
-    <value>Set Master Password</value>
+    <value>Stel hoofdwachtwoord in</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Instellingen</value>
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>Settings have been reset!</value>
+    <value>Instellingen zijn gereset!</value>
   </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
@@ -361,10 +361,10 @@
     <value>Socket</value>
   </data>
   <data name="Statistics" xml:space="preserve">
-    <value>Statistics</value>
+    <value>Statistieken</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Status</value>
+    <value>Staat</value>
   </data>
   <data name="Subnet" xml:space="preserve">
     <value>Subnet</value>
@@ -376,7 +376,7 @@
     <value>Success!</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>Theme</value>
+    <value>Thema</value>
   </data>
   <data name="Traceroute" xml:space="preserve">
     <value>Traceroute</value>
@@ -385,7 +385,7 @@
     <value>Transparency</value>
   </data>
   <data name="Tray" xml:space="preserve">
-    <value>Tray</value>
+    <value>Dienblad</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
@@ -397,7 +397,7 @@
     <value>v3</value>
   </data>
   <data name="ValidationFailed" xml:space="preserve">
-    <value>Validation failed!</value>
+    <value>Validatie mislukt!</value>
   </data>
   <data name="WakeOnLAN" xml:space="preserve">
     <value>Wake on LAN</value>
@@ -406,28 +406,28 @@
     <value>Website</value>
   </data>
   <data name="Window" xml:space="preserve">
-    <value>Window</value>
+    <value>Venster</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
-    <value>Wrong password!</value>
+    <value>Verkeerd wachtwoord!</value>
   </data>
   <data name="Client" xml:space="preserve">
-    <value>Client</value>
+    <value>Cliënt</value>
   </data>
   <data name="Administrator" xml:space="preserve">
-    <value>Administrator</value>
+    <value>Beheerder</value>
   </data>
   <data name="AlwaysShowIconInTray" xml:space="preserve">
-    <value>Always show icon in tray</value>
+    <value>Toon altijd het pictogram in de lade</value>
   </data>
   <data name="Attempts" xml:space="preserve">
-    <value>Attempts</value>
+    <value>Pogingen</value>
   </data>
   <data name="AverageTime" xml:space="preserve">
-    <value>Average time</value>
+    <value>Gemiddelde tijd</value>
   </data>
   <data name="Broadcast" xml:space="preserve">
-    <value>Broadcast</value>
+    <value>Uitzending</value>
   </data>
   <data name="Buffer" xml:space="preserve">
     <value>Buffer</value>
@@ -439,19 +439,19 @@
     <value>CIDR</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Close</value>
+    <value>Dichtbij</value>
   </data>
   <data name="DefaultGateway" xml:space="preserve">
     <value>Default-Gateway</value>
   </data>
   <data name="DeleteDots" xml:space="preserve">
-    <value>Delete...</value>
+    <value>Wegvagen...</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>Beschrijving</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
-    <value>DHCP enabled</value>
+    <value>DHCP ingeschakeld</value>
   </data>
   <data name="DHCPLeaseExpires" xml:space="preserve">
     <value>DHCP lease expires</value>
@@ -484,16 +484,16 @@
     <value>Hostname</value>
   </data>
   <data name="IPAddress" xml:space="preserve">
-    <value>IP address</value>
+    <value>IP adres</value>
   </data>
   <data name="IPAddresses" xml:space="preserve">
-    <value>IP addresses</value>
+    <value>IP adressen</value>
   </data>
   <data name="IPv4" xml:space="preserve">
     <value>IPv4</value>
   </data>
   <data name="IPv4Address" xml:space="preserve">
-    <value>IPv4 address</value>
+    <value>IPv4 adres</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
     <value>IPv4-Default-Gateway</value>
@@ -502,7 +502,7 @@
     <value>IPv6</value>
   </data>
   <data name="IPv6Address" xml:space="preserve">
-    <value>IPv6 address</value>
+    <value>IPv6 adres</value>
   </data>
   <data name="IPv6AddressLinkLocal" xml:space="preserve">
     <value>Link-local IPv6 address</value>
@@ -511,7 +511,7 @@
     <value>IPv6-Default-Gateway</value>
   </data>
   <data name="Maximum" xml:space="preserve">
-    <value>Maximum</value>
+    <value>Maximaal</value>
   </data>
   <data name="MaximumHopsRouter" xml:space="preserve">
     <value>Maximum hops/router</value>
@@ -526,16 +526,16 @@
     <value>Minimum</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Naam</value>
   </data>
   <data name="NetworkAddress" xml:space="preserve">
-    <value>Network address</value>
+    <value>Netwerkadres</value>
   </data>
   <data name="NewSubnetmaskOrCIDR" xml:space="preserve">
     <value>New subnetmask or CIDR</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>Nee</value>
   </data>
   <data name="ObtainAnIPAddressAutomatically" xml:space="preserve">
     <value>Obtain an IP address automatically</value>
@@ -544,28 +544,28 @@
     <value>Obtain DNS server address automatically</value>
   </data>
   <data name="PacketLoss" xml:space="preserve">
-    <value>Packet loss</value>
+    <value>Pakketverlies</value>
   </data>
   <data name="PacketsTransmitted" xml:space="preserve">
-    <value>Packets transmitted</value>
+    <value>Pakketten verzonden</value>
   </data>
   <data name="PhysicalAddress" xml:space="preserve">
-    <value>PhysicalAddress</value>
+    <value>Fysiek adres</value>
   </data>
   <data name="PreferredProtocolWhenResolvingHostname" xml:space="preserve">
     <value>Preferred protocol when resolving hostname:</value>
   </data>
   <data name="PrimaryDNSServer" xml:space="preserve">
-    <value>Primary DNS server</value>
+    <value>Primaire DNS-server</value>
   </data>
   <data name="ReceivedLost" xml:space="preserve">
-    <value>Received / Lost</value>
+    <value>Ontvangen / verloren</value>
   </data>
   <data name="ResolveHostname" xml:space="preserve">
     <value>Resolve hostname</value>
   </data>
   <data name="RestartRequired" xml:space="preserve">
-    <value>Restart required</value>
+    <value>Opnieuw opstarten vereist</value>
   </data>
   <data name="RestartRequiredSettingsChangedMessage" xml:space="preserve">
     <value>Some settings are applied only after restarting the application!</value>
@@ -574,25 +574,25 @@
     <value>Save settings in the application folder</value>
   </data>
   <data name="SecondaryDNSServer" xml:space="preserve">
-    <value>Secondary DNS server</value>
+    <value>Secundaire DNS-server</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Show</value>
   </data>
   <data name="ShowTheFollowingApplicationOnStartup" xml:space="preserve">
-    <value>Show the following application on startup:</value>
+    <value>Toon de volgende applicatie bij het opstarten:</value>
   </data>
   <data name="Slogan" xml:space="preserve">
-    <value>A powerful tool for managing networks and troubleshoot network problems!</value>
+    <value>Een krachtig hulpmiddel voor het beheren van netwerken en het oplossen van netwerkproblemen!</value>
   </data>
   <data name="Speed" xml:space="preserve">
-    <value>Speed</value>
+    <value>Snelheid</value>
   </data>
   <data name="StartMinimizedInTray" xml:space="preserve">
-    <value>Start minimized in tray</value>
+    <value>Start geminimaliseerd in lade</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
-    <value>Start with Windows (current user)</value>
+    <value>Begin met Windows (huidige gebruiker)</value>
   </data>
   <data name="StaticIPv4Address" xml:space="preserve">
     <value>Static IPv4 address</value>
@@ -610,19 +610,19 @@
     <value>Threads</value>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>Time</value>
+    <value>Tijd</value>
   </data>
   <data name="Time1" xml:space="preserve">
-    <value>Time 1</value>
+    <value>Tijd 1</value>
   </data>
   <data name="Time2" xml:space="preserve">
-    <value>Time 2</value>
+    <value>Tijd 2</value>
   </data>
   <data name="Time3" xml:space="preserve">
-    <value>Time 3</value>
+    <value>Tijd 3</value>
   </data>
   <data name="Timeout" xml:space="preserve">
-    <value>Timeout</value>
+    <value>Time-out</value>
   </data>
   <data name="TimeoutMS" xml:space="preserve">
     <value>Timeout (ms)</value>
@@ -643,10 +643,10 @@
     <value>Use the following IP address:</value>
   </data>
   <data name="WakeUp" xml:space="preserve">
-    <value>Wake up</value>
+    <value>Wakker maken</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Ja</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>
@@ -682,7 +682,7 @@
     <value>Additionals</value>
   </data>
   <data name="AddProfileDots" xml:space="preserve">
-    <value>Add profile...</value>
+    <value>Voeg profiel toe ...</value>
   </data>
   <data name="AdjustScreenAutomatically" xml:space="preserve">
     <value>Adjust screen automatically</value>
@@ -694,7 +694,7 @@
     <value>Application is restarted afterwards</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>Apply</value>
+    <value>Van toepassing zijn</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
     <value>Apply Windows key combinations (e.g. ALT+TAB):</value>
@@ -703,7 +703,7 @@
     <value>Auth</value>
   </data>
   <data name="AuthenticationLevel" xml:space="preserve">
-    <value>Authentication level</value>
+    <value>Authenticatieniveau</value>
   </data>
   <data name="Authorities" xml:space="preserve">
     <value>Authorities</value>
@@ -712,22 +712,22 @@
     <value>Automatically update every</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>back</value>
+    <value>terug</value>
   </data>
   <data name="Backup" xml:space="preserve">
-    <value>Backup</value>
+    <value>Reservekopie</value>
   </data>
   <data name="Baud" xml:space="preserve">
     <value>Baud</value>
   </data>
   <data name="CanceledByUserMessage" xml:space="preserve">
-    <value>The operation has been canceled by the user!</value>
+    <value>De bewerking is geannuleerd door de gebruiker!</value>
   </data>
   <data name="CapsLockIsEnabled" xml:space="preserve">
-    <value>Caps lock is enabled!</value>
+    <value>Caps lock is ingeschakeld!</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>Check for updates at startup</value>
+    <value>Controleren op updates bij het opstarten</value>
   </data>
   <data name="Class" xml:space="preserve">
     <value>Class</value>
@@ -739,13 +739,13 @@
     <value>Color depth (bit)</value>
   </data>
   <data name="Community" xml:space="preserve">
-    <value>Community</value>
+    <value>Gemeenschap</value>
   </data>
   <data name="ConfigureThePathToPuTTYInTheSettingsDots" xml:space="preserve">
-    <value>Configure the path to PuTTY in the settings...</value>
+    <value>Configureer het pad naar PuTTY in de instellingen...</value>
   </data>
   <data name="ConfirmClose" xml:space="preserve">
-    <value>Confirm close</value>
+    <value>Bevestig dichtbij</value>
   </data>
   <data name="ConfirmCloseMessage" xml:space="preserve">
     <value>Are you sure you want to close the application?</value>
@@ -760,19 +760,19 @@
     <value>Connect the network card to a network to configure it!</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>Kopiëren</value>
   </data>
   <data name="CopyAsDots" xml:space="preserve">
-    <value>Copy as...</value>
+    <value>Kopiëren als...</value>
   </data>
   <data name="CopyDots" xml:space="preserve">
-    <value>Copy...</value>
+    <value>Kopiëren...</value>
   </data>
   <data name="CouldNotResolveHostnameFor" xml:space="preserve">
     <value>Could not resolve hostname for: "{0}"</value>
   </data>
   <data name="Credential" xml:space="preserve">
-    <value>Credential</value>
+    <value>Geloofsbrieven</value>
   </data>
   <data name="CredentialNotFoundMessage" xml:space="preserve">
     <value>Edit the Profile and select a different credential or delete the existing one</value>
@@ -835,7 +835,7 @@
     <value>DNS server</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
-    <value>Open documentation</value>
+    <value>Open documentatie</value>
   </data>
   <data name="Domain" xml:space="preserve">
     <value>Domain</value>
@@ -844,7 +844,7 @@
     <value>Duration</value>
   </data>
   <data name="EditDots" xml:space="preserve">
-    <value>Edit...</value>
+    <value>Bewerk...</value>
   </data>
   <data name="Enable" xml:space="preserve">
     <value>Enable</value>
@@ -856,7 +856,7 @@
     <value>Enable transparency</value>
   </data>
   <data name="EndTime" xml:space="preserve">
-    <value>End time</value>
+    <value>Eindtijd</value>
   </data>
   <data name="EnterASubnetToCalculateIt" xml:space="preserve">
     <value>Enter a subnet to calculate it...</value>
@@ -883,7 +883,7 @@
     <value>Fixed screen size:</value>
   </data>
   <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork the Project on Github</value>
+    <value>Star / Fork the Project op Github</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Found</value>
@@ -910,7 +910,7 @@
     <value>Inherit host from default</value>
   </data>
   <data name="InstallRDP8dot1Message" xml:space="preserve">
-    <value>You must install the Remote Desktop Protocol (RDP) version 8.1 on your system to use the Remote Desktop functionality!</value>
+    <value>U moet de Remote Desktop Protocol (RDP) versie 8.1 op uw systeem installeren om de Remote Desktop-functionaliteit te gebruiken!</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>IP range</value>
@@ -946,68 +946,68 @@
     <value>Multiple instances</value>
   </data>
   <data name="NetworkLocationCannotBeReachedMessage" xml:space="preserve">
-    <value>The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help.</value>
+    <value>Het netwerkadres kan niet worden bereikt. Controleer of uw computer is verbonden met het netwerk. Raadpleeg Windows Help voor informatie over het oplossen van netwerkproblemen.</value>
   </data>
   <data name="NewConnectionDots" xml:space="preserve">
-    <value>New connection...</value>
+    <value>Nieuwe verbinding...</value>
   </data>
   <data name="NoDNSRecordFoundCheckYourInputAndSettings" xml:space="preserve">
     <value>No DNS record found for "{0}"! Check your input and the settings.</value>
   </data>
   <data name="NoEnabledNetworkAdaptersFound" xml:space="preserve">
-    <value>No enabled network adapters found!</value>
+    <value>Geen geschikte netwerkadapters gevonden!</value>
   </data>
   <data name="NoPortsFoundCheckYourInput" xml:space="preserve">
-    <value>No ports found. Check your input!</value>
+    <value>Geen poorten gevonden. Controleer je invoer!</value>
   </data>
   <data name="NoProfilesFoundCreateOne" xml:space="preserve">
-    <value>No profiles found!
-Create one...</value>
+    <value>Geen profielen gevonden!
+Creëer er een...</value>
   </data>
   <data name="NothingFound" xml:space="preserve">
-    <value>Nothing found!</value>
+    <value>Niets gevonden!</value>
   </data>
   <data name="NothingToDoCheckYourInput" xml:space="preserve">
-    <value>Nothing to do. Check your input!</value>
+    <value>Niets te doen. Controleer je invoer!</value>
   </data>
   <data name="NoUpdateAvailable" xml:space="preserve">
-    <value>No update available!</value>
+    <value>Geen update beschikbaar!</value>
   </data>
   <data name="NoValidFileFoundToImport" xml:space="preserve">
-    <value>No valid file found to import.</value>
+    <value>Geen geldig bestand gevonden om te importeren.</value>
   </data>
   <data name="NoVendorFoundCheckYourInput" xml:space="preserve">
-    <value>No vendor found. Check your input!</value>
+    <value>Geen verkoper gevonden. Controleer je invoer!</value>
   </data>
   <data name="NumberOfErrorsAfterWhichIsCanceled" xml:space="preserve">
-    <value>Number of errors after which is canceled:</value>
+    <value>Aantal fouten waarna is geannuleerd:</value>
   </data>
   <data name="NumberOfStoredEntries" xml:space="preserve">
-    <value>Number of stored entries</value>
+    <value>Aantal opgeslagen items</value>
   </data>
   <data name="OID" xml:space="preserve">
     <value>OID</value>
   </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
-    <value>Only when using the full screen</value>
+    <value>Alleen bij gebruik van het volledige scherm</value>
   </data>
   <data name="OnTheRemoteComputer" xml:space="preserve">
-    <value>On the remote computer</value>
+    <value>Op de externe computer</value>
   </data>
   <data name="OnThisComputer" xml:space="preserve">
-    <value>On this computer</value>
+    <value>Op deze computer</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>Open</value>
   </data>
   <data name="OpenLicense" xml:space="preserve">
-    <value>Open license</value>
+    <value>Open licentie</value>
   </data>
   <data name="OpenProject" xml:space="preserve">
     <value>Open project</value>
   </data>
   <data name="OpenWebsite" xml:space="preserve">
-    <value>Open website</value>
+    <value>Open de website</value>
   </data>
   <data name="Override" xml:space="preserve">
     <value>override</value>
@@ -1018,13 +1018,13 @@ Create one...</value>
 If you click "Move &amp; Restart", the remaining files will be copied and the application will be restarted with the new settings!</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Wachtwoord</value>
   </data>
   <data name="PasswordsDoNotMatch" xml:space="preserve">
-    <value>Passwords do not match!</value>
+    <value>Wachtwoorden komen niet overeen!</value>
   </data>
   <data name="Path" xml:space="preserve">
-    <value>Path</value>
+    <value>Pad</value>
   </data>
   <data name="PortOrService" xml:space="preserve">
     <value>Port or service</value>
@@ -1036,7 +1036,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Priv</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value>Profile</value>
+    <value>Profiel</value>
   </data>
   <data name="ProfilesReloaded" xml:space="preserve">
     <value>Profiles reloaded</value>
@@ -1048,10 +1048,10 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>PuTTY process has ended!</value>
   </data>
   <data name="PuTTYProfile" xml:space="preserve">
-    <value>PuTTY profile</value>
+    <value>PuTTY profiel</value>
   </data>
   <data name="Questions" xml:space="preserve">
-    <value>Questions</value>
+    <value>Vragen</value>
   </data>
   <data name="RAW" xml:space="preserve">
     <value>RAW</value>
@@ -1255,7 +1255,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Vendor</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Version</value>
+    <value>Versie</value>
   </data>
   <data name="VersionxxIsAvailable" xml:space="preserve">
     <value>Version {0} is available!</value>
@@ -1273,13 +1273,13 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>The entered password is wrong.</value>
   </data>
   <data name="AddDots" xml:space="preserve">
-    <value>Add...</value>
+    <value>Toevoegen...</value>
   </data>
   <data name="AddEntryDots" xml:space="preserve">
     <value>Add entry...</value>
   </data>
   <data name="Calculate" xml:space="preserve">
-    <value>Calculate</value>
+    <value>Berekenen</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -1297,7 +1297,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Check for updates</value>
   </data>
   <data name="Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>Gesloten</value>
   </data>
   <data name="Continue" xml:space="preserve">
     <value>Continue</value>
@@ -1324,7 +1324,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>How to create a custom theme and accent?</value>
   </data>
   <data name="EnterLocationDots" xml:space="preserve">
-    <value>Enter location...</value>
+    <value>Voer locatie in...</value>
   </data>
   <data name="Everything" xml:space="preserve">
     <value>Everything</value>
@@ -1333,7 +1333,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Filter...</value>
   </data>
   <data name="FlushDNSCache" xml:space="preserve">
-    <value>Flush DNS cache</value>
+    <value>Lege DNS-cache</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
     <value>Decrypt and load your credentials to select them.</value>
@@ -1342,7 +1342,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Displays this dialog.</value>
   </data>
   <data name="HelpMessage_ParameterResetSettings" xml:space="preserve">
-    <value>Reset all settings.</value>
+    <value>Reset alle instellingen.</value>
   </data>
   <data name="HelpMessage_PasswordNotDisplayedCanBeOverwritten" xml:space="preserve">
     <value>The password is not displayed when editing, but can be overwritten.</value>
@@ -1366,7 +1366,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Minute(s)</value>
   </data>
   <data name="MoveAndRestart" xml:space="preserve">
-    <value>Move &amp; Restart</value>
+    <value>Verplaatsen &amp; Opnieuw opstarten</value>
   </data>
   <data name="NetworkConnectionsDots" xml:space="preserve">
     <value>Network connections....</value>
@@ -1375,19 +1375,19 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>(not changed)</value>
   </data>
   <data name="Off" xml:space="preserve">
-    <value>Off</value>
+    <value>Uit</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="On" xml:space="preserve">
-    <value>On</value>
+    <value>Op</value>
   </data>
   <data name="OpenLocation" xml:space="preserve">
-    <value>Open location</value>
+    <value>Open locatie</value>
   </data>
   <data name="OpenSettings" xml:space="preserve">
-    <value>Open settings</value>
+    <value>Open instellingen</value>
   </data>
   <data name="Overwrite" xml:space="preserve">
     <value>Overwrite</value>
@@ -1396,7 +1396,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Paste</value>
   </data>
   <data name="PuTTYLocationDots" xml:space="preserve">
-    <value>PuTTY location...</value>
+    <value>PuTTY locatie ...</value>
   </data>
   <data name="Reconnect" xml:space="preserve">
     <value>Reconnect</value>
@@ -1408,19 +1408,19 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Restart now</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Opslaan</value>
   </data>
   <data name="SearchDots" xml:space="preserve">
-    <value>Search...</value>
+    <value>Zoeken...</value>
   </data>
   <data name="TimeUnit_Second" xml:space="preserve">
     <value>Second(s)</value>
   </data>
   <data name="Send" xml:space="preserve">
-    <value>Send</value>
+    <value>Sturen</value>
   </data>
   <data name="SetMasterPasswordDots" xml:space="preserve">
-    <value>Set Master Password...</value>
+    <value>Stel hoofdwachtwoord in...</value>
   </data>
   <data name="ShowLocalLicenses" xml:space="preserve">
     <value>Show local licenses</value>
@@ -1477,19 +1477,19 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Applications</value>
   </data>
   <data name="BaseDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Duister</value>
   </data>
   <data name="BaseLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Helder</value>
   </data>
   <data name="Black" xml:space="preserve">
-    <value>Black</value>
+    <value>Zwart</value>
   </data>
   <data name="Blue" xml:space="preserve">
-    <value>Blue</value>
+    <value>Blauw</value>
   </data>
   <data name="Brown" xml:space="preserve">
-    <value>Brown</value>
+    <value>Bruin</value>
   </data>
   <data name="Cobalt" xml:space="preserve">
     <value>Cobalt</value>
@@ -1513,13 +1513,13 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Enter valid hosts (multiple hosts can not end with ";")!</value>
   </data>
   <data name="EnterValidIPAddress" xml:space="preserve">
-    <value>Enter a valid IP address!</value>
+    <value>Voer een geldig IP-adres in!</value>
   </data>
   <data name="EnterValidNumber" xml:space="preserve">
-    <value>Enter a valid number!</value>
+    <value>Voer een geldig nummer in!</value>
   </data>
   <data name="EnterValidOID" xml:space="preserve">
-    <value>Enter a valid OID!</value>
+    <value>Voer een geldige OID in!</value>
   </data>
   <data name="EnterValidPortOrPortRange" xml:space="preserve">
     <value>Enter a valid port and/or port range (1 - 65535)!</value>
@@ -1531,10 +1531,10 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Enter a valid website (like https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
-    <value>Green</value>
+    <value>Groen</value>
   </data>
   <data name="ImportExport" xml:space="preserve">
-    <value>Import / Export</value>
+    <value>Importeren / Exporteren</value>
   </data>
   <data name="Indigo" xml:space="preserve">
     <value>Indigo</value>
@@ -1561,7 +1561,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Key must have 8 characters or more!</value>
   </data>
   <data name="Lime" xml:space="preserve">
-    <value>Lime</value>
+    <value>Limoen</value>
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>Magenta</value>
@@ -1570,22 +1570,22 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Mauve</value>
   </data>
   <data name="Olive" xml:space="preserve">
-    <value>Olive</value>
+    <value>Olijf</value>
   </data>
   <data name="OnlyNumbersCanBeEntered" xml:space="preserve">
     <value>Only numbers can be entered!</value>
   </data>
   <data name="Orange" xml:space="preserve">
-    <value>Orange</value>
+    <value>Oranje</value>
   </data>
   <data name="Pink" xml:space="preserve">
-    <value>Pink</value>
+    <value>Roze</value>
   </data>
   <data name="Purple" xml:space="preserve">
-    <value>Purple</value>
+    <value>Purper</value>
   </data>
   <data name="Red" xml:space="preserve">
-    <value>Red</value>
+    <value>Rood</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE" xml:space="preserve">
     <value>Socket closed.</value>
@@ -1654,13 +1654,13 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>No information is available.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory" xml:space="preserve">
-    <value>Out of memory.</value>
+    <value>Geen geheugen meer.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory2" xml:space="preserve">
-    <value>Out of memory.</value>
+    <value>Geen geheugen meer.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory3" xml:space="preserve">
-    <value>Out of memory.</value>
+    <value>Geen geheugen meer.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_RemoteByUser" xml:space="preserve">
     <value>Remote disconnect by user.</value>
@@ -1741,7 +1741,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Taupe</value>
   </data>
   <data name="TcpState_Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>Gesloten</value>
   </data>
   <data name="TcpState_CloseWait" xml:space="preserve">
     <value>CloseWait</value>
@@ -1780,16 +1780,16 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Unkown</value>
   </data>
   <data name="Teal" xml:space="preserve">
-    <value>Teal</value>
+    <value>Taling</value>
   </data>
   <data name="Violet" xml:space="preserve">
-    <value>Violet</value>
+    <value>Violetta</value>
   </data>
   <data name="White" xml:space="preserve">
-    <value>White</value>
+    <value>Wit</value>
   </data>
   <data name="Yellow" xml:space="preserve">
-    <value>Yellow</value>
+    <value>Geel</value>
   </data>
   <data name="EnterValidValueBetween25and100" xml:space="preserve">
     <value>Enter a valid value between 25 and 100!</value>
@@ -1801,7 +1801,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>A Credential with this name already exists!</value>
   </data>
   <data name="PortState_Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>Gesloten</value>
   </data>
   <data name="PortState_Open" xml:space="preserve">
     <value>Open</value>
@@ -1843,7 +1843,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Renew</value>
   </data>
   <data name="WindowsDNSSettings" xml:space="preserve">
-    <value>Windows DNS settings</value>
+    <value>Windows DNS instellingen</value>
   </data>
   <data name="DeleteDNSServer" xml:space="preserve">
     <value>Delete DNS server</value>
@@ -1873,7 +1873,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TigerVNC.</value>
   </data>
   <data name="TigerVNCLocationDots" xml:space="preserve">
-    <value>TigerVNC location...</value>
+    <value>TigerVNC locatie...</value>
   </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
     <value>TigerVNC process has ended!</value>
@@ -1891,13 +1891,13 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Export all</value>
   </data>
   <data name="ExportDots" xml:space="preserve">
-    <value>Export...</value>
+    <value>Exporteren...</value>
   </data>
   <data name="ExportSelected" xml:space="preserve">
     <value>Export selected</value>
   </data>
   <data name="LocationDots" xml:space="preserve">
-    <value>Location...</value>
+    <value>Plaats...</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
@@ -1906,7 +1906,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Enter valid file path!</value>
   </data>
   <data name="All" xml:space="preserve">
-    <value>All</value>
+    <value>Allemaal</value>
   </data>
   <data name="Format" xml:space="preserve">
     <value>Format</value>
@@ -1918,7 +1918,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>An error occurred while exporting the data. See error message for details:</value>
   </data>
   <data name="Design" xml:space="preserve">
-    <value>Design</value>
+    <value>Ontwerp</value>
   </data>
   <data name="HighlightTimeouts" xml:space="preserve">
     <value>Highlight timeouts</value>
@@ -1930,17 +1930,17 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Wide Subnet</value>
   </data>
   <data name="AddTabDots" xml:space="preserve">
-    <value>Add tab...</value>
+    <value>Tab toevoegen...</value>
   </data>
   <data name="ResetCredentialsMessage" xml:space="preserve">
     <value>If you have forgotten your password and want to start over, delete the following file and restart the application.
 Path: "{0}"</value>
   </data>
   <data name="AddIPv4AddressDots" xml:space="preserve">
-    <value>Add IPv4 address...</value>
+    <value>IPv4-adres toevoegen...</value>
   </data>
   <data name="AddIPv4Address" xml:space="preserve">
-    <value>Add IPv4 address</value>
+    <value>IPv4-adres toevoegen</value>
   </data>
   <data name="HostThreads" xml:space="preserve">
     <value>Host threads</value>
@@ -1967,13 +1967,13 @@ Path: "{0}"</value>
     <value>Remote console</value>
   </data>
   <data name="PowerShellLocationDots" xml:space="preserve">
-    <value>PowerShell location...</value>
+    <value>PowerShell-locatie...</value>
   </data>
   <data name="FilePath" xml:space="preserve">
     <value>File path</value>
   </data>
   <data name="ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater" xml:space="preserve">
-    <value>This feature is only available in Windows 10 / Server 2016 or later!</value>
+    <value>Deze functie is alleen beschikbaar in Windows 10 / Server 2016 of hoger!</value>
   </data>
   <data name="OverrideDefaultSettings" xml:space="preserve">
     <value>Override default settings</value>
@@ -1982,7 +1982,7 @@ Path: "{0}"</value>
     <value>Resolve IPv4 address for this host</value>
   </data>
   <data name="Hide" xml:space="preserve">
-    <value>Hide</value>
+    <value>Verbergen</value>
   </data>
   <data name="TotalBytesReceived" xml:space="preserve">
     <value>Total bytes received</value>
@@ -1994,10 +1994,10 @@ Path: "{0}"</value>
     <value>Download</value>
   </data>
   <data name="Bandwidth" xml:space="preserve">
-    <value>Bandwidth</value>
+    <value>Bandbreedte</value>
   </data>
   <data name="Upload" xml:space="preserve">
-    <value>Upload</value>
+    <value>Uploaden</value>
   </data>
   <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
     <value>Apply Windows key combinations</value>
@@ -2049,7 +2049,7 @@ URL: https://api.ipify.org/</value>
     <value>Privacy</value>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Welcome</value>
+    <value>Welkom</value>
   </data>
   <data name="ExternalServices" xml:space="preserve">
     <value>External services</value>
@@ -2057,10 +2057,10 @@ URL: https://api.ipify.org/</value>
   <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
     <value>Star/Fork the Project on Github.
 
-URL: https://github.com.com/BornToBeRoot/NETworkManager/</value>
+URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
   </data>
   <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value>Help translate the tool on Transifex.
+    <value>Help de tool te vertalen op Transifex
 
 URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
   </data>
@@ -2088,13 +2088,13 @@ URL: https://twitter.com/BornToBeRoot_DE</value>
     <value>Check your network adapter configuration (dhcp, static ip) and if you are connected to a network.</value>
   </data>
   <data name="ConnectionState_Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Fout</value>
   </data>
   <data name="ConnectionState_OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="ConnectionState_Warning" xml:space="preserve">
-    <value>Warning</value>
+    <value>Waarschuwing</value>
   </data>
   <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
     <value>Could not detect gateway ip address!</value>
@@ -2149,7 +2149,7 @@ is disabled!</value>
     <value>"{0}" is reachable via ICMP!</value>
   </data>
   <data name="UseCustomAPI" xml:space="preserve">
-    <value>Use custom API</value>
+    <value>Gebruik aangepaste API</value>
   </data>
   <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
     <value>URL to a web service that can be reached via http or https and returns an IP address as response.</value>
@@ -2161,27 +2161,24 @@ is disabled!</value>
     <value>Could not connect to "{0}"!</value>
   </data>
   <data name="PublicDNSTestDomain" xml:space="preserve">
-    <value>Public DNS test domain</value>
+    <value>Openbaar DNS test domain</value>
   </data>
   <data name="PublicDNSTestIPAddress" xml:space="preserve">
-    <value>Public DNS test IP address</value>
+    <value>Openbaar DNS test IP adres</value>
   </data>
   <data name="PublicICMPTestIPAddress" xml:space="preserve">
-    <value>Public ICMP test IP address</value>
+    <value>Openbaar ICMP test IP adres</value>
   </data>
   <data name="IPv4ProtocolAvailable" xml:space="preserve">
-    <value>IPv4 protocol available</value>
+    <value>IPv4 protocol beschikbaar</value>
   </data>
   <data name="IPv6ProtocolAvailable" xml:space="preserve">
-    <value>IPv6 protocol available</value>
+    <value>IPv6 protocol beschikbaar</value>
   </data>
   <data name="CopyNoun" xml:space="preserve">
-    <value>Copy</value>
+    <value>Kopiëren</value>
   </data>
   <data name="Official" xml:space="preserve">
-    <value>Official</value>
-  </data>
-  <data name="HelpTranslate" xml:space="preserve">
-    <value>Help translate</value>
+    <value>Officieel</value>
   </data>
 </root>

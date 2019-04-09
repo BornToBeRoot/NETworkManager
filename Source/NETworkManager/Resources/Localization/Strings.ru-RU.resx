@@ -325,7 +325,7 @@
     <value>Сброс</value>
   </data>
   <data name="ResolvePTR" xml:space="preserve">
-    <value>Resolve PTR</value>
+    <value>Определить PTR</value>
   </data>
   <data name="Resources" xml:space="preserve">
     <value>Ресурсы</value>
@@ -796,19 +796,19 @@
     <value>Стандартный</value>
   </data>
   <data name="BaudRate" xml:space="preserve">
-    <value>Baud rate</value>
+    <value>Скорость передачи</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
     <value>Порт по умолчанию:</value>
   </data>
   <data name="RloginPort" xml:space="preserve">
-    <value>Rlogin port</value>
+    <value>Рлогин порт</value>
   </data>
   <data name="SSHPort" xml:space="preserve">
-    <value>SSH port</value>
+    <value>SSH порт</value>
   </data>
   <data name="TelnetPort" xml:space="preserve">
-    <value>Telnet port</value>
+    <value>Telnet порт</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
     <value>Выбранные учетные данные будут удалены навсегда.</value>
@@ -834,8 +834,8 @@
   <data name="DNSServer" xml:space="preserve">
     <value>DNS-сервер</value>
   </data>
-  <data name="Documentation" xml:space="preserve">
-    <value>Документация</value>
+  <data name="OpenDocumentation" xml:space="preserve">
+    <value>Открыть документацию</value>
   </data>
   <data name="Domain" xml:space="preserve">
     <value>Домен</value>
@@ -865,7 +865,7 @@
     <value>Введите подсеть и новую маску подсети для создания подсетей...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>Couldn't connect to 'api.github.com', check your network connection!</value>
+    <value>Не удалось подключиться к api.github.com, проверьте подключение к сети!</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
     <value>Ошибка в ответе!</value>
@@ -882,8 +882,8 @@
   <data name="FixedScreenSize" xml:space="preserve">
     <value>Фиксированный размер экрана:</value>
   </data>
-  <data name="ForkMeOnGitHub" xml:space="preserve">
-    <value>Fork me on Github!</value>
+  <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
+    <value>Стар/Форк проект на Github</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Найдено</value>
@@ -1348,10 +1348,10 @@
     <value>Пароль не отображается при редактировании, но может быть перезаписан.</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0] If server authentication fails, connect to the computer without warning.
-[1] If server authentication fails, do not establish a connection.
-[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.
-[3] No authentication requirement is specified.</value>
+    <value>[0] Если аутентификация на сервере не удалась, подключитесь к компьютеру без предупреждения.
+[1] Если аутентификация на сервере не удалась, не устанавливайте соединение.
+[2] Если аутентификация на сервере не удалась, выведите предупреждение и разрешите мне подключиться или отказаться от подключения.
+[3] Требования к аутентификации не указаны.</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
     <value>Теги помогают организовать профили/сеансы по темам/проектам. Несколько тегов могут быть использованы с ";" быть разделены. Поиск по тегам с "tag=xxx".</value>
@@ -1867,16 +1867,16 @@
     <value>TigerVNC</value>
   </data>
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
-    <value>Configure the path to TigerVNC in the settings...</value>
+    <value>Настроить путь к TigerVNC в настройках...</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUseTigerVNC" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TigerVNC.</value>
+    <value>Отключите прозрачность в настройках (Общие/Внешний вид) и перезапустите приложение, чтобы использовать TigerVNC.</value>
   </data>
   <data name="TigerVNCLocationDots" xml:space="preserve">
-    <value>TigerVNC location...</value>
+    <value>Расположение TigerVNC...</value>
   </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
-    <value>TigerVNC process has ended!</value>
+    <value>Процесс TigerVNC завершен!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
     <value>Соединение...</value>
@@ -1943,79 +1943,242 @@
     <value>Добавить адрес IPv4</value>
   </data>
   <data name="HostThreads" xml:space="preserve">
-    <value>Host threads</value>
+    <value>Потоки хоста</value>
   </data>
   <data name="PortThreads" xml:space="preserve">
-    <value>Port threads</value>
+    <value>Потоки порта</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
   </data>
   <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
-    <value>Configure the path to PowerShell in the settings...</value>
+    <value>Настройте путь к PowerShell в настройках...</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUsePowerShell" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PowerShell.</value>
+    <value>Отключите прозрачность в настройках (Общие/Внешний вид) и перезапустите приложение, чтобы использовать PowerShell.</value>
   </data>
   <data name="PowerShellProcessHasEnded" xml:space="preserve">
-    <value>PowerShell process has ended!</value>
+    <value>Процесс PowerShell завершен!</value>
   </data>
   <data name="ExecutionPolicy" xml:space="preserve">
-    <value>Execution Policy</value>
+    <value>Политика исполнения</value>
   </data>
   <data name="RemoteConsole" xml:space="preserve">
-    <value>Remote console</value>
+    <value>Удаленная консоль</value>
   </data>
   <data name="PowerShellLocationDots" xml:space="preserve">
-    <value>PowerShell location...</value>
+    <value>Расположение PowerShell...</value>
   </data>
   <data name="FilePath" xml:space="preserve">
-    <value>File path</value>
+    <value>Путь файла</value>
   </data>
   <data name="ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater" xml:space="preserve">
-    <value>This feature is only available in Windows 10 / Server 2016 or later!</value>
+    <value>Эта функция доступна только в Windows 10/Server 2016 или более поздней версии!</value>
   </data>
   <data name="OverrideDefaultSettings" xml:space="preserve">
-    <value>Override default settings</value>
+    <value>Перезаписать настройки по умолчанию</value>
   </data>
   <data name="ResolveIPv4AddressForThisHost" xml:space="preserve">
-    <value>Resolve IPv4 address for this host</value>
+    <value>Определить IPv4-адрес для этого хоста</value>
   </data>
   <data name="Hide" xml:space="preserve">
-    <value>Hide</value>
+    <value>Скрыть</value>
   </data>
   <data name="TotalBytesReceived" xml:space="preserve">
-    <value>Total bytes received</value>
+    <value>Всего байт получено</value>
   </data>
   <data name="TotalBytesSent" xml:space="preserve">
-    <value>Total bytes sent</value>
+    <value>Всего отправлено байт</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>Download</value>
+    <value>Скачать</value>
   </data>
   <data name="Bandwidth" xml:space="preserve">
-    <value>Bandwidth</value>
+    <value>Пропускная способность</value>
   </data>
   <data name="Upload" xml:space="preserve">
-    <value>Upload</value>
+    <value>Загрузить</value>
   </data>
   <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
-    <value>Apply Windows key combinations</value>
+    <value>Применить комбинации клавиш Windows</value>
   </data>
   <data name="CredentialSecuritySupportProvider" xml:space="preserve">
-    <value>Credential Security Support Provider</value>
+    <value>Поставщик поддержки безопасности учетных данных</value>
   </data>
   <data name="BackgroundJob" xml:space="preserve">
-    <value>Background job</value>
+    <value>Фоновая работа</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>The background job will save settings, profiles, credentials every x-minutes.
+    <value>Фоновое задание будет сохранять настройки, профили и учетные данные каждые x минут.
 
-Value 0 will disable this feature.
+Значение 0 отключит эту функцию.
 
-Changing this value requires a restart of the application to take effect.</value>
+Изменение этого значения требует перезапуска приложения для вступления в силу.</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
-    <value>Run background job every x-minute</value>
+    <value>Запускать фоновую работу каждую х-минуту</value>
+  </data>
+  <data name="YourSystemOSIsIncompatibleWithTheLatestRelease" xml:space="preserve">
+    <value>Ваша операционная система несовместима с последней версией!</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
+    <value>Все настройки можно изменить позже в настройках</value>
+  </data>
+  <data name="CheckPublicIPAddress" xml:space="preserve">
+    <value>Проверьте общедоступный IP-адрес</value>
+  </data>
+  <data name="FirstRunMessage" xml:space="preserve">
+    <value>Спасибо за использование NETworkManager!
+
+Для предоставления дополнительных функций, приложение использует сервисы в интернете, которыми я не управляю. Данные не будут отправлены мне.</value>
+  </data>
+  <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
+    <value>При запуске программы в фоновом режиме проверяется, доступна ли новая версия программы на Github.
+
+URL: https://api.github.com/</value>
+  </data>
+  <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
+    <value>Публичный IP-адрес определяется через ipify.org.
+
+URL: https://api.ipify.org/</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Конфиденциальность</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Добро пожаловать</value>
+  </data>
+  <data name="ExternalServices" xml:space="preserve">
+    <value>Внешние услуги</value>
+  </data>
+  <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
+    <value>Стар/Форк проект на Github.
+
+URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+  </data>
+  <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
+    <value>Помогите перевести на Transifex.
+
+URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+  </data>
+  <data name="ToolTip_TwitterContact" xml:space="preserve">
+    <value>Связаться через Twitter.
+
+URL: https://twitter.com/BornToBeRoot_DE</value>
+  </data>
+  <data name="Connection" xml:space="preserve">
+    <value>Соединение</value>
+  </data>
+  <data name="Computer" xml:space="preserve">
+    <value>Компьютер</value>
+  </data>
+  <data name="GatewayRouter" xml:space="preserve">
+    <value>Шлюз/Маршрутизатор</value>
+  </data>
+  <data name="Internet" xml:space="preserve">
+    <value>Интернет</value>
+  </data>
+  <data name="CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage" xml:space="preserve">
+    <value>Проверьте конфигурацию сетевого адаптера (DNS) и правильно ли настроен сервер DNS.</value>
+  </data>
+  <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
+    <value>Проверьте конфигурацию сетевого адаптера (dhcp, статический ip) и убедитесь, что вы подключены к сети.</value>
+  </data>
+  <data name="ConnectionState_Error" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="ConnectionState_OK" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="ConnectionState_Warning" xml:space="preserve">
+    <value>Предупреждение</value>
+  </data>
+  <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
+    <value>Не удалось обнаружить IP-адрес шлюза!</value>
+  </data>
+  <data name="CouldNotDetectLocalIPAddressMessage" xml:space="preserve">
+    <value>Не удалось обнаружить локальный IP-адрес!</value>
+  </data>
+  <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>Не удалось получить публичный IP-адрес через WebRequest (http / https) из "{0}"! Проверьте подключение к сети (брандмауэр, прокси и т. Д.).</value>
+  </data>
+  <data name="CouldNotResolveHostnameForXXXMessage" xml:space="preserve">
+    <value>Не удалось определить имя хоста для IP-адреса "{0}"!</value>
+  </data>
+  <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
+    <value>Нет записей A в DNS, разрешенных для "{0}"!</value>
+  </data>
+  <data name="NoPTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
+    <value>Нет записи PTR в DNS для "{0}"!</value>
+  </data>
+  <data name="XADNSRecordsResolvedForXXXMessage" xml:space="preserve">
+    <value>"{0}" A запись в DNS для "{1}"!</value>
+  </data>
+  <data name="PTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
+    <value>PTR запись в DNS для "{0}"!</value>
+  </data>
+  <data name="GotXXXAsPublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>Получил "{0}" как публичный IP-адрес от "{1}"!</value>
+  </data>
+  <data name="ResolvedXXXAsHostnameForIPAddressXXXMessage" xml:space="preserve">
+    <value>Определить "{0}" в качестве имени хоста для IP-адреса "{1}"!</value>
+  </data>
+  <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
+    <value>Проверка публичного IP-адреса
+выключена!</value>
+  </data>
+  <data name="TCPIPStackIsAvailableMessage" xml:space="preserve">
+    <value>Стек TCP / IP доступен. "{0}" доступен через ICMP!</value>
+  </data>
+  <data name="TCPIPStackIsNotAvailableMessage" xml:space="preserve">
+    <value>Стек TCP / IP недоступен ... "{0}" не доступен через ICMP!</value>
+  </data>
+  <data name="XXXDetectedAsGatewayIPAddress" xml:space="preserve">
+    <value>"{0}" обнаружен как IP-адрес шлюза!</value>
+  </data>
+  <data name="XXXDetectedAsLocalIPAddressMessage" xml:space="preserve">
+    <value>"{0}" обнаружен как локальный IP-адрес!</value>
+  </data>
+  <data name="XXXIsNotReachableViaICMPMessage" xml:space="preserve">
+    <value>"{0}" недоступен через ICMP!</value>
+  </data>
+  <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
+    <value>"{0}" доступен через ICMP!</value>
+  </data>
+  <data name="UseCustomAPI" xml:space="preserve">
+    <value>Использовать пользовательский API</value>
+  </data>
+  <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
+    <value>URL-адрес веб-службы, по которому можно получить доступ через http или https и который возвращает IP-адрес в качестве ответа.</value>
+  </data>
+  <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>Не удалось разобрать публичный IP-адрес из "{0}"! Попробуйте другой сервис или используйте по умолчанию...</value>
+  </data>
+  <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
+    <value>Не удалось подключиться к "{0}"!</value>
+  </data>
+  <data name="PublicDNSTestDomain" xml:space="preserve">
+    <value>Общедоступный тестовый домен DNS</value>
+  </data>
+  <data name="PublicDNSTestIPAddress" xml:space="preserve">
+    <value>Публичный тестовый IP-адрес DNS</value>
+  </data>
+  <data name="PublicICMPTestIPAddress" xml:space="preserve">
+    <value>Публичный ICMP тестовый IP-адрес</value>
+  </data>
+  <data name="IPv4ProtocolAvailable" xml:space="preserve">
+    <value>Доступен протокол IPv4</value>
+  </data>
+  <data name="IPv6ProtocolAvailable" xml:space="preserve">
+    <value>Доступен протокол IPv6</value>
+  </data>
+  <data name="CopyNoun" xml:space="preserve">
+    <value>Копировать</value>
+  </data>
+  <data name="Official" xml:space="preserve">
+    <value>Официальный</value>
   </data>
 </root>

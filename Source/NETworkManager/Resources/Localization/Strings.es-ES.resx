@@ -610,16 +610,16 @@
     <value>Hilos</value>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>Hora</value>
+    <value>Tiempo</value>
   </data>
   <data name="Time1" xml:space="preserve">
-    <value>Hora 1</value>
+    <value>Tiempo 1</value>
   </data>
   <data name="Time2" xml:space="preserve">
-    <value>Hora 2</value>
+    <value>Tiempo 2</value>
   </data>
   <data name="Time3" xml:space="preserve">
-    <value>Hora 3</value>
+    <value>Tiempo 3</value>
   </data>
   <data name="Timeout" xml:space="preserve">
     <value>Tiempo de espera</value>
@@ -796,19 +796,19 @@
     <value>Predeterminado</value>
   </data>
   <data name="BaudRate" xml:space="preserve">
-    <value>Baud rate</value>
+    <value>Tasa de baudios</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
     <value>Puerto predeterminado:</value>
   </data>
   <data name="RloginPort" xml:space="preserve">
-    <value>Rlogin port</value>
+    <value>Puerto rlogin</value>
   </data>
   <data name="SSHPort" xml:space="preserve">
-    <value>SSH port</value>
+    <value>Puerto SSH</value>
   </data>
   <data name="TelnetPort" xml:space="preserve">
-    <value>Telnet port</value>
+    <value>Puerto telnet</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
     <value>La credencial seleccionada se eliminará permanentemente.</value>
@@ -820,10 +820,10 @@
     <value>Los perfiles seleccionados se eliminarán permanentemente.</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUsePuTTY" xml:space="preserve">
-    <value>Desactive la transparencia en la configuración (General/Apariencia) y luego reinicie la aplicación para usar PuTTY.</value>
+    <value>Desactive la transparencia en la configuración (General &gt; Apariencia) y luego reinicie la aplicación para usar PuTTY.</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUseRemoteDesktop" xml:space="preserve">
-    <value>Desactive la transparencia en la configuración (General/Apariencia) y luego reinicie la aplicación para usar el Escritorio remoto.</value>
+    <value>Desactive la transparencia en la configuración (General &gt; Apariencia) y luego reinicie la aplicación para usar el escritorio remoto.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Configuración automática de DNS</value>
@@ -834,8 +834,8 @@
   <data name="DNSServer" xml:space="preserve">
     <value>Servidor DNS</value>
   </data>
-  <data name="Documentation" xml:space="preserve">
-    <value>Documentación</value>
+  <data name="OpenDocumentation" xml:space="preserve">
+    <value>Ver documentación</value>
   </data>
   <data name="Domain" xml:space="preserve">
     <value>Dominio</value>
@@ -856,7 +856,7 @@
     <value>Habilitar transparencia</value>
   </data>
   <data name="EndTime" xml:space="preserve">
-    <value>Hora de finalización</value>
+    <value>Fecha/hora de finalización</value>
   </data>
   <data name="EnterASubnetToCalculateIt" xml:space="preserve">
     <value>Ingrese una subred para calcularla...</value>
@@ -882,8 +882,8 @@
   <data name="FixedScreenSize" xml:space="preserve">
     <value>Tamaño de pantalla fijo:</value>
   </data>
-  <data name="ForkMeOnGitHub" xml:space="preserve">
-    <value>¡Búscame en Github!</value>
+  <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
+    <value>El proyecto en GitHub</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Encontrado</value>
@@ -931,7 +931,7 @@
     <value>¡Paquete mágico enviado con éxito!</value>
   </data>
   <data name="MaximumNumberOfHopsReached" xml:space="preserve">
-    <value>¡Número máximo ({0}) de hops/router alcanzados!</value>
+    <value>¡Número máximo ({0}) de saltos/router alcanzados!</value>
   </data>
   <data name="MessageSize" xml:space="preserve">
     <value>Tamaño del mensaje</value>
@@ -1174,7 +1174,7 @@ Crear uno...</value>
     <value>SSH</value>
   </data>
   <data name="StartTime" xml:space="preserve">
-    <value>Hora de inicio</value>
+    <value>Fecha/hora de inicio</value>
   </data>
   <data name="State" xml:space="preserve">
     <value>Estado</value>
@@ -1219,7 +1219,7 @@ Crear uno...</value>
     <value>Marca de tiempo</value>
   </data>
   <data name="Trace" xml:space="preserve">
-    <value>Rastro</value>
+    <value>Rastrear</value>
   </data>
   <data name="UnkownError" xml:space="preserve">
     <value>¡Error desconocido!</value>
@@ -1270,7 +1270,7 @@ Crear uno...</value>
     <value>Las credenciales no se pueden desencriptar con la contraseña dada.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
-    <value>La contraseña introducida es incorrecta.</value>
+    <value>La contraseña introducida no es correcta.</value>
   </data>
   <data name="AddDots" xml:space="preserve">
     <value>Añadir...</value>
@@ -1333,7 +1333,7 @@ Crear uno...</value>
     <value>Filtrar...</value>
   </data>
   <data name="FlushDNSCache" xml:space="preserve">
-    <value>Limpiar la caché de DNS</value>
+    <value>Limpiar caché de DNS</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
     <value>Desencriptar y cargar tus credenciales para seleccionarlas.</value>
@@ -1438,7 +1438,7 @@ Crear uno...</value>
     <value>Conexiones</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>¡Ingrese un rango ip válido!</value>
+    <value>¡Ingrese un rango IP válido!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
     <value>¡Ingrese una dirección IPv4 válida!</value>
@@ -1612,7 +1612,7 @@ Crear uno...</value>
     <value>Error de encriptación.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_GetHostByNameFailed" xml:space="preserve">
-    <value>Windows Sockets gethostbyname call failed.</value>
+    <value>Llamada a Windows Sockets gethostbyname fallida.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_HostNotFound" xml:space="preserve">
     <value>Host no encontrado.</value>
@@ -1699,7 +1699,7 @@ Crear uno...</value>
     <value>El inicio de sesión falló.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority" xml:space="preserve">
-    <value>No se pudo contactar a ninguna autoridad para la autenticación. El nombre de dominio de la parte que realiza la autenticación podría ser incorrecto, el dominio podría ser inalcanzable o podría haber habido una falla en la relación de confianza.</value>
+    <value>No se pudo contactar a ninguna autoridad para la autenticación. El nombre de dominio de la parte que realiza la autenticación podría no ser correcta, el dominio podría ser inalcanzable o podría haber habido una falla en la relación de confianza.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoSuchUser" xml:space="preserve">
     <value>El usuario especificado no tiene cuenta.</value>
@@ -1867,16 +1867,16 @@ Crear uno...</value>
     <value>TigerVNC</value>
   </data>
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
-    <value>Configure the path to TigerVNC in the settings...</value>
+    <value>Configure la ruta de TigerVNC en la configuración...</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUseTigerVNC" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TigerVNC.</value>
+    <value>Desactive la transparencia en la configuración (General &gt; Apariencia) y luego reinicie la aplicación para usar TigerVNC.</value>
   </data>
   <data name="TigerVNCLocationDots" xml:space="preserve">
-    <value>TigerVNC location...</value>
+    <value>Ubicación de TigerVNC...</value>
   </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
-    <value>TigerVNC process has ended!</value>
+    <value>¡El proceso de TigerVNC ha finalizado!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
     <value>Conectando...</value>
@@ -1955,7 +1955,7 @@ Ruta: "{0}"</value>
     <value>Configure la ruta de PowerShell en la configuración...</value>
   </data>
   <data name="DisableTransparencyInTheSettingsToUsePowerShell" xml:space="preserve">
-    <value>Desactive la transparencia en la configuración (General/Apariencia) y luego reinicie la aplicación para usar PowerShell.</value>
+    <value>Desactive la transparencia en la configuración (General &gt; Apariencia) y luego reinicie la aplicación para usar PowerShell.</value>
   </data>
   <data name="PowerShellProcessHasEnded" xml:space="preserve">
     <value>¡El proceso de PowerShell ha finalizado!</value>
@@ -2000,22 +2000,185 @@ Ruta: "{0}"</value>
     <value>Subida</value>
   </data>
   <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
-    <value>Apply Windows key combinations</value>
+    <value>Aplicar combinaciones de teclas de Windows</value>
   </data>
   <data name="CredentialSecuritySupportProvider" xml:space="preserve">
-    <value>Credential Security Support Provider</value>
+    <value>Proveedor de soporte de seguridad de credenciales</value>
   </data>
   <data name="BackgroundJob" xml:space="preserve">
-    <value>Background job</value>
+    <value>Trabajo en segundo plano</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>The background job will save settings, profiles, credentials every x-minutes.
+    <value>El trabajo en segundo plano guardará la configuración, los perfiles y las credenciales cada x-minutos.
 
-Value 0 will disable this feature.
+El valor 0 deshabilitará esta característica.
 
-Changing this value requires a restart of the application to take effect.</value>
+Cambiar este valor requiere el reinicio de la aplicación para que tenga efecto.</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
-    <value>Run background job every x-minute</value>
+    <value>Ejecutar trabajo en segundo plano cada x-minutos</value>
+  </data>
+  <data name="YourSystemOSIsIncompatibleWithTheLatestRelease" xml:space="preserve">
+    <value>¡Su sistema operativo no es compatible con la última versión!</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Panel de control</value>
+  </data>
+  <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
+    <value>Todas las configuraciones se pueden cambiar más adelante en configuración</value>
+  </data>
+  <data name="CheckPublicIPAddress" xml:space="preserve">
+    <value>Comprobar dirección IP pública</value>
+  </data>
+  <data name="FirstRunMessage" xml:space="preserve">
+    <value>¡Gracias por utilizar NETworkManager!
+
+Para proporcionar características adicionales, la aplicación utiliza servicios en Internet que no son operados por mí. No se me enviarán datos en ningún momento.</value>
+  </data>
+  <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
+    <value>Al iniciar el programa, comprueba en segundo plano si está disponible una nueva versión del programa en GitHub.
+
+URL: https://api.github.com/</value>
+  </data>
+  <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
+    <value>La dirección IP pública se determina a través de ipify.org.
+
+URL: https://api.ipify.org/</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacidad</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Bienvenido</value>
+  </data>
+  <data name="ExternalServices" xml:space="preserve">
+    <value>Servicios externos</value>
+  </data>
+  <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
+    <value>El proyecto en GitHub.
+
+URL: https://github.com/BornToBeRoot/NETworkManager/</value>
+  </data>
+  <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
+    <value>Ayude a traducir la herramienta en Transifex.
+
+URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+  </data>
+  <data name="ToolTip_TwitterContact" xml:space="preserve">
+    <value>Contacto por Twitter.
+
+URL: https://twitter.com/BornToBeRoot_DE</value>
+  </data>
+  <data name="Connection" xml:space="preserve">
+    <value>Conexión</value>
+  </data>
+  <data name="Computer" xml:space="preserve">
+    <value>Equipo</value>
+  </data>
+  <data name="GatewayRouter" xml:space="preserve">
+    <value>Puerta de enlace / Router</value>
+  </data>
+  <data name="Internet" xml:space="preserve">
+    <value>Internet</value>
+  </data>
+  <data name="CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage" xml:space="preserve">
+    <value>Compruebe la configuración de su adaptador de red (DNS) y si su servidor DNS está configurado correctamente.</value>
+  </data>
+  <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
+    <value>Compruebe la configuración de su adaptador de red (DHCP, IP estático) y si está conectado a una red.</value>
+  </data>
+  <data name="ConnectionState_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ConnectionState_OK" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="ConnectionState_Warning" xml:space="preserve">
+    <value>Advertencia</value>
+  </data>
+  <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
+    <value>¡No se pudo detectar la dirección IP de la puerta de enlace!</value>
+  </data>
+  <data name="CouldNotDetectLocalIPAddressMessage" xml:space="preserve">
+    <value>¡No se pudo detectar la dirección IP local!</value>
+  </data>
+  <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>¡No se pudo obtener la dirección IP pública a través de WebRequest (http/https) desde "{0}"! Compruebe su conexión de red (firewall, proxy, etc.).</value>
+  </data>
+  <data name="CouldNotResolveHostnameForXXXMessage" xml:space="preserve">
+    <value>¡No se pudo resolver el nombre de host para la dirección IP "{0}"!</value>
+  </data>
+  <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
+    <value>¡No hay registros DNS tipo A resueltos para "{0}"!</value>
+  </data>
+  <data name="NoPTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
+    <value>¡No hay registros DNS tipo PTR resueltos para "{0}"!</value>
+  </data>
+  <data name="XADNSRecordsResolvedForXXXMessage" xml:space="preserve">
+    <value>¡"{0}" registros DNS tipo A resueltos para "{1}"!</value>
+  </data>
+  <data name="PTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
+    <value>¡Registro DNS tipo PTR resuelto para "{0}"!</value>
+  </data>
+  <data name="GotXXXAsPublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>¡Hay "{0}" como dirección IP pública de "{1}"!</value>
+  </data>
+  <data name="ResolvedXXXAsHostnameForIPAddressXXXMessage" xml:space="preserve">
+    <value>¡"{0}" resuelto como nombre de host para la dirección IP "{1}"!</value>
+  </data>
+  <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
+    <value>¡La comprobación de la dirección IP pública
+está deshabilitada!</value>
+  </data>
+  <data name="TCPIPStackIsAvailableMessage" xml:space="preserve">
+    <value>¡El conjunto TCP/IP está disponible. "{0}" es accesible a través de ICMP!</value>
+  </data>
+  <data name="TCPIPStackIsNotAvailableMessage" xml:space="preserve">
+    <value>¡El conjunto TCP/IP no está disponible.... "{0}" no es accesible a través de ICMP!</value>
+  </data>
+  <data name="XXXDetectedAsGatewayIPAddress" xml:space="preserve">
+    <value>¡"{0}" detectado como dirección IP de la puerta de enlace!</value>
+  </data>
+  <data name="XXXDetectedAsLocalIPAddressMessage" xml:space="preserve">
+    <value>¡"{0}" detectado como dirección IP local!</value>
+  </data>
+  <data name="XXXIsNotReachableViaICMPMessage" xml:space="preserve">
+    <value>¡"{0}" no es accesible a través de ICMP!</value>
+  </data>
+  <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
+    <value>¡"{0}"  es accesible a través de ICMP!</value>
+  </data>
+  <data name="UseCustomAPI" xml:space="preserve">
+    <value>Usar API personalizada</value>
+  </data>
+  <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
+    <value>URL para un servicio web al que se puede acceder a través de http o https y que devuelve una dirección IP como respuesta.</value>
+  </data>
+  <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>¡No se pudo analizar la dirección IP pública de "{0}"! Pruebe otro servicio o utilice el predeterminado...</value>
+  </data>
+  <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
+    <value>¡No se pudo conectar con "{0}"!</value>
+  </data>
+  <data name="PublicDNSTestDomain" xml:space="preserve">
+    <value>Dominio de prueba con DNS público</value>
+  </data>
+  <data name="PublicDNSTestIPAddress" xml:space="preserve">
+    <value>Dirección IP de prueba con DNS público</value>
+  </data>
+  <data name="PublicICMPTestIPAddress" xml:space="preserve">
+    <value>Dirección IP de prueba con ICMP público</value>
+  </data>
+  <data name="IPv4ProtocolAvailable" xml:space="preserve">
+    <value>Protocolo IPv4 disponible</value>
+  </data>
+  <data name="IPv6ProtocolAvailable" xml:space="preserve">
+    <value>Protocolo IPv6 disponible</value>
+  </data>
+  <data name="CopyNoun" xml:space="preserve">
+    <value>Copiar</value>
+  </data>
+  <data name="Official" xml:space="preserve">
+    <value>Oficial</value>
   </data>
 </root>

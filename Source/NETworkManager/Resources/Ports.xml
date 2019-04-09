@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 02/16/2019 21:48:41-->
+Generated 04/09/2019 20:24:31-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -53922,7 +53922,7 @@ Generated 02/16/2019 21:48:41-->
     <Number>5349</Number>
     <Protocol>tcp</Protocol>
     <Name>stuns</Name>
-    <Description>STUN over TLS</Description>
+    <Description>Session Traversal Utilities for NAT (STUN) port</Description>
   </Port>
   <Port>
     <Number>5349</Number>
@@ -63353,6 +63353,18 @@ Generated 02/16/2019 21:48:41-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>8016</Number>
+    <Protocol>tcp</Protocol>
+    <Name>ads-s</Name>
+    <Description>Beckhoff Automation Device Specification</Description>
+  </Port>
+  <Port>
+    <Number>8016</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>8019</Number>
     <Protocol>tcp</Protocol>
     <Name>qbdb</Name>
@@ -72715,6 +72727,18 @@ Generated 02/16/2019 21:48:41-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>27017</Number>
+    <Protocol>tcp</Protocol>
+    <Name>mongodb</Name>
+    <Description>Mongo database system</Description>
+  </Port>
+  <Port>
+    <Number>27017</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>27345</Number>
     <Protocol>tcp</Protocol>
     <Name>imagepump</Name>
@@ -74949,7 +74973,7 @@ Generated 02/16/2019 21:48:41-->
   <Port>
     <Number>48048</Number>
     <Protocol>tcp</Protocol>
-    <Name>juliar</Name>
+    <Name>juka</Name>
     <Description>Juliar Programming Language Protocol</Description>
   </Port>
   <Port>

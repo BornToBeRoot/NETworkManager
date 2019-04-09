@@ -19,7 +19,7 @@ namespace NETworkManager.Resources.Localization {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -2365,6 +2365,15 @@ namespace NETworkManager.Resources.Localization {
         public static string HelpMessage_Tags {
             get {
                 return ResourceManager.GetString("HelpMessage_Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help translate.
+        /// </summary>
+        public static string HelpTranslate {
+            get {
+                return ResourceManager.GetString("HelpTranslate", resourceCulture);
             }
         }
         
@@ -5661,7 +5670,7 @@ namespace NETworkManager.Resources.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Star/Fork the Project on Github.
         ///
-        ///URL: https://transifex.com/BornToBeRoot/NETworkManager/.
+        ///URL: https://github.com.com/BornToBeRoot/NETworkManager/.
         /// </summary>
         public static string ToolTip_GitHubProjectUrl {
             get {

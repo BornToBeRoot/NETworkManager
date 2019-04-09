@@ -1324,6 +1324,8 @@
       <LastGenOutput>StaticStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Localization\Strings.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Localization\Strings.fr-FR.resx" />
+    <EmbeddedResource Include="Resources\Localization\Strings.nl-NL.resx" />
     <EmbeddedResource Include="Resources\Localization\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>

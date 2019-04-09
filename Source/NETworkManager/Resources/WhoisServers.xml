@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Whois servers by domain from IANA
-Generated 02/16/2019 21:48:52-->
+Generated 04/09/2019 20:28:30-->
 <WhoisServers>
   <WhoisServer>
     <TLD>AAA</TLD>
@@ -68,10 +68,6 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ACO</TLD>
-    <Server>whois.afilias-srs.net</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>ACTIVE</TLD>
     <Server>whois.afilias-srs.net</Server>
   </WhoisServer>
   <WhoisServer>
@@ -188,7 +184,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ALLFINANZ</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.allfinanz</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ALLSTATE</TLD>
@@ -424,8 +420,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>BABY</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.baby</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>BAIDU</TLD>
@@ -648,7 +643,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>BMW</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.bmw</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>BN</TLD>
@@ -842,7 +837,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>CAM</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.cam</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>CAMERA</TLD>
@@ -1240,7 +1235,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>COUNTRY</TLD>
-    <Server>whois-dub.mm-registry.com</Server>
+    <Server>whois.uniregistry.net</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>COUPON</TLD>
@@ -1430,7 +1425,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>DESI</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.desi</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>DESIGN</TLD>
@@ -1572,7 +1567,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>DVAG</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.dvag</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>DVR</TLD>
@@ -1597,7 +1592,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ECO</TLD>
-    <Server>whois.afilias-srs.net</Server>
+    <Server>whois.nic.eco</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>EDEKA</TLD>
@@ -1954,7 +1949,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>FRESENIUS</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.fresenius</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>FRL</TLD>
@@ -2575,7 +2570,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>IN</TLD>
-    <Server>whois.inregistry.net</Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>INC</TLD>
@@ -3384,7 +3379,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>MINI</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.mini</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>MINT</TLD>
@@ -4107,7 +4102,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>POHL</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.pohl</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>POKER</TLD>
@@ -4459,7 +4454,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SAARLAND</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.saarland</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SAFE</TLD>
@@ -4873,8 +4868,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SS</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.ss</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ST</TLD>
@@ -5304,7 +5298,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>TUI</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.tui</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>TUNES</TLD>
@@ -5732,8 +5726,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--2SCRJ9C</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--30RR7Y</TLD>
@@ -5753,8 +5746,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--3HCRJ9C</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--3OQ18VL8PN36A</TLD>
@@ -5770,13 +5762,11 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--45BR5CYL</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--45BRJ9C</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--45Q11C</TLD>
@@ -5967,8 +5957,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--FPCRJ9C3D</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--FZC2C9E2C</TLD>
@@ -5991,8 +5980,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--GECRJ9C</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--GK3AT1E</TLD>
@@ -6001,18 +5989,15 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--H2BREG3EVE</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--H2BRJ9C</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--H2BRJ9C8C</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--HXT814E</TLD>
@@ -6132,13 +6117,11 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBBH1A</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBBH1A71E</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBC0A9AZCG</TLD>
@@ -6155,8 +6138,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBGU82A</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBI4ECEXP</TLD>
@@ -6280,13 +6262,11 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--RVC1E0AM3E</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--S9BRJ9C</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--SES554G</TLD>
@@ -6310,11 +6290,11 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--VERMGENSBERATER-CTB</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.xn--vermgensberater-ctb</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--VERMGENSBERATUNG-PWB</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.xn--vermgensberatung-pwb</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--VHQUV</TLD>
@@ -6352,8 +6332,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--XKC2DL3A5EE0H</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.in</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--Y9A3AQ</TLD>
@@ -6466,7 +6445,7 @@ Generated 02/16/2019 21:48:52-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ZUERICH</TLD>
-    <Server>whois.ksregistry.net</Server>
+    <Server>whois.nic.zuerich</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ZW</TLD>

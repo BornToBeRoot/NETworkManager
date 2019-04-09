@@ -834,8 +834,8 @@
   <data name="DNSServer" xml:space="preserve">
     <value>DNS-Server</value>
   </data>
-  <data name="Documentation" xml:space="preserve">
-    <value>Dokumentation</value>
+  <data name="OpenDocumentation" xml:space="preserve">
+    <value>Dokumentation öffnen</value>
   </data>
   <data name="Domain" xml:space="preserve">
     <value>Domäne</value>
@@ -882,8 +882,8 @@
   <data name="FixedScreenSize" xml:space="preserve">
     <value>Feste Bildschirmgröße:</value>
   </data>
-  <data name="ForkMeOnGitHub" xml:space="preserve">
-    <value>Fork me on Github!</value>
+  <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
+    <value>Star/Fork das Projekt auf Github</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Gefunden</value>
@@ -2017,5 +2017,168 @@ Wenn der Wert geändert wird, muss die Anwendung muss neu gestartet werden, dami
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
     <value>Hintergrundjob alle x-Minuten ausführen</value>
+  </data>
+  <data name="YourSystemOSIsIncompatibleWithTheLatestRelease" xml:space="preserve">
+    <value>Ihr Betriebssystem ist nicht mit der neuesten Version kompatibel!</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
+    <value>Alle Einstellungen können später in den Einstellungen geändert werden</value>
+  </data>
+  <data name="CheckPublicIPAddress" xml:space="preserve">
+    <value>Überprüfen der öffentlichen IP-Adresse</value>
+  </data>
+  <data name="FirstRunMessage" xml:space="preserve">
+    <value>Vielen Dank, dass Sie NETworkManager verwenden!
+
+Um zusätzliche Funktionen bereitzustellen, verwendet die Anwendung Dienste im Internet, die nicht von mir betrieben werden. Es werden zu keinem Zeitpunkt Daten an mich gesendet.</value>
+  </data>
+  <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
+    <value>Beim Starten des Programms wird im Hintergrund geprüft, ob eine neue Programmversion auf Github verfügbar ist.
+
+URL: https://api.github.com/</value>
+  </data>
+  <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
+    <value>Die öffentliche IP-Adresse wird über ipify.org ermittelt.
+
+URL: https://api.ipify.org/</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privatsphäre</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Willkommen</value>
+  </data>
+  <data name="ExternalServices" xml:space="preserve">
+    <value>Externe Dienste</value>
+  </data>
+  <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
+    <value>Star/Fork das Projekt auf Github.
+
+URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+  </data>
+  <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
+    <value>Helfen Sie bei der Übersetzung des Tools auf Transifex.
+
+URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+  </data>
+  <data name="ToolTip_TwitterContact" xml:space="preserve">
+    <value>Kontakt via Twitter.
+
+URL: https://twitter.com/BornToBeRoot_DE</value>
+  </data>
+  <data name="Connection" xml:space="preserve">
+    <value>Verbindung</value>
+  </data>
+  <data name="Computer" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="GatewayRouter" xml:space="preserve">
+    <value>Gateway / Router</value>
+  </data>
+  <data name="Internet" xml:space="preserve">
+    <value>Internet</value>
+  </data>
+  <data name="CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage" xml:space="preserve">
+    <value>Überprüfen Sie die Konfiguration Ihres Netzwerkadapters (DNS) und ob Ihr DNS Server richtig konfiguriert ist.</value>
+  </data>
+  <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
+    <value>Überprüfen Sie die Konfiguration Ihres Netzwerkadapters (DHCP, statische IP) und ob Sie mit dem Netzwerk verbunden sind.</value>
+  </data>
+  <data name="ConnectionState_Error" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="ConnectionState_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ConnectionState_Warning" xml:space="preserve">
+    <value>Warnung</value>
+  </data>
+  <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
+    <value>Die IP-Adresse des Gateways konnte nicht ermittelt werden!</value>
+  </data>
+  <data name="CouldNotDetectLocalIPAddressMessage" xml:space="preserve">
+    <value>Die lokale IP-Adresse konnte nicht ermittelt werden!</value>
+  </data>
+  <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>Öffentliche IP-Adresse konnte nicht über WebRequest (http / https) von "{0}" abgerufen werden! Überprüfen Sie Ihre Netzwerkverbindung (Firewall, Proxy usw.).</value>
+  </data>
+  <data name="CouldNotResolveHostnameForXXXMessage" xml:space="preserve">
+    <value>Hostname für IP-Adresse {0} konnte nicht aufgelöst werden!</value>
+  </data>
+  <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
+    <value>Kein A DNS Eintrag aufgelöst für "{0}"!</value>
+  </data>
+  <data name="NoPTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
+    <value>Kein PTR DNS Eintrag aufgelöst für "{0}"!</value>
+  </data>
+  <data name="XADNSRecordsResolvedForXXXMessage" xml:space="preserve">
+    <value>"{0}" A DNS Einträge aufgelöst für "{1}"!</value>
+  </data>
+  <data name="PTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
+    <value>PTR DNS Eintrag aufgelöst für "{0}"!</value>
+  </data>
+  <data name="GotXXXAsPublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>"{0}" als öffentliche IP-Adresse von "{1}" erhalten!</value>
+  </data>
+  <data name="ResolvedXXXAsHostnameForIPAddressXXXMessage" xml:space="preserve">
+    <value>"{0}" als Hostname für IP-Adresse "{1}" aufgelöst!</value>
+  </data>
+  <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
+    <value>Überprüfung der öffentlichen IP-Adresse
+ist deaktiviert!</value>
+  </data>
+  <data name="TCPIPStackIsAvailableMessage" xml:space="preserve">
+    <value>TCP/IP-Stack ist verfügbar. "{0}" ist über ICMP erreichbar!</value>
+  </data>
+  <data name="TCPIPStackIsNotAvailableMessage" xml:space="preserve">
+    <value>TCP/IP-Stack ist nicht verfügbar... "{0}" ist über ICMP nicht erreichbar!</value>
+  </data>
+  <data name="XXXDetectedAsGatewayIPAddress" xml:space="preserve">
+    <value>{0} wurde als Gateway IP-Adresse erkannt!</value>
+  </data>
+  <data name="XXXDetectedAsLocalIPAddressMessage" xml:space="preserve">
+    <value>{0} wurde als lokale IP-Adresse erkannt!</value>
+  </data>
+  <data name="XXXIsNotReachableViaICMPMessage" xml:space="preserve">
+    <value>{0} ist nicht über ICMP erreichbar!</value>
+  </data>
+  <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
+    <value>{0} ist erreichbar über ICMP!</value>
+  </data>
+  <data name="UseCustomAPI" xml:space="preserve">
+    <value>Verwende benutzerdefinierte API</value>
+  </data>
+  <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
+    <value>URL zu einem Webdienst, der über http oder https erreichbar ist und eine IP-Adresse als Antwort zurückgibt.</value>
+  </data>
+  <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>Öffentliche IP-Adresse von "{0}" konnte nicht geparsed! Versuchen Sie es mit einem anderen Dienst oder verwenden Sie die Standardeinstellung ...</value>
+  </data>
+  <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
+    <value>Verbindung zu "{0}" konnte nicht hergestellt werden!</value>
+  </data>
+  <data name="PublicDNSTestDomain" xml:space="preserve">
+    <value>Öffentliche DNS Test Domain</value>
+  </data>
+  <data name="PublicDNSTestIPAddress" xml:space="preserve">
+    <value>Öffentliche DNS Test IP-Adresse</value>
+  </data>
+  <data name="PublicICMPTestIPAddress" xml:space="preserve">
+    <value>Öffentliche ICMP Test IP-Adresse</value>
+  </data>
+  <data name="IPv4ProtocolAvailable" xml:space="preserve">
+    <value>IPv4-Protokoll ist verfügbar</value>
+  </data>
+  <data name="IPv6ProtocolAvailable" xml:space="preserve">
+    <value>IPv6-Protokoll ist verfügbar</value>
+  </data>
+  <data name="CopyNoun" xml:space="preserve">
+    <value>Kopie</value>
+  </data>
+  <data name="Official" xml:space="preserve">
+    <value>Offiziell</value>
   </data>
 </root>
