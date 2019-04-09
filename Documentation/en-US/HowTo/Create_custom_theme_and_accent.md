@@ -4,6 +4,8 @@ Since version 1.5.0.0, you can create custom designs that are compatible with [M
 
 Own designs are stored in the program folder under `themes`.
 
+MahApps.Metro also has a great guide on how to write your own theme: https://mahapps.com/guides/styles.html
+
 ## Theme
 
 Download a theme for MahApps.Metro (eg [Black](https://github.com/BornToBeRoot/NETworkManager/blob/master/Source/NETworkManager/Themes/Black.Theme.xaml), [White](https://github.com/BornToBeRoot/NETworkManager/blob/master/Source/NETworkManager/Themes/White.Theme.xaml)) and modify the values as you like. Save the file in the `themes` folder with the following filename `CUSTOMNAME.Theme.xaml`.
