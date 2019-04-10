@@ -76,6 +76,8 @@ You can also send me a [pull requests](https://github.com/BornToBeRoot/NETworkMa
 - German
 - Russian
 - Spanish
+- Dutch
+- French
 
 Help translate on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager).
 
