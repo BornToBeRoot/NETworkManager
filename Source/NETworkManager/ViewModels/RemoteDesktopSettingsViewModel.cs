@@ -327,6 +327,28 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public List<Tuple<int, string>> ConnectionSpeeds => GlobalStaticConfiguration.RemoteDesktop_ConnectionSpeeds;
+
+        private Tuple<int, string> _connectionSpeeds;
+        public Tuple<int, string> ConnectionSpeed
+        {
+            get => _connectionSpeeds;
+            set
+            {
+                if (Equals(value, _connectionSpeeds))
+                    return;
+
+                if (!_isLoading)
+                {
+                    // Adjust performance settings 
+                    SettingsManager.Current.RemoteDesktop_KeyboardHookMode = value.Item1;
+                }
+
+                _connectionSpeeds = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, load settings

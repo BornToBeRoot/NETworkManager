@@ -2184,4 +2184,58 @@ is disabled!</value>
   <data name="HelpTranslate" xml:space="preserve">
     <value>Help translate</value>
   </data>
+  <data name="ChooseYourConnectionSpeedToOptimizePerformance" xml:space="preserve">
+    <value>Choose your connection speed to optimize performance</value>
+  </data>
+  <data name="DesktopBackground" xml:space="preserve">
+    <value>Desktop background</value>
+  </data>
+  <data name="DesktopComposition" xml:space="preserve">
+    <value>Desktop composition</value>
+  </data>
+  <data name="Experience" xml:space="preserve">
+    <value>Experience</value>
+  </data>
+  <data name="FontSmoothing" xml:space="preserve">
+    <value>Font smoothing</value>
+  </data>
+  <data name="MenuAndWindowAnimation" xml:space="preserve">
+    <value>Menu and window animation</value>
+  </data>
+  <data name="Performance" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="PersistentBitmapCaching" xml:space="preserve">
+    <value>Persistent bitmap caching</value>
+  </data>
+  <data name="ReconnectIfTheConnectionIsDropped" xml:space="preserve">
+    <value>Reconnect if the connection is dropped</value>
+  </data>
+  <data name="RemoteDesktopConnectionType_BroadbandHigh" xml:space="preserve">
+    <value>High-speed broadband (2 Mbps - 10 Mbps)</value>
+  </data>
+  <data name="RemoteDesktopConnectionType_BroadbandLow" xml:space="preserve">
+    <value>Low-speed broadband (256 kbps - 2 Mbps)</value>
+  </data>
+  <data name="RemoteDesktopConnectionType_DetectAutomatically" xml:space="preserve">
+    <value>Detect connection quality automatically</value>
+  </data>
+  <data name="RemoteDesktopConnectionType_LAN" xml:space="preserve">
+    <value>LAN (10 Mbps or higher)</value>
+  </data>
+  <data name="RemoteDesktopConnectionType_Modem" xml:space="preserve">
+    <value>Modem (56 kbps)</value>
+  </data>
+  <data name="RemoteDesktopConnectionType_Satellite" xml:space="preserve">
+    <value>Satellite (2 Mbps - 16 Mbps with high latency)</value>
+  </data>
+  <data name="RemoteDesktopConnectionType_WAN" xml:space="preserve">
+    <value>WAN (10 Mbps or higher with high latency)</value>
+  </data>
+  <data name="ShowWindowContentsWhileDragging" xml:space="preserve">
+    <value>Show window contents while dragging</value>
+  </data>
+  <data name="VisualStyles" xml:space="preserve">
+    <value>Visual styles</value>
+  </data>
 </root>

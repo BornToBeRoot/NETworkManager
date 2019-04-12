@@ -122,6 +122,16 @@ namespace NETworkManager
         };
         public static uint RemoteDesktop_AuthenticationLevel => 2;
         public static int RemoteDesktop_KeyboardHookMode => 1;
+        public static List<Tuple<int, string>> RemoteDesktop_ConnectionSpeeds => new List<Tuple<int, string>>
+        {
+            Tuple.Create(0,Resources.Localization.Strings.RemoteDesktopConnectionType_DetectAutomatically),
+            Tuple.Create(1,Resources.Localization.Strings.RemoteDesktopConnectionType_Modem),
+            Tuple.Create(2,Resources.Localization.Strings.RemoteDesktopConnectionType_BroadbandLow),
+            Tuple.Create(3,Resources.Localization.Strings.RemoteDesktopConnectionType_Satellite),
+            Tuple.Create(4,Resources.Localization.Strings.RemoteDesktopConnectionType_BroadbandHigh),
+            Tuple.Create(5,Resources.Localization.Strings.RemoteDesktopConnectionType_WAN),
+            Tuple.Create(6,Resources.Localization.Strings.RemoteDesktopConnectionType_LAN)
+        };
 
         // Application: PowerShell
         public static string PowerShell_ApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");

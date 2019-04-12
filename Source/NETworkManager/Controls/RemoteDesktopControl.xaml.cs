@@ -182,6 +182,11 @@ namespace NETworkManager.Controls
             RdpClient.AdvancedSettings9.RedirectSmartCards = _rdpSessionInfo.RedirectSmartCards;
             RdpClient.AdvancedSettings9.RedirectPrinters = _rdpSessionInfo.RedirectPrinters;
 
+            // Experience
+            RdpClient.AdvancedSettings9.NetworkConnectionType = 0x1;
+            RdpClient.AdvancedSettings9.PerformanceFlags |= 0x00000001;
+            RdpClient.AdvancedSettings9.BitmapPersistence = true ? 1 : 0;
+
             // Display
             RdpClient.ColorDepth = _rdpSessionInfo.ColorDepth;      // 8, 15, 16, 24
 

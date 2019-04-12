@@ -285,6 +285,7 @@
     <Compile Include="Models\Network\WhoisServerInfo.cs" />
     <Compile Include="Models\PuTTY\PuTTYSessionInfo.cs" />
     <Compile Include="Models\PuTTY\PuTTY.cs" />
+    <Compile Include="Models\RemoteDesktop\RemoteDesktopPerformanceConstants.cs" />
     <Compile Include="Models\Settings\ProfileInfo.cs" />
     <Compile Include="Models\Settings\ProfileManager.cs" />
     <Compile Include="Models\PowerShell\PowerShell.cs" />

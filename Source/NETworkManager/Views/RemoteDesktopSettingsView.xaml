@@ -90,6 +90,18 @@
         <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectDrives}" IsChecked="{Binding RedirectDrives}" Margin="0,0,0,10" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPorts}" IsChecked="{Binding RedirectPorts}" Margin="0,0,0,10" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectSmartcards}" IsChecked="{Binding RedirectSmartCards}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPrinters}" IsChecked="{Binding RedirectPrinters}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPrinters}" IsChecked="{Binding RedirectPrinters}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Experience}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.PersistentBitmapCaching}" IsChecked="{Binding PersistentBitmapCaching}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ReconnectIfTheConnectionIsDropped}" IsChecked="{Binding ReconnectIfTheConnectionIsDropped}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Performance}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.ChooseYourConnectionSpeedToOptimizePerformance}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding ConnectionSpeeds}" DisplayMemberPath="Item2" SelectedItem="{Binding ConnectionSpeed}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.DesktopBackground}" IsChecked="{Binding DesktopBackground}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.FontSmoothing}" IsChecked="{Binding FontSmoothing}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.DesktopComposition}" IsChecked="{Binding DesktopComposition}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowWindowContentsWhileDragging}" IsChecked="{Binding ShowWindowContentsWhileDragging}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.MenuAndWindowAnimation}" IsChecked="{Binding MenuAndWindowAnimation}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.VisualStyles}" IsChecked="{Binding VisualStyles}" Margin="0,0,0,10" />
     </StackPanel>
 </UserControl>
