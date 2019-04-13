@@ -328,24 +328,159 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<Tuple<int, string>> ConnectionSpeeds => GlobalStaticConfiguration.RemoteDesktop_ConnectionSpeeds;
-
-        private Tuple<int, string> _connectionSpeeds;
-        public Tuple<int, string> ConnectionSpeed
+        private bool _persistentBitmapCaching;
+        public bool PersistentBitmapCaching
         {
-            get => _connectionSpeeds;
+            get => _persistentBitmapCaching;
             set
             {
-                if (Equals(value, _connectionSpeeds))
+                if (value == _persistentBitmapCaching)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_PersistentBitmapCaching = value;
+
+                _persistentBitmapCaching = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _reconnectIfTheConnectionIsDropped;
+        public bool ReconnectIfTheConnectionIsDropped
+        {
+            get => _reconnectIfTheConnectionIsDropped;
+            set
+            {
+                if (value == _reconnectIfTheConnectionIsDropped)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_ReconnectIfTheConnectionIsDropped = value;
+
+                _reconnectIfTheConnectionIsDropped = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<Tuple<int, string>> ConnectionSpeeds => GlobalStaticConfiguration.RemoteDesktop_ConnectionSpeeds;
+
+        private Tuple<int, string> _connectionSpeed;
+        public Tuple<int, string> ConnectionSpeed
+        {
+            get => _connectionSpeed;
+            set
+            {
+                if (Equals(value, _connectionSpeed))
                     return;
 
                 if (!_isLoading)
                 {
-                    // Adjust performance settings 
-                    SettingsManager.Current.RemoteDesktop_KeyboardHookMode = value.Item1;
+                    ChangeConnectionSpeedSettings(value.Item1);
+                    SettingsManager.Current.RemoteDesktop_ConnectionSpeed = value.Item1;
                 }
 
-                _connectionSpeeds = value;
+                _connectionSpeed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _desktopBackground;
+        public bool DesktopBackground
+        {
+            get => _desktopBackground;
+            set
+            {
+                if (value == _desktopBackground)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_DesktopBackground = value;
+
+                _desktopBackground = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _fontSmoothing;
+        public bool FontSmoothing
+        {
+            get => _fontSmoothing;
+            set
+            {
+                if (value == _fontSmoothing)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_FontSmoothing = value;
+
+                _fontSmoothing = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _desktopComposition;
+        public bool DesktopComposition
+        {
+            get => _desktopComposition;
+            set
+            {
+                if (value == _desktopComposition)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_DesktopComposition = value;
+
+                _desktopComposition = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _showWindowContentsWhileDragging;
+        public bool ShowWindowContentsWhileDragging
+        {
+            get => _showWindowContentsWhileDragging;
+            set
+            {
+                if (value == _showWindowContentsWhileDragging)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_ShowWindowContentsWhileDragging = value;
+
+                _showWindowContentsWhileDragging = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _menuAndWindowAnimation;
+        public bool MenuAndWindowAnimation
+        {
+            get => _menuAndWindowAnimation;
+            set
+            {
+                if (value == _menuAndWindowAnimation)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_MenuAndWindowAnimation = value;
+
+                _menuAndWindowAnimation = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _visualStyles;
+        public bool VisualStyles
+        {
+            get => _visualStyles;
+            set
+            {
+                if (value == _visualStyles)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_VisualStyles = value;
+
+                _visualStyles = value;
                 OnPropertyChanged();
             }
         }
@@ -381,6 +516,58 @@ namespace NETworkManager.ViewModels
             RedirectPorts = SettingsManager.Current.RemoteDesktop_RedirectPorts;
             RedirectSmartCards = SettingsManager.Current.RemoteDesktop_RedirectSmartCards;
             RedirectPrinters = SettingsManager.Current.RemoteDesktop_RedirectPrinters;
+            PersistentBitmapCaching = SettingsManager.Current.RemoteDesktop_PersistentBitmapCaching;
+            ReconnectIfTheConnectionIsDropped = SettingsManager.Current.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
+            ConnectionSpeed = ConnectionSpeeds.FirstOrDefault(x => x.Item1 == SettingsManager.Current.RemoteDesktop_ConnectionSpeed);
+            DesktopBackground = SettingsManager.Current.RemoteDesktop_DesktopBackground;
+            FontSmoothing = SettingsManager.Current.RemoteDesktop_FontSmoothing;
+            DesktopComposition = SettingsManager.Current.RemoteDesktop_DesktopComposition;
+            ShowWindowContentsWhileDragging = SettingsManager.Current.RemoteDesktop_ShowWindowContentsWhileDragging;
+            MenuAndWindowAnimation = SettingsManager.Current.RemoteDesktop_MenuAndWindowAnimation;
+            VisualStyles = SettingsManager.Current.RemoteDesktop_VisualStyles;
+        }
+        #endregion
+
+        #region Methods
+        private void ChangeConnectionSpeedSettings(int speed)
+        {
+            switch (speed)
+            {
+                case 1:
+                    DesktopBackground = false;
+                    FontSmoothing = false;
+                    DesktopComposition = false;
+                    ShowWindowContentsWhileDragging = false;
+                    MenuAndWindowAnimation = false;
+                    VisualStyles = false;
+                    break;
+                case 2:
+                    DesktopBackground = false;
+                    FontSmoothing = false;
+                    DesktopComposition = false;
+                    ShowWindowContentsWhileDragging = false;
+                    MenuAndWindowAnimation = false;
+                    VisualStyles = true;
+                    break;
+                case 3:
+                case 4:
+                    DesktopBackground = false;
+                    FontSmoothing = false;
+                    DesktopComposition = true;
+                    ShowWindowContentsWhileDragging = false;
+                    MenuAndWindowAnimation = false;
+                    VisualStyles = true;
+                    break;
+                case 5:
+                case 6:
+                    DesktopBackground = true;
+                    FontSmoothing = true;
+                    DesktopComposition = true;
+                    ShowWindowContentsWhileDragging = true;
+                    MenuAndWindowAnimation = true;
+                    VisualStyles = true;
+                    break;
+            }
         }
         #endregion
     }

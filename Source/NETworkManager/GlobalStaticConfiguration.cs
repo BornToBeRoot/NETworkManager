@@ -120,8 +120,8 @@ namespace NETworkManager
             Tuple.Create(1, Resources.Localization.Strings.OnTheRemoteComputer)/*,
             Tuple.Create(2, Resources.Localization.Strings.OnlyWhenUsingTheFullScreen),*/
         };
-        public static uint RemoteDesktop_AuthenticationLevel => 2;
         public static int RemoteDesktop_KeyboardHookMode => 1;
+        public static uint RemoteDesktop_AuthenticationLevel => 2;
         public static List<Tuple<int, string>> RemoteDesktop_ConnectionSpeeds => new List<Tuple<int, string>>
         {
             Tuple.Create(0,Resources.Localization.Strings.RemoteDesktopConnectionType_DetectAutomatically),
@@ -132,6 +132,7 @@ namespace NETworkManager
             Tuple.Create(5,Resources.Localization.Strings.RemoteDesktopConnectionType_WAN),
             Tuple.Create(6,Resources.Localization.Strings.RemoteDesktopConnectionType_LAN)
         };
+        public static int RemoteDesktop_ConnectionSpeed => 0;
 
         // Application: PowerShell
         public static string PowerShell_ApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");

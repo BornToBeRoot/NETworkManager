@@ -77,7 +77,25 @@ namespace NETworkManager.Models.Settings
         public bool RemoteDesktop_RedirectSmartCards { get; set; }
         public bool RemoteDesktop_OverrideRedirectPrinters { get; set; }
         public bool RemoteDesktop_RedirectPrinters { get; set; }
-
+        public bool RemoteDesktop_OverridePersistentBitmapCaching { get; set; }
+        public bool RemoteDesktop_PersistentBitmapCaching { get; set; }
+        public bool RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped { get; set; }
+        public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped { get; set; }
+        public bool RemoteDesktop_OverrideConnectionSpeed { get; set; }
+        public int RemoteDesktop_ConnectionSpeed { get; set; }
+        public bool RemoteDesktop_OverrideDesktopBackground { get; set; }
+        public bool RemoteDesktop_DesktopBackground { get; set; }
+        public bool RemoteDesktop_OverrideFontSmoothing { get; set; }
+        public bool RemoteDesktop_FontSmoothing { get; set; }
+        public bool RemoteDesktop_OverrideDesktopComposition { get; set; }
+        public bool RemoteDesktop_DesktopComposition { get; set; }
+        public bool RemoteDesktop_OverrideShowWindowContentsWhileDragging { get; set; }
+        public bool RemoteDesktop_ShowWindowContentsWhileDragging { get; set; }
+        public bool RemoteDesktop_OverrideMenuAndWindowAnimation { get; set; }
+        public bool RemoteDesktop_MenuAndWindowAnimation { get; set; }
+        public bool RemoteDesktop_OverrideVisualStyles { get; set; }
+        public bool RemoteDesktop_VisualStyles { get; set; }
+        
         public bool PowerShell_Enabled { get; set; }
         public bool PowerShell_EnableRemoteConsole { get; set; } = true;
         public bool PowerShell_InheritHost { get; set; } = true;

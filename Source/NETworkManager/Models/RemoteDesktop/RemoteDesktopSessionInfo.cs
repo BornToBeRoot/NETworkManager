@@ -22,7 +22,16 @@ namespace NETworkManager.Models.RemoteDesktop
         public bool RedirectDrives { get; set; }
         public bool RedirectPorts { get; set; }
         public bool RedirectSmartCards { get; set; }
-        public bool RedirectPrinters { get; set; }        
+        public bool RedirectPrinters { get; set; }
+        public bool PersistentBitmapCaching { get; set; }
+        public bool ReconnectIfTheConnectionIsDropped { get; set; }
+        public int ConnectionSpeed { get; set; }
+        public bool DesktopBackground { get; set; }
+        public bool FontSmoothing { get; set; }
+        public bool DesktopComposition { get; set; }
+        public bool ShowWindowContentsWhileDragging { get; set; }
+        public bool MenuAndWindowAnimation { get; set; }
+        public bool VisualStyles { get; set; }
 
         public RemoteDesktopSessionInfo()
         {

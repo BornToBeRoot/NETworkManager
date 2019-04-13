@@ -97,11 +97,23 @@
         <TextBlock Text="{x:Static localization:Strings.Performance}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.ChooseYourConnectionSpeedToOptimizePerformance}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding ConnectionSpeeds}" DisplayMemberPath="Item2" SelectedItem="{Binding ConnectionSpeed}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.DesktopBackground}" IsChecked="{Binding DesktopBackground}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.FontSmoothing}" IsChecked="{Binding FontSmoothing}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.DesktopComposition}" IsChecked="{Binding DesktopComposition}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowWindowContentsWhileDragging}" IsChecked="{Binding ShowWindowContentsWhileDragging}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.MenuAndWindowAnimation}" IsChecked="{Binding MenuAndWindowAnimation}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.VisualStyles}" IsChecked="{Binding VisualStyles}" Margin="0,0,0,10" />
+        <StackPanel>
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ConnectionSpeed.Item1}" Value="0">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.DesktopBackground}" IsChecked="{Binding DesktopBackground}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.FontSmoothing}" IsChecked="{Binding FontSmoothing}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.DesktopComposition}" IsChecked="{Binding DesktopComposition}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowWindowContentsWhileDragging}" IsChecked="{Binding ShowWindowContentsWhileDragging}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.MenuAndWindowAnimation}" IsChecked="{Binding MenuAndWindowAnimation}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.VisualStyles}" IsChecked="{Binding VisualStyles}" Margin="0,0,0,10" />
+        </StackPanel>
     </StackPanel>
 </UserControl>

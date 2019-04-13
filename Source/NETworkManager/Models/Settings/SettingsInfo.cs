@@ -373,36 +373,6 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Dashboard
-       /* private bool _dashboard_OverrideGatewayIPAddress = true;
-        public bool Dashboard_OverrideGatewayIPAddress
-        {
-            get => _dashboard_OverrideGatewayIPAddress;
-            set
-            {
-                if (value == _dashboard_OverrideGatewayIPAddress)
-                    return;
-
-                _dashboard_OverrideGatewayIPAddress = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private string _dashboard_GatewayIPAddress;
-        public string Dashboard_GatewayIPAddress
-        {
-            get => _dashboard_GatewayIPAddress;
-            set
-            {
-                if (value == _dashboard_GatewayIPAddress)
-                    return;
-
-                _dashboard_GatewayIPAddress = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }*/
-
         private string _dashboard_PublicICMPTestIPAddress = GlobalStaticConfiguration.Dashboard_PublicICMPTestIPAddress;
         public string Dashboard_PublicICMPTestIPAddress
         {
@@ -2106,6 +2076,141 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _remoteDesktop_RedirectPrinters = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_PersistentBitmapCaching;
+        public bool RemoteDesktop_PersistentBitmapCaching
+        {
+            get => _remoteDesktop_PersistentBitmapCaching;
+            set
+            {
+                if (value == _remoteDesktop_PersistentBitmapCaching)
+                    return;
+
+                _remoteDesktop_PersistentBitmapCaching = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_ReconnectIfTheConnectionIsDropped;
+        public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped
+        {
+            get => _remoteDesktop_ReconnectIfTheConnectionIsDropped;
+            set
+            {
+                if (value == _remoteDesktop_ReconnectIfTheConnectionIsDropped)
+                    return;
+
+                _remoteDesktop_ReconnectIfTheConnectionIsDropped = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _remoteDesktop_ConnectionSpeed = GlobalStaticConfiguration.RemoteDesktop_ConnectionSpeed;
+        public int RemoteDesktop_ConnectionSpeed
+        {
+            get => _remoteDesktop_ConnectionSpeed;
+            set
+            {
+                if (value == _remoteDesktop_ConnectionSpeed)
+                    return;
+
+                _remoteDesktop_ConnectionSpeed = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_DesktopBackground;
+        public bool RemoteDesktop_DesktopBackground
+        {
+            get => _remoteDesktop_DesktopBackground;
+            set
+            {
+                if (value == _remoteDesktop_DesktopBackground)
+                    return;
+
+                _remoteDesktop_DesktopBackground = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_FontSmoothing;
+        public bool RemoteDesktop_FontSmoothing
+        {
+            get => _remoteDesktop_FontSmoothing;
+            set
+            {
+                if (value == _remoteDesktop_FontSmoothing)
+                    return;
+
+                _remoteDesktop_FontSmoothing = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_DesktopComposition;
+        public bool RemoteDesktop_DesktopComposition
+        {
+            get => _remoteDesktop_DesktopComposition;
+            set
+            {
+                if (value == _remoteDesktop_DesktopComposition)
+                    return;
+
+                _remoteDesktop_DesktopComposition = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_ShowWindowContentsWhileDragging;
+        public bool RemoteDesktop_ShowWindowContentsWhileDragging
+        {
+            get => _remoteDesktop_ShowWindowContentsWhileDragging;
+            set
+            {
+                if (value == _remoteDesktop_ShowWindowContentsWhileDragging)
+                    return;
+
+                _remoteDesktop_ShowWindowContentsWhileDragging = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_MenuAndWindowAnimation;
+        public bool RemoteDesktop_MenuAndWindowAnimation
+        {
+            get => _remoteDesktop_MenuAndWindowAnimation;
+            set
+            {
+                if (value == _remoteDesktop_MenuAndWindowAnimation)
+                    return;
+
+                _remoteDesktop_MenuAndWindowAnimation = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _remoteDesktop_VisualStyles;
+        public bool RemoteDesktop_VisualStyles
+        {
+            get => _remoteDesktop_VisualStyles;
+            set
+            {
+                if (value == _remoteDesktop_VisualStyles)
+                    return;
+
+                _remoteDesktop_VisualStyles = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
