@@ -2111,8 +2111,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _remoteDesktop_ConnectionSpeed = GlobalStaticConfiguration.RemoteDesktop_ConnectionSpeed;
-        public int RemoteDesktop_ConnectionSpeed
+        private uint _remoteDesktop_ConnectionSpeed = GlobalStaticConfiguration.RemoteDesktop_ConnectionSpeed;
+        public uint RemoteDesktop_ConnectionSpeed
         {
             get => _remoteDesktop_ConnectionSpeed;
             set

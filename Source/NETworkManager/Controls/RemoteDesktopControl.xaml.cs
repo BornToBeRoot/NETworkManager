@@ -182,10 +182,33 @@ namespace NETworkManager.Controls
             RdpClient.AdvancedSettings9.RedirectSmartCards = _rdpSessionInfo.RedirectSmartCards;
             RdpClient.AdvancedSettings9.RedirectPrinters = _rdpSessionInfo.RedirectPrinters;
 
+            // Performance
+            RdpClient.AdvancedSettings9.BitmapPeristence = _rdpSessionInfo.PersistentBitmapCaching ? 1 : 0;
+            RdpClient.AdvancedSettings9.EnableAutoReconnect = _rdpSessionInfo.ReconnectIfTheConnectionIsDropped;
+
             // Experience
-            RdpClient.AdvancedSettings9.NetworkConnectionType = 0x1;
-            RdpClient.AdvancedSettings9.PerformanceFlags |= 0x00000001;
-            RdpClient.AdvancedSettings9.BitmapPersistence = true ? 1 : 0;
+            if (_rdpSessionInfo.ConnectionSpeed != 0)
+            {
+                RdpClient.AdvancedSettings9.NetworkConnectionType = _rdpSessionInfo.ConnectionSpeed;
+
+                if (!_rdpSessionInfo.DesktopBackground)
+                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_WALLPAPER;
+
+                if (_rdpSessionInfo.FontSmoothing)
+                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_ENABLE_FONT_SMOOTHING;
+
+                if (_rdpSessionInfo.DesktopComposition)
+                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_ENABLE_DESKTOP_COMPOSITION;
+
+                if (!_rdpSessionInfo.ShowWindowContentsWhileDragging)
+                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_FULLWINDOWDRAG;
+
+                if (!_rdpSessionInfo.MenuAndWindowAnimation)
+                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_MENUANIMATIONS;
+
+                if (!_rdpSessionInfo.VisualStyles)
+                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_THEMING;
+            }
 
             // Display
             RdpClient.ColorDepth = _rdpSessionInfo.ColorDepth;      // 8, 15, 16, 24

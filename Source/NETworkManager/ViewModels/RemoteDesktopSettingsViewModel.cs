@@ -361,10 +361,10 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        public List<Tuple<int, string>> ConnectionSpeeds => GlobalStaticConfiguration.RemoteDesktop_ConnectionSpeeds;
+        public List<Tuple<uint, string>> ConnectionSpeeds => GlobalStaticConfiguration.RemoteDesktop_ConnectionSpeeds;
 
-        private Tuple<int, string> _connectionSpeed;
-        public Tuple<int, string> ConnectionSpeed
+        private Tuple<uint, string> _connectionSpeed;
+        public Tuple<uint, string> ConnectionSpeed
         {
             get => _connectionSpeed;
             set
@@ -529,7 +529,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void ChangeConnectionSpeedSettings(int speed)
+        private void ChangeConnectionSpeedSettings(uint speed)
         {
             switch (speed)
             {

@@ -82,7 +82,7 @@ namespace NETworkManager.Models.Settings
         public bool RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped { get; set; }
         public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped { get; set; }
         public bool RemoteDesktop_OverrideConnectionSpeed { get; set; }
-        public int RemoteDesktop_ConnectionSpeed { get; set; }
+        public uint RemoteDesktop_ConnectionSpeed { get; set; }
         public bool RemoteDesktop_OverrideDesktopBackground { get; set; }
         public bool RemoteDesktop_DesktopBackground { get; set; }
         public bool RemoteDesktop_OverrideFontSmoothing { get; set; }

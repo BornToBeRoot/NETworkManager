@@ -25,7 +25,7 @@ namespace NETworkManager.Models.RemoteDesktop
         public bool RedirectPrinters { get; set; }
         public bool PersistentBitmapCaching { get; set; }
         public bool ReconnectIfTheConnectionIsDropped { get; set; }
-        public int ConnectionSpeed { get; set; }
+        public uint ConnectionSpeed { get; set; }
         public bool DesktopBackground { get; set; }
         public bool FontSmoothing { get; set; }
         public bool DesktopComposition { get; set; }
