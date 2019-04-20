@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
 using NETworkManager.ViewModels;
 
@@ -86,6 +89,11 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        internal static void Update(Version assemblyVersion, Version settingsVersion)
+        {
+            throw new NotImplementedException();
+        }
+
         public static void Reset()
         {
             if (Profiles == null)
@@ -165,7 +173,7 @@ namespace NETworkManager.Models.Settings
                 RemoteDesktop_OverrideAuthenticationLevel = instance.RemoteDesktop_OverrideAuthenticationLevel,
                 RemoteDesktop_AuthenticationLevel = instance.RemoteDesktop_AuthenticationLevel,
                 RemoteDesktop_OverrideApplyWindowsKeyCombinations = instance.RemoteDesktop_OverrideApplyWindowsKeyCombinations,
-                RemoteDesktop_KeyboardHookMode = instance.RemoteDesktop_KeyboardHookMode.Item1,
+                RemoteDesktop_KeyboardHookMode = instance.RemoteDesktop_KeyboardHookMode,
                 RemoteDesktop_OverrideRedirectClipboard = instance.RemoteDesktop_OverrideRedirectClipboard,
                 RemoteDesktop_RedirectClipboard = instance.RemoteDesktop_RedirectClipboard,
                 RemoteDesktop_OverrideRedirectDevices = instance.RemoteDesktop_OverrideRedirectDevices,
@@ -241,6 +249,51 @@ namespace NETworkManager.Models.Settings
 
                 ProfilesChanged = true;
             }
+        }
+
+        public static void Upgrade(Version settingsVersion)
+        {
+            if (settingsVersion > new Version("0.0.0.0"))
+            {
+                Debug.WriteLine("Upgrade profile...");
+
+                bool needUpdate = false;
+
+                // Changes in 1.11.0.0
+                if (settingsVersion < new Version("1.11.0.0"))
+                    needUpdate = true;
+
+                if(needUpdate)
+                    RunUpgrade(settingsVersion);
+            }
+        }
+        
+        private static void RunUpgrade(Version version)
+        {
+            string filePath = GetProfilesFilePath();
+
+            if (!File.Exists(filePath))
+                return;
+
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(filePath);
+
+            if (version < new Version("1.11.0.0"))
+            {
+                foreach (XmlNode x in xmlDocument.SelectNodes(@"/ArrayOfProfileInfo/ProfileInfo/RemoteDesktop_KeyboardHookMode"))
+                {
+                    if (x.InnerText == "0")
+                        x.InnerText = "OnThisComputer";
+                    else if (x.InnerText == "1")
+                        x.InnerText = "OnTheRemoteComputer";
+                    else
+                        x.InnerText = "OnlyWhenUsingTheFullScreen";
+                }
+            }
+            
+            xmlDocument.Save(filePath);
+
+            Debug.WriteLine("Test");
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Enum;
 using static NETworkManager.Models.PuTTY.PuTTY;
+using NETworkManager.Models.RemoteDesktop;
 // ReSharper disable InconsistentNaming
 
 namespace NETworkManager.ViewModels
@@ -499,7 +500,7 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        #region RemoteDesktop
+        #region Remote Desktop
         private bool _remoteDesktop_Enabled;
         public bool RemoteDesktop_Enabled
         {
@@ -793,10 +794,10 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<Tuple<int, string>> RemoteDesktop_KeyboardHookModes => GlobalStaticConfiguration.RemoteDesktop_KeyboardHookModes;
+        public IEnumerable<RemoteDesktop.KeyboardHookMode> RemoteDesktop_KeyboardHookModes => System.Enum.GetValues(typeof(RemoteDesktop.KeyboardHookMode)).Cast<RemoteDesktop.KeyboardHookMode>();
 
-        private Tuple<int, string> _remoteDesktop_KeyboardHookMode;
-        public Tuple<int, string> RemoteDesktop_KeyboardHookMode
+        private RemoteDesktop.KeyboardHookMode _remoteDesktop_KeyboardHookMode;
+        public RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode
         {
             get => _remoteDesktop_KeyboardHookMode;
             set
@@ -976,6 +977,8 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+
         #endregion
 
         #region PowerShell
@@ -1712,7 +1715,7 @@ namespace NETworkManager.ViewModels
             RemoteDesktop_OverrideAuthenticationLevel = profileInfo.RemoteDesktop_OverrideAuthenticationLevel;
             RemoteDesktop_AuthenticationLevel = profileInfo.RemoteDesktop_AuthenticationLevel;
             RemoteDesktop_OverrideApplyWindowsKeyCombinations = profileInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
-            RemoteDesktop_KeyboardHookMode = RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x.Item1 == profileInfo.RemoteDesktop_KeyboardHookMode);
+            RemoteDesktop_KeyboardHookMode = RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_KeyboardHookMode);
             RemoteDesktop_OverrideRedirectClipboard = profileInfo.RemoteDesktop_OverrideRedirectClipboard;
             RemoteDesktop_RedirectClipboard = profileInfo.RemoteDesktop_RedirectClipboard;
             RemoteDesktop_OverrideRedirectDevices = profileInfo.RemoteDesktop_OverrideRedirectDevices;

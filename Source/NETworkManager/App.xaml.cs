@@ -58,8 +58,22 @@ namespace NETworkManager
                 SettingsManager.Load();
 
                 // Update settings (Default --> %AppData%\NETworkManager\Settings)
-                if (AssemblyManager.Current.Version > new Version(SettingsManager.Current.SettingsVersion))
-                    SettingsManager.Update(AssemblyManager.Current.Version, new Version(SettingsManager.Current.SettingsVersion));
+                Version assemblyVersion = AssemblyManager.Current.Version;
+                Version settingsVersion = new Version(SettingsManager.Current.SettingsVersion);
+
+                if (assemblyVersion > settingsVersion)
+                {
+                    SettingsManager.Update(assemblyVersion, settingsVersion);
+
+                    try
+                    {
+                        ProfileManager.Upgrade(settingsVersion);
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show("Failed to update profiles...\n\n" + ex.Message, "Profile Manager - Update Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
             }
             catch (InvalidOperationException)
             {

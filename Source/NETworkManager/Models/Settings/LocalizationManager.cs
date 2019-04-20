@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using NETworkManager.Models.Network;
 using NETworkManager.Enum;
+using static NETworkManager.Models.RemoteDesktop.RemoteDesktop;
 
 namespace NETworkManager.Models.Settings
 {
@@ -100,6 +101,26 @@ namespace NETworkManager.Models.Settings
             var status = Resources.Localization.Strings.ResourceManager.GetString("ConnectionState_" + connectionState, Culture);
 
             return string.IsNullOrEmpty(status) ? connectionState.ToString() : status;
+        }
+
+        public static string TranslateRemoteDesktopConnectionSpeed(object value)
+        {
+            if (!(value is ConnectionSpeed connectionSpeed))
+                return "-/-";
+
+            var status = Resources.Localization.Strings.ResourceManager.GetString("RemoteDesktopConnectionType_" + connectionSpeed, Culture);
+
+            return string.IsNullOrEmpty(status) ? connectionSpeed.ToString() : status;
+        }
+
+        public static string TranslateRemoteDesktopKeyboardHookMode(object value)
+        {
+            if (!(value is KeyboardHookMode keyboardHookMode))
+                return "-/-";
+
+            var status = Resources.Localization.Strings.ResourceManager.GetString("RemoteDesktopKeyboardHookMode_" + keyboardHookMode, Culture);
+
+            return string.IsNullOrEmpty(status) ? keyboardHookMode.ToString() : status;
         }
     }
 }

@@ -10,6 +10,7 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Utilities;
 using NETworkManager.Enum;
+using NETworkManager.Models.RemoteDesktop;
 
 // ReSharper disable InconsistentNaming
 
@@ -114,26 +115,11 @@ namespace NETworkManager
         };
         public static int RemoteDesktop_ColorDepth = 32;
         public static int RemoteDesktop_Port => 3389;
-        public static List<Tuple<int, string>> RemoteDesktop_KeyboardHookModes => new List<Tuple<int, string>>
-        {
-            Tuple.Create(0, Resources.Localization.Strings.OnThisComputer),
-            Tuple.Create(1, Resources.Localization.Strings.OnTheRemoteComputer)/*,
-            Tuple.Create(2, Resources.Localization.Strings.OnlyWhenUsingTheFullScreen),*/
-        };
-        public static int RemoteDesktop_KeyboardHookMode => 1;
+        public static RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode => RemoteDesktop.KeyboardHookMode.OnTheRemoteComputer;
         public static uint RemoteDesktop_AuthenticationLevel => 2;
-        public static List<Tuple<uint, string>> RemoteDesktop_ConnectionSpeeds => new List<Tuple<uint, string>>
-        {
-            Tuple.Create((uint)0,Resources.Localization.Strings.RemoteDesktopConnectionType_DetectAutomatically),
-            Tuple.Create((uint)1,Resources.Localization.Strings.RemoteDesktopConnectionType_Modem),
-            Tuple.Create((uint)2,Resources.Localization.Strings.RemoteDesktopConnectionType_BroadbandLow),
-            Tuple.Create((uint)3,Resources.Localization.Strings.RemoteDesktopConnectionType_Satellite),
-            Tuple.Create((uint)4,Resources.Localization.Strings.RemoteDesktopConnectionType_BroadbandHigh),
-            Tuple.Create((uint)5,Resources.Localization.Strings.RemoteDesktopConnectionType_WAN),
-            Tuple.Create((uint)6,Resources.Localization.Strings.RemoteDesktopConnectionType_LAN)
-        };
-        public static uint RemoteDesktop_ConnectionSpeed => 0;
-
+   
+        public static RemoteDesktop.ConnectionSpeed RemoteDesktop_ConnectionSpeed => RemoteDesktop.ConnectionSpeed.DetectAutomatically;
+        
         // Application: PowerShell
         public static string PowerShell_ApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");
         public static PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy => PowerShell.ExecutionPolicy.RemoteSigned;

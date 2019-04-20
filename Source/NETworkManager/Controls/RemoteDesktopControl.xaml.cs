@@ -172,7 +172,7 @@ namespace NETworkManager.Controls
             RdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpSessionInfo.EnableCredSspSupport;
 
             // Keyboard
-            RdpClient.SecuredSettings3.KeyboardHookMode = _rdpSessionInfo.KeyboardHookMode;
+            RdpClient.SecuredSettings3.KeyboardHookMode = (int)_rdpSessionInfo.KeyboardHookMode;
 
             // Devices and resources
             RdpClient.AdvancedSettings9.RedirectClipboard = _rdpSessionInfo.RedirectClipboard;
@@ -189,7 +189,7 @@ namespace NETworkManager.Controls
             // Experience
             if (_rdpSessionInfo.ConnectionSpeed != 0)
             {
-                RdpClient.AdvancedSettings9.NetworkConnectionType = _rdpSessionInfo.ConnectionSpeed;
+                RdpClient.AdvancedSettings9.NetworkConnectionType = (uint)_rdpSessionInfo.ConnectionSpeed;
 
                 if (!_rdpSessionInfo.DesktopBackground)
                     RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_WALLPAPER;

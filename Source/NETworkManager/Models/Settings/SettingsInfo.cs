@@ -1976,8 +1976,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _remoteDesktop_KeyboardHookMode = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
-        public int RemoteDesktop_KeyboardHookMode
+        private RemoteDesktop.RemoteDesktop.KeyboardHookMode _remoteDesktop_KeyboardHookMode = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
+        public RemoteDesktop.RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode
         {
             get => _remoteDesktop_KeyboardHookMode;
             set
@@ -2111,8 +2111,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private uint _remoteDesktop_ConnectionSpeed = GlobalStaticConfiguration.RemoteDesktop_ConnectionSpeed;
-        public uint RemoteDesktop_ConnectionSpeed
+        private RemoteDesktop.RemoteDesktop.ConnectionSpeed _remoteDesktop_ConnectionSpeed = GlobalStaticConfiguration.RemoteDesktop_ConnectionSpeed;
+        public RemoteDesktop.RemoteDesktop.ConnectionSpeed RemoteDesktop_ConnectionSpeed
         {
             get => _remoteDesktop_ConnectionSpeed;
             set

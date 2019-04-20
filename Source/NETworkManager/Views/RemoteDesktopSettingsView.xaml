@@ -7,7 +7,12 @@
         xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:RemoteDesktopSettingsViewModel}">
+    <UserControl.Resources>
+        <converters:RemoteDesktopConnectionSpeedToStringConverter x:Key="RemoteDesktopConnectionSpeedToStringConverter"/>
+        <converters:RemoteDesktopKeyboardHookModeToStringConverter x:Key="RemoteDesktopKeyboardHookModeToStringConverter" />
+    </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.Display}" Style="{StaticResource HeaderTextBlock}" />
         <RadioButton x:Name="RadioButtonAdjustScreenAutomatically" Content="{x:Static localization:Strings.AdjustScreenAutomatically}" IsChecked="{Binding AdjustScreenAutomatically}" Margin="0,0,0,10" />
@@ -83,7 +88,13 @@
         </StackPanel>
         <TextBlock Text="{x:Static localization:Strings.Keyboard}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.ApplyWindowsKeyCombinationsLikeAltTab}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <ComboBox ItemsSource="{Binding KeyboardHookModes}" DisplayMemberPath="Item2" SelectedItem="{Binding KeyboardHookMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,20" />
+        <ComboBox ItemsSource="{Binding KeyboardHookModes}" SelectedItem="{Binding KeyboardHookMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,20">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopKeyboardHookModeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <TextBlock Text="{x:Static localization:Strings.LocalDevicesAndResources}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectClipboard}" IsChecked="{Binding RedirectClipboard}" Margin="0,0,0,10" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectDevices}" IsChecked="{Binding RedirectDevices}" Margin="0,0,0,10" />
@@ -96,7 +107,13 @@
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ReconnectIfTheConnectionIsDropped}" IsChecked="{Binding ReconnectIfTheConnectionIsDropped}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Performance}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.ChooseYourConnectionSpeedToOptimizePerformance}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <ComboBox ItemsSource="{Binding ConnectionSpeeds}" DisplayMemberPath="Item2" SelectedItem="{Binding ConnectionSpeed}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding ConnectionSpeeds}" SelectedItem="{Binding ConnectionSpeed}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,10">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopConnectionSpeedToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <StackPanel>
             <StackPanel.Style>
                 <Style TargetType="{x:Type StackPanel}">

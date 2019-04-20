@@ -16,7 +16,7 @@ namespace NETworkManager.Models.RemoteDesktop
         public int ColorDepth { get; set; }
         public bool EnableCredSspSupport { get; set; }
         public uint AuthenticationLevel { get; set; }
-        public int KeyboardHookMode { get; set; }
+        public RemoteDesktop.KeyboardHookMode KeyboardHookMode { get; set; }
         public bool RedirectClipboard { get; set; }
         public bool RedirectDevices { get; set; }
         public bool RedirectDrives { get; set; }
@@ -25,7 +25,7 @@ namespace NETworkManager.Models.RemoteDesktop
         public bool RedirectPrinters { get; set; }
         public bool PersistentBitmapCaching { get; set; }
         public bool ReconnectIfTheConnectionIsDropped { get; set; }
-        public uint ConnectionSpeed { get; set; }
+        public RemoteDesktop.ConnectionSpeed ConnectionSpeed { get; set; }
         public bool DesktopBackground { get; set; }
         public bool FontSmoothing { get; set; }
         public bool DesktopComposition { get; set; }

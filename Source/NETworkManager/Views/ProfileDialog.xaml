@@ -16,6 +16,7 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:RemoteDesktopKeyboardHookModeToStringConverter x:Key="RemoteDesktopKeyboardHookModeToStringConverter" />
         <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">
@@ -800,7 +801,13 @@
                                         </Rectangle.Resources>
                                     </Rectangle>
                                     <CheckBox Grid.Column="0" Grid.Row="20" Content="{x:Static localization:Strings.ApplyWindowsKeyCombinations}" IsChecked="{Binding RemoteDesktop_OverrideApplyWindowsKeyCombinations}" Style="{StaticResource DefaultCheckBox}" />
-                                    <ComboBox Grid.Column="2" Grid.Row="20" ItemsSource="{Binding RemoteDesktop_KeyboardHookModes}" DisplayMemberPath="Item2" SelectedItem="{Binding RemoteDesktop_KeyboardHookMode}" IsEnabled="{Binding RemoteDesktop_OverrideApplyWindowsKeyCombinations}" />
+                                    <ComboBox Grid.Column="2" Grid.Row="20" ItemsSource="{Binding RemoteDesktop_KeyboardHookModes}" SelectedItem="{Binding RemoteDesktop_KeyboardHookMode}" IsEnabled="{Binding RemoteDesktop_OverrideApplyWindowsKeyCombinations}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopKeyboardHookModeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
                                     <CheckBox Grid.Column="0" Grid.Row="22" Content="{x:Static localization:Strings.RedirectClipboard}" IsChecked="{Binding RemoteDesktop_OverrideRedirectClipboard}" Style="{StaticResource DefaultCheckBox}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="22" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectClipboard}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectClipboard}" />
                                     <CheckBox Grid.Column="0" Grid.Row="24" Content="{x:Static localization:Strings.RedirectDevices}" IsChecked="{Binding RemoteDesktop_OverrideRedirectDevices}" Style="{StaticResource DefaultCheckBox}" />
@@ -813,6 +820,10 @@
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="30" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectSmartCards}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectSmartcards}" />
                                     <CheckBox Grid.Column="0" Grid.Row="32" Content="{x:Static localization:Strings.RedirectPrinters}" IsChecked="{Binding RemoteDesktop_OverrideRedirectPrinters}" Style="{StaticResource DefaultCheckBox}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="32" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectPrinters}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectPrinters}" />
+                                    
+                                    
+                                    
+                                    
                                 </Grid>
                             </StackPanel>
                         </StackPanel>

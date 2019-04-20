@@ -3414,24 +3414,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to On the remote computer.
-        /// </summary>
-        public static string OnTheRemoteComputer {
-            get {
-                return ResourceManager.GetString("OnTheRemoteComputer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to On this computer.
-        /// </summary>
-        public static string OnThisComputer {
-            get {
-                return ResourceManager.GetString("OnThisComputer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string Open {
@@ -4592,6 +4574,24 @@ namespace NETworkManager.Resources.Localization {
         public static string RemoteDesktopDisconnectReason_WinsockSendFailed {
             get {
                 return ResourceManager.GetString("RemoteDesktopDisconnectReason_WinsockSendFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On the remote computer.
+        /// </summary>
+        public static string RemoteDesktopKeyboardHookMode_OnTheRemoteComputer {
+            get {
+                return ResourceManager.GetString("RemoteDesktopKeyboardHookMode_OnTheRemoteComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On this computer.
+        /// </summary>
+        public static string RemoteDesktopKeyboardHookMode_OnThisComputer {
+            get {
+                return ResourceManager.GetString("RemoteDesktopKeyboardHookMode_OnThisComputer", resourceCulture);
             }
         }
         

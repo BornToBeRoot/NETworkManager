@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
@@ -207,10 +208,10 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<Tuple<int, string>> KeyboardHookModes => GlobalStaticConfiguration.RemoteDesktop_KeyboardHookModes;
+        public IEnumerable<RemoteDesktop.KeyboardHookMode> KeyboardHookModes => System.Enum.GetValues(typeof(RemoteDesktop.KeyboardHookMode)).Cast< RemoteDesktop.KeyboardHookMode>();
 
-        private Tuple<int, string> _keyboardHookMode;
-        public Tuple<int, string> KeyboardHookMode
+        private RemoteDesktop.KeyboardHookMode _keyboardHookMode;
+        public RemoteDesktop.KeyboardHookMode KeyboardHookMode
         {
             get => _keyboardHookMode;
             set
@@ -219,7 +220,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.RemoteDesktop_KeyboardHookMode = value.Item1;
+                    SettingsManager.Current.RemoteDesktop_KeyboardHookMode = value;
 
                 _keyboardHookMode = value;
                 OnPropertyChanged();
@@ -361,10 +362,10 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        public List<Tuple<uint, string>> ConnectionSpeeds => GlobalStaticConfiguration.RemoteDesktop_ConnectionSpeeds;
+        public IEnumerable<RemoteDesktop.ConnectionSpeed> ConnectionSpeeds => System.Enum.GetValues(typeof(RemoteDesktop.ConnectionSpeed)).Cast<RemoteDesktop.ConnectionSpeed>();
 
-        private Tuple<uint, string> _connectionSpeed;
-        public Tuple<uint, string> ConnectionSpeed
+        private RemoteDesktop.ConnectionSpeed _connectionSpeed;
+        public RemoteDesktop.ConnectionSpeed ConnectionSpeed
         {
             get => _connectionSpeed;
             set
@@ -374,8 +375,8 @@ namespace NETworkManager.ViewModels
 
                 if (!_isLoading)
                 {
-                    ChangeConnectionSpeedSettings(value.Item1);
-                    SettingsManager.Current.RemoteDesktop_ConnectionSpeed = value.Item1;
+                    ChangeConnectionSpeedSettings(value);
+                    SettingsManager.Current.RemoteDesktop_ConnectionSpeed = value;
                 }
 
                 _connectionSpeed = value;
@@ -509,7 +510,7 @@ namespace NETworkManager.ViewModels
             Port = SettingsManager.Current.RemoteDesktop_Port;
             EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
             AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
-            KeyboardHookMode = KeyboardHookModes.FirstOrDefault(x => x.Item1 == SettingsManager.Current.RemoteDesktop_KeyboardHookMode);
+            KeyboardHookMode = KeyboardHookModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_KeyboardHookMode);
             RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
             RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;
             RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives;
@@ -518,7 +519,7 @@ namespace NETworkManager.ViewModels
             RedirectPrinters = SettingsManager.Current.RemoteDesktop_RedirectPrinters;
             PersistentBitmapCaching = SettingsManager.Current.RemoteDesktop_PersistentBitmapCaching;
             ReconnectIfTheConnectionIsDropped = SettingsManager.Current.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
-            ConnectionSpeed = ConnectionSpeeds.FirstOrDefault(x => x.Item1 == SettingsManager.Current.RemoteDesktop_ConnectionSpeed);
+            ConnectionSpeed = ConnectionSpeeds.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_ConnectionSpeed);
             DesktopBackground = SettingsManager.Current.RemoteDesktop_DesktopBackground;
             FontSmoothing = SettingsManager.Current.RemoteDesktop_FontSmoothing;
             DesktopComposition = SettingsManager.Current.RemoteDesktop_DesktopComposition;
@@ -529,11 +530,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void ChangeConnectionSpeedSettings(uint speed)
+        private void ChangeConnectionSpeedSettings(RemoteDesktop.ConnectionSpeed connectionSpeed)
         {
-            switch (speed)
+            switch (connectionSpeed)
             {
-                case 1:
+                case RemoteDesktop.ConnectionSpeed.Modem:
                     DesktopBackground = false;
                     FontSmoothing = false;
                     DesktopComposition = false;
@@ -541,7 +542,7 @@ namespace NETworkManager.ViewModels
                     MenuAndWindowAnimation = false;
                     VisualStyles = false;
                     break;
-                case 2:
+                case RemoteDesktop.ConnectionSpeed.BroadbandLow:
                     DesktopBackground = false;
                     FontSmoothing = false;
                     DesktopComposition = false;
@@ -549,8 +550,8 @@ namespace NETworkManager.ViewModels
                     MenuAndWindowAnimation = false;
                     VisualStyles = true;
                     break;
-                case 3:
-                case 4:
+                case RemoteDesktop.ConnectionSpeed.Satellite:
+                case RemoteDesktop.ConnectionSpeed.BroadbandHigh:
                     DesktopBackground = false;
                     FontSmoothing = false;
                     DesktopComposition = true;
@@ -558,8 +559,8 @@ namespace NETworkManager.ViewModels
                     MenuAndWindowAnimation = false;
                     VisualStyles = true;
                     break;
-                case 5:
-                case 6:
+                case RemoteDesktop.ConnectionSpeed.WAN:
+                case RemoteDesktop.ConnectionSpeed.LAN:
                     DesktopBackground = true;
                     FontSmoothing = true;
                     DesktopComposition = true;

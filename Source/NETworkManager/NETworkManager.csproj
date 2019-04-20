@@ -253,7 +253,9 @@
     <Compile Include="Converters\BooleanReverseToVisibilityHiddenConverter.cs" />
     <Compile Include="Converters\ApplicationNameToTranslatedStringConverter.cs" />
     <Compile Include="Converters\PingStatusToBooleanConverter.cs" />
+    <Compile Include="Converters\RemoteDesktopKeyboardHookModeToStringConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter.cs" />
+    <Compile Include="Converters\RemoteDesktopConnectionSpeedToStringConverter.cs" />
     <Compile Include="Converters\TcpStateToStringConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyToBooleanConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyToVisibilityCollapsedConverter.cs" />

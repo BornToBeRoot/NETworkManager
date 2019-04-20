@@ -202,7 +202,7 @@ namespace NETworkManager.Models.Settings
             ForceRestart = true;
         }
 
-        public static void Update(Version programmVersion, Version settingsVersion)
+        public static void Update(Version assemblyVersion, Version settingsVersion)
         {
             // Version is 0.0.0.0 on first run or settings reset --> skip updates 
             if (settingsVersion > new Version("0.0.0.0"))
@@ -240,7 +240,7 @@ namespace NETworkManager.Models.Settings
             }
 
             // Update settings version
-            Current.SettingsVersion = programmVersion.ToString();
+            Current.SettingsVersion = assemblyVersion.ToString();
         }
     }
 }

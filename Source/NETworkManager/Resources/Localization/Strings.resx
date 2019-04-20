@@ -991,10 +991,10 @@ Create one...</value>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
     <value>Only when using the full screen</value>
   </data>
-  <data name="OnTheRemoteComputer" xml:space="preserve">
+  <data name="RemoteDesktopKeyboardHookMode_OnTheRemoteComputer" xml:space="preserve">
     <value>On the remote computer</value>
   </data>
-  <data name="OnThisComputer" xml:space="preserve">
+  <data name="RemoteDesktopKeyboardHookMode_OnThisComputer" xml:space="preserve">
     <value>On this computer</value>
   </data>
   <data name="Open" xml:space="preserve">

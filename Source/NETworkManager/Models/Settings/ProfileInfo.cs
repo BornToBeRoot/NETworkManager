@@ -64,7 +64,7 @@ namespace NETworkManager.Models.Settings
         public bool RemoteDesktop_OverrideAuthenticationLevel { get; set; }
         public uint RemoteDesktop_AuthenticationLevel { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
         public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations { get; set; }
-        public int RemoteDesktop_KeyboardHookMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
+        public RemoteDesktop.RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
         public bool RemoteDesktop_OverrideRedirectClipboard { get; set; }
         public bool RemoteDesktop_RedirectClipboard { get; set; } = true;
         public bool RemoteDesktop_OverrideRedirectDevices { get; set; }
@@ -82,7 +82,7 @@ namespace NETworkManager.Models.Settings
         public bool RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped { get; set; }
         public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped { get; set; }
         public bool RemoteDesktop_OverrideConnectionSpeed { get; set; }
-        public uint RemoteDesktop_ConnectionSpeed { get; set; }
+        public RemoteDesktop.RemoteDesktop.ConnectionSpeed RemoteDesktop_ConnectionSpeed { get; set; }
         public bool RemoteDesktop_OverrideDesktopBackground { get; set; }
         public bool RemoteDesktop_DesktopBackground { get; set; }
         public bool RemoteDesktop_OverrideFontSmoothing { get; set; }

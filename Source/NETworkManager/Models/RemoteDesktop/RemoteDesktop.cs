@@ -64,5 +64,25 @@ namespace NETworkManager.Models.RemoteDesktop
 
             return info;
         }
+        
+        public enum KeyboardHookMode
+        {
+            OnThisComputer,
+            OnTheRemoteComputer,
+            //OnlyWhenUsingTheFullScreen
+        }
+
+        // https://docs.microsoft.com/en-us/windows/desktop/termserv/imsrdpclientadvancedsettings7-networkconnectiontype
+        // Convert to uint
+        public enum ConnectionSpeed
+        {
+            DetectAutomatically,
+            Modem,
+            BroadbandLow,
+            Satellite,
+            BroadbandHigh,
+            WAN,
+            LAN
+        }
     }
 }
