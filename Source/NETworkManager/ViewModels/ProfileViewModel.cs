@@ -600,7 +600,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<string> RemoteDesktop_ScreenResolutions => GlobalStaticConfiguration.RemoteDesktop_ScreenResolutions;
+        public List<string> RemoteDesktop_ScreenResolutions => RemoteDesktop.ScreenResolutions;
 
         public int RemoteDesktop_ScreenWidth;
         public int RemoteDesktop_ScreenHeight;
@@ -680,7 +680,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<int> RemoteDesktop_ColorDepths => GlobalStaticConfiguration.RemoteDesktop_ColorDepths;
+        public List<int> RemoteDesktop_ColorDepths => RemoteDesktop.ColorDepths;
 
         private int _remoteDesktop_SelectedColorDepth;
         public int RemoteDesktop_SelectedColorDepth

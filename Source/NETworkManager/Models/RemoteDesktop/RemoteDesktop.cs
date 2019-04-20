@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using NETworkManager.Models.Settings;
+using System.Collections.Generic;
 
 namespace NETworkManager.Models.RemoteDesktop
 {
@@ -53,7 +54,7 @@ namespace NETworkManager.Models.RemoteDesktop
                 ReconnectIfTheConnectionIsDropped = profileInfo != null && profileInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped ? profileInfo.RemoteDesktop_ReconnectIfTheConnectionIsDropped : SettingsManager.Current.RemoteDesktop_ReconnectIfTheConnectionIsDropped,
 
                 // Performance
-                ConnectionSpeed = profileInfo != null && profileInfo.RemoteDesktop_OverrideConnectionSpeed ? profileInfo.RemoteDesktop_ConnectionSpeed : SettingsManager.Current.RemoteDesktop_ConnectionSpeed,
+                NetworkConnectionType = profileInfo != null && profileInfo.RemoteDesktop_OverrideConnectionSpeed ? profileInfo.RemoteDesktop_NetworkConnectionType : SettingsManager.Current.RemoteDesktop_NetworkConnectionType,
                 DesktopBackground = profileInfo != null && profileInfo.RemoteDesktop_OverrideDesktopBackground ? profileInfo.RemoteDesktop_DesktopBackground : SettingsManager.Current.RemoteDesktop_DesktopBackground,
                 FontSmoothing = profileInfo != null && profileInfo.RemoteDesktop_OverrideFontSmoothing ? profileInfo.RemoteDesktop_FontSmoothing : SettingsManager.Current.RemoteDesktop_FontSmoothing,
                 DesktopComposition = profileInfo != null && profileInfo.RemoteDesktop_OverrideDesktopComposition ? profileInfo.RemoteDesktop_DesktopComposition : SettingsManager.Current.RemoteDesktop_DesktopComposition,
@@ -64,7 +65,30 @@ namespace NETworkManager.Models.RemoteDesktop
 
             return info;
         }
-        
+
+        public static List<string> ScreenResolutions => new List<string>
+        {
+            "640x480",
+            "800x600",
+            "1024x768",
+            "1280x720",
+            "1280x768",
+            "1280x800",
+            "1280x1024",
+            "1366x768",
+            "1440x900",
+            "1400x1050",
+            "1680x1050",
+            "1920x1080"
+        };
+        public static List<int> ColorDepths => new List<int>
+        {
+            15,
+            16,
+            24,
+            32
+        };     
+
         public enum KeyboardHookMode
         {
             OnThisComputer,
@@ -74,7 +98,7 @@ namespace NETworkManager.Models.RemoteDesktop
 
         // https://docs.microsoft.com/en-us/windows/desktop/termserv/imsrdpclientadvancedsettings7-networkconnectiontype
         // Convert to uint
-        public enum ConnectionSpeed
+        public enum NetworkConnectionType
         {
             DetectAutomatically,
             Modem,
@@ -83,6 +107,19 @@ namespace NETworkManager.Models.RemoteDesktop
             BroadbandHigh,
             WAN,
             LAN
+        }
+
+        public enum AudioRedirectionMode
+        {
+            PlayOnThisComputer,
+            PlayOnRemoteComputer,
+            DoNotPlay
+        }
+
+        public enum AudioCaptureRedirectionMode
+        {
+            RecordFromThisComputer,
+            DoNotRecord
         }
     }
 }

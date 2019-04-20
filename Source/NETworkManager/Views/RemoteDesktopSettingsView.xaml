@@ -107,7 +107,7 @@
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ReconnectIfTheConnectionIsDropped}" IsChecked="{Binding ReconnectIfTheConnectionIsDropped}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Performance}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.ChooseYourConnectionSpeedToOptimizePerformance}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <ComboBox ItemsSource="{Binding ConnectionSpeeds}" SelectedItem="{Binding ConnectionSpeed}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,10">
+        <ComboBox ItemsSource="{Binding NetworkConnectionTypes}" SelectedItem="{Binding NetworkConnectionType}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,10">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopConnectionSpeedToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>

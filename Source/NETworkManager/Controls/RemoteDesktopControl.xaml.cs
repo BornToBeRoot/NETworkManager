@@ -182,14 +182,18 @@ namespace NETworkManager.Controls
             RdpClient.AdvancedSettings9.RedirectSmartCards = _rdpSessionInfo.RedirectSmartCards;
             RdpClient.AdvancedSettings9.RedirectPrinters = _rdpSessionInfo.RedirectPrinters;
 
+            // Audio
+            //RdpClient.AdvancedSettings9.AudioRedirectionMode
+           //RdpClient.AdvancedSettings9.AudioCaptureRedirectionMode
+
             // Performance
             RdpClient.AdvancedSettings9.BitmapPeristence = _rdpSessionInfo.PersistentBitmapCaching ? 1 : 0;
             RdpClient.AdvancedSettings9.EnableAutoReconnect = _rdpSessionInfo.ReconnectIfTheConnectionIsDropped;
 
             // Experience
-            if (_rdpSessionInfo.ConnectionSpeed != 0)
+            if (_rdpSessionInfo.NetworkConnectionType != 0)
             {
-                RdpClient.AdvancedSettings9.NetworkConnectionType = (uint)_rdpSessionInfo.ConnectionSpeed;
+                RdpClient.AdvancedSettings9.NetworkConnectionType = (uint)_rdpSessionInfo.NetworkConnectionType;
 
                 if (!_rdpSessionInfo.DesktopBackground)
                     RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_WALLPAPER;

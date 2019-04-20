@@ -105,12 +105,12 @@ namespace NETworkManager.Models.Settings
 
         public static string TranslateRemoteDesktopConnectionSpeed(object value)
         {
-            if (!(value is ConnectionSpeed connectionSpeed))
+            if (!(value is NetworkConnectionType networkConnectionType))
                 return "-/-";
 
-            var status = Resources.Localization.Strings.ResourceManager.GetString("RemoteDesktopConnectionType_" + connectionSpeed, Culture);
+            var status = Resources.Localization.Strings.ResourceManager.GetString("RemoteDesktopNetworkConnectionType_" + networkConnectionType, Culture);
 
-            return string.IsNullOrEmpty(status) ? connectionSpeed.ToString() : status;
+            return string.IsNullOrEmpty(status) ? networkConnectionType.ToString() : status;
         }
 
         public static string TranslateRemoteDesktopKeyboardHookMode(object value)

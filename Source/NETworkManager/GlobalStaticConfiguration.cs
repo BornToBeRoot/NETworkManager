@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Heijden.DNS;
@@ -89,36 +88,15 @@ namespace NETworkManager
         public static ExportManager.ExportFileType DNSLookup_ExportFileType => ExportManager.ExportFileType.CSV;
 
         // Application: RemoteDesktop
-        public static List<string> RemoteDesktop_ScreenResolutions => new List<string>
-        {
-            "640x480",
-            "800x600",
-            "1024x768",
-            "1280x720",
-            "1280x768",
-            "1280x800",
-            "1280x1024",
-            "1366x768",
-            "1440x900",
-            "1400x1050",
-            "1680x1050",
-            "1920x1080"
-        };
         public static int RemoteDesktop_ScreenWidth => 1280;
         public static int RemoteDesktop_ScreenHeight => 768;
-        public static List<int> RemoteDesktop_ColorDepths => new List<int>
-        {
-            15,
-            16,
-            24,
-            32
-        };
+      
         public static int RemoteDesktop_ColorDepth = 32;
         public static int RemoteDesktop_Port => 3389;
         public static RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode => RemoteDesktop.KeyboardHookMode.OnTheRemoteComputer;
         public static uint RemoteDesktop_AuthenticationLevel => 2;
    
-        public static RemoteDesktop.ConnectionSpeed RemoteDesktop_ConnectionSpeed => RemoteDesktop.ConnectionSpeed.DetectAutomatically;
+        public static RemoteDesktop.NetworkConnectionType RemoteDesktop_NetworkConnectionType => RemoteDesktop.NetworkConnectionType.DetectAutomatically;
         
         // Application: PowerShell
         public static string PowerShell_ApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");

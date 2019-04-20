@@ -63,7 +63,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<string> ScreenResolutions => GlobalStaticConfiguration.RemoteDesktop_ScreenResolutions;
+        public List<string> ScreenResolutions => RemoteDesktop.ScreenResolutions;
 
         private string _selectedScreenResolution;
         public string SelectedScreenResolution
@@ -138,7 +138,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public List<int> ColorDepths => GlobalStaticConfiguration.RemoteDesktop_ColorDepths;
+        public List<int> ColorDepths => RemoteDesktop.ColorDepths;
 
         private int _selectedColorDepth;
         public int SelectedColorDepth
@@ -362,24 +362,24 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        public IEnumerable<RemoteDesktop.ConnectionSpeed> ConnectionSpeeds => System.Enum.GetValues(typeof(RemoteDesktop.ConnectionSpeed)).Cast<RemoteDesktop.ConnectionSpeed>();
+        public IEnumerable<RemoteDesktop.NetworkConnectionType> NetworkConnectionTypes => System.Enum.GetValues(typeof(RemoteDesktop.NetworkConnectionType)).Cast<RemoteDesktop.NetworkConnectionType>();
 
-        private RemoteDesktop.ConnectionSpeed _connectionSpeed;
-        public RemoteDesktop.ConnectionSpeed ConnectionSpeed
+        private RemoteDesktop.NetworkConnectionType _networkConnectionType;
+        public RemoteDesktop.NetworkConnectionType NetworkConnectionType
         {
-            get => _connectionSpeed;
+            get => _networkConnectionType;
             set
             {
-                if (Equals(value, _connectionSpeed))
+                if (Equals(value, _networkConnectionType))
                     return;
 
                 if (!_isLoading)
                 {
                     ChangeConnectionSpeedSettings(value);
-                    SettingsManager.Current.RemoteDesktop_ConnectionSpeed = value;
+                    SettingsManager.Current.RemoteDesktop_NetworkConnectionType = value;
                 }
 
-                _connectionSpeed = value;
+                _networkConnectionType = value;
                 OnPropertyChanged();
             }
         }
@@ -484,7 +484,7 @@ namespace NETworkManager.ViewModels
                 _visualStyles = value;
                 OnPropertyChanged();
             }
-        }
+        }       
         #endregion
 
         #region Constructor, load settings
@@ -519,7 +519,7 @@ namespace NETworkManager.ViewModels
             RedirectPrinters = SettingsManager.Current.RemoteDesktop_RedirectPrinters;
             PersistentBitmapCaching = SettingsManager.Current.RemoteDesktop_PersistentBitmapCaching;
             ReconnectIfTheConnectionIsDropped = SettingsManager.Current.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
-            ConnectionSpeed = ConnectionSpeeds.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_ConnectionSpeed);
+            NetworkConnectionType = NetworkConnectionTypes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_NetworkConnectionType);
             DesktopBackground = SettingsManager.Current.RemoteDesktop_DesktopBackground;
             FontSmoothing = SettingsManager.Current.RemoteDesktop_FontSmoothing;
             DesktopComposition = SettingsManager.Current.RemoteDesktop_DesktopComposition;
@@ -530,11 +530,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void ChangeConnectionSpeedSettings(RemoteDesktop.ConnectionSpeed connectionSpeed)
+        private void ChangeConnectionSpeedSettings(RemoteDesktop.NetworkConnectionType connectionSpeed)
         {
             switch (connectionSpeed)
             {
-                case RemoteDesktop.ConnectionSpeed.Modem:
+                case RemoteDesktop.NetworkConnectionType.Modem:
                     DesktopBackground = false;
                     FontSmoothing = false;
                     DesktopComposition = false;
@@ -542,7 +542,7 @@ namespace NETworkManager.ViewModels
                     MenuAndWindowAnimation = false;
                     VisualStyles = false;
                     break;
-                case RemoteDesktop.ConnectionSpeed.BroadbandLow:
+                case RemoteDesktop.NetworkConnectionType.BroadbandLow:
                     DesktopBackground = false;
                     FontSmoothing = false;
                     DesktopComposition = false;
@@ -550,8 +550,8 @@ namespace NETworkManager.ViewModels
                     MenuAndWindowAnimation = false;
                     VisualStyles = true;
                     break;
-                case RemoteDesktop.ConnectionSpeed.Satellite:
-                case RemoteDesktop.ConnectionSpeed.BroadbandHigh:
+                case RemoteDesktop.NetworkConnectionType.Satellite:
+                case RemoteDesktop.NetworkConnectionType.BroadbandHigh:
                     DesktopBackground = false;
                     FontSmoothing = false;
                     DesktopComposition = true;
@@ -559,8 +559,8 @@ namespace NETworkManager.ViewModels
                     MenuAndWindowAnimation = false;
                     VisualStyles = true;
                     break;
-                case RemoteDesktop.ConnectionSpeed.WAN:
-                case RemoteDesktop.ConnectionSpeed.LAN:
+                case RemoteDesktop.NetworkConnectionType.WAN:
+                case RemoteDesktop.NetworkConnectionType.LAN:
                     DesktopBackground = true;
                     FontSmoothing = true;
                     DesktopComposition = true;

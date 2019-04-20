@@ -2111,16 +2111,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private RemoteDesktop.RemoteDesktop.ConnectionSpeed _remoteDesktop_ConnectionSpeed = GlobalStaticConfiguration.RemoteDesktop_ConnectionSpeed;
-        public RemoteDesktop.RemoteDesktop.ConnectionSpeed RemoteDesktop_ConnectionSpeed
+        private RemoteDesktop.RemoteDesktop.NetworkConnectionType _remoteDesktop_NetworkConnectionType = GlobalStaticConfiguration.RemoteDesktop_NetworkConnectionType;
+        public RemoteDesktop.RemoteDesktop.NetworkConnectionType RemoteDesktop_NetworkConnectionType
         {
-            get => _remoteDesktop_ConnectionSpeed;
+            get => _remoteDesktop_NetworkConnectionType;
             set
             {
-                if (value == _remoteDesktop_ConnectionSpeed)
+                if (value == _remoteDesktop_NetworkConnectionType)
                     return;
 
-                _remoteDesktop_ConnectionSpeed = value;
+                _remoteDesktop_NetworkConnectionType = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

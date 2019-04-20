@@ -2211,25 +2211,25 @@ is disabled!</value>
   <data name="ReconnectIfTheConnectionIsDropped" xml:space="preserve">
     <value>Reconnect if the connection is dropped</value>
   </data>
-  <data name="RemoteDesktopConnectionType_BroadbandHigh" xml:space="preserve">
+  <data name="RemoteDesktopNetworkConnectionType_BroadbandHigh" xml:space="preserve">
     <value>High-speed broadband (2 Mbps - 10 Mbps)</value>
   </data>
-  <data name="RemoteDesktopConnectionType_BroadbandLow" xml:space="preserve">
+  <data name="RemoteDesktopNetworkConnectionType_BroadbandLow" xml:space="preserve">
     <value>Low-speed broadband (256 kbps - 2 Mbps)</value>
   </data>
-  <data name="RemoteDesktopConnectionType_DetectAutomatically" xml:space="preserve">
+  <data name="RemoteDesktopNetworkConnectionType_DetectAutomatically" xml:space="preserve">
     <value>Detect connection quality automatically</value>
   </data>
-  <data name="RemoteDesktopConnectionType_LAN" xml:space="preserve">
+  <data name="RemoteDesktopNetworkConnectionType_LAN" xml:space="preserve">
     <value>LAN (10 Mbps or higher)</value>
   </data>
-  <data name="RemoteDesktopConnectionType_Modem" xml:space="preserve">
+  <data name="RemoteDesktopNetworkConnectionType_Modem" xml:space="preserve">
     <value>Modem (56 kbps)</value>
   </data>
-  <data name="RemoteDesktopConnectionType_Satellite" xml:space="preserve">
+  <data name="RemoteDesktopNetworkConnectionType_Satellite" xml:space="preserve">
     <value>Satellite (2 Mbps - 16 Mbps with high latency)</value>
   </data>
-  <data name="RemoteDesktopConnectionType_WAN" xml:space="preserve">
+  <data name="RemoteDesktopNetworkConnectionType_WAN" xml:space="preserve">
     <value>WAN (10 Mbps or higher with high latency)</value>
   </data>
   <data name="ShowWindowContentsWhileDragging" xml:space="preserve">

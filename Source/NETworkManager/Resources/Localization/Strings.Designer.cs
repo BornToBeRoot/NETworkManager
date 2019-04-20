@@ -4092,69 +4092,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to High-speed broadband (2 Mbps - 10 Mbps).
-        /// </summary>
-        public static string RemoteDesktopConnectionType_BroadbandHigh {
-            get {
-                return ResourceManager.GetString("RemoteDesktopConnectionType_BroadbandHigh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Low-speed broadband (256 kbps - 2 Mbps).
-        /// </summary>
-        public static string RemoteDesktopConnectionType_BroadbandLow {
-            get {
-                return ResourceManager.GetString("RemoteDesktopConnectionType_BroadbandLow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Detect connection quality automatically.
-        /// </summary>
-        public static string RemoteDesktopConnectionType_DetectAutomatically {
-            get {
-                return ResourceManager.GetString("RemoteDesktopConnectionType_DetectAutomatically", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to LAN (10 Mbps or higher).
-        /// </summary>
-        public static string RemoteDesktopConnectionType_LAN {
-            get {
-                return ResourceManager.GetString("RemoteDesktopConnectionType_LAN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Modem (56 kbps).
-        /// </summary>
-        public static string RemoteDesktopConnectionType_Modem {
-            get {
-                return ResourceManager.GetString("RemoteDesktopConnectionType_Modem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Satellite (2 Mbps - 16 Mbps with high latency).
-        /// </summary>
-        public static string RemoteDesktopConnectionType_Satellite {
-            get {
-                return ResourceManager.GetString("RemoteDesktopConnectionType_Satellite", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WAN (10 Mbps or higher with high latency).
-        /// </summary>
-        public static string RemoteDesktopConnectionType_WAN {
-            get {
-                return ResourceManager.GetString("RemoteDesktopConnectionType_WAN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Socket closed..
         /// </summary>
         public static string RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE {
@@ -4592,6 +4529,69 @@ namespace NETworkManager.Resources.Localization {
         public static string RemoteDesktopKeyboardHookMode_OnThisComputer {
             get {
                 return ResourceManager.GetString("RemoteDesktopKeyboardHookMode_OnThisComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to High-speed broadband (2 Mbps - 10 Mbps).
+        /// </summary>
+        public static string RemoteDesktopNetworkConnectionType_BroadbandHigh {
+            get {
+                return ResourceManager.GetString("RemoteDesktopNetworkConnectionType_BroadbandHigh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Low-speed broadband (256 kbps - 2 Mbps).
+        /// </summary>
+        public static string RemoteDesktopNetworkConnectionType_BroadbandLow {
+            get {
+                return ResourceManager.GetString("RemoteDesktopNetworkConnectionType_BroadbandLow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detect connection quality automatically.
+        /// </summary>
+        public static string RemoteDesktopNetworkConnectionType_DetectAutomatically {
+            get {
+                return ResourceManager.GetString("RemoteDesktopNetworkConnectionType_DetectAutomatically", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LAN (10 Mbps or higher).
+        /// </summary>
+        public static string RemoteDesktopNetworkConnectionType_LAN {
+            get {
+                return ResourceManager.GetString("RemoteDesktopNetworkConnectionType_LAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modem (56 kbps).
+        /// </summary>
+        public static string RemoteDesktopNetworkConnectionType_Modem {
+            get {
+                return ResourceManager.GetString("RemoteDesktopNetworkConnectionType_Modem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satellite (2 Mbps - 16 Mbps with high latency).
+        /// </summary>
+        public static string RemoteDesktopNetworkConnectionType_Satellite {
+            get {
+                return ResourceManager.GetString("RemoteDesktopNetworkConnectionType_Satellite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WAN (10 Mbps or higher with high latency).
+        /// </summary>
+        public static string RemoteDesktopNetworkConnectionType_WAN {
+            get {
+                return ResourceManager.GetString("RemoteDesktopNetworkConnectionType_WAN", resourceCulture);
             }
         }
         
