@@ -5,7 +5,7 @@ using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Converters
 {
-    public sealed class RemoteDesktopConnectionSpeedToStringConverter : IValueConverter
+    public sealed class RemoteDesktopNetworkConnectionTypeToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

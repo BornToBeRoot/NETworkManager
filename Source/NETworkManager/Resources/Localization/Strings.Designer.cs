@@ -4074,6 +4074,33 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remote audio.
+        /// </summary>
+        public static string RemoteAudio {
+            get {
+                return ResourceManager.GetString("RemoteAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote audio playback.
+        /// </summary>
+        public static string RemoteAudioPlayback {
+            get {
+                return ResourceManager.GetString("RemoteAudioPlayback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote audio recording.
+        /// </summary>
+        public static string RemoteAudioRecording {
+            get {
+                return ResourceManager.GetString("RemoteAudioRecording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remote console.
         /// </summary>
         public static string RemoteConsole {
@@ -4088,6 +4115,51 @@ namespace NETworkManager.Resources.Localization {
         public static string RemoteDesktop {
             get {
                 return ResourceManager.GetString("RemoteDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not record.
+        /// </summary>
+        public static string RemoteDesktopAudioCaptureRedirectionMode_DoNotRecord {
+            get {
+                return ResourceManager.GetString("RemoteDesktopAudioCaptureRedirectionMode_DoNotRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record from this computer.
+        /// </summary>
+        public static string RemoteDesktopAudioCaptureRedirectionMode_RecordFromThisComputer {
+            get {
+                return ResourceManager.GetString("RemoteDesktopAudioCaptureRedirectionMode_RecordFromThisComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not play.
+        /// </summary>
+        public static string RemoteDesktopAudioRedirectionMode_DoNotPlay {
+            get {
+                return ResourceManager.GetString("RemoteDesktopAudioRedirectionMode_DoNotPlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play on remote computer.
+        /// </summary>
+        public static string RemoteDesktopAudioRedirectionMode_PlayOnRemoteComputer {
+            get {
+                return ResourceManager.GetString("RemoteDesktopAudioRedirectionMode_PlayOnRemoteComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play on this computer.
+        /// </summary>
+        public static string RemoteDesktopAudioRedirectionMode_PlayOnThisComputer {
+            get {
+                return ResourceManager.GetString("RemoteDesktopAudioRedirectionMode_PlayOnThisComputer", resourceCulture);
             }
         }
         

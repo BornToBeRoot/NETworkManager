@@ -16,6 +16,8 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:RemoteDesktopAudioCaptureRedirectionModeToStringConverter x:Key="RemoteDesktopAudioCaptureRedirectionModeToStringConverter" />
+        <converters:RemoteDesktopAudioRedirectionModeToStringConverter x:Key="RemoteDesktopAudioRedirectionModeToStringConverter" />
         <converters:RemoteDesktopKeyboardHookModeToStringConverter x:Key="RemoteDesktopKeyboardHookModeToStringConverter" />
         <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
     </UserControl.Resources>
@@ -691,6 +693,10 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="10" />
                                         <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*" />
@@ -800,26 +806,42 @@
                                             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                                         </Rectangle.Resources>
                                     </Rectangle>
-                                    <CheckBox Grid.Column="0" Grid.Row="20" Content="{x:Static localization:Strings.ApplyWindowsKeyCombinations}" IsChecked="{Binding RemoteDesktop_OverrideApplyWindowsKeyCombinations}" Style="{StaticResource DefaultCheckBox}" />
-                                    <ComboBox Grid.Column="2" Grid.Row="20" ItemsSource="{Binding RemoteDesktop_KeyboardHookModes}" SelectedItem="{Binding RemoteDesktop_KeyboardHookMode}" IsEnabled="{Binding RemoteDesktop_OverrideApplyWindowsKeyCombinations}">
+                                    <CheckBox Grid.Column="0" Grid.Row="20" Content="{x:Static localization:Strings.RemoteAudioPlayback}" IsChecked="{Binding RemoteDesktop_OverrideAudioRedirectionMode}" Style="{StaticResource DefaultCheckBox}" />
+                                    <ComboBox Grid.Column="2" Grid.Row="20" ItemsSource="{Binding RemoteDesktop_AudioRedirectionModes}" SelectedItem="{Binding RemoteDesktop_AudioRedirectionMode}" IsEnabled="{Binding RemoteDesktop_OverrideAudioRedirectionMode}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopAudioRedirectionModeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <CheckBox Grid.Column="0" Grid.Row="22" Content="{x:Static localization:Strings.RemoteAudioRecording}" IsChecked="{Binding RemoteDesktop_OverrideAudioCaptureRedirectionMode}" Style="{StaticResource DefaultCheckBox}" />
+                                    <ComboBox Grid.Column="2" Grid.Row="22" ItemsSource="{Binding RemoteDesktop_AudioCaptureRedirectionModes}" SelectedItem="{Binding RemoteDesktop_AudioCaptureRedirectionMode}" IsEnabled="{Binding RemoteDesktop_OverrideAudioCaptureRedirectionMode}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopAudioCaptureRedirectionModeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <CheckBox Grid.Column="0" Grid.Row="24" Content="{x:Static localization:Strings.ApplyWindowsKeyCombinations}" IsChecked="{Binding RemoteDesktop_OverrideApplyWindowsKeyCombinations}" Style="{StaticResource DefaultCheckBox}" />
+                                    <ComboBox Grid.Column="2" Grid.Row="24" ItemsSource="{Binding RemoteDesktop_KeyboardHookModes}" SelectedItem="{Binding RemoteDesktop_KeyboardHookMode}" IsEnabled="{Binding RemoteDesktop_OverrideApplyWindowsKeyCombinations}">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopKeyboardHookModeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
-                                    <CheckBox Grid.Column="0" Grid.Row="22" Content="{x:Static localization:Strings.RedirectClipboard}" IsChecked="{Binding RemoteDesktop_OverrideRedirectClipboard}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="22" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectClipboard}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectClipboard}" />
-                                    <CheckBox Grid.Column="0" Grid.Row="24" Content="{x:Static localization:Strings.RedirectDevices}" IsChecked="{Binding RemoteDesktop_OverrideRedirectDevices}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="24" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectDevices}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectDevices}" />
-                                    <CheckBox Grid.Column="0" Grid.Row="26" Content="{x:Static localization:Strings.RedirectDrives}" IsChecked="{Binding RemoteDesktop_OverrideRedirectDrives}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="26" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectDrives}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectDrives}"/>
-                                    <CheckBox Grid.Column="0" Grid.Row="28" Content="{x:Static localization:Strings.RedirectPorts}" IsChecked="{Binding RemoteDesktop_OverrideRedirectPorts}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="28" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectPorts}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectPorts}" />
-                                    <CheckBox Grid.Column="0" Grid.Row="30" Content="{x:Static localization:Strings.RedirectSmartcards}" IsChecked="{Binding RemoteDesktop_OverrideRedirectSmartcards}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="30" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectSmartCards}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectSmartcards}" />
-                                    <CheckBox Grid.Column="0" Grid.Row="32" Content="{x:Static localization:Strings.RedirectPrinters}" IsChecked="{Binding RemoteDesktop_OverrideRedirectPrinters}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="32" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectPrinters}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectPrinters}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="26" Content="{x:Static localization:Strings.RedirectClipboard}" IsChecked="{Binding RemoteDesktop_OverrideRedirectClipboard}" Style="{StaticResource DefaultCheckBox}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="26" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectClipboard}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectClipboard}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="28" Content="{x:Static localization:Strings.RedirectDevices}" IsChecked="{Binding RemoteDesktop_OverrideRedirectDevices}" Style="{StaticResource DefaultCheckBox}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="28" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectDevices}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectDevices}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="30" Content="{x:Static localization:Strings.RedirectDrives}" IsChecked="{Binding RemoteDesktop_OverrideRedirectDrives}" Style="{StaticResource DefaultCheckBox}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="30" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectDrives}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectDrives}"/>
+                                    <CheckBox Grid.Column="0" Grid.Row="32" Content="{x:Static localization:Strings.RedirectPorts}" IsChecked="{Binding RemoteDesktop_OverrideRedirectPorts}" Style="{StaticResource DefaultCheckBox}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="32" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectPorts}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectPorts}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="34" Content="{x:Static localization:Strings.RedirectSmartcards}" IsChecked="{Binding RemoteDesktop_OverrideRedirectSmartcards}" Style="{StaticResource DefaultCheckBox}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="34" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectSmartCards}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectSmartcards}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="36" Content="{x:Static localization:Strings.RedirectPrinters}" IsChecked="{Binding RemoteDesktop_OverrideRedirectPrinters}" Style="{StaticResource DefaultCheckBox}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="36" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectPrinters}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectPrinters}" />
                                     
                                     
                                     

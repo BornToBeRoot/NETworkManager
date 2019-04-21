@@ -10,7 +10,9 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:RemoteDesktopSettingsViewModel}">
     <UserControl.Resources>
-        <converters:RemoteDesktopConnectionSpeedToStringConverter x:Key="RemoteDesktopConnectionSpeedToStringConverter"/>
+        <converters:RemoteDesktopAudioCaptureRedirectionModeToStringConverter x:Key="RemoteDesktopAudioCaptureRedirectionModeToStringConverter" />
+        <converters:RemoteDesktopAudioRedirectionModeToStringConverter x:Key="RemoteDesktopAudioRedirectionModeToStringConverter" />
+        <converters:RemoteDesktopNetworkConnectionTypeToStringConverter x:Key="RemoteDesktopNetworkConnectionTypeToStringConverter"/>
         <converters:RemoteDesktopKeyboardHookModeToStringConverter x:Key="RemoteDesktopKeyboardHookModeToStringConverter" />
     </UserControl.Resources>
     <StackPanel>
@@ -86,6 +88,23 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
+        <TextBlock Text="{x:Static localization:Strings.RemoteAudio}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.RemoteAudioPlayback}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding AudioRedirectionModes}" SelectedItem="{Binding AudioRedirectionMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,20">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopAudioRedirectionModeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Text="{x:Static localization:Strings.RemoteAudioRecording}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding AudioCaptureRedirectionModes}" SelectedItem="{Binding AudioCaptureRedirectionMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,20">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopAudioCaptureRedirectionModeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <TextBlock Text="{x:Static localization:Strings.Keyboard}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.ApplyWindowsKeyCombinationsLikeAltTab}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding KeyboardHookModes}" SelectedItem="{Binding KeyboardHookMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,20">
@@ -110,7 +129,7 @@
         <ComboBox ItemsSource="{Binding NetworkConnectionTypes}" SelectedItem="{Binding NetworkConnectionType}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,10">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopConnectionSpeedToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                    <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopNetworkConnectionTypeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
@@ -119,7 +138,7 @@
                 <Style TargetType="{x:Type StackPanel}">
                     <Setter Property="IsEnabled" Value="True" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ConnectionSpeed.Item1}" Value="0">
+                        <DataTrigger Binding="{Binding NetworkConnectionType}" Value="0">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
                     </Style.Triggers>

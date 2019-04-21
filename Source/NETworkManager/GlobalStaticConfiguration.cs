@@ -93,6 +93,8 @@ namespace NETworkManager
       
         public static int RemoteDesktop_ColorDepth = 32;
         public static int RemoteDesktop_Port => 3389;
+        public static RemoteDesktop.AudioRedirectionMode RemoteDesktop_AudioRedirectionMode => RemoteDesktop.AudioRedirectionMode.PlayOnThisComputer;
+        public static RemoteDesktop.AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode => RemoteDesktop.AudioCaptureRedirectionMode.DoNotRecord;
         public static RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode => RemoteDesktop.KeyboardHookMode.OnTheRemoteComputer;
         public static uint RemoteDesktop_AuthenticationLevel => 2;
    

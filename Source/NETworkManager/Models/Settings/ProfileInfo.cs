@@ -63,6 +63,10 @@ namespace NETworkManager.Models.Settings
         public bool RemoteDesktop_EnableCredSspSupport { get; set; }
         public bool RemoteDesktop_OverrideAuthenticationLevel { get; set; }
         public uint RemoteDesktop_AuthenticationLevel { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
+        public bool RemoteDesktop_OverrideAudioRedirectionMode { get; set; }
+        public RemoteDesktop.RemoteDesktop.AudioRedirectionMode RemoteDesktop_AudioRedirectionMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
+        public bool RemoteDesktop_OverrideAudioCaptureRedirectionMode { get; set; }
+        public RemoteDesktop.RemoteDesktop.AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AudioCaptureRedirectionMode;
         public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations { get; set; }
         public RemoteDesktop.RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
         public bool RemoteDesktop_OverrideRedirectClipboard { get; set; }

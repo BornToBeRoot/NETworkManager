@@ -780,6 +780,68 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _remoteDesktop_OverrideAudioRedirectionMode;
+        public bool RemoteDesktop_OverrideAudioRedirectionMode
+        {
+            get => _remoteDesktop_OverrideAudioRedirectionMode;
+            set
+            {
+                if (value == _remoteDesktop_OverrideAudioRedirectionMode)
+                    return;
+
+                _remoteDesktop_OverrideAudioRedirectionMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IEnumerable<RemoteDesktop.AudioRedirectionMode> RemoteDesktop_AudioRedirectionModes => System.Enum.GetValues(typeof(RemoteDesktop.AudioRedirectionMode)).Cast<RemoteDesktop.AudioRedirectionMode>();
+
+        private RemoteDesktop.AudioRedirectionMode _remoteDesktop_AudioRedirectionMode;
+        public RemoteDesktop.AudioRedirectionMode RemoteDesktop_AudioRedirectionMode
+        {
+            get => _remoteDesktop_AudioRedirectionMode;
+            set
+            {
+                if (Equals(value, _remoteDesktop_AudioRedirectionMode))
+                    return;
+
+                _remoteDesktop_AudioRedirectionMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private bool _remoteDesktop_OverrideAudioCaptureRedirectionMode;
+        public bool RemoteDesktop_OverrideAudioCaptureRedirectionMode
+        {
+            get => _remoteDesktop_OverrideAudioCaptureRedirectionMode;
+            set
+            {
+                if (value == _remoteDesktop_OverrideAudioCaptureRedirectionMode)
+                    return;
+
+                _remoteDesktop_OverrideAudioCaptureRedirectionMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IEnumerable<RemoteDesktop.AudioCaptureRedirectionMode> RemoteDesktop_AudioCaptureRedirectionModes => System.Enum.GetValues(typeof(RemoteDesktop.AudioCaptureRedirectionMode)).Cast<RemoteDesktop.AudioCaptureRedirectionMode>();
+
+        private RemoteDesktop.AudioCaptureRedirectionMode _remoteDesktop_AudioCaptureRedirectionMode;
+        public RemoteDesktop.AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode
+        {
+            get => _remoteDesktop_AudioCaptureRedirectionMode;
+            set
+            {
+                if (Equals(value, _remoteDesktop_AudioCaptureRedirectionMode))
+                    return;
+
+                _remoteDesktop_AudioCaptureRedirectionMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private bool _remoteDesktop_OverrideApplyWindowsKeyCombinations;
         public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations
         {
@@ -1714,6 +1776,10 @@ namespace NETworkManager.ViewModels
             RemoteDesktop_EnableCredSspSupport = profileInfo.RemoteDesktop_EnableCredSspSupport;
             RemoteDesktop_OverrideAuthenticationLevel = profileInfo.RemoteDesktop_OverrideAuthenticationLevel;
             RemoteDesktop_AuthenticationLevel = profileInfo.RemoteDesktop_AuthenticationLevel;
+            RemoteDesktop_OverrideAudioRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioRedirectionMode;
+            RemoteDesktop_AudioRedirectionMode = RemoteDesktop_AudioRedirectionModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_AudioRedirectionMode);
+            RemoteDesktop_OverrideAudioCaptureRedirectionMode = profile.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
+            RemoteDesktop_AudioCaptureRedirectionMode = RemoteDesktop_AudioCaptureRedirectionModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_AudioCaptureRedirectionMode);
             RemoteDesktop_OverrideApplyWindowsKeyCombinations = profileInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
             RemoteDesktop_KeyboardHookMode = RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_KeyboardHookMode);
             RemoteDesktop_OverrideRedirectClipboard = profileInfo.RemoteDesktop_OverrideRedirectClipboard;

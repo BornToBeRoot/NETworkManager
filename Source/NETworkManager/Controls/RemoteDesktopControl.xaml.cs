@@ -1,4 +1,6 @@
-﻿using NETworkManager.Models.RemoteDesktop;
+﻿// Documenation: https://docs.microsoft.com/en-us/windows/desktop/termserv/remote-desktop-web-connection-reference
+
+using NETworkManager.Models.RemoteDesktop;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -183,8 +185,8 @@ namespace NETworkManager.Controls
             RdpClient.AdvancedSettings9.RedirectPrinters = _rdpSessionInfo.RedirectPrinters;
 
             // Audio
-            //RdpClient.AdvancedSettings9.AudioRedirectionMode
-           //RdpClient.AdvancedSettings9.AudioCaptureRedirectionMode
+            RdpClient.AdvancedSettings9.AudioRedirectionMode = (uint)_rdpSessionInfo.AudioRedirectionMode;
+            RdpClient.AdvancedSettings9.AudioCaptureRedirectionMode = _rdpSessionInfo.AudioCaptureRedirectionMode == 0 ? true : false;
 
             // Performance
             RdpClient.AdvancedSettings9.BitmapPeristence = _rdpSessionInfo.PersistentBitmapCaching ? 1 : 0;

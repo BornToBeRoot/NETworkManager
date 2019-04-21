@@ -39,6 +39,10 @@ namespace NETworkManager.Models.RemoteDesktop
                 EnableCredSspSupport = profileInfo != null && profileInfo.RemoteDesktop_OverrideCredSspSupport ? profileInfo.RemoteDesktop_EnableCredSspSupport : SettingsManager.Current.RemoteDesktop_EnableCredSspSupport,
                 AuthenticationLevel = profileInfo != null && profileInfo.RemoteDesktop_OverrideAuthenticationLevel ? profileInfo.RemoteDesktop_AuthenticationLevel : SettingsManager.Current.RemoteDesktop_AuthenticationLevel,
 
+                // Remote audio
+                AudioRedirectionMode = profileInfo != null && profileInfo.RemoteDesktop_OverrideAudioRedirectionMode ? profileInfo.RemoteDesktop_AudioRedirectionMode : SettingsManager.Current.RemoteDesktop_AudioRedirectionMode,
+                AudioCaptureRedirectionMode = profileInfo != null && profileInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode ? profileInfo.RemoteDesktop_AudioCaptureRedirectionMode : SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode,
+
                 // Keyboard
                 KeyboardHookMode = profileInfo != null && profileInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations ? profileInfo.RemoteDesktop_KeyboardHookMode : SettingsManager.Current.RemoteDesktop_KeyboardHookMode,
 
@@ -48,6 +52,7 @@ namespace NETworkManager.Models.RemoteDesktop
                 RedirectDrives = profileInfo != null && profileInfo.RemoteDesktop_OverrideRedirectDrives ? profileInfo.RemoteDesktop_RedirectDrives : SettingsManager.Current.RemoteDesktop_RedirectDrives,
                 RedirectPorts = profileInfo != null && profileInfo.RemoteDesktop_OverrideRedirectPorts ? profileInfo.RemoteDesktop_RedirectPorts : SettingsManager.Current.RemoteDesktop_RedirectPorts,
                 RedirectSmartCards = profileInfo != null && profileInfo.RemoteDesktop_OverrideRedirectSmartcards ? profileInfo.RemoteDesktop_RedirectSmartCards : SettingsManager.Current.RemoteDesktop_RedirectSmartCards,
+                RedirectPrinters = profileInfo != null && profileInfo.RemoteDesktop_OverrideRedirectPrinters ? profileInfo.RemoteDesktop_RedirectPrinters : SettingsManager.Current.RemoteDesktop_RedirectPrinters,
 
                 // Experience
                 PersistentBitmapCaching = profileInfo != null && profileInfo.RemoteDesktop_OverridePersistentBitmapCaching ? profileInfo.RemoteDesktop_PersistentBitmapCaching : SettingsManager.Current.RemoteDesktop_PersistentBitmapCaching,

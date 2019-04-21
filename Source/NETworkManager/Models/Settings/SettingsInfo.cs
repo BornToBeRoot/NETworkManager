@@ -1976,6 +1976,36 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private RemoteDesktop.RemoteDesktop.AudioRedirectionMode _remoteDesktop_AudioRedirectionMode = GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
+        public RemoteDesktop.RemoteDesktop.AudioRedirectionMode RemoteDesktop_AudioRedirectionMode
+        {
+            get => _remoteDesktop_AudioRedirectionMode;
+            set
+            {
+                if (value == _remoteDesktop_AudioRedirectionMode)
+                    return;
+
+                _remoteDesktop_AudioRedirectionMode = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private RemoteDesktop.RemoteDesktop.AudioCaptureRedirectionMode _remoteDesktop_AudioCaptureRedirectionMode = GlobalStaticConfiguration.RemoteDesktop_AudioCaptureRedirectionMode;
+        public RemoteDesktop.RemoteDesktop.AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode
+        {
+            get => _remoteDesktop_AudioCaptureRedirectionMode;
+            set
+            {
+                if (value == _remoteDesktop_AudioCaptureRedirectionMode)
+                    return;
+
+                _remoteDesktop_AudioCaptureRedirectionMode = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         private RemoteDesktop.RemoteDesktop.KeyboardHookMode _remoteDesktop_KeyboardHookMode = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
         public RemoteDesktop.RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode
         {

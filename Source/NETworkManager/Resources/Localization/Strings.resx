@@ -2238,4 +2238,28 @@ is disabled!</value>
   <data name="VisualStyles" xml:space="preserve">
     <value>Visual styles</value>
   </data>
+  <data name="RemoteAudio" xml:space="preserve">
+    <value>Remote audio</value>
+  </data>
+  <data name="RemoteAudioPlayback" xml:space="preserve">
+    <value>Remote audio playback</value>
+  </data>
+  <data name="RemoteAudioRecording" xml:space="preserve">
+    <value>Remote audio recording</value>
+  </data>
+  <data name="RemoteDesktopAudioCaptureRedirectionMode_DoNotRecord" xml:space="preserve">
+    <value>Do not record</value>
+  </data>
+  <data name="RemoteDesktopAudioCaptureRedirectionMode_RecordFromThisComputer" xml:space="preserve">
+    <value>Record from this computer</value>
+  </data>
+  <data name="RemoteDesktopAudioRedirectionMode_DoNotPlay" xml:space="preserve">
+    <value>Do not play</value>
+  </data>
+  <data name="RemoteDesktopAudioRedirectionMode_PlayOnRemoteComputer" xml:space="preserve">
+    <value>Play on remote computer</value>
+  </data>
+  <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
+    <value>Play on this computer</value>
+  </data>
 </root>

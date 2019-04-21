@@ -208,6 +208,44 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public IEnumerable<RemoteDesktop.AudioRedirectionMode> AudioRedirectionModes => System.Enum.GetValues(typeof(RemoteDesktop.AudioRedirectionMode)).Cast<RemoteDesktop.AudioRedirectionMode>();
+
+        private RemoteDesktop.AudioRedirectionMode _audioRedirectionMode;
+        public RemoteDesktop.AudioRedirectionMode AudioRedirectionMode
+        {
+            get => _audioRedirectionMode;
+            set
+            {
+                if (Equals(value, _audioRedirectionMode))
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_AudioRedirectionMode = value;
+
+                _audioRedirectionMode = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        public IEnumerable<RemoteDesktop.AudioCaptureRedirectionMode> AudioCaptureRedirectionModes => System.Enum.GetValues(typeof(RemoteDesktop.AudioCaptureRedirectionMode)).Cast<RemoteDesktop.AudioCaptureRedirectionMode>();
+
+        private RemoteDesktop.AudioCaptureRedirectionMode _audioCaptureRedirectionMode;
+        public RemoteDesktop.AudioCaptureRedirectionMode AudioCaptureRedirectionMode
+        {
+            get => _audioCaptureRedirectionMode;
+            set
+            {
+                if (Equals(value, _audioCaptureRedirectionMode))
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode = value;
+
+                _audioCaptureRedirectionMode = value;
+                OnPropertyChanged();
+            }
+        }
+        
         public IEnumerable<RemoteDesktop.KeyboardHookMode> KeyboardHookModes => System.Enum.GetValues(typeof(RemoteDesktop.KeyboardHookMode)).Cast< RemoteDesktop.KeyboardHookMode>();
 
         private RemoteDesktop.KeyboardHookMode _keyboardHookMode;
@@ -510,6 +548,8 @@ namespace NETworkManager.ViewModels
             Port = SettingsManager.Current.RemoteDesktop_Port;
             EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
             AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
+            AudioRedirectionMode = AudioRedirectionModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_AudioRedirectionMode);
+            AudioCaptureRedirectionMode = AudioCaptureRedirectionModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode);
             KeyboardHookMode = KeyboardHookModes.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_KeyboardHookMode);
             RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard;
             RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices;

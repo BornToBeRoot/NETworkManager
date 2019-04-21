@@ -122,5 +122,25 @@ namespace NETworkManager.Models.Settings
 
             return string.IsNullOrEmpty(status) ? keyboardHookMode.ToString() : status;
         }
+
+        public static string TranslateRemoteDesktopAudioRedirectionMode(object value)
+        {
+            if (!(value is AudioRedirectionMode audioRedirectionMode))
+                return "-/-";
+
+            var status = Resources.Localization.Strings.ResourceManager.GetString("RemoteDesktopAudioRedirectionMode_" + audioRedirectionMode, Culture);
+
+            return string.IsNullOrEmpty(status) ? audioRedirectionMode.ToString() : status;
+        }
+
+        public static string TranslateRemoteDesktopAudioCaptureRedirectionMode(object value)
+        {
+            if (!(value is AudioCaptureRedirectionMode audioCaptureRedirectionMode))
+                return "-/-";
+
+            var status = Resources.Localization.Strings.ResourceManager.GetString("RemoteDesktopAudioCaptureRedirectionMode_" + audioCaptureRedirectionMode, Culture);
+
+            return string.IsNullOrEmpty(status) ? audioCaptureRedirectionMode.ToString() : status;
+        }
     }
 }
