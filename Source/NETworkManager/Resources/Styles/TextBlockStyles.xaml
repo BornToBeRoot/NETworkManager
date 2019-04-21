@@ -54,4 +54,12 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style x:Key="DisabledTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.55" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

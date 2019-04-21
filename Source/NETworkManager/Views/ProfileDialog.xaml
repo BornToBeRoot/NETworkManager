@@ -19,6 +19,7 @@
         <converters:RemoteDesktopAudioCaptureRedirectionModeToStringConverter x:Key="RemoteDesktopAudioCaptureRedirectionModeToStringConverter" />
         <converters:RemoteDesktopAudioRedirectionModeToStringConverter x:Key="RemoteDesktopAudioRedirectionModeToStringConverter" />
         <converters:RemoteDesktopKeyboardHookModeToStringConverter x:Key="RemoteDesktopKeyboardHookModeToStringConverter" />
+        <converters:RemoteDesktopNetworkConnectionTypeToStringConverter x:Key="RemoteDesktopNetworkConnectionTypeToStringConverter" />
         <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">
@@ -697,6 +698,24 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="10" />
                                         <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*" />
@@ -842,10 +861,30 @@
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="34" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectSmartCards}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectSmartcards}" />
                                     <CheckBox Grid.Column="0" Grid.Row="36" Content="{x:Static localization:Strings.RedirectPrinters}" IsChecked="{Binding RemoteDesktop_OverrideRedirectPrinters}" Style="{StaticResource DefaultCheckBox}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="36" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectPrinters}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectPrinters}" />
-                                    
-                                    
-                                    
-                                    
+                                    <CheckBox Grid.Column="0" Grid.Row="38" Content="{x:Static localization:Strings.PersistentBitmapCaching}" IsChecked="{Binding RemoteDesktop_OverridePersistentBitmapCaching}" Style="{StaticResource DefaultCheckBox}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="38" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_PersistentBitmapCaching}" IsEnabled="{Binding RemoteDesktop_OverridePersistentBitmapCaching}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="40" Content="{x:Static localization:Strings.ReconnectIfTheConnectionIsDropped}" IsChecked="{Binding RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped}" Style="{StaticResource DefaultCheckBox}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="40" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_ReconnectIfTheConnectionIsDropped}" IsEnabled="{Binding RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="42" Content="{x:Static localization:Strings.NetworkConnectionType}" IsChecked="{Binding RemoteDesktop_OverrideNetworkConnectionType}" Style="{StaticResource DefaultCheckBox}" />
+                                    <ComboBox Grid.Column="2" Grid.Row="42" ItemsSource="{Binding RemoteDesktop_NetworkConnectionTypes}" SelectedItem="{Binding RemoteDesktop_NetworkConnectionType}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopNetworkConnectionTypeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <TextBlock Grid.Column="0" Grid.Row="44" Text="{x:Static localization:Strings.DesktopBackground}" Margin="24,0,0,0" Style="{StaticResource DisabledTextBlock}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="44" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_DesktopBackground}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="46" Text="{x:Static localization:Strings.FontSmoothing}" Margin="24,0,0,0" Style="{StaticResource DisabledTextBlock}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="46" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_FontSmoothing}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="48" Text="{x:Static localization:Strings.DesktopComposition}" Margin="24,0,0,0" Style="{StaticResource DisabledTextBlock}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="48" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_DesktopComposition}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="50" Text="{x:Static localization:Strings.ShowWindowContentsWhileDragging}" Margin="24,0,0,0" Style="{StaticResource DisabledTextBlock}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="50" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_ShowWindowContentsWhileDragging}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="52" Text="{x:Static localization:Strings.MenuAndWindowAnimation}" Margin="24,0,0,0" Style="{StaticResource DisabledTextBlock}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="52" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_MenuAndWindowAnimation}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="54" Text="{x:Static localization:Strings.VisualStyles}" Margin="24,0,0,0" Style="{StaticResource DisabledTextBlock}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="54" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_VisualStyles}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
                                 </Grid>
                             </StackPanel>
                         </StackPanel>

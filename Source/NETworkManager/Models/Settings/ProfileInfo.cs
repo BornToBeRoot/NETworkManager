@@ -85,7 +85,7 @@ namespace NETworkManager.Models.Settings
         public bool RemoteDesktop_PersistentBitmapCaching { get; set; }
         public bool RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped { get; set; }
         public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped { get; set; }
-        public bool RemoteDesktop_OverrideConnectionSpeed { get; set; }
+        public bool RemoteDesktop_OverrideNetworkConnectionType { get; set; }
         public RemoteDesktop.RemoteDesktop.NetworkConnectionType RemoteDesktop_NetworkConnectionType { get; set; }
         public bool RemoteDesktop_OverrideDesktopBackground { get; set; }
         public bool RemoteDesktop_DesktopBackground { get; set; }

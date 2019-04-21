@@ -1,7 +1,6 @@
 ﻿using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -226,7 +225,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         public IEnumerable<RemoteDesktop.AudioCaptureRedirectionMode> AudioCaptureRedirectionModes => System.Enum.GetValues(typeof(RemoteDesktop.AudioCaptureRedirectionMode)).Cast<RemoteDesktop.AudioCaptureRedirectionMode>();
 
         private RemoteDesktop.AudioCaptureRedirectionMode _audioCaptureRedirectionMode;
@@ -245,8 +244,8 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        
-        public IEnumerable<RemoteDesktop.KeyboardHookMode> KeyboardHookModes => System.Enum.GetValues(typeof(RemoteDesktop.KeyboardHookMode)).Cast< RemoteDesktop.KeyboardHookMode>();
+
+        public IEnumerable<RemoteDesktop.KeyboardHookMode> KeyboardHookModes => System.Enum.GetValues(typeof(RemoteDesktop.KeyboardHookMode)).Cast<RemoteDesktop.KeyboardHookMode>();
 
         private RemoteDesktop.KeyboardHookMode _keyboardHookMode;
         public RemoteDesktop.KeyboardHookMode KeyboardHookMode
@@ -413,7 +412,7 @@ namespace NETworkManager.ViewModels
 
                 if (!_isLoading)
                 {
-                    ChangeConnectionSpeedSettings(value);
+                    ChangeNetworkConnectionTypeSettings(value);
                     SettingsManager.Current.RemoteDesktop_NetworkConnectionType = value;
                 }
 
@@ -522,7 +521,7 @@ namespace NETworkManager.ViewModels
                 _visualStyles = value;
                 OnPropertyChanged();
             }
-        }       
+        }
         #endregion
 
         #region Constructor, load settings
@@ -570,9 +569,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void ChangeConnectionSpeedSettings(RemoteDesktop.NetworkConnectionType connectionSpeed)
+        private void ChangeNetworkConnectionTypeSettings(RemoteDesktop.NetworkConnectionType networkConnectionType)
         {
-            switch (connectionSpeed)
+            switch (networkConnectionType)
             {
                 case RemoteDesktop.NetworkConnectionType.Modem:
                     DesktopBackground = false;

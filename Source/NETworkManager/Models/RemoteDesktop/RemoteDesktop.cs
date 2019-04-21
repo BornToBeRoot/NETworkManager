@@ -59,7 +59,7 @@ namespace NETworkManager.Models.RemoteDesktop
                 ReconnectIfTheConnectionIsDropped = profileInfo != null && profileInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped ? profileInfo.RemoteDesktop_ReconnectIfTheConnectionIsDropped : SettingsManager.Current.RemoteDesktop_ReconnectIfTheConnectionIsDropped,
 
                 // Performance
-                NetworkConnectionType = profileInfo != null && profileInfo.RemoteDesktop_OverrideConnectionSpeed ? profileInfo.RemoteDesktop_NetworkConnectionType : SettingsManager.Current.RemoteDesktop_NetworkConnectionType,
+                NetworkConnectionType = profileInfo != null && profileInfo.RemoteDesktop_OverrideNetworkConnectionType ? profileInfo.RemoteDesktop_NetworkConnectionType : SettingsManager.Current.RemoteDesktop_NetworkConnectionType,
                 DesktopBackground = profileInfo != null && profileInfo.RemoteDesktop_OverrideDesktopBackground ? profileInfo.RemoteDesktop_DesktopBackground : SettingsManager.Current.RemoteDesktop_DesktopBackground,
                 FontSmoothing = profileInfo != null && profileInfo.RemoteDesktop_OverrideFontSmoothing ? profileInfo.RemoteDesktop_FontSmoothing : SettingsManager.Current.RemoteDesktop_FontSmoothing,
                 DesktopComposition = profileInfo != null && profileInfo.RemoteDesktop_OverrideDesktopComposition ? profileInfo.RemoteDesktop_DesktopComposition : SettingsManager.Current.RemoteDesktop_DesktopComposition,

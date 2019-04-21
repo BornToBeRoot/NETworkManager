@@ -2184,8 +2184,8 @@ is disabled!</value>
   <data name="HelpTranslate" xml:space="preserve">
     <value>Help translate</value>
   </data>
-  <data name="ChooseYourConnectionSpeedToOptimizePerformance" xml:space="preserve">
-    <value>Choose your connection speed to optimize performance</value>
+  <data name="NetworkConnectionType" xml:space="preserve">
+    <value>Network connection type</value>
   </data>
   <data name="DesktopBackground" xml:space="preserve">
     <value>Desktop background</value>

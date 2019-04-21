@@ -754,15 +754,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose your connection speed to optimize performance.
-        /// </summary>
-        public static string ChooseYourConnectionSpeedToOptimizePerformance {
-            get {
-                return ResourceManager.GetString("ChooseYourConnectionSpeedToOptimizePerformance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to CIDR.
         /// </summary>
         public static string CIDR {
@@ -3130,6 +3121,15 @@ namespace NETworkManager.Resources.Localization {
         public static string NetworkConnectionsDots {
             get {
                 return ResourceManager.GetString("NetworkConnectionsDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network connection type.
+        /// </summary>
+        public static string NetworkConnectionType {
+            get {
+                return ResourceManager.GetString("NetworkConnectionType", resourceCulture);
             }
         }
         

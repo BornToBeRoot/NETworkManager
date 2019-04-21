@@ -19,6 +19,7 @@ namespace NETworkManager.ViewModels
     public class ProfileViewModel : ViewModelBase
     {
         #region Variables
+        private readonly bool _isLoading;
         public ICollectionView ProfileViews { get; }
 
         #region General
@@ -1040,7 +1041,178 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _remoteDesktop_OverridePersistentBitmapCaching;
+        public bool RemoteDesktop_OverridePersistentBitmapCaching
+        {
+            get => _remoteDesktop_OverridePersistentBitmapCaching;
+            set
+            {
+                if (value == _remoteDesktop_OverridePersistentBitmapCaching)
+                    return;
 
+                _remoteDesktop_OverridePersistentBitmapCaching = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_PersistentBitmapCaching;
+        public bool RemoteDesktop_PersistentBitmapCaching
+        {
+            get => _remoteDesktop_PersistentBitmapCaching;
+            set
+            {
+                if (value == _remoteDesktop_PersistentBitmapCaching)
+                    return;
+
+                _remoteDesktop_PersistentBitmapCaching = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+        public bool RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped
+        {
+            get => _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+            set
+            {
+                if (value == _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped)
+                    return;
+
+                _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_ReconnectIfTheConnectionIsDropped;
+        public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped
+        {
+            get => _remoteDesktop_ReconnectIfTheConnectionIsDropped;
+            set
+            {
+                if (value == _remoteDesktop_ReconnectIfTheConnectionIsDropped)
+                    return;
+
+                _remoteDesktop_ReconnectIfTheConnectionIsDropped = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideNetworkConnectionType;
+        public bool RemoteDesktop_OverrideNetworkConnectionType
+        {
+            get => _remoteDesktop_OverrideNetworkConnectionType;
+            set
+            {
+                if (value == _remoteDesktop_OverrideNetworkConnectionType)
+                    return;
+
+                _remoteDesktop_OverrideNetworkConnectionType = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IEnumerable<RemoteDesktop.NetworkConnectionType> RemoteDesktop_NetworkConnectionTypes => System.Enum.GetValues(typeof(RemoteDesktop.NetworkConnectionType)).Cast<RemoteDesktop.NetworkConnectionType>();
+
+        private RemoteDesktop.NetworkConnectionType _remoteDesktop_NetworkConnectionType;
+        public RemoteDesktop.NetworkConnectionType RemoteDesktop_NetworkConnectionType
+        {
+            get => _remoteDesktop_NetworkConnectionType;
+            set
+            {
+                if (Equals(value, _remoteDesktop_NetworkConnectionType))
+                    return;
+
+                if (!_isLoading)
+                    ChangeNetworkConnectionTypeSettings(value);
+
+                _remoteDesktop_NetworkConnectionType = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_DesktopBackground;
+        public bool RemoteDesktop_DesktopBackground
+        {
+            get => _remoteDesktop_DesktopBackground;
+            set
+            {
+                if (value == _remoteDesktop_DesktopBackground)
+                    return;
+
+                _remoteDesktop_DesktopBackground = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_FontSmoothing;
+        public bool RemoteDesktop_FontSmoothing
+        {
+            get => _remoteDesktop_FontSmoothing;
+            set
+            {
+                if (value == _remoteDesktop_FontSmoothing)
+                    return;
+
+                _remoteDesktop_FontSmoothing = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_DesktopComposition;
+        public bool RemoteDesktop_DesktopComposition
+        {
+            get => _remoteDesktop_DesktopComposition;
+            set
+            {
+                if (value == _remoteDesktop_DesktopComposition)
+                    return;
+
+                _remoteDesktop_DesktopComposition = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_ShowWindowContentsWhileDragging;
+        public bool RemoteDesktop_ShowWindowContentsWhileDragging
+        {
+            get => _remoteDesktop_ShowWindowContentsWhileDragging;
+            set
+            {
+                if (value == _remoteDesktop_ShowWindowContentsWhileDragging)
+                    return;
+
+                _remoteDesktop_ShowWindowContentsWhileDragging = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_MenuAndWindowAnimation;
+        public bool RemoteDesktop_MenuAndWindowAnimation
+        {
+            get => _remoteDesktop_MenuAndWindowAnimation;
+            set
+            {
+                if (value == _remoteDesktop_MenuAndWindowAnimation)
+                    return;
+
+                _remoteDesktop_MenuAndWindowAnimation = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_VisualStyles;
+        public bool RemoteDesktop_VisualStyles
+        {
+            get => _remoteDesktop_VisualStyles;
+            set
+            {
+                if (value == _remoteDesktop_VisualStyles)
+                    return;
+
+                _remoteDesktop_VisualStyles = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region PowerShell
@@ -1683,6 +1855,8 @@ namespace NETworkManager.ViewModels
 
         public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null)
         {
+            _isLoading = true;
+
             // Load the view
             ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
             ProfileViews.SortDescriptions.Add(new SortDescription(nameof(ProfileViewInfo.Name), ListSortDirection.Ascending));
@@ -1778,7 +1952,7 @@ namespace NETworkManager.ViewModels
             RemoteDesktop_AuthenticationLevel = profileInfo.RemoteDesktop_AuthenticationLevel;
             RemoteDesktop_OverrideAudioRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioRedirectionMode;
             RemoteDesktop_AudioRedirectionMode = RemoteDesktop_AudioRedirectionModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_AudioRedirectionMode);
-            RemoteDesktop_OverrideAudioCaptureRedirectionMode = profile.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
+            RemoteDesktop_OverrideAudioCaptureRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
             RemoteDesktop_AudioCaptureRedirectionMode = RemoteDesktop_AudioCaptureRedirectionModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_AudioCaptureRedirectionMode);
             RemoteDesktop_OverrideApplyWindowsKeyCombinations = profileInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
             RemoteDesktop_KeyboardHookMode = RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_KeyboardHookMode);
@@ -1794,6 +1968,17 @@ namespace NETworkManager.ViewModels
             RemoteDesktop_RedirectSmartCards = profileInfo.RemoteDesktop_RedirectSmartCards;
             RemoteDesktop_OverrideRedirectPrinters = profileInfo.RemoteDesktop_OverrideRedirectPrinters;
             RemoteDesktop_RedirectPrinters = profileInfo.RemoteDesktop_RedirectPrinters;
+            RemoteDesktop_OverridePersistentBitmapCaching = profileInfo.RemoteDesktop_OverridePersistentBitmapCaching;
+            RemoteDesktop_PersistentBitmapCaching = profileInfo.RemoteDesktop_PersistentBitmapCaching;
+            RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped = profileInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+            RemoteDesktop_ReconnectIfTheConnectionIsDropped = profileInfo.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
+            RemoteDesktop_NetworkConnectionType = RemoteDesktop_NetworkConnectionTypes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_NetworkConnectionType);
+            RemoteDesktop_DesktopBackground = profileInfo.RemoteDesktop_DesktopBackground;
+            RemoteDesktop_FontSmoothing = profileInfo.RemoteDesktop_FontSmoothing;
+            RemoteDesktop_DesktopComposition = profileInfo.RemoteDesktop_DesktopComposition;
+            RemoteDesktop_ShowWindowContentsWhileDragging = profileInfo.RemoteDesktop_ShowWindowContentsWhileDragging;
+            RemoteDesktop_MenuAndWindowAnimation = profileInfo.RemoteDesktop_MenuAndWindowAnimation;
+            RemoteDesktop_VisualStyles = profileInfo.RemoteDesktop_VisualStyles;
 
             // PowerShell
             PowerShell_Enabled = profileInfo.PowerShell_Enabled;
@@ -1862,6 +2047,8 @@ namespace NETworkManager.ViewModels
             Whois_Enabled = profileInfo.Whois_Enabled;
             Whois_InheritHost = profileInfo.Whois_InheritHost;
             Whois_Domain = profileInfo.Whois_Domain;
+
+            _isLoading = false;
         }
 
         #region ICommands & Actions
@@ -1894,6 +2081,49 @@ namespace NETworkManager.ViewModels
         private void UnselectCredentialAction()
         {
             CredentialID = Guid.Empty;
+        }
+        #endregion
+
+        #region Methods
+        private void ChangeNetworkConnectionTypeSettings(RemoteDesktop.NetworkConnectionType connectionSpeed)
+        {
+            switch (connectionSpeed)
+            {
+                case RemoteDesktop.NetworkConnectionType.Modem:
+                    RemoteDesktop_DesktopBackground = false;
+                    RemoteDesktop_FontSmoothing = false;
+                    RemoteDesktop_DesktopComposition = false;
+                    RemoteDesktop_ShowWindowContentsWhileDragging = false;
+                    RemoteDesktop_MenuAndWindowAnimation = false;
+                    RemoteDesktop_VisualStyles = false;
+                    break;
+                case RemoteDesktop.NetworkConnectionType.BroadbandLow:
+                    RemoteDesktop_DesktopBackground = false;
+                    RemoteDesktop_FontSmoothing = false;
+                    RemoteDesktop_DesktopComposition = false;
+                    RemoteDesktop_ShowWindowContentsWhileDragging = false;
+                    RemoteDesktop_MenuAndWindowAnimation = false;
+                    RemoteDesktop_VisualStyles = true;
+                    break;
+                case RemoteDesktop.NetworkConnectionType.Satellite:
+                case RemoteDesktop.NetworkConnectionType.BroadbandHigh:
+                    RemoteDesktop_DesktopBackground = false;
+                    RemoteDesktop_FontSmoothing = false;
+                    RemoteDesktop_DesktopComposition = true;
+                    RemoteDesktop_ShowWindowContentsWhileDragging = false;
+                    RemoteDesktop_MenuAndWindowAnimation = false;
+                    RemoteDesktop_VisualStyles = true;
+                    break;
+                case RemoteDesktop.NetworkConnectionType.WAN:
+                case RemoteDesktop.NetworkConnectionType.LAN:
+                    RemoteDesktop_DesktopBackground = true;
+                    RemoteDesktop_FontSmoothing = true;
+                    RemoteDesktop_DesktopComposition = true;
+                    RemoteDesktop_ShowWindowContentsWhileDragging = true;
+                    RemoteDesktop_MenuAndWindowAnimation = true;
+                    RemoteDesktop_VisualStyles = true;
+                    break;
+            }
         }
         #endregion
     }
