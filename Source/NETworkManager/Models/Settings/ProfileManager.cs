@@ -5,7 +5,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Enum;
 using NETworkManager.ViewModels;
+using NETworkManager.Views;
 
 namespace NETworkManager.Models.Settings
 {
@@ -267,6 +270,135 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        public static async void ShowAddProfileDialog(IProfileViewModel viewModel, IDialogCoordinator dialogCoordinator)
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.AddProfile
+            };
+
+            var profileViewModel = new ProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+
+                AddProfile(instance);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            }, GetGroups());
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = profileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        }
+
+        public static async void ShowEditProfileDialog(IProfileViewModel viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.EditProfile
+            };
+
+            var profileViewModel = new ProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+
+                RemoveProfile(selectedProfile);
+
+                AddProfile(instance);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            }, GetGroups(), ProfileEditMode.Edit, selectedProfile);
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = profileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        }
+
+        public static async void ShowCopyAsProfileDialog(IProfileViewModel viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.CopyProfile
+            };
+
+            var profileViewModel = new ProfileViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+
+                AddProfile(instance);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            }, GetGroups(), ProfileEditMode.Copy, selectedProfile);
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = profileViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        }
+
+        public static async void ShowDeleteProfileDialog(IProfileViewModel viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.DeleteProfile
+            };
+
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+
+                RemoveProfile(selectedProfile);
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            }, Resources.Localization.Strings.DeleteProfileMessage);
+
+            customDialog.Content = new ConfirmRemoveDialog
+            {
+                DataContext = confirmRemoveViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        }
+
+        public static async void ShowEditGroupDialog(IProfileViewModel viewModel, IDialogCoordinator dialogCoordinator, string group)
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.EditGroup
+            };
+
+            var editGroupViewModel = new GroupViewModel(instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+
+                RenameGroup(instance.OldGroup, instance.Group);
+
+                viewModel.RefreshProfiles();
+            }, instance =>
+            {
+                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+            }, group, GetGroups());
+
+            customDialog.Content = new GroupDialog
+            {
+                DataContext = editGroupViewModel
+            };
+
+            await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        }
+
         public static void Upgrade(Version settingsVersion)
         {
             if (settingsVersion > new Version("0.0.0.0"))
@@ -279,11 +411,11 @@ namespace NETworkManager.Models.Settings
                 if (settingsVersion < new Version("1.11.0.0"))
                     needUpdate = true;
 
-                if(needUpdate)
+                if (needUpdate)
                     RunUpgrade(settingsVersion);
             }
         }
-        
+
         private static void RunUpgrade(Version version)
         {
             string filePath = GetProfilesFilePath();
@@ -306,7 +438,7 @@ namespace NETworkManager.Models.Settings
                         x.InnerText = "OnlyWhenUsingTheFullScreen";
                 }
             }
-            
+
             xmlDocument.Save(filePath);
 
             Debug.WriteLine("Test");

@@ -1,7 +1,7 @@
 ﻿using System;
 using NETworkManager.Models.Settings;
 
-namespace NETworkManager.Utilities
+namespace NETworkManager.Models.EventSystem
 {
     public class EventSystemRedirectProfileApplicationArgs : EventArgs
     {

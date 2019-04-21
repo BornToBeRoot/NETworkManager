@@ -316,9 +316,9 @@
     <Compile Include="Enum\ProfileEditMode.cs" />
     <Compile Include="Enum\ConnectionState.cs" />
     <Compile Include="Enum\TimeUnit.cs" />
-    <Compile Include="Utilities\EventSystemRedirectProfileApplicationArgs.cs" />
-    <Compile Include="Utilities\EventSystemRedirectDataApplicationArgs.cs" />
-    <Compile Include="Utilities\EventSystem.cs" />
+    <Compile Include="Models\EventSystem\EventSystemRedirectProfileApplicationArgs.cs" />
+    <Compile Include="Models\EventSystem\EventSystemRedirectDataApplicationArgs.cs" />
+    <Compile Include="Models\EventSystem\EventSystem.cs" />
     <Compile Include="Utilities\FileSizeConverter.cs" />
     <Compile Include="Utilities\JsonIPAddressConverter.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
@@ -357,6 +357,7 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\FirstRunViewModel.cs" />
+    <Compile Include="ViewModels\IProfileViewModel.cs" />
     <Compile Include="ViewModels\NetworkInterfaceAddIPAddressViewModel.cs" />
     <Compile Include="ViewModels\ExportViewModel.cs" />
     <Compile Include="ViewModels\DNSServerViewModel.cs" />
@@ -1165,7 +1166,7 @@
     <Compile Include="ViewModels\SettingsSettingsViewModel.cs" />
     <Compile Include="ViewModels\SettingsAutostartViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="Utilities\ViewModelBase.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\TracerouteView.xaml.cs">
       <DependentUpon>TracerouteView.xaml</DependentUpon>
     </Compile>

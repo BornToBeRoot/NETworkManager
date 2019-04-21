@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NETworkManager.Utilities
+namespace NETworkManager.Models.EventSystem
 {
     public class EventSystemRedirectDataApplicationArgs : EventArgs
     {

@@ -21,6 +21,7 @@ using NETworkManager.Controls;
 using NETworkManager.Models.Update;
 using NETworkManager.Models.Documentation;
 using NETworkManager.ViewModels;
+using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 
 namespace NETworkManager

@@ -15,6 +15,7 @@ using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Models.TigerVNC;
 using NETworkManager.Enum;
+using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {
