@@ -41,6 +41,7 @@ namespace NETworkManager
         private NotifyIcon _notifyIcon;
 
         private readonly bool _isLoading;
+        private bool isApplicationListLoading;
 
         private bool _isInTray;
         private bool _closeApplication;
@@ -125,7 +126,7 @@ namespace NETworkManager
             get => _applications;
             set
             {
-                if(value == _applications)
+                if (value == _applications)
                     return;
 
                 _applications = value;
@@ -142,7 +143,7 @@ namespace NETworkManager
                 if (Equals(value, _selectedApplication))
                     return;
 
-                if (value != null)
+                if (!isApplicationListLoading && value != null)
                     ChangeApplicationView(value.Name);
 
                 _selectedApplication = value;
@@ -211,8 +212,6 @@ namespace NETworkManager
             get => _showSettingsView;
             set
             {
-
-
                 if (value == _showSettingsView)
                     return;
 
@@ -283,7 +282,7 @@ namespace NETworkManager
 
             // Load Profiles
             ProfileManager.Load();
-            
+
             // Load settings
             ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
 
@@ -295,7 +294,7 @@ namespace NETworkManager
 
             _isLoading = false;
         }
-        
+
         protected override async void OnContentRendered(EventArgs e)
         {
             base.OnContentRendered(e);
@@ -328,7 +327,7 @@ namespace NETworkManager
                     SettingsManager.Current.FirstRun = false;
                     SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
                     SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
-                    
+
                     AfterContentRendered();
                 });
 
@@ -361,6 +360,8 @@ namespace NETworkManager
 
         private void LoadApplicationList()
         {
+            isApplicationListLoading = true;
+
             // Need to add items here... if in SettingsInfo/Constructor --> same item will appear multiple times...
             if (SettingsManager.Current.General_ApplicationList.Count == 0)
                 SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationViewInfo>(ApplicationViewManager.GetList());
@@ -386,7 +387,9 @@ namespace NETworkManager
 
             SettingsManager.Current.General_ApplicationList.CollectionChanged += (sender, args) => Applications.Refresh();
 
-            // Get application from settings
+            isApplicationListLoading = false;
+
+            // Select the application
             SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
 
             // Scroll into view
