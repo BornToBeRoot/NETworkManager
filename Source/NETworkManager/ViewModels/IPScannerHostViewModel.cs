@@ -68,7 +68,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                Profiles.Refresh();
+                RefreshProfiles();
 
                 OnPropertyChanged();
             }
@@ -292,6 +292,16 @@ namespace NETworkManager.ViewModels
         public void RefreshProfiles()
         {
             Profiles.Refresh();
+        }
+
+        public void OnProfileDialogOpen()
+        {
+
+        }
+
+        public void OnProfileDialogClose()
+        {
+
         }
         #endregion
     }

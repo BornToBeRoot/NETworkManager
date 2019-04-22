@@ -363,11 +363,11 @@
     <Compile Include="ViewModels\DNSServerViewModel.cs" />
     <Compile Include="ViewModels\SubnetCalculatorWideSubnetViewModel.cs" />
     <Compile Include="ViewModels\PowerShellConnectViewModel.cs" />
-    <Compile Include="ViewModels\TightVNCConnectViewModel.cs" />
+    <Compile Include="ViewModels\TigerVNCConnectViewModel.cs" />
     <Compile Include="ViewModels\PowerShellHostViewModel.cs" />
     <Compile Include="ViewModels\PowerShellSettingsViewModel.cs" />
-    <Compile Include="ViewModels\TightVNCSettingsViewModel.cs" />
-    <Compile Include="ViewModels\TightVNCHostViewModel.cs" />
+    <Compile Include="ViewModels\TigerVNCSettingsViewModel.cs" />
+    <Compile Include="ViewModels\TigerVNCHostViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\DashboardSettingsViewModel.cs" />
     <Compile Include="ViewModels\WhoisSettingsViewModel.cs" />
@@ -441,8 +441,8 @@
     <Compile Include="Views\PowerShellConnectDialog.xaml.cs">
       <DependentUpon>PowerShellConnectDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TightVNCConnectDialog.xaml.cs">
-      <DependentUpon>TightVNCConnectDialog.xaml</DependentUpon>
+    <Compile Include="Views\TigerVNCConnectDialog.xaml.cs">
+      <DependentUpon>TigerVNCConnectDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PowerShellHostView.xaml.cs">
       <DependentUpon>PowerShellHostView.xaml</DependentUpon>
@@ -450,11 +450,11 @@
     <Compile Include="Views\PowerShellSettingsView.xaml.cs">
       <DependentUpon>PowerShellSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TightVNCSettingsView.xaml.cs">
-      <DependentUpon>TightVNCSettingsView.xaml</DependentUpon>
+    <Compile Include="Views\TigerVNCSettingsView.xaml.cs">
+      <DependentUpon>TigerVNCSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TightVNCHostView.xaml.cs">
-      <DependentUpon>TightVNCHostView.xaml</DependentUpon>
+    <Compile Include="Views\TigerVNCHostView.xaml.cs">
+      <DependentUpon>TigerVNCHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
@@ -779,7 +779,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\TightVNCConnectDialog.xaml">
+    <Page Include="Views\TigerVNCConnectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -791,11 +791,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\TightVNCSettingsView.xaml">
+    <Page Include="Views\TigerVNCSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\TightVNCHostView.xaml">
+    <Page Include="Views\TigerVNCHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

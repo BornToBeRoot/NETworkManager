@@ -290,7 +290,5 @@ namespace NETworkManager.ViewModels
             Profiles.Refresh();
         }
         #endregion
-
-       
     }
 }

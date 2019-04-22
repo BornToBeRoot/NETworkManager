@@ -270,6 +270,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        #region Dialogs
         public static async void ShowAddProfileDialog(IProfileViewModel viewModel, IDialogCoordinator dialogCoordinator)
         {
             var customDialog = new CustomDialog
@@ -280,11 +281,13 @@ namespace NETworkManager.Models.Settings
             var profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
 
                 AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
             }, GetGroups());
 
             customDialog.Content = new ProfileDialog
@@ -292,6 +295,7 @@ namespace NETworkManager.Models.Settings
                 DataContext = profileViewModel
             };
 
+            viewModel.OnProfileDialogOpen();
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
@@ -305,6 +309,7 @@ namespace NETworkManager.Models.Settings
             var profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
 
                 RemoveProfile(selectedProfile);
 
@@ -312,6 +317,7 @@ namespace NETworkManager.Models.Settings
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
             }, GetGroups(), ProfileEditMode.Edit, selectedProfile);
 
             customDialog.Content = new ProfileDialog
@@ -319,6 +325,7 @@ namespace NETworkManager.Models.Settings
                 DataContext = profileViewModel
             };
 
+            viewModel.OnProfileDialogOpen();
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
@@ -332,11 +339,13 @@ namespace NETworkManager.Models.Settings
             var profileViewModel = new ProfileViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
 
                 AddProfile(instance);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
             }, GetGroups(), ProfileEditMode.Copy, selectedProfile);
 
             customDialog.Content = new ProfileDialog
@@ -344,6 +353,7 @@ namespace NETworkManager.Models.Settings
                 DataContext = profileViewModel
             };
 
+            viewModel.OnProfileDialogOpen();
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
@@ -357,11 +367,13 @@ namespace NETworkManager.Models.Settings
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
 
                 RemoveProfile(selectedProfile);
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
             }, Resources.Localization.Strings.DeleteProfileMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
@@ -369,6 +381,7 @@ namespace NETworkManager.Models.Settings
                 DataContext = confirmRemoveViewModel
             };
 
+            viewModel.OnProfileDialogOpen();
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
@@ -382,6 +395,7 @@ namespace NETworkManager.Models.Settings
             var editGroupViewModel = new GroupViewModel(instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
 
                 RenameGroup(instance.OldGroup, instance.Group);
 
@@ -389,6 +403,7 @@ namespace NETworkManager.Models.Settings
             }, instance =>
             {
                 dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
             }, group, GetGroups());
 
             customDialog.Content = new GroupDialog
@@ -396,9 +411,12 @@ namespace NETworkManager.Models.Settings
                 DataContext = editGroupViewModel
             };
 
+            viewModel.OnProfileDialogOpen();
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
+        #endregion
 
+        #region Upgrade
         public static void Upgrade(Version settingsVersion)
         {
             if (settingsVersion > new Version("0.0.0.0"))
@@ -426,8 +444,10 @@ namespace NETworkManager.Models.Settings
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(filePath);
 
+            // Changes in Version 1.11.0.0
             if (version < new Version("1.11.0.0"))
             {
+                // Integer has changed to enum
                 foreach (XmlNode x in xmlDocument.SelectNodes(@"/ArrayOfProfileInfo/ProfileInfo/RemoteDesktop_KeyboardHookMode"))
                 {
                     if (x.InnerText == "0")
@@ -440,8 +460,7 @@ namespace NETworkManager.Models.Settings
             }
 
             xmlDocument.Save(filePath);
-
-            Debug.WriteLine("Test");
         }
+        #endregion
     }
 }

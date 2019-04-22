@@ -14,12 +14,11 @@ using System.IO;
 using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Models.TigerVNC;
-using NETworkManager.Enum;
 using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {
-    public class TigerVNCHostViewModel : ViewModelBase
+    public class TigerVNCHostViewModel : ViewModelBase, IProfileViewModel
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
@@ -86,7 +85,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                Profiles.Refresh();
+                RefreshProfiles();
 
                 OnPropertyChanged();
             }
@@ -234,156 +233,37 @@ namespace NETworkManager.ViewModels
 
         public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
-        private async void AddProfileAction()
+        private void AddProfileAction()
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.AddProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-            }, ProfileManager.GetGroups());
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            ConfigurationManager.Current.FixAirspace = true;
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            ProfileManager.ShowAddProfileDialog(this, _dialogCoordinator);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
-        private async void EditProfileAction()
+        private void EditProfileAction()
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.EditProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-
-                ProfileManager.RemoveProfile(SelectedProfile);
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-            }, ProfileManager.GetGroups(), ProfileEditMode.Edit, SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            ConfigurationManager.Current.FixAirspace = true;
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            ProfileManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
-        private async void CopyAsProfileAction()
+        private void CopyAsProfileAction()
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.CopyProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-            }, ProfileManager.GetGroups(), ProfileEditMode.Copy, SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            ConfigurationManager.Current.FixAirspace = true;
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            ProfileManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
-        private async void DeleteProfileAction()
+        private void DeleteProfileAction()
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.DeleteProfile
-            };
-
-            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-
-                ProfileManager.RemoveProfile(SelectedProfile);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-            }, Resources.Localization.Strings.DeleteProfileMessage);
-
-            customDialog.Content = new ConfirmRemoveDialog
-            {
-                DataContext = confirmRemoveViewModel
-            };
-
-            ConfigurationManager.Current.FixAirspace = true;
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            ProfileManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
-        private async void EditGroupAction(object group)
+        private void EditGroupAction(object group)
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.EditGroup
-            };
-
-            var editGroupViewModel = new GroupViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-
-                ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
-
-                Profiles.Refresh();
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-            }, group.ToString(), ProfileManager.GetGroups());
-
-            customDialog.Content = new GroupDialog
-            {
-                DataContext = editGroupViewModel
-            };
-
-            ConfigurationManager.Current.FixAirspace = true;
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -528,13 +408,26 @@ namespace NETworkManager.ViewModels
 
         public void OnViewVisible()
         {
-            // Refresh profiles
-            Profiles.Refresh();
+            RefreshProfiles();
         }
 
         public void OnViewHide()
         {
 
+        }
+
+        public void RefreshProfiles()
+        {
+            Profiles.Refresh();
+        }
+        public void OnProfileDialogOpen()
+        {
+            ConfigurationManager.Current.FixAirspace = true;
+        }
+
+        public void OnProfileDialogClose()
+        {
+            ConfigurationManager.Current.FixAirspace = false;
         }
         #endregion
     }

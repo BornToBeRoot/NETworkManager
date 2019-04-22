@@ -7,6 +7,8 @@ namespace NETworkManager.ViewModels
     {
         ICollectionView Profiles { get; }
         void RefreshProfiles();
+        void OnProfileDialogOpen();
+        void OnProfileDialogClose();
         ICommand AddProfileCommand { get; }
         ICommand EditProfileCommand { get; }
         ICommand CopyAsProfileCommand { get; }
