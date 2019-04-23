@@ -45,7 +45,9 @@ namespace NETworkManager
             // Get assembly informations   
             AssemblyManager.Load();
 
-            // Load application settings (profiles/Profiles/clients are loaded when needed)
+            bool profileUpdateRequired = false;
+
+            // Load application settings
             try
             {
                 // Update integrated settings %LocalAppData%\NETworkManager\NETworkManager_GUID (custom settings path)
@@ -61,24 +63,31 @@ namespace NETworkManager
                 Version assemblyVersion = AssemblyManager.Current.Version;
                 Version settingsVersion = new Version(SettingsManager.Current.SettingsVersion);
 
-                if (assemblyVersion > settingsVersion)
+                if (AssemblyManager.Current.Version > settingsVersion)
                 {
-                    SettingsManager.Update(assemblyVersion, settingsVersion);
-
-                    try
-                    {
-                        ProfileManager.Upgrade(settingsVersion);
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show("Failed to update profiles...\n\n" + ex.Message, "Profile Manager - Update Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    SettingsManager.Update(AssemblyManager.Current.Version, settingsVersion);
                 }
             }
             catch (InvalidOperationException)
             {
                 SettingsManager.InitDefault();
+
+                profileUpdateRequired = true; // Because we don't know if a profile update is required
+
                 ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
+            }
+
+            // Upgrade profile if version has changed or settings have been reset (mthis happens mostly, because the version has changed and values are wrong)
+            if(profileUpdateRequired)
+            {
+                try
+                {
+                    ProfileManager.Upgrade();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to update profiles...\n\n" + ex.Message, "Profile Manager - Update Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
 
             // Load localization (requires settings to be loaded first)
@@ -113,7 +122,7 @@ namespace NETworkManager
 
                     _dispatcherTimer.Start();
                 }
-                
+
                 StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
             }
             else

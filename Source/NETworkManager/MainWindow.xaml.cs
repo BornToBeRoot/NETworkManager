@@ -140,10 +140,13 @@ namespace NETworkManager
             get => _selectedApplication;
             set
             {
+                if (isApplicationListLoading)
+                    return;
+
                 if (Equals(value, _selectedApplication))
                     return;
 
-                if (!isApplicationListLoading && value != null)
+                if (value != null)
                     ChangeApplicationView(value.Name);
 
                 _selectedApplication = value;

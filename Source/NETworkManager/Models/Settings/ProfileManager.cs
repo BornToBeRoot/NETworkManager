@@ -417,24 +417,7 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Upgrade
-        public static void Upgrade(Version settingsVersion)
-        {
-            if (settingsVersion > new Version("0.0.0.0"))
-            {
-                Debug.WriteLine("Upgrade profile...");
-
-                bool needUpdate = false;
-
-                // Changes in 1.11.0.0
-                if (settingsVersion < new Version("1.11.0.0"))
-                    needUpdate = true;
-
-                if (needUpdate)
-                    RunUpgrade(settingsVersion);
-            }
-        }
-
-        private static void RunUpgrade(Version version)
+        public static void Upgrade()
         {
             string filePath = GetProfilesFilePath();
 
@@ -444,19 +427,17 @@ namespace NETworkManager.Models.Settings
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(filePath);
 
-            // Changes in Version 1.11.0.0
-            if (version < new Version("1.11.0.0"))
+            /* Changes in Version 1.11.0.0 */
+
+            // RemoteDesktop_KeyboardHookMode has changed from integer to enum
+            foreach (XmlNode x in xmlDocument.SelectNodes(@"/ArrayOfProfileInfo/ProfileInfo/RemoteDesktop_KeyboardHookMode"))
             {
-                // Integer has changed to enum
-                foreach (XmlNode x in xmlDocument.SelectNodes(@"/ArrayOfProfileInfo/ProfileInfo/RemoteDesktop_KeyboardHookMode"))
-                {
-                    if (x.InnerText == "0")
-                        x.InnerText = "OnThisComputer";
-                    else if (x.InnerText == "1")
-                        x.InnerText = "OnTheRemoteComputer";
-                    else
-                        x.InnerText = "OnlyWhenUsingTheFullScreen";
-                }
+                if (x.InnerText == "0")
+                    x.InnerText = "OnThisComputer";
+                else if (x.InnerText == "1")
+                    x.InnerText = "OnTheRemoteComputer";
+                else if (x.InnerText == "2")
+                    x.InnerText = "OnlyWhenUsingTheFullScreen";
             }
 
             xmlDocument.Save(filePath);
