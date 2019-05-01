@@ -15,29 +15,28 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <TextBlock Text="{x:Static localization:Strings.FirstRunMessage}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,20" TextWrapping="Wrap" />
-            <mahAppsControls:MetroHeader Header="{x:Static localization:Strings.Privacy}" Margin="0,0,0,20">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10" >
-                        <mahAppsControls:ToggleSwitch  IsChecked="{Binding CheckForUpdatesAtStartup}" Header="{x:Static localization:Strings.CheckForUpdatesAtStartup}" />
-                        <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckForUpdatesAtStartup}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
-                            <Rectangle.Resources>
-                                <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
-                            </Rectangle.Resources>
-                        </Rectangle>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <mahAppsControls:ToggleSwitch  IsChecked="{Binding CheckPublicIPAddress}" Header="{x:Static localization:Strings.CheckPublicIPAddress}" />
-                        <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckPublicIPAddress}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
-                            <Rectangle.Resources>
-                                <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
-                            </Rectangle.Resources>
-                        </Rectangle>
-                    </StackPanel>
+            <TextBlock Text="{x:Static localization:Strings.Privacy}" Style="{StaticResource HeaderTextBlock}" />
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10" >
+                    <mahAppsControls:ToggleSwitch  IsChecked="{Binding CheckForUpdatesAtStartup}" Header="{x:Static localization:Strings.CheckForUpdatesAtStartup}" />
+                    <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckForUpdatesAtStartup}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                        <Rectangle.Resources>
+                            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                        </Rectangle.Resources>
+                    </Rectangle>
                 </StackPanel>
-            </mahAppsControls:MetroHeader>
+                <StackPanel Orientation="Horizontal">
+                    <mahAppsControls:ToggleSwitch  IsChecked="{Binding CheckPublicIPAddress}" Header="{x:Static localization:Strings.CheckPublicIPAddress}" />
+                    <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckPublicIPAddress}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                        <Rectangle.Resources>
+                            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                        </Rectangle.Resources>
+                    </Rectangle>
+                </StackPanel>
+            </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Rectangle Width="24" Height="24" Style="{StaticResource InfoImageRectangle}" Margin="0,0,10,0" />
-            <TextBlock Text="{x:Static localization:Strings.AllSettingsCanBeChangedLaterInTheSettings}" Style="{StaticResource InfoTextBlock}" />
+                <TextBlock Text="{x:Static localization:Strings.AllSettingsCanBeChangedLaterInTheSettings}" Style="{StaticResource InfoTextBlock}" />
             </StackPanel>
         </StackPanel>
         <Button Grid.Row="2" HorizontalAlignment="Right" Content="{x:Static localization:Strings.Continue}" Command="{Binding ContinueCommand}" IsDefault="True" Style="{StaticResource HighlightedButton}" />
