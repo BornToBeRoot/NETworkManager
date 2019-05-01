@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Models.Lookup;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -136,8 +137,15 @@ namespace NETworkManager.Models.Network
                                     UseResolverCache = DNSUseResolverCache,
                                     Recursion = DNSRecursion
                                 };
-                                
-                                hostname = dnsLookup.ResolvePTR(ipAddress).Item2.FirstOrDefault();
+
+                                try
+                                {
+                                    hostname = dnsLookup.ResolvePTR(ipAddress).Item2.FirstOrDefault();
+                                }
+                                catch 
+                                {
+                                    // Could not resolve hostname... e.g. no dns server is configured
+                                }
                             }
 
                             // ARP
