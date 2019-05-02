@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Collections;
+using System.Windows.Input;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Settings;
 using System.Collections.Generic;
@@ -6,13 +8,20 @@ using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.Models.Lookup;
 using System.Linq;
+using System.Windows;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Export;
 using NETworkManager.Utilities;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class LookupPortLookupViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private string _portOrService;
         public string PortOrService
         {
@@ -56,20 +65,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<PortLookupInfo> _portLookupResult = new ObservableCollection<PortLookupInfo>();
-        public ObservableCollection<PortLookupInfo> PortLookupResult
+        private ObservableCollection<PortLookupInfo> _portLookupResults = new ObservableCollection<PortLookupInfo>();
+        public ObservableCollection<PortLookupInfo> PortLookupResults
         {
-            get => _portLookupResult;
+            get => _portLookupResults;
             set
             {
-                if (value != null && value == _portLookupResult)
+                if (value != null && value == _portLookupResults)
                     return;
 
-                _portLookupResult = value;
+                _portLookupResults = value;
             }
         }
 
-        public ICollectionView PortLookupResultView { get; }
+        public ICollectionView PortLookupResultsView { get; }
 
         private PortLookupInfo _selectedPortLookupResult;
         public PortLookupInfo SelectedPortLookupResult
@@ -84,6 +93,21 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private IList _selectedPortLookupResults = new ArrayList();
+        public IList SelectedPortLookupResults
+        {
+            get => _selectedPortLookupResults;
+            set
+            {
+                if (Equals(value, _selectedPortLookupResults))
+                    return;
+
+                _selectedPortLookupResults = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool _noPortsFound;
         public bool NoPortsFound
@@ -101,29 +125,25 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, Load settings
-        public LookupPortLookupViewModel()
+        public LookupPortLookupViewModel(IDialogCoordinator instance)
         {
+            _dialogCoordinator = instance;
+
             PortsOrServicesHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Lookup_Port_PortsHistory);
-            PortLookupResultView = CollectionViewSource.GetDefaultView(PortLookupResult);
+            PortLookupResultsView = CollectionViewSource.GetDefaultView(PortLookupResults);
         }
         #endregion
 
         #region ICommands & Actions
-        public ICommand PortLookupCommand
-        {
-            get { return new RelayCommand(p => PortLookupAction(), PortLookup_CanExecute); }
-        }
+        public ICommand PortLookupCommand => new RelayCommand(p => PortLookupAction(), PortLookup_CanExecute);
 
-        private bool PortLookup_CanExecute(object parameter)
-        {
-            return !PortOrServiceHasError;
-        }
+        private bool PortLookup_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !PortOrServiceHasError;
 
         private async void PortLookupAction()
         {
             IsLookupRunning = true;
 
-            PortLookupResult.Clear();
+            PortLookupResults.Clear();
 
             var portsByService = new List<string>();
 
@@ -143,7 +163,7 @@ namespace NETworkManager.ViewModels
                             {
                                 foreach (var info in await PortLookup.LookupAsync(i))
                                 {
-                                    PortLookupResult.Add(info);
+                                    PortLookupResults.Add(info);
                                 }
                             }
                         }
@@ -166,7 +186,7 @@ namespace NETworkManager.ViewModels
                         {
                             foreach (var info in await PortLookup.LookupAsync(port))
                             {
-                                PortLookupResult.Add(info);
+                                PortLookupResults.Add(info);
                             }
                         }
                         else
@@ -183,10 +203,10 @@ namespace NETworkManager.ViewModels
 
             foreach (var info in await PortLookup.LookupByServiceAsync(portsByService))
             {
-                PortLookupResult.Add(info);
+                PortLookupResults.Add(info);
             }
 
-            if (PortLookupResult.Count == 0)
+            if (PortLookupResults.Count == 0)
             {
                 NoPortsFound = true;
             }
@@ -199,44 +219,69 @@ namespace NETworkManager.ViewModels
             IsLookupRunning = false;
         }
 
-        public ICommand CopySelectedPortCommand
-        {
-            get { return new RelayCommand(p => CopySelectedPortAction()); }
-        }
+        public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
 
         private void CopySelectedPortAction()
         {
             CommonMethods.SetClipboard(SelectedPortLookupResult.Number.ToString());
         }
 
-        public ICommand CopySelectedProtocolCommand
-        {
-            get { return new RelayCommand(p => CopySelectedProtocolAction()); }
-        }
+        public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
 
         private void CopySelectedProtocolAction()
         {
             CommonMethods.SetClipboard(SelectedPortLookupResult.Protocol.ToString());
         }
 
-        public ICommand CopySelectedServiceCommand
-        {
-            get { return new RelayCommand(p => CopySelectedServiceAction()); }
-        }
+        public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
 
         private void CopySelectedServiceAction()
         {
             CommonMethods.SetClipboard(SelectedPortLookupResult.Service);
         }
 
-        public ICommand CopySelectedDescriptionCommand
-        {
-            get { return new RelayCommand(p => CopySelectedDescriptionAction()); }
-        }
+        public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
 
         private void CopySelectedDescriptionAction()
         {
             CommonMethods.SetClipboard(SelectedPortLookupResult.Description);
+        }
+
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? PortLookupResults : new ObservableCollection<PortLookupInfo>(SelectedPortLookupResults.Cast<PortLookupInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Lookup_Port_ExportFileType = instance.FileType;
+                SettingsManager.Current.Lookup_Port_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Lookup_Port_ExportFileType, SettingsManager.Current.Lookup_Port_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
 

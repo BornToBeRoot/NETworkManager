@@ -12,8 +12,9 @@
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         mc:Ignorable="d"
-        Title="{x:Static localization:StaticStrings.ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
+        Title="{x:Static localization:StaticStrings.ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="1050" MinHeight="700" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
         d:DataContext="{d:DesignInstance networkManager:MainWindow}">
+    <!-- MetroDialogStyles.xaml must be adjusted if MinWidth/MinHeight is changed -->
     <mahAppsControls:MetroWindow.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:ApplicationNameToTranslatedStringConverter x:Key="ApplicationNameToTranslatedStringConverter" />
@@ -38,7 +39,6 @@
                     </Rectangle>
                 </MenuItem.Icon>
             </MenuItem>
-            <Separator />
             <MenuItem Header="{x:Static localization:Strings.Close}" Command="{Binding CloseApplicationCommand}">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource CleanWindowCloseButtonBackgroundBrush}">
@@ -55,7 +55,8 @@
     </mahAppsControls:MetroWindow.WindowButtonCommands>
     <mahAppsControls:MetroWindow.RightWindowCommands>
         <mahAppsControls:WindowCommands>
-            <Button Focusable="False" Command="{Binding OpenWebsiteCommand}" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" Cursor="Hand">
+            <StackPanel Orientation="Horizontal">
+            <Button Command="{Binding OpenWebsiteCommand}" Opacity="1" Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
@@ -65,30 +66,27 @@
                     <TextBlock Text="{Binding UpdateText}" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
-            <Button Focusable="False" Command="{Binding OpenDocumentationCommand}" Cursor="Hand">
+            <Button Command="{Binding OpenDocumentationCommand}" ToolTip="{x:Static localization:Strings.OpenDocumentation}" Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=Repo}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-                    <TextBlock Text="{x:Static localization:Strings.Documentation}" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
-            <Button Focusable="False" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}" Cursor="Hand">
+            <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}" Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=SocialGithubOctocat}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-                    <TextBlock Text="{x:Static localization:Strings.ForkMeOnGitHub}" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
-           
+            </StackPanel>
         </mahAppsControls:WindowCommands>
     </mahAppsControls:MetroWindow.RightWindowCommands>
- 
     <Grid>
         <Grid>
             <Grid.Style>
@@ -147,7 +145,10 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Padding="8" Width="48" Height="48" Command="{Binding OpenApplicationListCommand}" Focusable="False" ToolTip="{x:Static localization:Strings.Expand}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="43" />
+                            </Grid.RowDefinitions>
+                            <Button Grid.Column="0" Command="{Binding OpenApplicationListCommand}" ToolTip="{x:Static localization:Strings.Search}">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                         <Style.Triggers>
@@ -177,7 +178,7 @@
                                 </Button.Style>
                                 <Rectangle Width="24" Height="24">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=BarsSolid}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Magnify}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -191,7 +192,7 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
-                            <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.SearchDots}" mahAppsControls:TextBoxHelper.ClearTextButton="True">
+                            <TextBox x:Name="TextBoxSearch" Grid.Column="0" Grid.Row="0" BorderThickness="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.SearchDots}" mahAppsControls:TextBoxHelper.ClearTextButton="True" Margin="10,0,0,0">
                                 <TextBox.Style>
                                     <Style BasedOn="{StaticResource SearchTextBox}" TargetType="{x:Type TextBox}">
                                         <Setter Property="Visibility" Value="Hidden" />
@@ -200,7 +201,6 @@
                                             <DataTrigger Binding="{Binding ExpandApplicationView}" Value="True">
                                                 <Setter Property="Visibility" Value="Visible" />
                                                 <Setter Property="Width" Value="Auto" />
-                                                <Setter Property="Margin" Value="10,0" />
                                             </DataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
@@ -210,7 +210,6 @@
                                                 <MultiDataTrigger.Setters>
                                                     <Setter Property="Visibility" Value="Visible" />
                                                     <Setter Property="Width" Value="Auto" />
-                                                    <Setter Property="Margin" Value="10,0" />
                                                 </MultiDataTrigger.Setters>
                                             </MultiDataTrigger>
                                             <MultiDataTrigger>
@@ -221,7 +220,6 @@
                                                 <MultiDataTrigger.Setters>
                                                     <Setter Property="Visibility" Value="Visible" />
                                                     <Setter Property="Width" Value="Auto" />
-                                                    <Setter Property="Margin" Value="10,0" />
                                                 </MultiDataTrigger.Setters>
                                             </MultiDataTrigger>
                                             <Trigger Property="mahAppsControls:TextBoxHelper.HasText" Value="True">
@@ -239,7 +237,7 @@
                                     </interactivity:EventTrigger>
                                 </interactivity:Interaction.Triggers>
                             </TextBox>
-                            <ToggleButton Grid.Column="1" Width="32" Height="32" IsChecked="{Binding ExpandApplicationView}" Focusable="False">
+                            <ToggleButton Grid.Column="1" Width="32" Height="32" IsChecked="{Binding ExpandApplicationView}">
                                 <ToggleButton.Style>
                                     <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MetroCircleButtonStyle}">
                                         <Setter Property="Visibility" Value="Collapsed" />
@@ -469,7 +467,7 @@
                         <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}" Foreground="{DynamicResource GrayBrush3}" Text="{x:Static localization:Strings.SearchedApplicationNotFound}" Margin="10,0" TextWrapping="Wrap" TextAlignment="Center" />
                     </Grid>
                     <Border Grid.Row="2" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,1,0,0" Background="Transparent">
-                        <Button Height="48" HorizontalContentAlignment="Stretch" Command="{Binding OpenSettingsCommand}" Focusable="False">
+                        <Button Height="48" HorizontalContentAlignment="Stretch" Command="{Binding OpenSettingsCommand}">
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SettingsButton}">
                                     <Setter Property="ToolTip" Value="{x:Static localization:Strings.Settings}" />
@@ -565,35 +563,7 @@
                     </interactivity:Interaction.Triggers>
                 </Grid>
             </Border>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Border x:Name="HeaderBorder" Grid.Row="0" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,0,1" MouseDown="HeaderBorder_MouseDown">
-                    <Border.Style>
-                        <Style TargetType="{x:Type Border}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ShowCurrentApplicationTitle}" Value="False">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
-                    <TextBlock VerticalAlignment="Center" Height="48" TextAlignment="Center" FontSize="22" Style="{StaticResource HeaderTextBlock}" Text="{Binding SelectedApplication.Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}" Foreground="{DynamicResource GrayBrush3}" Margin="0" />
-                </Border>
-                <ContentControl x:Name="ContentControlApplication" Grid.Row="1" Focusable="False">
-                    <ContentControl.Style>
-                        <Style TargetType="{x:Type ContentControl}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ShowCurrentApplicationTitle}" Value="False">
-                                    <Setter Property="Margin" Value="0,5,0,0" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ContentControl.Style>
-                </ContentControl>
-            </Grid>
+            <ContentControl x:Name="ContentControlApplication" Grid.Column="1" />
         </Grid>
         <Grid>
             <Grid.Style>
@@ -657,6 +627,6 @@
                 </Border>
                 <ContentControl Grid.Row="1" x:Name="ContentControlSettings" />
             </Grid>
-        </Grid>       
+        </Grid>
     </Grid>
 </mahAppsControls:MetroWindow>

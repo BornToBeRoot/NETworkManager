@@ -12,7 +12,7 @@ namespace NETworkManager
         {
             var list = new List<ApplicationViewInfo>();
 
-            foreach (Name name in Enum.GetValues(typeof(Name)))
+            foreach (Name name in System.Enum.GetValues(typeof(Name)))
             {
                 if (name != Name.None)
                     list.Add(new ApplicationViewInfo(name));
@@ -25,6 +25,8 @@ namespace NETworkManager
         {
             switch (name)
             {
+                case Name.Dashboard:
+                    return Resources.Localization.Strings.Dashboard;
                 case Name.NetworkInterface:
                     return Resources.Localization.Strings.NetworkInterface;
                 case Name.IPScanner:
@@ -39,10 +41,12 @@ namespace NETworkManager
                     return Resources.Localization.Strings.DNSLookup;
                 case Name.RemoteDesktop:
                     return Resources.Localization.Strings.RemoteDesktop;
+                case Name.PowerShell:
+                    return Resources.Localization.Strings.PowerShell;
                 case Name.PuTTY:
                     return Resources.Localization.Strings.PuTTY;
-                case Name.TightVNC:
-                    return Resources.Localization.Strings.TightVNC;
+                case Name.TigerVNC:
+                    return Resources.Localization.Strings.TigerVNC;
                 case Name.SNMP:
                     return Resources.Localization.Strings.SNMP;
                 case Name.WakeOnLAN:
@@ -72,6 +76,9 @@ namespace NETworkManager
 
             switch (name)
             {
+                case Name.Dashboard:
+                    canvas.Children.Add(new PackIconOcticons { Kind = PackIconOcticonsKind.Dashboard });
+                    break;
                 case Name.NetworkInterface:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Network });
                     break;
@@ -93,10 +100,13 @@ namespace NETworkManager
                 case Name.RemoteDesktop:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.RemoteDesktop });
                     break;
+                case Name.PowerShell:
+                    canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.TerminalSolid });
+                    break;
                 case Name.PuTTY:
                     canvas.Children.Add(new PackIconOcticons { Kind = PackIconOcticonsKind.Terminal });
                     break;
-                case Name.TightVNC:
+                case Name.TigerVNC:
                     canvas.Children.Add(new PackIconMaterial {Kind = PackIconMaterialKind.EyeOutline});
                     break;
                 case Name.SNMP:
@@ -137,6 +147,7 @@ namespace NETworkManager
         public enum Name
         {
             None,
+            Dashboard,
             NetworkInterface,
             IPScanner,
             PortScanner,
@@ -144,8 +155,9 @@ namespace NETworkManager
             Traceroute,
             DNSLookup,
             RemoteDesktop,
+            PowerShell,
             PuTTY,
-            TightVNC,
+            TigerVNC,
             SNMP,
             WakeOnLAN,
             HTTPHeaders,

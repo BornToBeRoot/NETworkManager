@@ -148,14 +148,8 @@ namespace NETworkManager.ViewModels
             _isLoading = false;
         }
 
-        public void HasCredentialInfoChanged()
-        {
-            CredentialInfoChanged = (_credentialInfo.Name != Name) || (_credentialInfo.Username != Username) || (SecureStringHelper.ConvertToString(_credentialInfo.Password) != SecureStringHelper.ConvertToString(Password));
-        }
+        public void HasCredentialInfoChanged() => CredentialInfoChanged = (_credentialInfo.Name != Name) || (_credentialInfo.Username != Username) || (SecureStringHelper.ConvertToString(_credentialInfo.Password) != SecureStringHelper.ConvertToString(Password));
 
-        private void ValidatePassword()
-        {
-            PasswordIsEmpty = (Password == null || Password.Length == 0);
-        }
+        private void ValidatePassword() => PasswordIsEmpty = Password == null || Password.Length == 0;
     }
 }

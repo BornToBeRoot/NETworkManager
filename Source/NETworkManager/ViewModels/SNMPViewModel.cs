@@ -2,6 +2,7 @@
 using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,12 +17,18 @@ using System.Windows.Threading;
 using static NETworkManager.Models.Network.SNMP;
 using NETworkManager.Controls;
 using Dragablz;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Export;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class SNMPViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
@@ -240,20 +247,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<SNMPReceivedInfo> _queryResult = new ObservableCollection<SNMPReceivedInfo>();
-        public ObservableCollection<SNMPReceivedInfo> QueryResult
+        private ObservableCollection<SNMPReceivedInfo> _queryResults = new ObservableCollection<SNMPReceivedInfo>();
+        public ObservableCollection<SNMPReceivedInfo> QueryResults
         {
-            get => _queryResult;
+            get => _queryResults;
             set
             {
-                if (Equals(value, _queryResult))
+                if (Equals(value, _queryResults))
                     return;
 
-                _queryResult = value;
+                _queryResults = value;
             }
         }
 
-        public ICollectionView QueryResultView { get; }
+        public ICollectionView QueryResultsView { get; }
 
         private SNMPReceivedInfo _selectedQueryResult;
         public SNMPReceivedInfo SelectedQueryResult
@@ -268,6 +275,21 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private IList _selectedQueryResults = new ArrayList();
+        public IList SelectedQueryResults
+        {
+            get => _selectedQueryResults;
+            set
+            {
+                if (Equals(value, _selectedQueryResults))
+                    return;
+
+                _selectedQueryResults = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
@@ -375,10 +397,12 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public SNMPViewModel(int tabId, string host)
+        public SNMPViewModel(IDialogCoordinator instance, int tabId, string host)
         {
             _isLoading = true;
 
+            _dialogCoordinator = instance;
+            
             _tabId = tabId;
             Host = host;
 
@@ -387,21 +411,21 @@ namespace NETworkManager.ViewModels
             OIDHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNMP_OIDHistory);
 
             // Result view
-            QueryResultView = CollectionViewSource.GetDefaultView(QueryResult);
-            QueryResultView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
+            QueryResultsView = CollectionViewSource.GetDefaultView(QueryResults);
+            QueryResultsView.SortDescriptions.Add(new SortDescription(nameof(SNMPReceivedInfo.OID), ListSortDirection.Ascending));
 
             // Versions (v1, v2c, v3)
-            Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
+            Versions = System.Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
 
             // Modes
-            Modes = new List<SNMPMode>() { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
+            Modes = new List<SNMPMode> { SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set };
 
             // Security
-            Securitys = new List<SNMPV3Security>() { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
+            Securitys = new List<SNMPV3Security> { SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv };
 
             // Auth / Priv
-            AuthenticationProviders = new List<SNMPV3AuthenticationProvider>() { SNMPV3AuthenticationProvider.MD5, SNMPV3AuthenticationProvider.SHA1 };
-            PrivacyProviders = new List<SNMPV3PrivacyProvider>() { SNMPV3PrivacyProvider.DES, SNMPV3PrivacyProvider.AES };
+            AuthenticationProviders = new List<SNMPV3AuthenticationProvider> { SNMPV3AuthenticationProvider.MD5, SNMPV3AuthenticationProvider.SHA1 };
+            PrivacyProviders = new List<SNMPV3PrivacyProvider> { SNMPV3PrivacyProvider.DES, SNMPV3PrivacyProvider.AES };
 
             LoadSettings();
 
@@ -423,36 +447,65 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand WorkCommand
-        {
-            get { return new RelayCommand(p => WorkAction()); }
-        }
+        public ICommand WorkCommand => new RelayCommand(p => WorkAction(), Work_CanExecute);
+
+        private bool Work_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void WorkAction()
         {
             Work();
         }
 
-        public ICommand CopySelectedOIDCommand
-        {
-            get { return new RelayCommand(p => CopySelectedOIDAction()); }
-        }
+        public ICommand CopySelectedOIDCommand => new RelayCommand(p => CopySelectedOIDAction());
 
         private void CopySelectedOIDAction()
         {
             CommonMethods.SetClipboard(SelectedQueryResult.OID);
         }
 
-        public ICommand CopySelectedDataCommand
-        {
-            get { return new RelayCommand(p => CopySelectedDataAction()); }
-        }
+        public ICommand CopySelectedDataCommand => new RelayCommand(p => CopySelectedDataAction());
 
         private void CopySelectedDataAction()
         {
             CommonMethods.SetClipboard(SelectedQueryResult.Data);
         }
 
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? QueryResults : new ObservableCollection<SNMPReceivedInfo>(SelectedQueryResults.Cast<SNMPReceivedInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.SNMP_ExportFileType = instance.FileType;
+                SettingsManager.Current.SNMP_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.SNMP_ExportFileType, SettingsManager.Current.SNMP_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
         #endregion
 
         #region Methods
@@ -469,7 +522,7 @@ namespace NETworkManager.ViewModels
             _dispatcherTimer.Start();
             EndTime = null;
 
-            QueryResult.Clear();
+            QueryResults.Clear();
             Responses = 0;
 
             // Change the tab title (not nice, but it works)
@@ -528,16 +581,14 @@ namespace NETworkManager.ViewModels
             }
 
             // SNMP...
-            var snmpOptions = new SNMPOptions()
+            var snmp = new SNMP
             {
                 Port = SettingsManager.Current.SNMP_Port,
                 Timeout = SettingsManager.Current.SNMP_Timeout
             };
 
-            var snmp = new SNMP();
-
             snmp.Received += Snmp_Received;
-            snmp.Timeout += Snmp_Timeout;
+            snmp.TimeoutReached += Snmp_TimeoutReached;
             snmp.Error += Snmp_Error;
             snmp.UserHasCanceled += Snmp_UserHasCanceled;
             snmp.Complete += Snmp_Complete;
@@ -546,21 +597,21 @@ namespace NETworkManager.ViewModels
             {
                 case SNMPMode.Get:
                     if (Version != SNMPVersion.V3)
-                        snmp.GetV1V2CAsync(Version, ipAddress, Community, OID, snmpOptions);
+                        snmp.GetV1V2CAsync(Version, ipAddress, Community, OID);
                     else
-                        snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, snmpOptions);
+                        snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv);
                     break;
                 case SNMPMode.Walk:
                     if (Version != SNMPVersion.V3)
-                        snmp.WalkV1V2CAsync(Version, ipAddress, Community, OID, SettingsManager.Current.SNMP_WalkMode, snmpOptions);
+                        snmp.WalkV1V2CAsync(Version, ipAddress, Community, OID, SettingsManager.Current.SNMP_WalkMode);
                     else
-                        snmp.WalkV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, SettingsManager.Current.SNMP_WalkMode, snmpOptions);
+                        snmp.WalkV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, SettingsManager.Current.SNMP_WalkMode);
                     break;
                 case SNMPMode.Set:
                     if (Version != SNMPVersion.V3)
-                        snmp.SetV1V2CAsync(Version, ipAddress, Community, OID, Data, snmpOptions);
+                        snmp.SetV1V2CAsync(Version, ipAddress, Community, OID, Data);
                     else
-                        snmp.SetV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, Data, snmpOptions);
+                        snmp.SetV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, Data);
                     break;
             }
 
@@ -622,14 +673,14 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (QueryResult)
-                    QueryResult.Add(snmpReceivedInfo);
+                lock (QueryResults)
+                    QueryResults.Add(snmpReceivedInfo);
             }));
 
             Responses++;
         }
 
-        private void Snmp_Timeout(object sender, EventArgs e)
+        private void Snmp_TimeoutReached(object sender, EventArgs e)
         {
             StatusMessage = Resources.Localization.Strings.TimeoutOnSNMPQuery;
             DisplayStatusMessage = true;

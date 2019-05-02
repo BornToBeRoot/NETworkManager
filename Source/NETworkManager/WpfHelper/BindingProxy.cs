@@ -2,7 +2,6 @@
 
 namespace NETworkManager.WpfHelper
 {
-
     public class BindingProxy : Freezable
     {
         protected override Freezable CreateInstanceCore()

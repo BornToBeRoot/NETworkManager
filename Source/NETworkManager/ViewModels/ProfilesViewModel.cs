@@ -9,6 +9,8 @@ using NETworkManager.Utilities;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
+using System.Windows.Threading;
+using NETworkManager.Enum;
 
 namespace NETworkManager.ViewModels
 {
@@ -16,7 +18,8 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
-        
+        private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
+
         public ICollectionView Profiles { get; }
 
         private ProfileInfo _selectedProfile = new ProfileInfo();
@@ -58,7 +61,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                Profiles.Refresh();
+                _searchDispatcherTimer.Start();
 
                 OnPropertyChanged();
             }
@@ -92,46 +95,39 @@ namespace NETworkManager.ViewModels
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
-            // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+            SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
+
+            _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+            _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
         }
         #endregion
 
         #region Commands & Actions
-        public ICommand AddProfileCommand
-        {
-            get { return new RelayCommand(p => AddProfileAction()); }
-        }
+        public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
         private void AddProfileAction()
         {
             AddProfile();
         }
 
-        public ICommand EditProfileCommand
-        {
-            get { return new RelayCommand(p => EditProfileAction()); }
-        }
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), EditProfile_CanExecute);
+
+        private bool EditProfile_CanExecute(object paramter) => SelectedProfiles.Count == 1;
 
         private void EditProfileAction()
         {
             EditProfile();
         }
 
-        public ICommand CopyAsProfileCommand
-        {
-            get { return new RelayCommand(p => CopyAsProfileAction()); }
-        }
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
             CopyAsProfile();
         }
 
-        public ICommand DeleteProfileCommand
-        {
-            get { return new RelayCommand(p => DeleteProfileAction()); }
-        }
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private void DeleteProfileAction()
         {
@@ -162,32 +158,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), false);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async void CopyAsProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.CopyProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), false, SelectedProfile);
+            }, ProfileManager.GetGroups());
 
             customDialog.Content = new ProfileDialog
             {
@@ -214,7 +185,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), true, SelectedProfile);
+            }, ProfileManager.GetGroups(), ProfileEditMode.Edit, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -224,6 +195,31 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
+        public async void CopyAsProfile()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.CopyProfile
+            };
+
+            var profileViewModel = new ProfileViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                ProfileManager.AddProfile(instance);
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, ProfileManager.GetGroups(), ProfileEditMode.Copy, SelectedProfile);
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = profileViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+        
         public async void DeleteProfile()
         {
             var customDialog = new CustomDialog
@@ -282,6 +278,15 @@ namespace NETworkManager.ViewModels
         public void Refresh()
         {
             // Refresh profiles
+            Profiles.Refresh();
+        }
+        #endregion
+
+        #region Event
+        private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            _searchDispatcherTimer.Stop();
+
             Profiles.Refresh();
         }
         #endregion

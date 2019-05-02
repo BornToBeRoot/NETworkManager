@@ -93,7 +93,7 @@
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinDown}" />
                                 </Rectangle.OpacityMask>
-                            </Rectangle>                           
+                            </Rectangle>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -128,22 +128,22 @@
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        <Grid Background="Transparent" SnapsToDevicePixels="False">
+                            BorderBrush="{StaticResource GrayBrush8}"
+                            BorderThickness="0,0,0,1">
+                        <Grid Background="Transparent" SnapsToDevicePixels="False" Margin="0,10,0,5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{TemplateBinding Content}" Style="{StaticResource HeaderTextBlock}" Margin="10,10,10,0" />
-                            <Rectangle Grid.Column="1" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" Margin="0,10,10,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Grid.Column="0" Text="{TemplateBinding Content}" Style="{StaticResource HeaderTextBlock}" Margin="10,0" />
+                            <Rectangle Grid.Column="1" x:Name="Chevron" Width="16" Height="16" Fill="{DynamicResource GrayBrush3}" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinLeft}" />
                                 </Rectangle.OpacityMask>
-                            </Rectangle>                           
+                            </Rectangle>
                         </Grid>
                     </Border>
-                    <ControlTemplate.Triggers>                      
+                    <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Chevron" Property="Fill" Value="{DynamicResource GrayBrush5}"/>
                         </Trigger>
@@ -171,14 +171,15 @@
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinRight}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Row="1" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" Style="{StaticResource HeaderTextBlock}" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Grid.Row="1" Text="{TemplateBinding Content}" TextOptions.TextFormattingMode="Display" Foreground="{TemplateBinding Foreground}" Style="{StaticResource DefaultTextBlock}" FontSize="18" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <TextBlock.LayoutTransform>
-                                    <RotateTransform Angle="90" />
+                                        <RotateTransform Angle="-90" />
                                 </TextBlock.LayoutTransform>
-                            </TextBlock>                            
+                            </TextBlock>
+
                         </Grid>
                     </Border>
-                    <ControlTemplate.Triggers>                   
+                    <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Chevron" Property="Fill" Value="{DynamicResource GrayBrush5}"/>
                         </Trigger>
@@ -187,7 +188,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="RightExpander" TargetType="{x:Type Expander}" BasedOn="{StaticResource MetroExpander}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="Transparent" />

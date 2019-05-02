@@ -1,24 +1,28 @@
 ﻿using NETworkManager.Models.Lookup;
-using System;
 using System.Net;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network
 {
     public class PortInfo
     {
-        public Tuple<IPAddress, string> Host { get; set; }
+        public IPAddress IPAddress { get; set; }
+        public string Hostname { get; set; }
         public int Port { get; set; }
         public PortLookupInfo LookupInfo { get; set; }
         public PortStatus Status { get; set; }
+
+        public int IPAddressInt32 => IPAddress != null && IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(IPAddress) : 0;
 
         public PortInfo()
         {
 
         }
 
-        public PortInfo(Tuple<IPAddress, string> host, int port, PortLookupInfo lookupInfo, PortStatus status)
+        public PortInfo(IPAddress ipAddress, string hostname, int port, PortLookupInfo lookupInfo, PortStatus status)
         {
-            Host = host;
+            IPAddress = ipAddress;
+            Hostname = hostname;
             Port = port;
             LookupInfo = lookupInfo;
             Status = status;
@@ -26,7 +30,7 @@ namespace NETworkManager.Models.Network
 
         public static PortInfo Parse(PortScannedArgs e)
         {
-            return new PortInfo(e.Host, e.Port, e.LookupInfo, e.Status);
+            return new PortInfo(e.IPAddress, e.Hostname, e.Port, e.LookupInfo, e.Status);
         }
 
         public enum PortStatus

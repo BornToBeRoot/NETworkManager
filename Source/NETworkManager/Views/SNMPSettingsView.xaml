@@ -15,7 +15,7 @@
         <TextBlock Text="{x:Static localization:Strings.Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="900000" Minimum="100" Interval="100" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Port}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="150" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort161}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
+        <TextBox Width="150" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort161}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
             <TextBox.Text>
                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

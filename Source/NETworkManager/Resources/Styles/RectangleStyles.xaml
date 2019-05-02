@@ -15,6 +15,20 @@
         <Setter Property="ToolTipService.ShowDuration" Value="600000" />
     </Style>
 
+    <Style x:Key="InfoImageRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationVariant}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
+        <Setter Property="ToolTipService.ShowDuration" Value="600000" />
+    </Style>
+
     <Style x:Key="WarnImageRectangle" TargetType="{x:Type Rectangle}">
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
@@ -27,5 +41,63 @@
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
         <Setter Property="ToolTipService.ShowDuration" Value="600000" />
+    </Style>
+
+    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+    <Style x:Key="CheckRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="#badc58" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Check}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+    <Style x:Key="AlertRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="Orange" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOutline}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+    <Style x:Key="ErrorRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="Red" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+   <!-- <Style x:Key="HelpRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=HelpCircleOutline}"/>
+            </Setter.Value>
+        </Setter>
+    </Style> -->
+
+
+    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+    <Style x:Key="HiddenRectangle" TargetType="{x:Type Rectangle}">
+        <Setter Property="Visibility" Value="Hidden" />
     </Style>
 </ResourceDictionary>

@@ -12,11 +12,13 @@
     </Style>
 
     <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource DefaultDataGrid}" />
-    <Style TargetType="{x:Type networkManagerControls:ScrollingDataGrid}" BasedOn="{StaticResource DefaultDataGrid}" />
+    <Style TargetType="{x:Type networkManagerControls:MultiSelectScrollingDataGrid}" BasedOn="{StaticResource DefaultDataGrid}" />
 
-    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MetroDataGridColumnHeader}" >
+    <Style x:Key="DefaultDataGridColumnHeader" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MetroDataGridColumnHeader}" >
         <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="BorderThickness" Value="0,0,0,1" />
         <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
     </Style>
+    
+    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource DefaultDataGridColumnHeader}" />
 </ResourceDictionary>

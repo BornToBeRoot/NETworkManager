@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Controls.TightVNCControl"
+﻿<UserControl x:Class="NETworkManager.Controls.TigerVNCControl"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +10,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
         mah:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:TightVNCControl}">
+        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:TigerVNCControl}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
@@ -20,7 +20,7 @@
     <Grid SizeChanged="TightVNCGrid_SizeChanged">
         <!-- WindowsFormsHost is qualified with a namespace to work around https://github.com/dotnet/core/issues/2085 -->
         <wfi:WindowsFormsHost Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">  
-            <windowsForms:Panel x:Name="TightVNCHost" />
+            <windowsForms:Panel x:Name="WindowHost" />
         </wfi:WindowsFormsHost>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding IsConnected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <Grid.RowDefinitions>
@@ -30,7 +30,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Disconnected}" Style="{StaticResource HeaderTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
-            <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{x:Static localization:Strings.TightVNCProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
+            <TextBlock Grid.Row="1" Foreground="{DynamicResource AccentColorBrush}" Text="{x:Static localization:Strings.TigerVNCProcessHasEnded}" Style="{DynamicResource DefaultTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
             <mah:ProgressRing Grid.Row="0" Grid.RowSpan="2" Height="50" Width="50" IsActive="{Binding IsConnecting}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"/>
             <Button Grid.Row="3" Content="{x:Static localization:Strings.Reconnect}" Command="{Binding ReconnectCommand}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" IsDefault="True" IsEnabled="{Binding IsConnecting, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}"/>
             <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.ConnectingDots}" Style="{StaticResource MessageTextBlock}" Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />

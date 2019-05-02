@@ -1,11 +1,12 @@
 ﻿using NETworkManager.ViewModels;
 using System.Windows.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Views
 {
     public partial class LookupPortLookupView
     {
-        private readonly LookupPortLookupViewModel _viewModel = new LookupPortLookupViewModel();
+        private readonly LookupPortLookupViewModel _viewModel = new LookupPortLookupViewModel(DialogCoordinator.Instance);
 
         public LookupPortLookupView()
         {

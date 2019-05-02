@@ -3,8 +3,10 @@ using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network
@@ -43,20 +45,22 @@ namespace NETworkManager.Models.Network
                 var dhcpLeaseObtained = new DateTime();
                 var dhcpLeaseExpires = new DateTime();
 
-                foreach (var unicastIPAddrInfo in networkInterface.GetIPProperties().UnicastAddresses)
+                var ipProperties = networkInterface.GetIPProperties();
+
+                foreach (var unicastIPAddrInfo in ipProperties.UnicastAddresses)
                 {
                     switch (unicastIPAddrInfo.Address.AddressFamily)
                     {
-                        case System.Net.Sockets.AddressFamily.InterNetwork:
+                        case AddressFamily.InterNetwork:
                             listIPv4Address.Add(unicastIPAddrInfo.Address);
                             listSubnetmask.Add(unicastIPAddrInfo.IPv4Mask);
                             dhcpLeaseExpires = (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressPreferredLifetime)).ToLocalTime();
                             dhcpLeaseObtained = (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressValidLifetime) - TimeSpan.FromSeconds(unicastIPAddrInfo.DhcpLeaseLifetime)).ToLocalTime();
                             break;
-                        case System.Net.Sockets.AddressFamily.InterNetworkV6 when unicastIPAddrInfo.Address.IsIPv6LinkLocal:
+                        case AddressFamily.InterNetworkV6 when unicastIPAddrInfo.Address.IsIPv6LinkLocal:
                             listIPv6AddressLinkLocal.Add(unicastIPAddrInfo.Address);
                             break;
-                        case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                        case AddressFamily.InterNetworkV6:
                             listIPv6Address.Add(unicastIPAddrInfo.Address);
                             break;
                     }
@@ -65,14 +69,14 @@ namespace NETworkManager.Models.Network
                 var listIPv4Gateway = new List<IPAddress>();
                 var listIPv6Gateway = new List<IPAddress>();
 
-                foreach (var gatewayIPAddrInfo in networkInterface.GetIPProperties().GatewayAddresses)
+                foreach (var gatewayIPAddrInfo in ipProperties.GatewayAddresses)
                 {
                     switch (gatewayIPAddrInfo.Address.AddressFamily)
                     {
-                        case System.Net.Sockets.AddressFamily.InterNetwork:
+                        case AddressFamily.InterNetwork:
                             listIPv4Gateway.Add(gatewayIPAddrInfo.Address);
                             break;
-                        case System.Net.Sockets.AddressFamily.InterNetworkV6:
+                        case AddressFamily.InterNetworkV6:
                             listIPv6Gateway.Add(gatewayIPAddrInfo.Address);
                             break;
                     }
@@ -80,21 +84,47 @@ namespace NETworkManager.Models.Network
 
                 var listDhcpServer = new List<IPAddress>();
 
-                foreach (var dhcpServerIPAddress in networkInterface.GetIPProperties().DhcpServerAddresses)
+                foreach (var dhcpServerIPAddress in ipProperties.DhcpServerAddresses)
                 {
-                    if (dhcpServerIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    if (dhcpServerIPAddress.AddressFamily == AddressFamily.InterNetwork)
                         listDhcpServer.Add(dhcpServerIPAddress);
                 }
 
                 // Check if autoconfiguration for DNS is enabled (only via registry key)
                 var nameServerKey = Registry.LocalMachine.OpenSubKey($@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{networkInterface.Id}");
-                var dnsAutoconfigurationEnabled = nameServerKey != null && string.IsNullOrEmpty(nameServerKey.GetValue("NameServer").ToString());
+                var dnsAutoconfigurationEnabled = nameServerKey?.GetValue("NameServer") != null && string.IsNullOrEmpty(nameServerKey.GetValue("NameServer").ToString());
 
                 var listDNSServer = new List<IPAddress>();
 
-                foreach (var dnsServerIPAddress in networkInterface.GetIPProperties().DnsAddresses)
+                foreach (var dnsServerIPAddress in ipProperties.DnsAddresses)
                 {
                     listDNSServer.Add(dnsServerIPAddress);
+                }
+
+                // Check if IPv4 protocol is available
+                var ipv4ProtocolAvailable = true;
+                IPv4InterfaceProperties ipv4Properties = null;
+
+                try
+                {
+                    ipv4Properties = ipProperties.GetIPv4Properties();
+                }
+                catch (NetworkInformationException)
+                {
+                    ipv4ProtocolAvailable = false;
+                }
+
+                // Check if IPv6 protocol is available
+                var ipv6ProtocolAvailable = true;
+                IPv6InterfaceProperties ipv6Properties = null;
+
+                try
+                {
+                    ipv6Properties = ipProperties.GetIPv6Properties();
+                }
+                catch (NetworkInformationException)
+                {
+                    ipv6ProtocolAvailable = false;
                 }
 
                 listNetworkInterfaceInfo.Add(new NetworkInterfaceInfo
@@ -107,23 +137,67 @@ namespace NETworkManager.Models.Network
                     Status = networkInterface.OperationalStatus,
                     IsOperational = networkInterface.OperationalStatus == OperationalStatus.Up,
                     Speed = networkInterface.Speed,
+                    IPv4ProtocolAvailable = ipv4ProtocolAvailable,
                     IPv4Address = listIPv4Address.ToArray(),
                     Subnetmask = listSubnetmask.ToArray(),
                     IPv4Gateway = listIPv4Gateway.ToArray(),
-                    DhcpEnabled = networkInterface.GetIPProperties().GetIPv4Properties().IsDhcpEnabled,
+                    DhcpEnabled = ipv4Properties != null && ipv4Properties.IsDhcpEnabled,
                     DhcpServer = listDhcpServer.ToArray(),
                     DhcpLeaseObtained = dhcpLeaseObtained,
                     DhcpLeaseExpires = dhcpLeaseExpires,
+                    IPv6ProtocolAvailable = ipv6ProtocolAvailable,
                     IPv6AddressLinkLocal = listIPv6AddressLinkLocal.ToArray(),
                     IPv6Address = listIPv6Address.ToArray(),
                     IPv6Gateway = listIPv6Gateway.ToArray(),
                     DNSAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
-                    DNSSuffix = networkInterface.GetIPProperties().DnsSuffix,
+                    DNSSuffix = ipProperties.DnsSuffix,
                     DNSServer = listDNSServer.ToArray()
                 });
             }
 
             return listNetworkInterfaceInfo;
+        }
+
+        public static Task<IPAddress> DetectLocalIPAddressBasedOnRoutingAsync(IPAddress remoteIPAddress)
+        {
+            return Task.Run(() => DetectLocalIPAddressBasedOnRouting(remoteIPAddress));
+        }
+
+        public static IPAddress DetectLocalIPAddressBasedOnRouting(IPAddress remoteIPAddress)
+        {
+            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
+            {
+                socket.Bind(new IPEndPoint(IPAddress.Any, 0));
+                socket.Connect(new IPEndPoint(remoteIPAddress, 0));
+
+                if (socket.LocalEndPoint is IPEndPoint ipAddress)
+                    return ipAddress.Address;
+            }
+
+            return null;
+        }
+
+        public static Task<IPAddress> DetectGatewayBasedOnLocalIPAddressAsync(IPAddress localIPAddress)
+        {
+            return Task.Run(() => DetectGatewayBasedOnLocalIPAddress(localIPAddress));
+        }
+
+        public static IPAddress DetectGatewayBasedOnLocalIPAddress(IPAddress localIPAddress)
+        {
+            foreach (var networkInterface in GetNetworkInterfaces())
+            {
+                if (networkInterface.IPv4Address.Contains(localIPAddress))
+                {
+                    return networkInterface.IPv4Gateway.FirstOrDefault();
+                }
+
+                if (networkInterface.IPv6Address.Contains(localIPAddress))
+                {
+                    return networkInterface.IPv4Gateway.FirstOrDefault();
+                }
+            }
+
+            return null;
         }
 
         public Task ConfigureNetworkInterfaceAsync(NetworkInterfaceConfig config)
@@ -144,7 +218,7 @@ namespace NETworkManager.Models.Network
 
             try
             {
-                PowerShellHelper.RunPSCommand(command, true);
+                PowerShellHelper.ExecuteCommand(command, true);
             }
             catch (Win32Exception win32Ex)
             {
@@ -159,38 +233,50 @@ namespace NETworkManager.Models.Network
             }
         }
 
-        public static Task FlushDnsResolverCacheAsync()
+        public static Task FlushDnsAsync()
         {
-            return Task.Run(() => FlushDnsResolverCache());
+            return Task.Run(() => FlushDns());
         }
 
-        public static void FlushDnsResolverCache()
+        public static void FlushDns()
         {
             const string command = @"ipconfig /flushdns";
 
-            PowerShellHelper.RunPSCommand(command);
+            PowerShellHelper.ExecuteCommand(command);
         }
 
-        public static Task IPConfigReleaseRenewAsync(IPConfigReleaseRenewMode mode)
+        public static Task ReleaseRenewAsync(IPConfigReleaseRenewMode mode)
         {
-            return Task.Run(() => IPConfigReleaseRenew(mode));
+            return Task.Run(() => ReleaseRenew(mode));
         }
 
-        public static void IPConfigReleaseRenew(IPConfigReleaseRenewMode mode)
+        public static void ReleaseRenew(IPConfigReleaseRenewMode mode)
         {
             if (mode == IPConfigReleaseRenewMode.ReleaseRenew || mode == IPConfigReleaseRenewMode.Release)
             {
-                const string releaseCommand = @"ipconfig /release";
+                const string command = @"ipconfig /release";
 
-                PowerShellHelper.RunPSCommand(releaseCommand);
+                PowerShellHelper.ExecuteCommand(command);
             }
 
             if (mode == IPConfigReleaseRenewMode.ReleaseRenew || mode == IPConfigReleaseRenewMode.Renew)
             {
-                const string renewCommand = @"ipconfig /renew";
+                const string command = @"ipconfig /renew";
 
-                PowerShellHelper.RunPSCommand(renewCommand);
+                PowerShellHelper.ExecuteCommand(command);
             }
+        }
+
+        public static Task AddIPAddressToNetworkInterfaceAsync(NetworkInterfaceConfig config)
+        {
+            return Task.Run(() => AddIPAddressToNetworkInterface(config));
+        }
+
+        public static void AddIPAddressToNetworkInterface(NetworkInterfaceConfig config)
+        {
+            var command = @"netsh interface ipv4 add address '" + config.Name + @"' " + config.IPAddress + @" " + config.Subnetmask;
+
+            PowerShellHelper.ExecuteCommand(command, true);
         }
         #endregion
 

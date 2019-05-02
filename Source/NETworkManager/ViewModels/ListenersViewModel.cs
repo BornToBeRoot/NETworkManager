@@ -1,22 +1,30 @@
 ﻿using NETworkManager.Models.Network;
 using System;
+using System.Collections;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using NETworkManager.Utilities;
-using System.Windows;
 using NETworkManager.Models.Settings;
 using System.Windows.Threading;
 using System.Linq;
+using System.Windows;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Export;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class ListenersViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private readonly bool _isLoading;
         private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
+        private bool _isTimerPaused;
 
         private string _search;
         public string Search
@@ -29,27 +37,27 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                ListenersView.Refresh();
+                ListenerResultsView.Refresh();
 
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<ListenerInfo> _listeners = new ObservableCollection<ListenerInfo>();
-        public ObservableCollection<ListenerInfo> Listeners
+        private ObservableCollection<ListenerInfo> _listenerResults = new ObservableCollection<ListenerInfo>();
+        public ObservableCollection<ListenerInfo> ListenerResults
         {
-            get => _listeners;
+            get => _listenerResults;
             set
             {
-                if (value == _listeners)
+                if (value == _listenerResults)
                     return;
 
-                _listeners = value;
+                _listenerResults = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICollectionView ListenersView { get; }
+        public ICollectionView ListenerResultsView { get; }
 
         private ListenerInfo _selectedListenerInfo;
         public ListenerInfo SelectedListenerInfo
@@ -61,6 +69,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _selectedListenerInfo = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList _selectedListenerInfos = new ArrayList();
+        public IList SelectedListenerInfos
+        {
+            get => _selectedListenerInfos;
+            set
+            {
+                if (Equals(value, _selectedListenerInfos))
+                    return;
+
+                _selectedListenerInfos = value;
                 OnPropertyChanged();
             }
         }
@@ -159,14 +181,16 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public ListenersViewModel()
+        public ListenersViewModel(IDialogCoordinator instance)
         {
             _isLoading = true;
 
-            ListenersView = CollectionViewSource.GetDefaultView(Listeners);
-            ListenersView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.Protocol), ListSortDirection.Ascending));
-            ListenersView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.IPAddressInt32), ListSortDirection.Ascending));
-            ListenersView.Filter = o =>
+            _dialogCoordinator = instance;
+
+            ListenerResultsView = CollectionViewSource.GetDefaultView(ListenerResults);
+            ListenerResultsView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.Protocol), ListSortDirection.Ascending));
+            ListenerResultsView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.IPAddressInt32), ListSortDirection.Ascending));
+            ListenerResultsView.Filter = o =>
             {
 
                 if (!(o is ListenerInfo info))
@@ -201,60 +225,16 @@ namespace NETworkManager.ViewModels
             AutoRefresh = SettingsManager.Current.Listeners_AutoRefresh;
         }
         #endregion
-
-        #region ICommands & Actions
-        public ICommand RefreshCommand
-        {
-            get { return new RelayCommand(p => RefreshAction()); }
-        }
-
-        private void RefreshAction()
-        {
-            DisplayStatusMessage = false;
-
-            Refresh();
-        }
-
-        public ICommand CopySelectedProtocolCommand
-        {
-            get { return new RelayCommand(p => CopySelectedProtocolAction()); }
-        }
-
-        private void CopySelectedProtocolAction()
-        {
-            CommonMethods.SetClipboard(SelectedListenerInfo.Protocol.ToString());
-        }
         
-        public ICommand CopySelectedIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
-        }
-
-        private void CopySelectedIPAddressAction()
-        {
-            CommonMethods.SetClipboard(SelectedListenerInfo.IPAddress.ToString());
-        }
-
-        public ICommand CopySelectedPortCommand
-        {
-            get { return new RelayCommand(p => CopySelectedPortAction()); }
-        }
-
-        private void CopySelectedPortAction()
-        {
-            CommonMethods.SetClipboard(SelectedListenerInfo.Port.ToString());
-        }
-        #endregion
-
         #region Methods
         private async void Refresh()
         {
             IsRefreshing = true;
 
-            Listeners.Clear();
+            ListenerResults.Clear();
 
-            (await Listener.GetAllActiveListenersAsync()).ForEach(x => Listeners.Add(x));
-
+            (await Listener.GetAllActiveListenersAsync()).ForEach(x => ListenerResults.Add(x));
+            
             IsRefreshing = false;
         }
 
@@ -278,6 +258,104 @@ namespace NETworkManager.ViewModels
         private void StopAutoRefreshTimer()
         {
             _autoRefreshTimer.Stop();
+        }
+
+        private void PauseRefresh()
+        {
+            if (!_autoRefreshTimer.IsEnabled)
+                return;
+
+            _autoRefreshTimer.Stop();
+            _isTimerPaused = true;
+        }
+
+        private void ResumeRefresh()
+        {
+            if (!_isTimerPaused)
+                return;
+
+                _autoRefreshTimer.Start();
+            _isTimerPaused = false;
+        }
+        public void OnViewHide()
+        {
+            PauseRefresh();
+        }
+
+        public void OnViewVisible()
+        {
+            ResumeRefresh();
+        }
+        #endregion
+
+        #region ICommands & Actions
+        public ICommand RefreshCommand => new RelayCommand(p => RefreshAction(), Refresh_CanExecute);
+
+        private bool Refresh_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+
+        private void RefreshAction()
+        {
+            DisplayStatusMessage = false;
+
+            Refresh();
+        }
+
+        public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
+
+        private void CopySelectedProtocolAction()
+        {
+            CommonMethods.SetClipboard(SelectedListenerInfo.Protocol.ToString());
+        }
+
+        public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
+
+        private void CopySelectedIPAddressAction()
+        {
+            CommonMethods.SetClipboard(SelectedListenerInfo.IPAddress.ToString());
+        }
+
+        public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
+
+        private void CopySelectedPortAction()
+        {
+            CommonMethods.SetClipboard(SelectedListenerInfo.Port.ToString());
+        }
+
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? ListenerResults : new ObservableCollection<ListenerInfo>(SelectedListenerInfos.Cast<ListenerInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Listeners_ExportFileType = instance.FileType;
+                SettingsManager.Current.Listeners_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Listeners_ExportFileType, SettingsManager.Current.Listeners_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
     }

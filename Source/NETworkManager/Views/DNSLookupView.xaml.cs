@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
@@ -12,7 +14,7 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
 
-            _viewModel = new DNSLookupViewModel(tabId, host);
+            _viewModel = new DNSLookupViewModel(DialogCoordinator.Instance, tabId, host);
 
             DataContext = _viewModel;
         }
@@ -33,6 +35,10 @@ namespace NETworkManager.Views
                 menu.DataContext = _viewModel;
         }
 
-      
+        private void ColumnHeader_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is DataGridColumnHeader columnHeader)
+                _viewModel.SortResultByPropertyName(columnHeader.Column.SortMemberPath);
+        }
     }
 }

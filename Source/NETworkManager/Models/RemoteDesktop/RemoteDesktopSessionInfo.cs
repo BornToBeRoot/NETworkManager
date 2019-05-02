@@ -16,13 +16,24 @@ namespace NETworkManager.Models.RemoteDesktop
         public int ColorDepth { get; set; }
         public bool EnableCredSspSupport { get; set; }
         public uint AuthenticationLevel { get; set; }
-        public int KeyboardHookMode { get; set; }
+        public RemoteDesktop.AudioRedirectionMode AudioRedirectionMode { get; set; }
+        public RemoteDesktop.AudioCaptureRedirectionMode AudioCaptureRedirectionMode { get; set; }
+        public RemoteDesktop.KeyboardHookMode KeyboardHookMode { get; set; }
         public bool RedirectClipboard { get; set; }
         public bool RedirectDevices { get; set; }
         public bool RedirectDrives { get; set; }
         public bool RedirectPorts { get; set; }
         public bool RedirectSmartCards { get; set; }
-        public bool RedirectPrinters { get; set; }        
+        public bool RedirectPrinters { get; set; }
+        public bool PersistentBitmapCaching { get; set; }
+        public bool ReconnectIfTheConnectionIsDropped { get; set; }
+        public RemoteDesktop.NetworkConnectionType NetworkConnectionType { get; set; }
+        public bool DesktopBackground { get; set; }
+        public bool FontSmoothing { get; set; }
+        public bool DesktopComposition { get; set; }
+        public bool ShowWindowContentsWhileDragging { get; set; }
+        public bool MenuAndWindowAnimation { get; set; }
+        public bool VisualStyles { get; set; }
 
         public RemoteDesktopSessionInfo()
         {

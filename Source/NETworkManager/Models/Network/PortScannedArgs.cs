@@ -6,7 +6,8 @@ namespace NETworkManager.Models.Network
 {
     public class PortScannedArgs : EventArgs
     {
-        public Tuple <IPAddress, string> Host { get; set; }
+        public IPAddress IPAddress { get; set; }
+        public string Hostname { get; set; }
         public int Port { get; set; }
         public PortLookupInfo LookupInfo { get; set; }
         public PortInfo.PortStatus Status { get; set; }
@@ -16,9 +17,10 @@ namespace NETworkManager.Models.Network
 
         }
 
-        public PortScannedArgs(Tuple<IPAddress, string> host, int port, PortLookupInfo lookupInfo, PortInfo.PortStatus status)
+        public PortScannedArgs(IPAddress ipAddres, string hostname, int port, PortLookupInfo lookupInfo, PortInfo.PortStatus status)
         {
-            Host = host;
+            IPAddress = ipAddres;
+            Hostname = hostname;
             Port = port;
             LookupInfo = lookupInfo;
             Status = status;

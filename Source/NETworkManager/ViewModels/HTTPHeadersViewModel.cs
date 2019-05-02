@@ -11,12 +11,19 @@ using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Controls;
 using Dragablz;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Export;
+using NETworkManager.Resources.Localization;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class HTTPHeadersViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private readonly int _tabId;
         private bool _firstLoad = true;
 
@@ -175,9 +182,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public HTTPHeadersViewModel(int tabId, string websiteUri)
+        public HTTPHeadersViewModel(IDialogCoordinator instance ,int tabId, string websiteUri)
         {
             _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             _tabId = tabId;
             WebsiteUri = websiteUri;
@@ -211,14 +220,53 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand CheckCommand
+        public ICommand CheckCommand => new RelayCommand(p => CheckAction(), Check_CanExecute);
+
+        private bool Check_CanExecute(object paramter)
         {
-            get { return new RelayCommand(p => CheckAction()); }
+            return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
         private void CheckAction()
         {
             Check();
+        }
+
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, Headers);
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Strings.Error, Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.HTTPHeaders_ExportFileType = instance.FileType;
+                SettingsManager.Current.HTTPHeaders_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.HTTPHeaders_ExportFileType, SettingsManager.Current.HTTPHeaders_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
 

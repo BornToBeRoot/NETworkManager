@@ -9,6 +9,18 @@ namespace NETworkManager.Models.Network
 {
     public class Ping
     {
+        #region Varaibles
+        public int Attempts = 0;
+        public int WaitTime = 1000;
+        public int Timeout = 4000;
+        public byte[] Buffer = new byte[32];
+        public int TTL = 64;
+        public bool DontFragment = true;
+        public int ExceptionCancelCount = 3;
+        public string Hostname = string.Empty;
+        #endregion
+
+        #region Events
         public event EventHandler<PingReceivedArgs> PingReceived;
 
         protected virtual void OnPingReceived(PingReceivedArgs e)
@@ -36,12 +48,14 @@ namespace NETworkManager.Models.Network
         {
             UserHasCanceled?.Invoke(this, EventArgs.Empty);
         }
+        #endregion
 
-        public void SendAsync(IPAddress ipAddress, PingOptions pingOptions, CancellationToken cancellationToken)
+        #region Methods
+        public void SendAsync(IPAddress ipAddress, CancellationToken cancellationToken)
         {
             Task.Run(() =>
             {
-                var hostname = pingOptions.Hostname;
+                var hostname = Hostname;
 
                 // Try to resolve PTR
                 if (string.IsNullOrEmpty(hostname))
@@ -59,10 +73,10 @@ namespace NETworkManager.Models.Network
                 var pingTotal = 0;
                 var errorCount = 0;
 
-                var options = new System.Net.NetworkInformation.PingOptions
+                var options = new PingOptions
                 {
-                    Ttl = pingOptions.TTL,
-                    DontFragment = pingOptions.DontFragment
+                    Ttl = TTL,
+                    DontFragment = DontFragment
                 };
 
                 using (var ping = new System.Net.NetworkInformation.Ping())
@@ -75,7 +89,7 @@ namespace NETworkManager.Models.Network
                             var timestamp = DateTime.Now;
 
                             // Send ping
-                            var pingReply = ping.Send(ipAddress, pingOptions.Timeout, pingOptions.Buffer, options);
+                            var pingReply = ping.Send(ipAddress, Timeout, Buffer, options);
 
                             // Reset the error count (if no exception was thrown)
                             errorCount = 0;
@@ -85,7 +99,7 @@ namespace NETworkManager.Models.Network
                                 if (pingReply != null && pingReply.Address == null)
                                     OnPingReceived(new PingReceivedArgs(timestamp, ipAddress, hostname, pingReply.Status));
                                 else if (pingReply != null)
-                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname,pingReply.Status));
+                                    OnPingReceived(new PingReceivedArgs(timestamp, pingReply.Address, hostname, pingReply.Status));
                             }
                             else
                             {
@@ -101,7 +115,7 @@ namespace NETworkManager.Models.Network
                         {
                             errorCount++;
 
-                            if (errorCount == pingOptions.ExceptionCancelCount)
+                            if (errorCount == ExceptionCancelCount)
                             {
                                 OnPingException(new PingExceptionArgs(ex.Message, ex.InnerException));
 
@@ -112,14 +126,14 @@ namespace NETworkManager.Models.Network
                         pingTotal++;
 
                         // If ping is canceled... dont wait for example 5 seconds
-                        for (var i = 0; i < pingOptions.WaitTime; i += 100)
+                        for (var i = 0; i < WaitTime; i += 100)
                         {
                             Thread.Sleep(100);
 
                             if (cancellationToken.IsCancellationRequested)
                                 break;
                         }
-                    } while ((pingOptions.Attempts == 0 || pingTotal < pingOptions.Attempts) && !cancellationToken.IsCancellationRequested);
+                    } while ((Attempts == 0 || pingTotal < Attempts) && !cancellationToken.IsCancellationRequested);
                 }
 
                 if (cancellationToken.IsCancellationRequested)
@@ -128,6 +142,18 @@ namespace NETworkManager.Models.Network
                     OnPingCompleted();
             }, cancellationToken);
         }
+
+        // Param: disableSpecialChar --> ExportManager --> "<" this char cannot be displayed in xml
+        public static string TimeToString(IPStatus status, long time, bool disableSpecialChar = false)
+        {
+            if (status != IPStatus.Success && status != IPStatus.TtlExpired)
+                return "-/-";
+
+            long.TryParse(time.ToString(), out var t);
+
+            return disableSpecialChar ? $"{t} ms" : t == 0 ? "<1 ms" : $"{t} ms";
+        }
+        #endregion
     }
 }
 

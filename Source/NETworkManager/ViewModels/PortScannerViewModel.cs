@@ -1,13 +1,13 @@
 ﻿using System.Windows.Input;
 using System.Windows;
 using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using System.Threading;
 using System.Net;
-using System.Net.Sockets;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.ComponentModel;
@@ -15,13 +15,19 @@ using System.Windows.Data;
 using System.Linq;
 using NETworkManager.Utilities;
 using Dragablz;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
+using NETworkManager.Models.Export;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
     public class PortScannerViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private CancellationTokenSource _cancellationTokenSource;
 
         private readonly int _tabId;
@@ -29,6 +35,8 @@ namespace NETworkManager.ViewModels
 
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly Stopwatch _stopwatch = new Stopwatch();
+
+        private string _lastSortDescriptionAscending = string.Empty;
 
         private bool _isLoading;
 
@@ -93,34 +101,50 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<PortInfo> _portScanResult = new ObservableCollection<PortInfo>();
+        private ObservableCollection<PortInfo> _portScanResults = new ObservableCollection<PortInfo>();
         public ObservableCollection<PortInfo> PortScanResult
         {
-            get => _portScanResult;
+            get => _portScanResults;
             set
             {
-                if (_portScanResult != null && value == _portScanResult)
+                if (_portScanResults != null && value == _portScanResults)
                     return;
 
-                _portScanResult = value;
+                _portScanResults = value;
             }
         }
 
-        public ICollectionView PortScanResultView { get; }
+        public ICollectionView PortScanResultsView { get; }
 
-        private PortInfo _selectedScanResult;
-        public PortInfo SelectedScanResult
+        private PortInfo _selectedPortScanResult;
+        public PortInfo SelectedPortScanResult
         {
-            get => _selectedScanResult;
+            get => _selectedPortScanResult;
             set
             {
-                if (value == _selectedScanResult)
+                if (value == _selectedPortScanResult)
                     return;
 
-                _selectedScanResult = value;
+                _selectedPortScanResult = value;
                 OnPropertyChanged();
             }
         }
+
+        private IList _selectedPortScanResults = new ArrayList();
+        public IList SelectedPortScanResults
+        {
+            get => _selectedPortScanResults;
+            set
+            {
+                if (Equals(value, _selectedPortScanResults))
+                    return;
+
+                _selectedPortScanResults = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ResolveHostname => SettingsManager.Current.PortScanner_ResolveHostname;
 
         private int _portsToScan;
         public int PortsToScan
@@ -270,9 +294,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings, shutdown
-        public PortScannerViewModel(int tabId, string host, string port)
+        public PortScannerViewModel(IDialogCoordinator instance, int tabId, string host, string port)
         {
             _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             _tabId = tabId;
             Host = host;
@@ -283,8 +309,9 @@ namespace NETworkManager.ViewModels
             PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortHistory);
 
             // Result view
-            PortScanResultView = CollectionViewSource.GetDefaultView(PortScanResult);
-            PortScanResultView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.Host)));
+            PortScanResultsView = CollectionViewSource.GetDefaultView(PortScanResult);
+            PortScanResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.IPAddress)));
+            PortScanResultsView.SortDescriptions.Add(new SortDescription(nameof(PortInfo.IPAddressInt32), ListSortDirection.Descending));
 
             LoadSettings();
 
@@ -319,10 +346,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand ScanCommand
-        {
-            get { return new RelayCommand(p => ScanAction()); }
-        }
+        public ICommand ScanCommand => new RelayCommand(p => ScanAction(), Scan_CanExecute);
+
+        private bool Scan_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void ScanAction()
         {
@@ -332,74 +358,60 @@ namespace NETworkManager.ViewModels
                 StartScan();
         }
 
-        public ICommand CopySelectedIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
-        }
+        public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedScanResult.Host.Item1.ToString());
+            CommonMethods.SetClipboard(SelectedPortScanResult.IPAddress.ToString());
         }
 
-        public ICommand CopySelectedHostnameCommand
-        {
-            get { return new RelayCommand(p => CopySelectedHostnameAction()); }
-        }
+        public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
-            CommonMethods.SetClipboard(SelectedScanResult.Host.Item2);
+            CommonMethods.SetClipboard(SelectedPortScanResult.Hostname);
         }
 
-        public ICommand CopySelectedPortCommand
-        {
-            get { return new RelayCommand(p => CopySelectedPortAction()); }
-        }
+        public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
 
         private void CopySelectedPortAction()
         {
-            CommonMethods.SetClipboard(SelectedScanResult.Port.ToString());
+            CommonMethods.SetClipboard(SelectedPortScanResult.Port.ToString());
         }
 
-        public ICommand CopySelectedStatusCommand
-        {
-            get { return new RelayCommand(p => CopySelectedStatusAction()); }
-        }
+        public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
         {
-            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString(SelectedScanResult.Status.ToString()));
+            CommonMethods.SetClipboard(LocalizationManager.TranslatePortStatus(SelectedPortScanResult.Status));
         }
 
-        public ICommand CopySelectedProtocolCommand
-        {
-            get { return new RelayCommand(p => CopySelectedProtocolAction()); }
-        }
+        public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
 
         private void CopySelectedProtocolAction()
         {
-            CommonMethods.SetClipboard(SelectedScanResult.LookupInfo.Protocol.ToString());
+            CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Protocol.ToString());
         }
 
-        public ICommand CopySelectedServiceCommand
-        {
-            get { return new RelayCommand(p => CopySelectedServiceAction()); }
-        }
+        public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
 
         private void CopySelectedServiceAction()
         {
-            CommonMethods.SetClipboard(SelectedScanResult.LookupInfo.Service);
+            CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Service);
         }
 
-        public ICommand CopySelectedDescriptionCommand
-        {
-            get { return new RelayCommand(p => CopySelectedDescriptionAction()); }
-        }
+        public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
 
         private void CopySelectedDescriptionAction()
         {
-            CommonMethods.SetClipboard(SelectedScanResult.LookupInfo.Description);
+            CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Description);
+        }
+
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private void ExportAction()
+        {
+            Export();
         }
         #endregion
 
@@ -438,124 +450,64 @@ namespace NETworkManager.ViewModels
 
             _cancellationTokenSource = new CancellationTokenSource();
 
-            var hosts = Host.Split(';');
+            // Resolve hostnames
+            List<string> ipRanges;
 
-            var hostData = new List<Tuple<IPAddress, string>>();
-
-            var hostname = string.Empty;
-
-            foreach (var host in hosts)
+            try
             {
-                var host1 = host.Trim();
-
-                IPAddress.TryParse(host1, out var ipAddress);
-
-                try
-                {
-                    // Resolve DNS
-                    // Try to resolve the hostname
-                    if (ipAddress == null)
-                    {
-                        var ipHostEntry = await Dns.GetHostEntryAsync(host1);
-
-                        foreach (var ip in ipHostEntry.AddressList)
-                        {
-                            switch (ip.AddressFamily)
-                            {
-                                case AddressFamily.InterNetwork when SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4:
-                                    ipAddress = ip;
-                                    break;
-                                case AddressFamily.InterNetworkV6 when !SettingsManager.Current.PortScanner_ResolveHostnamePreferIPv4:
-                                    ipAddress = ip;
-                                    break;
-                            }
-                        }
-
-                        // Fallback --> If we could not resolve our prefered ip protocol
-                        if (ipAddress == null)
-                        {
-                            foreach (var ip in ipHostEntry.AddressList)
-                            {
-                                ipAddress = ip;
-                                break;
-                            }
-                        }
-
-                        hostname = host1;
-                    }
-                    else
-                    {
-                        try
-                        {
-                            var ipHostEntry = await Dns.GetHostEntryAsync(ipAddress);
-
-                            hostname = ipHostEntry.HostName;
-                        }
-                        catch
-                        {
-                            // ignored
-                        }
-                    }
-                }
-                catch (SocketException) // This will catch DNS resolve errors
-                {
-                    if (!string.IsNullOrEmpty(StatusMessage))
-                        StatusMessage += Environment.NewLine;
-
-                    StatusMessage += string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, host1);
-                    DisplayStatusMessage = true;
-
-                    continue;
-                }
-
-                hostData.Add(Tuple.Create(ipAddress, hostname));
+                ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Host.Replace(" ", "").Split(';'), _cancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                UserHasCanceled(this, EventArgs.Empty);
+                return;
+            }
+            catch (AggregateException exceptions) // DNS error (could not resolve hostname...)
+            {
+                DnsResolveFailed(exceptions);
+                return;
             }
 
-            if (hostData.Count == 0)
+            // Create ip addresses 
+            IPAddress[] ipAddresses;
+
+            try
             {
-                StatusMessage += Environment.NewLine + Resources.Localization.Strings.NothingToDoCheckYourInput;
-                DisplayStatusMessage = true;
-
-                ScanFinished();
-
+                // Create a list of all ip addresses
+                ipAddresses = await HostRangeHelper.CreateIPAddressesFromIPRangesAsync(ipRanges.ToArray(), _cancellationTokenSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                UserHasCanceled(this, EventArgs.Empty);
                 return;
             }
 
             var ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Port);
 
-            try
+            PortsToScan = ports.Length * ipAddresses.Length;
+            PortsScanned = 0;
+
+            PreparingScan = false;
+
+            // Add host(s) to the history
+            AddHostToHistory(Host);
+            AddPortToHistory(Port);
+
+            var portScanner = new PortScanner
             {
-                PortsToScan = ports.Length * hostData.Count;
-                PortsScanned = 0;
+                ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname,
+                HostThreads = SettingsManager.Current.PortScanner_HostThreads,
+                PortThreads = SettingsManager.Current.PortScanner_PortThreads,
+                ShowClosed = SettingsManager.Current.PortScanner_ShowClosed,
+                Timeout = SettingsManager.Current.PortScanner_Timeout
+            };
 
-                PreparingScan = false;
+            portScanner.PortScanned += PortScanned;
+            portScanner.ScanComplete += ScanComplete;
+            portScanner.ProgressChanged += ProgressChanged;
+            portScanner.UserHasCanceled += UserHasCanceled;
 
-                AddHostToHistory(Host);
-                AddPortToHistory(Port);
-
-                var portScannerOptions = new PortScannerOptions
-                {
-                    Threads = SettingsManager.Current.PortScanner_Threads,
-                    ShowClosed = SettingsManager.Current.PortScanner_ShowClosed,
-                    Timeout = SettingsManager.Current.PortScanner_Timeout
-                };
-
-                PortScanner portScanner = new PortScanner();
-                portScanner.PortScanned += PortScanner_PortScanned;
-                portScanner.ScanComplete += PortScanner_ScanComplete;
-                portScanner.ProgressChanged += PortScanner_ProgressChanged;
-                portScanner.UserHasCanceled += PortScanner_UserHasCanceled;
-
-                portScanner.ScanAsync(hostData, ports, portScannerOptions, _cancellationTokenSource.Token);
-            }
-
-            catch (Exception ex) // This will catch any exception
-            {
-                StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
-
-                ScanFinished();
-            }
+            portScanner.ScanAsync(ipAddresses, ports, _cancellationTokenSource.Token);
         }
 
         private void StopScan()
@@ -577,6 +529,41 @@ namespace NETworkManager.ViewModels
 
             CancelScan = false;
             IsScanRunning = false;
+        }
+
+        private async void Export()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? PortScanResult : new ObservableCollection<PortInfo>(SelectedPortScanResults.Cast<PortInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.PortScanner_ExportFileType = instance.FileType;
+                SettingsManager.Current.PortScanner_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.PortScanner_ExportFileType, SettingsManager.Current.PortScanner_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         private void AddHostToHistory(string host)
@@ -604,10 +591,27 @@ namespace NETworkManager.ViewModels
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.PortScanner_PortHistory.Add(x));
         }
+
+        public void SortResultByPropertyName(string sortDescription)
+        {
+            PortScanResultsView.SortDescriptions.Clear();
+            PortScanResultsView.SortDescriptions.Add(new SortDescription(nameof(PortInfo.IPAddressInt32), ListSortDirection.Descending));
+
+            if (_lastSortDescriptionAscending.Equals(sortDescription))
+            {
+                PortScanResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Descending));
+                _lastSortDescriptionAscending = string.Empty;
+            }
+            else
+            {
+                PortScanResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Ascending));
+                _lastSortDescriptionAscending = sortDescription;
+            }
+        }
         #endregion
 
         #region Events
-        private void PortScanner_UserHasCanceled(object sender, EventArgs e)
+        private void UserHasCanceled(object sender, EventArgs e)
         {
             StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
@@ -615,17 +619,25 @@ namespace NETworkManager.ViewModels
             ScanFinished();
         }
 
-        private void PortScanner_ProgressChanged(object sender, ProgressChangedArgs e)
+        private void ProgressChanged(object sender, ProgressChangedArgs e)
         {
             PortsScanned = e.Value;
         }
 
-        private void PortScanner_ScanComplete(object sender, EventArgs e)
+        private void DnsResolveFailed(AggregateException e)
+        {
+            StatusMessage = $"{Resources.Localization.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
+            DisplayStatusMessage = true;
+
+            ScanFinished();
+        }
+
+        private void ScanComplete(object sender, EventArgs e)
         {
             ScanFinished();
         }
 
-        private void PortScanner_PortScanned(object sender, PortScannedArgs e)
+        private void PortScanned(object sender, PortScannedArgs e)
         {
             var portInfo = PortInfo.Parse(e);
 
@@ -646,8 +658,15 @@ namespace NETworkManager.ViewModels
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.PortScanner_ShowStatistics))
-                OnPropertyChanged(nameof(ShowStatistics));
+            switch (e.PropertyName)
+            {
+                case nameof(SettingsInfo.PortScanner_ShowStatistics):
+                    OnPropertyChanged(nameof(ShowStatistics));
+                    break;
+                case nameof(SettingsInfo.PortScanner_ResolveHostname):
+                    OnPropertyChanged(nameof(ResolveHostname));
+                    break;
+            }
         }
         #endregion
     }

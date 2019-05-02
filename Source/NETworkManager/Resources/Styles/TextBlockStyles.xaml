@@ -2,13 +2,18 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="DefaultTextBlock" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />        
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
     </Style>
 
     <Style x:Key="HeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource HeaderFontFamily}" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Margin" Value="0,0,0,10" />
+    </Style>
+
+    <Style x:Key="InfoTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="AccentTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
@@ -25,7 +30,7 @@
         <Setter Property="TextAlignment" Value="Center" />
         <Setter Property="Margin" Value="10,0" />
     </Style>
-    
+
     <Style x:Key="BoldTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
@@ -34,7 +39,7 @@
     <Style x:Key="WrapTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
-    
+
     <Style x:Key="CenterTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" >
         <Setter Property="Margin"  Value="0,0,10,0" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -45,7 +50,15 @@
         <Setter Property="Cursor" Value="Hand" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />               
+                <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DisabledTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.55" />
             </Trigger>
         </Style.Triggers>
     </Style>

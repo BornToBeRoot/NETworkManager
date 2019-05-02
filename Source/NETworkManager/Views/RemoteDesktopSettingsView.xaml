@@ -7,7 +7,14 @@
         xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:RemoteDesktopSettingsViewModel}">
+    <UserControl.Resources>
+        <converters:RemoteDesktopAudioCaptureRedirectionModeToStringConverter x:Key="RemoteDesktopAudioCaptureRedirectionModeToStringConverter" />
+        <converters:RemoteDesktopAudioRedirectionModeToStringConverter x:Key="RemoteDesktopAudioRedirectionModeToStringConverter" />
+        <converters:RemoteDesktopNetworkConnectionTypeToStringConverter x:Key="RemoteDesktopNetworkConnectionTypeToStringConverter"/>
+        <converters:RemoteDesktopKeyboardHookModeToStringConverter x:Key="RemoteDesktopKeyboardHookModeToStringConverter" />
+    </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.Display}" Style="{StaticResource HeaderTextBlock}" />
         <RadioButton x:Name="RadioButtonAdjustScreenAutomatically" Content="{x:Static localization:Strings.AdjustScreenAutomatically}" IsChecked="{Binding AdjustScreenAutomatically}" Margin="0,0,0,10" />
@@ -15,7 +22,7 @@
         <RadioButton x:Name="RadioButtonFixedScreenSize" Content="{x:Static localization:Strings.FixedScreenSize}" IsChecked="{Binding UseFixedScreenSize}" Margin="0,0,0,10" />
         <GroupBox x:Name="GroupBoxFixedScreenSize" Style="{StaticResource WithoutHeaderGroupBox}" MinWidth="270" HorizontalAlignment="Left" IsEnabled="{Binding UseFixedScreenSize}" Margin="25,0,0,10">
             <StackPanel>
-                <TextBlock Text="{x:Static localization:Strings.SelectAScreenResolution}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+                <TextBlock Text="{x:Static localization:Strings.SelectAScreenResolution}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
                 <ComboBox ItemsSource="{Binding ScreenResolutions}" SelectedItem="{Binding SelectedScreenResolution}" Width="250" HorizontalAlignment="Left" />
             </StackPanel>
         </GroupBox>
@@ -56,11 +63,11 @@
                 </TextBox>
             </Grid>
         </GroupBox>
-        <TextBlock Text="{x:Static localization:Strings.ColorDepthBit}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.ColorDepthBit}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding ColorDepths}" SelectedItem="{Binding SelectedColorDepth}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Network}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{x:Static localization:Strings.Port}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExamplePort3389 }" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
+        <TextBlock Text="{x:Static localization:Strings.Port}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort3389}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
             <TextBox.Text>
                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -72,24 +79,77 @@
         </TextBox>
         <TextBlock Text="{x:Static localization:Strings.Authentication}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.EnableCredentialSecuritySupportProvider}" IsChecked="{Binding EnableCredSspSupport}" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.AuthenticationLevel}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.AuthenticationLevel}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
             <mah:NumericUpDown Value="{Binding AuthenticationLevel}" Maximum="3" Minimum="0" Interval="1" />
-            <Rectangle Width="24" Height="24" ToolTip="{Binding RDPAuthenticationLevelHelpMessage}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_RDPAuthenticationLevel}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
+        <TextBlock Text="{x:Static localization:Strings.RemoteAudio}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.RemoteAudioPlayback}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding AudioRedirectionModes}" SelectedItem="{Binding AudioRedirectionMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,20">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopAudioRedirectionModeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Text="{x:Static localization:Strings.RemoteAudioRecording}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding AudioCaptureRedirectionModes}" SelectedItem="{Binding AudioCaptureRedirectionMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,20">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopAudioCaptureRedirectionModeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <TextBlock Text="{x:Static localization:Strings.Keyboard}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{x:Static localization:Strings.ApplyWindowsKeyCombinationsLikeAltTab}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,0,10" />
-        <ComboBox ItemsSource="{Binding KeyboardHookModes}" DisplayMemberPath="Item2" SelectedItem="{Binding KeyboardHookMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,20" />
+        <TextBlock Text="{x:Static localization:Strings.ApplyWindowsKeyCombinationsLikeAltTab}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding KeyboardHookModes}" SelectedItem="{Binding KeyboardHookMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,20">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopKeyboardHookModeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <TextBlock Text="{x:Static localization:Strings.LocalDevicesAndResources}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectClipboard}"   IsChecked="{Binding RedirectClipboard}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectDevices}"   IsChecked="{Binding RedirectDevices}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectDrives}"   IsChecked="{Binding RedirectDrives}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPorts}"   IsChecked="{Binding RedirectPorts}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectSmartcards}"   IsChecked="{Binding RedirectSmartCards}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPrinters}"   IsChecked="{Binding RedirectPrinters}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectClipboard}" IsChecked="{Binding RedirectClipboard}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectDevices}" IsChecked="{Binding RedirectDevices}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectDrives}" IsChecked="{Binding RedirectDrives}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPorts}" IsChecked="{Binding RedirectPorts}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectSmartcards}" IsChecked="{Binding RedirectSmartCards}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.RedirectPrinters}" IsChecked="{Binding RedirectPrinters}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Experience}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.PersistentBitmapCaching}" IsChecked="{Binding PersistentBitmapCaching}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ReconnectIfTheConnectionIsDropped}" IsChecked="{Binding ReconnectIfTheConnectionIsDropped}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Performance}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.NetworkConnectionType}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding NetworkConnectionTypes}" SelectedItem="{Binding NetworkConnectionType}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,10">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource RemoteDesktopNetworkConnectionTypeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <StackPanel>
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="IsEnabled" Value="True" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding NetworkConnectionType}" Value="0">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.DesktopBackground}" IsChecked="{Binding DesktopBackground}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.FontSmoothing}" IsChecked="{Binding FontSmoothing}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.DesktopComposition}" IsChecked="{Binding DesktopComposition}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowWindowContentsWhileDragging}" IsChecked="{Binding ShowWindowContentsWhileDragging}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.MenuAndWindowAnimation}" IsChecked="{Binding MenuAndWindowAnimation}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.VisualStyles}" IsChecked="{Binding VisualStyles}" Margin="0,0,0,10" />
+        </StackPanel>
     </StackPanel>
 </UserControl>

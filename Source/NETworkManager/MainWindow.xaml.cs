@@ -14,12 +14,14 @@ using NETworkManager.Models.Settings;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using NETworkManager.Utilities;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
+using NETworkManager.Controls;
 using NETworkManager.Models.Update;
 using NETworkManager.Models.Documentation;
+using NETworkManager.ViewModels;
+using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 
 namespace NETworkManager
@@ -39,6 +41,7 @@ namespace NETworkManager
         private NotifyIcon _notifyIcon;
 
         private readonly bool _isLoading;
+        private bool isApplicationListLoading;
 
         private bool _isInTray;
         private bool _closeApplication;
@@ -117,8 +120,19 @@ namespace NETworkManager
             }
         }
 
-        public ICollectionView Applications { get; private set; }
-        
+        private ICollectionView _applications;
+        public ICollectionView Applications
+        {
+            get => _applications;
+            set
+            {
+                if (value == _applications)
+                    return;
+
+                _applications = value;
+                OnPropertyChanged();
+            }
+        }
 
         private ApplicationViewInfo _selectedApplication;
         public ApplicationViewInfo SelectedApplication
@@ -126,7 +140,10 @@ namespace NETworkManager
             get => _selectedApplication;
             set
             {
-                if (value == _selectedApplication)
+                if (isApplicationListLoading)
+                    return;
+
+                if (Equals(value, _selectedApplication))
                     return;
 
                 if (value != null)
@@ -198,8 +215,6 @@ namespace NETworkManager
             get => _showSettingsView;
             set
             {
-
-
                 if (value == _showSettingsView)
                     return;
 
@@ -208,16 +223,16 @@ namespace NETworkManager
             }
         }
 
-        private bool _updateAvailable;
-        public bool UpdateAvailable
+        private bool _isUpdateAvailable;
+        public bool IsUpdateAvailable
         {
-            get => _updateAvailable;
+            get => _isUpdateAvailable;
             set
             {
-                if (value == _updateAvailable)
+                if (value == _isUpdateAvailable)
                     return;
 
-                _updateAvailable = value;
+                _isUpdateAvailable = value;
                 OnPropertyChanged();
             }
         }
@@ -235,9 +250,6 @@ namespace NETworkManager
                 OnPropertyChanged();
             }
         }
-
-        public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
-
         #endregion
 
         #region Constructor, window load and close events
@@ -274,51 +286,88 @@ namespace NETworkManager
             // Load Profiles
             ProfileManager.Load();
 
-            // Load application list, filter, sort
-            LoadApplicationList();
-
             // Load settings
             ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
 
             // Register some events
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-            EventSystem.RedirectToApplicationEvent += EventSystem_RedirectToApplicationEvent;
+            EventSystem.RedirectProfileToApplicationEvent += EventSystem_RedirectProfileToApplicationEvent;
+            EventSystem.RedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
             EventSystem.RedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
 
             _isLoading = false;
         }
 
-        // Hide window after it shows up... not nice, but otherwise the hotkeys do not work
         protected override async void OnContentRendered(EventArgs e)
         {
             base.OnContentRendered(e);
 
+            // Show settings reset note...
             if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
             {
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
 
-                ConfigurationManager.Current.IsDialogOpen = true;
+                ConfigurationManager.Current.FixAirspace = true;
 
                 await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.SettingsHaveBeenReset, NETworkManager.Resources.Localization.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, MessageDialogStyle.Affirmative, settings);
 
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
             }
 
-            // Hide to tray...
+            if (SettingsManager.Current.FirstRun)
+            {
+                // Show first run dialog...
+                var customDialog = new CustomDialog
+                {
+                    Title = NETworkManager.Resources.Localization.Strings.Welcome
+                };
+
+                var arpTableAddEntryViewModel = new FirstRunViewModel(async instance =>
+                {
+                    await this.HideMetroDialogAsync(customDialog);
+
+                    SettingsManager.Current.FirstRun = false;
+                    SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
+                    SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
+
+                    AfterContentRendered();
+                });
+
+                customDialog.Content = new FirstRunDialog
+                {
+                    DataContext = arpTableAddEntryViewModel
+                };
+
+                await this.ShowMetroDialogAsync(customDialog).ConfigureAwait(true);
+            }
+            else
+            {
+                AfterContentRendered();
+            }
+        }
+
+        private void AfterContentRendered()
+        {
+            // Load application list, filter, sort, etc.
+            LoadApplicationList();
+
+            // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
 
-            // Search for updates...
+            // Search for updates... 
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
         }
 
         private void LoadApplicationList()
         {
+            isApplicationListLoading = true;
+
             // Need to add items here... if in SettingsInfo/Constructor --> same item will appear multiple times...
             if (SettingsManager.Current.General_ApplicationList.Count == 0)
-                SettingsManager.Current.General_ApplicationList = new ObservableCollection<ApplicationViewInfo>(ApplicationViewManager.GetList());
+                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationViewInfo>(ApplicationViewManager.GetList());
 
             Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
 
@@ -341,7 +390,9 @@ namespace NETworkManager
 
             SettingsManager.Current.General_ApplicationList.CollectionChanged += (sender, args) => Applications.Refresh();
 
-            // Get application from settings
+            isApplicationListLoading = false;
+
+            // Select the application
             SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
 
             // Scroll into view
@@ -385,11 +436,11 @@ namespace NETworkManager
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 // Fix airspace issues
-                ConfigurationManager.Current.IsDialogOpen = true;
+                ConfigurationManager.Current.FixAirspace = true;
 
                 var result = await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.Confirm, NETworkManager.Resources.Localization.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
 
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
 
                 if (result != MessageDialogResult.Affirmative)
                     return;
@@ -410,6 +461,7 @@ namespace NETworkManager
         #endregion
 
         #region Application Views
+        private DashboardView _overviewView;
         private NetworkInterfaceView _networkInterfaceView;
         private IPScannerHostView _ipScannerHostView;
         private PortScannerHostView _portScannerHostView;
@@ -417,8 +469,9 @@ namespace NETworkManager
         private TracerouteHostView _tracerouteHostView;
         private DNSLookupHostView _dnsLookupHostView;
         private RemoteDesktopHostView _remoteDesktopHostView;
+        private PowerShellHostView _powerShellHostView;
         private PuTTYHostView _puttyHostView;
-        private TightVNCHostView _tightVncHostView;
+        private TigerVNCHostView _tigerVNCHostView;
         private SNMPHostView _snmpHostView;
         private WakeOnLANView _wakeOnLanView;
         private SubnetCalculatorHostView _subnetCalculatorHostView;
@@ -431,18 +484,44 @@ namespace NETworkManager
 
         private ApplicationViewManager.Name? _currentApplicationViewName;
 
-        private void ChangeApplicationView(ApplicationViewManager.Name name)
+        private void ChangeApplicationView(ApplicationViewManager.Name name, bool refresh = false)
         {
-            if (_currentApplicationViewName == name)
+            if (!refresh && _currentApplicationViewName == name)
                 return;
 
+            // Stop some functions on the old view
+            switch (_currentApplicationViewName)
+            {
+                case ApplicationViewManager.Name.NetworkInterface:
+                    _networkInterfaceView?.OnViewHide();
+                    break;
+                case ApplicationViewManager.Name.Connections:
+                    _connectionsView?.OnViewHide();
+                    break;
+                case ApplicationViewManager.Name.Listeners:
+                    _listenersView?.OnViewHide();
+                    break;
+                case ApplicationViewManager.Name.ARPTable:
+                    _arpTableView?.OnViewHide();
+                    break;
+            }
+
+            // Create new view / start some functions
             switch (name)
             {
+                case ApplicationViewManager.Name.Dashboard:
+                    if (_overviewView == null)
+                        _overviewView = new DashboardView();
+                    else
+                        _overviewView.OnViewVisible();
+
+                    ContentControlApplication.Content = _overviewView;
+                    break;
                 case ApplicationViewManager.Name.NetworkInterface:
                     if (_networkInterfaceView == null)
                         _networkInterfaceView = new NetworkInterfaceView();
                     else
-                        RefreshApplicationView(name);
+                        _networkInterfaceView.OnViewVisible();
 
                     ContentControlApplication.Content = _networkInterfaceView;
                     break;
@@ -450,7 +529,7 @@ namespace NETworkManager
                     if (_ipScannerHostView == null)
                         _ipScannerHostView = new IPScannerHostView();
                     else
-                        RefreshApplicationView(name);
+                        _ipScannerHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _ipScannerHostView;
                     break;
@@ -458,7 +537,7 @@ namespace NETworkManager
                     if (_portScannerHostView == null)
                         _portScannerHostView = new PortScannerHostView();
                     else
-                        RefreshApplicationView(name);
+                        _portScannerHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _portScannerHostView;
                     break;
@@ -466,7 +545,7 @@ namespace NETworkManager
                     if (_pingHostView == null)
                         _pingHostView = new PingHostView();
                     else
-                        RefreshApplicationView(name);
+                        _pingHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _pingHostView;
                     break;
@@ -474,7 +553,7 @@ namespace NETworkManager
                     if (_tracerouteHostView == null)
                         _tracerouteHostView = new TracerouteHostView();
                     else
-                        RefreshApplicationView(name);
+                        _tracerouteHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _tracerouteHostView;
                     break;
@@ -482,7 +561,7 @@ namespace NETworkManager
                     if (_dnsLookupHostView == null)
                         _dnsLookupHostView = new DNSLookupHostView();
                     else
-                        RefreshApplicationView(name);
+                        _dnsLookupHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _dnsLookupHostView;
                     break;
@@ -490,29 +569,39 @@ namespace NETworkManager
                     if (_remoteDesktopHostView == null)
                         _remoteDesktopHostView = new RemoteDesktopHostView();
                     else
-                        RefreshApplicationView(name);
+                        _remoteDesktopHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _remoteDesktopHostView;
+                    break;
+                case ApplicationViewManager.Name.PowerShell:
+                    if (_powerShellHostView == null)
+                        _powerShellHostView = new PowerShellHostView();
+                    else
+                        _powerShellHostView.OnViewVisible();
+
+                    ContentControlApplication.Content = _powerShellHostView;
                     break;
                 case ApplicationViewManager.Name.PuTTY:
                     if (_puttyHostView == null)
                         _puttyHostView = new PuTTYHostView();
                     else
-                        RefreshApplicationView(name);
+                        _puttyHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _puttyHostView;
                     break;
-                case ApplicationViewManager.Name.TightVNC:
-                    if (_tightVncHostView == null)
-                        _tightVncHostView = new TightVNCHostView();
+                case ApplicationViewManager.Name.TigerVNC:
+                    if (_tigerVNCHostView == null)
+                        _tigerVNCHostView = new TigerVNCHostView();
                     else
-                        RefreshApplicationView(name);
+                        _tigerVNCHostView.OnViewVisible();
 
-                    ContentControlApplication.Content = _tightVncHostView;
+                    ContentControlApplication.Content = _tigerVNCHostView;
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     if (_snmpHostView == null)
                         _snmpHostView = new SNMPHostView();
+                    else
+                        _snmpHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _snmpHostView;
                     break;
@@ -520,7 +609,7 @@ namespace NETworkManager
                     if (_wakeOnLanView == null)
                         _wakeOnLanView = new WakeOnLANView();
                     else
-                        RefreshApplicationView(name);
+                        _wakeOnLanView.OnViewVisible();
 
                     ContentControlApplication.Content = _wakeOnLanView;
                     break;
@@ -528,7 +617,7 @@ namespace NETworkManager
                     if (_httpHeadersHostView == null)
                         _httpHeadersHostView = new HTTPHeadersHostView();
                     else
-                        RefreshApplicationView(name);
+                        _httpHeadersHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _httpHeadersHostView;
                     break;
@@ -536,7 +625,7 @@ namespace NETworkManager
                     if (_whoisHostView == null)
                         _whoisHostView = new WhoisHostView();
                     else
-                        RefreshApplicationView(name);
+                        _whoisHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _whoisHostView;
                     break;
@@ -555,18 +644,24 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.Connections:
                     if (_connectionsView == null)
                         _connectionsView = new ConnectionsView();
+                    else
+                        _connectionsView.OnViewVisible();
 
                     ContentControlApplication.Content = _connectionsView;
                     break;
                 case ApplicationViewManager.Name.Listeners:
                     if (_listenersView == null)
                         _listenersView = new ListenersView();
+                    else
+                        _listenersView.OnViewVisible();
 
                     ContentControlApplication.Content = _listenersView;
                     break;
                 case ApplicationViewManager.Name.ARPTable:
                     if (_arpTableView == null)
                         _arpTableView = new ARPTableView();
+                    else
+                        _arpTableView.OnViewVisible();
 
                     ContentControlApplication.Content = _arpTableView;
                     break;
@@ -577,65 +672,6 @@ namespace NETworkManager
             }
 
             _currentApplicationViewName = name;
-        }
-
-        private void RefreshApplicationView(ApplicationViewManager.Name name)
-        {
-            switch (name)
-            {
-                case ApplicationViewManager.Name.NetworkInterface:
-                    _networkInterfaceView.Refresh();
-                    break;
-                case ApplicationViewManager.Name.IPScanner:
-                    _ipScannerHostView.Refresh();
-                    break;
-                case ApplicationViewManager.Name.PortScanner:
-                    _portScannerHostView.Refresh();
-                    break;
-                case ApplicationViewManager.Name.Ping:
-                    _pingHostView.Refresh();
-                    break;
-                case ApplicationViewManager.Name.Traceroute:
-                    _tracerouteHostView.Refresh();
-                    break;
-                case ApplicationViewManager.Name.RemoteDesktop:
-                    _remoteDesktopHostView.Refresh();
-                    break;
-                case ApplicationViewManager.Name.PuTTY:
-                    _puttyHostView.Refresh();
-                    break;
-                case ApplicationViewManager.Name.TightVNC:
-                    _tightVncHostView.Refresh();
-                    break;
-                case ApplicationViewManager.Name.WakeOnLAN:
-                    _wakeOnLanView.Refresh();
-                    break;
-                case ApplicationViewManager.Name.DNSLookup:
-                    _dnsLookupHostView.Refresh();
-                    break;
-                case ApplicationViewManager.Name.SNMP:
-                    break;
-                case ApplicationViewManager.Name.HTTPHeaders:
-                    _httpHeadersHostView.Refresh();
-                    break;
-                case ApplicationViewManager.Name.Whois:
-                    _whoisHostView.Refresh();
-                    break;
-                case ApplicationViewManager.Name.SubnetCalculator:
-                    break;
-                case ApplicationViewManager.Name.Lookup:
-                    break;
-                case ApplicationViewManager.Name.Connections:
-                    break;
-                case ApplicationViewManager.Name.Listeners:
-                    break;
-                case ApplicationViewManager.Name.ARPTable:
-                    break;
-                case ApplicationViewManager.Name.None:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(name), name, null);
-            }
         }
 
         private void ClearSearchOnApplicationListMinimize()
@@ -655,43 +691,109 @@ namespace NETworkManager
             ListViewApplication.ScrollIntoView(SelectedApplication);
         }
 
-        private void EventSystem_RedirectToApplicationEvent(object sender, EventArgs e)
+        // This works, but is currently not used :) 
+        private void EventSystem_RedirectProfileToApplicationEvent(object sender, EventArgs e)
         {
-            if (!(e is EventSystemRedirectApplicationArgs args))
+            if (!(e is EventSystemRedirectProfileApplicationArgs profile))
                 return;
 
             // Change view
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == args.Application);
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == profile.Application);
 
             // Crate a new tab / perform action
-            switch (args.Application)
+            switch (profile.Application)
             {
+                case ApplicationViewManager.Name.None:
+                    break;
+                case ApplicationViewManager.Name.Dashboard:
+                    break;
+                case ApplicationViewManager.Name.NetworkInterface:
+                    break;
                 case ApplicationViewManager.Name.IPScanner:
-                    _ipScannerHostView.AddTab(args.Data);
+                    _ipScannerHostView.AddTab(profile.Profile);
                     break;
                 case ApplicationViewManager.Name.PortScanner:
-                    _portScannerHostView.AddTab(args.Data);
+                    _portScannerHostView.AddTab(profile.Profile);
                     break;
                 case ApplicationViewManager.Name.Ping:
-                    _pingHostView.AddTab(args.Data);
+                    _pingHostView.AddTab(profile.Profile);
                     break;
                 case ApplicationViewManager.Name.Traceroute:
-                    _tracerouteHostView.AddTab(args.Data);
+                    _tracerouteHostView.AddTab(profile.Profile);
                     break;
                 case ApplicationViewManager.Name.DNSLookup:
-                    _dnsLookupHostView.AddTab(args.Data);
                     break;
                 case ApplicationViewManager.Name.RemoteDesktop:
-                    _remoteDesktopHostView.AddTab(args.Data);
+                    break;
+                case ApplicationViewManager.Name.PowerShell:
                     break;
                 case ApplicationViewManager.Name.PuTTY:
-                    _puttyHostView.AddTab(args.Data);
                     break;
-                case ApplicationViewManager.Name.TightVNC:
-                    _tightVncHostView.AddTab(args.Data);
+                case ApplicationViewManager.Name.TigerVNC:
                     break;
                 case ApplicationViewManager.Name.SNMP:
-                    _snmpHostView.AddTab(args.Data);
+                    break;
+                case ApplicationViewManager.Name.WakeOnLAN:
+                    break;
+                case ApplicationViewManager.Name.HTTPHeaders:
+                    break;
+                case ApplicationViewManager.Name.Whois:
+                    break;
+                case ApplicationViewManager.Name.SubnetCalculator:
+                    break;
+                case ApplicationViewManager.Name.Lookup:
+                    break;
+                case ApplicationViewManager.Name.Connections:
+                    break;
+                case ApplicationViewManager.Name.Listeners:
+                    break;
+                case ApplicationViewManager.Name.ARPTable:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void EventSystem_RedirectDataToApplicationEvent(object sender, EventArgs e)
+        {
+            if (!(e is EventSystemRedirectDataApplicationArgs data))
+                return;
+
+            // Change view
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == data.Application);
+
+            // Crate a new tab / perform action
+            switch (data.Application)
+            {
+                case ApplicationViewManager.Name.IPScanner:
+                    _ipScannerHostView.AddTab(data.Args);
+                    break;
+                case ApplicationViewManager.Name.PortScanner:
+                    _portScannerHostView.AddTab(data.Args);
+                    break;
+                case ApplicationViewManager.Name.Ping:
+                    _pingHostView.AddTab(data.Args);
+                    break;
+                case ApplicationViewManager.Name.Traceroute:
+                    _tracerouteHostView.AddTab(data.Args);
+                    break;
+                case ApplicationViewManager.Name.DNSLookup:
+                    _dnsLookupHostView.AddTab(data.Args);
+                    break;
+                case ApplicationViewManager.Name.RemoteDesktop:
+                    _remoteDesktopHostView.AddTab(data.Args);
+                    break;
+                case ApplicationViewManager.Name.PowerShell:
+                    _powerShellHostView.AddTab(data.Args);
+                    break;
+                case ApplicationViewManager.Name.PuTTY:
+                    _puttyHostView.AddTab(data.Args);
+                    break;
+                case ApplicationViewManager.Name.TigerVNC:
+                    _tigerVNCHostView.AddTab(data.Args);
+                    break;
+                case ApplicationViewManager.Name.SNMP:
+                    _snmpHostView.AddTab(data.Args);
                     break;
                 case ApplicationViewManager.Name.NetworkInterface:
                     break;
@@ -777,7 +879,7 @@ namespace NETworkManager
                 settings.NegativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                ConfigurationManager.Current.IsDialogOpen = true;
+                ConfigurationManager.Current.FixAirspace = true;
 
                 if (await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.RestartRequired, NETworkManager.Resources.Localization.Strings.RestartRequiredSettingsChangedMessage, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
                 {
@@ -785,7 +887,7 @@ namespace NETworkManager
                     return;
                 }
 
-                ConfigurationManager.Current.IsDialogOpen = false;
+                ConfigurationManager.Current.FixAirspace = false;
             }
 
             // Change the transparency
@@ -811,7 +913,7 @@ namespace NETworkManager
                 SettingsManager.Save();
 
             // Refresh the view
-            RefreshApplicationView(SelectedApplication.Name);
+            ChangeApplicationView(SelectedApplication.Name, true);
         }
         #endregion
 
@@ -862,7 +964,7 @@ namespace NETworkManager
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
             UpdateText = string.Format(NETworkManager.Resources.Localization.Strings.VersionxxIsAvailable, e.Version);
-            UpdateAvailable = true;
+            IsUpdateAvailable = true;
         }
         #endregion
 
@@ -996,6 +1098,9 @@ namespace NETworkManager
         {
             switch (SelectedApplication.Name)
             {
+                case ApplicationViewManager.Name.Dashboard:
+                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationDashboard);
+                    break;
                 case ApplicationViewManager.Name.NetworkInterface:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationNetworkInterface);
                     break;
@@ -1017,11 +1122,14 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.RemoteDesktop:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationRemoteDesktop);
                     break;
+                case ApplicationViewManager.Name.PowerShell:
+                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationPowerShell);
+                    break;
                 case ApplicationViewManager.Name.PuTTY:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationPutty);
                     break;
-                case ApplicationViewManager.Name.TightVNC:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationTightVNC);
+                case ApplicationViewManager.Name.TigerVNC:
+                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationTigerVNC);
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationSnmp);
@@ -1067,6 +1175,7 @@ namespace NETworkManager
         private void OpenApplicationListAction()
         {
             IsApplicationListOpen = true;
+            TextBoxSearch.Focus();
         }
 
         public ICommand OpenSettingsCommand
@@ -1149,7 +1258,7 @@ namespace NETworkManager
 
         private void ApplicationListMouseLeaveAction()
         {
-            // Don't minmize the list, if the user has accidently mouved the mouse while searching
+            // Don't minmize the list, if the user has accidently moved the mouse while searching
             if (!IsTextBoxSearchFocused)
                 IsApplicationListOpen = false;
 
@@ -1193,8 +1302,7 @@ namespace NETworkManager
         #region Events
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.Window_ShowCurrentApplicationTitle))
-                OnPropertyChanged(nameof(ShowCurrentApplicationTitle));
+
         }
         #endregion
 

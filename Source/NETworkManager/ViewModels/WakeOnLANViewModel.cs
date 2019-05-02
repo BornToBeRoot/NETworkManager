@@ -7,14 +7,14 @@ using System;
 using NETworkManager.Models.Network;
 using System.ComponentModel;
 using System.Windows.Data;
-using NETworkManager.Views;
 using NETworkManager.Utilities;
 using System.Threading.Tasks;
 using System.Linq;
+using MahApps.Metro.Controls;
 
 namespace NETworkManager.ViewModels
 {
-    public class WakeOnLANViewModel : ViewModelBase
+    public class WakeOnLANViewModel : ViewModelBase, IProfileViewModel
     {
         #region  Variables 
         private readonly IDialogCoordinator _dialogCoordinator;
@@ -163,7 +163,7 @@ namespace NETworkManager.ViewModels
                 {
                     MACAddress = value.WakeOnLAN_MACAddress;
                     Broadcast = value.WakeOnLAN_Broadcast;
-                    Port = value.WakeOnLAN_Port;
+                    Port = value.WakeOnLAN_OverridePort ? value.WakeOnLAN_Port : SettingsManager.Current.WakeOnLAN_Port;
                 }
 
                 _selectedProfile = value;
@@ -182,7 +182,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                Profiles.Refresh();
+                RefreshProfiles();
 
                 OnPropertyChanged();
             }
@@ -221,7 +221,7 @@ namespace NETworkManager.ViewModels
                 if (value == _profileWidth)
                     return;
 
-                if (!_isLoading && value.Value != 40) // Do not save the size when collapsed
+                if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
                     SettingsManager.Current.WakeOnLAN_ClientWidth = value.Value;
 
                 _profileWidth = value;
@@ -260,7 +260,7 @@ namespace NETworkManager.ViewModels
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
                     return !string.IsNullOrEmpty(info.Tags) && info.WakeOnLAN_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
-                // Search by: Name, IPScanner_IPRange
+                // Search by: Name, WakeOnLAN_MACAddress
                 return info.WakeOnLAN_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.WakeOnLAN_MACAddress.Replace("-", "").Replace(":", "").IndexOf(search.Replace("-", "").Replace(":", ""), StringComparison.OrdinalIgnoreCase) > -1);
             };
 
@@ -278,22 +278,16 @@ namespace NETworkManager.ViewModels
             Port = SettingsManager.Current.WakeOnLAN_Port;
             ExpandProfileView = SettingsManager.Current.WakeOnLAN_ExpandClientView;
 
-            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth) : new GridLength(40);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
             _tempProfileWidth = SettingsManager.Current.WakeOnLAN_ClientWidth;
         }
         #endregion
 
         #region ICommands & Actions
-        public ICommand WakeUpCommand
-        {
-            get { return new RelayCommand(p => WakeUpAction(), WakeUpAction_CanExecute); }
-        }
+        public ICommand WakeUpCommand => new RelayCommand(p => WakeUpAction(), WakeUpAction_CanExecute);
 
-        private bool WakeUpAction_CanExecute(object parameter)
-        {
-            return !MACAddressHasError && !BroadcastHasError && !PortHasError;
-        }
+        private bool WakeUpAction_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !MACAddressHasError && !BroadcastHasError && !PortHasError;
 
         private void WakeUpAction()
         {
@@ -307,178 +301,49 @@ namespace NETworkManager.ViewModels
             WakeUp(info);
         }
 
-        public ICommand WakeUpProfileCommand
-        {
-            get { return new RelayCommand(p => WakeUpProfileAction()); }
-        }
+        public ICommand WakeUpProfileCommand => new RelayCommand(p => WakeUpProfileAction());
 
         private void WakeUpProfileAction()
         {
-            var info = new WakeOnLANInfo
-            {
-                MagicPacket = WakeOnLAN.CreateMagicPacket(SelectedProfile.WakeOnLAN_MACAddress),
-                Broadcast = IPAddress.Parse(SelectedProfile.WakeOnLAN_Broadcast),
-                Port = SelectedProfile.WakeOnLAN_Port
-            };
-
-            WakeUp(info);
+            WakeUp(WakeOnLAN.CreateWakeOnLANInfo(SelectedProfile));
         }
 
-        public ICommand AddProfileCommand
+        public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+
+        private void AddProfileAction()
         {
-            get { return new RelayCommand(p => AddProfileAction()); }
+            ProfileManager.ShowAddProfileDialog(this, _dialogCoordinator);
         }
 
-        private async void AddProfileAction()
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
+
+        private void EditProfileAction()
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.AddProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups());
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            ProfileManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        public ICommand EditProfileCommand
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
+
+        private void CopyAsProfileAction()
         {
-            get { return new RelayCommand(p => EditProfileAction()); }
+            ProfileManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        private async void EditProfileAction()
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
+
+        private void DeleteProfileAction()
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.EditProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.RemoveProfile(SelectedProfile);
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(),true, SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand CopyAsProfileCommand
-        {
-            get { return new RelayCommand(p => CopyAsProfileAction()); }
-        }
-
-        private async void CopyAsProfileAction()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.CopyProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), false, SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand DeleteProfileCommand
-        {
-            get { return new RelayCommand(p => DeleteProfileAction()); }
-        }
-
-        private async void DeleteProfileAction()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.DeleteProfile
-            };
-
-            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.RemoveProfile(SelectedProfile);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Resources.Localization.Strings.DeleteProfileMessage);
-
-            customDialog.Content = new ConfirmRemoveDialog
-            {
-                DataContext = confirmRemoveViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            ProfileManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
-        private async void EditGroupAction(object group)
+        private void EditGroupAction(object group)
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.EditGroup
-            };
-
-            var editGroupViewModel = new GroupViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
-
-                Refresh();
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, group.ToString(), ProfileManager.GetGroups());
-
-            customDialog.Content = new GroupDialog
-            {
-                DataContext = editGroupViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
 
-        public ICommand ClearSearchCommand
-        {
-            get { return new RelayCommand(p => ClearSearchAction()); }
-        }
+        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
         {
@@ -518,28 +383,47 @@ namespace NETworkManager.ViewModels
 
             if (dueToChangedSize)
             {
-                ExpandProfileView = ProfileWidth.Value != 40;
+                ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix;
             }
             else
             {
                 if (ExpandProfileView)
                 {
-                    ProfileWidth = _tempProfileWidth == 40 ? new GridLength(250) : new GridLength(_tempProfileWidth);
+                    ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {
                     _tempProfileWidth = ProfileWidth.Value;
-                    ProfileWidth = new GridLength(40);
+                    ProfileWidth = new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
                 }
             }
 
             _canProfileWidthChange = true;
         }
 
-        public void Refresh()
+        public void OnViewVisible()
         {
-            // Refresh profiles
+            RefreshProfiles();
+        }
+
+        public void OnViewHide()
+        {
+
+        }
+
+        public void RefreshProfiles()
+        {
             Profiles.Refresh();
+        }
+
+        public void OnProfileDialogOpen()
+        {
+
+        }
+
+        public void OnProfileDialogClose()
+        {
+
         }
         #endregion
     }

@@ -126,9 +126,6 @@ namespace NETworkManager.ViewModels
             _isLoading = false;
         }
 
-        public void HasDNSServerInfoChanged()
-        {
-            DNSServerInfoChanged = _dnsServerInfo.Name != null || _previousDNSServerAsString != DNSServer ||_dnsServerInfo.Port != Port;
-        }
+        public void HasDNSServerInfoChanged() => DNSServerInfoChanged = _dnsServerInfo.Name != null || _previousDNSServerAsString != DNSServer || _dnsServerInfo.Port != Port;
     }
 }

@@ -275,10 +275,10 @@ namespace NETworkManager.ViewModels
             ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
             Recursion = SettingsManager.Current.DNSLookup_Recursion;
             UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
-            Classes = Enum.GetValues(typeof(QClass)).Cast<QClass>().OrderBy(x => x.ToString()).ToList();
+            Classes = System.Enum.GetValues(typeof(QClass)).Cast<QClass>().OrderBy(x => x.ToString()).ToList();
             Class = Classes.First(x => x == SettingsManager.Current.DNSLookup_Class);
             ShowMostCommonQueryTypes = SettingsManager.Current.DNSLookup_ShowMostCommonQueryTypes;
-            TransportTypes = Enum.GetValues(typeof(TransportType)).Cast<TransportType>().OrderBy(x => x.ToString()).ToList();
+            TransportTypes = System.Enum.GetValues(typeof(TransportType)).Cast<TransportType>().OrderBy(x => x.ToString()).ToList();
             TransportType = TransportTypes.First(x => x == SettingsManager.Current.DNSLookup_TransportType);
             Attempts = SettingsManager.Current.DNSLookup_Attempts;
             Timeout = SettingsManager.Current.DNSLookup_Timeout;
@@ -287,30 +287,21 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddDNSServerCommand
-        {
-            get { return new RelayCommand(p => AddDNSServerAction()); }
-        }
+        public ICommand AddDNSServerCommand => new RelayCommand(p => AddDNSServerAction());
 
         private void AddDNSServerAction()
         {
             AddDNSServer();
         }
 
-        public ICommand EditDNSServerCommand
-        {
-            get { return new RelayCommand(p => EditDNSServerAction()); }
-        }
+        public ICommand EditDNSServerCommand => new RelayCommand(p => EditDNSServerAction());
 
         private void EditDNSServerAction()
         {
             EditDNSServer();
         }
 
-        public ICommand DeleteDNSServerCommand
-        {
-            get { return new RelayCommand(p => DeleteDNSServerAction()); }
-        }
+        public ICommand DeleteDNSServerCommand => new RelayCommand(p => DeleteDNSServerAction());
 
         private void DeleteDNSServerAction()
         {

@@ -1,11 +1,12 @@
 ﻿using NETworkManager.ViewModels;
 using System.Windows.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Views
 {
     public partial class ListenersView
     {
-        private readonly ListenersViewModel _viewModel = new ListenersViewModel();
+        private readonly ListenersViewModel _viewModel = new ListenersViewModel(DialogCoordinator.Instance);
 
         public ListenersView()
         {
@@ -17,6 +18,16 @@ namespace NETworkManager.Views
         {
             if (sender is ContextMenu menu)
                 menu.DataContext = _viewModel;
+        }
+
+        public void OnViewHide()
+        {
+            _viewModel.OnViewHide();
+        }
+
+        public void OnViewVisible()
+        {
+             _viewModel.OnViewVisible();
         }
     }
 }

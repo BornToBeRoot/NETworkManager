@@ -4,9 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Windows.Data;
 using System.Windows.Input;
+using NETworkManager.Models.PowerShell;
+using NETworkManager.Enum;
 using static NETworkManager.Models.PuTTY.PuTTY;
+using NETworkManager.Models.RemoteDesktop;
 // ReSharper disable InconsistentNaming
 
 namespace NETworkManager.ViewModels
@@ -15,6 +20,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly bool _isLoading;
+        public ICollectionView ProfileViews { get; }
 
         #region General
         private string _name;
@@ -27,10 +33,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _name = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -45,10 +47,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _host = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -63,10 +61,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _credentialID = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -83,10 +77,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _group = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -103,24 +93,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _tags = value;
-
-                if (!_isLoading)
-                    Validate();
-
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isTabEnabled;
-        public bool IsTabEnabled
-        {
-            get => _isTabEnabled;
-            set
-            {
-                if (value == _isTabEnabled)
-                    return;
-
-                _isTabEnabled = value;
                 OnPropertyChanged();
             }
         }
@@ -138,20 +110,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private bool _isEdited;
-        public bool IsEdited
-        {
-            get => _isEdited;
-            set
-            {
-                if (value == _isEdited)
-                    return;
-
-                _isEdited = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #region Network Interface
@@ -165,9 +123,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -183,10 +138,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_EnableDynamicIPAddress = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -204,10 +155,6 @@ namespace NETworkManager.ViewModels
                     NetworkInterface_EnableStaticDNS = true;
 
                 _networkInterface_EnableStaticIPAddress = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -222,10 +169,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_IPAddress = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -240,10 +183,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_SubnetmaskOrCidr = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -258,10 +197,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_Gateway = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -276,10 +211,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_EnableDynamicDNS = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -294,10 +225,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_EnableStaticDNS = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -312,10 +239,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_PrimaryDNSServer = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -330,17 +253,12 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networkInterface_SecondaryDNSServer = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region IP Scanner
-
         private bool _ipScanner_Enabled;
         public bool IPScanner_Enabled
         {
@@ -351,9 +269,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _ipScanner_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -369,28 +284,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _ipScanner_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
 
-        private string _ipScanner_IPRange;
-        public string IPScanner_IPRange
+        private string _ipScanner_HostOrIPRange;
+        public string IPScanner_HostOrIPRange
         {
-            get => _ipScanner_IPRange;
+            get => _ipScanner_HostOrIPRange;
             set
             {
-                if (value == _ipScanner_IPRange)
+                if (value == _ipScanner_HostOrIPRange)
                     return;
 
-                _ipScanner_IPRange = value;
-
-                if (!_isLoading)
-                    Validate();
-
+                _ipScanner_HostOrIPRange = value;
                 OnPropertyChanged();
             }
         }
@@ -398,7 +305,6 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Port Scanner
-
         private bool _portScanner_Enabled;
         public bool PortScanner_Enabled
         {
@@ -409,9 +315,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _portScanner_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -427,10 +330,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _portScanner_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -445,10 +344,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _portScanner_Host = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -463,10 +358,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _portScanner_Ports = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -485,9 +376,6 @@ namespace NETworkManager.ViewModels
 
                 _ping_Enabled = value;
 
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -502,10 +390,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _ping_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -520,10 +404,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _ping_Host = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -542,9 +422,6 @@ namespace NETworkManager.ViewModels
 
                 _traceroute_Enabled = value;
 
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -559,10 +436,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _traceroute_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -577,10 +450,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _traceroute_Host = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -599,9 +468,6 @@ namespace NETworkManager.ViewModels
 
                 _dnsLookup_Enabled = value;
 
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -616,10 +482,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _dnsLookup_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -634,16 +496,12 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _dnsLookup_Host = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
         #endregion
 
-        #region RemoteDesktop
+        #region Remote Desktop
         private bool _remoteDesktop_Enabled;
         public bool RemoteDesktop_Enabled
         {
@@ -654,9 +512,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -672,10 +527,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -690,14 +541,807 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_Host = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideDisplay;
+        public bool RemoteDesktop_OverrideDisplay
+        {
+            get => _remoteDesktop_OverrideDisplay;
+            set
+            {
+                if (value == _remoteDesktop_OverrideDisplay)
+                    return;
+
+                _remoteDesktop_OverrideDisplay = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_AdjustScreenAutomatically;
+        public bool RemoteDesktop_AdjustScreenAutomatically
+        {
+            get => _remoteDesktop_AdjustScreenAutomatically;
+            set
+            {
+                if (value == _remoteDesktop_AdjustScreenAutomatically)
+                    return;
+
+                _remoteDesktop_AdjustScreenAutomatically = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_UseCurrentViewSize;
+        public bool RemoteDesktop_UseCurrentViewSize
+        {
+            get => _remoteDesktop_UseCurrentViewSize;
+            set
+            {
+                if (value == _remoteDesktop_UseCurrentViewSize)
+                    return;
+
+                _remoteDesktop_UseCurrentViewSize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_UseFixedScreenSize;
+        public bool RemoteDesktop_UseFixedScreenSize
+        {
+            get => _remoteDesktop_UseFixedScreenSize;
+            set
+            {
+                if (value == _remoteDesktop_UseFixedScreenSize)
+                    return;
+
+                _remoteDesktop_UseFixedScreenSize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<string> RemoteDesktop_ScreenResolutions => RemoteDesktop.ScreenResolutions;
+
+        public int RemoteDesktop_ScreenWidth;
+        public int RemoteDesktop_ScreenHeight;
+
+        private string _remoteDesktop_SelectedScreenResolution;
+        public string RemoteDesktop_SelectedScreenResolution
+        {
+            get => _remoteDesktop_SelectedScreenResolution;
+            set
+            {
+                if (value == _remoteDesktop_SelectedScreenResolution)
+                    return;
+
+                var resolution = value.Split('x');
+
+                RemoteDesktop_ScreenWidth = int.Parse(resolution[0]);
+                RemoteDesktop_ScreenHeight = int.Parse(resolution[1]);
+
+                _remoteDesktop_SelectedScreenResolution = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_UseCustomScreenSize;
+        public bool RemoteDesktop_UseCustomScreenSize
+        {
+            get => _remoteDesktop_UseCustomScreenSize;
+            set
+            {
+                if (value == _remoteDesktop_UseCustomScreenSize)
+                    return;
+
+                _remoteDesktop_UseCustomScreenSize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _remoteDesktop_CustomScreenWidth;
+        public string RemoteDesktop_CustomScreenWidth
+        {
+            get => _remoteDesktop_CustomScreenWidth;
+            set
+            {
+                if (value == _remoteDesktop_CustomScreenWidth)
+                    return;
+
+                _remoteDesktop_CustomScreenWidth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _remoteDesktop_CustomScreenHeight;
+        public string RemoteDesktop_CustomScreenHeight
+        {
+            get => _remoteDesktop_CustomScreenHeight;
+            set
+            {
+                if (value == _remoteDesktop_CustomScreenHeight)
+                    return;
+
+                _remoteDesktop_CustomScreenHeight = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideColorDepth;
+        public bool RemoteDesktop_OverrideColorDepth
+        {
+            get => _remoteDesktop_OverrideColorDepth;
+            set
+            {
+                if (value == _remoteDesktop_OverrideColorDepth)
+                    return;
+
+                _remoteDesktop_OverrideColorDepth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<int> RemoteDesktop_ColorDepths => RemoteDesktop.ColorDepths;
+
+        private int _remoteDesktop_SelectedColorDepth;
+        public int RemoteDesktop_SelectedColorDepth
+        {
+            get => _remoteDesktop_SelectedColorDepth;
+            set
+            {
+                if (value == _remoteDesktop_SelectedColorDepth)
+                    return;
+
+                _remoteDesktop_SelectedColorDepth = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverridePort;
+        public bool RemoteDesktop_OverridePort
+        {
+            get => _remoteDesktop_OverridePort;
+            set
+            {
+                if (value == _remoteDesktop_OverridePort)
+                    return;
+
+                _remoteDesktop_OverridePort = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _remoteDesktop_Port;
+        public int RemoteDesktop_Port
+        {
+            get => _remoteDesktop_Port;
+            set
+            {
+                if (value == _remoteDesktop_Port)
+                    return;
+
+                _remoteDesktop_Port = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideCredSspSupport;
+        public bool RemoteDesktop_OverrideCredSspSupport
+        {
+            get => _remoteDesktop_OverrideCredSspSupport;
+            set
+            {
+                if (value == _remoteDesktop_OverrideCredSspSupport)
+                    return;
+
+                _remoteDesktop_OverrideCredSspSupport = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_EnableCredSspSupport;
+        public bool RemoteDesktop_EnableCredSspSupport
+        {
+            get => _remoteDesktop_EnableCredSspSupport;
+            set
+            {
+                if (value == _remoteDesktop_EnableCredSspSupport)
+                    return;
+
+                _remoteDesktop_EnableCredSspSupport = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideAuthenticationLevel;
+        public bool RemoteDesktop_OverrideAuthenticationLevel
+        {
+            get => _remoteDesktop_OverrideAuthenticationLevel;
+            set
+            {
+                if (value == _remoteDesktop_OverrideAuthenticationLevel)
+                    return;
+
+                _remoteDesktop_OverrideAuthenticationLevel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private uint _remoteDesktop_AuthenticationLevel;
+        public uint RemoteDesktop_AuthenticationLevel
+        {
+            get => _remoteDesktop_AuthenticationLevel;
+            set
+            {
+                if (value == _remoteDesktop_AuthenticationLevel)
+                    return;
+
+                _remoteDesktop_AuthenticationLevel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideAudioRedirectionMode;
+        public bool RemoteDesktop_OverrideAudioRedirectionMode
+        {
+            get => _remoteDesktop_OverrideAudioRedirectionMode;
+            set
+            {
+                if (value == _remoteDesktop_OverrideAudioRedirectionMode)
+                    return;
+
+                _remoteDesktop_OverrideAudioRedirectionMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IEnumerable<RemoteDesktop.AudioRedirectionMode> RemoteDesktop_AudioRedirectionModes => System.Enum.GetValues(typeof(RemoteDesktop.AudioRedirectionMode)).Cast<RemoteDesktop.AudioRedirectionMode>();
+
+        private RemoteDesktop.AudioRedirectionMode _remoteDesktop_AudioRedirectionMode;
+        public RemoteDesktop.AudioRedirectionMode RemoteDesktop_AudioRedirectionMode
+        {
+            get => _remoteDesktop_AudioRedirectionMode;
+            set
+            {
+                if (Equals(value, _remoteDesktop_AudioRedirectionMode))
+                    return;
+
+                _remoteDesktop_AudioRedirectionMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private bool _remoteDesktop_OverrideAudioCaptureRedirectionMode;
+        public bool RemoteDesktop_OverrideAudioCaptureRedirectionMode
+        {
+            get => _remoteDesktop_OverrideAudioCaptureRedirectionMode;
+            set
+            {
+                if (value == _remoteDesktop_OverrideAudioCaptureRedirectionMode)
+                    return;
+
+                _remoteDesktop_OverrideAudioCaptureRedirectionMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IEnumerable<RemoteDesktop.AudioCaptureRedirectionMode> RemoteDesktop_AudioCaptureRedirectionModes => System.Enum.GetValues(typeof(RemoteDesktop.AudioCaptureRedirectionMode)).Cast<RemoteDesktop.AudioCaptureRedirectionMode>();
+
+        private RemoteDesktop.AudioCaptureRedirectionMode _remoteDesktop_AudioCaptureRedirectionMode;
+        public RemoteDesktop.AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode
+        {
+            get => _remoteDesktop_AudioCaptureRedirectionMode;
+            set
+            {
+                if (Equals(value, _remoteDesktop_AudioCaptureRedirectionMode))
+                    return;
+
+                _remoteDesktop_AudioCaptureRedirectionMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private bool _remoteDesktop_OverrideApplyWindowsKeyCombinations;
+        public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations
+        {
+            get => _remoteDesktop_OverrideApplyWindowsKeyCombinations;
+            set
+            {
+                if (value == _remoteDesktop_OverrideApplyWindowsKeyCombinations)
+                    return;
+
+                _remoteDesktop_OverrideApplyWindowsKeyCombinations = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IEnumerable<RemoteDesktop.KeyboardHookMode> RemoteDesktop_KeyboardHookModes => System.Enum.GetValues(typeof(RemoteDesktop.KeyboardHookMode)).Cast<RemoteDesktop.KeyboardHookMode>();
+
+        private RemoteDesktop.KeyboardHookMode _remoteDesktop_KeyboardHookMode;
+        public RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode
+        {
+            get => _remoteDesktop_KeyboardHookMode;
+            set
+            {
+                if (Equals(value, _remoteDesktop_KeyboardHookMode))
+                    return;
+
+                _remoteDesktop_KeyboardHookMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideRedirectClipboard;
+        public bool RemoteDesktop_OverrideRedirectClipboard
+        {
+            get => _remoteDesktop_OverrideRedirectClipboard;
+            set
+            {
+                if (value == _remoteDesktop_OverrideRedirectClipboard)
+                    return;
+
+                _remoteDesktop_OverrideRedirectClipboard = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_RedirectClipboard;
+        public bool RemoteDesktop_RedirectClipboard
+        {
+            get => _remoteDesktop_RedirectClipboard;
+            set
+            {
+                if (value == _remoteDesktop_RedirectClipboard)
+                    return;
+
+                _remoteDesktop_RedirectClipboard = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideRedirectDevices;
+        public bool RemoteDesktop_OverrideRedirectDevices
+        {
+            get => _remoteDesktop_OverrideRedirectDevices;
+            set
+            {
+                if (value == _remoteDesktop_OverrideRedirectDevices)
+                    return;
+
+                _remoteDesktop_OverrideRedirectDevices = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_RedirectDevices;
+        public bool RemoteDesktop_RedirectDevices
+        {
+            get => _remoteDesktop_RedirectDevices;
+            set
+            {
+                if (value == _remoteDesktop_RedirectDevices)
+                    return;
+
+                _remoteDesktop_RedirectDevices = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideRedirectDrives;
+        public bool RemoteDesktop_OverrideRedirectDrives
+        {
+            get => _remoteDesktop_OverrideRedirectDrives;
+            set
+            {
+                if (value == _remoteDesktop_OverrideRedirectDrives)
+                    return;
+
+                _remoteDesktop_OverrideRedirectDrives = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_RedirectDrives;
+        public bool RemoteDesktop_RedirectDrives
+        {
+            get => _remoteDesktop_RedirectDrives;
+            set
+            {
+                if (value == _remoteDesktop_RedirectDrives)
+                    return;
+
+                _remoteDesktop_RedirectDrives = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideRedirectPorts;
+        public bool RemoteDesktop_OverrideRedirectPorts
+        {
+            get => _remoteDesktop_OverrideRedirectPorts;
+            set
+            {
+                if (value == _remoteDesktop_OverrideRedirectPorts)
+                    return;
+
+                _remoteDesktop_OverrideRedirectPorts = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_RedirectPorts;
+        public bool RemoteDesktop_RedirectPorts
+        {
+            get => _remoteDesktop_RedirectPorts;
+            set
+            {
+                if (value == _remoteDesktop_RedirectPorts)
+                    return;
+
+                _remoteDesktop_RedirectPorts = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideRedirectSmartcards;
+        public bool RemoteDesktop_OverrideRedirectSmartcards
+        {
+            get => _remoteDesktop_OverrideRedirectSmartcards;
+            set
+            {
+                if (value == _remoteDesktop_OverrideRedirectSmartcards)
+                    return;
+
+                _remoteDesktop_OverrideRedirectSmartcards = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_RedirectSmartCards;
+        public bool RemoteDesktop_RedirectSmartCards
+        {
+            get => _remoteDesktop_RedirectSmartCards;
+            set
+            {
+                if (value == _remoteDesktop_RedirectSmartCards)
+                    return;
+
+                _remoteDesktop_RedirectSmartCards = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideRedirectPrinters;
+        public bool RemoteDesktop_OverrideRedirectPrinters
+        {
+            get => _remoteDesktop_OverrideRedirectPrinters;
+            set
+            {
+                if (value == _remoteDesktop_OverrideRedirectPrinters)
+                    return;
+
+                _remoteDesktop_OverrideRedirectPrinters = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_RedirectPrinters;
+        public bool RemoteDesktop_RedirectPrinters
+        {
+            get => _remoteDesktop_RedirectPrinters;
+            set
+            {
+                if (value == _remoteDesktop_RedirectPrinters)
+                    return;
+
+                _remoteDesktop_RedirectPrinters = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverridePersistentBitmapCaching;
+        public bool RemoteDesktop_OverridePersistentBitmapCaching
+        {
+            get => _remoteDesktop_OverridePersistentBitmapCaching;
+            set
+            {
+                if (value == _remoteDesktop_OverridePersistentBitmapCaching)
+                    return;
+
+                _remoteDesktop_OverridePersistentBitmapCaching = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_PersistentBitmapCaching;
+        public bool RemoteDesktop_PersistentBitmapCaching
+        {
+            get => _remoteDesktop_PersistentBitmapCaching;
+            set
+            {
+                if (value == _remoteDesktop_PersistentBitmapCaching)
+                    return;
+
+                _remoteDesktop_PersistentBitmapCaching = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+        public bool RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped
+        {
+            get => _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+            set
+            {
+                if (value == _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped)
+                    return;
+
+                _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_ReconnectIfTheConnectionIsDropped;
+        public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped
+        {
+            get => _remoteDesktop_ReconnectIfTheConnectionIsDropped;
+            set
+            {
+                if (value == _remoteDesktop_ReconnectIfTheConnectionIsDropped)
+                    return;
+
+                _remoteDesktop_ReconnectIfTheConnectionIsDropped = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_OverrideNetworkConnectionType;
+        public bool RemoteDesktop_OverrideNetworkConnectionType
+        {
+            get => _remoteDesktop_OverrideNetworkConnectionType;
+            set
+            {
+                if (value == _remoteDesktop_OverrideNetworkConnectionType)
+                    return;
+
+                _remoteDesktop_OverrideNetworkConnectionType = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IEnumerable<RemoteDesktop.NetworkConnectionType> RemoteDesktop_NetworkConnectionTypes => System.Enum.GetValues(typeof(RemoteDesktop.NetworkConnectionType)).Cast<RemoteDesktop.NetworkConnectionType>();
+
+        private RemoteDesktop.NetworkConnectionType _remoteDesktop_NetworkConnectionType;
+        public RemoteDesktop.NetworkConnectionType RemoteDesktop_NetworkConnectionType
+        {
+            get => _remoteDesktop_NetworkConnectionType;
+            set
+            {
+                if (Equals(value, _remoteDesktop_NetworkConnectionType))
+                    return;
 
                 if (!_isLoading)
-                    Validate();
+                    ChangeNetworkConnectionTypeSettings(value);
+
+                _remoteDesktop_NetworkConnectionType = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_DesktopBackground;
+        public bool RemoteDesktop_DesktopBackground
+        {
+            get => _remoteDesktop_DesktopBackground;
+            set
+            {
+                if (value == _remoteDesktop_DesktopBackground)
+                    return;
+
+                _remoteDesktop_DesktopBackground = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_FontSmoothing;
+        public bool RemoteDesktop_FontSmoothing
+        {
+            get => _remoteDesktop_FontSmoothing;
+            set
+            {
+                if (value == _remoteDesktop_FontSmoothing)
+                    return;
+
+                _remoteDesktop_FontSmoothing = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_DesktopComposition;
+        public bool RemoteDesktop_DesktopComposition
+        {
+            get => _remoteDesktop_DesktopComposition;
+            set
+            {
+                if (value == _remoteDesktop_DesktopComposition)
+                    return;
+
+                _remoteDesktop_DesktopComposition = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_ShowWindowContentsWhileDragging;
+        public bool RemoteDesktop_ShowWindowContentsWhileDragging
+        {
+            get => _remoteDesktop_ShowWindowContentsWhileDragging;
+            set
+            {
+                if (value == _remoteDesktop_ShowWindowContentsWhileDragging)
+                    return;
+
+                _remoteDesktop_ShowWindowContentsWhileDragging = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_MenuAndWindowAnimation;
+        public bool RemoteDesktop_MenuAndWindowAnimation
+        {
+            get => _remoteDesktop_MenuAndWindowAnimation;
+            set
+            {
+                if (value == _remoteDesktop_MenuAndWindowAnimation)
+                    return;
+
+                _remoteDesktop_MenuAndWindowAnimation = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_VisualStyles;
+        public bool RemoteDesktop_VisualStyles
+        {
+            get => _remoteDesktop_VisualStyles;
+            set
+            {
+                if (value == _remoteDesktop_VisualStyles)
+                    return;
+
+                _remoteDesktop_VisualStyles = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region PowerShell
+        private bool _powerShell_Enabled;
+        public bool PowerShell_Enabled
+        {
+            get => _powerShell_Enabled;
+            set
+            {
+                if (value == _powerShell_Enabled)
+                    return;
+
+                _powerShell_Enabled = value;
 
                 OnPropertyChanged();
             }
         }
 
+        private bool _powerShell_EnableRemoteConsole;
+        public bool PowerShell_EnableRemoteConsole
+        {
+            get => _powerShell_EnableRemoteConsole;
+            set
+            {
+                if (value == _powerShell_EnableRemoteConsole)
+                    return;
+
+                _powerShell_EnableRemoteConsole = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _powerShell_InheritHost;
+        public bool PowerShell_InheritHost
+        {
+            get => _powerShell_InheritHost;
+            set
+            {
+                if (value == _powerShell_InheritHost)
+                    return;
+
+                _powerShell_InheritHost = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _powerShell_Host;
+        public string PowerShell_Host
+        {
+            get => _powerShell_Host;
+            set
+            {
+                if (value == _powerShell_Host)
+                    return;
+
+                _powerShell_Host = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _powerShell_OverrideAdditionalCommandLine;
+        public bool PowerShell_OverrideAdditionalCommandLine
+        {
+            get => _powerShell_OverrideAdditionalCommandLine;
+            set
+            {
+                if (value == _powerShell_OverrideAdditionalCommandLine)
+                    return;
+
+                _powerShell_OverrideAdditionalCommandLine = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _powerShell_AdditionalCommandLine;
+        public string PowerShell_AdditionalCommandLine
+        {
+            get => _powerShell_AdditionalCommandLine;
+            set
+            {
+                if (value == _powerShell_AdditionalCommandLine)
+                    return;
+
+                _powerShell_AdditionalCommandLine = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<PowerShell.ExecutionPolicy> _powerShell_ExecutionPolicies = new List<PowerShell.ExecutionPolicy>();
+        public List<PowerShell.ExecutionPolicy> PowerShell_ExecutionPolicies
+        {
+            get => _powerShell_ExecutionPolicies;
+            set
+            {
+                if (value == _powerShell_ExecutionPolicies)
+                    return;
+
+                _powerShell_ExecutionPolicies = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _powerShell_OverrideExecutionPolicy;
+        public bool PowerShell_OverrideExecutionPolicy
+        {
+            get => _powerShell_OverrideExecutionPolicy;
+            set
+            {
+                if (value == _powerShell_OverrideExecutionPolicy)
+                    return;
+
+                _powerShell_OverrideExecutionPolicy = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy;
+        public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
+        {
+            get => _powerShell_ExecutionPolicy;
+            set
+            {
+                if (value == _powerShell_ExecutionPolicy)
+                    return;
+
+                _powerShell_ExecutionPolicy = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region PuTTY 
@@ -711,9 +1355,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
 
                 OnPropertyChanged();
             }
@@ -729,10 +1370,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -748,7 +1385,10 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Port = SettingsManager.Current.PuTTY_SSHPort;
+                    if (PuTTY_ConnectionMode == ConnectionMode.Serial)
+                        PuTTY_HostOrSerialLine = Host;
+
+                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_SSHPort;
                     PuTTY_ConnectionMode = ConnectionMode.SSH;
                 }
 
@@ -768,7 +1408,10 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Port = SettingsManager.Current.PuTTY_TelnetPort;
+                    if (PuTTY_ConnectionMode == ConnectionMode.Serial)
+                        PuTTY_HostOrSerialLine = Host;
+
+                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_TelnetPort;
                     PuTTY_ConnectionMode = ConnectionMode.Telnet;
                 }
 
@@ -788,7 +1431,10 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Baud = SettingsManager.Current.PuTTY_BaudRate;
+                    if (PuTTY_ConnectionMode != ConnectionMode.Serial)
+                        PuTTY_HostOrSerialLine = SettingsManager.Current.PuTTY_SerialLine;
+
+                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_BaudRate;
                     PuTTY_ConnectionMode = ConnectionMode.Serial;
                 }
 
@@ -808,7 +1454,10 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Port = SettingsManager.Current.PuTTY_RloginPort;
+                    if (PuTTY_ConnectionMode == ConnectionMode.Serial)
+                        PuTTY_HostOrSerialLine = Host;
+
+                    PuTTY_PortOrBaud = SettingsManager.Current.PuTTY_RloginPort;
                     PuTTY_ConnectionMode = ConnectionMode.Rlogin;
                 }
 
@@ -828,7 +1477,10 @@ namespace NETworkManager.ViewModels
 
                 if (value)
                 {
-                    PuTTY_Port = 0;
+                    if (PuTTY_ConnectionMode == ConnectionMode.Serial)
+                        PuTTY_HostOrSerialLine = Host;
+
+                    PuTTY_PortOrBaud = 0;
                     PuTTY_ConnectionMode = ConnectionMode.RAW;
                 }
 
@@ -837,74 +1489,58 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _puTTY_Host;
-        public string PuTTY_Host
+        private string _puTTY_HostOrSerialLine;
+        public string PuTTY_HostOrSerialLine
         {
-            get => _puTTY_Host;
+            get => _puTTY_HostOrSerialLine;
             set
             {
-                if (value == _puTTY_Host)
+                if (value == _puTTY_HostOrSerialLine)
                     return;
 
-                _puTTY_Host = value;
-
-                if (!_isLoading)
-                    Validate();
-
+                _puTTY_HostOrSerialLine = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _puTTY_SerialLine;
-        public string PuTTY_SerialLine
+        private bool _puTTY_OverridePortOrBaud;
+        public bool PuTTY_OverridePortOrBaud
         {
-            get => _puTTY_SerialLine;
+            get => _puTTY_OverridePortOrBaud;
             set
             {
-                if (value == _puTTY_SerialLine)
+                if (value == _puTTY_OverridePortOrBaud)
                     return;
 
-                _puTTY_SerialLine = value;
-
-                if (!_isLoading)
-                    Validate();
-
+                _puTTY_OverridePortOrBaud = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _puTTY_Port;
-        public int PuTTY_Port
+        private int _puTTY_PortOrBaud;
+        public int PuTTY_PortOrBaud
         {
-            get => _puTTY_Port;
+            get => _puTTY_PortOrBaud;
             set
             {
-                if (value == _puTTY_Port)
+                if (value == _puTTY_PortOrBaud)
                     return;
 
-                _puTTY_Port = value;
-
-                if (!_isLoading)
-                    Validate();
-
+                _puTTY_PortOrBaud = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _puTTY_Baud;
-        public int PuTTY_Baud
+        private bool _puTTY_OverrideUsername;
+        public bool PuTTY_OverrideUsername
         {
-            get => _puTTY_Baud;
+            get => _puTTY_OverrideUsername;
             set
             {
-                if (value == _puTTY_Baud)
+                if (value == _puTTY_OverrideUsername)
                     return;
 
-                _puTTY_Baud = value;
-
-                if (!_isLoading)
-                    Validate();
-
+                _puTTY_OverrideUsername = value;
                 OnPropertyChanged();
             }
         }
@@ -919,10 +1555,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY__Username = value;
+                OnPropertyChanged();
+            }
+        }
 
-                if (!_isLoading)
-                    Validate();
+        private bool _puTTY_OverrideProfile;
+        public bool PuTTY_OverrideProfile
+        {
+            get => _puTTY_OverrideProfile;
+            set
+            {
+                if (value == _puTTY_OverrideProfile)
+                    return;
 
+                _puTTY_OverrideProfile = value;
                 OnPropertyChanged();
             }
         }
@@ -937,10 +1583,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_Profile = value;
+                OnPropertyChanged();
+            }
+        }
 
-                if (!_isLoading)
-                    Validate();
+        private bool _puTTY_OverrideAdditionalCommandLine;
+        public bool PuTTY_OverrideAdditionalCommandLine
+        {
+            get => _puTTY_OverrideAdditionalCommandLine;
+            set
+            {
+                if (value == _puTTY_OverrideAdditionalCommandLine)
+                    return;
 
+                _puTTY_OverrideAdditionalCommandLine = value;
                 OnPropertyChanged();
             }
         }
@@ -955,10 +1611,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_AdditionalCommandLine = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -973,82 +1625,79 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _puTTY_ConnectionMode = value;
-
-                if (!_isLoading)
-                    Validate();
             }
         }
         #endregion
 
-        #region TightVNC
-        private bool _tightVNC_Enabled;
-        public bool TightVNC_Enabled
+        #region TigerVNC
+        private bool _tigerVNC_Enabled;
+        public bool TigerVNC_Enabled
         {
-            get => _tightVNC_Enabled;
+            get => _tigerVNC_Enabled;
             set
             {
-                if (value == _tightVNC_Enabled)
+                if (value == _tigerVNC_Enabled)
                     return;
 
-                _tightVNC_Enabled = value;
-
-                if (!_isLoading)
-                    Validate();
+                _tigerVNC_Enabled = value;
 
                 OnPropertyChanged();
             }
         }
 
-        private bool _tightVNC_InheritHost;
-        public bool TightVNC_InheritHost
+        private bool _tigerVNC_InheritHost;
+        public bool TigerVNC_InheritHost
         {
-            get => _tightVNC_InheritHost;
+            get => _tigerVNC_InheritHost;
             set
             {
-                if (value == _tightVNC_InheritHost)
+                if (value == _tigerVNC_InheritHost)
                     return;
 
-                _tightVNC_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
+                _tigerVNC_InheritHost = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _tightVNC_Host;
-        public string TightVNC_Host
+        private string _tigerVNC_Host;
+        public string TigerVNC_Host
         {
-            get => _tightVNC_Host;
+            get => _tigerVNC_Host;
             set
             {
-                if (value == _tightVNC_Host)
+                if (value == _tigerVNC_Host)
                     return;
 
-                _tightVNC_Host = value;
-
-                if (!_isLoading)
-                    Validate();
-
+                _tigerVNC_Host = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _tightVNC_Port;
-        public int TightVNC_Port
+
+        private bool _tigerVNC_OverridePort;
+        public bool TigerVNC_OverridePort
         {
-            get => _tightVNC_Port;
+            get => _tigerVNC_OverridePort;
             set
             {
-                if (value == _tightVNC_Port)
+                if (value == _tigerVNC_OverridePort)
                     return;
 
-                _tightVNC_Port = value;
+                _tigerVNC_OverridePort = value;
+                OnPropertyChanged();
+            }
+        }
 
-                if (!_isLoading)
-                    Validate();
+        private int _tigerVNC_Port;
+        public int TigerVNC_Port
+        {
+            get => _tigerVNC_Port;
+            set
+            {
+                if (value == _tigerVNC_Port)
+                    return;
 
+                _tigerVNC_Port = value;
                 OnPropertyChanged();
             }
         }
@@ -1066,9 +1715,6 @@ namespace NETworkManager.ViewModels
 
                 _wakeOnLAN_Enabled = value;
 
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1083,10 +1729,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _wakeOnLAN_MACAddress = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1101,10 +1743,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _wakeOnLAN_Broadcast = value;
+                OnPropertyChanged();
+            }
+        }
 
-                if (!_isLoading)
-                    Validate();
+        private bool _wakeOnLAN_OverridePort;
+        public bool WakeOnLAN_OverridePort
+        {
+            get => _wakeOnLAN_OverridePort;
+            set
+            {
+                if (value == _wakeOnLAN_OverridePort)
+                    return;
 
+                _wakeOnLAN_OverridePort = value;
                 OnPropertyChanged();
             }
         }
@@ -1119,10 +1771,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _wakeOnLAN_Port = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1140,9 +1788,6 @@ namespace NETworkManager.ViewModels
 
                 _httpHeaders_Enabled = value;
 
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1157,10 +1802,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _httpHeaders_Website = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1178,9 +1819,6 @@ namespace NETworkManager.ViewModels
 
                 _whois_Enabled = value;
 
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1195,10 +1833,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _whois_InheritHost = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -1213,29 +1847,31 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _whois_Domain = value;
-
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
         #endregion
         #endregion
 
-        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, bool isEdited = false, ProfileInfo profileInfo = null)
+        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null)
         {
             _isLoading = true;
+
+            // Load the view
+            ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
+            ProfileViews.SortDescriptions.Add(new SortDescription(nameof(ProfileViewInfo.Name), ListSortDirection.Ascending));
 
             SaveCommand = new RelayCommand(p => saveCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            IsEdited = isEdited;
+            var profileInfo = profile ?? new ProfileInfo();
 
-            var profileInfo2 = profileInfo ?? new ProfileInfo();
+            Name = profileInfo.Name;
 
-            Name = profileInfo2.Name;
-            Host = profileInfo2.Host;
+            if (editMode == ProfileEditMode.Copy)
+                Name += " - " + Resources.Localization.Strings.CopyNoun;
+
+            Host = profileInfo.Host;
 
             if (CredentialManager.IsLoaded)
             {
@@ -1245,64 +1881,120 @@ namespace NETworkManager.ViewModels
             {
                 ShowUnlockCredentialsHint = true;
 
-                Credentials = profileInfo2.CredentialID == Guid.Empty ? new CollectionViewSource { Source = new List<CredentialInfo>() }.View : new CollectionViewSource { Source = new List<CredentialInfo>() { new CredentialInfo(profileInfo2.CredentialID) } }.View;
+                Credentials = profileInfo.CredentialID == Guid.Empty ? new CollectionViewSource { Source = new List<CredentialInfo>() }.View : new CollectionViewSource { Source = new List<CredentialInfo> { new CredentialInfo(profileInfo.CredentialID) } }.View;
             }
 
-            CredentialID = profileInfo2.CredentialID;
+            CredentialID = profileInfo.CredentialID;
 
-            Group = string.IsNullOrEmpty(profileInfo2.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Resources.Localization.Strings.Default) : profileInfo2.Group;
-            Tags = profileInfo2.Tags;
+            Group = string.IsNullOrEmpty(profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Resources.Localization.Strings.Default) : profileInfo.Group;
+            Tags = profileInfo.Tags;
 
             Groups = CollectionViewSource.GetDefaultView(groups);
             Groups.SortDescriptions.Add(new SortDescription());
 
             // Network Interface
-            NetworkInterface_Enabled = profileInfo2.NetworkInterface_Enabled;
-            NetworkInterface_EnableDynamicIPAddress = !profileInfo2.NetworkInterface_EnableStaticIPAddress;
-            NetworkInterface_EnableStaticIPAddress = profileInfo2.NetworkInterface_EnableStaticIPAddress;
-            NetworkInterface_IPAddress = profileInfo2.NetworkInterface_IPAddress;
-            NetworkInterface_Gateway = profileInfo2.NetworkInterface_Gateway;
-            NetworkInterface_SubnetmaskOrCidr = profileInfo2.NetworkInterface_SubnetmaskOrCidr;
-            NetworkInterface_EnableDynamicDNS = !profileInfo2.NetworkInterface_EnableStaticDNS;
-            NetworkInterface_EnableStaticDNS = profileInfo2.NetworkInterface_EnableStaticDNS;
-            NetworkInterface_PrimaryDNSServer = profileInfo2.NetworkInterface_PrimaryDNSServer;
-            NetworkInterface_SecondaryDNSServer = profileInfo2.NetworkInterface_SecondaryDNSServer;
+            NetworkInterface_Enabled = profileInfo.NetworkInterface_Enabled;
+            NetworkInterface_EnableDynamicIPAddress = !profileInfo.NetworkInterface_EnableStaticIPAddress;
+            NetworkInterface_EnableStaticIPAddress = profileInfo.NetworkInterface_EnableStaticIPAddress;
+            NetworkInterface_IPAddress = profileInfo.NetworkInterface_IPAddress;
+            NetworkInterface_Gateway = profileInfo.NetworkInterface_Gateway;
+            NetworkInterface_SubnetmaskOrCidr = profileInfo.NetworkInterface_SubnetmaskOrCidr;
+            NetworkInterface_EnableDynamicDNS = !profileInfo.NetworkInterface_EnableStaticDNS;
+            NetworkInterface_EnableStaticDNS = profileInfo.NetworkInterface_EnableStaticDNS;
+            NetworkInterface_PrimaryDNSServer = profileInfo.NetworkInterface_PrimaryDNSServer;
+            NetworkInterface_SecondaryDNSServer = profileInfo.NetworkInterface_SecondaryDNSServer;
 
             // IP Scanner
-            IPScanner_Enabled = profileInfo2.IPScanner_Enabled;
-            IPScanner_InheritHost = profileInfo2.IPScanner_InheritHost;
-            IPScanner_IPRange = profileInfo2.IPScanner_IPRange;
+            IPScanner_Enabled = profileInfo.IPScanner_Enabled;
+            IPScanner_InheritHost = profileInfo.IPScanner_InheritHost;
+            IPScanner_HostOrIPRange = profileInfo.IPScanner_HostOrIPRange;
 
             // Port Scanner
-            PortScanner_Enabled = profileInfo2.PortScanner_Enabled;
-            PortScanner_InheritHost = profileInfo2.PortScanner_InheritHost;
-            PortScanner_Host = profileInfo2.PortScanner_Host;
-            PortScanner_Ports = profileInfo2.PortScanner_Ports;
+            PortScanner_Enabled = profileInfo.PortScanner_Enabled;
+            PortScanner_InheritHost = profileInfo.PortScanner_InheritHost;
+            PortScanner_Host = profileInfo.PortScanner_Host;
+            PortScanner_Ports = profileInfo.PortScanner_Ports;
 
             // Ping
-            Ping_Enabled = profileInfo2.Ping_Enabled;
-            Ping_InheritHost = profileInfo2.Ping_InheritHost;
-            Ping_Host = profileInfo2.Ping_Host;
+            Ping_Enabled = profileInfo.Ping_Enabled;
+            Ping_InheritHost = profileInfo.Ping_InheritHost;
+            Ping_Host = profileInfo.Ping_Host;
 
             // Traceroute
-            Traceroute_Enabled = profileInfo2.Traceroute_Enabled;
-            Traceroute_InheritHost = profileInfo2.Traceroute_InheritHost;
-            Traceroute_Host = profileInfo2.Traceroute_Host;
+            Traceroute_Enabled = profileInfo.Traceroute_Enabled;
+            Traceroute_InheritHost = profileInfo.Traceroute_InheritHost;
+            Traceroute_Host = profileInfo.Traceroute_Host;
 
             // DNS Lookup
-            DNSLookup_Enabled = profileInfo2.DNSLookup_Enabled;
-            DNSLookup_InheritHost = profileInfo2.DNSLookup_InheritHost;
-            DNSLookup_Host = profileInfo2.DNSLookup_Host;
+            DNSLookup_Enabled = profileInfo.DNSLookup_Enabled;
+            DNSLookup_InheritHost = profileInfo.DNSLookup_InheritHost;
+            DNSLookup_Host = profileInfo.DNSLookup_Host;
 
             // Remote Desktop
-            RemoteDesktop_Enabled = profileInfo2.RemoteDesktop_Enabled;
-            RemoteDesktop_InheritHost = profileInfo2.RemoteDesktop_InheritHost;
-            RemoteDesktop_Host = profileInfo2.RemoteDesktop_Host;
+            RemoteDesktop_Enabled = profileInfo.RemoteDesktop_Enabled;
+            RemoteDesktop_InheritHost = profileInfo.RemoteDesktop_InheritHost;
+            RemoteDesktop_Host = profileInfo.RemoteDesktop_Host;
+            RemoteDesktop_OverrideDisplay = profileInfo.RemoteDesktop_OverrideDisplay;
+            RemoteDesktop_AdjustScreenAutomatically = profileInfo.RemoteDesktop_AdjustScreenAutomatically;
+            RemoteDesktop_UseCurrentViewSize = profileInfo.RemoteDesktop_UseCurrentViewSize;
+            RemoteDesktop_UseFixedScreenSize = profileInfo.RemoteDesktop_UseFixedScreenSize;
+            RemoteDesktop_SelectedScreenResolution = RemoteDesktop_ScreenResolutions.FirstOrDefault(x => x == $"{profileInfo.RemoteDesktop_ScreenWidth}x{profileInfo.RemoteDesktop_ScreenHeight}");
+            RemoteDesktop_UseCustomScreenSize = profileInfo.RemoteDesktop_UseCustomScreenSize;
+            RemoteDesktop_CustomScreenWidth = profileInfo.RemoteDesktop_CustomScreenWidth.ToString();
+            RemoteDesktop_CustomScreenHeight = profileInfo.RemoteDesktop_CustomScreenHeight.ToString();
+            RemoteDesktop_OverrideColorDepth = profileInfo.RemoteDesktop_OverrideColorDepth;
+            RemoteDesktop_SelectedColorDepth = RemoteDesktop_ColorDepths.FirstOrDefault(x => x == profileInfo.RemoteDesktop_ColorDepth);
+            RemoteDesktop_OverridePort = profileInfo.RemoteDesktop_OverridePort;
+            RemoteDesktop_Port = profileInfo.RemoteDesktop_Port;
+            RemoteDesktop_OverrideCredSspSupport = profileInfo.RemoteDesktop_OverrideCredSspSupport;
+            RemoteDesktop_EnableCredSspSupport = profileInfo.RemoteDesktop_EnableCredSspSupport;
+            RemoteDesktop_OverrideAuthenticationLevel = profileInfo.RemoteDesktop_OverrideAuthenticationLevel;
+            RemoteDesktop_AuthenticationLevel = profileInfo.RemoteDesktop_AuthenticationLevel;
+            RemoteDesktop_OverrideAudioRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioRedirectionMode;
+            RemoteDesktop_AudioRedirectionMode = RemoteDesktop_AudioRedirectionModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_AudioRedirectionMode);
+            RemoteDesktop_OverrideAudioCaptureRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
+            RemoteDesktop_AudioCaptureRedirectionMode = RemoteDesktop_AudioCaptureRedirectionModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_AudioCaptureRedirectionMode);
+            RemoteDesktop_OverrideApplyWindowsKeyCombinations = profileInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
+            RemoteDesktop_KeyboardHookMode = RemoteDesktop_KeyboardHookModes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_KeyboardHookMode);
+            RemoteDesktop_OverrideRedirectClipboard = profileInfo.RemoteDesktop_OverrideRedirectClipboard;
+            RemoteDesktop_RedirectClipboard = profileInfo.RemoteDesktop_RedirectClipboard;
+            RemoteDesktop_OverrideRedirectDevices = profileInfo.RemoteDesktop_OverrideRedirectDevices;
+            RemoteDesktop_RedirectDevices = profileInfo.RemoteDesktop_RedirectDevices;
+            RemoteDesktop_OverrideRedirectDrives = profileInfo.RemoteDesktop_OverrideRedirectDrives;
+            RemoteDesktop_RedirectDrives = profileInfo.RemoteDesktop_RedirectDrives;
+            RemoteDesktop_OverrideRedirectPorts = profileInfo.RemoteDesktop_OverrideRedirectPorts;
+            RemoteDesktop_RedirectPorts = profileInfo.RemoteDesktop_RedirectPorts;
+            RemoteDesktop_OverrideRedirectSmartcards = profileInfo.RemoteDesktop_OverrideRedirectSmartcards;
+            RemoteDesktop_RedirectSmartCards = profileInfo.RemoteDesktop_RedirectSmartCards;
+            RemoteDesktop_OverrideRedirectPrinters = profileInfo.RemoteDesktop_OverrideRedirectPrinters;
+            RemoteDesktop_RedirectPrinters = profileInfo.RemoteDesktop_RedirectPrinters;
+            RemoteDesktop_OverridePersistentBitmapCaching = profileInfo.RemoteDesktop_OverridePersistentBitmapCaching;
+            RemoteDesktop_PersistentBitmapCaching = profileInfo.RemoteDesktop_PersistentBitmapCaching;
+            RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped = profileInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+            RemoteDesktop_ReconnectIfTheConnectionIsDropped = profileInfo.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
+            RemoteDesktop_NetworkConnectionType = RemoteDesktop_NetworkConnectionTypes.FirstOrDefault(x => x == profileInfo.RemoteDesktop_NetworkConnectionType);
+            RemoteDesktop_DesktopBackground = profileInfo.RemoteDesktop_DesktopBackground;
+            RemoteDesktop_FontSmoothing = profileInfo.RemoteDesktop_FontSmoothing;
+            RemoteDesktop_DesktopComposition = profileInfo.RemoteDesktop_DesktopComposition;
+            RemoteDesktop_ShowWindowContentsWhileDragging = profileInfo.RemoteDesktop_ShowWindowContentsWhileDragging;
+            RemoteDesktop_MenuAndWindowAnimation = profileInfo.RemoteDesktop_MenuAndWindowAnimation;
+            RemoteDesktop_VisualStyles = profileInfo.RemoteDesktop_VisualStyles;
+
+            // PowerShell
+            PowerShell_Enabled = profileInfo.PowerShell_Enabled;
+            PowerShell_EnableRemoteConsole = profileInfo.PowerShell_EnableRemoteConsole;
+            PowerShell_InheritHost = profileInfo.PowerShell_InheritHost;
+            PowerShell_Host = profileInfo.PowerShell_Host;
+            PowerShell_OverrideAdditionalCommandLine = profileInfo.PowerShell_OverrideAdditionalCommandLine;
+            PowerShell_AdditionalCommandLine = profileInfo.PowerShell_AdditionalCommandLine;
+            PowerShell_ExecutionPolicies = System.Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
+            PowerShell_OverrideExecutionPolicy = profileInfo.PowerShell_OverrideExecutionPolicy;
+            PowerShell_ExecutionPolicy = editMode != ProfileEditMode.Add ? profileInfo.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
 
             // PuTTY
-            PuTTY_Enabled = profileInfo2.PuTTY_Enabled;
+            PuTTY_Enabled = profileInfo.PuTTY_Enabled;
 
-            switch (profileInfo2.PuTTY_ConnectionMode)
+            switch (profileInfo.PuTTY_ConnectionMode)
             {
                 // SSH is default
                 case ConnectionMode.SSH:
@@ -1322,53 +2014,41 @@ namespace NETworkManager.ViewModels
                     break;
             }
 
-            PuTTY_InheritHost = profileInfo2.PuTTY_InheritHost;
+            PuTTY_InheritHost = profileInfo.PuTTY_InheritHost;
+            PuTTY_HostOrSerialLine = profileInfo.PuTTY_HostOrSerialLine;
+            PuTTY_OverridePortOrBaud = profileInfo.PuTTY_OverridePortOrBaud;
+            PuTTY_PortOrBaud = profileInfo.PuTTY_OverridePortOrBaud ? profileInfo.PuTTY_PortOrBaud : GetPortOrBaudByConnectionMode(PuTTY_ConnectionMode);
+            PuTTY_OverrideUsername = profileInfo.PuTTY_OverrideUsername;
+            PuTTY_Username = profileInfo.PuTTY_Username;
+            PuTTY_OverrideProfile = profileInfo.PuTTY_OverrideProfile;
+            PuTTY_Profile = profileInfo.PuTTY_Profile;
+            PuTTY_OverrideAdditionalCommandLine = profileInfo.PuTTY_OverrideAdditionalCommandLine;
+            PuTTY_AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine;
 
-            if (profileInfo2.PuTTY_ConnectionMode == ConnectionMode.Serial)
-            {
-                PuTTY_SerialLine = profileInfo2.PuTTY_HostOrSerialLine;
-                PuTTY_Baud = profileInfo2.PuTTY_PortOrBaud;
-            }
-            else
-            {
-                PuTTY_Host = profileInfo2.PuTTY_HostOrSerialLine;
-                PuTTY_Port = profileInfo2.PuTTY_PortOrBaud == 0 ? SettingsManager.Current.PuTTY_SSHPort : profileInfo2.PuTTY_PortOrBaud; // Default SSH port
-            }
-
-            PuTTY_Username = profileInfo2.PuTTY_Username;
-            PuTTY_Profile = profileInfo2.PuTTY_Profile;
-            PuTTY_AdditionalCommandLine = profileInfo2.PuTTY_AdditionalCommandLine;
-
-            // TightVNC
-            TightVNC_Enabled = profileInfo2.TightVNC_Enabled;
-            TightVNC_InheritHost = profileInfo2.TightVNC_InheritHost;
-            TightVNC_Host = profileInfo2.TightVNC_Host;
-            TightVNC_Port = profileInfo2.TightVNC_Port == 0 ? SettingsManager.Current.TightVNC_VNCPort : profileInfo2.TightVNC_Port;
+            // TigerVNC
+            TigerVNC_Enabled = profileInfo.TigerVNC_Enabled;
+            TigerVNC_InheritHost = profileInfo.TigerVNC_InheritHost;
+            TigerVNC_Host = profileInfo.TigerVNC_Host;
+            TigerVNC_OverridePort = profileInfo.TigerVNC_OverridePort;
+            TigerVNC_Port = profileInfo.TigerVNC_OverridePort ? profileInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port;
 
             // Wake on LAN
-            WakeOnLAN_Enabled = profileInfo2.WakeOnLAN_Enabled;
-            WakeOnLAN_MACAddress = profileInfo2.WakeOnLAN_MACAddress;
-            WakeOnLAN_Broadcast = profileInfo2.WakeOnLAN_Broadcast;
-            WakeOnLAN_Port = profileInfo2.WakeOnLAN_Port == 0 ? SettingsManager.Current.WakeOnLAN_Port : profileInfo2.WakeOnLAN_Port;
+            WakeOnLAN_Enabled = profileInfo.WakeOnLAN_Enabled;
+            WakeOnLAN_MACAddress = profileInfo.WakeOnLAN_MACAddress;
+            WakeOnLAN_Broadcast = profileInfo.WakeOnLAN_Broadcast;
+            WakeOnLAN_OverridePort = profileInfo.WakeOnLAN_OverridePort;
+            WakeOnLAN_Port = profileInfo.WakeOnLAN_OverridePort ? profileInfo.WakeOnLAN_Port : SettingsManager.Current.WakeOnLAN_Port;
 
             // HTTP Headers
-            HTTPHeaders_Enabled = profileInfo2.HTTPHeaders_Enabled;
-            HTTPHeaders_Website = profileInfo2.HTTPHeaders_Website;
+            HTTPHeaders_Enabled = profileInfo.HTTPHeaders_Enabled;
+            HTTPHeaders_Website = profileInfo.HTTPHeaders_Website;
 
             // Whois
-            Whois_Enabled = profileInfo2.Whois_Enabled;
-            Whois_InheritHost = profileInfo2.Whois_InheritHost;
-            Whois_Domain = profileInfo2.Whois_Domain;
-
-            Validate();
+            Whois_Enabled = profileInfo.Whois_Enabled;
+            Whois_InheritHost = profileInfo.Whois_InheritHost;
+            Whois_Domain = profileInfo.Whois_Domain;
 
             _isLoading = false;
-        }
-
-        private void Validate()
-        {
-            // Note
-            IsTabEnabled = NetworkInterface_Enabled || IPScanner_Enabled || PortScanner_Enabled || Ping_Enabled || Traceroute_Enabled || DNSLookup_Enabled || RemoteDesktop_Enabled || PuTTY_Enabled || TightVNC_Enabled || WakeOnLAN_Enabled || HTTPHeaders_Enabled || Whois_Enabled;
         }
 
         #region ICommands & Actions
@@ -1376,14 +2056,74 @@ namespace NETworkManager.ViewModels
 
         public ICommand CancelCommand { get; }
 
-        public ICommand UnselectCredentialCommand
+        public ICommand ResolveHostCommand => new RelayCommand(async p => await ResolveHostActionAsync());
+
+        private async System.Threading.Tasks.Task ResolveHostActionAsync()
         {
-            get { return new RelayCommand(p => UnselectCredentialAction()); }
+            try
+            {
+                foreach (var ipAddr in (await Dns.GetHostEntryAsync(Host)).AddressList)
+                {
+                    if (ipAddr.AddressFamily != AddressFamily.InterNetwork)
+                        continue;
+
+                    Host = ipAddr.ToString();
+                    break;
+                }
+
+            }
+            catch (SocketException) // DNS Error
+            { }
         }
+
+        public ICommand UnselectCredentialCommand => new RelayCommand(p => UnselectCredentialAction());
 
         private void UnselectCredentialAction()
         {
             CredentialID = Guid.Empty;
+        }
+        #endregion
+
+        #region Methods
+        private void ChangeNetworkConnectionTypeSettings(RemoteDesktop.NetworkConnectionType connectionSpeed)
+        {
+            switch (connectionSpeed)
+            {
+                case RemoteDesktop.NetworkConnectionType.Modem:
+                    RemoteDesktop_DesktopBackground = false;
+                    RemoteDesktop_FontSmoothing = false;
+                    RemoteDesktop_DesktopComposition = false;
+                    RemoteDesktop_ShowWindowContentsWhileDragging = false;
+                    RemoteDesktop_MenuAndWindowAnimation = false;
+                    RemoteDesktop_VisualStyles = false;
+                    break;
+                case RemoteDesktop.NetworkConnectionType.BroadbandLow:
+                    RemoteDesktop_DesktopBackground = false;
+                    RemoteDesktop_FontSmoothing = false;
+                    RemoteDesktop_DesktopComposition = false;
+                    RemoteDesktop_ShowWindowContentsWhileDragging = false;
+                    RemoteDesktop_MenuAndWindowAnimation = false;
+                    RemoteDesktop_VisualStyles = true;
+                    break;
+                case RemoteDesktop.NetworkConnectionType.Satellite:
+                case RemoteDesktop.NetworkConnectionType.BroadbandHigh:
+                    RemoteDesktop_DesktopBackground = false;
+                    RemoteDesktop_FontSmoothing = false;
+                    RemoteDesktop_DesktopComposition = true;
+                    RemoteDesktop_ShowWindowContentsWhileDragging = false;
+                    RemoteDesktop_MenuAndWindowAnimation = false;
+                    RemoteDesktop_VisualStyles = true;
+                    break;
+                case RemoteDesktop.NetworkConnectionType.WAN:
+                case RemoteDesktop.NetworkConnectionType.LAN:
+                    RemoteDesktop_DesktopBackground = true;
+                    RemoteDesktop_FontSmoothing = true;
+                    RemoteDesktop_DesktopComposition = true;
+                    RemoteDesktop_ShowWindowContentsWhileDragging = true;
+                    RemoteDesktop_MenuAndWindowAnimation = true;
+                    RemoteDesktop_VisualStyles = true;
+                    break;
+            }
         }
         #endregion
     }

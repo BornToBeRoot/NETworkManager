@@ -169,10 +169,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand BrowseFolderCommand
-        {
-            get { return new RelayCommand(p => BrowseFolderAction()); }
-        }
+        public ICommand BrowseFolderCommand => new RelayCommand(p => BrowseFolderAction());
 
         private void BrowseFolderAction()
         {
@@ -187,20 +184,14 @@ namespace NETworkManager.ViewModels
                 LocationSelectedPath = dialog.SelectedPath;
         }
 
-        public ICommand OpenLocationCommand
-        {
-            get { return new RelayCommand(p => OpenLocationAction()); }
-        }
+        public ICommand OpenLocationCommand => new RelayCommand(p => OpenLocationAction());
 
         private static void OpenLocationAction()
         {
             Process.Start("explorer.exe", SettingsManager.GetSettingsLocation());
         }
 
-        public ICommand ChangeSettingsCommand
-        {
-            get { return new RelayCommand(p => ChangeSettingsAction()); }
-        }
+        public ICommand ChangeSettingsCommand => new RelayCommand(p => ChangeSettingsAction());
 
         // Check if a file(name) is a settings file
         private static bool FilesContainsSettingsFiles(IEnumerable<string> files)
@@ -284,20 +275,14 @@ namespace NETworkManager.ViewModels
             MovingFiles = false;
         }
 
-        public ICommand RestoreDefaultSettingsLocationCommand
-        {
-            get { return new RelayCommand(p => RestoreDefaultSettingsLocationAction()); }
-        }
+        public ICommand RestoreDefaultSettingsLocationCommand => new RelayCommand(p => RestoreDefaultSettingsLocationAction());
 
         private void RestoreDefaultSettingsLocationAction()
         {
             LocationSelectedPath = SettingsManager.GetDefaultSettingsLocation();
         }
 
-        public ICommand ResetSettingsCommand
-        {
-            get { return new RelayCommand(p => ResetSettingsAction()); }
-        }
+        public ICommand ResetSettingsCommand => new RelayCommand(p => ResetSettingsAction());
 
         public async void ResetSettingsAction()
         {

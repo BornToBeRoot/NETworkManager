@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.Windows;
 using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Net.Sockets;
 using NETworkManager.Models.Settings;
@@ -15,13 +16,20 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Linq;
 using Dragablz;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
+using NETworkManager.Models.Export;
+using NETworkManager.Views;
+using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {
     public class TracerouteViewModel : ViewModelBase
     {
         #region Variables
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private CancellationTokenSource _cancellationTokenSource;
 
         private readonly int _tabId;
@@ -76,20 +84,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<TracerouteHopInfo> _traceResult = new ObservableCollection<TracerouteHopInfo>();
-        public ObservableCollection<TracerouteHopInfo> TraceResult
+        private ObservableCollection<TracerouteHopInfo> _traceResults = new ObservableCollection<TracerouteHopInfo>();
+        public ObservableCollection<TracerouteHopInfo> TraceResults
         {
-            get => _traceResult;
+            get => _traceResults;
             set
             {
-                if (Equals(value, _traceResult))
+                if (Equals(value, _traceResults))
                     return;
 
-                _traceResult = value;
+                _traceResults = value;
             }
         }
 
-        public ICollectionView TraceResultView { get; }
+        public ICollectionView TraceResultsView { get; }
 
         private TracerouteHopInfo _selectedTraceResult;
         public TracerouteHopInfo SelectedTraceResult
@@ -101,6 +109,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _selectedTraceResult = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList _selectedTraceResults = new ArrayList();
+        public IList SelectedTraceResults
+        {
+            get => _selectedTraceResults;
+            set
+            {
+                if (Equals(value, _selectedTraceResults))
+                    return;
+
+                _selectedTraceResults = value;
                 OnPropertyChanged();
             }
         }
@@ -213,9 +235,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public TracerouteViewModel(int tabId, string host)
+        public TracerouteViewModel(IDialogCoordinator instance, int tabId, string host)
         {
             _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             _tabId = tabId;
             Host = host;
@@ -224,8 +248,8 @@ namespace NETworkManager.ViewModels
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.Traceroute_HostHistory);
 
             // Result view
-            TraceResultView = CollectionViewSource.GetDefaultView(TraceResult);
-            TraceResultView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop), ListSortDirection.Ascending));
+            TraceResultsView = CollectionViewSource.GetDefaultView(TraceResults);
+            TraceResultsView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop), ListSortDirection.Ascending));
 
             LoadSettings();
 
@@ -252,10 +276,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand TraceCommand
-        {
-            get { return new RelayCommand(p => TraceAction()); }
-        }
+        public ICommand TraceCommand => new RelayCommand(p => TraceAction(), Trace_CanExecute);
+
+        private bool Trace_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void TraceAction()
         {
@@ -265,103 +288,82 @@ namespace NETworkManager.ViewModels
                 StartTrace();
         }
 
-        public ICommand RedirectToApplicationCommand
-        {
-            get { return new RelayCommand(p => RedirectToApplicationAction(p)); }
-        }
+        public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
 
-        private void RedirectToApplicationAction(object name)
+        private void RedirectDataToApplicationAction(object name)
         {
             if (!(name is string appName))
                 return;
 
-            if (!Enum.TryParse(appName, out ApplicationViewManager.Name app))
+            if (!System.Enum.TryParse(appName, out ApplicationViewManager.Name app))
                 return;
 
-            var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname) ? SelectedTraceResult.Hostname : SelectedTraceResult
-                .IPAddress.ToString();
+            var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname) ? SelectedTraceResult.Hostname : SelectedTraceResult.IPAddress.ToString();
 
-            EventSystem.RedirectToApplication(app, host);
+            EventSystem.RedirectDataToApplication(app, host);
         }
 
-        public ICommand PerformDNSLookupIPAddressCommand
-        {
-            get { return new RelayCommand(p => PerformDNSLookupIPAddressAction()); }
-        }
+        public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(p => PerformDNSLookupIPAddressAction());
 
         private void PerformDNSLookupIPAddressAction()
         {
-            EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.IPAddress.ToString());
+            EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.IPAddress.ToString());
         }
 
-        public ICommand PerformDNSLookupHostnameCommand
-        {
-            get { return new RelayCommand(p => PerformDNSLookupHostnameAction()); }
-        }
+        public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
 
         private void PerformDNSLookupHostnameAction()
         {
-            EventSystem.RedirectToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.Hostname);
+            EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.Hostname);
         }
 
-        public ICommand CopySelectedHopCommand
-        {
-            get { return new RelayCommand(p => CopySelectedHopAction()); }
-        }
+        public ICommand CopySelectedHopCommand => new RelayCommand(p => CopySelectedHopAction());
 
         private void CopySelectedHopAction()
         {
             CommonMethods.SetClipboard(SelectedTraceResult.Hop.ToString());
         }
 
-        public ICommand CopySelectedTime1Command
-        {
-            get { return new RelayCommand(p => CopySelectedTime1Action()); }
-        }
+        public ICommand CopySelectedTime1Command => new RelayCommand(p => CopySelectedTime1Action());
 
         private void CopySelectedTime1Action()
         {
             CommonMethods.SetClipboard(SelectedTraceResult.Time1.ToString(CultureInfo.CurrentCulture));
         }
 
-        public ICommand CopySelectedTime2Command
-        {
-            get { return new RelayCommand(p => CopySelectedTime2Action()); }
-        }
+        public ICommand CopySelectedTime2Command => new RelayCommand(p => CopySelectedTime2Action());
 
         private void CopySelectedTime2Action()
         {
             CommonMethods.SetClipboard(SelectedTraceResult.Time2.ToString(CultureInfo.CurrentCulture));
         }
 
-        public ICommand CopySelectedTime3Command
-        {
-            get { return new RelayCommand(p => CopySelectedTime3Action()); }
-        }
+        public ICommand CopySelectedTime3Command => new RelayCommand(p => CopySelectedTime3Action());
 
         private void CopySelectedTime3Action()
         {
             CommonMethods.SetClipboard(SelectedTraceResult.Time3.ToString(CultureInfo.CurrentCulture));
         }
 
-        public ICommand CopySelectedIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedIPAddressAction()); }
-        }
+        public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
             CommonMethods.SetClipboard(SelectedTraceResult.IPAddress.ToString());
         }
 
-        public ICommand CopySelectedHostnameCommand
-        {
-            get { return new RelayCommand(p => CopySelectedHostnameAction()); }
-        }
+        public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
             CommonMethods.SetClipboard(SelectedTraceResult.Hostname);
+        }
+
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private void ExportAction()
+        {
+            Export();
         }
         #endregion
 
@@ -385,7 +387,7 @@ namespace NETworkManager.ViewModels
             _dispatcherTimer.Start();
             EndTime = null;
 
-            TraceResult.Clear();
+            TraceResults.Clear();
             Hops = 0;
 
             // Change the tab title (not nice, but it works)
@@ -409,9 +411,9 @@ namespace NETworkManager.ViewModels
                 // Try to resolve the hostname
                 if (ipAddress == null)
                 {
-                    var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
+                    var ipHostEntries = await Dns.GetHostEntryAsync(Host);
 
-                    foreach (var ipAddr in ipHostEntrys.AddressList)
+                    foreach (var ipAddr in ipHostEntries.AddressList)
                     {
                         switch (ipAddr.AddressFamily)
                         {
@@ -427,7 +429,7 @@ namespace NETworkManager.ViewModels
                     // Fallback --> If we could not resolve our prefered ip protocol
                     if (ipAddress == null)
                     {
-                        foreach (var ip in ipHostEntrys.AddressList)
+                        foreach (var ip in ipHostEntries.AddressList)
                         {
                             ipAddress = ip;
                             break;
@@ -435,23 +437,21 @@ namespace NETworkManager.ViewModels
                     }
                 }
 
-                var tracerouteOptions = new TracerouteOptions
+                var traceroute = new Traceroute
                 {
                     Timeout = SettingsManager.Current.Traceroute_Timeout,
-                    Buffer = SettingsManager.Current.Traceroute_Buffer,
+                    Buffer = new byte[SettingsManager.Current.Traceroute_Buffer],
                     MaximumHops = SettingsManager.Current.Traceroute_MaximumHops,
                     DontFragement = true,
                     ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname
                 };
-
-                var traceroute = new Traceroute();
 
                 traceroute.HopReceived += Traceroute_HopReceived;
                 traceroute.TraceComplete += Traceroute_TraceComplete;
                 traceroute.MaximumHopsReached += Traceroute_MaximumHopsReached;
                 traceroute.UserHasCanceled += Traceroute_UserHasCanceled;
 
-                traceroute.TraceAsync(ipAddress, tracerouteOptions, _cancellationTokenSource.Token);
+                traceroute.TraceAsync(ipAddress, _cancellationTokenSource.Token);
 
                 // Add the host to history
                 AddHostToHistory(Host);
@@ -487,6 +487,41 @@ namespace NETworkManager.ViewModels
             IsTraceRunning = false;
         }
 
+        private async void Export()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? TraceResults : new ObservableCollection<TracerouteHopInfo>(SelectedTraceResults.Cast<TracerouteHopInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
+                SettingsManager.Current.Traceroute_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Traceroute_ExportFileType, SettingsManager.Current.Traceroute_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
         private void AddHostToHistory(string host)
         {
             // Create the new list
@@ -514,8 +549,8 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (TraceResult)
-                    TraceResult.Add(tracerouteInfo);
+                lock (TraceResults)
+                    TraceResults.Add(tracerouteInfo);
             }));
 
             Hops++;

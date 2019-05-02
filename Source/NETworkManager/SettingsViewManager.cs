@@ -20,21 +20,23 @@ namespace NETworkManager
             new SettingsViewInfo(Name.Settings, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Cog }, Group.General),
 
             // Applications
+            new SettingsViewInfo(Name.Dashboard, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Dashboard), Group.Applications),
             new SettingsViewInfo(Name.IPScanner, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.IPScanner), Group.Applications),
             new SettingsViewInfo(Name.PortScanner,ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PortScanner), Group.Applications),
             new SettingsViewInfo(Name.Ping, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Ping), Group.Applications),
             new SettingsViewInfo(Name.Traceroute, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Traceroute), Group.Applications),
             new SettingsViewInfo(Name.DNSLookup, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.DNSLookup), Group.Applications ),
-            new SettingsViewInfo(Name.RemoteDesktop, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PuTTY), Group.Applications),
-            new SettingsViewInfo(Name.PuTTY, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.TightVNC), Group.Applications),
-            new SettingsViewInfo(Name.TightVNC, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.IPScanner), Group.Applications),
+            new SettingsViewInfo(Name.RemoteDesktop, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.RemoteDesktop), Group.Applications),
+            new SettingsViewInfo(Name.PowerShell, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PowerShell), Group.Applications),
+            new SettingsViewInfo(Name.PuTTY, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PuTTY), Group.Applications),
+            new SettingsViewInfo(Name.TigerVNC, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.TigerVNC), Group.Applications),
             new SettingsViewInfo(Name.SNMP, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.SNMP), Group.Applications),
             new SettingsViewInfo(Name.WakeOnLAN, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.WakeOnLAN), Group.Applications),
             new SettingsViewInfo(Name.HTTPHeaders, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.HTTPHeaders), Group.Applications),
             new SettingsViewInfo(Name.Whois, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Whois), Group.Applications)
         };
 
-        public static string TranslateName(Name name, Group group)
+        public static string TranslateName(Name name)
         {
             switch (name)
             {
@@ -56,6 +58,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.ImportExport;
                 case Name.Settings:
                     return Resources.Localization.Strings.Settings;
+                case Name.Dashboard:
+                    return Resources.Localization.Strings.Dashboard;
                 case Name.IPScanner:
                     return Resources.Localization.Strings.IPScanner;
                 case Name.PortScanner:
@@ -68,10 +72,12 @@ namespace NETworkManager
                     return Resources.Localization.Strings.DNSLookup;
                 case Name.RemoteDesktop:
                     return Resources.Localization.Strings.RemoteDesktop;
+                case Name.PowerShell:
+                    return Resources.Localization.Strings.PowerShell;
                 case Name.PuTTY:
                     return Resources.Localization.Strings.PuTTY;
-                case Name.TightVNC:
-                    return Resources.Localization.Strings.TightVNC;
+                case Name.TigerVNC:
+                    return Resources.Localization.Strings.TigerVNC;
                 case Name.SNMP:
                     return Resources.Localization.Strings.SNMP;
                 case Name.WakeOnLAN:
@@ -109,14 +115,16 @@ namespace NETworkManager
             Update,
             ImportExport,
             Settings,
+            Dashboard,
             IPScanner,
             PortScanner,
             Ping,
             Traceroute,
             DNSLookup,
             RemoteDesktop,
+            PowerShell,
             PuTTY,
-            TightVNC,
+            TigerVNC,
             SNMP,
             WakeOnLAN,
             HTTPHeaders,

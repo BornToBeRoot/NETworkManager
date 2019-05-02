@@ -1,4 +1,7 @@
-﻿using NETworkManager.Utilities;
+﻿using NETworkManager.Models.Settings;
+using NETworkManager.Utilities;
+using System;
+using System.Net;
 using System.Net.Sockets;
 
 namespace NETworkManager.Models.Network
@@ -37,6 +40,18 @@ namespace NETworkManager.Models.Network
             var macBytes = MACAddressHelper.ConvertStringToByteArray(mac);
 
             return CreateMagicPacket(macBytes);
+        }
+
+        public static WakeOnLANInfo CreateWakeOnLANInfo(ProfileInfo profileInfo)
+        {
+            var info = new WakeOnLANInfo
+            {
+                MagicPacket = CreateMagicPacket(profileInfo.WakeOnLAN_MACAddress),
+                Broadcast = IPAddress.Parse(profileInfo.WakeOnLAN_Broadcast),
+                Port = profileInfo.WakeOnLAN_OverridePort ? profileInfo.WakeOnLAN_Port : SettingsManager.Current.WakeOnLAN_Port
+            };
+
+            return info;
         }
         #endregion
     }

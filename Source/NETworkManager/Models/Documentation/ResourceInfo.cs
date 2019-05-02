@@ -1,16 +1,10 @@
 ﻿namespace NETworkManager.Models.Documentation
 {
-    public class ResourceInfo
+    public class ResourceInfo : BaseInfo
     {
-        public string Resource { get; set; }
-        public string ResourceUrl { get; set; }
-        public string Description { get; set; }
-
-        public ResourceInfo(string resource, string resourceUrl, string description)
+        public ResourceInfo(string name, string websiteUrl, string description) : base(name, websiteUrl, description)
         {
-            Resource = resource;
-            ResourceUrl = resourceUrl;
-            Description = description;
+            
         }
     }
 }

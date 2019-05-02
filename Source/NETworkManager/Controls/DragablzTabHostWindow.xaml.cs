@@ -51,8 +51,6 @@ namespace NETworkManager.Controls
                 OnPropertyChanged();
             }
         }
-
-        public bool ShowCurrentApplicationTitle => SettingsManager.Current.Window_ShowCurrentApplicationTitle;
         #endregion
 
         #region Constructor
@@ -114,8 +112,8 @@ namespace NETworkManager.Controls
                 case ApplicationViewManager.Name.PuTTY:
                     ((PuTTYControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.TightVNC:
-                    ((TightVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                case ApplicationViewManager.Name.TigerVNC:
+                    ((TigerVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     ((SNMPView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
@@ -151,7 +149,7 @@ namespace NETworkManager.Controls
         private void RestartPuTTYSessionAction(object view)
         {
             if (view is PuTTYControl puttyControl)
-                puttyControl.RestartPuTTYSession();
+                puttyControl.RestartSession();
         }
         #endregion
         #endregion
@@ -159,8 +157,6 @@ namespace NETworkManager.Controls
         #region Events
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.Window_ShowCurrentApplicationTitle))
-                OnPropertyChanged(nameof(ShowCurrentApplicationTitle));
         }
         #endregion
 

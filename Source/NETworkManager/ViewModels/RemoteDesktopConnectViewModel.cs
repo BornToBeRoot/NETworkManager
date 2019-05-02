@@ -161,10 +161,7 @@ namespace NETworkManager.ViewModels
         }
 
         #region ICommand & Actions
-        public ICommand UnselectCredentialCommand
-        {
-            get { return new RelayCommand(p => UnselectCredentialAction()); }
-        }
+        public ICommand UnselectCredentialCommand => new RelayCommand(p => UnselectCredentialAction());
 
         private void UnselectCredentialAction()
         {

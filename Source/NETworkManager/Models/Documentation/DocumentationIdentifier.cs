@@ -3,6 +3,7 @@
     public enum DocumentationIdentifier
     {
         Default,
+        ApplicationDashboard,
         ApplicationNetworkInterface,
         ApplicationIpScanner,
         ApplicationPortScanner,
@@ -10,8 +11,9 @@
         ApplicationTraceroute,
         ApplicationDnsLookup,
         ApplicationRemoteDesktop,
+        ApplicationPowerShell,
         ApplicationPutty,
-        ApplicationTightVNC,
+        ApplicationTigerVNC,
         ApplicationSnmp,
         ApplicationWakeOnLan,
         ApplicationHttpHeaders,

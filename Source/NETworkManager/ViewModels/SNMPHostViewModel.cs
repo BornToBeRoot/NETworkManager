@@ -43,10 +43,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddTabCommand
-        {
-            get { return new RelayCommand(p => AddTabAction()); }
-        }
+        public ICommand AddTabCommand => new RelayCommand(p => AddTabAction());
 
         private void AddTabAction()
         {
@@ -69,6 +66,16 @@ namespace NETworkManager.ViewModels
             TabItems.Add(new DragablzTabItem(host ?? Resources.Localization.Strings.NewTab, new SNMPView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
+        }
+
+        public void OnViewVisible()
+        {
+            
+        }
+
+        public void OnViewHide()
+        {
+
         }
         #endregion
     }

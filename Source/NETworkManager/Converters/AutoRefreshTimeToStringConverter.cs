@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using static NETworkManager.Utilities.AutoRefreshTime;
+using NETworkManager.Models.Settings;
+using NETworkManager.Enum;
 
 namespace NETworkManager.Converters
 {
@@ -12,7 +13,7 @@ namespace NETworkManager.Converters
             if (!(value is TimeUnit timeUnit))
                 return "No valid time unit passed!";
 
-            var timeUnitTranslated = Resources.Localization.Strings.ResourceManager.GetString("TimeUnit_" + timeUnit);
+            var timeUnitTranslated = Resources.Localization.Strings.ResourceManager.GetString("TimeUnit_" + timeUnit, LocalizationManager.Culture);
 
             return string.IsNullOrEmpty(timeUnitTranslated) ? timeUnit.ToString() : timeUnitTranslated;
         }

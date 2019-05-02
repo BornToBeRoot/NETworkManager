@@ -12,7 +12,9 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-        xmlns:neTworkManager="clr-namespace:NETworkManager"
+        xmlns:controls="clr-namespace:NETworkManager.Controls"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerViewModel}">
     <UserControl.Resources>
@@ -23,7 +25,7 @@
         <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
-        <converters:StringIsNotNullOrEmptyToBoolConverter x:Key="StringIsNotNullOrEmptyToBoolConverter" />
+        <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -49,12 +51,12 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.IPRange}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="ComboBoxIPRange" ItemsSource="{Binding IPRangeHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" x:Name="ComboBoxIPRange" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
-                        <Binding Path="IPRange" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <validators:IPScanRangeValidator ValidatesOnTargetUpdated="True" />
+                                <validators:MultipleHostsRangeValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>
@@ -162,12 +164,12 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
-        <DataGrid Grid.Row="3" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding IPScanResultView}" SelectedItem="{Binding SelectedIPScanResult}">
-            <DataGrid.Resources>
+        <controls:MultiSelectDataGrid Grid.Row="3" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding HostResultsView}" SelectedItem="{Binding SelectedHostResult}" SelectedItemsList="{Binding SelectedHostResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.PortScanner}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="PortScanner">
+                    <MenuItem Header="{x:Static localization:Strings.PortScanner}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PortScanner">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -176,7 +178,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.Ping}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="Ping">
+                    <MenuItem Header="{x:Static localization:Strings.Ping}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="Ping">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -185,7 +187,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.Traceroute}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="Traceroute">
+                    <MenuItem Header="{x:Static localization:Strings.Traceroute}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="Traceroute">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -211,7 +213,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding PerformDNSLookupHostnameCommand}" IsEnabled="{Binding SelectedIPScanResult.Hostname, Converter={StaticResource StringIsNotNullOrEmptyToBoolConverter}}">
+                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding PerformDNSLookupHostnameCommand}" IsEnabled="{Binding SelectedHostResult.Hostname, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -221,7 +223,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.RemoteDesktop}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="RemoteDesktop">
+                    <MenuItem Header="{x:Static localization:Strings.RemoteDesktop}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="RemoteDesktop">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -230,7 +232,16 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.PuTTY}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="PuTTY">
+                    <MenuItem Header="{x:Static localization:Strings.PowerShell}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PowerShell">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{x:Static localization:Strings.PuTTY}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="PuTTY">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -239,7 +250,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.TightVNC}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="TightVNC">
+                    <MenuItem Header="{x:Static localization:Strings.TigerVNC}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="TigerVNC">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -248,7 +259,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.SNMP}" Command="{Binding RedirectToApplicationCommand}" CommandParameter="SNMP">
+                    <MenuItem Header="{x:Static localization:Strings.SNMP}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="SNMP">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -342,38 +353,59 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
+                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </ContextMenu>
-            </DataGrid.Resources>
-            <DataGrid.RowStyle>
+                <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </controls:MultiSelectDataGrid.Resources>
+            <controls:MultiSelectDataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >
                             <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </DataGrid.RowStyle>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:IPScannerHostInfo.PingInfo).IPAddress}" SortMemberPath="PingInfo.IPAddressInt32" MinWidth="150" />
+            </controls:MultiSelectDataGrid.RowStyle>
+            <controls:MultiSelectDataGrid.Columns>
+                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:HostInfo.PingInfo).IPAddress}" SortMemberPath="PingInfo.IPAddressInt32" MinWidth="150" />
                 <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:IPScannerHostInfo.Hostname)}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:HostInfo.Hostname)}" SortMemberPath="Hostname" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
                 <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding (network:IPScannerHostInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding (network:HostInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" SortMemberPath="MACAddressString" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
                 <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}" Binding="{Binding (network:IPScannerHostInfo.Vendor)}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="200" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Bytes}" Binding="{Binding (network:IPScannerHostInfo.PingInfo).Bytes, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}" Binding="{Binding (network:HostInfo.Vendor)}" SortMemberPath="Vendor" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Bytes}" Binding="{Binding (network:HostInfo.PingInfo).Bytes, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Time}" SortMemberPath="PingInfo.Time" MinWidth="80">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
-                            <Binding Path="(network:IPScannerHostInfo.PingInfo).Status" />
-                            <Binding Path="(network:IPScannerHostInfo.PingInfo).Time" />
+                            <Binding Path="(network:HostInfo.PingInfo).Status" />
+                            <Binding Path="(network:HostInfo.PingInfo).Time" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.TTL}" Binding="{Binding (network:IPScannerHostInfo.PingInfo).TTL, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:IPScannerHostInfo.PingInfo).Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGridTextColumn Header="{x:Static localization:Strings.TTL}" Binding="{Binding (network:HostInfo.PingInfo).TTL, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:HostInfo.PingInfo).Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" />
+            </controls:MultiSelectDataGrid.Columns>
+        </controls:MultiSelectDataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Style="{StaticResource HeaderExpander}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />

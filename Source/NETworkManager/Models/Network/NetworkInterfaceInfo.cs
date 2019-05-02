@@ -16,6 +16,7 @@ namespace NETworkManager.Models.Network
         public OperationalStatus Status { get; set; }
         public bool IsOperational { get; set; }
         public long Speed { get; set; }
+        public bool IPv4ProtocolAvailable { get; set; }
         public IPAddress[] IPv4Address { get; set; }
         public IPAddress[] Subnetmask { get; set; }
         public IPAddress[] IPv4Gateway { get; set; }
@@ -23,6 +24,7 @@ namespace NETworkManager.Models.Network
         public IPAddress[] DhcpServer { get; set; }
         public DateTime DhcpLeaseObtained { get; set; }
         public DateTime DhcpLeaseExpires { get; set; }
+        public bool IPv6ProtocolAvailable { get; set; }
         public IPAddress[] IPv6Address { get; set; }
         public IPAddress[] IPv6AddressLinkLocal { get; set; }
         public IPAddress[] IPv6Gateway { get; set; }

@@ -12,6 +12,8 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingViewModel}">
     <UserControl.Resources>
@@ -19,6 +21,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
+        <converters:PingStatusToBooleanConverter x:Key="PingStatusToBoolConverter" />
         <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <converters:PercentConverter x:Key="PercentConverter" />
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
@@ -47,7 +50,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Host}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="ComboBoxHost" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsPingRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" x:Name="ComboBoxHost" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsPingRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -123,8 +126,8 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.Status}" Style="{StaticResource HeaderTextBlock}" />
-        <controls:ScrollingDataGrid Grid.Row="3" ItemsSource="{Binding PingResultView}" SelectedItem="{Binding SelectedPingResult}">
-            <controls:ScrollingDataGrid.Resources>
+        <controls:MultiSelectScrollingDataGrid Grid.Row="3" CanUserSortColumns="False" ItemsSource="{Binding PingResultsView}" SelectedItem="{Binding SelectedPingResult}" SelectedItemsList="{Binding SelectedPingResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <controls:MultiSelectScrollingDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollingDataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.CopyDots}">
@@ -199,9 +202,29 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
+                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </ContextMenu>
-            </controls:ScrollingDataGrid.Resources>
-            <controls:ScrollingDataGrid.Columns>
+                <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </controls:MultiSelectScrollingDataGrid.Resources>
+            <controls:MultiSelectScrollingDataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Timestamp}" Binding="{Binding (network:PingInfo.Timestamp)}" MinWidth="180" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:PingInfo.IPAddress)}" MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:PingInfo.Hostname)}" MinWidth="150" />
@@ -215,18 +238,30 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.TTL}" Binding="{Binding (network:PingInfo.TTL), Converter={StaticResource IntToStringConverter}}" MinWidth="80"/>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:PingInfo.Status), Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" Width="*" />
-            </controls:ScrollingDataGrid.Columns>
-            <controls:ScrollingDataGrid.RowStyle>
+                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:PingInfo.Status), Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" />
+            </controls:MultiSelectScrollingDataGrid.Columns>
+            <controls:MultiSelectScrollingDataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
                     <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding DataContext.HighlightTimeouts, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True" />
+                                <Condition Binding="{Binding (network:PingInfo.Status), Converter={StaticResource PingStatusToBoolConverter}}" Value="False" />
+                                <Condition Binding="{Binding (DataGridRow.IsSelected), RelativeSource={RelativeSource Self}}" Value="False" />
+                                <Condition Binding="{Binding (DataGridRow.IsMouseOver), RelativeSource={RelativeSource Self}}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="Foreground" Value="Red" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
                         <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >
                             <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </controls:ScrollingDataGrid.RowStyle>
-        </controls:ScrollingDataGrid>
+            </controls:MultiSelectScrollingDataGrid.RowStyle>
+        </controls:MultiSelectScrollingDataGrid>
         <Expander Grid.Row="4" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />

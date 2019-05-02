@@ -11,6 +11,9 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:controls="clr-namespace:NETworkManager.Controls"
+        dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNMPViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
@@ -58,7 +61,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxOID, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+            <ComboBox Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxOID, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -72,7 +75,7 @@
             <TextBlock Grid.Column="10" Grid.Row="0" Text="{x:Static localization:Strings.Mode}" Style="{StaticResource CenterTextBlock}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
             <ComboBox Grid.Column="12" Grid.Row="0" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.OID}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSNMPOID}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPOID}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                 <ComboBox.Text>
                     <Binding Path="OID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -94,7 +97,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="5" Name="TextBoxCommunity" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleSNMPCommunity}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
+            <TextBox Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="5" Name="TextBoxCommunity" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPCommunity}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Setter Property="Visibility" Value="Visible" />
@@ -149,7 +152,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Grid.Column="12" Grid.Row="2" x:Name="TextBoxUsername" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleUsername}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
+            <TextBox Grid.Column="12" Grid.Row="2" x:Name="TextBoxUsername" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -472,8 +475,8 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <DataGrid Grid.Row="5" Grid.ColumnSpan="3" Grid.Column="0" ItemsSource="{Binding QueryResultView}" SelectedItem="{Binding SelectedQueryResult}">
-            <DataGrid.Resources>
+        <controls:MultiSelectDataGrid Grid.Row="5" Grid.ColumnSpan="3" Grid.Column="0" ItemsSource="{Binding QueryResultsView}" SelectedItem="{Binding SelectedQueryResult}" SelectedItemsList="{Binding SelectedQueryResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.CopyDots}">
@@ -503,9 +506,29 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
+                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </ContextMenu>
-            </DataGrid.Resources>
-            <DataGrid.Style>
+                <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                    <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </controls:MultiSelectDataGrid.Resources>
+            <controls:MultiSelectDataGrid.Style>
                 <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource DefaultDataGrid}">
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
@@ -517,21 +540,22 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </DataGrid.Style>
-            <DataGrid.RowStyle>
+            </controls:MultiSelectDataGrid.Style>
+            <controls:MultiSelectDataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >
                             <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </DataGrid.RowStyle>
+            </controls:MultiSelectDataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPReceivedInfo.OID)}" MinWidth="200" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Data}" Binding="{Binding (network:SNMPReceivedInfo.Data)}" MinWidth="300" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" Binding="{Binding (network:SNMPReceivedInfo.OID)}" SortMemberPath="OID" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Data}" Binding="{Binding (network:SNMPReceivedInfo.Data)}" SortMemberPath="Data" MinWidth="300" />
             </DataGrid.Columns>
-        </DataGrid>
+        </controls:MultiSelectDataGrid>
         <TextBox Grid.Row="5" Grid.Column="0" Text="{Binding Data}">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ConsoleTextBox}">
@@ -547,7 +571,6 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-
         <Expander Grid.Row="7" Grid.ColumnSpan="3" Grid.Column="0" IsExpanded="{Binding ExpandStatistics}" Visibility="{Binding ShowStatistics, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderExpander}" Margin="0,20,0,0">
             <Expander.Header>
                 <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" Margin="0" />

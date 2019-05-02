@@ -5,64 +5,182 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Input;
+using NETworkManager.Models.PuTTY;
 
 namespace NETworkManager.ViewModels
 {
     public class PuTTYSettingsViewModel : ViewModelBase
     {
         #region Variables
-        private const string ApplicationFileExtensionFilter = "Application (*.exe)|*.exe";
         private readonly IDialogCoordinator _dialogCoordinator;
-        
+
         private readonly bool _isLoading;
 
-        private string _puTTYLocation;
-        public string PuTTYLocation
+        private string _applicationFilePath;
+        public string ApplicationFilePath
         {
-            get => _puTTYLocation;
+            get => _applicationFilePath;
             set
             {
-                if (value == _puTTYLocation)
+                if (value == _applicationFilePath)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_PuTTYLocation = value;
+                    SettingsManager.Current.PuTTY_ApplicationFilePath = value;
 
-                // Path to putty is configured....
-                IsPuTTYConfigured = !string.IsNullOrEmpty(value);
+                IsConfigured = !string.IsNullOrEmpty(value);
 
-                _puTTYLocation = value;                               
+                _applicationFilePath = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _isPuTTYConfigured;
-        public bool IsPuTTYConfigured
+        private bool _isConfigured;
+        public bool IsConfigured
         {
-            get => _isPuTTYConfigured;
+            get => _isConfigured;
             set
             {
-                if (value == _isPuTTYConfigured)
+                if (value == _isConfigured)
                     return;
 
-                _isPuTTYConfigured = value;
+                _isConfigured = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _puTTYProfile;
-        public string PuTTYProfile
+        private bool _useSSH;
+        public bool UseSSH
         {
-            get => _puTTYProfile;
+            get => _useSSH;
             set
             {
-                if (value == _puTTYProfile)
+                if (value == _useSSH)
+                    return;
+
+                if (value)
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.SSH;
+
+                _useSSH = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useTelnet;
+        public bool UseTelnet
+        {
+            get => _useTelnet;
+            set
+            {
+                if (value == _useTelnet)
+                    return;
+
+                if (value)
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.Telnet;
+
+                _useTelnet = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useSerial;
+        public bool UseSerial
+        {
+            get => _useSerial;
+            set
+            {
+                if (value == _useSerial)
+                    return;
+
+                if (value)
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.Serial;
+
+                _useSerial = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useRlogin;
+        public bool UseRlogin
+        {
+            get => _useRlogin;
+            set
+            {
+                if (value == _useRlogin)
+                    return;
+
+                if (value)
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.Rlogin;
+
+                _useRlogin = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useRAW;
+        public bool UseRAW
+        {
+            get => _useRAW;
+            set
+            {
+                if (value == _useRAW)
+                    return;
+
+                if (value)
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.RAW;
+
+                _useRAW = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _username;
+        public string Username
+        {
+            get => _username;
+            set
+            {
+                if (value == _username)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PuTTY_Username = value;
+
+                _username = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _additionalCommandLine;
+        public string AdditionalCommandLine
+        {
+            get => _additionalCommandLine;
+            set
+            {
+                if (value == _additionalCommandLine)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PuTTY_AdditionalCommandLine = value;
+
+                _additionalCommandLine = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _profile;
+        public string Profile
+        {
+            get => _profile;
+            set
+            {
+                if (value == _profile)
                     return;
 
                 if (!_isLoading)
                     SettingsManager.Current.PuTTY_Profile = value;
 
-                _puTTYProfile = value;
+                _profile = value;
                 OnPropertyChanged();
             }
         }
@@ -167,10 +285,32 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            PuTTYLocation = SettingsManager.Current.PuTTY_PuTTYLocation;
-            IsPuTTYConfigured = File.Exists(PuTTYLocation);
+            ApplicationFilePath = SettingsManager.Current.PuTTY_ApplicationFilePath;
+
+            switch (SettingsManager.Current.PuTTY_DefaultConnectionMode)
+            {
+                case PuTTY.ConnectionMode.SSH:
+                    UseSSH = true;
+                    break;
+                case PuTTY.ConnectionMode.Telnet:
+                    UseTelnet = true;
+                    break;
+                case PuTTY.ConnectionMode.Serial:
+                    UseSerial = true;
+                    break;
+                case PuTTY.ConnectionMode.Rlogin:
+                    UseRlogin = true;
+                    break;
+                case PuTTY.ConnectionMode.RAW:
+                    UseRAW = true;
+                    break;
+            }
+
+            IsConfigured = File.Exists(ApplicationFilePath);
+            Username = SettingsManager.Current.PuTTY_Username;
+            Profile = SettingsManager.Current.PuTTY_Profile;
+            AdditionalCommandLine = SettingsManager.Current.PuTTY_AdditionalCommandLine;
             SerialLine = SettingsManager.Current.PuTTY_SerialLine;
-            PuTTYProfile = SettingsManager.Current.PuTTY_Profile;
             SSHPort = SettingsManager.Current.PuTTY_SSHPort;
             TelnetPort = SettingsManager.Current.PuTTY_TelnetPort;
             BaudRate = SettingsManager.Current.PuTTY_BaudRate;
@@ -179,39 +319,33 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand BrowseFileCommand
-        {
-            get { return new RelayCommand(p => BrowseFileAction()); }
-        }
+        public ICommand BrowseFileCommand => new RelayCommand(p => BrowseFileAction());
 
         private void BrowseFileAction()
         {
             var openFileDialog = new System.Windows.Forms.OpenFileDialog
             {
-                Filter = ApplicationFileExtensionFilter
+                Filter = GlobalStaticConfiguration.ApplicationFileExtensionFilter
             };
 
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                PuTTYLocation = openFileDialog.FileName;
+                ApplicationFilePath = openFileDialog.FileName;
         }
 
-        public ICommand ConfigurePuTTYCommand
-        {
-            get { return new RelayCommand(p => ConfigurePuTTYAction()); }
-        }
+        public ICommand ConfigureCommand => new RelayCommand(p => ConfigureAction());
 
-        private void ConfigurePuTTYAction()
+        private void ConfigureAction()
         {
-            ConfigurePuTTY();
+            Configure();
         }
         #endregion
 
         #region Methods
-        private async void ConfigurePuTTY()
+        private async void Configure()
         {
             try
             {
-                Process.Start(SettingsManager.Current.PuTTY_PuTTYLocation);
+                Process.Start(SettingsManager.Current.PuTTY_ApplicationFilePath);
             }
             catch (Exception ex)
             {
@@ -225,9 +359,9 @@ namespace NETworkManager.ViewModels
 
         public void SetFilePathFromDragDrop(string filePath)
         {
-            PuTTYLocation = filePath;
+            ApplicationFilePath = filePath;
 
-            OnPropertyChanged(nameof(PuTTYLocation));
+            OnPropertyChanged(nameof(ApplicationFilePath));
         }
         #endregion
     }

@@ -9,6 +9,7 @@
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:networkManager="clr-namespace:NETworkManager"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TracerouteHostViewModel}">
     <UserControl.Resources>
@@ -22,7 +23,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition MinWidth="40" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="350" />
+            <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
         </Grid.ColumnDefinitions>
         <dragablz:TabablzControl Grid.Column="0" Grid.Row="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
             <dragablz:TabablzControl.InterTabController>
@@ -61,26 +62,42 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <StackPanel>
-                <Button HorizontalAlignment="Center" Focusable="False" Command="{Binding AddTabCommand}" ToolTip="{x:Static localization:Strings.NewTab}" Style="{StaticResource CleanButton}" Margin="0,0,0,10">
-                    <Rectangle Width="20" Height="20">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
-                        </Rectangle.OpacityMask>
-                        <Rectangle.Style>
-                            <Style TargetType="{x:Type Rectangle}">
-                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Rectangle.Style>
-                    </Rectangle>
-                </Button>
-                <TextBlock Text="{x:Static localization:Strings.AddATabToPerformATrace}" Style="{StaticResource MessageTextBlock}" />
-            </StackPanel>
+            <Button HorizontalAlignment="Center" Command="{Binding AddTabCommand}" Style="{StaticResource CleanButton}">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
+                            </Rectangle.OpacityMask>
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddATabToPerformATrace}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </Button.Content>
+            </Button>
         </Grid>
         <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
         <Expander Grid.Column="2" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
@@ -199,21 +216,25 @@
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>
-                    <StackPanel>
-                        <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
-                                    <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-                                    <Setter Property="ToolTip" Value="{x:Static localization:Strings.AddProfileDots}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                            <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
-                                            <Setter Property="ToolTip" Value="{x:Static localization:Strings.ClearFilter}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                            <Rectangle Width="20" Height="20">
+                    <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                <Setter Property="Command" Value="{Binding AddProfileCommand}" />
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                        <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
+                                        <Setter Property="ToolTip" Value="{x:Static localization:Strings.ClearFilter}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0" Width="20" Height="20">
                                 <Rectangle.Resources>
                                     <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}"/>
                                     <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
@@ -233,37 +254,77 @@
                                     </Style>
                                 </Rectangle.Style>
                             </Rectangle>
-                        </Button>
-                        <TextBlock>
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
-                                    <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                            <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </StackPanel>
+                            <TextBlock Grid.Column="1">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                        <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Button>
                 </Grid>
-                <Button x:Name="ButtonAddProfile" Grid.Row="4" Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}">
-                    <Button.Content>
+                <Border Grid.Column="0" Grid.Row="4" BorderBrush="{DynamicResource GrayBrush8}" Margin="-10" BorderThickness="0,1,0,0" Background="Transparent">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Profiles.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <Button Height="48" Margin="10,0" Focusable="False">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                <Setter Property="Command" Value="{Binding AddProfileCommand}" />
+                                
+                            </Style>
+                        </Button.Style>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
-                                </Rectangle.OpacityMask>
+                            <Rectangle Grid.Column="0" Width="20" Height="20">
+                                <Rectangle.Resources>
+                                    <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}"/>
+                                </Rectangle.Resources>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="OpacityMask" Value="{StaticResource VisualPlus}" />
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddProfile}" FontSize="14" Margin="10,5" TextAlignment="Center" />
+                            <TextBlock Grid.Column="1" TextWrapping="NoWrap" TextTrimming="WordEllipsis">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                        <Setter Property="Text" Value="{x:Static localization:Strings.AddProfileDots}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Grid>
-                    </Button.Content>
-                </Button>
+                    </Button>
+                </Border>
             </Grid>
         </Expander>
     </Grid>

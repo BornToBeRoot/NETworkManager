@@ -9,6 +9,22 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="TextBoxScrollBar" TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MetroScrollBar}">
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="Height" Value="8" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Width" Value="8"/>
+                <Setter Property="Height" Value="Auto" />
+            </Trigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type TextBox}}, Path=IsMouseOver}" Value="False">
+                <Setter Property="Opacity" Value="0.5" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="DataGridScrollBar" TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MetroScrollBar}">
            <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
@@ -51,7 +67,7 @@
                 <Setter Property="Width" Value="8"/>
                 <Setter Property="Height" Value="Auto" />
             </Trigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type networkManagerControls:ScrollingDataGrid}}, Path=IsMouseOver}" Value="False">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type networkManagerControls:MultiSelectScrollingDataGrid}}, Path=IsMouseOver}" Value="False">
                 <Setter Property="Opacity" Value="0.5" />
             </DataTrigger>
         </Style.Triggers>

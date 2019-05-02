@@ -1,6 +1,7 @@
 # Documentation
 
 ## Application
+- [Dashboard](Application/Dashboard.md)
 - [Network Interface](Application/NetworkInterface.md)
 - [IP Scanner](Application/IPScanner.md)
 - [Port Scanner](Application/PortScanner.md)
@@ -8,8 +9,9 @@
 - [Traceroute](Application/Traceroute.md)
 - [DNS Lookup](Application/DNSLookup.md)
 - [Remote Desktop](Application/RemoteDesktop.md)
+- [PowerShell](Application/PowerShell.md)
 - [PuTTY](Application/PuTTY.md)
-- [TightVNC](Application/TightVNC.md)
+- [TigerVNC](Application/TigerVNC.md)
 - [SNMP](Application/SNMP.md)
 - [Wake on LAN](Application/WakeOnLAN.md)
 - [HTTP Headers](Application/HTTPHeaders.md)

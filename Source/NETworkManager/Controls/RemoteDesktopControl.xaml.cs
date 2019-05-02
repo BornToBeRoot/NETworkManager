@@ -1,10 +1,12 @@
-﻿using NETworkManager.Models.RemoteDesktop;
+﻿// Documenation: https://docs.microsoft.com/en-us/windows/desktop/termserv/remote-desktop-web-connection-reference
+
+using NETworkManager.Models.RemoteDesktop;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System;
-using System.Windows.Threading;
+using System.Threading.Tasks;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Controls
@@ -24,8 +26,6 @@ namespace NETworkManager.Controls
         private bool _initialized;
 
         private readonly RemoteDesktopSessionInfo _rdpSessionInfo;
-
-        private readonly DispatcherTimer _reconnectAdjustScreenTimer = new DispatcherTimer();
 
         // Fix WindowsFormsHost width
         private double _rdpClientWidth;
@@ -98,6 +98,20 @@ namespace NETworkManager.Controls
                 OnPropertyChanged();
             }
         }
+
+        private bool _isReconnecting;
+        public bool IsReconnecting
+        {
+            get => _isReconnecting;
+            set
+            {
+                if (value == _isReconnecting)
+                    return;
+
+                _isReconnecting = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, load
@@ -108,20 +122,17 @@ namespace NETworkManager.Controls
 
             _rdpSessionInfo = info;
 
-            _reconnectAdjustScreenTimer.Tick += ReconnectAdjustScreenTimer_Tick;
-            _reconnectAdjustScreenTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Connect after the control is drawn and only on the first init
-            if (!_initialized)
-            {
-                Connect();
-                _initialized = true;
-            }
+            if (_initialized)
+                return;
+
+            Connect();
+            _initialized = true;
         }
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
@@ -163,7 +174,7 @@ namespace NETworkManager.Controls
             RdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpSessionInfo.EnableCredSspSupport;
 
             // Keyboard
-            RdpClient.SecuredSettings3.KeyboardHookMode = _rdpSessionInfo.KeyboardHookMode;
+            RdpClient.SecuredSettings3.KeyboardHookMode = (int)_rdpSessionInfo.KeyboardHookMode;
 
             // Devices and resources
             RdpClient.AdvancedSettings9.RedirectClipboard = _rdpSessionInfo.RedirectClipboard;
@@ -172,6 +183,38 @@ namespace NETworkManager.Controls
             RdpClient.AdvancedSettings9.RedirectPorts = _rdpSessionInfo.RedirectPorts;
             RdpClient.AdvancedSettings9.RedirectSmartCards = _rdpSessionInfo.RedirectSmartCards;
             RdpClient.AdvancedSettings9.RedirectPrinters = _rdpSessionInfo.RedirectPrinters;
+
+            // Audio
+            RdpClient.AdvancedSettings9.AudioRedirectionMode = (uint)_rdpSessionInfo.AudioRedirectionMode;
+            RdpClient.AdvancedSettings9.AudioCaptureRedirectionMode = _rdpSessionInfo.AudioCaptureRedirectionMode == 0 ? true : false;
+
+            // Performance
+            RdpClient.AdvancedSettings9.BitmapPeristence = _rdpSessionInfo.PersistentBitmapCaching ? 1 : 0;
+            RdpClient.AdvancedSettings9.EnableAutoReconnect = _rdpSessionInfo.ReconnectIfTheConnectionIsDropped;
+
+            // Experience
+            if (_rdpSessionInfo.NetworkConnectionType != 0)
+            {
+                RdpClient.AdvancedSettings9.NetworkConnectionType = (uint)_rdpSessionInfo.NetworkConnectionType;
+
+                if (!_rdpSessionInfo.DesktopBackground)
+                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_WALLPAPER;
+
+                if (_rdpSessionInfo.FontSmoothing)
+                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_ENABLE_FONT_SMOOTHING;
+
+                if (_rdpSessionInfo.DesktopComposition)
+                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_ENABLE_DESKTOP_COMPOSITION;
+
+                if (!_rdpSessionInfo.ShowWindowContentsWhileDragging)
+                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_FULLWINDOWDRAG;
+
+                if (!_rdpSessionInfo.MenuAndWindowAnimation)
+                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_MENUANIMATIONS;
+
+                if (!_rdpSessionInfo.VisualStyles)
+                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_THEMING;
+            }
 
             // Display
             RdpClient.ColorDepth = _rdpSessionInfo.ColorDepth;      // 8, 15, 16, 24
@@ -357,18 +400,23 @@ namespace NETworkManager.Controls
 
         private void RdpGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            // Prevent with a timer, that the function (rdpClient.Reconnect()) is executed too often
-            if (IsConnected && _rdpSessionInfo.AdjustScreenAutomatically)
-                _reconnectAdjustScreenTimer.Start();
+            if (IsConnected && _rdpSessionInfo.AdjustScreenAutomatically && !IsReconnecting)
+                InitiateReconnection();
         }
 
-        private void ReconnectAdjustScreenTimer_Tick(object sender, EventArgs e)
+        private async void InitiateReconnection()
         {
-            // Stop timer
-            _reconnectAdjustScreenTimer.Stop();
+            IsReconnecting = true;
 
-            // Reconnect with new resulution
+            do
+            {
+                await Task.Delay(500);
+
+            } while (Mouse.LeftButton == MouseButtonState.Pressed);
+
             ReconnectAdjustScreen();
+
+            IsReconnecting = false;
         }
         #endregion
     }

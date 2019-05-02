@@ -8,14 +8,14 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
-using NETworkManager.Models.TightVNC;
+using NETworkManager.Models.TigerVNC;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Controls
 {
-    public partial class TightVNCControl : INotifyPropertyChanged
+    public partial class TigerVNCControl : INotifyPropertyChanged
     {
         #region PropertyChangedEventHandler
         public event PropertyChangedEventHandler PropertyChanged;
@@ -32,9 +32,9 @@ namespace NETworkManager.Controls
 
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private readonly TightVNCSessionInfo _tightVNCSessionInfo;
+        private readonly TigerVNCSessionInfo _sessionInfo;
 
-        private Process _tightVNCProcess;
+        private Process _process;
         private IntPtr _appWin;
 
         private readonly DispatcherTimer _resizeTimer = new DispatcherTimer();
@@ -69,14 +69,14 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor, load
-        public TightVNCControl(TightVNCSessionInfo info)
+        public TigerVNCControl(TigerVNCSessionInfo info)
         {
             InitializeComponent();
             DataContext = this;
 
             _dialogCoordinator = DialogCoordinator.Instance;
 
-            _tightVNCSessionInfo = info;
+            _sessionInfo = info;
 
             _resizeTimer.Tick += ResizeTimer_Tick;
             _resizeTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -91,8 +91,8 @@ namespace NETworkManager.Controls
                 return;
 
             // Fix: The control is not visible by default, thus height and width is not set. If the values are not set, the size does not scale properly
-            TightVNCHost.Height = (int)ActualHeight;
-            TightVNCHost.Width = (int)ActualWidth;
+            WindowHost.Height = (int)ActualHeight;
+            WindowHost.Width = (int)ActualWidth;
 
             Connect();
             _initialized = true;
@@ -123,22 +123,20 @@ namespace NETworkManager.Controls
 
             var info = new ProcessStartInfo
             {
-                FileName = _tightVNCSessionInfo.TightVNCLocation,
-                Arguments = TightVNC.BuildCommandLine(_tightVNCSessionInfo)
+                FileName = _sessionInfo.ApplicationFilePath,
+                Arguments = TigerVNC.BuildCommandLine(_sessionInfo)
             };
 
             try
             {
-                _tightVNCProcess = Process.Start(info);
+                _process = Process.Start(info);
 
-                if (_tightVNCProcess != null)
+                if (_process != null)
                 {
-                    _tightVNCProcess.EnableRaisingEvents = true;
-                    _tightVNCProcess.Exited += TightVNCProcess_Exited;
+                    _process.EnableRaisingEvents = true;
+                    _process.Exited += Process_Exited;
 
-                    // Embed tightvnc window into panel, remove border etc.
-                    _tightVNCProcess.WaitForInputIdle();
-                    _appWin = _tightVNCProcess.MainWindowHandle;
+                    _appWin = _process.MainWindowHandle;
 
                     if (_appWin == IntPtr.Zero)
                     {
@@ -146,8 +144,12 @@ namespace NETworkManager.Controls
 
                         while ((DateTime.Now - startTime).TotalSeconds < 10)
                         {
-                            _tightVNCProcess.Refresh();
-                            _appWin = _tightVNCProcess.MainWindowHandle;
+                            _process.Refresh();
+
+                            if (_process.HasExited)
+                                break;
+
+                            _appWin = _process.MainWindowHandle;
 
                             if (IntPtr.Zero != _appWin)
                                 break;
@@ -158,25 +160,38 @@ namespace NETworkManager.Controls
 
                     if (_appWin != IntPtr.Zero)
                     {
-                        NativeMethods.SetParent(_appWin, TightVNCHost.Handle);
+                        while (!_process.HasExited && _process.MainWindowTitle.IndexOf(" - TigerVNC", StringComparison.Ordinal) == -1)
+                        {
+                            await Task.Delay(50);
 
-                        // Show window before set style and resize
-                        NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
+                            _process.Refresh();
+                        }
 
-                        // Remove border etc.
-                        long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
-                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
-                        NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
-                        
-                        IsConnected = true;
+                        if (!_process.HasExited)
+                        {
+                            // Update the window handle, it changes when there is an authentication dialog
+                            _appWin = _process.MainWindowHandle;
 
-                        // Resize embedded application & refresh       
-                        ResizeEmbeddedTightVNC();
+                            NativeMethods.SetParent(_appWin, WindowHost.Handle);
+
+                            // Show window before set style and resize
+                            NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
+
+                            // Remove border etc.
+                            long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
+                            style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME); // NativeMethods.WS_POPUP --> Overflow? (https://github.com/BornToBeRoot/NETworkManager/issues/167)
+                            NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
+
+                            IsConnected = true;
+
+                            // Resize embedded application & refresh       
+                            ResizeEmbeddedWindow();
+                        }
                     }
                 }
                 else
                 {
-                    throw new Exception("TightVNC process could not be started!");
+                    throw new Exception("Process could not be started!");
                 }
             }
             catch (Exception ex)
@@ -185,35 +200,34 @@ namespace NETworkManager.Controls
                 {
                     var settings = AppearanceManager.MetroDialog;
                     settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
-
-                    ConfigurationManager.Current.IsDialogOpen = true;
+                    ConfigurationManager.Current.FixAirspace = true;
 
                     await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error,
                         ex.Message, MessageDialogStyle.Affirmative, settings);
 
-                    ConfigurationManager.Current.IsDialogOpen = false;
+                    ConfigurationManager.Current.FixAirspace = false;
                 }
             }
 
             IsConnecting = false;
         }
 
-        private void TightVNCProcess_Exited(object sender, EventArgs e)
+        private void Process_Exited(object sender, EventArgs e)
         {
             // This happens when the user exit the process
             IsConnected = false;
         }
 
-        private void ResizeEmbeddedTightVNC()
+        private void ResizeEmbeddedWindow()
         {
             if (IsConnected)
-                NativeMethods.SetWindowPos(_tightVNCProcess.MainWindowHandle, IntPtr.Zero, 0, 0, TightVNCHost.ClientSize.Width, TightVNCHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+                NativeMethods.SetWindowPos(_process.MainWindowHandle, IntPtr.Zero, 0, 0, WindowHost.ClientSize.Width, WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
         }
 
         public void Disconnect()
         {
-            if (_tightVNCProcess != null && !_tightVNCProcess.HasExited)
-                _tightVNCProcess.Kill();
+            if (_process != null && !_process.HasExited)
+                _process.Kill();
         }
 
         public void CloseTab()
@@ -225,17 +239,17 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Events
-        private void TightVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void TigerVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (_tightVNCProcess != null)
-                ResizeEmbeddedTightVNC();
+            if (_process != null)
+                ResizeEmbeddedWindow();
         }
 
         private void ResizeTimer_Tick(object sender, EventArgs e)
         {
             _resizeTimer.Stop();
 
-            ResizeEmbeddedTightVNC();
+            ResizeEmbeddedWindow();
         }
         #endregion
     }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using NETworkManager.Controls;
 
 namespace NETworkManager.Models.Settings
 {
@@ -201,7 +202,7 @@ namespace NETworkManager.Models.Settings
             ForceRestart = true;
         }
 
-        public static void Update(Version programmVersion, Version settingsVersion)
+        public static void Update(Version assemblyVersion, Version settingsVersion)
         {
             // Version is 0.0.0.0 on first run or settings reset --> skip updates 
             if (settingsVersion > new Version("0.0.0.0"))
@@ -211,19 +212,35 @@ namespace NETworkManager.Models.Settings
                 // Features added in 1.8.0.0
                 if (settingsVersion < new Version("1.8.0.0"))
                 {
-                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.TightVNC));
+                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.TigerVNC));
                     Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Whois));
+
+                    reorderApplications = true;
+                }
+
+                // Features added in 1.9.0.0
+                if (settingsVersion < new Version("1.9.0.0"))
+                {
+                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.PowerShell));
+                    
+                    reorderApplications = true;
+                }
+
+                // Features added in 1.10.0.0
+                if (settingsVersion < new Version("1.10.0.0"))
+                {
+                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Dashboard));
 
                     reorderApplications = true;
                 }
 
                 // Reorder application view
                 if (reorderApplications)
-                    Current.General_ApplicationList = new ObservableCollection<ApplicationViewInfo>(Current.General_ApplicationList.OrderBy(info => info.Name));
+                    Current.General_ApplicationList = new ObservableSetCollection<ApplicationViewInfo>(Current.General_ApplicationList.OrderBy(info => info.Name));
             }
 
             // Update settings version
-            Current.SettingsVersion = programmVersion.ToString();
+            Current.SettingsVersion = assemblyVersion.ToString();
         }
     }
 }

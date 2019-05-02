@@ -21,9 +21,14 @@ namespace NETworkManager.Views
                 menu.DataContext = _viewModel;
         }
 
-        public void Refresh()
+        public void OnViewHide()
         {
-            _viewModel.Refresh();
+            _viewModel.OnViewHide();
+        }
+
+        public void OnViewVisible()
+        {
+            _viewModel.OnViewVisible();
         }
     }
 }

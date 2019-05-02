@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using NETworkManager.Models.Settings;
 using static NETworkManager.Models.Network.PortInfo;
 
 namespace NETworkManager.Converters
@@ -12,7 +13,7 @@ namespace NETworkManager.Converters
             if (!(value is PortStatus portStatus))
                 return "-/-";
 
-            var status = Resources.Localization.Strings.ResourceManager.GetString("PortState_" + portStatus);
+            var status = LocalizationManager.TranslatePortStatus(portStatus);
 
             return string.IsNullOrEmpty(status) ? portStatus.ToString() : status;
         }

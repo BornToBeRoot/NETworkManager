@@ -9,8 +9,13 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Linq;
 using System.Net;
 using System;
+using System.Collections;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using MahApps.Metro.Controls;
+using NETworkManager.Models.Export;
+using NETworkManager.Models.Network;
+using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
@@ -80,8 +85,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<IPNetwork> _subnetsResult = new ObservableCollection<IPNetwork>();
-        public ObservableCollection<IPNetwork> SubnetsResult
+        private ObservableCollection<IPNetworkInfo> _subnetsResult = new ObservableCollection<IPNetworkInfo>();
+        public ObservableCollection<IPNetworkInfo> SubnetsResult
         {
             get => _subnetsResult;
             set
@@ -94,10 +99,10 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICollectionView SubnetsResultView { get; }
+        public ICollectionView SubnetsResultsView { get; }
 
-        private IPNetwork _selectedSubnetResult;
-        public IPNetwork SelectedSubnetResult
+        private IPNetworkInfo _selectedSubnetResult;
+        public IPNetworkInfo SelectedSubnetResult
         {
             get => _selectedSubnetResult;
             set
@@ -109,6 +114,22 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+
+        private IList _selectedSubnetResults = new ArrayList();
+        public IList SelectedSubnetResults
+        {
+            get => _selectedSubnetResults;
+            set
+            {
+                if (Equals(value, _selectedSubnetResults))
+                    return;
+
+                _selectedSubnetResults = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
@@ -149,104 +170,116 @@ namespace NETworkManager.ViewModels
             NewSubnetmaskOrCIDRHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory);
 
             // Result view
-            SubnetsResultView = CollectionViewSource.GetDefaultView(SubnetsResult);
+            SubnetsResultsView = CollectionViewSource.GetDefaultView(SubnetsResult);
         }
         #endregion
 
         #region ICommands & Actions
-        public ICommand SubnettingCommand
+        public ICommand CalculateCommand => new RelayCommand(p => CalculateAction(), Calculate_CanExecute);
+
+        private bool Calculate_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+
+        private void CalculateAction()
         {
-            get { return new RelayCommand(p => SubnettingAction()); }
+            Calculate();
         }
 
-        private void SubnettingAction()
-        {
-            Subnetting();
-        }
-
-        public ICommand CopySelectedNetworkAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedNetworkAddressAction()); }
-        }
+        public ICommand CopySelectedNetworkAddressCommand => new RelayCommand(p => CopySelectedNetworkAddressAction());
 
         private void CopySelectedNetworkAddressAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Network.ToString());
         }
 
-        public ICommand CopySelectedBroadcastCommand
-        {
-            get { return new RelayCommand(p => CopySelectedBroadcastAction()); }
-        }
+        public ICommand CopySelectedBroadcastCommand => new RelayCommand(p => CopySelectedBroadcastAction());
 
         private void CopySelectedBroadcastAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Broadcast.ToString());
         }
 
-        public ICommand CopySelectedIPAddressesCommand
-        {
-            get { return new RelayCommand(p => CopySelectedIPAddressesAction()); }
-        }
+        public ICommand CopySelectedIPAddressesCommand => new RelayCommand(p => CopySelectedIPAddressesAction());
 
         private void CopySelectedIPAddressesAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Total.ToString());
         }
 
-        public ICommand CopySelectedSubnetmaskCommand
-        {
-            get { return new RelayCommand(p => CopySelectedSubnetmaskAction()); }
-        }
+        public ICommand CopySelectedSubnetmaskCommand => new RelayCommand(p => CopySelectedSubnetmaskAction());
 
         private void CopySelectedSubnetmaskAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Netmask.ToString());
         }
 
-        public ICommand CopySelectedCIDRCommand
-        {
-            get { return new RelayCommand(p => CopySelectedCIDRAction()); }
-        }
+        public ICommand CopySelectedCIDRCommand => new RelayCommand(p => CopySelectedCIDRAction());
 
         private void CopySelectedCIDRAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Cidr.ToString());
         }
 
-        public ICommand CopySelectedFirstIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedFirstIPAddressAction()); }
-        }
+        public ICommand CopySelectedFirstIPAddressCommand => new RelayCommand(p => CopySelectedFirstIPAddressAction());
 
         private void CopySelectedFirstIPAddressAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.FirstUsable.ToString());
         }
 
-        public ICommand CopySelectedLastIPAddressCommand
-        {
-            get { return new RelayCommand(p => CopySelectedLastIPAddressAction()); }
-        }
+        public ICommand CopySelectedLastIPAddressCommand => new RelayCommand(p => CopySelectedLastIPAddressAction());
 
         private void CopySelectedLastIPAddressAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.LastUsable.ToString());
         }
 
-        public ICommand CopySelectedHostCommand
-        {
-            get { return new RelayCommand(p => CopySelectedHostAction()); }
-        }
+        public ICommand CopySelectedHostCommand => new RelayCommand(p => CopySelectedHostAction());
 
         private void CopySelectedHostAction()
         {
             CommonMethods.SetClipboard(SelectedSubnetResult.Usable.ToString());
         }
+
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private async void ExportAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? SubnetsResult : new ObservableCollection<IPNetworkInfo>(SelectedSubnetResults.Cast<IPNetworkInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType = instance.FileType;
+                SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
         #endregion
 
         #region Methods
-        private async void Subnetting()
+        private async void Calculate()
         {
             DisplayStatusMessage = false;
             IsCalculationRunning = true;
@@ -259,7 +292,7 @@ namespace NETworkManager.ViewModels
             // Ask the user if there is a large calculation...
             var baseCidr = subnet.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? 32 : 128;
 
-            if (65535 < (Math.Pow(2, baseCidr - subnet.Cidr) / Math.Pow(2, (baseCidr - newCidr))))
+            if (65535 < Math.Pow(2, baseCidr - subnet.Cidr) / Math.Pow(2, (baseCidr - newCidr)))
             {
                 var settings = AppearanceManager.MetroDialog;
 
@@ -281,10 +314,10 @@ namespace NETworkManager.ViewModels
             {
                 foreach (var network in subnet.Subnet(newCidr))
                 {
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
                     {
                         lock (SubnetsResult)
-                            SubnetsResult.Add(network);
+                            SubnetsResult.Add(new IPNetworkInfo(network));
                     }));
                 }
             });

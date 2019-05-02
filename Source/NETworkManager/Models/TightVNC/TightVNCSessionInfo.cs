@@ -1,27 +1,16 @@
 ﻿using NETworkManager.Models.Settings;
 
-namespace NETworkManager.Models.TightVNC
+namespace NETworkManager.Models.TigerVNC
 {
-    public class TightVNCSessionInfo
+    public class TigerVNCSessionInfo
     {
-        public string TightVNCLocation { get; set; }
+        public string ApplicationFilePath { get; set; }
         public string Host { get; set; }
         public int Port { get; set; }
         
-        public TightVNCSessionInfo()
+        public TigerVNCSessionInfo()
         {
 
-        }
-
-        public static TightVNCSessionInfo Parse(ProfileInfo profileInfo)
-        {
-            var info = new TightVNCSessionInfo
-            {
-                Host = profileInfo.TightVNC_Host,
-                Port = profileInfo.TightVNC_Port
-            };
-
-            return info;
         }
     }
 }

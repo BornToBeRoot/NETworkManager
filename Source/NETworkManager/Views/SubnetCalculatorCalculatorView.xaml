@@ -32,7 +32,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Subnet}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-            <ComboBox Grid.Column="2" x:Name="ComboBoxSubnet" ItemsSource="{Binding SubnetHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExampleIPv4IPv6Subnet}" Style="{StaticResource HistoryComboBox}" >
+            <ComboBox Grid.Column="2" x:Name="ComboBoxSubnet" ItemsSource="{Binding SubnetHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4IPv6Subnet}" Style="{StaticResource HistoryComboBox}" >
                 <ComboBox.Text>
                     <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                         <Binding.ValidationRules>

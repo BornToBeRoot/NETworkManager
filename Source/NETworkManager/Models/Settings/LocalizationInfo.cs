@@ -10,6 +10,9 @@ namespace NETworkManager.Models.Settings
         public BitmapImage Flag { get; set; }
         public string Translator { get; set; }
         public string Code { get; set; }
+        public double PercentTranslated { get; set; }
+        public bool IsOfficial { get; set; }
+        public bool IsVisible { get; set; }
 
         public LocalizationInfo()
         {
@@ -21,16 +24,19 @@ namespace NETworkManager.Models.Settings
             Code = code;
         }
 
-        public LocalizationInfo(string name, string nativeName, BitmapImage flag, string translator, string code)
+        public LocalizationInfo(string name, string nativeName, BitmapImage flag, string translator, string code, double percentTranslated, bool isOfficial, bool isVisible = true)
         {
             Name = name;
             NativeName = nativeName;
             Flag = flag;
             Translator = translator;
             Code = code;
+            PercentTranslated = percentTranslated;
+            IsOfficial = isOfficial;
+            IsVisible = isVisible;
         }
 
-        public LocalizationInfo(string name, string nativeName, Uri flagPath, string translator, string code) : this(name, nativeName, new BitmapImage(flagPath), translator, code)
+        public LocalizationInfo(string name, string nativeName, Uri flagPath, string translator, string code, double percentTranslated, bool isOfficial, bool isVisible = true) : this(name, nativeName, new BitmapImage(flagPath), translator, code, percentTranslated, isOfficial, isVisible)
         {
 
         }

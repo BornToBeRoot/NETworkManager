@@ -44,9 +44,14 @@
                             <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LicenseUrl}" MouseAction="LeftClick" />
                         </TextBlock.InputBindings>
                     </TextBlock>
-                    <TextBlock Text="Maintained by GitHub.com/BornToBeRoot" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
+                    <TextBlock Text="Developed and maintained by GitHub.com/BornToBeRoot" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
-                        <Button ToolTip="{x:Static localization:StaticStrings.GitHub}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.GithubUrl}" Style="{StaticResource CleanButton}">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                <Setter Property="Cursor" Value="Hand"></Setter>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.GithubUrl}">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:SimpleIcons Kind=GitHub}" />
@@ -63,10 +68,27 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:StaticStrings.Gitter}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.GitterUrl}" Style="{StaticResource CleanButton}" Margin="10,0,0,0">
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_TransifexProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.TransifexUrl}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24" >
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:SimpleIcons Kind=Gitter}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Translate}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_TwitterContact}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.TwitterUrl}" Margin="10,0,0,0">
+                            <Rectangle Width="24" Height="24" >
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Twitter}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -83,8 +105,8 @@
                     </StackPanel>
                 </StackPanel>
             </Grid>
-            <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.Update}" Style="{StaticResource HeaderTextBlock}"/>
-            <Grid Grid.Row="4" Margin="0,0,0,20">
+            <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Update}" Style="{StaticResource HeaderTextBlock}"/>
+            <Grid Grid.Row="2" Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
@@ -98,6 +120,7 @@
                     <StackPanel.Style>
                         <Style TargetType="{x:Type StackPanel}">
                             <Setter Property="TextBlock.Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Cursor" Value="Hand" />
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="TextBlock.Foreground" Value="{DynamicResource BlackColorBrush}" />
@@ -125,12 +148,12 @@
                 <mahAppsControls:ProgressRing Grid.Column="2" Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Height="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}" Width="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}" HorizontalAlignment="Left" IsActive="True" />
                 <TextBlock Grid.Column="2" Text="{Binding UpdaterMessage}" Visibility="{Binding ShowUpdaterMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CenterTextBlock}" Margin="10,0,0,0" />
             </Grid>
-            <TextBlock Grid.Row="5" Text="{x:Static localization:Strings.Libraries}" Style="{StaticResource HeaderTextBlock}"/>
-            <DataGrid x:Name="DataGridLibaries" Grid.Row="6" ItemsSource="{Binding LibrariesView}" SelectedItem="{Binding SelectedLibraryInfo}" Margin="0,0,0,10">
+            <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.Libraries}" Style="{StaticResource HeaderTextBlock}"/>
+            <DataGrid x:Name="DataGridLibaries" Grid.Row="4" ItemsSource="{Binding LibrariesView}" SelectedItem="{Binding SelectedLibraryInfo}" Margin="0,0,0,10">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                        <MenuItem Header="{x:Static localization:Strings.OpenProject}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedLibraryInfo.LibraryUrl}">
+                        <MenuItem Header="{x:Static localization:Strings.OpenProject}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedLibraryInfo.WebsiteUrl}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -160,7 +183,7 @@
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (documentation:LibraryInfo.Library)}" MinWidth="150" />
+                    <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (documentation:LibraryInfo.Name)}" MinWidth="150" />
                     <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (documentation:LibraryInfo.Description)}" MinWidth="300" Width="*" >
                         <DataGridTextColumn.ElementStyle>
                             <Style>
@@ -171,7 +194,7 @@
                     <DataGridTextColumn Header="{x:Static localization:Strings.License}" Binding="{Binding (documentation:LibraryInfo.License)}" MinWidth="150" />
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Grid.Row="7" Command="{Binding OpenLicenseFolderCommand}" HorizontalAlignment="Right" Style="{StaticResource ImageWithTextButton}" Margin="0,0,0,20">
+            <Button Grid.Row="5" Command="{Binding OpenLicenseFolderCommand}" HorizontalAlignment="Right" Style="{StaticResource ImageWithTextButton}" Margin="0,0,0,20">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -187,12 +210,12 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <TextBlock Grid.Row="8" Text="{x:Static localization:Strings.Resources}" Style="{StaticResource HeaderTextBlock}"/>
-            <DataGrid x:Name="DataGridResources" Grid.Row="9" ItemsSource="{Binding ResourcesView}" SelectedItem="{Binding SelectedResourceInfo}">
+            <TextBlock Grid.Row="6" Text="{x:Static localization:Strings.ExternalServices}" Style="{StaticResource HeaderTextBlock}"/>
+            <DataGrid x:Name="DataGridExternalServices" Grid.Row="7" ItemsSource="{Binding ExternalServicesView}" SelectedItem="{Binding SelectedExternalServicesInfo}" Margin="0,0,0,20">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                        <MenuItem Header="{x:Static localization:Strings.OpenWebsite}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedResourceInfo.ResourceUrl}">
+                        <MenuItem Header="{x:Static localization:Strings.OpenWebsite}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedExternalServicesInfo.WebsiteUrl}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -213,7 +236,43 @@
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (documentation:ResourceInfo.Resource)}" MinWidth="150" />
+                    <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (documentation:ExternalServicesInfo.Name)}" MinWidth="150" />
+                    <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (documentation:ExternalServicesInfo.Description)}" MinWidth="300" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock Grid.Row="8" Text="{x:Static localization:Strings.Resources}" Style="{StaticResource HeaderTextBlock}"/>
+            <DataGrid x:Name="DataGridResources" Grid.Row="9" ItemsSource="{Binding ResourcesView}" SelectedItem="{Binding SelectedResourceInfo}">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                    <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                        <MenuItem Header="{x:Static localization:Strings.OpenWebsite}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedResourceInfo.WebsiteUrl}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </DataGrid.Resources>
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
+                                <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (documentation:ResourceInfo.Name)}" MinWidth="150" />
                     <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (documentation:ResourceInfo.Description)}" MinWidth="300" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <Style>

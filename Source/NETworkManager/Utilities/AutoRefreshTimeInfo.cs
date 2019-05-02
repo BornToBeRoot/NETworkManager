@@ -1,4 +1,4 @@
-﻿using static NETworkManager.Utilities.AutoRefreshTime;
+﻿using NETworkManager.Enum;
 
 namespace NETworkManager.Utilities
 {

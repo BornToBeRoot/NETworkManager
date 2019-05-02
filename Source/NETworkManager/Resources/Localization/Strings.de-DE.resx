@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -375,9 +375,6 @@
   <data name="Success" xml:space="preserve">
     <value>Erfolgreich!</value>
   </data>
-  <data name="Supernetting" xml:space="preserve">
-    <value>Supernetting</value>
-  </data>
   <data name="Theme" xml:space="preserve">
     <value>Thema</value>
   </data>
@@ -654,9 +651,6 @@
   <data name="Add" xml:space="preserve">
     <value>Hinzufügen</value>
   </data>
-  <data name="AddATabToOpenANewConnection" xml:space="preserve">
-    <value>Füge eine Registerkarte hinzu, um eine neue Verbindung herzustellen...</value>
-  </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
     <value>Füge eine Registerkarte hinzu, um eine DNS-Suche durchzuführen...</value>
   </data>
@@ -801,20 +795,20 @@
   <data name="Default" xml:space="preserve">
     <value>Standard</value>
   </data>
-  <data name="DefaultBaudRate" xml:space="preserve">
-    <value>Standard Baudrate</value>
+  <data name="BaudRate" xml:space="preserve">
+    <value>Baudrate</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
     <value>Standard-Port:</value>
   </data>
-  <data name="DefaultRloginPort" xml:space="preserve">
-    <value>Standard Rlogin Port</value>
+  <data name="RloginPort" xml:space="preserve">
+    <value>Rlogin Port</value>
   </data>
-  <data name="DefaultSSHPort" xml:space="preserve">
-    <value>Standard SSH Port</value>
+  <data name="SSHPort" xml:space="preserve">
+    <value>SSH Port</value>
   </data>
-  <data name="DefaultTelnetPort" xml:space="preserve">
-    <value>Standard Telnet Port</value>
+  <data name="TelnetPort" xml:space="preserve">
+    <value>Telnet Port</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
     <value>Die ausgewählte Anmeldeinformation wird unwiderruflich gelöscht.</value>
@@ -840,8 +834,8 @@
   <data name="DNSServer" xml:space="preserve">
     <value>DNS-Server</value>
   </data>
-  <data name="Documentation" xml:space="preserve">
-    <value>Dokumentation</value>
+  <data name="OpenDocumentation" xml:space="preserve">
+    <value>Dokumentation öffnen</value>
   </data>
   <data name="Domain" xml:space="preserve">
     <value>Domäne</value>
@@ -858,9 +852,6 @@
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
     <value>Aktiviere Credential Security Support Provider</value>
   </data>
-  <data name="EnableTheProfileInAtLeastOneTool" xml:space="preserve">
-    <value>Aktivieren Sie das Profil in mindestens einem Tool! Klicken Sie auf eine Registerkarte und wählen Sie "Aktivieren"...</value>
-  </data>
   <data name="EnableTransparency" xml:space="preserve">
     <value>Transparenz aktivieren</value>
   </data>
@@ -873,11 +864,8 @@
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
     <value>Geben Sie das Subnetz und eine neue Subnetzmaske ein, um Subnetze zu erstellen...</value>
   </data>
-  <data name="EnterSubnetsToCreateASupernet" xml:space="preserve">
-    <value>Geben Sie Subnetze ein, um ein Supernet zu erstellen...</value>
-  </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>Fehler beim Überprüfen von 'api.github.com', überprüfen Sie Ihre Netzwerkverbindung!</value>
+    <value>Verbindung zu 'api.github.com' kann nicht hergestellt werden, überprüfen Sie Ihre Netzwerkverbindung.</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
     <value>Fehler in Antwort!</value>
@@ -894,8 +882,8 @@
   <data name="FixedScreenSize" xml:space="preserve">
     <value>Feste Bildschirmgröße:</value>
   </data>
-  <data name="ForkMeOnGitHub" xml:space="preserve">
-    <value>Fork me on Github!</value>
+  <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
+    <value>Star/Fork das Projekt auf Github</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Gefunden</value>
@@ -973,7 +961,8 @@
     <value>Keine Ports gefunden. Überprüfen Sie Ihre Eingabe!</value>
   </data>
   <data name="NoProfilesFoundCreateOne" xml:space="preserve">
-    <value>Keine Profile gefunden! Erstelle eins...</value>
+    <value>Keine Profile gefunden!
+Erstelle eins...</value>
   </data>
   <data name="NothingFound" xml:space="preserve">
     <value>Nichts gefunden!</value>
@@ -1310,9 +1299,6 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="Closed" xml:space="preserve">
     <value>Geschlossen</value>
   </data>
-  <data name="ConfigurePuTTY" xml:space="preserve">
-    <value>PuTTY konfigurieren</value>
-  </data>
   <data name="Continue" xml:space="preserve">
     <value>Weiter</value>
   </data>
@@ -1343,129 +1329,6 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="Everything" xml:space="preserve">
     <value>Alles</value>
   </data>
-  <data name="ExampleBaud9600" xml:space="preserve">
-    <value>9600</value>
-  </data>
-  <data name="ExampleCredentialName" xml:space="preserve">
-    <value>Windows-Testbenutzer</value>
-  </data>
-  <data name="ExampleGroupServers" xml:space="preserve">
-    <value>Server</value>
-  </data>
-  <data name="ExampleGroupSwitche" xml:space="preserve">
-    <value>Switche</value>
-  </data>
-  <data name="ExampleHostname" xml:space="preserve">
-    <value>SERVER-01</value>
-  </data>
-  <data name="ExampleHostnameAndOrIPAddress" xml:space="preserve">
-    <value>192.168.178.1; fritz.box</value>
-  </data>
-  <data name="ExampleHostnameOrIPAddress" xml:space="preserve">
-    <value>SERVER-01 und 172.16.0.100</value>
-  </data>
-  <data name="ExampleIPScanRange" xml:space="preserve">
-    <value>192.168.1.0/24; 192.168.178.1 - 192.168.178.128; 192.168.[178-179].[1,100,150-200]; 192.168.178.150; server-01/24</value>
-  </data>
-  <data name="ExampleIPv4Address" xml:space="preserve">
-    <value>192.168.178.55</value>
-  </data>
-  <data name="ExampleIPv4Broadcast" xml:space="preserve">
-    <value>192.168.178.255</value>
-  </data>
-  <data name="ExampleIPv4DNSServer" xml:space="preserve">
-    <value>8.8.8.8</value>
-  </data>
-  <data name="ExampleIPv4DNSServers" xml:space="preserve">
-    <value>192.168.178.1; 8.8.8.8; 8.8.4.4</value>
-  </data>
-  <data name="ExampleIPv4Gateway" xml:space="preserve">
-    <value>192.168.178.1</value>
-  </data>
-  <data name="ExampleIPv4IPv6Subnet" xml:space="preserve">
-    <value>192.168.178.133/255.255.255.0 oder 2001:0db8::/64</value>
-  </data>
-  <data name="ExampleIPv4IPv6Subnet2" xml:space="preserve">
-    <value>192.168.178.134/255.255.255.0 oder 2001:0db9::/64</value>
-  </data>
-  <data name="ExampleIPv4Subnet" xml:space="preserve">
-    <value>192.168.178.133/22 oder 192.168.178.133/255.255.252.0</value>
-  </data>
-  <data name="ExampleIPv4Subnetmask" xml:space="preserve">
-    <value>255.255.255.0</value>
-  </data>
-  <data name="ExampleIPv4SubnetmaskIPv4CIDR" xml:space="preserve">
-    <value>/24 oder 255.255.255.0</value>
-  </data>
-  <data name="ExampleIPv4SubnetmaskIPv6CIDR" xml:space="preserve">
-    <value>255.255.255.0 oder /64</value>
-  </data>
-  <data name="ExampleIPv4SubnetWithCIDR" xml:space="preserve">
-    <value>192.168.100.0/24</value>
-  </data>
-  <data name="ExampleMACAddress" xml:space="preserve">
-    <value>00:F1:21:AB:0B:35</value>
-  </data>
-  <data name="ExampleMACAddressesOrVendor" xml:space="preserve">
-    <value>01:23:45:67:89:AB; 01-23-45; AA11BB; 00F1A2C3D4E5; Intel Corp; Asus</value>
-  </data>
-  <data name="ExamplePort161" xml:space="preserve">
-    <value>161</value>
-  </data>
-  <data name="ExamplePort22" xml:space="preserve">
-    <value>22</value>
-  </data>
-  <data name="ExamplePort23" xml:space="preserve">
-    <value>23</value>
-  </data>
-  <data name="ExamplePort3389" xml:space="preserve">
-    <value>3389</value>
-  </data>
-  <data name="ExamplePort513" xml:space="preserve">
-    <value>513</value>
-  </data>
-  <data name="ExamplePort53" xml:space="preserve">
-    <value>53</value>
-  </data>
-  <data name="ExamplePort7" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="ExamplePortPortRangeOrService" xml:space="preserve">
-    <value>22; 80; https; ldaps; 777 - 999; 8080</value>
-  </data>
-  <data name="ExamplePortScanRange" xml:space="preserve">
-    <value>22; 80; 443; 500 - 999; 8080</value>
-  </data>
-  <data name="ExampleRemoteDesktopProfileName" xml:space="preserve">
-    <value>Webserver</value>
-  </data>
-  <data name="ExampleSerialLine" xml:space="preserve">
-    <value>COM5</value>
-  </data>
-  <data name="ExampleSNMPCommunity" xml:space="preserve">
-    <value>public</value>
-  </data>
-  <data name="ExampleSNMPOID" xml:space="preserve">
-    <value>1.3.6.1.2.1.1</value>
-  </data>
-  <data name="ExampleSNMPUsername" xml:space="preserve">
-    <value>snmp-user</value>
-  </data>
-  <data name="ExampleSuffix" xml:space="preserve">
-    <value>fritz.box</value>
-  </data>
-  <data name="ExampleTags" xml:space="preserve">
-    <value>server; dmz</value>
-  </data>
-  <data name="ExampleUsername" xml:space="preserve">
-    <value>Admin</value>
-  </data>
-  <data name="ExampleWebserverPorts" xml:space="preserve">
-    <value>80; 443; 8080; 8443</value>
-  </data>
-  <data name="ExampleWebsiteUri" xml:space="preserve">
-    <value>http(s)://example.com/index.html</value>
-  </data>
   <data name="FilterDots" xml:space="preserve">
     <value>Filter...</value>
   </data>
@@ -1485,7 +1348,10 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
     <value>Das Passwort wird bei der Bearbeitung nicht angezeigt, kann jedoch überschrieben werden.</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0] Wenn die Serverauthentifizierung fehlschlägt, wird ohne Warnung eine Verbindung zum Computer hergestellt.\n[1] Wenn die Serverauthentifizierung fehlschlägt, wird keine Verbindung hergestellt.\n[2] Wenn die Server-Authentifizierung fehlschlägt, wird eine Warnung und ein Dialog angezeigt, um die Verbindung herzustellen oder abzulehnen.\n[3] Es ist keine Authentifizierungsanforderung angegeben.</value>
+    <value>[0] Wenn die Serverauthentifizierung fehlschlägt, wird ohne Warnung eine Verbindung zum Computer hergestellt.
+[1] Wenn die Serverauthentifizierung fehlschlägt, wird keine Verbindung hergestellt.
+[2] Wenn die Server-Authentifizierung fehlschlägt, wird eine Warnung und ein Dialog angezeigt, um die Verbindung herzustellen oder abzulehnen.
+[3] Es ist keine Authentifizierungsanforderung angegeben.</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
     <value>Mit Tags können Sie Profile/Sitzungen nach Themen/Projekten organisieren. Mehrere Tags können mit ";" getrennt sein. Suche nach Tags mit "tag=xxx".</value>
@@ -1964,9 +1830,6 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>Whois-Server nicht gefunden für die Domain: "{0}"</value>
   </data>
-  <data name="ExampleDomain" xml:space="preserve">
-    <value>example.com</value>
-  </data>
   <data name="Routing" xml:space="preserve">
     <value>Routing</value>
   </data>
@@ -2000,29 +1863,20 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="RestartSession" xml:space="preserve">
     <value>Session neu starten</value>
   </data>
-  <data name="ExamplePort5900" xml:space="preserve">
-    <value>5900</value>
+  <data name="TigerVNC" xml:space="preserve">
+    <value>TigerVNC</value>
   </data>
-  <data name="TightVNC" xml:space="preserve">
-    <value>TightVNC</value>
+  <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
+    <value>Konfiguriere den Pfad zu TigerVNC in den Einstellungen...</value>
   </data>
-  <data name="ConfigureThePathToTightVNCInTheSettingsDots" xml:space="preserve">
-    <value>Konfiguriere den Pfad zu TightVNC in den Einstellungen...</value>
+  <data name="DisableTransparencyInTheSettingsToUseTigerVNC" xml:space="preserve">
+    <value>Deaktivieren Sie die Transparenz in den Einstellungen (Allgemein/Aussehen) und starten Sie anschließend die Anwendung neu, um TigerVNC zu verwenden.</value>
   </data>
-  <data name="ConfigureTightVNC" xml:space="preserve">
-    <value>TightVNC konfigurieren</value>
+  <data name="TigerVNCLocationDots" xml:space="preserve">
+    <value>TigerVNC-Speicherort...</value>
   </data>
-  <data name="DefaultVNCPort" xml:space="preserve">
-    <value>Standard VNC Port</value>
-  </data>
-  <data name="DisableTransparencyInTheSettingsToUseTightVNC" xml:space="preserve">
-    <value>Deaktivieren Sie die Transparenz in den Einstellungen (Allgemein/Aussehen) und starten Sie anschließend die Anwendung neu, um TightVNC zu verwenden.</value>
-  </data>
-  <data name="TightVNCLocationDots" xml:space="preserve">
-    <value>TightVNC-Speicherort...</value>
-  </data>
-  <data name="TightVNCProcessHasEnded" xml:space="preserve">
-    <value>TightVNC-Prozess wurde beendet!</value>
+  <data name="TigerVNCProcessHasEnded" xml:space="preserve">
+    <value>TigerVNC-Prozess wurde beendet!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
     <value>Verbinde...</value>
@@ -2030,7 +1884,301 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="ResolveMACAddressAndVendor" xml:space="preserve">
     <value>MAC-Adresse und Hersteller auflösen</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value/>
+  <data name="Note" xml:space="preserve">
+    <value>Hinweis</value>
+  </data>
+  <data name="ExportAll" xml:space="preserve">
+    <value>Alles exportieren</value>
+  </data>
+  <data name="ExportDots" xml:space="preserve">
+    <value>Exportieren...</value>
+  </data>
+  <data name="ExportSelected" xml:space="preserve">
+    <value>Ausgewählte exportieren</value>
+  </data>
+  <data name="LocationDots" xml:space="preserve">
+    <value>Speicherort...</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>Datei</value>
+  </data>
+  <data name="EnterValidFilePath" xml:space="preserve">
+    <value>Geben Sie einen gültigen Dateipfad ein!</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Alle</value>
+  </data>
+  <data name="Format" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>Ausgewählte</value>
+  </data>
+  <data name="AnErrorOccurredWhileExportingTheData" xml:space="preserve">
+    <value>Beim Exportieren der Daten ist ein Fehler aufgetreten. Siehe Fehlermeldung für Details:</value>
+  </data>
+  <data name="Design" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="HighlightTimeouts" xml:space="preserve">
+    <value>Timeouts hervorheben</value>
+  </data>
+  <data name="EnterSubnetsToCreateAWideSubnet" xml:space="preserve">
+    <value>Geben Sie Subnetze ein, um ein WideSubnet zu erstellen...</value>
+  </data>
+  <data name="WideSubnet" xml:space="preserve">
+    <value>Wide Subnet</value>
+  </data>
+  <data name="AddTabDots" xml:space="preserve">
+    <value>Tab hinzufügen...</value>
+  </data>
+  <data name="ResetCredentialsMessage" xml:space="preserve">
+    <value>Wenn Sie Ihr Passwort vergessen haben und neu beginnen möchten, löschen Sie die folgende Datei und starten Sie die Anwendung erneut.
+Pfad: "{0}"</value>
+  </data>
+  <data name="AddIPv4AddressDots" xml:space="preserve">
+    <value>IPv4-Adresse hinzufügen...</value>
+  </data>
+  <data name="AddIPv4Address" xml:space="preserve">
+    <value>IPv4-Adresse hinzufügen</value>
+  </data>
+  <data name="HostThreads" xml:space="preserve">
+    <value>Host Threads</value>
+  </data>
+  <data name="PortThreads" xml:space="preserve">
+    <value>Port Threads</value>
+  </data>
+  <data name="PowerShell" xml:space="preserve">
+    <value>PowerShell</value>
+  </data>
+  <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
+    <value>Konfiguriere den Pfad zu PowerShell in den Einstellungen...</value>
+  </data>
+  <data name="DisableTransparencyInTheSettingsToUsePowerShell" xml:space="preserve">
+    <value>Deaktivieren Sie die Transparenz in den Einstellungen (Allgemein/Aussehen) und starten Sie anschließend die Anwendung neu, um PowerShell zu verwenden.</value>
+  </data>
+  <data name="PowerShellProcessHasEnded" xml:space="preserve">
+    <value>PowerShell-Prozess wurde beendet!</value>
+  </data>
+  <data name="ExecutionPolicy" xml:space="preserve">
+    <value>Execution Policy</value>
+  </data>
+  <data name="RemoteConsole" xml:space="preserve">
+    <value>Remote-Konsole</value>
+  </data>
+  <data name="PowerShellLocationDots" xml:space="preserve">
+    <value>PowerShell-Speicherort...</value>
+  </data>
+  <data name="FilePath" xml:space="preserve">
+    <value>Dateipfad</value>
+  </data>
+  <data name="ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater" xml:space="preserve">
+    <value>Dieses Feature ist nur in Windows  10 / Server 2016 oder später verfügbar!</value>
+  </data>
+  <data name="OverrideDefaultSettings" xml:space="preserve">
+    <value>Überschreibe Standard-Einstellungen</value>
+  </data>
+  <data name="ResolveIPv4AddressForThisHost" xml:space="preserve">
+    <value>IPv4-Adresse für diesen Host auflösen</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Verbergen</value>
+  </data>
+  <data name="TotalBytesReceived" xml:space="preserve">
+    <value>Anzahl der empfangenen Bytes</value>
+  </data>
+  <data name="TotalBytesSent" xml:space="preserve">
+    <value>Anzahl der gesendeten Bytes</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Bandwidth" xml:space="preserve">
+    <value>Bandbreite</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
+    <value>Windows Tastenkombinationen anwenden</value>
+  </data>
+  <data name="CredentialSecuritySupportProvider" xml:space="preserve">
+    <value>Credential Security Support Provider</value>
+  </data>
+  <data name="BackgroundJob" xml:space="preserve">
+    <value>Hintergrundjob</value>
+  </data>
+  <data name="HelpMessage_BackgroundJob" xml:space="preserve">
+    <value>Der Hintergrundjob speichert alle x-Minuten die Einstellungen, Profile und Anmeldeinformationen.
+
+Wert 0 deaktiviert dieses Feature.
+
+Wenn der Wert geändert wird, muss die Anwendung muss neu gestartet werden, damit dieser angewandt werden.</value>
+  </data>
+  <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
+    <value>Hintergrundjob alle x-Minuten ausführen</value>
+  </data>
+  <data name="YourSystemOSIsIncompatibleWithTheLatestRelease" xml:space="preserve">
+    <value>Ihr Betriebssystem ist nicht mit der neuesten Version kompatibel!</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
+    <value>Alle Einstellungen können später in den Einstellungen geändert werden</value>
+  </data>
+  <data name="CheckPublicIPAddress" xml:space="preserve">
+    <value>Überprüfen der öffentlichen IP-Adresse</value>
+  </data>
+  <data name="FirstRunMessage" xml:space="preserve">
+    <value>Vielen Dank, dass Sie NETworkManager verwenden!
+
+Um zusätzliche Funktionen bereitzustellen, verwendet die Anwendung Dienste im Internet, die nicht von mir betrieben werden. Es werden zu keinem Zeitpunkt Daten an mich gesendet.</value>
+  </data>
+  <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
+    <value>Beim Starten des Programms wird im Hintergrund geprüft, ob eine neue Programmversion auf Github verfügbar ist.
+
+URL: https://api.github.com/</value>
+  </data>
+  <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
+    <value>Die öffentliche IP-Adresse wird über ipify.org ermittelt.
+
+URL: https://api.ipify.org/</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privatsphäre</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Willkommen</value>
+  </data>
+  <data name="ExternalServices" xml:space="preserve">
+    <value>Externe Dienste</value>
+  </data>
+  <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
+    <value>Star/Fork das Projekt auf Github.
+
+URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+  </data>
+  <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
+    <value>Helfen Sie bei der Übersetzung des Tools auf Transifex.
+
+URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+  </data>
+  <data name="ToolTip_TwitterContact" xml:space="preserve">
+    <value>Kontakt via Twitter.
+
+URL: https://twitter.com/BornToBeRoot_DE</value>
+  </data>
+  <data name="Connection" xml:space="preserve">
+    <value>Verbindung</value>
+  </data>
+  <data name="Computer" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="GatewayRouter" xml:space="preserve">
+    <value>Gateway / Router</value>
+  </data>
+  <data name="Internet" xml:space="preserve">
+    <value>Internet</value>
+  </data>
+  <data name="CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage" xml:space="preserve">
+    <value>Überprüfen Sie die Konfiguration Ihres Netzwerkadapters (DNS) und ob Ihr DNS Server richtig konfiguriert ist.</value>
+  </data>
+  <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
+    <value>Überprüfen Sie die Konfiguration Ihres Netzwerkadapters (DHCP, statische IP) und ob Sie mit dem Netzwerk verbunden sind.</value>
+  </data>
+  <data name="ConnectionState_Error" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="ConnectionState_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ConnectionState_Warning" xml:space="preserve">
+    <value>Warnung</value>
+  </data>
+  <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
+    <value>Die IP-Adresse des Gateways konnte nicht ermittelt werden!</value>
+  </data>
+  <data name="CouldNotDetectLocalIPAddressMessage" xml:space="preserve">
+    <value>Die lokale IP-Adresse konnte nicht ermittelt werden!</value>
+  </data>
+  <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>Öffentliche IP-Adresse konnte nicht über WebRequest (http / https) von "{0}" abgerufen werden! Überprüfen Sie Ihre Netzwerkverbindung (Firewall, Proxy usw.).</value>
+  </data>
+  <data name="CouldNotResolveHostnameForXXXMessage" xml:space="preserve">
+    <value>Hostname für IP-Adresse {0} konnte nicht aufgelöst werden!</value>
+  </data>
+  <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
+    <value>Kein A DNS Eintrag aufgelöst für "{0}"!</value>
+  </data>
+  <data name="NoPTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
+    <value>Kein PTR DNS Eintrag aufgelöst für "{0}"!</value>
+  </data>
+  <data name="XADNSRecordsResolvedForXXXMessage" xml:space="preserve">
+    <value>"{0}" A DNS Einträge aufgelöst für "{1}"!</value>
+  </data>
+  <data name="PTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
+    <value>PTR DNS Eintrag aufgelöst für "{0}"!</value>
+  </data>
+  <data name="GotXXXAsPublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>"{0}" als öffentliche IP-Adresse von "{1}" erhalten!</value>
+  </data>
+  <data name="ResolvedXXXAsHostnameForIPAddressXXXMessage" xml:space="preserve">
+    <value>"{0}" als Hostname für IP-Adresse "{1}" aufgelöst!</value>
+  </data>
+  <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
+    <value>Überprüfung der öffentlichen IP-Adresse
+ist deaktiviert!</value>
+  </data>
+  <data name="TCPIPStackIsAvailableMessage" xml:space="preserve">
+    <value>TCP/IP-Stack ist verfügbar. "{0}" ist über ICMP erreichbar!</value>
+  </data>
+  <data name="TCPIPStackIsNotAvailableMessage" xml:space="preserve">
+    <value>TCP/IP-Stack ist nicht verfügbar... "{0}" ist über ICMP nicht erreichbar!</value>
+  </data>
+  <data name="XXXDetectedAsGatewayIPAddress" xml:space="preserve">
+    <value>{0} wurde als Gateway IP-Adresse erkannt!</value>
+  </data>
+  <data name="XXXDetectedAsLocalIPAddressMessage" xml:space="preserve">
+    <value>{0} wurde als lokale IP-Adresse erkannt!</value>
+  </data>
+  <data name="XXXIsNotReachableViaICMPMessage" xml:space="preserve">
+    <value>{0} ist nicht über ICMP erreichbar!</value>
+  </data>
+  <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
+    <value>{0} ist erreichbar über ICMP!</value>
+  </data>
+  <data name="UseCustomAPI" xml:space="preserve">
+    <value>Verwende benutzerdefinierte API</value>
+  </data>
+  <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
+    <value>URL zu einem Webdienst, der über http oder https erreichbar ist und eine IP-Adresse als Antwort zurückgibt.</value>
+  </data>
+  <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
+    <value>Öffentliche IP-Adresse von "{0}" konnte nicht geparsed! Versuchen Sie es mit einem anderen Dienst oder verwenden Sie die Standardeinstellung ...</value>
+  </data>
+  <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
+    <value>Verbindung zu "{0}" konnte nicht hergestellt werden!</value>
+  </data>
+  <data name="PublicDNSTestDomain" xml:space="preserve">
+    <value>Öffentliche DNS Test Domain</value>
+  </data>
+  <data name="PublicDNSTestIPAddress" xml:space="preserve">
+    <value>Öffentliche DNS Test IP-Adresse</value>
+  </data>
+  <data name="PublicICMPTestIPAddress" xml:space="preserve">
+    <value>Öffentliche ICMP Test IP-Adresse</value>
+  </data>
+  <data name="IPv4ProtocolAvailable" xml:space="preserve">
+    <value>IPv4-Protokoll ist verfügbar</value>
+  </data>
+  <data name="IPv6ProtocolAvailable" xml:space="preserve">
+    <value>IPv6-Protokoll ist verfügbar</value>
+  </data>
+  <data name="CopyNoun" xml:space="preserve">
+    <value>Kopie</value>
+  </data>
+  <data name="Official" xml:space="preserve">
+    <value>Offiziell</value>
   </data>
 </root>

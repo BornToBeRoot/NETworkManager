@@ -103,6 +103,22 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public ICollectionView ExternalServicesView { get; }
+
+        private ExternalServicesInfo _selectedExternalServicesInfo;
+        public ExternalServicesInfo SelectedExternalServicesInfo
+        {
+            get => _selectedExternalServicesInfo;
+            set
+            {
+                if (value == _selectedExternalServicesInfo)
+                    return;
+
+                _selectedExternalServicesInfo = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICollectionView ResourcesView { get; }
 
         private ResourceInfo _selectedResourceInfo;
@@ -124,18 +140,18 @@ namespace NETworkManager.ViewModels
         public AboutViewModel()
         {
             LibrariesView = CollectionViewSource.GetDefaultView(LibraryManager.List);
-            LibrariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Library), ListSortDirection.Ascending));
+            LibrariesView.SortDescriptions.Add(new SortDescription(nameof(LibraryInfo.Name), ListSortDirection.Ascending));
+
+            ExternalServicesView = CollectionViewSource.GetDefaultView(ExternalServicesManager.List);
+            ExternalServicesView.SortDescriptions.Add(new SortDescription(nameof(ExternalServicesInfo.Name), ListSortDirection.Ascending));
 
             ResourcesView = CollectionViewSource.GetDefaultView(ResourceManager.List);
-            ResourcesView.SortDescriptions.Add(new SortDescription(nameof(ResourceInfo.Resource), ListSortDirection.Ascending));
+            ResourcesView.SortDescriptions.Add(new SortDescription(nameof(ResourceInfo.Name), ListSortDirection.Ascending));
         }
         #endregion
 
         #region Commands & Actions
-        public ICommand CheckForUpdatesCommand
-        {
-            get { return new RelayCommand(p => CheckForUpdatesAction()); }
-        }
+        public ICommand CheckForUpdatesCommand => new RelayCommand(p => CheckForUpdatesAction());
 
         private void CheckForUpdatesAction()
         {
@@ -149,10 +165,7 @@ namespace NETworkManager.ViewModels
             Process.Start((string)url);
         }
 
-        public ICommand OpenLicenseFolderCommand
-        {
-            get { return new RelayCommand(p => OpenLicenseFolderAction()); }
-        }
+        public ICommand OpenLicenseFolderCommand => new RelayCommand(p => OpenLicenseFolderAction());
 
         private void OpenLicenseFolderAction()
         {
@@ -172,15 +185,13 @@ namespace NETworkManager.ViewModels
 
             updater.UpdateAvailable += Updater_UpdateAvailable;
             updater.NoUpdateAvailable += Updater_NoUpdateAvailable;
+            updater.ClientIncompatibleWithNewVersion += Updater_ClientIncompatibleWithNewVersion; ;
             updater.Error += Updater_Error;
 
             updater.Check();
         }
 
-        public void OpenLicenseFolder()
-        {
-            Process.Start(LibraryManager.GetLicenseLocation());
-        }
+        public void OpenLicenseFolder() => Process.Start(LibraryManager.GetLicenseLocation());
         #endregion
 
         #region Events
@@ -195,6 +206,14 @@ namespace NETworkManager.ViewModels
         private void Updater_NoUpdateAvailable(object sender, EventArgs e)
         {
             UpdaterMessage = Strings.NoUpdateAvailable;
+
+            IsUpdateCheckRunning = false;
+            ShowUpdaterMessage = true;
+        }
+
+        private void Updater_ClientIncompatibleWithNewVersion(object sender, EventArgs e)
+        {
+            UpdaterMessage = Strings.YourSystemOSIsIncompatibleWithTheLatestRelease;
 
             IsUpdateCheckRunning = false;
             ShowUpdaterMessage = true;

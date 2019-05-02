@@ -25,11 +25,6 @@ namespace NETworkManager.Views
                 _viewModel.CloseAction = window.Close;
         }
 
-        public void SaveAndCheckSettings()
-        {
-            _viewModel.SaveAndCheckSettings();
-        }
-
         private void TextBoxLocation_Drop(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -45,6 +40,11 @@ namespace NETworkManager.Views
         {
             e.Effects = DragDropEffects.Copy;
             e.Handled = true;
+        }
+
+        public void OnVisible()
+        {
+            _viewModel.SaveAndCheckSettings();
         }
     }
 }

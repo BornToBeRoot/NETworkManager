@@ -5,18 +5,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 using NETworkManager.Properties;
 
 namespace NETworkManager
 {
-    /// <summary>
-    /// Interaktionslogik für "App.xaml"
-    /// </summary>
     public partial class App
     {
-        // Single instance unique identifier
-        private const string Guid = "6A3F34B2-161F-4F70-A8BC-A19C40F79CFB";
+        // Single instance identifier
+        private const string GUID = "6A3F34B2-161F-4F70-A8BC-A19C40F79CFB";
         private Mutex _mutex;
+        private DispatcherTimer _dispatcherTimer;
 
         private bool _singleInstanceClose;
 
@@ -46,7 +45,9 @@ namespace NETworkManager
             // Get assembly informations   
             AssemblyManager.Load();
 
-            // Load application settings (profiles/Profiles/clients are loaded when needed)
+            bool profileUpdateRequired = false;
+
+            // Load application settings
             try
             {
                 // Update integrated settings %LocalAppData%\NETworkManager\NETworkManager_GUID (custom settings path)
@@ -55,17 +56,38 @@ namespace NETworkManager
                     Settings.Default.Upgrade();
                     Settings.Default.UpgradeRequired = false;
                 }
-                
+
                 SettingsManager.Load();
 
                 // Update settings (Default --> %AppData%\NETworkManager\Settings)
-                if (AssemblyManager.Current.Version > new Version(SettingsManager.Current.SettingsVersion))
-                    SettingsManager.Update(AssemblyManager.Current.Version, new Version(SettingsManager.Current.SettingsVersion));
+                Version assemblyVersion = AssemblyManager.Current.Version;
+                Version settingsVersion = new Version(SettingsManager.Current.SettingsVersion);
+
+                if (AssemblyManager.Current.Version > settingsVersion)
+                {
+                    SettingsManager.Update(AssemblyManager.Current.Version, settingsVersion);
+                }
             }
             catch (InvalidOperationException)
             {
                 SettingsManager.InitDefault();
+
+                profileUpdateRequired = true; // Because we don't know if a profile update is required
+
                 ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
+            }
+
+            // Upgrade profile if version has changed or settings have been reset (mthis happens mostly, because the version has changed and values are wrong)
+            if(profileUpdateRequired)
+            {
+                try
+                {
+                    ProfileManager.Upgrade();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to update profiles...\n\n" + ex.Message, "Profile Manager - Update Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
 
             // Load localization (requires settings to be loaded first)
@@ -80,7 +102,7 @@ namespace NETworkManager
             }
 
             // Create mutex
-            _mutex = new Mutex(true, "{" + Guid + "}");
+            _mutex = new Mutex(true, "{" + GUID + "}");
             var mutexIsAcquired = _mutex.WaitOne(TimeSpan.Zero, true);
 
             // Release mutex
@@ -89,6 +111,18 @@ namespace NETworkManager
 
             if (SettingsManager.Current.Window_MultipleInstances || mutexIsAcquired)
             {
+                if (SettingsManager.Current.General_BackgroundJobInterval != 0)
+                {
+                    _dispatcherTimer = new DispatcherTimer
+                    {
+                        Interval = TimeSpan.FromMinutes(SettingsManager.Current.General_BackgroundJobInterval)
+                    };
+
+                    _dispatcherTimer.Tick += DispatcherTimer_Tick;
+
+                    _dispatcherTimer.Start();
+                }
+
                 StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
             }
             else
@@ -99,6 +133,11 @@ namespace NETworkManager
                 _singleInstanceClose = true;
                 Shutdown();
             }
+        }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Save();
         }
 
         protected override void OnSessionEnding(SessionEndingCancelEventArgs e)
@@ -116,6 +155,13 @@ namespace NETworkManager
             if (_singleInstanceClose || ImportExportManager.ForceRestart || CommandLineManager.Current.Help)
                 return;
 
+            _dispatcherTimer?.Stop();
+
+            Save();
+        }
+
+        private void Save()
+        {
             // Save local settings (custom settings path in AppData/Local)
             Settings.Default.Save();
 

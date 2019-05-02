@@ -57,7 +57,7 @@ namespace NETworkManager.ViewModels
             get => _isVisibleToHideApplicationEnabled;
             set
             {
-                if(value == _isVisibleToHideApplicationEnabled)
+                if (value == _isVisibleToHideApplicationEnabled)
                     return;
 
                 _isVisibleToHideApplicationEnabled = value;
@@ -94,6 +94,23 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _isHideToVisibleApplicationEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _backgroundJobInterval;
+        public int BackgroundJobInterval
+        {
+            get => _backgroundJobInterval;
+            set
+            {
+                if (value == _backgroundJobInterval)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.General_BackgroundJobInterval = value;
+
+                _backgroundJobInterval = value;
                 OnPropertyChanged();
             }
         }
@@ -161,6 +178,7 @@ namespace NETworkManager.ViewModels
             ValidateHideVisibleApplications();
 
             DefaultApplicationSelectedItem = Applications.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
+            BackgroundJobInterval = SettingsManager.Current.General_BackgroundJobInterval;
             HistoryListEntries = SettingsManager.Current.General_HistoryListEntries;
         }
         #endregion
@@ -175,15 +193,16 @@ namespace NETworkManager.ViewModels
         {
             var index = 0;
 
-            bool newDefaultApplication = DefaultApplicationSelectedItem.Name == VisibleApplicationSelectedItem.Name;
+            var newDefaultApplication = DefaultApplicationSelectedItem.Name == VisibleApplicationSelectedItem.Name;
 
             for (var i = 0; i < SettingsManager.Current.General_ApplicationList.Count; i++)
             {
-                if (SettingsManager.Current.General_ApplicationList[i].Name == VisibleApplicationSelectedItem.Name)
-                {
-                    index = i;
-                    break;
-                }
+                if (SettingsManager.Current.General_ApplicationList[i].Name != VisibleApplicationSelectedItem.Name)
+                    continue;
+
+                index = i;
+
+                break;
             }
 
             // Remove and add will fire a collection changed event --> detected in MainWindow

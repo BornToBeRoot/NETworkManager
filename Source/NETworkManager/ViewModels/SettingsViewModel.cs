@@ -89,14 +89,16 @@ namespace NETworkManager.ViewModels
         private SettingsSettingsView _settingsSettingsView;
         private SettingsUpdateView _settingsUpdateView;
         private SettingsImportExportView _settingsImportExportView;
+        private DashboardSettingsView _dashboardSettingsView;
         private IPScannerSettingsView _ipScannerSettingsView;
         private PortScannerSettingsView _portScannerSettingsView;
         private PingSettingsView _pingSettingsViewModel;
         private TracerouteSettingsView _tracerouteSettingsView;
         private DNSLookupSettingsView _dnsLookupSettingsViewModel;
         private RemoteDesktopSettingsView _remoteDesktopSettingsView;
+        private PowerShellSettingsView _powerShellSettingsView;
         private PuTTYSettingsView _puTTYSettingsView;
-        private TightVNCSettingsView _tightVNCSettingsView;
+        private TigerVNCSettingsView _tigerVNCSettingsView;
         private SNMPSettingsView _snmpSettingsView;
         private WakeOnLANSettingsView _wakeOnLANSettingsView;
         private HTTPHeadersSettingsView _httpHeadersSettingsView;
@@ -113,10 +115,9 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            // General
             SettingsViews =  new CollectionViewSource { Source = SettingsViewManager.List }.View;
-            SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription("TranslatedGroup"));
-            SettingsViews.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SettingsViewInfo.TranslatedGroup)));
+            SettingsViews.SortDescriptions.Add(new SortDescription(nameof(SettingsViewInfo.Name), ListSortDirection.Ascending));
             SettingsViews.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
@@ -136,10 +137,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand ClearSearchCommand
-        {
-            get { return new RelayCommand(p => ClearSearchAction()); }
-        }
+        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
         {
@@ -153,8 +151,8 @@ namespace NETworkManager.ViewModels
             // Don't change the view, if the user has filtered the settings...
             if (!string.IsNullOrEmpty(Search))
                 return;
-
-            if (Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName.ToString()) && ApplicationViewManager.Name.None.ToString() != applicationName.ToString())
+            
+            if (System.Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName.ToString()) && ApplicationViewManager.Name.None.ToString() != applicationName.ToString())
                 SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName.ToString());
             else
                 SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == SettingsViewManager.Name.General);
@@ -205,7 +203,7 @@ namespace NETworkManager.ViewModels
                         _settingsSettingsView = new SettingsSettingsView();
 
                     // Save settings (if changed) and check if files exists
-                    _settingsSettingsView.SaveAndCheckSettings();
+                    _settingsSettingsView.OnVisible();
 
                     SettingsContent = _settingsSettingsView;
                     break;
@@ -220,9 +218,15 @@ namespace NETworkManager.ViewModels
                         _settingsImportExportView = new SettingsImportExportView();
 
                     // Save settings (if changed) and check if files exists
-                    _settingsImportExportView.SaveAndCheckSettings();
+                    _settingsImportExportView.OnVisible();
 
                     SettingsContent = _settingsImportExportView;
+                    break;
+                case SettingsViewManager.Name.Dashboard:
+                    if(_dashboardSettingsView == null)
+                        _dashboardSettingsView = new DashboardSettingsView();
+
+                    SettingsContent = _dashboardSettingsView;
                     break;
                 case SettingsViewManager.Name.IPScanner:
                     if (_ipScannerSettingsView == null)
@@ -261,17 +265,23 @@ namespace NETworkManager.ViewModels
 
                     SettingsContent = _remoteDesktopSettingsView;
                     break;
+                case SettingsViewManager.Name.PowerShell:
+                    if(_powerShellSettingsView == null)
+                        _powerShellSettingsView = new PowerShellSettingsView();
+
+                    SettingsContent = _powerShellSettingsView;
+                    break;
                 case SettingsViewManager.Name.PuTTY:
                     if (_puTTYSettingsView == null)
                         _puTTYSettingsView = new PuTTYSettingsView();
 
                     SettingsContent = _puTTYSettingsView;
                     break;
-                case SettingsViewManager.Name.TightVNC:
-                    if(_tightVNCSettingsView == null)
-                        _tightVNCSettingsView = new TightVNCSettingsView();
+                case SettingsViewManager.Name.TigerVNC:
+                    if(_tigerVNCSettingsView == null)
+                        _tigerVNCSettingsView = new TigerVNCSettingsView();
 
-                    SettingsContent = _tightVNCSettingsView;
+                    SettingsContent = _tigerVNCSettingsView;
                     break;
                 case SettingsViewManager.Name.SNMP:
                     if (_snmpSettingsView == null)

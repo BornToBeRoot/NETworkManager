@@ -48,9 +48,6 @@ namespace NETworkManager.ViewModels
             CancelCommand = new RelayCommand(p => cancelHandler(this));
         }
 
-        private void ValidatePassword()
-        {
-            IsPasswordEmpty = (Password == null || Password.Length == 0);
-        }
+        private void ValidatePassword() => IsPasswordEmpty = Password == null || Password.Length == 0;
     }
 }

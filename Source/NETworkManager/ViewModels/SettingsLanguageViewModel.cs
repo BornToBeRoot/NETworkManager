@@ -5,6 +5,7 @@ using NETworkManager.Utilities;
 using System.ComponentModel;
 using System;
 using System.Windows.Input;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
@@ -78,6 +79,8 @@ namespace NETworkManager.ViewModels
             _isLoading = true;
 
             Languages = CollectionViewSource.GetDefaultView(LocalizationManager.List);
+            Languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.IsOfficial), ListSortDirection.Descending));
+            Languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.PercentTranslated), ListSortDirection.Descending));
             Languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.Name), ListSortDirection.Ascending));
 
             Languages.Filter = o =>
@@ -108,14 +111,18 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand ClearSearchCommand
-        {
-            get { return new RelayCommand(p => ClearSearchAction()); }
-        }
+        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
         {
             Search = string.Empty;
+        }
+
+        public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
+
+        private static void OpenWebsiteAction(object url)
+        {
+            Process.Start((string)url);
         }
         #endregion
     }
