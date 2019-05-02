@@ -398,7 +398,7 @@ namespace NETworkManager.Controls
             DisconnectReason = GetDisconnectReason(e.discReason);
         }
 
-        private void RdpGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (IsConnected && _rdpSessionInfo.AdjustScreenAutomatically && !IsReconnecting)
                 InitiateReconnection();

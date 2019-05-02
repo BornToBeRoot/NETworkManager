@@ -235,8 +235,8 @@
     <Compile Include="Controls\PowerShellControl.xaml.cs">
       <DependentUpon>PowerShellControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TightVNCControl.xaml.cs">
-      <DependentUpon>TightVNCControl.xaml</DependentUpon>
+    <Compile Include="Controls\TigerVNCControl.xaml.cs">
+      <DependentUpon>TigerVNCControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
@@ -595,7 +595,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\TightVNCControl.xaml">
+    <Page Include="Controls\TigerVNCControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

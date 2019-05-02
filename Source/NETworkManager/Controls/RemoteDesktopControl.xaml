@@ -16,7 +16,7 @@
         <converters:BooleanReverseToVisibilityHiddenConverter x:Key="BooleanReverseToVisibilityHiddenConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
-    <Grid x:Name="RdpGrid" SizeChanged="RdpGrid_SizeChanged">
+    <Grid x:Name="RdpGrid" SizeChanged="WindowGrid_SizeChanged">
         <!-- WindowsFormsHost is qualified with a namespace to work around https://github.com/dotnet/core/issues/2085 -->        
         <wfi:WindowsFormsHost MaxWidth="{Binding RdpClientWidth, Mode=OneWay}" MaxHeight="{Binding RdpClientHeight, Mode=OneWay}">
             <WindowsFormsHost.Style>

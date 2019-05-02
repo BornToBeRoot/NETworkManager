@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:windowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"             
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
@@ -17,9 +18,9 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid SizeChanged="WindowGrid_SizeChanged">
-        <WindowsFormsHost Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">  
+        <wfi:WindowsFormsHost Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">  
             <windowsForms:Panel x:Name="WindowHost" />
-        </WindowsFormsHost>
+        </wfi:WindowsFormsHost>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center" Visibility="{Binding IsConnected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

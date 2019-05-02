@@ -39,9 +39,12 @@
     <PackageReference Include="Dragablz" Version="0.0.3.203" />
     <PackageReference Include="IPNetwork2" Version="2.1.2" />
     <PackageReference Include="Lextm.SharpSnmpLib" Version="10.0.11" />
+    <PackageReference Include="LiveCharts" Version="0.9.7" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MahApps.Metro" Version="1.6.5" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="2.3.0" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Octokit" Version="0.32.0" />
 
     <Reference Include="AxMSTSCLib">
@@ -143,6 +146,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Controls\RemoteDesktopControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="..\NETworkManager\Controls\TigerVNCControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="..\NETworkManager\Controls\TightVNCControl.xaml">

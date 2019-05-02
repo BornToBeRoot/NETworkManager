@@ -239,7 +239,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Events
-        private void TigerVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (_process != null)
                 ResizeEmbeddedWindow();
