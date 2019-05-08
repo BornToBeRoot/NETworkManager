@@ -14,7 +14,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {
-    public class WhoisHostViewModel : ViewModelBase, IProfileViewModel
+    public class WhoisHostViewModel : ViewModelBase, IProfileManagerViewModel
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;

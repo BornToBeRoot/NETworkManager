@@ -18,7 +18,7 @@ using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {
-    public class PuTTYHostViewModel : ViewModelBase, IProfileViewModel
+    public class PuTTYHostViewModel : ViewModelBase, IProfileManagerViewModel
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;

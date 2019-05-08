@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -271,7 +270,7 @@ namespace NETworkManager.Models.Settings
         }
 
         #region Dialogs
-        public static async void ShowAddProfileDialog(IProfileViewModel viewModel, IDialogCoordinator dialogCoordinator)
+        public static async void ShowAddProfileDialog(IProfileManagerViewModel viewModel, IDialogCoordinator dialogCoordinator)
         {
             var customDialog = new CustomDialog
             {
@@ -298,8 +297,8 @@ namespace NETworkManager.Models.Settings
             viewModel.OnProfileDialogOpen();
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
-
-        public static async void ShowEditProfileDialog(IProfileViewModel viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
+      
+        public static async void ShowEditProfileDialog(IProfileManagerViewModel viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
         {
             var customDialog = new CustomDialog
             {
@@ -329,7 +328,7 @@ namespace NETworkManager.Models.Settings
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
-        public static async void ShowCopyAsProfileDialog(IProfileViewModel viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
+        public static async void ShowCopyAsProfileDialog(IProfileManagerViewModel viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
         {
             var customDialog = new CustomDialog
             {
@@ -357,7 +356,7 @@ namespace NETworkManager.Models.Settings
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
-        public static async void ShowDeleteProfileDialog(IProfileViewModel viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
+        public static async void ShowDeleteProfileDialog(IProfileManagerViewModel viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
         {
             var customDialog = new CustomDialog
             {
@@ -385,7 +384,7 @@ namespace NETworkManager.Models.Settings
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
-        public static async void ShowEditGroupDialog(IProfileViewModel viewModel, IDialogCoordinator dialogCoordinator, string group)
+        public static async void ShowEditGroupDialog(IProfileManagerViewModel viewModel, IDialogCoordinator dialogCoordinator, string group)
         {
             var customDialog = new CustomDialog
             {

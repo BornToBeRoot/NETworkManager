@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
-    public class IPScannerHostViewModel : ViewModelBase, IProfileViewModel
+    public class IPScannerHostViewModel : ViewModelBase, IProfileManagerViewModel
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;

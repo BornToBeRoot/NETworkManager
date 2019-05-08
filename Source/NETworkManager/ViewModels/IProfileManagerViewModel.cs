@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
-    public interface IProfileViewModel
+    public interface IProfileManagerViewModel
     {
         ICollectionView Profiles { get; }
         void RefreshProfiles();

@@ -20,7 +20,7 @@ using MahApps.Metro.Controls;
 
 namespace NETworkManager.ViewModels
 {
-    public class NetworkInterfaceViewModel : ViewModelBase, IProfileViewModel
+    public class NetworkInterfaceViewModel : ViewModelBase, IProfileManagerViewModel
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;

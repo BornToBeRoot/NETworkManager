@@ -21,6 +21,7 @@ using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using NETworkManager.Models.EventSystem;
+using NETworkManager.Enum;
 
 namespace NETworkManager.ViewModels
 {
@@ -418,6 +419,39 @@ namespace NETworkManager.ViewModels
         private void CopySelectedStatusAction()
         {
             CommonMethods.SetClipboard(LocalizationManager.TranslateIPStatus(SelectedHostResult.PingInfo.Status));
+        }
+
+        public ICommand AddProfileSelectedHostCommand => new RelayCommand(p => AddProfileSelectedHostAction());
+
+        private async void AddProfileSelectedHostAction()
+        {
+            ProfileInfo profileInfo = new ProfileInfo()
+            {
+                Name = string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.PingInfo.IPAddress.ToString() : SelectedHostResult.Hostname.TrimEnd('.'),
+                Host = SelectedHostResult.PingInfo.IPAddress.ToString()
+            };
+
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.AddProfile
+            };
+
+            var profileViewModel = new ProfileViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                ProfileManager.AddProfile(instance);
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, ProfileManager.GetGroups(), ProfileEditMode.Add, profileInfo);
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = profileViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

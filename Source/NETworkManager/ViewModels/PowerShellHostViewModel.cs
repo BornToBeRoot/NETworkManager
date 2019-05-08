@@ -19,7 +19,7 @@ using MahApps.Metro.Controls;
 
 namespace NETworkManager.ViewModels
 {
-    public class PowerShellHostViewModel : ViewModelBase, IProfileViewModel
+    public class PowerShellHostViewModel : ViewModelBase, IProfileManagerViewModel
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;

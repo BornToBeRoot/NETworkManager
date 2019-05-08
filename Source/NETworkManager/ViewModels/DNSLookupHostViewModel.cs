@@ -14,7 +14,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {
-    public class DNSLookupHostViewModel : ViewModelBase, IProfileViewModel
+    public class DNSLookupHostViewModel : ViewModelBase, IProfileManagerViewModel
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;

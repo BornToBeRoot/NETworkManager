@@ -14,7 +14,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {
-    public class HTTPHeadersHostViewModel : ViewModelBase, IProfileViewModel
+    public class HTTPHeadersHostViewModel : ViewModelBase, IProfileManagerViewModel
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;

@@ -14,7 +14,7 @@ using MahApps.Metro.Controls;
 
 namespace NETworkManager.ViewModels
 {
-    public class WakeOnLANViewModel : ViewModelBase, IProfileViewModel
+    public class WakeOnLANViewModel : ViewModelBase, IProfileManagerViewModel
     {
         #region  Variables 
         private readonly IDialogCoordinator _dialogCoordinator;
