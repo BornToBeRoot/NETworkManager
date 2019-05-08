@@ -427,7 +427,7 @@ namespace NETworkManager.Models.Settings
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(filePath);
 
-            /* Changes in Version 1.11.0.0 */
+            /* Version 1.10.1.0 */
 
             // RemoteDesktop_KeyboardHookMode has changed from integer to enum
             foreach (XmlNode x in xmlDocument.SelectNodes(@"/ArrayOfProfileInfo/ProfileInfo/RemoteDesktop_KeyboardHookMode"))
