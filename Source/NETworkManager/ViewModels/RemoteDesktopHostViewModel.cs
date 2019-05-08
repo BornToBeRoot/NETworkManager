@@ -17,7 +17,7 @@ using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {
-    public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManagerViewModel
+    public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;

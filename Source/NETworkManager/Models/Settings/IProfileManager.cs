@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
 
-namespace NETworkManager.ViewModels
+namespace NETworkManager.Models.Settings
 {
-    public interface IProfileManagerViewModel
+    public interface IProfileManager
     {
         ICollectionView Profiles { get; }
         void RefreshProfiles();

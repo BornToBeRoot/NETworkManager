@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace NETworkManager.ViewModels
 {
-    public class TracerouteHostViewModel : ViewModelBase, IProfileManagerViewModel
+    public class TracerouteHostViewModel : ViewModelBase, IProfileManager
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;

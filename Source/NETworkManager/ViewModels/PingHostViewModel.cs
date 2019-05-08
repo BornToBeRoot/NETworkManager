@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace NETworkManager.ViewModels
 {
-    public class PingHostViewModel : ViewModelBase, IProfileManagerViewModel
+    public class PingHostViewModel : ViewModelBase, IProfileManager
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;

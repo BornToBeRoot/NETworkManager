@@ -18,7 +18,7 @@ using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {
-    public class TigerVNCHostViewModel : ViewModelBase, IProfileManagerViewModel
+    public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;

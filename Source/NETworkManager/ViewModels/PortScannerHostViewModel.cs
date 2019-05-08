@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
-    public class PortScannerHostViewModel : ViewModelBase, IProfileManagerViewModel
+    public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
