@@ -16,7 +16,7 @@
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerViewModel}">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerViewModel}" x:Name="xIPScannerView">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -213,7 +213,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding PerformDNSLookupHostnameCommand}" IsEnabled="{Binding SelectedHostResult.Hostname, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
+                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding PerformDNSLookupHostnameCommand}" IsEnabled="{Binding Data.SelectedHostResult.Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
@@ -297,7 +297,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
                         <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding CopySelectedHostnameCommand}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding CopySelectedHostnameCommand}" IsEnabled="{Binding Data.SelectedHostResult.Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>
