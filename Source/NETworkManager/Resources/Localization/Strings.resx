@@ -2262,4 +2262,13 @@ is disabled!</value>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
     <value>Play on this computer</value>
   </data>
+  <data name="HelpMessage_PublicDNSTestDomain" xml:space="preserve">
+    <value>Domain to test dns server settings (Domain must resolve A or AAAA record).</value>
+  </data>
+  <data name="HelpMessage_PublicDNSTestIPAddress" xml:space="preserve">
+    <value>IP address to test dns server settings (IP address must resolve PTR record).</value>
+  </data>
+  <data name="HelpMessage_PublicICMPTestIPAddress" xml:space="preserve">
+    <value>IP address to test connection via ping (ICMP).</value>
+  </data>
 </root>

@@ -2384,6 +2384,33 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Domain to test dns server settings (Domain must resolve A or AAAA record)..
+        /// </summary>
+        public static string HelpMessage_PublicDNSTestDomain {
+            get {
+                return ResourceManager.GetString("HelpMessage_PublicDNSTestDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP address to test dns server settings (IP address must resolve PTR record)..
+        /// </summary>
+        public static string HelpMessage_PublicDNSTestIPAddress {
+            get {
+                return ResourceManager.GetString("HelpMessage_PublicDNSTestIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP address to test connection via ping (ICMP)..
+        /// </summary>
+        public static string HelpMessage_PublicICMPTestIPAddress {
+            get {
+                return ResourceManager.GetString("HelpMessage_PublicICMPTestIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [0] If server authentication fails, connect to the computer without warning.
         ///[1] If server authentication fails, do not establish a connection.
         ///[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.
