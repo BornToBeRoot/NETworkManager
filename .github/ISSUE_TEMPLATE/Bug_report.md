@@ -1,3 +1,9 @@
+---
+name: Bug report
+about: Report a bug
+labels: Issue
+---
+
 **Describe your issue**:
 
 **Steps to reproduce the issue**:
