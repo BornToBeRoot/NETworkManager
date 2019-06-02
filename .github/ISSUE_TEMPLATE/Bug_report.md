@@ -1,4 +1,4 @@
-**Describe your issue or feature request**:
+**Describe your issue**:
 
 **Steps to reproduce the issue**:
 
@@ -6,7 +6,7 @@
 2.
 3.
 
-**NETworkManager version**:
+**NETworkManager version**: 
 
 **Windows version**:
 
