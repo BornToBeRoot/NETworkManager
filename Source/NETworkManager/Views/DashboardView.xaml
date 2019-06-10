@@ -435,6 +435,36 @@
                         <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding PublicIPAddressCheckDisabledNote2}" Visibility="{Binding CheckPublicIPAddress, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"  />
                     </Grid>
                 </Grid>
+                <Grid Grid.Column="0" Grid.Row="2">
+                    <Button Grid.Column="2" Command="{Binding CheckConnectionCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                </Grid>
             </Grid>
         </TabItem>
     </TabControl>
