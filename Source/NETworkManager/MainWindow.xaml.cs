@@ -865,7 +865,7 @@ namespace NETworkManager
                 if (_notifyIcon != null)
                     _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
 
-                MetroWindowMain.HideOverlay();
+                MetroMainWindow.HideOverlay();
             }
 
             // Ask the user to restart (if he has changed the language)
@@ -1017,6 +1017,7 @@ namespace NETworkManager
             }
 
             _notifyIcon.Text = Title;
+            _notifyIcon.Click += NotifyIcon_Click;
             _notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
             _notifyIcon.MouseDown += NotifyIcon_MouseDown;
             _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
@@ -1029,6 +1030,32 @@ namespace NETworkManager
 
             var trayMenu = (ContextMenu)FindResource("ContextMenuNotifyIcon");
             trayMenu.IsOpen = true;
+        }
+
+        StatusWindow statusWindow;
+
+        private void NotifyIcon_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.MouseEventArgs mouse = (System.Windows.Forms.MouseEventArgs)e;
+
+            if (mouse.Button != MouseButtons.Left)
+                return;
+
+            if (statusWindow == null)
+                statusWindow = new StatusWindow();
+
+            
+
+            System.Drawing.Point cursor = System.Windows.Forms.Cursor.Position;
+
+            Screen screen = Screen.FromPoint(new System.Drawing.Point(cursor.X, cursor.Y));
+
+            statusWindow.Left = screen.WorkingArea.Right - statusWindow.Width - 10;
+            statusWindow.Top = screen.WorkingArea.Bottom - statusWindow.Height - 10;
+
+            statusWindow.Show();
+
+            statusWindow.Activate();
         }
 
         private void NotifyIcon_DoubleClick(object sender, EventArgs e)
