@@ -30,6 +30,15 @@
                     </Rectangle>
                 </MenuItem.Icon>
             </MenuItem>
+            <MenuItem Header="{x:Static localization:Strings.Status}" Command="{Binding OpenStatusWindowCommand}">
+                <MenuItem.Icon>
+                    <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </MenuItem.Icon>
+            </MenuItem>
             <MenuItem Header="{x:Static localization:Strings.Settings}" Command="{Binding OpenSettingsCommand}">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">

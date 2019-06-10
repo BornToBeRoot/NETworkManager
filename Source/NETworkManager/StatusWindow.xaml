@@ -14,7 +14,12 @@
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />        
     </mahAppsControls:MetroWindow.Resources>
         <Grid Margin="10">
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
             <TextBlock Text="{x:Static localization:Strings.Network}" Style="{StaticResource HeaderTextBlock}" />
             <Grid>
                 <Grid.Resources>
@@ -45,5 +50,6 @@
                 <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding NetworkInterfaceInfo.Speed, Converter={StaticResource Bytes1000ToSpeedConverter}}" />
             </Grid>
         </StackPanel>
+        <Button Grid.Row="2" Content="{x:Static localization:Strings.Open}" Command="{Binding OpenMainWindowCommand}" Style="{StaticResource DefaultButton}" />
     </Grid>
 </mahAppsControls:MetroWindow>
