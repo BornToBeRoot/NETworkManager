@@ -39,6 +39,7 @@ namespace NETworkManager
 
         #region Variables        
         private NotifyIcon _notifyIcon;
+        private StatusWindow statusWindow;
 
         private readonly bool _isLoading;
         private bool isApplicationListLoading;
@@ -1017,8 +1018,7 @@ namespace NETworkManager
             }
 
             _notifyIcon.Text = Title;
-            _notifyIcon.Click += NotifyIcon_Click;
-            //_notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
+            _notifyIcon.Click += NotifyIcon_Click;            
             _notifyIcon.MouseDown += NotifyIcon_MouseDown;
             _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
         }
@@ -1030,9 +1030,7 @@ namespace NETworkManager
 
             var trayMenu = (ContextMenu)FindResource("ContextMenuNotifyIcon");
             trayMenu.IsOpen = true;
-        }
-
-        StatusWindow statusWindow;
+        }               
         
         private void NotifyIcon_Click(object sender, EventArgs e)
         {
