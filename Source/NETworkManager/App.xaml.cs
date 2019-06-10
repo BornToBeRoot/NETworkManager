@@ -21,7 +21,7 @@ namespace NETworkManager
 
         public App()
         {
-            ShutdownMode = ShutdownMode.OnLastWindowClose;
+            ShutdownMode = ShutdownMode.OnMainWindowClose;
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)

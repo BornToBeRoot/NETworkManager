@@ -2271,4 +2271,7 @@ is disabled!</value>
   <data name="HelpMessage_PublicICMPTestIPAddress" xml:space="preserve">
     <value>IP address to test connection via ping (ICMP).</value>
   </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>Gateway</value>
+  </data>
 </root>

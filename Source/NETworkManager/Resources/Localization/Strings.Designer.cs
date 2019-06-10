@@ -2241,6 +2241,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gateway.
+        /// </summary>
+        public static string Gateway {
+            get {
+                return ResourceManager.GetString("Gateway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gateway / Router.
         /// </summary>
         public static string GatewayRouter {
