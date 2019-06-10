@@ -14,6 +14,9 @@
         xmlns:controls="clr-namespace:NETworkManager.Controls"
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListenersViewModel}">
+    <UserControl.InputBindings>
+        <KeyBinding Key="F5" Command="{Binding RefreshCommand}" />
+    </UserControl.InputBindings>
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
