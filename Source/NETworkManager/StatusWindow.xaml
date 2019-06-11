@@ -8,7 +8,7 @@
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
-        Title="{x:Static localization:StaticStrings.ProductName}" Height="350" Width="250" IsWindowDraggable="False" GotKeyboardFocus="MetroWindow_GotKeyboardFocus" LostKeyboardFocus="MetroWindow_LostKeyboardFocus" Style="{StaticResource DefaultWindow}" ShowMinButton="False" ShowMaxRestoreButton="False" ShowCloseButton="False">
+        Title="{x:Static localization:StaticStrings.ProductName}" Height="350" Width="250" ShowInTaskbar="False" IsWindowDraggable="False" GotKeyboardFocus="MetroWindow_GotKeyboardFocus" LostKeyboardFocus="MetroWindow_LostKeyboardFocus" Style="{StaticResource DefaultWindow}" ShowMinButton="False" ShowMaxRestoreButton="False" ShowCloseButton="False">
     <mahAppsControls:MetroWindow.Resources>
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />        
