@@ -12,6 +12,20 @@ namespace NETworkManager.ViewModels
 
         public ICommand CancelCommand { get; }
 
+        private Guid _id;
+        public Guid ID
+        {
+            get => _id;
+            set
+            {
+                if (_id == value)
+                    return;
+
+                _id = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _name;
         public string Name
         {
@@ -67,8 +81,7 @@ namespace NETworkManager.ViewModels
         }
 
         private readonly CustomCommandInfo _info;
-
-
+        
         private bool _infoChanged;
         public bool InfoChanged
         {
@@ -106,8 +119,10 @@ namespace NETworkManager.ViewModels
 
             _isEdited = isEdited;
 
+            // Create new --> GUID
             _info = info ?? new CustomCommandInfo();
 
+            ID = _info.ID;
             Name = _info.Name;
             FilePath = _info.FilePath;
             Arguments = _info.Arguments;

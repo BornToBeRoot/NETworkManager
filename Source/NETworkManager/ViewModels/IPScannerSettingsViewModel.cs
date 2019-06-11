@@ -385,7 +385,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.Name, instance.FilePath, instance.Arguments));
+                SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.ID ,instance.Name, instance.FilePath, instance.Arguments));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -411,7 +411,7 @@ namespace NETworkManager.ViewModels
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 SettingsManager.Current.IPScanner_CustomCommands.Remove(SelectedCustomCommand);
-                SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.Name, instance.FilePath, instance.Arguments));
+                SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.ID, instance.Name, instance.FilePath, instance.Arguments));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

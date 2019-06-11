@@ -312,6 +312,7 @@
     <Compile Include="StatusWindow.xaml.cs">
       <DependentUpon>StatusWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\CustomCommand.cs" />
     <Compile Include="Utilities\CustomCommandInfo.cs" />
     <Compile Include="Utilities\CommonMethods.cs" />
     <Compile Include="Utilities\ArrayHelper.cs" />

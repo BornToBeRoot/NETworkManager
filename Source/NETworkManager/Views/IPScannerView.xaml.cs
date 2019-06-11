@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Utilities;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
@@ -63,9 +63,10 @@ namespace NETworkManager.Views
                 ((MenuItem)menu.Items[index]).Items.Clear();
 
                 // Add items to custom commands
-                foreach (string str in new string[] { "Internet Explorer","Google Chrome", "PowerShell" })
-                    ((MenuItem)menu.Items[index]).Items.Add(new MenuItem { Header = str });
-
+                foreach (CustomCommandInfo info in _viewModel.CustomCommands)
+                {
+                    ((MenuItem)menu.Items[index]).Items.Add(new MenuItem { Header = info.Name, Command = _viewModel.CustomCommandCommand, CommandParameter = info.ID });
+                }
             }
         }                
     }

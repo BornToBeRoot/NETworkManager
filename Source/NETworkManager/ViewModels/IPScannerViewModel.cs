@@ -22,6 +22,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using NETworkManager.Models.EventSystem;
 using NETworkManager.Enum;
+using System.Text.RegularExpressions;
 
 namespace NETworkManager.ViewModels
 {
@@ -257,6 +258,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public IEnumerable<CustomCommandInfo> CustomCommands => SettingsManager.Current.IPScanner_CustomCommands;
+
         private bool _expandStatistics;
         public bool ExpandStatistics
         {
@@ -365,6 +368,64 @@ namespace NETworkManager.ViewModels
             EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedHostResult.Hostname);
         }
 
+        public ICommand CustomCommandCommand => new RelayCommand(CustomCommandAction);
+
+        private void CustomCommandAction(object guid)
+        {
+            Debug.WriteLine(guid.ToString());
+
+            if (guid is Guid id)
+            {
+                CustomCommandInfo info = (CustomCommandInfo)CustomCommands.FirstOrDefault(x => x.ID == id).Clone();
+
+                if (info == null)
+                    return; // ToDo: Log and error message
+
+                // Replace vars
+                string hostname = !string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.Hostname.TrimEnd('.') : "";
+                string ipAddress = SelectedHostResult.PingInfo.IPAddress.ToString();
+
+                info.FilePath = Regex.Replace(info.FilePath, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
+                info.FilePath = Regex.Replace(info.FilePath, "\\$\\$ipaddress\\$\\$", ipAddress , RegexOptions.IgnoreCase);
+                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
+                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$ipaddress\\$\\$", ipAddress, RegexOptions.IgnoreCase);
+                
+                CustomCommand.Run(info);
+            }            
+        }
+
+        public ICommand AddProfileSelectedHostCommand => new RelayCommand(p => AddProfileSelectedHostAction());
+        private async void AddProfileSelectedHostAction()
+        {
+            ProfileInfo profileInfo = new ProfileInfo()
+            {
+                Name = string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.PingInfo.IPAddress.ToString() : SelectedHostResult.Hostname.TrimEnd('.'),
+                Host = SelectedHostResult.PingInfo.IPAddress.ToString()
+            };
+
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.AddProfile
+            };
+
+            var profileViewModel = new ProfileViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                ProfileManager.AddProfile(instance);
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, ProfileManager.GetGroups(), ProfileEditMode.Add, profileInfo);
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = profileViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
         public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
@@ -419,39 +480,6 @@ namespace NETworkManager.ViewModels
         private void CopySelectedStatusAction()
         {
             CommonMethods.SetClipboard(LocalizationManager.TranslateIPStatus(SelectedHostResult.PingInfo.Status));
-        }
-
-        public ICommand AddProfileSelectedHostCommand => new RelayCommand(p => AddProfileSelectedHostAction());
-
-        private async void AddProfileSelectedHostAction()
-        {
-            ProfileInfo profileInfo = new ProfileInfo()
-            {
-                Name = string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.PingInfo.IPAddress.ToString() : SelectedHostResult.Hostname.TrimEnd('.'),
-                Host = SelectedHostResult.PingInfo.IPAddress.ToString()
-            };
-
-            var customDialog = new CustomDialog
-            {
-                Title = Resources.Localization.Strings.AddProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), ProfileEditMode.Add, profileInfo);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
