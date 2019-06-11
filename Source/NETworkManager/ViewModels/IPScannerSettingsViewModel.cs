@@ -1,7 +1,10 @@
 ﻿using Heijden.DNS;
 using NETworkManager.Models.Settings;
+using NETworkManager.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
@@ -317,6 +320,45 @@ namespace NETworkManager.ViewModels
             DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout;
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
             ShowStatistics = SettingsManager.Current.IPScanner_ShowStatistics;
+        }
+        #endregion
+
+        #region ICommand & Actions
+        public ICommand AddCustomCommandCommand => new RelayCommand(p => AddCustomCommandAction());
+
+        private void AddCustomCommandAction()
+        {
+            AddCustomCommand();
+        }
+               
+        public ICommand EditCustomCommandCommand => new RelayCommand(p => EditCustomCommandAction());
+
+        private void EditCustomCommandAction()
+        {
+            EditCustomCommand();
+        }
+
+        public ICommand DeleteCustomCommandCommand => new RelayCommand(p => DeleteCustomCommandAction());
+
+        private void DeleteCustomCommandAction()
+        {
+            DeleteCustomCommand();
+        }
+
+
+        #endregion
+
+        #region Methods
+        public async void AddCustomCommand()
+        {
+        }
+
+        public async void EditCustomCommand()
+        {
+        }
+
+        public async void DeleteCustomCommand()
+        {
         }
         #endregion
     }

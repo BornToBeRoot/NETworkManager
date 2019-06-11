@@ -412,6 +412,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arguments.
+        /// </summary>
+        public static string Arguments {
+            get {
+                return ResourceManager.GetString("Arguments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ARP.
         /// </summary>
         public static string ARP {
@@ -1218,6 +1227,15 @@ namespace NETworkManager.Resources.Localization {
         public static string CustomColon {
             get {
                 return ResourceManager.GetString("CustomColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom commands.
+        /// </summary>
+        public static string CustomCommands {
+            get {
+                return ResourceManager.GetString("CustomCommands", resourceCulture);
             }
         }
         
@@ -3844,6 +3862,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ProfileWithThisNameAlreadyExists {
             get {
                 return ResourceManager.GetString("ProfileWithThisNameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Program.
+        /// </summary>
+        public static string Program {
+            get {
+                return ResourceManager.GetString("Program", resourceCulture);
             }
         }
         

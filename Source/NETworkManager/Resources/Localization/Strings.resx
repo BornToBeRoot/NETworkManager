@@ -2274,4 +2274,13 @@ is disabled!</value>
   <data name="Gateway" xml:space="preserve">
     <value>Gateway</value>
   </data>
+  <data name="CustomCommands" xml:space="preserve">
+    <value>Custom commands</value>
+  </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>Arguments</value>
+  </data>
+  <data name="Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
 </root>

@@ -6,6 +6,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerSettingsViewModel}">
     <StackPanel>
@@ -46,8 +47,8 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}"   IsChecked="{Binding DNSRecursion}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseResolverCache}"   IsChecked="{Binding DNSUseResolverCache}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}" IsChecked="{Binding DNSRecursion}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseResolverCache}" IsChecked="{Binding DNSUseResolverCache}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.Protocol}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding DNSTransportTypes}" SelectedItem="{Binding DNSTransportType}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.Attempts}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
@@ -55,8 +56,133 @@
         <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding DNSTimeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.ARP}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveMACAddressAndVendor}"   IsChecked="{Binding ResolveMACAddress}" Margin="0,0,0,20" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveMACAddressAndVendor}" IsChecked="{Binding ResolveMACAddress}" Margin="0,0,0,20" />
+        <TextBlock Text="{x:Static localization:Strings.CustomCommands}" Style="{StaticResource HeaderTextBlock}" />
+        <DataGrid x:Name="DataGridCustomCommands" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding CustomCommands}" SelectedItem="{Binding SelectedCustomCommand}" Height="200" Margin="0,0,0,10">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                <ContextMenu x:Key="RowContextMenu" Opened="RowContextMenu_OnOpened"  MinWidth="150">
+                    <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditCustomCommandCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteCustomCommandCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (utilities:CustomCommandInfo.Name)}" Width="1*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.FilePath}" Binding="{Binding (utilities:CustomCommandInfo.FilePath)}" Width="2*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Arguments}" Binding="{Binding (utilities:CustomCommandInfo.Arguments)}" Width="3*" />
+            </DataGrid.Columns>
+            <DataGrid.InputBindings>
+                <KeyBinding Command="{Binding EditCustomCommandCommand}" Key="F2" />
+                <KeyBinding Command="{Binding DeleteCustomCommandCommand}" Key="Delete" />
+            </DataGrid.InputBindings>
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
+                            <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,20">
+            <Button Command="{Binding DeleteCustomCommandCommand}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=DataGridDNSServers, Path=SelectedItems.Count}" Value="1" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding EditCustomCommandCommand}" Margin="10,0,0,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=DataGridDNSServers, Path=SelectedItems.Count}" Value="1" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.EditDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding AddCustomCommandCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </StackPanel>
         <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowStatistics}"   IsChecked="{Binding ShowStatistics}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowStatistics}" IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>
