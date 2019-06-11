@@ -19,7 +19,7 @@ namespace NETworkManager.Resources.Localization {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class StaticStrings {
@@ -84,6 +84,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ExampleCredentialName {
             get {
                 return ResourceManager.GetString("ExampleCredentialName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://$$HOSTNAME$$/.
+        /// </summary>
+        public static string ExampleCustomCommandVariableHostname {
+            get {
+                return ResourceManager.GetString("ExampleCustomCommandVariableHostname", resourceCulture);
             }
         }
         
@@ -498,6 +507,24 @@ namespace NETworkManager.Resources.Localization {
         public static string HiddenPassword {
             get {
                 return ResourceManager.GetString("HiddenPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to iexplore.exe.
+        /// </summary>
+        public static string IExploreExe {
+            get {
+                return ResourceManager.GetString("IExploreExe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internet Explorer.
+        /// </summary>
+        public static string InternetExplorer {
+            get {
+                return ResourceManager.GetString("InternetExplorer", resourceCulture);
             }
         }
         

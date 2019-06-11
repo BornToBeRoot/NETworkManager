@@ -1,7 +1,13 @@
 ﻿using Heijden.DNS;
+using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
@@ -9,6 +15,8 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly bool _isLoading;
+
+        private readonly IDialogCoordinator _dialogCoordinator;
 
         private bool _showScanResultForAllIPAddresses;
         public bool ShowScanResultForAllIPAddresses
@@ -267,6 +275,22 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public ICollectionView CustomCommands { get; }
+
+        private CustomCommandInfo _selectedCustomCommand = new CustomCommandInfo();
+        public CustomCommandInfo SelectedCustomCommand
+        {
+            get => _selectedCustomCommand;
+            set
+            {
+                if (value == _selectedCustomCommand)
+                    return;
+
+                _selectedCustomCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _showStatistics;
         public bool ShowStatistics
         {
@@ -286,9 +310,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public IPScannerSettingsViewModel()
-        {
+        public IPScannerSettingsViewModel(IDialogCoordinator instance)
+        {            
             _isLoading = true;
+
+            _dialogCoordinator = instance;
+
+            CustomCommands = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_CustomCommands);
+            CustomCommands.SortDescriptions.Add(new SortDescription(nameof(CustomCommandInfo.Name), ListSortDirection.Ascending));
 
             LoadSettings();
 
@@ -317,6 +346,108 @@ namespace NETworkManager.ViewModels
             DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout;
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
             ShowStatistics = SettingsManager.Current.IPScanner_ShowStatistics;
+        }
+        #endregion
+
+        #region ICommand & Actions
+        public ICommand AddCustomCommandCommand => new RelayCommand(p => AddCustomCommandAction());
+
+        private void AddCustomCommandAction()
+        {
+            AddCustomCommand();
+        }
+               
+        public ICommand EditCustomCommandCommand => new RelayCommand(p => EditCustomCommandAction());
+
+        private void EditCustomCommandAction()
+        {
+            EditCustomCommand();
+        }
+
+        public ICommand DeleteCustomCommandCommand => new RelayCommand(p => DeleteCustomCommandAction());
+
+        private void DeleteCustomCommandAction()
+        {
+            DeleteCustomCommand();
+        }
+
+        #endregion
+
+        #region Methods
+        public async void AddCustomCommand()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.AddCustomCommand
+            };
+
+            var customCommandViewModel = new CustomCommandViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.ID ,instance.Name, instance.FilePath, instance.Arguments));
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new CustomCommandDialog
+            {
+                DataContext = customCommandViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public async void EditCustomCommand()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.EditCustomCommand
+            };
+
+            var customCommandViewModel = new CustomCommandViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                SettingsManager.Current.IPScanner_CustomCommands.Remove(SelectedCustomCommand);
+                SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.ID, instance.Name, instance.FilePath, instance.Arguments));
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, true, SelectedCustomCommand);
+
+            customDialog.Content = new CustomCommandDialog
+            {
+                DataContext = customCommandViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public async void DeleteCustomCommand()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.DeleteCustomCommand
+            };
+
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                SettingsManager.Current.IPScanner_CustomCommands.Remove(SelectedCustomCommand);
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, Resources.Localization.Strings.DeleteCustomCommandMessage);
+
+            customDialog.Content = new ConfirmRemoveDialog
+            {
+                DataContext = confirmRemoveViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
     }

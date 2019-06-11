@@ -138,6 +138,7 @@ namespace NETworkManager.ViewModels
 
             _isEdited = isEdited;
 
+            // Create new --> GUID
             _credentialInfo = credentialInfo ?? new CredentialInfo();
 
             Id = _credentialInfo.ID;

@@ -269,7 +269,17 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="{x:Static localization:Strings.AddProfileDots}" Command="{Binding AddProfileSelectedHostCommand}" CommandParameter="SNMP">
+                    <MenuItem x:Name="CustomCommands" Header="{x:Static localization:Strings.CustomCommands}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Application}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="{x:Static localization:Strings.AddProfileDots}" Command="{Binding AddProfileSelectedHostCommand}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>

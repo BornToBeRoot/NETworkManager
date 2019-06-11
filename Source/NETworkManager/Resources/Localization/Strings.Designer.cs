@@ -169,6 +169,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add custom command.
+        /// </summary>
+        public static string AddCustomCommand {
+            get {
+                return ResourceManager.GetString("AddCustomCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add DNS server.
         /// </summary>
         public static string AddDNSServer {
@@ -408,6 +417,15 @@ namespace NETworkManager.Resources.Localization {
         public static string AreYouSure {
             get {
                 return ResourceManager.GetString("AreYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arguments.
+        /// </summary>
+        public static string Arguments {
+            get {
+                return ResourceManager.GetString("Arguments", resourceCulture);
             }
         }
         
@@ -1222,6 +1240,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom commands.
+        /// </summary>
+        public static string CustomCommands {
+            get {
+                return ResourceManager.GetString("CustomCommands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Custom screen size:.
         /// </summary>
         public static string CustomScreenSize {
@@ -1353,6 +1380,24 @@ namespace NETworkManager.Resources.Localization {
         public static string DeleteCredentials {
             get {
                 return ResourceManager.GetString("DeleteCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete custom command.
+        /// </summary>
+        public static string DeleteCustomCommand {
+            get {
+                return ResourceManager.GetString("DeleteCustomCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected custom command will be deleted permanently..
+        /// </summary>
+        public static string DeleteCustomCommandMessage {
+            get {
+                return ResourceManager.GetString("DeleteCustomCommandMessage", resourceCulture);
             }
         }
         
@@ -1713,6 +1758,15 @@ namespace NETworkManager.Resources.Localization {
         public static string EditCredentials {
             get {
                 return ResourceManager.GetString("EditCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit custom command.
+        /// </summary>
+        public static string EditCustomCommand {
+            get {
+                return ResourceManager.GetString("EditCustomCommand", resourceCulture);
             }
         }
         
@@ -2353,6 +2407,18 @@ namespace NETworkManager.Resources.Localization {
         public static string HelpMessage_Credentials {
             get {
                 return ResourceManager.GetString("HelpMessage_Credentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The following variables are available:
+        ///
+        ///$$ipaddress$$	--&gt;	IP adresse
+        ///$$hostname$$	--&gt;	Hostname.
+        /// </summary>
+        public static string HelpMessage_CustomCommandVariables {
+            get {
+                return ResourceManager.GetString("HelpMessage_CustomCommandVariables", resourceCulture);
             }
         }
         
@@ -3844,6 +3910,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ProfileWithThisNameAlreadyExists {
             get {
                 return ResourceManager.GetString("ProfileWithThisNameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Program.
+        /// </summary>
+        public static string Program {
+            get {
+                return ResourceManager.GetString("Program", resourceCulture);
             }
         }
         
