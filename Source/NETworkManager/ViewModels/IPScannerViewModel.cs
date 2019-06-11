@@ -372,28 +372,9 @@ namespace NETworkManager.ViewModels
 
         private void CustomCommandAction(object guid)
         {
-            Debug.WriteLine(guid.ToString());
-
-            if (guid is Guid id)
-            {
-                CustomCommandInfo info = (CustomCommandInfo)CustomCommands.FirstOrDefault(x => x.ID == id).Clone();
-
-                if (info == null)
-                    return; // ToDo: Log and error message
-
-                // Replace vars
-                string hostname = !string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.Hostname.TrimEnd('.') : "";
-                string ipAddress = SelectedHostResult.PingInfo.IPAddress.ToString();
-
-                info.FilePath = Regex.Replace(info.FilePath, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
-                info.FilePath = Regex.Replace(info.FilePath, "\\$\\$ipaddress\\$\\$", ipAddress , RegexOptions.IgnoreCase);
-                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
-                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$ipaddress\\$\\$", ipAddress, RegexOptions.IgnoreCase);
-                
-                CustomCommand.Run(info);
-            }            
+            CustomCommand(guid);            
         }
-
+                
         public ICommand AddProfileSelectedHostCommand => new RelayCommand(p => AddProfileSelectedHostAction());
         private async void AddProfileSelectedHostAction()
         {
@@ -607,6 +588,28 @@ namespace NETworkManager.ViewModels
 
             CancelScan = false;
             IsScanRunning = false;
+        }
+
+        private void CustomCommand(object guid)
+        {
+            if (guid is Guid id)
+            {
+                CustomCommandInfo info = (CustomCommandInfo)CustomCommands.FirstOrDefault(x => x.ID == id).Clone();
+
+                if (info == null)
+                    return; // ToDo: Log and error message
+
+                // Replace vars
+                string hostname = !string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.Hostname.TrimEnd('.') : "";
+                string ipAddress = SelectedHostResult.PingInfo.IPAddress.ToString();
+
+                info.FilePath = Regex.Replace(info.FilePath, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
+                info.FilePath = Regex.Replace(info.FilePath, "\\$\\$ipaddress\\$\\$", ipAddress, RegexOptions.IgnoreCase);
+                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
+                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$ipaddress\\$\\$", ipAddress, RegexOptions.IgnoreCase);
+
+                Utilities.CustomCommand.Run(info);
+            }
         }
 
         private void AddHostToHistory(string ipRange)

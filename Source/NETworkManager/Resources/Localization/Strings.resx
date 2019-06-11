@@ -2295,4 +2295,10 @@ is disabled!</value>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>The selected custom command will be deleted permanently.</value>
   </data>
+  <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
+    <value>The following variables are available:
+
+$$ipaddress$$	--&gt;	IP adresse
+$$hostname$$	--&gt;	Hostname</value>
+  </data>
 </root>

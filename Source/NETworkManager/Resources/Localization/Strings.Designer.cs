@@ -2411,6 +2411,18 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The following variables are available:
+        ///
+        ///$$ipaddress$$	--&gt;	IP adresse
+        ///$$hostname$$	--&gt;	Hostname.
+        /// </summary>
+        public static string HelpMessage_CustomCommandVariables {
+            get {
+                return ResourceManager.GetString("HelpMessage_CustomCommandVariables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to URL to a web service that can be reached via http or https and returns an IP address as response..
         /// </summary>
         public static string HelpMessage_CustomPublicIPAddressAPI {

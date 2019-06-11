@@ -23,6 +23,8 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="24" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -74,8 +76,18 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
+            <Rectangle Grid.Column="4" Grid.Row="2" Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CustomCommandVariables}" Style="{StaticResource HelpImageRectangle}">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Arguments}" />
             <TextBox x:Name="TextBoxArguments" Grid.Column="2" Grid.Row="4" Text="{Binding Arguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleCustomCommandVariableHostname}" />
+            <Rectangle Grid.Column="4" Grid.Row="4" Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CustomCommandVariables}" Style="{StaticResource HelpImageRectangle}">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
