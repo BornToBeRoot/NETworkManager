@@ -19,7 +19,7 @@ namespace NETworkManager.Resources.Localization {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class StaticStrings {
@@ -502,6 +502,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to iexplore.exe.
+        /// </summary>
+        public static string IExploreExe {
+            get {
+                return ResourceManager.GetString("IExploreExe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to JSON.
         /// </summary>
         public static string JSON {
@@ -525,6 +534,15 @@ namespace NETworkManager.Resources.Localization {
         public static string TXT {
             get {
                 return ResourceManager.GetString("TXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to %Hostname%.
+        /// </summary>
+        public static string VariableCustomCommandHostname {
+            get {
+                return ResourceManager.GetString("VariableCustomCommandHostname", resourceCulture);
             }
         }
         

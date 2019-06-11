@@ -276,4 +276,10 @@
   <data name="ExamplePublicIPAddressAPI" xml:space="preserve">
     <value>https://api.ipify.org</value>
   </data>
+  <data name="IExploreExe" xml:space="preserve">
+    <value>iexplore.exe</value>
+  </data>
+  <data name="VariableCustomCommandHostname" xml:space="preserve">
+    <value>%Hostname%</value>
+  </data>
 </root>

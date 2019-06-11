@@ -1,11 +1,10 @@
 ﻿using NETworkManager.Utilities;
 using System;
 using System.Windows.Input;
-using NETworkManager.Models.Network;
 
 namespace NETworkManager.ViewModels
 {
-    public class DNSServerViewModel : ViewModelBase
+    public class CustomCommandViewModel : ViewModelBase
     {
         private readonly bool _isLoading;
 
@@ -31,16 +30,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _dnsServer;
-        public string DNSServer
+        private string _filePath;
+        public string FilePath
         {
-            get => _dnsServer;
+            get => _filePath;
             set
             {
-                if (_dnsServer == value)
+                if (_filePath == value)
                     return;
 
-                _dnsServer = value;
+                _filePath = value;
 
                 if (!_isLoading)
                     CheckInfoChanged();
@@ -49,16 +48,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int _port;
-        public int Port
+        private string _arguments;
+        public string Arguments
         {
-            get => _port;
+            get => _arguments;
             set
             {
-                if (_port == value)
+                if (_arguments == value)
                     return;
 
-                _port = value;
+                _arguments = value;
 
                 if (!_isLoading)
                     CheckInfoChanged();
@@ -67,9 +66,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private readonly DNSServerInfo _info;
+        private readonly CustomCommandInfo _info;
 
-        private string _previousDNSServerAsString;
 
         private bool _infoChanged;
         public bool InfoChanged
@@ -99,30 +97,24 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public DNSServerViewModel(Action<DNSServerViewModel> saveCommand, Action<DNSServerViewModel> cancelHandler, bool isEdited = false, DNSServerInfo info = null)
+        public CustomCommandViewModel(Action<CustomCommandViewModel> saveCommand, Action<CustomCommandViewModel> cancelHandler, bool isEdited = false, CustomCommandInfo info = null)
         {
             _isLoading = true;
 
             SaveCommand = new RelayCommand(p => saveCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            IsEdited = isEdited;
+            _isEdited = isEdited;
 
-            _info = info ?? new DNSServerInfo();
+            _info = info ?? new CustomCommandInfo();
 
             Name = _info.Name;
-
-            // List to string
-            if (_info.Server != null)
-                DNSServer = string.Join("; ", _info.Server);
-
-            _previousDNSServerAsString = DNSServer;
-
-            Port = _info.Port;
+            FilePath = _info.FilePath;
+            Arguments = _info.Arguments;
 
             _isLoading = false;
         }
 
-        public void CheckInfoChanged() => InfoChanged = _info.Name != Name || _previousDNSServerAsString != DNSServer || _info.Port != Port;
+        public void CheckInfoChanged() => InfoChanged = _info.Name != null || _info.FilePath != FilePath || _info.Arguments != Arguments;
     }
 }

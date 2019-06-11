@@ -9,7 +9,7 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null ? string.Empty : string.Join(", ", (List<string>)value);
+            return value == null ? string.Empty : string.Join("; ", (List<string>)value);
 
         }
 
