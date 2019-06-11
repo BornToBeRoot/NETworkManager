@@ -169,6 +169,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add custom command.
+        /// </summary>
+        public static string AddCustomCommand {
+            get {
+                return ResourceManager.GetString("AddCustomCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add DNS server.
         /// </summary>
         public static string AddDNSServer {
@@ -1375,6 +1384,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete custom command.
+        /// </summary>
+        public static string DeleteCustomCommand {
+            get {
+                return ResourceManager.GetString("DeleteCustomCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected custom command will be deleted permanently..
+        /// </summary>
+        public static string DeleteCustomCommandMessage {
+            get {
+                return ResourceManager.GetString("DeleteCustomCommandMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete DNS server.
         /// </summary>
         public static string DeleteDNSServer {
@@ -1731,6 +1758,15 @@ namespace NETworkManager.Resources.Localization {
         public static string EditCredentials {
             get {
                 return ResourceManager.GetString("EditCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit custom command.
+        /// </summary>
+        public static string EditCustomCommand {
+            get {
+                return ResourceManager.GetString("EditCustomCommand", resourceCulture);
             }
         }
         

@@ -2277,10 +2277,22 @@ is disabled!</value>
   <data name="CustomCommands" xml:space="preserve">
     <value>Custom commands</value>
   </data>
+  <data name="AddCustomCommand" xml:space="preserve">
+    <value>Add custom command</value>
+  </data>
   <data name="Arguments" xml:space="preserve">
     <value>Arguments</value>
   </data>
+  <data name="DeleteCustomCommand" xml:space="preserve">
+    <value>Delete custom command</value>
+  </data>
+  <data name="EditCustomCommand" xml:space="preserve">
+    <value>Edit custom command</value>
+  </data>
   <data name="Program" xml:space="preserve">
     <value>Program</value>
+  </data>
+  <data name="DeleteCustomCommandMessage" xml:space="preserve">
+    <value>The selected custom command will be deleted permanently.</value>
   </data>
 </root>

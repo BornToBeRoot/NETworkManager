@@ -1,4 +1,5 @@
-﻿using NETworkManager.ViewModels;
+﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -7,7 +8,7 @@ namespace NETworkManager.Views
 {
     public partial class IPScannerSettingsView
     {
-        private readonly IPScannerSettingsViewModel _viewModel = new IPScannerSettingsViewModel();
+        private readonly IPScannerSettingsViewModel _viewModel = new IPScannerSettingsViewModel(DialogCoordinator.Instance);
 
         public IPScannerSettingsView()
         {

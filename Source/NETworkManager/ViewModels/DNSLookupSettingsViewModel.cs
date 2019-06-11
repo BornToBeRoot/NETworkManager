@@ -1,7 +1,6 @@
 ﻿using Heijden.DNS;
 using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -385,13 +384,7 @@ namespace NETworkManager.ViewModels
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public void Refresh()
-        {
-            // Refresh
-            DNSServers.Refresh();
-        }
+        }               
         #endregion
     }
 }

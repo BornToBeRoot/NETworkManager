@@ -32,7 +32,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
-            <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleCredentialName}">
+            <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.InternetExplorer}">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Style.Triggers>
@@ -75,7 +75,7 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Arguments}" />
-            <TextBox x:Name="TextBoxArguments" Grid.Column="2" Grid.Row="4" Text="{Binding Arguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.VariableCustomCommandHostname}" />
+            <TextBox x:Name="TextBoxArguments" Grid.Column="2" Grid.Row="4" Text="{Binding Arguments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleCustomCommandVariableHostname}" />
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />

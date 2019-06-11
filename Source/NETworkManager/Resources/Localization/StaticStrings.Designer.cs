@@ -88,6 +88,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://$$HOSTNAME$$/.
+        /// </summary>
+        public static string ExampleCustomCommandVariableHostname {
+            get {
+                return ResourceManager.GetString("ExampleCustomCommandVariableHostname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to example.com.
         /// </summary>
         public static string ExampleDomain {
@@ -511,6 +520,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Internet Explorer.
+        /// </summary>
+        public static string InternetExplorer {
+            get {
+                return ResourceManager.GetString("InternetExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to JSON.
         /// </summary>
         public static string JSON {
@@ -534,15 +552,6 @@ namespace NETworkManager.Resources.Localization {
         public static string TXT {
             get {
                 return ResourceManager.GetString("TXT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to %Hostname%.
-        /// </summary>
-        public static string VariableCustomCommandHostname {
-            get {
-                return ResourceManager.GetString("VariableCustomCommandHostname", resourceCulture);
             }
         }
         

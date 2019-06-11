@@ -752,6 +752,21 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private ObservableCollection<CustomCommandInfo> _ipScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>();
+        public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
+        {
+            get => _ipScanner_CustomCommands;
+            set
+            {
+                if (value == _ipScanner_CustomCommands)
+                    return;
+
+                _ipScanner_CustomCommands = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         private bool _ipScanner_ExpandStatistics = true;
         public bool IPScanner_ExpandStatistics
         {
@@ -3654,6 +3669,7 @@ namespace NETworkManager.Models.Settings
 
             // IP Scanner
             IPScanner_HostHistory.CollectionChanged += CollectionChanged;
+            IPScanner_CustomCommands.CollectionChanged += CollectionChanged;
 
             // Port Scanner
             PortScanner_HostHistory.CollectionChanged += CollectionChanged;

@@ -279,7 +279,10 @@
   <data name="IExploreExe" xml:space="preserve">
     <value>iexplore.exe</value>
   </data>
-  <data name="VariableCustomCommandHostname" xml:space="preserve">
-    <value>%Hostname%</value>
+  <data name="ExampleCustomCommandVariableHostname" xml:space="preserve">
+    <value>https://$$HOSTNAME$$/</value>
+  </data>
+  <data name="InternetExplorer" xml:space="preserve">
+    <value>Internet Explorer</value>
   </data>
 </root>
