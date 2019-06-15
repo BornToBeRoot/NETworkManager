@@ -10,6 +10,7 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Utilities;
 using NETworkManager.Enum;
 using NETworkManager.Models.RemoteDesktop;
+using System.Collections.ObjectModel;
 
 // ReSharper disable InconsistentNaming
 
@@ -59,6 +60,12 @@ namespace NETworkManager
         public static int IPScanner_ICMPTimeout => 4000;
         public static ExportManager.ExportFileType IPScanner_ExportFileType => ExportManager.ExportFileType.CSV;
 
+        public static ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands => new ObservableCollection<CustomCommandInfo>
+        {
+            new CustomCommandInfo(Guid.NewGuid(), "Internet Explorer", "iexplore.exe", "http://$$ipaddress$$/"),
+            new CustomCommandInfo(Guid.NewGuid(), "Internet Explorer (https)", "iexplore.exe", "https://$$ipaddress$$/"),
+        };
+
         // Application: Port Scanner 
         public static int PortScanner_HostThreads => 5;
         public static int PortScanner_PortThreds => 100;
@@ -90,16 +97,16 @@ namespace NETworkManager
         // Application: RemoteDesktop
         public static int RemoteDesktop_ScreenWidth => 1280;
         public static int RemoteDesktop_ScreenHeight => 768;
-      
+
         public static int RemoteDesktop_ColorDepth = 32;
         public static int RemoteDesktop_Port => 3389;
         public static RemoteDesktop.AudioRedirectionMode RemoteDesktop_AudioRedirectionMode => RemoteDesktop.AudioRedirectionMode.PlayOnThisComputer;
         public static RemoteDesktop.AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode => RemoteDesktop.AudioCaptureRedirectionMode.DoNotRecord;
         public static RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode => RemoteDesktop.KeyboardHookMode.OnTheRemoteComputer;
         public static uint RemoteDesktop_AuthenticationLevel => 2;
-   
+
         public static RemoteDesktop.NetworkConnectionType RemoteDesktop_NetworkConnectionType => RemoteDesktop.NetworkConnectionType.DetectAutomatically;
-        
+
         // Application: PowerShell
         public static string PowerShell_ApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");
         public static PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy => PowerShell.ExecutionPolicy.RemoteSigned;
@@ -154,5 +161,6 @@ namespace NETworkManager
         // Application: ARP Table
         public static ExportManager.ExportFileType ARPTable_ExportFileType => ExportManager.ExportFileType.CSV;
         public static AutoRefreshTimeInfo ARPTable_AutoRefreshTime => AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+
     }
 }
