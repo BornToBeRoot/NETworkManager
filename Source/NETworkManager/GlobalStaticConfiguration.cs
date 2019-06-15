@@ -59,13 +59,7 @@ namespace NETworkManager
         public static int IPScanner_DNSTimeout => 2000;
         public static int IPScanner_ICMPTimeout => 4000;
         public static ExportManager.ExportFileType IPScanner_ExportFileType => ExportManager.ExportFileType.CSV;
-
-        public static ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands => new ObservableCollection<CustomCommandInfo>
-        {
-            new CustomCommandInfo(Guid.NewGuid(), "Internet Explorer", "iexplore.exe", "http://$$ipaddress$$/"),
-            new CustomCommandInfo(Guid.NewGuid(), "Internet Explorer (https)", "iexplore.exe", "https://$$ipaddress$$/"),
-        };
-
+              
         // Application: Port Scanner 
         public static int PortScanner_HostThreads => 5;
         public static int PortScanner_PortThreds => 100;

@@ -752,7 +752,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ObservableCollection<CustomCommandInfo> _ipScanner_CustomCommands = GlobalStaticConfiguration.IPScanner_CustomCommands;
+        private ObservableCollection<CustomCommandInfo> _ipScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>();
         public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
         {
             get => _ipScanner_CustomCommands;

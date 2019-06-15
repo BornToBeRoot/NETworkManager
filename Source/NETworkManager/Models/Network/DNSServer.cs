@@ -4,7 +4,7 @@ namespace NETworkManager.Models.Network
 {
     public static class DNSServer
     {
-        public static List<DNSServerInfo> DefaultDNSServerList()
+        public static List<DNSServerInfo> DefaultList()
         {
             return new List<DNSServerInfo>
             {
