@@ -1018,7 +1018,7 @@ namespace NETworkManager
             }
 
             _notifyIcon.Text = Title;
-            _notifyIcon.Click += NotifyIcon_Click;            
+            // DISABLED IN RELEASE _notifyIcon.Click += NotifyIcon_Click;            
             _notifyIcon.MouseDown += NotifyIcon_MouseDown;
             _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
         }
