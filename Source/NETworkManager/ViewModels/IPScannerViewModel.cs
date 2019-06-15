@@ -372,9 +372,9 @@ namespace NETworkManager.ViewModels
 
         private void CustomCommandAction(object guid)
         {
-            CustomCommand(guid);            
+            CustomCommand(guid);
         }
-                
+
         public ICommand AddProfileSelectedHostCommand => new RelayCommand(p => AddProfileSelectedHostAction());
         private async void AddProfileSelectedHostAction()
         {
@@ -590,7 +590,7 @@ namespace NETworkManager.ViewModels
             IsScanRunning = false;
         }
 
-        private void CustomCommand(object guid)
+        private async void CustomCommand(object guid)
         {
             if (guid is Guid id)
             {
@@ -605,10 +605,20 @@ namespace NETworkManager.ViewModels
 
                 info.FilePath = Regex.Replace(info.FilePath, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
                 info.FilePath = Regex.Replace(info.FilePath, "\\$\\$ipaddress\\$\\$", ipAddress, RegexOptions.IgnoreCase);
-                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
-                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$ipaddress\\$\\$", ipAddress, RegexOptions.IgnoreCase);
+                if (!string.IsNullOrEmpty(info.Arguments))
+                {
+                    info.Arguments = Regex.Replace(info.Arguments, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
+                    info.Arguments = Regex.Replace(info.Arguments, "\\$\\$ipaddress\\$\\$", ipAddress, RegexOptions.IgnoreCase);
+                }
 
-                Utilities.CustomCommand.Run(info);
+                try
+                {
+                    Utilities.CustomCommand.Run(info);
+                }
+                catch (Exception ex)
+                {
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.ResourceManager.GetString("Error", LocalizationManager.Culture), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                }
             }
         }
 
