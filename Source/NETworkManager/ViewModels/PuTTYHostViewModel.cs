@@ -212,10 +212,10 @@ namespace NETworkManager.ViewModels
 
         private void PuTTY_ReconnectAction(object view)
         {
-            if (view is PuTTYControl puttyControl)
+            if (view is PuTTYControl control)
             {
-                if (puttyControl.ReconnectCommand.CanExecute(null))
-                    puttyControl.ReconnectCommand.Execute(null);
+                if (control.ReconnectCommand.CanExecute(null))
+                    control.ReconnectCommand.Execute(null);
             }
         }
 

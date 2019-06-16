@@ -208,6 +208,17 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem)?.View as TigerVNCControl)?.CloseTab();
         }
 
+        public ICommand TigerVNC_ReconnectCommand => new RelayCommand(TigerVNC_ReconnectAction);
+
+        private void TigerVNC_ReconnectAction(object view)
+        {
+            if (view is TigerVNCControl control)
+            {
+                if (control.ReconnectCommand.CanExecute(null))
+                    control.ReconnectCommand.Execute(null);
+            }
+        }
+
         public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
 
         private bool Connect_CanExecute(object obj) => IsConfigured && !ConfigurationManager.Current.IsTransparencyEnabled;

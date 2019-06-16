@@ -11,8 +11,7 @@ namespace NETworkManager.Views
         private readonly PuTTYHostViewModel _viewModel = new PuTTYHostViewModel(DialogCoordinator.Instance);
 
         private bool _loaded;
-
-
+        
         public PuTTYHostView()
         {
             InitializeComponent();

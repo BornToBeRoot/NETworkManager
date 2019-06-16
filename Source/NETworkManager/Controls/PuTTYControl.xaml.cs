@@ -113,7 +113,7 @@ namespace NETworkManager.Controls
         private void ReconnectAction()
         {
             Reconnect();
-        }              
+        }
         #endregion
 
         #region Methods       
@@ -230,7 +230,8 @@ namespace NETworkManager.Controls
 
         private void Reconnect()
         {
-            Disconnect();
+            if (IsConnected)
+                Disconnect();
 
             Connect();
         }

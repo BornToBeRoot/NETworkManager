@@ -44,10 +44,24 @@ namespace NETworkManager.Controls
             get => _isPuTTYControl;
             set
             {
-                if(value == _isPuTTYControl)
+                if (value == _isPuTTYControl)
                     return;
 
                 _isPuTTYControl = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isTigerVNCControl;
+        public bool IsTigerVNCControl
+        {
+            get => _isTigerVNCControl;
+            set
+            {
+                if (value == _isTigerVNCControl)
+                    return;
+
+                _isTigerVNCControl = value;
                 OnPropertyChanged();
             }
         }
@@ -74,8 +88,15 @@ namespace NETworkManager.Controls
 
             ApplicationTitle = ApplicationViewManager.GetTranslatedNameByName(applicationName);
 
-            if (applicationName == ApplicationViewManager.Name.PuTTY)
-                IsPuTTYControl = true;
+            switch (applicationName)
+            {
+                case ApplicationViewManager.Name.PuTTY:
+                    IsPuTTYControl = true;
+                    break;
+                case ApplicationViewManager.Name.TigerVNC:
+                    IsTigerVNCControl = true;
+                    break;
+            }
 
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
         }
@@ -120,10 +141,10 @@ namespace NETworkManager.Controls
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
                     ((HTTPHeadersView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                    break;                                                
+                    break;
                 case ApplicationViewManager.Name.Whois:
                     ((WhoisView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                    break;                
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -145,8 +166,20 @@ namespace NETworkManager.Controls
 
         private void PuTTY_RestartSessionAction(object view)
         {
-            if (view is PuTTYControl puttyControl)
-                puttyControl.RestartSession();
+            if (view is PuTTYControl control)
+                control.RestartSession();
+        }
+        #endregion
+        #region TigerVNC Commands
+        public ICommand TigerVNC_ReconnectCommand => new RelayCommand(TigerVNC_ReconnectAction);
+
+        private void TigerVNC_ReconnectAction(object view)
+        {
+            if (view is TigerVNCControl control)
+            {
+                if (control.ReconnectCommand.CanExecute(null))
+                    control.ReconnectCommand.Execute(null);
+            }
         }
         #endregion
         #endregion
