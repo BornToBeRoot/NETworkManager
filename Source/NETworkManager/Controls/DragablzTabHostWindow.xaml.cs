@@ -120,33 +120,30 @@ namespace NETworkManager.Controls
                     break;
                 case ApplicationViewManager.Name.HTTPHeaders:
                     ((HTTPHeadersView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                    break;
-                case ApplicationViewManager.Name.NetworkInterface:
-                    break;
-                case ApplicationViewManager.Name.WakeOnLAN:
-                    break;
-                case ApplicationViewManager.Name.SubnetCalculator:
-                    break;
-                case ApplicationViewManager.Name.Lookup:
-                    break;
+                    break;                                                
                 case ApplicationViewManager.Name.Whois:
                     ((WhoisView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                    break;
-                case ApplicationViewManager.Name.Connections:
-                    break;
-                case ApplicationViewManager.Name.Listeners:
-                    break;
-                case ApplicationViewManager.Name.ARPTable:
-                    break;
+                    break;                
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
         #region PuTTY Commands
-        public ICommand RestartPuTTYSessionCommand => new RelayCommand(RestartPuTTYSessionAction);
+        public ICommand PuTTY_ReconnectCommand => new RelayCommand(PuTTY_ReconnectAction);
 
-        private void RestartPuTTYSessionAction(object view)
+        private void PuTTY_ReconnectAction(object view)
+        {
+            if (view is PuTTYControl puttyControl)
+            {
+                if (puttyControl.ReconnectCommand.CanExecute(null))
+                    puttyControl.ReconnectCommand.Execute(null);
+            }
+        }
+
+        public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction);
+
+        private void PuTTY_RestartSessionAction(object view)
         {
             if (view is PuTTYControl puttyControl)
                 puttyControl.RestartSession();

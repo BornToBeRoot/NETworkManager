@@ -208,9 +208,20 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem)?.View as PuTTYControl)?.CloseTab();
         }
 
-        public ICommand RestartPuTTYSessionCommand => new RelayCommand(RestartSessionAction);
+        public ICommand PuTTY_ReconnectCommand => new RelayCommand(PuTTY_ReconnectAction);
 
-        private void RestartSessionAction(object view)
+        private void PuTTY_ReconnectAction(object view)
+        {
+            if (view is PuTTYControl puttyControl)
+            {
+                if (puttyControl.ReconnectCommand.CanExecute(null))
+                    puttyControl.ReconnectCommand.Execute(null);
+            }
+        }
+
+        public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction);
+
+        private void PuTTY_RestartSessionAction(object view)
         {
             if (view is PuTTYControl puttyControl)
                 puttyControl.RestartSession();
@@ -321,9 +332,7 @@ namespace NETworkManager.ViewModels
                 // Create Profile info
                 var info = new PuTTYSessionInfo
                 {
-                    HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial
-                        ? instance.SerialLine
-                        : instance.Host,
+                    HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
                     PortOrBaud = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
                     Username = instance.Username,

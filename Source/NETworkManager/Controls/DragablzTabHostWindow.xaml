@@ -46,7 +46,17 @@
                                                 <Grid>
                                                     <Grid.ContextMenu>
                                                         <ContextMenu>
-                                                            <MenuItem Header="{x:Static localization:Strings.RestartSession}" Command="{Binding Data.RestartPuTTYSessionCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                                            <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.PuTTY_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                                                <MenuItem.Icon>
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                        <Rectangle.OpacityMask>
+                                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restart}" />
+                                                                        </Rectangle.OpacityMask>
+                                                                    </Rectangle>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <Separator />
+                                                            <MenuItem Header="{x:Static localization:Strings.RestartSession}" Command="{Binding Data.PuTTY_RestartSessionCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
                                                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
                                                                         <Rectangle.OpacityMask>

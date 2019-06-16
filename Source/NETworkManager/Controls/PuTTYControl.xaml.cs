@@ -112,8 +112,8 @@ namespace NETworkManager.Controls
 
         private void ReconnectAction()
         {
-            Connect();
-        }
+            Reconnect();
+        }              
         #endregion
 
         #region Methods       
@@ -226,6 +226,13 @@ namespace NETworkManager.Controls
         {
             if (_process != null && !_process.HasExited)
                 _process.Kill();
+        }
+
+        private void Reconnect()
+        {
+            Disconnect();
+
+            Connect();
         }
 
         public void RestartSession()

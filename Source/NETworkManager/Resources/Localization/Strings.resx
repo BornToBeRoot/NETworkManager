@@ -2301,4 +2301,7 @@ is disabled!</value>
 $$ipaddress$$	--&gt;	IP adresse
 $$hostname$$	--&gt;	Hostname</value>
   </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
 </root>
