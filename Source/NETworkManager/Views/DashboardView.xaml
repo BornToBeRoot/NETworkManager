@@ -11,9 +11,10 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:DashboardViewModel}">
     <UserControl.InputBindings>
-        <KeyBinding Key="F5" Command="{Binding CheckConnectionCommand}" />
+        <KeyBinding Key="F5" Command="{Binding CheckConnectionViaHotkeyCommand}" />
     </UserControl.InputBindings>
     <UserControl.Resources>
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />
@@ -436,19 +437,7 @@
                     </Grid>
                 </Grid>
                 <Grid Grid.Column="0" Grid.Row="2">
-                    <Button Grid.Column="2" Command="{Binding CheckConnectionCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
+                    <Button Grid.Column="2" Command="{Binding CheckConnectionCommand}" Style="{StaticResource ImageWithTextButton}" IsEnabled="{Binding IsInternetCheckRunning, Converter={StaticResource BooleanReverseConverter}}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                         <Button.Content>
                             <Grid>
                                 <Grid.ColumnDefinitions>

@@ -373,7 +373,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand CheckConnectionCommand => new RelayCommand(p => CheckConnectionAction(), CheckConnection_CanExecute);
+        // CanExecute --> Disabled button is not enabled as soon as the check is finished (only when you click a control)
+        public ICommand CheckConnectionViaHotkeyCommand => new RelayCommand(p => CheckConnectionAction(), CheckConnection_CanExecute);
+        public ICommand CheckConnectionCommand => new RelayCommand(p => CheckConnectionAction());
 
         private bool CheckConnection_CanExecute(object paramter) => !IsInternetCheckRunning;
 
