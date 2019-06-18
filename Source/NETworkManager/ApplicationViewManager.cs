@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using MahApps.Metro.IconPacks;
@@ -143,6 +142,8 @@ namespace NETworkManager
 
             return canvas;
         }
+
+        public static string TEST = "";
 
         public enum Name
         {

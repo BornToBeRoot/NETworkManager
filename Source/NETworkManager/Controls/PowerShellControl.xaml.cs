@@ -112,7 +112,7 @@ namespace NETworkManager.Controls
 
         private void ReconnectAction()
         {
-            Connect();
+            Reconnect();
         }
         #endregion
 
@@ -218,6 +218,14 @@ namespace NETworkManager.Controls
         {
             if (_process != null && !_process.HasExited)
                 _process.Kill();
+        }
+
+        private void Reconnect()
+        {
+            if (IsConnected)
+                Disconnect();
+
+            Connect();
         }
 
         public void CloseTab()

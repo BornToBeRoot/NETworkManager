@@ -22,7 +22,20 @@ namespace NETworkManager.Controls
 
         #region Variables
         public IInterTabClient InterTabClient { get; }
-        private readonly ApplicationViewManager.Name _applicationName;
+        private ApplicationViewManager.Name _applicationName;
+
+        public ApplicationViewManager.Name ApplicationName
+        {
+            get => _applicationName;
+            set
+            {
+                if (value == _applicationName)
+                    return;
+
+                _applicationName = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _applicationTitle;
         public string ApplicationTitle
@@ -34,34 +47,6 @@ namespace NETworkManager.Controls
                     return;
 
                 _applicationTitle = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isPuTTYControl;
-        public bool IsPuTTYControl
-        {
-            get => _isPuTTYControl;
-            set
-            {
-                if (value == _isPuTTYControl)
-                    return;
-
-                _isPuTTYControl = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isTigerVNCControl;
-        public bool IsTigerVNCControl
-        {
-            get => _isTigerVNCControl;
-            set
-            {
-                if (value == _isTigerVNCControl)
-                    return;
-
-                _isTigerVNCControl = value;
                 OnPropertyChanged();
             }
         }
@@ -80,23 +65,13 @@ namespace NETworkManager.Controls
                 Opacity = SettingsManager.Current.Appearance_Opacity;
             }
 
-            _applicationName = applicationName;
+            ApplicationName = applicationName;
 
             InterTabClient = new DragablzInterTabClient(applicationName);
 
             InterTabController.Partition = applicationName.ToString();
 
             ApplicationTitle = ApplicationViewManager.GetTranslatedNameByName(applicationName);
-
-            switch (applicationName)
-            {
-                case ApplicationViewManager.Name.PuTTY:
-                    IsPuTTYControl = true;
-                    break;
-                case ApplicationViewManager.Name.TigerVNC:
-                    IsTigerVNCControl = true;
-                    break;
-            }
 
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
         }
@@ -130,6 +105,9 @@ namespace NETworkManager.Controls
                 case ApplicationViewManager.Name.RemoteDesktop:
                     ((RemoteDesktopControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
+                case ApplicationViewManager.Name.PowerShell:
+                    ((PowerShellControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                    break;
                 case ApplicationViewManager.Name.PuTTY:
                     ((PuTTYControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
@@ -149,6 +127,20 @@ namespace NETworkManager.Controls
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        #region PowerShell Commands
+        public ICommand PowerShell_ReconnectCommand => new RelayCommand(PowerShell_ReconnectAction);
+
+        private void PowerShell_ReconnectAction(object view)
+        {
+            if (view is PowerShellControl control)
+            {
+                if (control.ReconnectCommand.CanExecute(null))
+                    control.ReconnectCommand.Execute(null);
+            }
+        }
+
+        #endregion
 
         #region PuTTY Commands
         public ICommand PuTTY_ReconnectCommand => new RelayCommand(PuTTY_ReconnectAction);

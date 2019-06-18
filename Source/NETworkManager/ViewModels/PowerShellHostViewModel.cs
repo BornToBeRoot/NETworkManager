@@ -210,6 +210,17 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem)?.View as PowerShellControl)?.CloseTab();
         }
 
+        public ICommand PowerShell_ReconnectCommand => new RelayCommand(PowerShell_ReconnectAction);
+
+        private void PowerShell_ReconnectAction(object view)
+        {
+            if (view is PowerShellControl control)
+            {
+                if (control.ReconnectCommand.CanExecute(null))
+                    control.ReconnectCommand.Execute(null);
+            }
+        }
+
         public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
 
         private bool Connect_CanExecute(object obj) => IsConfigured && !ConfigurationManager.Current.IsTransparencyEnabled;

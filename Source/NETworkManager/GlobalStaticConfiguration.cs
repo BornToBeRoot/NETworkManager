@@ -10,7 +10,6 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Utilities;
 using NETworkManager.Enum;
 using NETworkManager.Models.RemoteDesktop;
-using System.Collections.ObjectModel;
 
 // ReSharper disable InconsistentNaming
 
