@@ -57,6 +57,21 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView HostHistoryView { get; }
 
+        private bool _isIPRangeDetectionRunning;
+        public bool IsIPRangeDetectionRunning
+        {
+            get => _isIPRangeDetectionRunning;
+            set
+            {
+                if (value == _isIPRangeDetectionRunning)
+                    return;
+
+                _isIPRangeDetectionRunning = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private bool _isScanRunning;
         public bool IsScanRunning
         {
@@ -337,10 +352,14 @@ namespace NETworkManager.ViewModels
 
         private void ScanAction()
         {
-            if (IsScanRunning)
-                StopScan();
-            else
-                StartScan();
+            Scan();
+        }
+
+        public ICommand DetectIPRangeCommand => new RelayCommand(p => DetectIPRangeAction());
+
+        private void DetectIPRangeAction()
+        {
+            DetectIPRange();
         }
 
         public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
@@ -476,6 +495,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
+        private void Scan()
+        {
+            if (IsScanRunning)
+                StopScan();
+            else
+                StartScan();
+        }
+
         private async void StartScan()
         {
             DisplayStatusMessage = false;
@@ -592,6 +619,28 @@ namespace NETworkManager.ViewModels
 
             CancelScan = false;
             IsScanRunning = false;
+        }
+
+        private async void DetectIPRange()
+        {
+            IsIPRangeDetectionRunning = true;
+
+            var localIP = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse("1.1.1.1"));
+
+            foreach (var networkInterface in await NetworkInterface.GetNetworkInterfacesAsync())
+            {
+                if (networkInterface.IPv4Address.Contains(localIP))
+                {                    
+                    Host = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.Subnetmask.First())}";
+
+                    // Fix: If the user clears the textbox and then clicks again on the button, the textbox remains empty...
+                    OnPropertyChanged(nameof(Host));
+
+                    break;
+                }
+            }
+
+            IsIPRangeDetectionRunning = false;
         }
 
         private async void CustomCommand(object guid)

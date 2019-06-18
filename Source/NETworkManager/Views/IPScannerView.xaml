@@ -49,6 +49,8 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.IPRange}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
                 <ComboBox Grid.Column="2" x:Name="ComboBoxIPRange" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
@@ -61,7 +63,27 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4" Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}">
+                <Button Grid.Column="4" Command="{Binding DetectIPRangeCommand}">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsScanRunning}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsIPRangeDetectionRunning}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Resources>
+                    
+                    <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>                
+                </Button>
+                <Button Grid.Column="6" Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
