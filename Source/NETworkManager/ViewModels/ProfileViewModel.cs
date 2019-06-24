@@ -21,7 +21,7 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
         public ICollectionView ProfileViews { get; }
-
+        
         #region General
         private string _name;
         public string Name
@@ -46,7 +46,39 @@ namespace NETworkManager.ViewModels
                 if (value == _host)
                     return;
 
+                // Reset, if string has changed
+                if (!IsResolveHostnameRunning)
+                    ShowCouldNotResolveHostnameWarning = false;
+
                 _host = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isResolveHostnameRunning;
+        public bool IsResolveHostnameRunning
+        {
+            get => _isResolveHostnameRunning;
+            set
+            {
+                if (value == _isResolveHostnameRunning)
+                    return;
+
+                _isResolveHostnameRunning = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _showCouldNotResolveHostnameWarning;
+        public bool ShowCouldNotResolveHostnameWarning
+        {
+            get => _showCouldNotResolveHostnameWarning;
+            set
+            {
+                if (value == _showCouldNotResolveHostnameWarning)
+                    return;
+
+                _showCouldNotResolveHostnameWarning = value;
                 OnPropertyChanged();
             }
         }
@@ -2060,6 +2092,8 @@ namespace NETworkManager.ViewModels
 
         private async System.Threading.Tasks.Task ResolveHostActionAsync()
         {
+            IsResolveHostnameRunning = true;
+
             try
             {
                 foreach (var ipAddr in (await Dns.GetHostEntryAsync(Host)).AddressList)
@@ -2073,7 +2107,11 @@ namespace NETworkManager.ViewModels
 
             }
             catch (SocketException) // DNS Error
-            { }
+            {
+                ShowCouldNotResolveHostnameWarning = true;
+            }
+
+            IsResolveHostnameRunning = false;
         }
 
         public ICommand UnselectCredentialCommand => new RelayCommand(p => UnselectCredentialAction());

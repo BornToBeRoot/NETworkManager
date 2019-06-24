@@ -218,7 +218,19 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <Button Grid.Column="3" Grid.Row="2" Command="{Binding ResolveHostCommand}" ToolTip="{x:Static localization:Strings.ResolveIPv4AddressForThisHost}" IsEnabled="{Binding Host, Converter={StaticResource StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter}}" Style="{StaticResource CleanButton}" Margin="10,0,0,0">
+                                <Button Grid.Column="3" Grid.Row="2" Command="{Binding ResolveHostCommand}" ToolTip="{x:Static localization:Strings.ResolveIPv4AddressForThisHost}" IsEnabled="{Binding Host, Converter={StaticResource StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter}}" Margin="10,0,0,0">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsResolveHostnameRunning}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ShowCouldNotResolveHostnameWarning}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                     <Rectangle Width="24" Height="24">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
@@ -235,6 +247,12 @@
                                         </Rectangle.Style>
                                     </Rectangle>
                                 </Button>
+                                <mah:ProgressRing Grid.Column="3" Grid.Row="2" Width="24" Height="24" Margin="10,0,0,0" Visibility="{Binding IsResolveHostnameRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="2" ToolTip="{x:Static localization:Strings.HelpMessage_CouldNotResolveIPAddressForHostname}" Visibility="{Binding ShowCouldNotResolveHostnameWarning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource WarnImageRectangle}" Margin="10,0,0,0">                                    
+                                    <Rectangle.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                    </Rectangle.Resources>
+                                </Rectangle>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Credential}" />
                                 <ComboBox x:Name="ComboBoxCredential" Grid.Column="2" Grid.Row="4" SelectedValue="{Binding CredentialID}" DisplayMemberPath="Name" SelectedValuePath="ID" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
                                     <ComboBox.InputBindings>

@@ -2304,4 +2304,7 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="Restart" xml:space="preserve">
     <value>Restart</value>
   </data>
+  <data name="HelpMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
+    <value>Could not resolve ip address for hostname.</value>
+  </data>
 </root>

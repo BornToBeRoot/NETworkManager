@@ -75,8 +75,7 @@
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </Button.Resources>
-                    
+                    </Button.Resources>                    
                     <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
