@@ -203,6 +203,41 @@ namespace NETworkManager.ViewModels
         {
             Connect();
         }
+                
+        public ICommand RemoteDesktop_ReconnectCommand => new RelayCommand(RemoteDesktop_ReconnectAction);
+
+        private void RemoteDesktop_ReconnectAction(object view)
+        {
+            if (view is RemoteDesktopControl control)
+            {
+                if (control.ReconnectCommand.CanExecute(null))
+                    control.ReconnectCommand.Execute(null);
+            }
+        }
+
+        public ICommand RemoteDesktop_FullscreenCommand => new RelayCommand(RemoteDesktop_FullscreenAction);
+
+        private void RemoteDesktop_FullscreenAction(object view)
+        {
+            if (view is RemoteDesktopControl control)
+                control.FullScreen();
+        }
+
+        public ICommand RemoteDesktop_AdjustScreenCommand => new RelayCommand(RemoteDesktop_AdjustScreenAction);
+
+        private void RemoteDesktop_AdjustScreenAction(object view)
+        {
+            if (view is RemoteDesktopControl control)
+                control.AdjustScreen();
+        }
+
+        public ICommand RemoteDesktop_SendCtrlAltDelCommand => new RelayCommand(RemoteDesktop_SendCtrlAltDelAction);
+
+        private void RemoteDesktop_SendCtrlAltDelAction(object view)
+        {
+            if (view is RemoteDesktopControl control)
+                control.SendKey(RemoteDesktop.Keystroke.CtrlAltDel);
+        }
 
         public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction());
 
@@ -303,7 +338,7 @@ namespace NETworkManager.ViewModels
                 var sessionInfo = RemoteDesktop.CreateSessionInfo();
 
                 sessionInfo.Hostname = instance.Host;
-                
+
                 if (instance.UseCredentials)
                 {
                     sessionInfo.CustomCredentials = true;
@@ -447,7 +482,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-               
+
                 if (instance.UseCredentials)
                 {
                     sessionInfo.CustomCredentials = true;

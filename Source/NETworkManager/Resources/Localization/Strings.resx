@@ -2307,4 +2307,16 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="HelpMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
     <value>Could not resolve ip address for hostname.</value>
   </data>
+  <data name="CtrlAltDel" xml:space="preserve">
+    <value>Ctrl+Alt+Del</value>
+  </data>
+  <data name="KeyboardShortcuts" xml:space="preserve">
+    <value>Keyboard shortcuts</value>
+  </data>
+  <data name="AdjustScreen" xml:space="preserve">
+    <value>Adjust screen</value>
+  </data>
+  <data name="Fullscreen" xml:space="preserve">
+    <value>Fullscreen</value>
+  </data>
 </root>

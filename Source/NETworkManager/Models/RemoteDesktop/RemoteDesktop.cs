@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using NETworkManager.Models.Settings;
+using System;
 using System.Collections.Generic;
 
 namespace NETworkManager.Models.RemoteDesktop
@@ -86,13 +87,29 @@ namespace NETworkManager.Models.RemoteDesktop
             "1680x1050",
             "1920x1080"
         };
+
         public static List<int> ColorDepths => new List<int>
         {
             15,
             16,
             24,
             32
-        };     
+        };
+
+        public static RemoteDesktopKeystrokeInfo GetKeystroke(Keystroke keystroke)
+        {
+            RemoteDesktopKeystrokeInfo info = new RemoteDesktopKeystrokeInfo();
+
+            switch (keystroke)
+            {
+                case Keystroke.CtrlAltDel:
+                    info.ArrayKeyUp = new bool[] { false, false, false, true, true, true, };
+                    info.KeyData = new int[] { 0x1d, 0x38, 0x53, 0x53, 0x38, 0x1d };
+                    break;
+            }
+
+            return info;
+        }
 
         public enum KeyboardHookMode
         {
@@ -125,6 +142,11 @@ namespace NETworkManager.Models.RemoteDesktop
         {
             RecordFromThisComputer,
             DoNotRecord
+        }
+
+        public enum Keystroke
+        {
+            CtrlAltDel
         }
     }
 }

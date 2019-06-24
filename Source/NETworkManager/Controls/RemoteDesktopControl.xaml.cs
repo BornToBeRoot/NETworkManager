@@ -8,6 +8,8 @@ using System.Windows.Input;
 using System;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
+using System.Diagnostics;
+using System.Threading;
 
 namespace NETworkManager.Controls
 {
@@ -236,29 +238,47 @@ namespace NETworkManager.Controls
             RdpClient.OnConnected += RdpClient_OnConnected;
             RdpClient.OnDisconnected += RdpClient_OnDisconnected;
 
-            RdpClient.AdvancedSettings9.EnableWindowsKey = 1;
+            RdpClient.AdvancedSettings9.EnableWindowsKey = 1;       // Enable window key
+            RdpClient.AdvancedSettings9.allowBackgroundInput = 1;   // Background input to send keystrokes like ctrl+alt+del
 
             RdpClient.Connect();
         }
 
         private void Reconnect()
         {
-            IsConnecting = true;
-
-            if (_rdpSessionInfo.AdjustScreenAutomatically)
+            if (IsConnected)
             {
-                RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
-                RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
+                Disconnect();
             }
+            else
+            {
+                IsConnecting = true;
 
-            FixWindowsFormsHostSize();
+                if (_rdpSessionInfo.AdjustScreenAutomatically)
+                {
+                    RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
+                    RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
+                }
 
-            RdpClient.Connect();
+                FixWindowsFormsHostSize();
+
+                RdpClient.Connect();
+            }
         }
 
-        private void ReconnectAdjustScreen()
+        public void FullScreen()
         {
-            RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
+            if (!IsConnected)
+                return;
+
+            RdpClient.FullScreen = true;
+        }
+
+        public void AdjustScreen()
+        {
+            if (!IsConnected)
+                RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
+
             FixWindowsFormsHostSize();
         }
 
@@ -268,10 +288,26 @@ namespace NETworkManager.Controls
             RdpClientHeight = RdpClient.DesktopHeight;
         }
 
+        public void SendKey(RemoteDesktop.Keystroke keystroke)
+        {
+            if (!IsConnected)
+                return;
+
+            MSTSCLib.IMsRdpClientNonScriptable ocx = (MSTSCLib.IMsRdpClientNonScriptable)RdpClient.GetOcx();
+
+            var info = RemoteDesktop.GetKeystroke(keystroke);
+
+            RdpClient.Focus();
+
+            ocx.SendKeys(info.KeyData.Length, info.ArrayKeyUp, info.KeyData);
+        }
+
         private void Disconnect()
         {
-            if (IsConnected)
-                RdpClient.Disconnect();
+            if (!IsConnected)
+                return;
+
+            RdpClient.Disconnect();
         }
 
         public void CloseTab()
@@ -392,6 +428,8 @@ namespace NETworkManager.Controls
 
         private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
+            Debug.WriteLine("Disconnected!");
+
             IsConnected = false;
             IsConnecting = false;
 
@@ -408,13 +446,13 @@ namespace NETworkManager.Controls
         {
             IsReconnecting = true;
 
-            do
+            do // Prevent to many requests
             {
                 await Task.Delay(500);
 
             } while (Mouse.LeftButton == MouseButtonState.Pressed);
 
-            ReconnectAdjustScreen();
+            AdjustScreen();
 
             IsReconnecting = false;
         }
