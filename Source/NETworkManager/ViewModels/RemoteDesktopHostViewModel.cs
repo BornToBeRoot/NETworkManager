@@ -203,8 +203,24 @@ namespace NETworkManager.ViewModels
         {
             Connect();
         }
-                
-        public ICommand RemoteDesktop_ReconnectCommand => new RelayCommand(RemoteDesktop_ReconnectAction);
+
+        private bool RemoteDesktop_Disconnected_CanExecute(object view)
+        {
+            if (view is RemoteDesktopControl control)
+                return !control.IsConnected;
+
+            return false;
+        }
+
+        private bool RemoteDesktop_Connected_CanExecute(object view)
+        {
+            if (view is RemoteDesktopControl control)
+                return control.IsConnected;
+
+            return false;
+        }
+
+        public ICommand RemoteDesktop_ReconnectCommand => new RelayCommand(RemoteDesktop_ReconnectAction, RemoteDesktop_Disconnected_CanExecute);
 
         private void RemoteDesktop_ReconnectAction(object view)
         {
@@ -215,7 +231,18 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICommand RemoteDesktop_FullscreenCommand => new RelayCommand(RemoteDesktop_FullscreenAction);
+        public ICommand RemoteDesktop_DisconnectCommand => new RelayCommand(RemoteDesktop_DisconnectAction, RemoteDesktop_Connected_CanExecute);
+
+        private void RemoteDesktop_DisconnectAction(object view)
+        {
+            if (view is RemoteDesktopControl control)
+            {
+                if (control.DisconnectCommand.CanExecute(null))
+                    control.DisconnectCommand.Execute(null);
+            }
+        }
+
+        public ICommand RemoteDesktop_FullscreenCommand => new RelayCommand(RemoteDesktop_FullscreenAction, RemoteDesktop_Connected_CanExecute);
 
         private void RemoteDesktop_FullscreenAction(object view)
         {
@@ -223,7 +250,7 @@ namespace NETworkManager.ViewModels
                 control.FullScreen();
         }
 
-        public ICommand RemoteDesktop_AdjustScreenCommand => new RelayCommand(RemoteDesktop_AdjustScreenAction);
+        public ICommand RemoteDesktop_AdjustScreenCommand => new RelayCommand(RemoteDesktop_AdjustScreenAction, RemoteDesktop_Connected_CanExecute);
 
         private void RemoteDesktop_AdjustScreenAction(object view)
         {
@@ -231,12 +258,25 @@ namespace NETworkManager.ViewModels
                 control.AdjustScreen();
         }
 
-        public ICommand RemoteDesktop_SendCtrlAltDelCommand => new RelayCommand(RemoteDesktop_SendCtrlAltDelAction);
+        public ICommand RemoteDesktop_SendCtrlAltDelCommand => new RelayCommand(RemoteDesktop_SendCtrlAltDelAction, RemoteDesktop_Connected_CanExecute);
 
-        private void RemoteDesktop_SendCtrlAltDelAction(object view)
+        private async void RemoteDesktop_SendCtrlAltDelAction(object view)
         {
             if (view is RemoteDesktopControl control)
-                control.SendKey(RemoteDesktop.Keystroke.CtrlAltDel);
+            {
+                try
+                {
+                    control.SendKey(RemoteDesktop.Keystroke.CtrlAltDel);
+                }
+                catch (Exception ex)
+                {
+                    ConfigurationManager.Current.FixAirspace = true;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", Resources.Localization.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
+
+                    ConfigurationManager.Current.FixAirspace = false;
+                }
+            }
         }
 
         public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction());

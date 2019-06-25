@@ -208,6 +208,23 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem)?.View as PuTTYControl)?.CloseTab();
         }
 
+        private bool PuTTY_Disconnected_CanExecute(object view)
+        {
+            if (view is PuTTYControl control)
+                return !control.IsConnected;
+
+            return false;
+        }
+
+        private bool PuTTY_Connected_CanExecute(object view)
+        {
+            if (view is PuTTYControl control)
+                return control.IsConnected;
+
+            return false;
+        }
+
+
         public ICommand PuTTY_ReconnectCommand => new RelayCommand(PuTTY_ReconnectAction);
 
         private void PuTTY_ReconnectAction(object view)
@@ -219,7 +236,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction);
+        public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction, PuTTY_Disconnected_CanExecute);
 
         private void PuTTY_RestartSessionAction(object view)
         {

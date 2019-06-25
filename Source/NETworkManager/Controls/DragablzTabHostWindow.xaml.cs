@@ -6,6 +6,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using NETworkManager.Utilities;
+using NETworkManager.Models.RemoteDesktop;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Controls
 {
@@ -128,6 +130,83 @@ namespace NETworkManager.Controls
             }
         }
 
+        #region RemoteDesktop Commands
+        private bool RemoteDesktop_Disconnected_CanExecute(object view)
+        {
+            if (view is RemoteDesktopControl control)
+                return !control.IsConnected;
+
+            return false;
+        }
+
+        private bool RemoteDesktop_Connected_CanExecute(object view)
+        {
+            if (view is RemoteDesktopControl control)
+                return control.IsConnected;
+
+            return false;
+        }
+
+        public ICommand RemoteDesktop_ReconnectCommand => new RelayCommand(RemoteDesktop_ReconnectAction, RemoteDesktop_Disconnected_CanExecute);
+
+        private void RemoteDesktop_ReconnectAction(object view)
+        {
+            if (view is RemoteDesktopControl control)
+            {
+                if (control.ReconnectCommand.CanExecute(null))
+                    control.ReconnectCommand.Execute(null);
+            }
+        }
+
+        public ICommand RemoteDesktop_DisconnectCommand => new RelayCommand(RemoteDesktop_DisconnectAction, RemoteDesktop_Connected_CanExecute);
+
+        private void RemoteDesktop_DisconnectAction(object view)
+        {
+            if (view is RemoteDesktopControl control)
+            {
+                if (control.DisconnectCommand.CanExecute(null))
+                    control.DisconnectCommand.Execute(null);
+            }
+        }
+
+        public ICommand RemoteDesktop_FullscreenCommand => new RelayCommand(RemoteDesktop_FullscreenAction, RemoteDesktop_Connected_CanExecute);
+
+        private void RemoteDesktop_FullscreenAction(object view)
+        {
+            if (view is RemoteDesktopControl control)
+                control.FullScreen();
+        }
+
+        public ICommand RemoteDesktop_AdjustScreenCommand => new RelayCommand(RemoteDesktop_AdjustScreenAction, RemoteDesktop_Connected_CanExecute);
+
+        private void RemoteDesktop_AdjustScreenAction(object view)
+        {
+            if (view is RemoteDesktopControl control)
+                control.AdjustScreen();
+        }
+
+        public ICommand RemoteDesktop_SendCtrlAltDelCommand => new RelayCommand(RemoteDesktop_SendCtrlAltDelAction, RemoteDesktop_Connected_CanExecute);
+
+        private async void RemoteDesktop_SendCtrlAltDelAction(object view)
+        {
+            if (view is RemoteDesktopControl control)
+            {
+                try
+                {
+                    control.SendKey(RemoteDesktop.Keystroke.CtrlAltDel);
+                }
+                catch (Exception ex)
+                {
+                    ConfigurationManager.Current.FixAirspace = true;
+                   
+                    await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", NETworkManager.Resources.Localization.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
+
+                    ConfigurationManager.Current.FixAirspace = false;
+                }
+            }
+        }
+        #endregion
+
         #region PowerShell Commands
         public ICommand PowerShell_ReconnectCommand => new RelayCommand(PowerShell_ReconnectAction);
 
@@ -143,6 +222,22 @@ namespace NETworkManager.Controls
         #endregion
 
         #region PuTTY Commands
+        private bool PuTTY_Disconnected_CanExecute(object view)
+        {
+            if (view is PuTTYControl control)
+                return !control.IsConnected;
+
+            return false;
+        }
+
+        private bool PuTTY_Connected_CanExecute(object view)
+        {
+            if (view is PuTTYControl control)
+                return control.IsConnected;
+
+            return false;
+        }
+
         public ICommand PuTTY_ReconnectCommand => new RelayCommand(PuTTY_ReconnectAction);
 
         private void PuTTY_ReconnectAction(object view)
@@ -154,7 +249,7 @@ namespace NETworkManager.Controls
             }
         }
 
-        public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction);
+        public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction, PuTTY_Disconnected_CanExecute);
 
         private void PuTTY_RestartSessionAction(object view)
         {
@@ -162,6 +257,7 @@ namespace NETworkManager.Controls
                 control.RestartSession();
         }
         #endregion
+
         #region TigerVNC Commands
         public ICommand TigerVNC_ReconnectCommand => new RelayCommand(TigerVNC_ReconnectAction);
 

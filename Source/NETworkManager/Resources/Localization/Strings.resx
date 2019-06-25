@@ -2319,4 +2319,10 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="Fullscreen" xml:space="preserve">
     <value>Fullscreen</value>
   </data>
+  <data name="CouldNotSendKeystroke" xml:space="preserve">
+    <value>Could not send keystroke!</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
 </root>

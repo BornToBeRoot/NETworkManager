@@ -37,6 +37,113 @@
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
+                        <!-- Add ContextMenu for RemoteDesktop -->
+                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static networkManager:ApplicationViewManager+Name.RemoteDesktop}">
+                            <DataTrigger.Setters>
+                                <Setter Property="HeaderItemTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate DataType="controls:DragablzTabItem">
+                                            <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
+                                                <Grid>
+                                                    <Grid.ContextMenu>
+                                                        <ContextMenu>
+                                                            <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.RemoteDesktop_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                                                <MenuItem.Icon>
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                        <Rectangle.OpacityMask>
+                                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restart}" />
+                                                                        </Rectangle.OpacityMask>
+                                                                    </Rectangle>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <MenuItem Header="{x:Static localization:Strings.Disconnect}" Command="{Binding Data.RemoteDesktop_DisconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                                                <MenuItem.Icon>
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                        <Rectangle.OpacityMask>
+                                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Disconnect}" />
+                                                                        </Rectangle.OpacityMask>
+                                                                    </Rectangle>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <Separator />
+                                                            <MenuItem Header="{x:Static localization:Strings.Fullscreen}" Command="{Binding Data.RemoteDesktop_FullscreenCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                                                <MenuItem.Icon>
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                        <Rectangle.OpacityMask>
+                                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=ScreenFull}" />
+                                                                        </Rectangle.OpacityMask>
+                                                                    </Rectangle>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <MenuItem Header="{x:Static localization:Strings.AdjustScreen}" Command="{Binding Data.RemoteDesktop_AdjustScreenCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                                                <MenuItem.Icon>
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                        <Rectangle.OpacityMask>
+                                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=ScreenNormal}" />
+                                                                        </Rectangle.OpacityMask>
+                                                                    </Rectangle>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
+                                                            <Separator />
+                                                            <MenuItem Header="{x:Static localization:Strings.KeyboardShortcuts}">
+                                                                <MenuItem.Icon>
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                        <Rectangle.OpacityMask>
+                                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyboardVariant}" />
+                                                                        </Rectangle.OpacityMask>
+                                                                    </Rectangle>
+                                                                </MenuItem.Icon>
+                                                                <MenuItem Header="{x:Static localization:Strings.CtrlAltDel}" Command="{Binding Data.RemoteDesktop_SendCtrlAltDelCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}" />
+                                                            </MenuItem>
+                                                        </ContextMenu>
+                                                    </Grid.ContextMenu>
+                                                    <Grid.InputBindings>
+                                                        <MouseBinding Command="dragablz:TabablzControl.CloseItemCommand" Gesture="MiddleClick" />
+                                                    </Grid.InputBindings>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Grid ToolTip="{Binding Header}">
+                                                            <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
+                                                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
+                                                                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                            </TextBlock>
+                                                            <Thumb Style="{DynamicResource InvisibleThumbStyle}" dragablz:DragablzItem.IsCustomThumb="True" />
+                                                        </Grid>
+                                                        <Button Style="{StaticResource CleanButton}" Command="dragablz:TabablzControl.CloseItemCommand" ToolTip="{x:Static localization:Strings.Close}" Margin="0,0,10,0">
+                                                            <Rectangle Width="16" Height="16">
+                                                                <Rectangle.OpacityMask>
+                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=WindowClose}" />
+                                                                </Rectangle.OpacityMask>
+                                                                <Rectangle.Style>
+                                                                    <Style TargetType="{x:Type Rectangle}">
+                                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Rectangle.Style>
+                                                            </Rectangle>
+                                                        </Button>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
                         <!-- Add ContextMenu for PowerShell -->
                         <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static networkManager:ApplicationViewManager+Name.PowerShell}">
                             <DataTrigger.Setters>

@@ -8,8 +8,6 @@ using System.Windows.Input;
 using System;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
-using System.Diagnostics;
-using System.Threading;
 
 namespace NETworkManager.Controls
 {
@@ -153,6 +151,16 @@ namespace NETworkManager.Controls
         {
             Reconnect();
         }
+
+        public ICommand DisconnectCommand
+        {
+            get { return new RelayCommand(p => DisconnectAction()); }
+        }
+
+        private void DisconnectAction()
+        {
+            Disconnect();
+        }
         #endregion
 
         #region Methods
@@ -247,23 +255,19 @@ namespace NETworkManager.Controls
         private void Reconnect()
         {
             if (IsConnected)
+                return;
+
+            IsConnecting = true;
+
+            if (_rdpSessionInfo.AdjustScreenAutomatically)
             {
-                Disconnect();
+                RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
+                RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
             }
-            else
-            {
-                IsConnecting = true;
 
-                if (_rdpSessionInfo.AdjustScreenAutomatically)
-                {
-                    RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
-                    RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
-                }
+            FixWindowsFormsHostSize();
 
-                FixWindowsFormsHostSize();
-
-                RdpClient.Connect();
-            }
+            RdpClient.Connect();
         }
 
         public void FullScreen()
@@ -277,7 +281,9 @@ namespace NETworkManager.Controls
         public void AdjustScreen()
         {
             if (!IsConnected)
-                RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
+                return;
+
+            RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
 
             FixWindowsFormsHostSize();
         }
@@ -428,8 +434,6 @@ namespace NETworkManager.Controls
 
         private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
-            Debug.WriteLine("Disconnected!");
-
             IsConnected = false;
             IsConnecting = false;
 

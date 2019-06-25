@@ -87,6 +87,15 @@
                                                     </Rectangle>
                                                 </MenuItem.Icon>
                                             </MenuItem>
+                                            <MenuItem Header="{x:Static localization:Strings.Disconnect}" Command="{Binding Data.RemoteDesktop_DisconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                                <MenuItem.Icon>
+                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                        <Rectangle.OpacityMask>
+                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Disconnect}" />
+                                                        </Rectangle.OpacityMask>
+                                                    </Rectangle>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
                                             <Separator />
                                             <MenuItem Header="{x:Static localization:Strings.Fullscreen}" Command="{Binding Data.RemoteDesktop_FullscreenCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                 <MenuItem.Icon>
