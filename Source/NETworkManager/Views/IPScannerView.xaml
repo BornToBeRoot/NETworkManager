@@ -63,7 +63,7 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4" Command="{Binding DetectIPRangeCommand}">
+                <Button Grid.Column="4" Command="{Binding DetectIPRangeCommand}" ToolTip="{x:Static localization:Strings.DetectLocalIPAddressAndSubnetmask}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
                             <Style.Triggers>

@@ -143,8 +143,6 @@ namespace NETworkManager
             return canvas;
         }
 
-        public static string TEST = "";
-
         public enum Name
         {
             None,
@@ -160,6 +158,7 @@ namespace NETworkManager
             PuTTY,
             TigerVNC,
             SNMP,
+            //LinkLayer,
             WakeOnLAN,
             HTTPHeaders,
             Whois,

@@ -2304,8 +2304,8 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="Restart" xml:space="preserve">
     <value>Restart</value>
   </data>
-  <data name="HelpMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
-    <value>Could not resolve ip address for hostname.</value>
+  <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
+    <value>Could not resolve ip address for hostname!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
@@ -2324,5 +2324,11 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="Disconnect" xml:space="preserve">
     <value>Disconnect</value>
+  </data>
+  <data name="DetectLocalIPAddressAndSubnetmask" xml:space="preserve">
+    <value>Detect local ip address and subnetmask</value>
+  </data>
+  <data name="CouldNotDetectSubnetmask" xml:space="preserve">
+    <value>Could not detect subnetmask!</value>
   </data>
 </root>
