@@ -1,6 +1,6 @@
 # How to install RDP 8.1 on Windows 7/Server 2008 R2?
 
-By default, Windows 7 and Server 2008 R2 only supports the Remote Desktop Protocol (RDP) in version 7.1. To Upgrade to version 8.1 follow these steps.
+By default, Windows 7 and Server 2008 R2 only supports the Remote Desktop Protocol (RDP) in version 7.1. To Upgrade to version 8.1 follow these steps:
 
 **1) Download the KB's for your system from Microsoft and apply them in the following order:**
 
