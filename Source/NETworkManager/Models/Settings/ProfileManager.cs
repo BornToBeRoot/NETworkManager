@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
+using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 using MahApps.Metro.Controls.Dialogs;
@@ -111,7 +113,12 @@ namespace NETworkManager.Models.Settings
 
         public static void AddProfile(ProfileInfo profile)
         {
-            Profiles.Add(profile);
+            // Possible fix for appcrash --> when icollection view is refreshed...
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                lock (Profiles)
+                    Profiles.Add(profile);
+            }));
         }
 
         public static void AddProfile(ProfileViewModel instance)
@@ -250,7 +257,12 @@ namespace NETworkManager.Models.Settings
 
         public static void RemoveProfile(ProfileInfo profile)
         {
-            Profiles.Remove(profile);
+            // Possible fix for appcrash --> when icollection view is refreshed...
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                lock (Profiles)
+                    Profiles.Remove(profile);
+            }));            
         }
 
         public static void RenameGroup(string oldGroup, string group)
@@ -297,7 +309,7 @@ namespace NETworkManager.Models.Settings
             viewModel.OnProfileDialogOpen();
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
-      
+
         public static async void ShowEditProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
         {
             var customDialog = new CustomDialog

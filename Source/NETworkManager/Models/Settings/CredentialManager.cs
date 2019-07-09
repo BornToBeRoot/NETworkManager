@@ -10,6 +10,8 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace NETworkManager.Models.Settings
 {
@@ -97,7 +99,7 @@ namespace NETworkManager.Models.Settings
         }
 
         public static void Save()
-        {            
+        {
             // Serialize as xml (utf-8)
             byte[] credentials = SerializeToByteArray();
 
@@ -144,12 +146,22 @@ namespace NETworkManager.Models.Settings
 
         public static void AddCredential(CredentialInfo credential)
         {
-            Credentials.Add(credential);
+            // Possible fix for appcrash --> when icollection view is refreshed...           
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                lock (Credentials)
+                    Credentials.Add(credential);
+            }));
         }
 
         public static void RemoveCredential(CredentialInfo credential)
         {
-            Credentials.Remove(credential);
+            // Possible fix for appcrash --> when icollection view is refreshed...
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                lock (Credentials)
+                    Credentials.Remove(credential);
+            }));
         }
 
         #region Encryption / Decryption
