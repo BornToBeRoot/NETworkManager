@@ -236,7 +236,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction, PuTTY_Disconnected_CanExecute);
+        public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction, PuTTY_Connected_CanExecute);
 
         private void PuTTY_RestartSessionAction(object view)
         {
