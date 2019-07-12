@@ -1,12 +1,13 @@
 ﻿using MahApps.Metro.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
-using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Runtime.CompilerServices;
-using System.Windows;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace NETworkManager
@@ -38,33 +39,37 @@ namespace NETworkManager
             }
         }
 
+        private bool _isRefreshing = true;
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set
+            {
+                if (value == _isRefreshing)
+                    return;
+
+                _isRefreshing = value;
+                OnPropertyChanged();
+            }
+        }
+
         public StatusWindow(MainWindow mainWindow)
         {
             InitializeComponent();
 
             DataContext = this;
-
             _mainWindow = mainWindow;
-        }
 
-        #region Events
-
-        private void MetroWindow_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            Hide();
+            UpdateNetworkInterfaceInfo();
         }
-
-        private void MetroWindow_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            UpdateView();
-        }
-        #endregion
 
         #region ICommands & Actions
         public ICommand OpenMainWindowCommand => new RelayCommand(p => OpenMainWindowAction());
 
         private void OpenMainWindowAction()
         {
+            Hide();
+
             if (_mainWindow.ShowWindowCommand.CanExecute(null))
                 _mainWindow.ShowWindowCommand.Execute(null);
         }
@@ -73,21 +78,67 @@ namespace NETworkManager
 
         #region Methods
 
-        private void UpdateView()
+        public void Refresh()
         {
-            RefreshNetwork();
+            UpdateNetworkInterfaceInfo();
         }
 
-        private async void RefreshNetwork()
+        private async void UpdateNetworkInterfaceInfo()
         {
-            var detectedIP = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(System.Net.IPAddress.Parse("1.1.1.1"));
+            IsRefreshing = true;
+
+            IPAddress detectedIP = null;
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            while(true)
+            {
+                // Try to get the ip address based on routing
+                try
+                {
+                    detectedIP = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse("1.1.1.1"));
+
+                    break;
+                }
+                catch(SocketException) {}
+                
+                // If null --> check if timeout is reached
+                if(detectedIP == null)
+                {
+                    if (stopwatch.ElapsedMilliseconds > 30000)
+                        break;
+
+                    await Task.Delay(2500);
+                }                
+            }
+
+            if (detectedIP == null)
+            {
+                IsRefreshing = false;
+                // ToDo: Error Message
+
+                return;
+            }
 
             foreach (NetworkInterfaceInfo info in await NetworkInterface.GetNetworkInterfacesAsync())
             {
                 if (info.IPv4Address.Contains(detectedIP))
+                {
                     NetworkInterfaceInfo = info;
+                    break;
+                }
             }
+
+            IsRefreshing = false;
         }
         #endregion
+
+        private void StatusWindow_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true;
+
+            Hide();
+        }
     }
 }

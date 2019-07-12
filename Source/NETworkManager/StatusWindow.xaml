@@ -4,14 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"                             
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
-        Title="{x:Static localization:StaticStrings.ProductName}" Height="350" Width="250" ShowInTaskbar="False" IsWindowDraggable="False" GotKeyboardFocus="MetroWindow_GotKeyboardFocus" LostKeyboardFocus="MetroWindow_LostKeyboardFocus" Style="{StaticResource DefaultWindow}" ShowMinButton="False" ShowMaxRestoreButton="False" ShowCloseButton="False">
+        Title="{x:Static localization:StaticStrings.ProductName}" Height="250" Width="250" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" Style="{StaticResource DefaultWindow}" ShowMinButton="False" ShowMaxRestoreButton="False" Closing="StatusWindow_Closing">
     <mahAppsControls:MetroWindow.Resources>
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
-        <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />        
+        <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
     </mahAppsControls:MetroWindow.Resources>
         <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -19,7 +22,7 @@
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
+        <StackPanel Grid.Row="0" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <TextBlock Text="{x:Static localization:Strings.Network}" Style="{StaticResource HeaderTextBlock}" />
             <Grid>
                 <Grid.Resources>
@@ -49,6 +52,11 @@
                 <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Speed}" />
                 <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding NetworkInterfaceInfo.Speed, Converter={StaticResource Bytes1000ToSpeedConverter}}" />
             </Grid>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" Grid.Row="0" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>
+            <TextBlock Text="Detecting network..." Style="{StaticResource MessageTextBlock}" />
+            <!-- <TextBlock Text="{x:Static localization:Strings.DetectingNetworkDots}" Style="{StaticResource MessageTextBlock}" /> -->
         </StackPanel>
         <Button Grid.Row="2" Content="{x:Static localization:Strings.Open}" Command="{Binding OpenMainWindowCommand}" Style="{StaticResource DefaultButton}" />
     </Grid>
