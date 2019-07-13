@@ -9,7 +9,7 @@
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
-        Title="{x:Static localization:StaticStrings.ProductName}" Height="250" Width="250" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" Style="{StaticResource DefaultWindow}" ShowMinButton="False" ShowMaxRestoreButton="False" Closing="StatusWindow_Closing">
+        Title="{x:Static localization:StaticStrings.ProductName}" Height="300" Width="250" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" Style="{StaticResource DefaultWindow}" ShowMinButton="False" ShowMaxRestoreButton="False" Closing="StatusWindow_Closing">
     <mahAppsControls:MetroWindow.Resources>
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
@@ -20,6 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
@@ -54,10 +55,12 @@
             </Grid>
         </StackPanel>
         <StackPanel VerticalAlignment="Center" Grid.Row="0" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>
-            <TextBlock Text="Detecting network..." Style="{StaticResource MessageTextBlock}" />
-            <!-- <TextBlock Text="{x:Static localization:Strings.DetectingNetworkDots}" Style="{StaticResource MessageTextBlock}" /> -->
+            <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>            
+            <TextBlock Text="{x:Static localization:Strings.DetectingNetworkDots}" Style="{StaticResource MessageTextBlock}" />
         </StackPanel>
-        <Button Grid.Row="2" Content="{x:Static localization:Strings.Open}" Command="{Binding OpenMainWindowCommand}" Style="{StaticResource DefaultButton}" />
+        <StackPanel Grid.Row="2" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Margin="0,0,0,10">
+            <mahAppsControls:MetroProgressBar Value="{Binding CountdownValue}" Minimum="0" Maximum="10" Foreground="{DynamicResource AccentColorBrush}" />
+        </StackPanel>
+        <Button Grid.Row="3" Content="{x:Static localization:Strings.Open}" Command="{Binding OpenMainWindowCommand}" Style="{StaticResource DefaultButton}" />
     </Grid>
 </mahAppsControls:MetroWindow>

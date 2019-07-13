@@ -23,8 +23,6 @@ using NETworkManager.Models.Documentation;
 using NETworkManager.ViewModels;
 using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
-using System.Net.NetworkInformation;
-using System.Windows.Threading;
 
 namespace NETworkManager
 {
@@ -292,10 +290,6 @@ namespace NETworkManager
             // Load settings
             ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
 
-            // Detect if network address or status changed...
-            NetworkChange.NetworkAvailabilityChanged += (sender, args) => OnNetworkHasChanged();
-            NetworkChange.NetworkAddressChanged += (sender, args) => OnNetworkHasChanged();
-
             // Check if settings have changed
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
@@ -303,7 +297,7 @@ namespace NETworkManager
             EventSystem.RedirectProfileToApplicationEvent += EventSystem_RedirectProfileToApplicationEvent;
             EventSystem.RedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
             EventSystem.RedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
-
+                        
             _isLoading = false;
         }
 
@@ -364,6 +358,9 @@ namespace NETworkManager
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
+
+            // Init status window
+            statusWindow = new StatusWindow(this);
 
             // Search for updates... 
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
@@ -1322,44 +1319,9 @@ namespace NETworkManager
         #endregion
 
         #region Methods
-        private void OnNetworkHasChanged()
-        {
-            // ToDo: User Settings --> Disable/Enable
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                OpenStatusWindow();
-            }));
-        }
-
         private void OpenStatusWindow()
         {
-            bool refresh = false;
-
-            // Create window
-            if (statusWindow == null)
-                statusWindow = new StatusWindow(this);
-            else
-                refresh = true;
-
-
-            // ToDo: Location on screen (user settings?)
-            // Detect screen based on cursor
-            //System.Drawing.Point cursor = System.Windows.Forms.Cursor.Position;
-            //Screen screen = Screen.FromPoint(new System.Drawing.Point(cursor.X, cursor.Y));
-                       
-            statusWindow.Left = Screen.PrimaryScreen.WorkingArea.Right - statusWindow.Width - 10;
-            statusWindow.Top = Screen.PrimaryScreen.WorkingArea.Bottom - statusWindow.Height - 10;
-
-            if (refresh)
-                statusWindow.Refresh();
-
-            // ToDo: AutoClose after x-Seconds (User settings)
-            //if(SetttingsManager.Current.StatusWindow_AutoClose)
-            //statusWindow.CloseAfter(SetttingsManager.Current.StatusWindow_AutoCloseTime);
-
-            statusWindow.Show();
-
-            statusWindow.Activate();
+            statusWindow.ShowFromExternal();            
         }
         #endregion
 

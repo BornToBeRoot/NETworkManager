@@ -1,13 +1,16 @@
 ﻿using MahApps.Metro.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace NETworkManager
@@ -24,6 +27,8 @@ namespace NETworkManager
         #endregion
 
         private MainWindow _mainWindow;
+
+        Timer _timer = new Timer();
 
         private NetworkInterfaceInfo _networkInterfaceInfo;
         public NetworkInterfaceInfo NetworkInterfaceInfo
@@ -53,6 +58,20 @@ namespace NETworkManager
             }
         }
 
+        private int _countdownValue = 10;
+        public int CountdownValue
+        {
+            get => _countdownValue;
+            set
+            {
+                if (value == _countdownValue)
+                    return;
+
+                _countdownValue = value;
+                OnPropertyChanged();
+            }
+        }
+
         public StatusWindow(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -60,7 +79,12 @@ namespace NETworkManager
             DataContext = this;
             _mainWindow = mainWindow;
 
-            UpdateNetworkInterfaceInfo();
+            _timer.Interval = 1000;
+            _timer.Tick += CountdownToCloseTimer_Tick;
+
+            // Detect if network address or status changed...
+            NetworkChange.NetworkAvailabilityChanged += (sender, args) => OnNetworkHasChanged();
+            NetworkChange.NetworkAddressChanged += (sender, args) => OnNetworkHasChanged();
         }
 
         #region ICommands & Actions
@@ -68,7 +92,7 @@ namespace NETworkManager
 
         private void OpenMainWindowAction()
         {
-            Hide();
+            HideWindow();
 
             if (_mainWindow.ShowWindowCommand.CanExecute(null))
                 _mainWindow.ShowWindowCommand.Execute(null);
@@ -77,13 +101,7 @@ namespace NETworkManager
         #endregion
 
         #region Methods
-
-        public void Refresh()
-        {
-            UpdateNetworkInterfaceInfo();
-        }
-
-        private async void UpdateNetworkInterfaceInfo()
+        private async void Refresh()
         {
             IsRefreshing = true;
 
@@ -92,25 +110,25 @@ namespace NETworkManager
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            while(true)
+            while (true)
             {
                 // Try to get the ip address based on routing
                 try
                 {
-                    detectedIP = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse("1.1.1.1"));
+                    detectedIP = await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse("1.1.1.1"));
 
                     break;
                 }
-                catch(SocketException) {}
-                
+                catch (SocketException) { }
+
                 // If null --> check if timeout is reached
-                if(detectedIP == null)
+                if (detectedIP == null)
                 {
                     if (stopwatch.ElapsedMilliseconds > 30000)
                         break;
 
                     await Task.Delay(2500);
-                }                
+                }
             }
 
             if (detectedIP == null)
@@ -121,7 +139,7 @@ namespace NETworkManager
                 return;
             }
 
-            foreach (NetworkInterfaceInfo info in await NetworkInterface.GetNetworkInterfacesAsync())
+            foreach (NetworkInterfaceInfo info in await Models.Network.NetworkInterface.GetNetworkInterfacesAsync())
             {
                 if (info.IPv4Address.Contains(detectedIP))
                 {
@@ -132,13 +150,74 @@ namespace NETworkManager
 
             IsRefreshing = false;
         }
+
+        private void OnNetworkHasChanged()
+        {
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate
+            {
+                ShowWindow();
+
+                Refresh();
+
+                StartCountdownToClose();
+            }));
+        }
+
+        private void StartCountdownToClose()
+        {
+            CountdownValue = 10; // ToDo: User settings
+
+            _timer.Start();
+        }
+
+        private void CountdownToCloseTimer_Tick(object sender, System.EventArgs e)
+        {
+            CountdownValue--;
+
+            if (CountdownValue > 0)
+                return;
+
+            _timer.Stop();
+
+            HideWindow();
+        }
+
+        public void ShowFromExternal()
+        {
+            ShowWindow();
+
+            Refresh();
+
+            StartCountdownToClose();
+        }
+
+        private void ShowWindow()
+        {
+            // Stop timer if running
+            _timer.Stop();
+
+            // Show on primary screen in left/bottom corner
+            // ToDo: User setting...
+            Left = Screen.PrimaryScreen.WorkingArea.Right - Width - 10;
+            Top = Screen.PrimaryScreen.WorkingArea.Bottom - Height - 10;
+
+            Show();
+
+            // ToDo: User setting...
+            Topmost = true;
+        }
+
+        private void HideWindow()
+        {
+            Hide();
+        }
         #endregion
 
         private void StatusWindow_Closing(object sender, CancelEventArgs e)
         {
             e.Cancel = true;
 
-            Hide();
+            HideWindow();
         }
     }
 }

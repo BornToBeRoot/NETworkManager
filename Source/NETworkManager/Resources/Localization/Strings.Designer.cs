@@ -1555,6 +1555,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detecting  network....
+        /// </summary>
+        public static string DetectingNetworkDots {
+            get {
+                return ResourceManager.GetString("DetectingNetworkDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detect local ip address and subnetmask.
         /// </summary>
         public static string DetectLocalIPAddressAndSubnetmask {

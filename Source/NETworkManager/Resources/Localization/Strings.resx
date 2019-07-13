@@ -2331,4 +2331,7 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="CouldNotDetectSubnetmask" xml:space="preserve">
     <value>Could not detect subnetmask!</value>
   </data>
+  <data name="DetectingNetworkDots" xml:space="preserve">
+    <value>Detecting  network...</value>
+  </data>
 </root>
