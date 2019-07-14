@@ -1023,7 +1023,7 @@ namespace NETworkManager
             }
 
             _notifyIcon.Text = Title;
-            // DISABLED IN RELEASE _notifyIcon.Click += NotifyIcon_Click;            
+            _notifyIcon.Click += NotifyIcon_Click;            
             _notifyIcon.MouseDown += NotifyIcon_MouseDown;
             _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
         }
@@ -1034,6 +1034,7 @@ namespace NETworkManager
                 return;
 
             var trayMenu = (ContextMenu)FindResource("ContextMenuNotifyIcon");
+
             trayMenu.IsOpen = true;
         }
 

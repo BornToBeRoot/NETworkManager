@@ -59,6 +59,7 @@
             <TextBlock Text="{x:Static localization:Strings.DetectingNetworkDots}" Style="{StaticResource MessageTextBlock}" />
         </StackPanel>
         <StackPanel Grid.Row="2" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Margin="0,0,0,10">
+            <TextBlock Text="Closing in x seconds..." Foreground="{DynamicResource GrayBrush5}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
             <mahAppsControls:MetroProgressBar Value="{Binding CountdownValue}" Minimum="0" Maximum="10" Foreground="{DynamicResource AccentColorBrush}" />
         </StackPanel>
         <Button Grid.Row="3" Content="{x:Static localization:Strings.Open}" Command="{Binding OpenMainWindowCommand}" Style="{StaticResource DefaultButton}" />

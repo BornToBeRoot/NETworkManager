@@ -92,6 +92,9 @@ namespace NETworkManager
 
         private void OpenMainWindowAction()
         {
+            // Stop timer if running
+            _timer.Stop();
+
             HideWindow();
 
             if (_mainWindow.ShowWindowCommand.CanExecute(null))
@@ -170,7 +173,7 @@ namespace NETworkManager
             _timer.Start();
         }
 
-        private void CountdownToCloseTimer_Tick(object sender, System.EventArgs e)
+        private void CountdownToCloseTimer_Tick(object sender, EventArgs e)
         {
             CountdownValue--;
 
@@ -192,10 +195,7 @@ namespace NETworkManager
         }
 
         private void ShowWindow()
-        {
-            // Stop timer if running
-            _timer.Stop();
-
+        {    
             // Show on primary screen in left/bottom corner
             // ToDo: User setting...
             Left = Screen.PrimaryScreen.WorkingArea.Right - Width - 10;
