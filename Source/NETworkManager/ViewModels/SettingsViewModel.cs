@@ -34,7 +34,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-                
+
         private bool _searchNothingFound;
         public bool SearchNothingFound
         {
@@ -84,6 +84,7 @@ namespace NETworkManager.ViewModels
         private SettingsWindowView _settingsWindowView;
         private SettingsAppearanceView _settingsApperanceView;
         private SettingsLanguageView _settingsLanguageView;
+        private SettingsStatusView _settingsStatusView;
         private SettingsHotKeysView _settingsHotKeysView;
         private SettingsAutostartView _settingsAutostartView;
         private SettingsSettingsView _settingsSettingsView;
@@ -115,7 +116,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            SettingsViews =  new CollectionViewSource { Source = SettingsViewManager.List }.View;
+            SettingsViews = new CollectionViewSource { Source = SettingsViewManager.List }.View;
             SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SettingsViewInfo.TranslatedGroup)));
             SettingsViews.SortDescriptions.Add(new SortDescription(nameof(SettingsViewInfo.Name), ListSortDirection.Ascending));
             SettingsViews.Filter = o =>
@@ -125,7 +126,7 @@ namespace NETworkManager.ViewModels
 
                 if (!(o is SettingsViewInfo info))
                     return false;
-                
+
                 var regex = new Regex(@" |-");
 
                 var search = regex.Replace(Search, "");
@@ -151,7 +152,7 @@ namespace NETworkManager.ViewModels
             // Don't change the view, if the user has filtered the settings...
             if (!string.IsNullOrEmpty(Search))
                 return;
-            
+
             if (System.Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName.ToString()) && ApplicationViewManager.Name.None.ToString() != applicationName.ToString())
                 SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName.ToString());
             else
@@ -185,6 +186,12 @@ namespace NETworkManager.ViewModels
                         _settingsLanguageView = new SettingsLanguageView();
 
                     SettingsContent = _settingsLanguageView;
+                    break;
+                case SettingsViewManager.Name.Status:
+                    if (_settingsStatusView == null)
+                        _settingsStatusView = new SettingsStatusView();
+
+                    SettingsContent = _settingsStatusView;
                     break;
                 case SettingsViewManager.Name.HotKeys:
                     if (_settingsHotKeysView == null)
@@ -223,7 +230,7 @@ namespace NETworkManager.ViewModels
                     SettingsContent = _settingsImportExportView;
                     break;
                 case SettingsViewManager.Name.Dashboard:
-                    if(_dashboardSettingsView == null)
+                    if (_dashboardSettingsView == null)
                         _dashboardSettingsView = new DashboardSettingsView();
 
                     SettingsContent = _dashboardSettingsView;
@@ -240,7 +247,7 @@ namespace NETworkManager.ViewModels
 
                     SettingsContent = _portScannerSettingsView;
                     break;
-               
+
                 case SettingsViewManager.Name.Ping:
                     if (_pingSettingsViewModel == null)
                         _pingSettingsViewModel = new PingSettingsView();
@@ -266,7 +273,7 @@ namespace NETworkManager.ViewModels
                     SettingsContent = _remoteDesktopSettingsView;
                     break;
                 case SettingsViewManager.Name.PowerShell:
-                    if(_powerShellSettingsView == null)
+                    if (_powerShellSettingsView == null)
                         _powerShellSettingsView = new PowerShellSettingsView();
 
                     SettingsContent = _powerShellSettingsView;
@@ -278,7 +285,7 @@ namespace NETworkManager.ViewModels
                     SettingsContent = _puTTYSettingsView;
                     break;
                 case SettingsViewManager.Name.TigerVNC:
-                    if(_tigerVNCSettingsView == null)
+                    if (_tigerVNCSettingsView == null)
                         _tigerVNCSettingsView = new TigerVNCSettingsView();
 
                     SettingsContent = _tigerVNCSettingsView;
