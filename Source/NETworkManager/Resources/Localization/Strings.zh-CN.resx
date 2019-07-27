@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>About</value>
+    <value>关于</value>
   </data>
   <data name="Accent" xml:space="preserve">
     <value>Accent</value>
@@ -139,28 +139,28 @@
     <value>ARP</value>
   </data>
   <data name="ARPTable" xml:space="preserve">
-    <value>ARP Table</value>
+    <value>ARP 表</value>
   </data>
   <data name="Authentication" xml:space="preserve">
-    <value>Authentication</value>
+    <value>认证</value>
   </data>
   <data name="Autostart" xml:space="preserve">
-    <value>Autostart</value>
+    <value>自动开始</value>
   </data>
   <data name="Calculator" xml:space="preserve">
-    <value>Calculator</value>
+    <value>计算器</value>
   </data>
   <data name="CommandLineArguments" xml:space="preserve">
-    <value>Command Line Arguments</value>
+    <value>命令行参数</value>
   </data>
   <data name="Configure" xml:space="preserve">
-    <value>Configure</value>
+    <value>配置</value>
   </data>
   <data name="Confirm" xml:space="preserve">
-    <value>Confirm</value>
+    <value>确认</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>Connect</value>
+    <value>连接</value>
   </data>
   <data name="ConnectAs" xml:space="preserve">
     <value>Connect as</value>
@@ -169,31 +169,31 @@
     <value>Copy profile</value>
   </data>
   <data name="CredentialNotFound" xml:space="preserve">
-    <value>Credential not found!</value>
+    <value>凭据未找到</value>
   </data>
   <data name="Credentials" xml:space="preserve">
-    <value>Credentials</value>
+    <value>凭据</value>
   </data>
   <data name="Data" xml:space="preserve">
-    <value>Data</value>
+    <value>数据</value>
   </data>
   <data name="DefaultApplication" xml:space="preserve">
-    <value>Default application</value>
+    <value>默认应用</value>
   </data>
   <data name="DeleteCredentials" xml:space="preserve">
-    <value>Delete credentials</value>
+    <value>删除凭据</value>
   </data>
   <data name="DeleteProfile" xml:space="preserve">
     <value>Delete profile</value>
   </data>
   <data name="Destination" xml:space="preserve">
-    <value>Destination</value>
+    <value>目的地</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value>Details</value>
+    <value>详细</value>
   </data>
   <data name="Disconnected" xml:space="preserve">
-    <value>Disconnected</value>
+    <value>未连接</value>
   </data>
   <data name="Display" xml:space="preserve">
     <value>Display</value>
@@ -211,16 +211,16 @@
     <value>Edit credentials</value>
   </data>
   <data name="EditGroup" xml:space="preserve">
-    <value>Edit group</value>
+    <value>编辑组</value>
   </data>
   <data name="EditProfile" xml:space="preserve">
     <value>Edit profile</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>错误</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>Export</value>
+    <value>导出</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
@@ -232,7 +232,7 @@
     <value>Headers</value>
   </data>
   <data name="History" xml:space="preserve">
-    <value>History</value>
+    <value>历史</value>
   </data>
   <data name="HotKeys" xml:space="preserve">
     <value>HotKeys</value>
@@ -241,7 +241,7 @@
     <value>HTTP Headers</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>Import</value>
+    <value>导入</value>
   </data>
   <data name="Information" xml:space="preserve">
     <value>Information</value>
@@ -274,7 +274,7 @@
     <value>Lookup</value>
   </data>
   <data name="MACAddress" xml:space="preserve">
-    <value>MAC Address</value>
+    <value>MAC 地址</value>
   </data>
   <data name="MasterPassword" xml:space="preserve">
     <value>Master Password</value>
@@ -361,10 +361,10 @@
     <value>Socket</value>
   </data>
   <data name="Statistics" xml:space="preserve">
-    <value>Statistics</value>
+    <value>统计</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Status</value>
+    <value>状态</value>
   </data>
   <data name="Subnet" xml:space="preserve">
     <value>Subnet</value>
@@ -376,7 +376,7 @@
     <value>Success!</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>Theme</value>
+    <value>主题</value>
   </data>
   <data name="Traceroute" xml:space="preserve">
     <value>Traceroute</value>
@@ -493,7 +493,7 @@
     <value>IPv4</value>
   </data>
   <data name="IPv4Address" xml:space="preserve">
-    <value>IPv4 address</value>
+    <value>IPv4 地址</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
     <value>IPv4-Default-Gateway</value>
@@ -502,7 +502,7 @@
     <value>IPv6</value>
   </data>
   <data name="IPv6Address" xml:space="preserve">
-    <value>IPv6 address</value>
+    <value>IPv6 地址</value>
   </data>
   <data name="IPv6AddressLinkLocal" xml:space="preserve">
     <value>Link-local IPv6 address</value>
@@ -646,7 +646,7 @@
     <value>Wake up</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>是</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>
@@ -715,7 +715,7 @@
     <value>back</value>
   </data>
   <data name="Backup" xml:space="preserve">
-    <value>Backup</value>
+    <value>备份</value>
   </data>
   <data name="Baud" xml:space="preserve">
     <value>Baud</value>
@@ -760,13 +760,13 @@
     <value>Connect the network card to a network to configure it!</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>拷贝</value>
   </data>
   <data name="CopyAsDots" xml:space="preserve">
     <value>Copy as...</value>
   </data>
   <data name="CopyDots" xml:space="preserve">
-    <value>Copy...</value>
+    <value>拷贝...</value>
   </data>
   <data name="CouldNotResolveHostnameFor" xml:space="preserve">
     <value>Could not resolve hostname for: "{0}"</value>
@@ -1534,7 +1534,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Green</value>
   </data>
   <data name="ImportExport" xml:space="preserve">
-    <value>Import / Export</value>
+    <value>导入／导出</value>
   </data>
   <data name="Indigo" xml:space="preserve">
     <value>Indigo</value>
@@ -1549,7 +1549,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Destination port unreachable.</value>
   </data>
   <data name="IPStatus_Success" xml:space="preserve">
-    <value>Success</value>
+    <value>成功</value>
   </data>
   <data name="IPStatus_TimedOut" xml:space="preserve">
     <value>Request timed out.</value>
@@ -2333,8 +2333,5 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="DetectingNetworkDots" xml:space="preserve">
     <value>Detecting  network...</value>
-  </data>
-  <data name="ClosingInXSecondsDots" xml:space="preserve">
-    <value>Closing in {0} seconds...</value>
   </data>
 </root>

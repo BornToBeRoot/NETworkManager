@@ -991,10 +991,10 @@ Crear uno...</value>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
     <value>Solo cuando se usa la pantalla completa</value>
   </data>
-  <data name="OnTheRemoteComputer" xml:space="preserve">
-    <value>En el equipo remoto</value>
+  <data name="RemoteDesktopKeyboardHookMode_OnTheRemoteComputer" xml:space="preserve">
+    <value>En un equipo remoto</value>
   </data>
-  <data name="OnThisComputer" xml:space="preserve">
+  <data name="RemoteDesktopKeyboardHookMode_OnThisComputer" xml:space="preserve">
     <value>En este equipo</value>
   </data>
   <data name="Open" xml:space="preserve">
@@ -1453,7 +1453,7 @@ Crear uno...</value>
     <value>¡Ingrese una máscara de subred válida (como 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>¡Ingrese una máscara de subred o CIDR válida (como 255.255.255.0 or /24)!</value>
+    <value>¡Ingrese una máscara de subred o CIDR válida (como 255.255.255.0 o /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>¡El campo no puede estar vacío!</value>
@@ -2055,7 +2055,7 @@ URL: https://api.ipify.org/</value>
     <value>Servicios externos</value>
   </data>
   <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
-    <value>El proyecto en GitHub.
+    <value>El proyecto en GitHub
 
 URL: https://github.com/BornToBeRoot/NETworkManager/</value>
   </data>
@@ -2180,5 +2180,158 @@ está deshabilitada!</value>
   </data>
   <data name="Official" xml:space="preserve">
     <value>Oficial</value>
+  </data>
+  <data name="HelpTranslate" xml:space="preserve">
+    <value>Ayudar a traducir</value>
+  </data>
+  <data name="NetworkConnectionType" xml:space="preserve">
+    <value>Tipo de conexión de red</value>
+  </data>
+  <data name="DesktopBackground" xml:space="preserve">
+    <value>Fondo de escritorio</value>
+  </data>
+  <data name="DesktopComposition" xml:space="preserve">
+    <value>Composición del escritorio</value>
+  </data>
+  <data name="Experience" xml:space="preserve">
+    <value>Experiencia</value>
+  </data>
+  <data name="FontSmoothing" xml:space="preserve">
+    <value>Suavizado de fuentes</value>
+  </data>
+  <data name="MenuAndWindowAnimation" xml:space="preserve">
+    <value>Animación de menús y ventanas</value>
+  </data>
+  <data name="Performance" xml:space="preserve">
+    <value>Rendimiento</value>
+  </data>
+  <data name="PersistentBitmapCaching" xml:space="preserve">
+    <value>Almacenamiento en caché persistente de mapas de bits</value>
+  </data>
+  <data name="ReconnectIfTheConnectionIsDropped" xml:space="preserve">
+    <value>Volver a conectarse si se pierde la conexión</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_BroadbandHigh" xml:space="preserve">
+    <value>Banda ancha a alta velocidad (2 Mbps - 10 Mbps)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_BroadbandLow" xml:space="preserve">
+    <value>Banda ancha a baja velocidad (256 kbps - 2 Mbps)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_DetectAutomatically" xml:space="preserve">
+    <value>Detectar calidad de conexión automáticamente</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_LAN" xml:space="preserve">
+    <value>LAN (10 Mbps o superior)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_Modem" xml:space="preserve">
+    <value>Módem (56 kbps)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_Satellite" xml:space="preserve">
+    <value>Satélite (2 Mbps - 16 Mbps con latencia alta)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_WAN" xml:space="preserve">
+    <value>WAN (10 Mbps o superior con latencia alta)</value>
+  </data>
+  <data name="ShowWindowContentsWhileDragging" xml:space="preserve">
+    <value>Mostrar el contenido de la ventana mientras se arrastra</value>
+  </data>
+  <data name="VisualStyles" xml:space="preserve">
+    <value>Estilos visuales</value>
+  </data>
+  <data name="RemoteAudio" xml:space="preserve">
+    <value>Audio remoto</value>
+  </data>
+  <data name="RemoteAudioPlayback" xml:space="preserve">
+    <value>Reproducción de audio remoto</value>
+  </data>
+  <data name="RemoteAudioRecording" xml:space="preserve">
+    <value>Grabación de audio remoto</value>
+  </data>
+  <data name="RemoteDesktopAudioCaptureRedirectionMode_DoNotRecord" xml:space="preserve">
+    <value>No grabar</value>
+  </data>
+  <data name="RemoteDesktopAudioCaptureRedirectionMode_RecordFromThisComputer" xml:space="preserve">
+    <value>Grabar desde este equipo</value>
+  </data>
+  <data name="RemoteDesktopAudioRedirectionMode_DoNotPlay" xml:space="preserve">
+    <value>No reproducir</value>
+  </data>
+  <data name="RemoteDesktopAudioRedirectionMode_PlayOnRemoteComputer" xml:space="preserve">
+    <value>Reproducir en equipo remoto</value>
+  </data>
+  <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
+    <value>Reproducir en este equipo</value>
+  </data>
+  <data name="HelpMessage_PublicDNSTestDomain" xml:space="preserve">
+    <value>Dominio para probar la configuración del servidor DNS (el dominio debe resolver un registro A o AAAA).</value>
+  </data>
+  <data name="HelpMessage_PublicDNSTestIPAddress" xml:space="preserve">
+    <value>Dirección IP para probar la configuración del servidor DNS (la dirección IP debe resolver el registro PTR).</value>
+  </data>
+  <data name="HelpMessage_PublicICMPTestIPAddress" xml:space="preserve">
+    <value>Dirección IP para probar la conexión a través de ping (ICMP).</value>
+  </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>Puerta de enlace</value>
+  </data>
+  <data name="CustomCommands" xml:space="preserve">
+    <value>Comandos personalizados</value>
+  </data>
+  <data name="AddCustomCommand" xml:space="preserve">
+    <value>Añadir comando personalizado</value>
+  </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>Argumentos</value>
+  </data>
+  <data name="DeleteCustomCommand" xml:space="preserve">
+    <value>Eliminar comando personalizado</value>
+  </data>
+  <data name="EditCustomCommand" xml:space="preserve">
+    <value>Editar comando personalizado</value>
+  </data>
+  <data name="Program" xml:space="preserve">
+    <value>Programa</value>
+  </data>
+  <data name="DeleteCustomCommandMessage" xml:space="preserve">
+    <value>El comando personalizado seleccionado se eliminará permanentemente.</value>
+  </data>
+  <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
+    <value>Las siguientes variables están disponibles:
+
+$$ipaddress$$	--&gt;	Dirección IP
+$$hostname$$	--&gt;	Nombre del host</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Reiniciar</value>
+  </data>
+  <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
+    <value>¡No se pudo resolver la dirección IP para el nombre del host!</value>
+  </data>
+  <data name="CtrlAltDel" xml:space="preserve">
+    <value>Ctrl+Alt+Supr</value>
+  </data>
+  <data name="KeyboardShortcuts" xml:space="preserve">
+    <value>Atajos de teclado</value>
+  </data>
+  <data name="AdjustScreen" xml:space="preserve">
+    <value>Ajustar a la pantalla</value>
+  </data>
+  <data name="Fullscreen" xml:space="preserve">
+    <value>Pantalla completa</value>
+  </data>
+  <data name="CouldNotSendKeystroke" xml:space="preserve">
+    <value>¡No se pudo enviar la pulsación de tecla!</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Desconectar</value>
+  </data>
+  <data name="DetectLocalIPAddressAndSubnetmask" xml:space="preserve">
+    <value>Detectar la dirección IP local y la máscara de subred</value>
+  </data>
+  <data name="CouldNotDetectSubnetmask" xml:space="preserve">
+    <value>¡No se pudo detectar la máscara de subred!</value>
+  </data>
+  <data name="DetectingNetworkDots" xml:space="preserve">
+    <value>Detecting  network...</value>
   </data>
 </root>

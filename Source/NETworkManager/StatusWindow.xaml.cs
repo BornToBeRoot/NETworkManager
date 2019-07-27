@@ -58,6 +58,20 @@ namespace NETworkManager
             }
         }
 
+        private string _countdownText;
+        public string CountdownText
+        {
+            get => _countdownText;
+            set
+            {
+                if (value == _countdownText)
+                    return;
+
+                _countdownText = value;
+                OnPropertyChanged();
+            }
+        }
+
         private int _countdownValue = 10;
         public int CountdownValue
         {
@@ -176,6 +190,7 @@ namespace NETworkManager
         private void CountdownToCloseTimer_Tick(object sender, EventArgs e)
         {
             CountdownValue--;
+            CountdownText = string.Format(NETworkManager.Resources.Localization.Strings.ClosingInXSecondsDots, CountdownValue);
 
             if (CountdownValue > 0)
                 return;

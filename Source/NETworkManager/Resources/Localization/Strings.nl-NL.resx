@@ -373,7 +373,7 @@
     <value>Subnetting</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>Success!</value>
+    <value>Succes!</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Thema</value>
@@ -382,7 +382,7 @@
     <value>Traceroute</value>
   </data>
   <data name="Transparency" xml:space="preserve">
-    <value>Transparency</value>
+    <value>Transparantie</value>
   </data>
   <data name="Tray" xml:space="preserve">
     <value>Dienblad</value>
@@ -562,7 +562,7 @@
     <value>Ontvangen / verloren</value>
   </data>
   <data name="ResolveHostname" xml:space="preserve">
-    <value>Resolve hostname</value>
+    <value>Hostnaam oplossen</value>
   </data>
   <data name="RestartRequired" xml:space="preserve">
     <value>Opnieuw opstarten vereist</value>
@@ -607,7 +607,7 @@
     <value>Subnetmask or CIDR</value>
   </data>
   <data name="Threads" xml:space="preserve">
-    <value>Threads</value>
+    <value>Draden</value>
   </data>
   <data name="Time" xml:space="preserve">
     <value>Tijd</value>
@@ -649,25 +649,25 @@
     <value>Ja</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Toevoegen</value>
   </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
-    <value>Add a tab to perform a DNS lookup...</value>
+    <value>Voeg een tabblad toe om een DNS lookup uit te voeren...</value>
   </data>
   <data name="AddATabToPerformANetworkScan" xml:space="preserve">
-    <value>Add a tab to perform a network scan...</value>
+    <value>Voeg een tabblad toe om een ​​netwerkscan uit te voeren...</value>
   </data>
   <data name="AddATabToPerformAnSNMPAction" xml:space="preserve">
-    <value>Add a tab to perform an SNMP action...</value>
+    <value>Voeg een tabblad toe om een SNMP-actie uit te voeren...</value>
   </data>
   <data name="AddATabToPerformAPing" xml:space="preserve">
-    <value>Add a tab to perform a ping...</value>
+    <value>Voeg een tabblad toe om een ping uit te voeren...</value>
   </data>
   <data name="AddATabToPerformAPortScan" xml:space="preserve">
-    <value>Add a tab to perform a port scan...</value>
+    <value>Voeg een tabblad toe om een poortscan uit te voeren...</value>
   </data>
   <data name="AddATabToPerformATrace" xml:space="preserve">
-    <value>Add a tab to perform a trace...</value>
+    <value>Voeg een tabblad toe om een trace uit te voeren...</value>
   </data>
   <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
     <value>Add a tab to query the HTTP headers...</value>
@@ -688,7 +688,7 @@
     <value>Adjust screen automatically</value>
   </data>
   <data name="Answers" xml:space="preserve">
-    <value>Answers</value>
+    <value>Antwoorden</value>
   </data>
   <data name="ApplicationIsRestartedAfterwards" xml:space="preserve">
     <value>Application is restarted afterwards</value>
@@ -730,13 +730,13 @@
     <value>Controleren op updates bij het opstarten</value>
   </data>
   <data name="Class" xml:space="preserve">
-    <value>Class</value>
+    <value>Klasse</value>
   </data>
   <data name="ClearFilter" xml:space="preserve">
     <value>Clear filter</value>
   </data>
   <data name="ColorDepthBit" xml:space="preserve">
-    <value>Color depth (bit)</value>
+    <value>Kleurdiepte (bit)</value>
   </data>
   <data name="Community" xml:space="preserve">
     <value>Gemeenschap</value>
@@ -748,16 +748,16 @@
     <value>Bevestig dichtbij</value>
   </data>
   <data name="ConfirmCloseMessage" xml:space="preserve">
-    <value>Are you sure you want to close the application?</value>
+    <value>Weet u zeker dat u de applicatie wilt sluiten?</value>
   </data>
   <data name="ConnectAsDots" xml:space="preserve">
-    <value>Connect as...</value>
+    <value>Aansluiten als...</value>
   </data>
   <data name="ConnectExternal" xml:space="preserve">
-    <value>Connect external</value>
+    <value>Extern aansluiten</value>
   </data>
   <data name="ConnectTheNetworkCardToConfigureIt" xml:space="preserve">
-    <value>Connect the network card to a network to configure it!</value>
+    <value>Verbind de netwerkkaart met een netwerk om het te configureren!</value>
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Kopiëren</value>
@@ -784,10 +784,10 @@
     <value>Custom</value>
   </data>
   <data name="CustomScreenSize" xml:space="preserve">
-    <value>Custom screen size:</value>
+    <value>Aangepaste schermgrootte:</value>
   </data>
   <data name="DataHasBeenUpdated" xml:space="preserve">
-    <value>Data has been updated!</value>
+    <value>Gegevens zijn bijgewerkt!</value>
   </data>
   <data name="DecryptAndLoadCredentialsMessage" xml:space="preserve">
     <value>Credentials must be decrypted and loaded to manage them.</value>
@@ -865,7 +865,7 @@
     <value>Enter subnet and a new subnet mask to create subnets...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>Couldn't connect to 'api.github.com', check your network connection!</value>
+    <value>Kon geen verbinding maken met 'api.github.com', controleer je netwerkverbinding!</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
     <value>Error in response!</value>
@@ -877,28 +877,28 @@
     <value>Expand</value>
   </data>
   <data name="FirstUsableIPAddress" xml:space="preserve">
-    <value>First usable IP address</value>
+    <value>Eerste bruikbare IP adres</value>
   </data>
   <data name="FixedScreenSize" xml:space="preserve">
-    <value>Fixed screen size:</value>
+    <value>Vaste schermgrootte:</value>
   </data>
   <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
     <value>Star / Fork the Project op Github</value>
   </data>
   <data name="Found" xml:space="preserve">
-    <value>Found</value>
+    <value>Gevonden</value>
   </data>
   <data name="Group" xml:space="preserve">
-    <value>Group</value>
+    <value>Groep</value>
   </data>
   <data name="Height" xml:space="preserve">
-    <value>Height</value>
+    <value>Hoogte</value>
   </data>
   <data name="Host" xml:space="preserve">
     <value>Host</value>
   </data>
   <data name="HostnameOrIPAddress" xml:space="preserve">
-    <value>Hostname or IP address</value>
+    <value>Hostnaam of IP adres</value>
   </data>
   <data name="Hosts" xml:space="preserve">
     <value>Hosts</value>
@@ -916,7 +916,7 @@
     <value>IP range</value>
   </data>
   <data name="LastUsableIPAddress" xml:space="preserve">
-    <value>Last usable IP address</value>
+    <value>Laatste bruikbare IP adres</value>
   </data>
   <data name="LocalIPAddress" xml:space="preserve">
     <value>Local IP address</value>
@@ -991,11 +991,11 @@ Creëer er een...</value>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
     <value>Alleen bij gebruik van het volledige scherm</value>
   </data>
-  <data name="OnTheRemoteComputer" xml:space="preserve">
-    <value>Op de externe computer</value>
+  <data name="RemoteDesktopKeyboardHookMode_OnTheRemoteComputer" xml:space="preserve">
+    <value>On the remote computer</value>
   </data>
-  <data name="OnThisComputer" xml:space="preserve">
-    <value>Op deze computer</value>
+  <data name="RemoteDesktopKeyboardHookMode_OnThisComputer" xml:space="preserve">
+    <value>On this computer</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>Open</value>
@@ -1327,7 +1327,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Voer locatie in...</value>
   </data>
   <data name="Everything" xml:space="preserve">
-    <value>Everything</value>
+    <value>Alles</value>
   </data>
   <data name="FilterDots" xml:space="preserve">
     <value>Filter...</value>
@@ -1372,7 +1372,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Network connections....</value>
   </data>
   <data name="NotChanged" xml:space="preserve">
-    <value>(not changed)</value>
+    <value>(niet veranderd)</value>
   </data>
   <data name="Off" xml:space="preserve">
     <value>Uit</value>
@@ -1390,10 +1390,10 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Open instellingen</value>
   </data>
   <data name="Overwrite" xml:space="preserve">
-    <value>Overwrite</value>
+    <value>Overschrijven</value>
   </data>
   <data name="Paste" xml:space="preserve">
-    <value>Paste</value>
+    <value>Invoegen</value>
   </data>
   <data name="PuTTYLocationDots" xml:space="preserve">
     <value>PuTTY locatie ...</value>
@@ -1405,7 +1405,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Refresh</value>
   </data>
   <data name="RestartNow" xml:space="preserve">
-    <value>Restart now</value>
+    <value>Start nu opnieuw</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Opslaan</value>
@@ -1435,46 +1435,46 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Some graphics cards / drivers have problems maximizing the application when transparency is enabled. The function must be disabled for using "Remote Desktop"! Enabling or disabling this feature requires a restart of the application.</value>
   </data>
   <data name="Connections" xml:space="preserve">
-    <value>Connections</value>
+    <value>Aansluitingen</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>Enter a valid ip range!</value>
+    <value>Voer een geldig ip-bereik in!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
-    <value>Enter a valid IPv4 address!</value>
+    <value>Voer een geldig IPv4-adres in!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Enter a valid MAC address (like 00:F1:23:AB:F2:35)!</value>
+    <value>Voer een geldig MAC-adres in (zoals 00:F1:23:AB:F2:35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
-    <value>Enter a valid port (1 - 65535)!</value>
+    <value>Voer een geldige poort in (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Enter a valid subnetmask (like 255.255.255.0)!</value>
+    <value>Voer een geldig subnetmasker in (zoals 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Enter a valid subnetmask or CIDR (like 255.255.255.0 or /24)!</value>
+    <value>Voer een geldig subnetmask of CIDR in (zoals 255.255.255.0 of / 24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
-    <value>Field cannot be empty!</value>
+    <value>Veld kan niet leeg zijn!</value>
   </data>
   <data name="FileDoesNotExist" xml:space="preserve">
-    <value>File does not exists!</value>
+    <value>Bestand bestaat niet!</value>
   </data>
   <data name="FolderDoesNotExist" xml:space="preserve">
-    <value>Folder does not exists!</value>
+    <value>Map bestaat niet!</value>
   </data>
   <data name="Listeners" xml:space="preserve">
     <value>Listeners</value>
   </data>
   <data name="Amber" xml:space="preserve">
-    <value>Amber</value>
+    <value>Barnsteen</value>
   </data>
   <data name="Appearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>Verschijning</value>
   </data>
   <data name="Applications" xml:space="preserve">
-    <value>Applications</value>
+    <value>Toepassingen</value>
   </data>
   <data name="BaseDark" xml:space="preserve">
     <value>Duister</value>
@@ -1492,10 +1492,10 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Bruin</value>
   </data>
   <data name="Cobalt" xml:space="preserve">
-    <value>Cobalt</value>
+    <value>Kobalt</value>
   </data>
   <data name="Crimson" xml:space="preserve">
-    <value>Crimson</value>
+    <value>Karmozijn</value>
   </data>
   <data name="Cyan" xml:space="preserve">
     <value>Cyan</value>
@@ -1504,13 +1504,13 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Emerald</value>
   </data>
   <data name="EnterOneOrMoreValidIPAddresses" xml:space="preserve">
-    <value>Enter one or more valid IP addresses!</value>
+    <value>Voer een of meer geldige IP-adressen in!</value>
   </data>
   <data name="EnterValidBaud" xml:space="preserve">
-    <value>Enter a valid baud!</value>
+    <value>Voer een geldige baud in!</value>
   </data>
   <data name="EnterValidHosts" xml:space="preserve">
-    <value>Enter valid hosts (multiple hosts can not end with ";")!</value>
+    <value>Voer geldige hosts in (meerdere hosts kunnen niet eindigen met ";")!</value>
   </data>
   <data name="EnterValidIPAddress" xml:space="preserve">
     <value>Voer een geldig IP-adres in!</value>
@@ -1522,13 +1522,13 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Voer een geldige OID in!</value>
   </data>
   <data name="EnterValidPortOrPortRange" xml:space="preserve">
-    <value>Enter a valid port and/or port range (1 - 65535)!</value>
+    <value>Voer een geldige poort en/of poortbereik in (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Enter a valid subnet (like 192.168.178.133/26)!</value>
+    <value>Voer een geldig subnet in (zoals 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Enter a valid website (like https://example.com/index.html)</value>
+    <value>Voer een geldige website in (zoals https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>Groen</value>
@@ -1543,10 +1543,10 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Destination host unreachable.</value>
   </data>
   <data name="IPStatus_DestinationNetworkUnreachable" xml:space="preserve">
-    <value>Destination network unreachable.</value>
+    <value>Bestemmingsnetwerk onbereikbaar.</value>
   </data>
   <data name="IPStatus_DestinationPortUnreachable" xml:space="preserve">
-    <value>Destination port unreachable.</value>
+    <value>Bestemmingspoort onbereikbaar.</value>
   </data>
   <data name="IPStatus_Success" xml:space="preserve">
     <value>Success</value>
@@ -1594,13 +1594,13 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Remote disconnect by server.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ClientDecompressionError" xml:space="preserve">
-    <value>Decompression error.</value>
+    <value>Decompressiefout.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ConnectionTimedOut" xml:space="preserve">
-    <value>Connection timed out.</value>
+    <value>Connectie time-out.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DecryptionError" xml:space="preserve">
-    <value>Decryption error.</value>
+    <value>Ontcijferingsfout.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed" xml:space="preserve">
     <value>DNS name lookup failure.</value>
@@ -1885,16 +1885,16 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Resolve MAC address and vendor</value>
   </data>
   <data name="Note" xml:space="preserve">
-    <value>Note</value>
+    <value>Notitie</value>
   </data>
   <data name="ExportAll" xml:space="preserve">
-    <value>Export all</value>
+    <value>Alles exporteren</value>
   </data>
   <data name="ExportDots" xml:space="preserve">
     <value>Exporteren...</value>
   </data>
   <data name="ExportSelected" xml:space="preserve">
-    <value>Export selected</value>
+    <value>Geselecteerde export</value>
   </data>
   <data name="LocationDots" xml:space="preserve">
     <value>Plaats...</value>
@@ -1903,7 +1903,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>File</value>
   </data>
   <data name="EnterValidFilePath" xml:space="preserve">
-    <value>Enter valid file path!</value>
+    <value>Voer geldig bestandspad in!</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>Allemaal</value>
@@ -1912,7 +1912,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Format</value>
   </data>
   <data name="Selected" xml:space="preserve">
-    <value>Selected</value>
+    <value>Geselecteerd</value>
   </data>
   <data name="AnErrorOccurredWhileExportingTheData" xml:space="preserve">
     <value>An error occurred while exporting the data. See error message for details:</value>
@@ -1970,7 +1970,7 @@ Path: "{0}"</value>
     <value>PowerShell-locatie...</value>
   </data>
   <data name="FilePath" xml:space="preserve">
-    <value>File path</value>
+    <value>Bestandspad</value>
   </data>
   <data name="ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater" xml:space="preserve">
     <value>Deze functie is alleen beschikbaar in Windows 10 / Server 2016 of hoger!</value>
@@ -1985,10 +1985,10 @@ Path: "{0}"</value>
     <value>Verbergen</value>
   </data>
   <data name="TotalBytesReceived" xml:space="preserve">
-    <value>Total bytes received</value>
+    <value>Totaal aantal ontvangen bytes</value>
   </data>
   <data name="TotalBytesSent" xml:space="preserve">
-    <value>Total bytes sent</value>
+    <value>Totaal aantal verzonden bytes</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
@@ -2006,7 +2006,7 @@ Path: "{0}"</value>
     <value>Credential Security Support Provider</value>
   </data>
   <data name="BackgroundJob" xml:space="preserve">
-    <value>Background job</value>
+    <value>Achtergrond baan</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
     <value>The background job will save settings, profiles and credentials every x-minutes.
@@ -2028,20 +2028,20 @@ Changing this value requires a restart of the application to take effect.</value
     <value>All settings can be changed later in the settings</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
-    <value>Check public IP address</value>
+    <value>Controleer openbaar IP adres</value>
   </data>
   <data name="FirstRunMessage" xml:space="preserve">
-    <value>Thanks for using NETworkManager!
+    <value>Bedankt voor het gebruik van NETworkManager!
 
-To provide additional features the application uses services on the Internet that are not operated by me. No data will be sent to me at any time.</value>
+Om extra functies te bieden, gebruikt de applicatie diensten op internet die niet door mij worden beheerd. Er worden op geen enkel moment gegevens aan mij verzonden.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>When starting the program, it checks in the background whether a new program version is available on Github.
+    <value>Bij het starten van het programma controleert het op de achtergrond of een nieuwe programmaversie beschikbaar is op Github.
 
 URL: https://api.github.com/</value>
   </data>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
-    <value>The public IP address is determined via ipify.org.
+    <value>Het openbare IP adres wordt bepaald via ipify.org.
 
 URL: https://api.ipify.org/</value>
   </data>
@@ -2052,12 +2052,12 @@ URL: https://api.ipify.org/</value>
     <value>Welkom</value>
   </data>
   <data name="ExternalServices" xml:space="preserve">
-    <value>External services</value>
+    <value>Externe dienstverlening</value>
   </data>
   <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
     <value>Star/Fork the Project on Github.
 
-URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+URL: https://github.com/BornToBeRoot/NETworkManager/</value>
   </data>
   <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
     <value>Help de tool te vertalen op Transifex
@@ -2070,7 +2070,7 @@ URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
 URL: https://twitter.com/BornToBeRoot_DE</value>
   </data>
   <data name="Connection" xml:space="preserve">
-    <value>Connection</value>
+    <value>Aansluiting</value>
   </data>
   <data name="Computer" xml:space="preserve">
     <value>Computer</value>
@@ -2180,5 +2180,158 @@ is disabled!</value>
   </data>
   <data name="Official" xml:space="preserve">
     <value>Officieel</value>
+  </data>
+  <data name="HelpTranslate" xml:space="preserve">
+    <value>Help translate</value>
+  </data>
+  <data name="NetworkConnectionType" xml:space="preserve">
+    <value>Network connection type</value>
+  </data>
+  <data name="DesktopBackground" xml:space="preserve">
+    <value>Desktop background</value>
+  </data>
+  <data name="DesktopComposition" xml:space="preserve">
+    <value>Desktop composition</value>
+  </data>
+  <data name="Experience" xml:space="preserve">
+    <value>Ervaring</value>
+  </data>
+  <data name="FontSmoothing" xml:space="preserve">
+    <value>Font smoothing</value>
+  </data>
+  <data name="MenuAndWindowAnimation" xml:space="preserve">
+    <value>Menu and window animation</value>
+  </data>
+  <data name="Performance" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="PersistentBitmapCaching" xml:space="preserve">
+    <value>Persistent bitmap caching</value>
+  </data>
+  <data name="ReconnectIfTheConnectionIsDropped" xml:space="preserve">
+    <value>Reconnect if the connection is dropped</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_BroadbandHigh" xml:space="preserve">
+    <value>High-speed broadband (2 Mbps - 10 Mbps)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_BroadbandLow" xml:space="preserve">
+    <value>Low-speed broadband (256 kbps - 2 Mbps)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_DetectAutomatically" xml:space="preserve">
+    <value>Detect connection quality automatically</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_LAN" xml:space="preserve">
+    <value>LAN (10 Mbps or higher)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_Modem" xml:space="preserve">
+    <value>Modem (56 kbps)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_Satellite" xml:space="preserve">
+    <value>Satellite (2 Mbps - 16 Mbps with high latency)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_WAN" xml:space="preserve">
+    <value>WAN (10 Mbps or higher with high latency)</value>
+  </data>
+  <data name="ShowWindowContentsWhileDragging" xml:space="preserve">
+    <value>Show window contents while dragging</value>
+  </data>
+  <data name="VisualStyles" xml:space="preserve">
+    <value>Visuele stijlen</value>
+  </data>
+  <data name="RemoteAudio" xml:space="preserve">
+    <value>Remote audio</value>
+  </data>
+  <data name="RemoteAudioPlayback" xml:space="preserve">
+    <value>Remote audio playback</value>
+  </data>
+  <data name="RemoteAudioRecording" xml:space="preserve">
+    <value>Remote audio recording</value>
+  </data>
+  <data name="RemoteDesktopAudioCaptureRedirectionMode_DoNotRecord" xml:space="preserve">
+    <value>Do not record</value>
+  </data>
+  <data name="RemoteDesktopAudioCaptureRedirectionMode_RecordFromThisComputer" xml:space="preserve">
+    <value>Record from this computer</value>
+  </data>
+  <data name="RemoteDesktopAudioRedirectionMode_DoNotPlay" xml:space="preserve">
+    <value>Do not play</value>
+  </data>
+  <data name="RemoteDesktopAudioRedirectionMode_PlayOnRemoteComputer" xml:space="preserve">
+    <value>Play on remote computer</value>
+  </data>
+  <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
+    <value>Play on this computer</value>
+  </data>
+  <data name="HelpMessage_PublicDNSTestDomain" xml:space="preserve">
+    <value>Domain to test dns server settings (Domain must resolve A or AAAA record).</value>
+  </data>
+  <data name="HelpMessage_PublicDNSTestIPAddress" xml:space="preserve">
+    <value>IP address to test dns server settings (IP address must resolve PTR record).</value>
+  </data>
+  <data name="HelpMessage_PublicICMPTestIPAddress" xml:space="preserve">
+    <value>IP address to test connection via ping (ICMP).</value>
+  </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>Gateway</value>
+  </data>
+  <data name="CustomCommands" xml:space="preserve">
+    <value>Custom commands</value>
+  </data>
+  <data name="AddCustomCommand" xml:space="preserve">
+    <value>Add custom command</value>
+  </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>Arguments</value>
+  </data>
+  <data name="DeleteCustomCommand" xml:space="preserve">
+    <value>Delete custom command</value>
+  </data>
+  <data name="EditCustomCommand" xml:space="preserve">
+    <value>Edit custom command</value>
+  </data>
+  <data name="Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="DeleteCustomCommandMessage" xml:space="preserve">
+    <value>The selected custom command will be deleted permanently.</value>
+  </data>
+  <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
+    <value>The following variables are available:
+
+$$ipaddress$$	--&gt;	IP adresse
+$$hostname$$	--&gt;	Hostname</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
+    <value>Could not resolve ip address for hostname!</value>
+  </data>
+  <data name="CtrlAltDel" xml:space="preserve">
+    <value>Ctrl+Alt+Del</value>
+  </data>
+  <data name="KeyboardShortcuts" xml:space="preserve">
+    <value>Keyboard shortcuts</value>
+  </data>
+  <data name="AdjustScreen" xml:space="preserve">
+    <value>Adjust screen</value>
+  </data>
+  <data name="Fullscreen" xml:space="preserve">
+    <value>Fullscreen</value>
+  </data>
+  <data name="CouldNotSendKeystroke" xml:space="preserve">
+    <value>Could not send keystroke!</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
+  <data name="DetectLocalIPAddressAndSubnetmask" xml:space="preserve">
+    <value>Detect local ip address and subnetmask</value>
+  </data>
+  <data name="CouldNotDetectSubnetmask" xml:space="preserve">
+    <value>Could not detect subnetmask!</value>
+  </data>
+  <data name="DetectingNetworkDots" xml:space="preserve">
+    <value>Detecting  network...</value>
   </data>
 </root>

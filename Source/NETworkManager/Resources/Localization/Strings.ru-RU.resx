@@ -991,11 +991,11 @@
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
     <value>Только в полноэкранном режиме</value>
   </data>
-  <data name="OnTheRemoteComputer" xml:space="preserve">
-    <value>На удаленном компьютере</value>
+  <data name="RemoteDesktopKeyboardHookMode_OnTheRemoteComputer" xml:space="preserve">
+    <value>On the remote computer</value>
   </data>
-  <data name="OnThisComputer" xml:space="preserve">
-    <value>На этом компьютере</value>
+  <data name="RemoteDesktopKeyboardHookMode_OnThisComputer" xml:space="preserve">
+    <value>On this computer</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>Открытый</value>
@@ -2055,9 +2055,9 @@ URL: https://api.ipify.org/</value>
     <value>Внешние услуги</value>
   </data>
   <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
-    <value>Стар/Форк проект на Github.
+    <value>Star/Fork the Project on Github.
 
-URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+URL: https://github.com/BornToBeRoot/NETworkManager/</value>
   </data>
   <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
     <value>Помогите перевести на Transifex.
@@ -2180,5 +2180,158 @@ URL: https://twitter.com/BornToBeRoot_DE</value>
   </data>
   <data name="Official" xml:space="preserve">
     <value>Официальный</value>
+  </data>
+  <data name="HelpTranslate" xml:space="preserve">
+    <value>Help translate</value>
+  </data>
+  <data name="NetworkConnectionType" xml:space="preserve">
+    <value>Network connection type</value>
+  </data>
+  <data name="DesktopBackground" xml:space="preserve">
+    <value>Desktop background</value>
+  </data>
+  <data name="DesktopComposition" xml:space="preserve">
+    <value>Desktop composition</value>
+  </data>
+  <data name="Experience" xml:space="preserve">
+    <value>Experience</value>
+  </data>
+  <data name="FontSmoothing" xml:space="preserve">
+    <value>Font smoothing</value>
+  </data>
+  <data name="MenuAndWindowAnimation" xml:space="preserve">
+    <value>Menu and window animation</value>
+  </data>
+  <data name="Performance" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="PersistentBitmapCaching" xml:space="preserve">
+    <value>Persistent bitmap caching</value>
+  </data>
+  <data name="ReconnectIfTheConnectionIsDropped" xml:space="preserve">
+    <value>Reconnect if the connection is dropped</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_BroadbandHigh" xml:space="preserve">
+    <value>High-speed broadband (2 Mbps - 10 Mbps)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_BroadbandLow" xml:space="preserve">
+    <value>Low-speed broadband (256 kbps - 2 Mbps)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_DetectAutomatically" xml:space="preserve">
+    <value>Detect connection quality automatically</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_LAN" xml:space="preserve">
+    <value>LAN (10 Mbps or higher)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_Modem" xml:space="preserve">
+    <value>Modem (56 kbps)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_Satellite" xml:space="preserve">
+    <value>Satellite (2 Mbps - 16 Mbps with high latency)</value>
+  </data>
+  <data name="RemoteDesktopNetworkConnectionType_WAN" xml:space="preserve">
+    <value>WAN (10 Mbps or higher with high latency)</value>
+  </data>
+  <data name="ShowWindowContentsWhileDragging" xml:space="preserve">
+    <value>Show window contents while dragging</value>
+  </data>
+  <data name="VisualStyles" xml:space="preserve">
+    <value>Visual styles</value>
+  </data>
+  <data name="RemoteAudio" xml:space="preserve">
+    <value>Remote audio</value>
+  </data>
+  <data name="RemoteAudioPlayback" xml:space="preserve">
+    <value>Remote audio playback</value>
+  </data>
+  <data name="RemoteAudioRecording" xml:space="preserve">
+    <value>Remote audio recording</value>
+  </data>
+  <data name="RemoteDesktopAudioCaptureRedirectionMode_DoNotRecord" xml:space="preserve">
+    <value>Do not record</value>
+  </data>
+  <data name="RemoteDesktopAudioCaptureRedirectionMode_RecordFromThisComputer" xml:space="preserve">
+    <value>Record from this computer</value>
+  </data>
+  <data name="RemoteDesktopAudioRedirectionMode_DoNotPlay" xml:space="preserve">
+    <value>Do not play</value>
+  </data>
+  <data name="RemoteDesktopAudioRedirectionMode_PlayOnRemoteComputer" xml:space="preserve">
+    <value>Play on remote computer</value>
+  </data>
+  <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
+    <value>Play on this computer</value>
+  </data>
+  <data name="HelpMessage_PublicDNSTestDomain" xml:space="preserve">
+    <value>Domain to test dns server settings (Domain must resolve A or AAAA record).</value>
+  </data>
+  <data name="HelpMessage_PublicDNSTestIPAddress" xml:space="preserve">
+    <value>IP address to test dns server settings (IP address must resolve PTR record).</value>
+  </data>
+  <data name="HelpMessage_PublicICMPTestIPAddress" xml:space="preserve">
+    <value>IP address to test connection via ping (ICMP).</value>
+  </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>Gateway</value>
+  </data>
+  <data name="CustomCommands" xml:space="preserve">
+    <value>Custom commands</value>
+  </data>
+  <data name="AddCustomCommand" xml:space="preserve">
+    <value>Add custom command</value>
+  </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>Arguments</value>
+  </data>
+  <data name="DeleteCustomCommand" xml:space="preserve">
+    <value>Delete custom command</value>
+  </data>
+  <data name="EditCustomCommand" xml:space="preserve">
+    <value>Edit custom command</value>
+  </data>
+  <data name="Program" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="DeleteCustomCommandMessage" xml:space="preserve">
+    <value>The selected custom command will be deleted permanently.</value>
+  </data>
+  <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
+    <value>The following variables are available:
+
+$$ipaddress$$	--&gt;	IP adresse
+$$hostname$$	--&gt;	Hostname</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
+    <value>Could not resolve ip address for hostname!</value>
+  </data>
+  <data name="CtrlAltDel" xml:space="preserve">
+    <value>Ctrl+Alt+Del</value>
+  </data>
+  <data name="KeyboardShortcuts" xml:space="preserve">
+    <value>Keyboard shortcuts</value>
+  </data>
+  <data name="AdjustScreen" xml:space="preserve">
+    <value>Adjust screen</value>
+  </data>
+  <data name="Fullscreen" xml:space="preserve">
+    <value>Fullscreen</value>
+  </data>
+  <data name="CouldNotSendKeystroke" xml:space="preserve">
+    <value>Could not send keystroke!</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
+  <data name="DetectLocalIPAddressAndSubnetmask" xml:space="preserve">
+    <value>Detect local ip address and subnetmask</value>
+  </data>
+  <data name="CouldNotDetectSubnetmask" xml:space="preserve">
+    <value>Could not detect subnetmask!</value>
+  </data>
+  <data name="DetectingNetworkDots" xml:space="preserve">
+    <value>Detecting  network...</value>
   </data>
 </root>

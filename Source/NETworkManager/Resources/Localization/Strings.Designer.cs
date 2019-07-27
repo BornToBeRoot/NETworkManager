@@ -835,6 +835,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Closing in {0} seconds....
+        /// </summary>
+        public static string ClosingInXSecondsDots {
+            get {
+                return ResourceManager.GetString("ClosingInXSecondsDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cobalt.
         /// </summary>
         public static string Cobalt {
