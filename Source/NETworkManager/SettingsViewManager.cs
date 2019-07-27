@@ -13,6 +13,7 @@ namespace NETworkManager
             new SettingsViewInfo(Name.Window, new PackIconMaterial { Kind = PackIconMaterialKind.Application }, Group.General),
             new SettingsViewInfo(Name.Appearance, new PackIconMaterial { Kind = PackIconMaterialKind.AutoFix }, Group.General),
             new SettingsViewInfo(Name.Language, new PackIconMaterial { Kind = PackIconMaterialKind.Flag }, Group.General),
+            new SettingsViewInfo(Name.Status, new PackIconModern { Kind = PackIconModernKind.NetworkHome }, Group.General),
             new SettingsViewInfo(Name.HotKeys, new PackIconOcticons { Kind = PackIconOcticonsKind.Keyboard }, Group.General),
             new SettingsViewInfo(Name.Autostart, new PackIconMaterial { Kind = PackIconMaterialKind.Power }, Group.General),
             new SettingsViewInfo(Name.Update, new PackIconMaterial { Kind = PackIconMaterialKind.Download }, Group.General),
@@ -48,6 +49,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.Appearance;
                 case Name.Language:
                     return Resources.Localization.Strings.Language;
+                case Name.Status:
+                    return Resources.Localization.Strings.Status;
                 case Name.HotKeys:
                     return Resources.Localization.Strings.HotKeys;
                 case Name.Autostart:
@@ -87,7 +90,7 @@ namespace NETworkManager
                 case Name.Whois:
                     return Resources.Localization.Strings.Whois;
                 default:
-                    return "Translation of name not found";
+                    return "Name translation not found";
             }
         }
 
@@ -100,7 +103,7 @@ namespace NETworkManager
                 case Group.Applications:
                     return Resources.Localization.Strings.Applications;
                 default:
-                    return "Translation of group not found!";
+                    return "Group translation not found!";
             }
         }
 
@@ -110,6 +113,7 @@ namespace NETworkManager
             Window,
             Appearance,
             Language,
+            Status,
             HotKeys,
             Autostart,
             Update,

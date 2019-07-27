@@ -58,7 +58,21 @@ namespace NETworkManager
             }
         }
 
-        private string _countdownText;
+        private bool _isNetworkAvailable;
+        public bool IsNetworkAvailable
+        {
+            get => _isNetworkAvailable;
+            set
+            {
+                if (value == _isNetworkAvailable)
+                    return;
+
+                _isNetworkAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _countdownText = string.Format(NETworkManager.Resources.Localization.Strings.ClosingInXSecondsDots, 10);
         public string CountdownText
         {
             get => _countdownText;
@@ -120,6 +134,9 @@ namespace NETworkManager
         #region Methods
         private async void Refresh()
         {
+            // Stop timer (if it's enabled)
+            StopAndResetCountdownToClose();
+
             IsRefreshing = true;
 
             IPAddress detectedIP = null;
@@ -141,31 +158,31 @@ namespace NETworkManager
                 // If null --> check if timeout is reached
                 if (detectedIP == null)
                 {
-                    if (stopwatch.ElapsedMilliseconds > 30000)
+                    if (stopwatch.ElapsedMilliseconds > 15000)
                         break;
 
                     await Task.Delay(2500);
                 }
             }
 
-            if (detectedIP == null)
+            IsNetworkAvailable = detectedIP != null;
+            
+            if (IsNetworkAvailable)
             {
-                IsRefreshing = false;
-                // ToDo: Error Message
-
-                return;
-            }
-
-            foreach (NetworkInterfaceInfo info in await Models.Network.NetworkInterface.GetNetworkInterfacesAsync())
-            {
-                if (info.IPv4Address.Contains(detectedIP))
+                foreach (NetworkInterfaceInfo info in await Models.Network.NetworkInterface.GetNetworkInterfacesAsync())
                 {
-                    NetworkInterfaceInfo = info;
-                    break;
+                    if (info.IPv4Address.Contains(detectedIP))
+                    {
+                        NetworkInterfaceInfo = info;
+                        IsNetworkAvailable = NetworkInterfaceInfo.IsOperational;
+                        break;
+                    }
                 }
             }
 
             IsRefreshing = false;
+
+            StartCountdownToClose();
         }
 
         private void OnNetworkHasChanged()
@@ -174,22 +191,28 @@ namespace NETworkManager
             {
                 ShowWindow();
 
-                Refresh();
-
-                StartCountdownToClose();
+                Refresh();                                
             }));
         }
 
         private void StartCountdownToClose()
         {
-            CountdownValue = 10; // ToDo: User settings
-
             _timer.Start();
+        }
+
+        private void StopAndResetCountdownToClose()
+        {
+            CountdownValue = 10;
+
+            string.Format(NETworkManager.Resources.Localization.Strings.ClosingInXSecondsDots, CountdownValue);
+
+            _timer.Stop();
         }
 
         private void CountdownToCloseTimer_Tick(object sender, EventArgs e)
         {
             CountdownValue--;
+
             CountdownText = string.Format(NETworkManager.Resources.Localization.Strings.ClosingInXSecondsDots, CountdownValue);
 
             if (CountdownValue > 0)
@@ -205,12 +228,10 @@ namespace NETworkManager
             ShowWindow();
 
             Refresh();
-
-            StartCountdownToClose();
         }
 
         private void ShowWindow()
-        {    
+        {
             // Show on primary screen in left/bottom corner
             // ToDo: User setting...
             Left = Screen.PrimaryScreen.WorkingArea.Right - Width - 10;

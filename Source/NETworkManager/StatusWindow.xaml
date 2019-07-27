@@ -7,6 +7,7 @@
         xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"                             
         xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
         Title="{x:Static localization:StaticStrings.ProductName}" Height="300" Width="250" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" Style="{StaticResource DefaultWindow}" ShowMinButton="False" ShowMaxRestoreButton="False" Closing="StatusWindow_Closing">
@@ -16,14 +17,34 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
     </mahAppsControls:MetroWindow.Resources>
-        <Grid Margin="10">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+        <StackPanel VerticalAlignment="Center" Grid.Row="0" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>
+            <TextBlock Text="{x:Static localization:Strings.DetectingNetworkDots}" Style="{StaticResource MessageTextBlock}" />
+        </StackPanel>
+        <StackPanel Grid.Row="0">
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Visibility" Value="Hidden" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsRefreshing}" Value="False" />
+                                <Condition Binding="{Binding IsNetworkAvailable}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
             <TextBlock Text="{x:Static localization:Strings.Network}" Style="{StaticResource HeaderTextBlock}" />
             <Grid>
                 <Grid.Resources>
@@ -54,11 +75,31 @@
                 <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding NetworkInterfaceInfo.Speed, Converter={StaticResource Bytes1000ToSpeedConverter}}" />
             </Grid>
         </StackPanel>
-        <StackPanel VerticalAlignment="Center" Grid.Row="0" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>            
-            <TextBlock Text="{x:Static localization:Strings.DetectingNetworkDots}" Style="{StaticResource MessageTextBlock}" />
+        <StackPanel VerticalAlignment="Center" Grid.Row="0">
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Visibility" Value="Hidden" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsRefreshing}" Value="False" />
+                                <Condition Binding="{Binding IsNetworkAvailable}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <Rectangle Grid.Column="0" Grid.Row="2" Width="48" Height="48" Fill="{DynamicResource GrayBrush3}">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+            <TextBlock Text="{x:Static localization:Strings.NetworkUnavailable}" Style="{StaticResource MessageTextBlock}" />
         </StackPanel>
-        <StackPanel Grid.Row="2" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Margin="0,0,0,10">
+        <StackPanel Grid.Row="2" Margin="0,0,0,10" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <TextBlock Text="{Binding CountdownText}" Foreground="{DynamicResource GrayBrush5}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
             <mahAppsControls:MetroProgressBar Value="{Binding CountdownValue}" Minimum="0" Maximum="10" Foreground="{DynamicResource AccentColorBrush}" />
         </StackPanel>

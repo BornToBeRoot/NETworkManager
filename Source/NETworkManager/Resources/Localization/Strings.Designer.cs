@@ -3344,6 +3344,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network unavailable!.
+        /// </summary>
+        public static string NetworkUnavailable {
+            get {
+                return ResourceManager.GetString("NetworkUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New connection....
         /// </summary>
         public static string NewConnectionDots {

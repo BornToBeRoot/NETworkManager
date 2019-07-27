@@ -17,7 +17,7 @@ namespace NETworkManager.Models.Settings
             new LocalizationInfo("German", "Deutsch", new Uri("/Resources/Localization/Flags/de-DE.png", UriKind.Relative), "BornToBeRoot", "de-DE", 100, true),
             new LocalizationInfo("Russian", "Русский", new Uri("/Resources/Localization/Flags/ru-RU.png", UriKind.Relative), "LaXe", "ru-RU", 92.74, true),
             new LocalizationInfo("Spanish", "Español", new Uri("/Resources/Localization/Flags/es-ES.png", UriKind.Relative), "MS-PC", "es-ES", 100, false),
-            new LocalizationInfo("Italian", "Italiano", new Uri("/Resources/Localization/Flags/it-IT.png", UriKind.Relative), "", "it-IT", 100, false),
+            new LocalizationInfo("Italian", "Italiano", new Uri("/Resources/Localization/Flags/it-IT.png", UriKind.Relative), "simone.ferrari", "it-IT", 100, false),
             new LocalizationInfo("Dutch", "Nederlands", new Uri("/Resources/Localization/Flags/nl-NL.png", UriKind.Relative), "Get_r3kt_by_Me", "nl-NL", 49.18, false),
             new LocalizationInfo("French", "Français", new Uri("/Resources/Localization/Flags/fr-FR.png", UriKind.Relative), "f4alm", "fr-FR", 16.58, false),            
             new LocalizationInfo("Chinese", "汉语", new Uri("/Resources/Localization/Flags/zh-CN.png", UriKind.Relative), "", "zh-CN", 4.79, false),

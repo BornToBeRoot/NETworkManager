@@ -26,7 +26,8 @@ namespace NETworkManager.Models.Documentation
             new LibraryInfo("AirspaceFixer" ,"https://github.com/chris84948/AirspaceFixer", "AirspacePanel fixes all Airspace issues with WPF-hosted Winforms.", "MIT License", "https://github.com/chris84948/AirspaceFixer/blob/master/LICENSE"),
             new LibraryInfo("Newtonsoft.Json", "https://github.com/JamesNK/Newtonsoft.Json", "Json.NET is a popular high-performance JSON framework for .NET", "MIT License","https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md"),
             new LibraryInfo("LiveCharts", "https://github.com/Live-Charts/Live-Charts", "Simple, flexible, interactive & powerful charts, maps and gauges for .Net", "MIT License","https://github.com/Live-Charts/Live-Charts/blob/master/LICENSE.TXT"),
-            new LibraryInfo("LiveCharts.Wpf", "https://github.com/Live-Charts/Live-Charts", "Simple, flexible, interactive & powerful charts, maps and gauges for .Net", "MIT License","https://github.com/Live-Charts/Live-Charts/blob/master/LICENSE.TXT")
+            new LibraryInfo("LiveCharts.Wpf", "https://github.com/Live-Charts/Live-Charts", "Simple, flexible, interactive & powerful charts, maps and gauges for .Net", "MIT License","https://github.com/Live-Charts/Live-Charts/blob/master/LICENSE.TXT"),
+            new LibraryInfo ("LoadingIndicators.WPF", "https://github.com/zeluisping/LoadingIndicators.WPF", "A collection of loading indicators for WPF", "Unlicense", "https://github.com/zeluisping/LoadingIndicators.WPF/blob/master/LICENSE")
         };
     }
 }

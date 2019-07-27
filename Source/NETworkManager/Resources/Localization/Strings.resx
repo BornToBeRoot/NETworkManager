@@ -2337,4 +2337,7 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="ClosingInXSecondsDots" xml:space="preserve">
     <value>Closing in {0} seconds...</value>
   </data>
+  <data name="NetworkUnavailable" xml:space="preserve">
+    <value>Network unavailable!</value>
+  </data>
 </root>
