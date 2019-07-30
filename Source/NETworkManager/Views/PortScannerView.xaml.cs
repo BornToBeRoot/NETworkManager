@@ -38,7 +38,8 @@ namespace NETworkManager.Views
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
-            if (sender is ContextMenu menu) menu.DataContext = _viewModel;
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
 
         private void ColumnHeader_Click(object sender, RoutedEventArgs e)

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Utilities;
+﻿using System.Windows;
 using NETworkManager.ViewModels;
+using MahApps.Metro.Controls.Dialogs;
+using System.Windows.Controls;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Views
 {
@@ -21,12 +21,12 @@ namespace NETworkManager.Views
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             _viewModel.OnLoaded();
         }
 
-        private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+        private void Dispatcher_ShutdownStarted(object sender, System.EventArgs e)
         {
             _viewModel.OnClose();
         }
@@ -36,7 +36,7 @@ namespace NETworkManager.Views
             _viewModel.OnClose();
         }
 
-        private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
             if (sender is ContextMenu menu)
             {
@@ -44,20 +44,27 @@ namespace NETworkManager.Views
                 menu.DataContext = _viewModel;
 
                 // Append custom commands
-                int index = menu.Items.Count -1;
-                                
-                for (int i = 0; i < menu.Items.Count; i++ )
+                int index = menu.Items.Count - 1;
+
+                bool entryFound = false;
+
+                for (int i = 0; i < menu.Items.Count; i++)
                 {
-                    if(menu.Items[i] is MenuItem item)
+                    if (menu.Items[i] is MenuItem item)
                     {
-                        if (item.Name != "CustomCommands")
+                        if ((string)item.Tag != "CustomCommands")
                             continue;
 
                         index = i;
 
+                        entryFound = true;
+
                         break;
                     }
                 }
+
+                if (!entryFound)
+                    return;
 
                 // Clear existing items in custom commands
                 ((MenuItem)menu.Items[index]).Items.Clear();
@@ -68,6 +75,6 @@ namespace NETworkManager.Views
                     ((MenuItem)menu.Items[index]).Items.Add(new MenuItem { Header = info.Name, Command = _viewModel.CustomCommandCommand, CommandParameter = info.ID });
                 }
             }
-        }                
+        }
     }
 }
