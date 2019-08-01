@@ -23,6 +23,9 @@ using NETworkManager.Models.Documentation;
 using NETworkManager.ViewModels;
 using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
+using System.Xml;
+using Windows.UI.Notifications;
+using Windows.Devices.WiFi;
 
 namespace NETworkManager
 {
@@ -297,7 +300,7 @@ namespace NETworkManager
             EventSystem.RedirectProfileToApplicationEvent += EventSystem_RedirectProfileToApplicationEvent;
             EventSystem.RedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
             EventSystem.RedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
-                        
+
             _isLoading = false;
         }
 
@@ -365,6 +368,37 @@ namespace NETworkManager
             // Search for updates... 
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
+
+            Test();
+        }
+
+        private async void Test()
+        {
+            var access = await WiFiAdapter.RequestAccessAsync();
+
+            var result = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(WiFiAdapter.GetDeviceSelector());
+
+            if (result.Count >= 1)
+            {
+                // take first adapter
+                WiFiAdapter adapter = await WiFiAdapter.FromIdAsync(result[0].Id);
+                // scan for networks
+                await adapter.ScanAsync();
+                // find network with the correct SSID
+                foreach (var x in adapter.NetworkReport.AvailableNetworks)
+                {
+
+                    Console.WriteLine("=== Adapter ===");
+                    Console.WriteLine(x.Ssid);
+                    Console.WriteLine(x.Bssid);
+                    Console.WriteLine(x.SecuritySettings);
+
+                }
+
+                // connect 
+                //await nwAdapter.ConnectAsync(nw, WiFiReconnectionKind.Automatic);
+            }
+
         }
 
         private void LoadApplicationList()
@@ -1023,7 +1057,7 @@ namespace NETworkManager
             }
 
             _notifyIcon.Text = Title;
-            _notifyIcon.Click += NotifyIcon_Click;            
+            _notifyIcon.Click += NotifyIcon_Click;
             _notifyIcon.MouseDown += NotifyIcon_MouseDown;
             _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
         }
@@ -1322,7 +1356,7 @@ namespace NETworkManager
         #region Methods
         private void OpenStatusWindow()
         {
-            statusWindow.ShowFromExternal();            
+            statusWindow.ShowFromExternal();
         }
         #endregion
 

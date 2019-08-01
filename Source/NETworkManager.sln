@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.10
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager", "NETworkManager\NETworkManager.csproj", "{E825EC30-AFA2-476A-AC2C-7537630A645B}"
 EndProject
@@ -10,25 +10,49 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
 		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
 		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Debug|ARM.Build.0 = Debug|Any CPU
+		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Debug|ARM64.Build.0 = Debug|Any CPU
 		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Debug|x64.ActiveCfg = Debug|x64
 		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Debug|x64.Build.0 = Debug|x64
+		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Debug|x86.Build.0 = Debug|Any CPU
 		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|ARM.Build.0 = Release|Any CPU
+		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|ARM64.Build.0 = Release|Any CPU
 		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|x64.ActiveCfg = Release|x64
 		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|x64.Build.0 = Release|x64
+		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|x86.ActiveCfg = Release|Any CPU
+		{E825EC30-AFA2-476A-AC2C-7537630A645B}.Release|x86.Build.0 = Release|Any CPU
 		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Debug|Any CPU.ActiveCfg = Debug
+		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Debug|ARM.ActiveCfg = Debug
+		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Debug|ARM64.ActiveCfg = Debug
 		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Debug|x64.ActiveCfg = Debug
+		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Debug|x86.ActiveCfg = Debug
 		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Release|Any CPU.ActiveCfg = Release
 		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Release|Any CPU.Build.0 = Release
+		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Release|ARM.ActiveCfg = Release
+		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Release|ARM64.ActiveCfg = Release
 		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Release|x64.ActiveCfg = Release
+		{2D5FFBD6-4992-4839-8C7F-6FA361893F2D}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
