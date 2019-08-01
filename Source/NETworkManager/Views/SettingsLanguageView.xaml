@@ -171,7 +171,7 @@
                     </Style>
                 </Rectangle.Style>
             </Rectangle>
-            <TextBlock Text="{x:Static localization:Strings.HelpTranslate}" FontSize="14" Margin="10,0,0,0" />
+            <TextBlock Text="{x:Static localization:Strings.HelpTranslateOnTransifex}" FontSize="14" Margin="10,0,0,0" />
         </StackPanel>
         <Grid Grid.Row="4" Visibility="{Binding RestartRequired, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,20,0,0">
             <Grid.ColumnDefinitions>

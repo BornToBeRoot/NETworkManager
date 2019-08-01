@@ -2060,7 +2060,7 @@ URL: https://api.ipify.org/</value>
 URL: https://github.com/BornToBeRoot/NETworkManager/</value>
   </data>
   <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value>Help translate the tool on Transifex.
+    <value>Help translate the project on Transifex.
 
 URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
   </data>
@@ -2181,8 +2181,8 @@ is disabled!</value>
   <data name="Official" xml:space="preserve">
     <value>Official</value>
   </data>
-  <data name="HelpTranslate" xml:space="preserve">
-    <value>Help translate</value>
+  <data name="HelpTranslateOnTransifex" xml:space="preserve">
+    <value>Help translate on transifex</value>
   </data>
   <data name="NetworkConnectionType" xml:space="preserve">
     <value>Network connection type</value>
