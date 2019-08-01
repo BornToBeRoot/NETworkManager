@@ -2340,4 +2340,13 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="NetworkUnavailable" xml:space="preserve">
     <value>Network unavailable!</value>
   </data>
+  <data name="IPAddressToDetectLocalIPAddressBasedOnRouting" xml:space="preserve">
+    <value>IP address to detect local ip address based on routing</value>
+  </data>
+  <data name="ShowWindowOnNetworkChange" xml:space="preserve">
+    <value>Show window on network change</value>
+  </data>
+  <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
+    <value>Time in seconds how long the window should be displayed</value>
+  </data>
 </root>

@@ -275,6 +275,52 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        // Status
+        private bool _status_ShowWindowOnNetworkChange = true;
+        public bool Status_ShowWindowOnNetworkChange
+        {
+            get => _status_ShowWindowOnNetworkChange;
+            set
+            {
+                if (value == _status_ShowWindowOnNetworkChange)
+                    return;
+
+                _status_ShowWindowOnNetworkChange = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _status_WindowCloseTime = 10;
+        public int Status_WindowCloseTime
+        {
+            get => _status_WindowCloseTime;
+            set
+            {
+                if (value == _status_WindowCloseTime)
+                    return;
+
+                _status_WindowCloseTime = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _status_IPAddressToDetectLocalIPAddressBasedOnRouting = "1.1.1.1";
+        public string Status_IPAddressToDetectLocalIPAddressBasedOnRouting
+        {
+            get => _status_IPAddressToDetectLocalIPAddressBasedOnRouting;
+            set
+            {
+                if (value == _status_IPAddressToDetectLocalIPAddressBasedOnRouting)
+                    return;
+
+                _status_IPAddressToDetectLocalIPAddressBasedOnRouting = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         // Autostart
         private bool _autostart_StartMinimizedInTray;
         public bool Autostart_StartMinimizedInTray

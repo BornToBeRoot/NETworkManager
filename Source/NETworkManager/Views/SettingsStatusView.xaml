@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WhoisSettingsViewModel}">
+        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsStatusViewModel}">
     <StackPanel>
+        <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.ShowWindowOnNetworkChange}" IsChecked="{Binding ShowWindowOnNetworkChange}" Margin="0,0,0,10"/>
+        <TextBlock Text="{x:Static localization:Strings.IPAddressToDetectLocalIPAddressBasedOnRouting}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" mahAppsControls:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort53}" Style="{StaticResource DefaultTextBox}">
+            <TextBox.Text>
+                <Binding Path="IPAddressToDetectLocalIPAddressBasedOnRouting" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:IPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Text="{x:Static localization:Strings.TimeInSecondsHowLongTheWindowShouldBeDisplayed}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding WindowCloseTime}" Maximum="120" Minimum="3" Interval="1" />
     </StackPanel>
 </UserControl>

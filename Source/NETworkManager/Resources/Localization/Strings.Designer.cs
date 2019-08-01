@@ -2813,6 +2813,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IP address to detect local ip address based on routing.
+        /// </summary>
+        public static string IPAddressToDetectLocalIPAddressBasedOnRouting {
+            get {
+                return ResourceManager.GetString("IPAddressToDetectLocalIPAddressBasedOnRouting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IP range.
         /// </summary>
         public static string IPRange {
@@ -5473,6 +5482,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show window on network change.
+        /// </summary>
+        public static string ShowWindowOnNetworkChange {
+            get {
+                return ResourceManager.GetString("ShowWindowOnNetworkChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sienna.
         /// </summary>
         public static string Sienna {
@@ -6027,6 +6045,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Time3 {
             get {
                 return ResourceManager.GetString("Time3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time in seconds how long the window should be displayed.
+        /// </summary>
+        public static string TimeInSecondsHowLongTheWindowShouldBeDisplayed {
+            get {
+                return ResourceManager.GetString("TimeInSecondsHowLongTheWindowShouldBeDisplayed", resourceCulture);
             }
         }
         

@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using NETworkManager.Models.Network;
+using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.ComponentModel;
@@ -164,7 +165,7 @@ namespace NETworkManager
                 // Try to get the ip address based on routing
                 try
                 {
-                    detectedIP = await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse("1.1.1.1"));
+                    detectedIP = await Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(SettingsManager.Current.Status_IPAddressToDetectLocalIPAddressBasedOnRouting));
 
                     break;
                 }
@@ -204,6 +205,9 @@ namespace NETworkManager
 
         private void OnNetworkHasChanged()
         {
+            if (!SettingsManager.Current.Status_ShowWindowOnNetworkChange)
+                return;
+
             Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate
             {
                 ShowWindow();
@@ -215,7 +219,7 @@ namespace NETworkManager
         private void StartTimer()
         {
             // Reset text
-            CountdownValue = 10;
+            CountdownValue = SettingsManager.Current.Status_WindowCloseTime;
             string.Format(NETworkManager.Resources.Localization.Strings.ClosingInXSecondsDots, CountdownValue);
 
             IsCountdownRunning = true;
