@@ -17,7 +17,7 @@ namespace NETworkManager
 {
     public class GlobalStaticConfiguration
     {
-        // Type to search (verage type speed --> 187 chars/min)
+        // Type to search (average type speed --> 187 chars/min)
         public static TimeSpan SearchDispatcherTimerTimeSpan => new TimeSpan(0, 0, 0, 0, 750);
         public static TimeSpan CredentialsUILockTime => new TimeSpan(0, 0, 120);
 
@@ -29,6 +29,9 @@ namespace NETworkManager
         public static int General_BackgroundJobInterval => 15;
         public static int General_HistoryListEntries => 5;
         public static double Appearance_Opacity => 0.85;
+        public static bool Status_ShowWindowOnNetworkChange => true;
+        public static int Status_WindowCloseTime => 10;
+        public static string Status_IPAddressToDetectLocalIPAddressBasedOnRouting => "1.1.1.1";
 
         // Fixes
         public static double FloatPointFix => 1.0;

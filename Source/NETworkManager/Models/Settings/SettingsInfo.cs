@@ -276,7 +276,7 @@ namespace NETworkManager.Models.Settings
         }
 
         // Status
-        private bool _status_ShowWindowOnNetworkChange = true;
+        private bool _status_ShowWindowOnNetworkChange = GlobalStaticConfiguration.Status_ShowWindowOnNetworkChange;
         public bool Status_ShowWindowOnNetworkChange
         {
             get => _status_ShowWindowOnNetworkChange;
@@ -291,7 +291,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _status_WindowCloseTime = 10;
+        private int _status_WindowCloseTime = GlobalStaticConfiguration.Status_WindowCloseTime;
         public int Status_WindowCloseTime
         {
             get => _status_WindowCloseTime;
@@ -306,7 +306,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private string _status_IPAddressToDetectLocalIPAddressBasedOnRouting = "1.1.1.1";
+        private string _status_IPAddressToDetectLocalIPAddressBasedOnRouting = GlobalStaticConfiguration.Status_IPAddressToDetectLocalIPAddressBasedOnRouting;
         public string Status_IPAddressToDetectLocalIPAddressBasedOnRouting
         {
             get => _status_IPAddressToDetectLocalIPAddressBasedOnRouting;
