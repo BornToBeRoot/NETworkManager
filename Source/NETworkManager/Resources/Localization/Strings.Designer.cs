@@ -2588,11 +2588,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Help translate.
+        ///   Looks up a localized string similar to Help translate on transifex.
         /// </summary>
-        public static string HelpTranslate {
+        public static string HelpTranslateOnTransifex {
             get {
-                return ResourceManager.GetString("HelpTranslate", resourceCulture);
+                return ResourceManager.GetString("HelpTranslateOnTransifex", resourceCulture);
             }
         }
         
@@ -6150,7 +6150,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Help translate the tool on Transifex.
+        ///   Looks up a localized string similar to Help translate the project on Transifex.
         ///
         ///URL: https://transifex.com/BornToBeRoot/NETworkManager/.
         /// </summary>
