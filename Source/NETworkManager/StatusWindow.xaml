@@ -99,7 +99,7 @@
             </Rectangle>
             <TextBlock Text="{x:Static localization:Strings.NetworkUnavailable}" Style="{StaticResource MessageTextBlock}" />
         </StackPanel>
-        <StackPanel Grid.Row="2" Margin="0,0,0,10" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+        <StackPanel Grid.Row="2" Margin="0,0,0,10" Visibility="{Binding IsCountdownRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
             <TextBlock Text="{Binding CountdownText}" Foreground="{DynamicResource GrayBrush5}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
             <mahAppsControls:MetroProgressBar Value="{Binding CountdownValue}" Minimum="0" Maximum="10" Foreground="{DynamicResource AccentColorBrush}" />
         </StackPanel>

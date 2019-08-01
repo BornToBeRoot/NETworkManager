@@ -26,6 +26,7 @@ namespace NETworkManager
         }
         #endregion
 
+        #region Variables
         private MainWindow _mainWindow;
 
         Timer _timer = new Timer();
@@ -72,7 +73,21 @@ namespace NETworkManager
             }
         }
 
-        private string _countdownText = string.Format(NETworkManager.Resources.Localization.Strings.ClosingInXSecondsDots, 10);
+        private bool _isCountdownRunning;
+        public bool IsCountdownRunning
+        {
+            get => _isCountdownRunning;
+            set
+            {
+                if (value == _isCountdownRunning)
+                    return;
+
+                _isCountdownRunning = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _countdownText;
         public string CountdownText
         {
             get => _countdownText;
@@ -86,7 +101,7 @@ namespace NETworkManager
             }
         }
 
-        private int _countdownValue = 10;
+        private int _countdownValue;
         public int CountdownValue
         {
             get => _countdownValue;
@@ -99,7 +114,9 @@ namespace NETworkManager
                 OnPropertyChanged();
             }
         }
+        #endregion
 
+        #region Constructor
         public StatusWindow(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -114,14 +131,15 @@ namespace NETworkManager
             NetworkChange.NetworkAvailabilityChanged += (sender, args) => OnNetworkHasChanged();
             NetworkChange.NetworkAddressChanged += (sender, args) => OnNetworkHasChanged();
         }
+        #endregion
 
         #region ICommands & Actions
         public ICommand OpenMainWindowCommand => new RelayCommand(p => OpenMainWindowAction());
 
         private void OpenMainWindowAction()
         {
-            // Stop timer if running
-            _timer.Stop();
+            // Stop timer, if running
+            StopTimer();
 
             HideWindow();
 
@@ -132,11 +150,8 @@ namespace NETworkManager
         #endregion
 
         #region Methods
-        private async void Refresh()
+        private async void Refresh(bool startTimer = false)
         {
-            // Stop timer (if it's enabled)
-            StopAndResetCountdownToClose();
-
             IsRefreshing = true;
 
             IPAddress detectedIP = null;
@@ -166,7 +181,7 @@ namespace NETworkManager
             }
 
             IsNetworkAvailable = detectedIP != null;
-            
+
             if (IsNetworkAvailable)
             {
                 foreach (NetworkInterfaceInfo info in await Models.Network.NetworkInterface.GetNetworkInterfacesAsync())
@@ -175,6 +190,7 @@ namespace NETworkManager
                     {
                         NetworkInterfaceInfo = info;
                         IsNetworkAvailable = NetworkInterfaceInfo.IsOperational;
+
                         break;
                     }
                 }
@@ -182,7 +198,8 @@ namespace NETworkManager
 
             IsRefreshing = false;
 
-            StartCountdownToClose();
+            if (startTimer)
+                StartTimer();
         }
 
         private void OnNetworkHasChanged()
@@ -191,36 +208,26 @@ namespace NETworkManager
             {
                 ShowWindow();
 
-                Refresh();                                
+                Refresh(true);
             }));
         }
 
-        private void StartCountdownToClose()
+        private void StartTimer()
         {
+            // Reset text
+            CountdownValue = 10;
+            string.Format(NETworkManager.Resources.Localization.Strings.ClosingInXSecondsDots, CountdownValue);
+
+            IsCountdownRunning = true;
+
             _timer.Start();
         }
 
-        private void StopAndResetCountdownToClose()
+        private void StopTimer()
         {
-            CountdownValue = 10;
-
-            string.Format(NETworkManager.Resources.Localization.Strings.ClosingInXSecondsDots, CountdownValue);
-
-            _timer.Stop();
-        }
-
-        private void CountdownToCloseTimer_Tick(object sender, EventArgs e)
-        {
-            CountdownValue--;
-
-            CountdownText = string.Format(NETworkManager.Resources.Localization.Strings.ClosingInXSecondsDots, CountdownValue);
-
-            if (CountdownValue > 0)
-                return;
-
             _timer.Stop();
 
-            HideWindow();
+            IsCountdownRunning = false;
         }
 
         public void ShowFromExternal()
@@ -249,11 +256,27 @@ namespace NETworkManager
         }
         #endregion
 
+        #region Events
         private void StatusWindow_Closing(object sender, CancelEventArgs e)
         {
             e.Cancel = true;
 
             HideWindow();
         }
+
+        private void CountdownToCloseTimer_Tick(object sender, EventArgs e)
+        {
+            CountdownValue--;
+
+            CountdownText = string.Format(NETworkManager.Resources.Localization.Strings.ClosingInXSecondsDots, CountdownValue);
+
+            if (CountdownValue > 0)
+                return;
+
+            StopTimer();
+
+            HideWindow();
+        }
+        #endregion
     }
 }
