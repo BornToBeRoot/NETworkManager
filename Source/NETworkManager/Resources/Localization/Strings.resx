@@ -2349,4 +2349,7 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
     <value>Time in seconds how long the window should be displayed</value>
   </data>
+  <data name="WiFi" xml:space="preserve">
+    <value>WiFi</value>
+  </data>
 </root>

@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="NETworkManager.Views.WiFiView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:converters="clr-namespace:NETworkManager.Converters"
+             xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+             xmlns:mahAppsControls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
+    <UserControl.InputBindings>
+        <KeyBinding Key="F5" Command="{Binding CheckConnectionViaHotkeyCommand}" />
+    </UserControl.InputBindings>
+    <UserControl.Resources>
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />
+    </UserControl.Resources>
+    <TabControl Style="{StaticResource DefaultTabControl}">
+        <TabItem Header="{x:Static localization:Strings.WiFi}">
+            <Grid Margin="10">
+          
+            </Grid>
+        </TabItem>
+    </TabControl>
+</UserControl>

@@ -23,8 +23,6 @@ using NETworkManager.Models.Documentation;
 using NETworkManager.ViewModels;
 using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
-using System.Xml;
-using Windows.UI.Notifications;
 using Windows.Devices.WiFi;
 
 namespace NETworkManager
@@ -503,6 +501,7 @@ namespace NETworkManager
         #region Application Views
         private DashboardView _overviewView;
         private NetworkInterfaceView _networkInterfaceView;
+        private WiFiView _wiFiView;
         private IPScannerHostView _ipScannerHostView;
         private PortScannerHostView _portScannerHostView;
         private PingHostView _pingHostView;
@@ -535,6 +534,9 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.NetworkInterface:
                     _networkInterfaceView?.OnViewHide();
                     break;
+                case ApplicationViewManager.Name.WiFi:
+                    _wiFiView?.OnViewHide();
+                    break;
                 case ApplicationViewManager.Name.Connections:
                     _connectionsView?.OnViewHide();
                     break;
@@ -564,6 +566,14 @@ namespace NETworkManager
                         _networkInterfaceView.OnViewVisible();
 
                     ContentControlApplication.Content = _networkInterfaceView;
+                    break;
+                case ApplicationViewManager.Name.WiFi:
+                    if (_wiFiView == null)
+                        _wiFiView = new WiFiView();
+                    else
+                        _wiFiView.OnViewVisible();
+
+                    ContentControlApplication.Content = _wiFiView;
                     break;
                 case ApplicationViewManager.Name.IPScanner:
                     if (_ipScannerHostView == null)
