@@ -2060,7 +2060,7 @@ URL: https://api.ipify.org/</value>
 URL: https://github.com/BornToBeRoot/NETworkManager/</value>
   </data>
   <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value>Helfen Sie bei der Übersetzung des Tools auf Transifex.
+    <value>Hilf mit, das Projekt auf Transifex zu übersetzen.
 
 URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
   </data>
@@ -2181,8 +2181,8 @@ ist deaktiviert!</value>
   <data name="Official" xml:space="preserve">
     <value>Offiziell</value>
   </data>
-  <data name="HelpTranslate" xml:space="preserve">
-    <value>Helfen Sie beim Übersetzen</value>
+  <data name="HelpTranslateOnTransifex" xml:space="preserve">
+    <value>Hilf bei der Übersetzung auf Transifex</value>
   </data>
   <data name="NetworkConnectionType" xml:space="preserve">
     <value>Netzwerkverbindungstyp</value>
@@ -2333,5 +2333,20 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="DetectingNetworkDots" xml:space="preserve">
     <value>Netzwerk wird erkannt...</value>
+  </data>
+  <data name="ClosingInXSecondsDots" xml:space="preserve">
+    <value>Schließen in {0} Sekunden...</value>
+  </data>
+  <data name="NetworkUnavailable" xml:space="preserve">
+    <value>Netzwerk nicht verfügbar!</value>
+  </data>
+  <data name="IPAddressToDetectLocalIPAddressBasedOnRouting" xml:space="preserve">
+    <value>IP-Adresse zur Erkennung der lokalen IP-Adresse basierend auf dem Routing</value>
+  </data>
+  <data name="ShowWindowOnNetworkChange" xml:space="preserve">
+    <value>Zeige Fenster beim wechsel des Netzwerkes</value>
+  </data>
+  <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
+    <value>Zeit in Sekunden, wie lange das Fenster angezeigt werden soll</value>
   </data>
 </root>

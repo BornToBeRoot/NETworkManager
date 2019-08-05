@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Whois servers by domain from IANA
-Generated 04/09/2019 20:28:30-->
+Generated 08/05/2019 18:50:00-->
 <WhoisServers>
   <WhoisServer>
     <TLD>AAA</TLD>
@@ -357,8 +357,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>AUDIBLE</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.audible</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>AUDIO</TLD>
@@ -370,8 +369,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>AUTHOR</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.author</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>AUTO</TLD>
@@ -391,8 +389,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>AWS</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.aws</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>AX</TLD>
@@ -650,10 +647,6 @@ Generated 04/09/2019 20:28:30-->
     <Server>whois.bnnic.bn</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>BNL</TLD>
-    <Server>whois.nic.bnl</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>BNPPARIBAS</TLD>
     <Server>whois.afilias-srs.net</Server>
   </WhoisServer>
@@ -687,8 +680,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>BOOK</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.book</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>BOOKING</TLD>
@@ -709,8 +701,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>BOT</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.bot</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>BOUTIQUE</TLD>
@@ -780,7 +771,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>BUY</TLD>
-    <Server>whois.afilias-srs.net</Server>
+    <Server>whois.nic.buy</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>BUZZ</TLD>
@@ -827,8 +818,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>CALL</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.call</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>CALVINKLEIN</TLD>
@@ -931,7 +921,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>CATHOLIC</TLD>
-    <Server>whois.aridnrs.net.au</Server>
+    <Server>whois.nic.catholic</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>CBA</TLD>
@@ -1052,8 +1042,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>CIRCLE</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.circle</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>CISCO</TLD>
@@ -1248,7 +1237,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>COURSES</TLD>
-    <Server>whois.aridnrs.net.au</Server>
+    <Server>whois.nic.courses</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>CR</TLD>
@@ -1378,8 +1367,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>DEAL</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.deal</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>DEALER</TLD>
@@ -1514,10 +1502,6 @@ Generated 04/09/2019 20:28:30-->
   <WhoisServer>
     <TLD>DOG</TLD>
     <Server>whois.nic.dog</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>DOHA</TLD>
-    <Server>whois.nic.doha</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>DOMAINS</TLD>
@@ -1769,8 +1753,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>FAST</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.fast</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>FEDEX</TLD>
@@ -1823,8 +1806,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>FIRE</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.fire</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>FIRESTONE</TLD>
@@ -1935,8 +1917,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>FOX</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.fox</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>FR</TLD>
@@ -1944,8 +1925,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>FREE</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.free</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>FRESENIUS</TLD>
@@ -2058,7 +2038,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>GE</TLD>
-    <Server>whois.registration.ge</Server>
+    <Server>whois.nic.ge</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>GEA</TLD>
@@ -2202,8 +2182,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>GOT</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.got</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>GOV</TLD>
@@ -2428,11 +2407,6 @@ Generated 04/09/2019 20:28:30-->
     <Server>whois.nic.honda</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>HONEYWELL</TLD>
-    <Server>
-    </Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>HORSE</TLD>
     <Server>whois.nic.horse</Server>
   </WhoisServer>
@@ -2450,8 +2424,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>HOT</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.hot</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>HOTELES</TLD>
@@ -2557,8 +2530,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>IMDB</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.imdb</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>IMMO</TLD>
@@ -2758,13 +2730,11 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>JOT</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.jot</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>JOY</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.joy</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>JP</TLD>
@@ -2844,8 +2814,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>KINDLE</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.kindle</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>KITCHEN</TLD>
@@ -2897,7 +2866,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>KRD</TLD>
-    <Server>whois.aridnrs.net.au</Server>
+    <Server>whois.nic.krd</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>KRED</TLD>
@@ -3067,8 +3036,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>LIKE</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.like</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>LILLY</TLD>
@@ -3327,7 +3295,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>MELBOURNE</TLD>
-    <Server>whois.aridnrs.net.au</Server>
+    <Server>whois.nic.melbourne</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>MEME</TLD>
@@ -3451,8 +3419,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>MOI</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.moi</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>MOM</TLD>
@@ -3602,7 +3569,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>NATURA</TLD>
-    <Server>whois.afilias-srs.net</Server>
+    <Server>whois.gtlds.nic.br</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>NAVY</TLD>
@@ -3747,12 +3714,11 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>NOW</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.now</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>NOWRUZ</TLD>
-    <Server>whois.agitsys.net</Server>
+    <Server>whois.nic.nowruz</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>NOWTV</TLD>
@@ -3926,7 +3892,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>PARS</TLD>
-    <Server>whois.agitsys.net</Server>
+    <Server>whois.nic.pars</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>PARTNERS</TLD>
@@ -3947,8 +3913,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>PAY</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.pay</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>PCCW</TLD>
@@ -4038,8 +4003,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>PIN</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.pin</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>PING</TLD>
@@ -4140,8 +4104,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>PRIME</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.prime</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>PRO</TLD>
@@ -4255,8 +4218,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>READ</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.read</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>REALESTATE</TLD>
@@ -4382,7 +4344,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>RMIT</TLD>
-    <Server>whois.aridnrs.net.au</Server>
+    <Server>whois.nic.rmit</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>RO</TLD>
@@ -4407,8 +4369,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ROOM</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.room</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>RS</TLD>
@@ -4458,8 +4419,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SAFE</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.safe</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SAFETY</TLD>
@@ -4514,8 +4474,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SAVE</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.save</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SAXO</TLD>
@@ -4604,8 +4563,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SECURE</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.secure</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SECURITY</TLD>
@@ -4678,7 +4636,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SHIA</TLD>
-    <Server>whois.agitsys.net</Server>
+    <Server>whois.nic.shia</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SHIKSHA</TLD>
@@ -4719,8 +4677,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SILK</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.silk</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SINA</TLD>
@@ -4779,8 +4736,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SMILE</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.smile</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SN</TLD>
@@ -4846,8 +4802,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SPOT</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.spot</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SPREADBETTING</TLD>
@@ -4888,10 +4843,6 @@ Generated 04/09/2019 20:28:30-->
     <Server>whois.nic.star</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>STARHUB</TLD>
-    <Server>whois.nic.starhub</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>STATEBANK</TLD>
     <Server>whois.nic.statebank</Server>
   </WhoisServer>
@@ -4922,8 +4873,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>STREAM</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.stream</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>STUDIO</TLD>
@@ -5023,8 +4973,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>TALK</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.talk</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>TAOBAO</TLD>
@@ -5062,7 +5011,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>TCI</TLD>
-    <Server>whois.agitsys.net</Server>
+    <Server>whois.nic.tci</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>TD</TLD>
@@ -5302,13 +5251,11 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>TUNES</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.tunes</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>TUSHU</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.tushu</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>TV</TLD>
@@ -5555,8 +5502,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>WANGGOU</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.wanggou</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>WARMAN</TLD>
@@ -5675,8 +5621,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>WOW</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.wow</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>WS</TLD>
@@ -5815,7 +5760,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--80AQECDR1A</TLD>
-    <Server>whois.aridnrs.net.au</Server>
+    <Server>whois.nic.xn--80aqecdr1a</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--80ASEHDB</TLD>
@@ -6142,7 +6087,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBI4ECEXP</TLD>
-    <Server>whois.aridnrs.net.au</Server>
+    <Server>whois.nic.xn--mgbi4ecexp</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBPL2FH</TLD>
@@ -6151,7 +6096,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBT3DHD</TLD>
-    <Server>whois.agitsys.net</Server>
+    <Server>whois.nic.xn--mgbt3dhd</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBTX2B</TLD>
@@ -6282,7 +6227,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--TIQ49XQYJ</TLD>
-    <Server>whois.aridnrs.net.au</Server>
+    <Server>whois.nic.xn--tiq49xqyj</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--UNUP4Y</TLD>
@@ -6369,8 +6314,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>YAMAXUN</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.yamaxun</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>YANDEX</TLD>
@@ -6397,8 +6341,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>YOU</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.you</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>YOUTUBE</TLD>
@@ -6419,8 +6362,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ZAPPOS</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.zappos</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ZARA</TLD>
@@ -6437,7 +6379,7 @@ Generated 04/09/2019 20:28:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ZM</TLD>
-    <Server>whois.nic.zm</Server>
+    <Server>whois.zicta.zm</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ZONE</TLD>

@@ -31,8 +31,8 @@
 <div align="center"> 
   <p>      
     :package: Download:
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.10.1.0/NETworkManager_v1.10.1.0_Portable.zip">Portable</a>, 
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.10.1.0/NETworkManager_v1.10.1.0_Setup.msi">MSI</a> or
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.11.0.0/NETworkManager_v1.11.0.0_Portable.zip">Portable</a>, 
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.11.0.0/NETworkManager_v1.11.0.0_Setup.msi">MSI</a> or
       <a href="https://chocolatey.org/packages/networkmanager">Chocolatey</a>
   </p>
   <p>
@@ -47,8 +47,8 @@
 
 - Dashboard 
 - Network Interface - Information, Bandwidth, Configure
-- IP-Scanner
-- Port-Scanner
+- IP Scanner
+- Port Scanner
 - Ping
 - Traceroute
 - DNS Lookup
@@ -72,12 +72,17 @@ You can also send me a [pull requests](https://github.com/BornToBeRoot/NETworkMa
 
 <h2>Languages</h2>
 
+Official:
 - English
 - German
 - Russian
-- Spanish
+
+Community:
+- Chinese
 - Dutch
 - French
+- Italy
+- Spanish
 
 Help translate on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager).
 

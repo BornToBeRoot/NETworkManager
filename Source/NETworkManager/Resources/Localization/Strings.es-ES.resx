@@ -2060,9 +2060,9 @@ URL: https://api.ipify.org/</value>
 URL: https://github.com/BornToBeRoot/NETworkManager/</value>
   </data>
   <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value>Ayude a traducir la herramienta en Transifex.
+    <value>Ayude a traducir el proyecto en Transifex.
 
-URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+URL: https://www.transifex.com/BornToBeRoot/NETworkManager/</value>
   </data>
   <data name="ToolTip_TwitterContact" xml:space="preserve">
     <value>Contacto por Twitter.
@@ -2181,8 +2181,8 @@ está deshabilitada!</value>
   <data name="Official" xml:space="preserve">
     <value>Oficial</value>
   </data>
-  <data name="HelpTranslate" xml:space="preserve">
-    <value>Ayudar a traducir</value>
+  <data name="HelpTranslateOnTransifex" xml:space="preserve">
+    <value>Ayude a traducir en Transifex</value>
   </data>
   <data name="NetworkConnectionType" xml:space="preserve">
     <value>Tipo de conexión de red</value>
@@ -2332,6 +2332,21 @@ $$hostname$$	--&gt;	Nombre del host</value>
     <value>¡No se pudo detectar la máscara de subred!</value>
   </data>
   <data name="DetectingNetworkDots" xml:space="preserve">
-    <value>Detecting  network...</value>
+    <value>Detectando la red...</value>
+  </data>
+  <data name="ClosingInXSecondsDots" xml:space="preserve">
+    <value>Cierre en {0} segundos...</value>
+  </data>
+  <data name="NetworkUnavailable" xml:space="preserve">
+    <value>¡Red no disponible!</value>
+  </data>
+  <data name="IPAddressToDetectLocalIPAddressBasedOnRouting" xml:space="preserve">
+    <value>Dirección IP para detectar la dirección IP local basada en el enrutamiento</value>
+  </data>
+  <data name="ShowWindowOnNetworkChange" xml:space="preserve">
+    <value>Mostrar ventana en el cambio de red</value>
+  </data>
+  <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
+    <value>Tiempo en segundos durante cuánto se debe mostrar la ventana</value>
   </data>
 </root>
