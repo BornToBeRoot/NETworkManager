@@ -725,9 +725,9 @@
     <Content Include="Licenses\LiveCharts.Wpf.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Licenses\LoadingIndicators.WPF.txt">
+    <Content Include="Licenses\LoadingIndicators.WPF.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
     <Content Include="Licenses\MahApps.Metro.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
