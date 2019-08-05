@@ -121,19 +121,19 @@
     <value>关于</value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>Accent</value>
+    <value>重点</value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
-    <value>Add credentials</value>
+    <value>新增凭据</value>
   </data>
   <data name="AddEntry" xml:space="preserve">
-    <value>Add entry</value>
+    <value>新增条目</value>
   </data>
   <data name="AddProfile" xml:space="preserve">
-    <value>Add profile</value>
+    <value>新增配置文件</value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
-    <value>Are you sure?</value>
+    <value>是否确定？</value>
   </data>
   <data name="ARP" xml:space="preserve">
     <value>ARP</value>
@@ -163,10 +163,10 @@
     <value>连接</value>
   </data>
   <data name="ConnectAs" xml:space="preserve">
-    <value>Connect as</value>
+    <value>连接方式</value>
   </data>
   <data name="CopyProfile" xml:space="preserve">
-    <value>Copy profile</value>
+    <value>复制配置文件</value>
   </data>
   <data name="CredentialNotFound" xml:space="preserve">
     <value>凭据未找到</value>
@@ -184,7 +184,7 @@
     <value>删除凭据</value>
   </data>
   <data name="DeleteProfile" xml:space="preserve">
-    <value>Delete profile</value>
+    <value>删除配置文件</value>
   </data>
   <data name="Destination" xml:space="preserve">
     <value>目的地</value>
@@ -193,28 +193,28 @@
     <value>详细</value>
   </data>
   <data name="Disconnected" xml:space="preserve">
-    <value>未连接</value>
+    <value>已断开</value>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Display</value>
+    <value>显示</value>
   </data>
   <data name="DNS" xml:space="preserve">
     <value>DNS</value>
   </data>
   <data name="DNSLookup" xml:space="preserve">
-    <value>DNS Lookup</value>
+    <value>DNS查找</value>
   </data>
   <data name="DontFragment" xml:space="preserve">
-    <value>Don't fragment</value>
+    <value>不分段</value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
-    <value>Edit credentials</value>
+    <value>编辑凭据</value>
   </data>
   <data name="EditGroup" xml:space="preserve">
     <value>编辑组</value>
   </data>
   <data name="EditProfile" xml:space="preserve">
-    <value>Edit profile</value>
+    <value>编辑配置文件</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>错误</value>
@@ -223,142 +223,142 @@
     <value>导出</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>Filter</value>
+    <value>筛选</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>全局</value>
   </data>
   <data name="Headers" xml:space="preserve">
-    <value>Headers</value>
+    <value>头信息</value>
   </data>
   <data name="History" xml:space="preserve">
     <value>历史</value>
   </data>
   <data name="HotKeys" xml:space="preserve">
-    <value>HotKeys</value>
+    <value>热键</value>
   </data>
   <data name="HTTPHeaders" xml:space="preserve">
-    <value>HTTP Headers</value>
+    <value>HTTP头信息</value>
   </data>
   <data name="Import" xml:space="preserve">
     <value>导入</value>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>Information</value>
+    <value>信息</value>
   </data>
   <data name="Interface" xml:space="preserve">
-    <value>Interface</value>
+    <value>接口</value>
   </data>
   <data name="IPScanner" xml:space="preserve">
-    <value>IP Scanner</value>
+    <value>IP扫描器</value>
   </data>
   <data name="Keyboard" xml:space="preserve">
-    <value>Keyboard</value>
+    <value>键盘</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Language</value>
+    <value>语言</value>
   </data>
   <data name="Libraries" xml:space="preserve">
-    <value>Libraries</value>
+    <value>内容库</value>
   </data>
   <data name="License" xml:space="preserve">
-    <value>License</value>
+    <value>许可证</value>
   </data>
   <data name="LocalDevicesAndResources" xml:space="preserve">
-    <value>Local devices and resources</value>
+    <value>本地设备和资源</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>位置</value>
   </data>
   <data name="Lookup" xml:space="preserve">
-    <value>Lookup</value>
+    <value>查找</value>
   </data>
   <data name="MACAddress" xml:space="preserve">
     <value>MAC 地址</value>
   </data>
   <data name="MasterPassword" xml:space="preserve">
-    <value>Master Password</value>
+    <value>主密码</value>
   </data>
   <data name="Multithreading" xml:space="preserve">
-    <value>Multithreading</value>
+    <value>多线程</value>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Network</value>
+    <value>网络</value>
   </data>
   <data name="NetworkInterface" xml:space="preserve">
-    <value>Network Interface</value>
+    <value>网络接口</value>
   </data>
   <data name="NewTab" xml:space="preserve">
-    <value>New tab</value>
+    <value>新标签</value>
   </data>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
   </data>
   <data name="OverwriteQuestion" xml:space="preserve">
-    <value>Overwrite?</value>
+    <value>是否覆盖?</value>
   </data>
   <data name="Ping" xml:space="preserve">
     <value>Ping</value>
   </data>
   <data name="Port" xml:space="preserve">
-    <value>Port</value>
+    <value>端口</value>
   </data>
   <data name="Portable" xml:space="preserve">
-    <value>Portable</value>
+    <value>绿色版</value>
   </data>
   <data name="PortScanner" xml:space="preserve">
-    <value>Port Scanner</value>
+    <value>端口扫描器</value>
   </data>
   <data name="Profiles" xml:space="preserve">
-    <value>Profiles</value>
+    <value>简介</value>
   </data>
   <data name="PuTTY" xml:space="preserve">
     <value>PuTTY</value>
   </data>
   <data name="Query" xml:space="preserve">
-    <value>Query</value>
+    <value>查询</value>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
+    <value>远程桌面</value>
   </data>
   <data name="Reset" xml:space="preserve">
-    <value>Reset</value>
+    <value>重置</value>
   </data>
   <data name="ResolvePTR" xml:space="preserve">
-    <value>Resolve PTR</value>
+    <value>反向解析</value>
   </data>
   <data name="Resources" xml:space="preserve">
-    <value>Resources</value>
+    <value>资源</value>
   </data>
   <data name="Result" xml:space="preserve">
-    <value>Result</value>
+    <value>结果</value>
   </data>
   <data name="Route" xml:space="preserve">
-    <value>Route</value>
+    <value>路由</value>
   </data>
   <data name="Scan" xml:space="preserve">
-    <value>Scan</value>
+    <value>扫描</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Search</value>
+    <value>搜索</value>
   </data>
   <data name="SelectAProfileDots" xml:space="preserve">
-    <value>Select a profile...</value>
+    <value>选择一个配置文件</value>
   </data>
   <data name="SetMasterPassword" xml:space="preserve">
-    <value>Set Master Password</value>
+    <value>设置主密码</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>设置</value>
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>Settings have been reset!</value>
+    <value>设置将被重置！</value>
   </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
   <data name="Socket" xml:space="preserve">
-    <value>Socket</value>
+    <value>套接字</value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>统计</value>
@@ -367,28 +367,28 @@
     <value>状态</value>
   </data>
   <data name="Subnet" xml:space="preserve">
-    <value>Subnet</value>
+    <value>子网</value>
   </data>
   <data name="Subnetting" xml:space="preserve">
-    <value>Subnetting</value>
+    <value>子网划分</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>Success!</value>
+    <value>成功！</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>主题</value>
   </data>
   <data name="Traceroute" xml:space="preserve">
-    <value>Traceroute</value>
+    <value>路由跟踪</value>
   </data>
   <data name="Transparency" xml:space="preserve">
-    <value>Transparency</value>
+    <value>透明度</value>
   </data>
   <data name="Tray" xml:space="preserve">
-    <value>Tray</value>
+    <value>托盘</value>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>Update</value>
+    <value>更新</value>
   </data>
   <data name="v1v2c" xml:space="preserve">
     <value>v1/v2c</value>
@@ -397,97 +397,97 @@
     <value>v3</value>
   </data>
   <data name="ValidationFailed" xml:space="preserve">
-    <value>Validation failed!</value>
+    <value>验证失败！</value>
   </data>
   <data name="WakeOnLAN" xml:space="preserve">
-    <value>Wake on LAN</value>
+    <value>局域网唤醒</value>
   </data>
   <data name="Website" xml:space="preserve">
-    <value>Website</value>
+    <value>网站</value>
   </data>
   <data name="Window" xml:space="preserve">
-    <value>Window</value>
+    <value>窗口</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
-    <value>Wrong password!</value>
+    <value>密码错误！</value>
   </data>
   <data name="Client" xml:space="preserve">
-    <value>Client</value>
+    <value>客户端</value>
   </data>
   <data name="Administrator" xml:space="preserve">
-    <value>Administrator</value>
+    <value>管理员</value>
   </data>
   <data name="AlwaysShowIconInTray" xml:space="preserve">
-    <value>Always show icon in tray</value>
+    <value>总是在托盘显示图标</value>
   </data>
   <data name="Attempts" xml:space="preserve">
-    <value>Attempts</value>
+    <value>尝试</value>
   </data>
   <data name="AverageTime" xml:space="preserve">
-    <value>Average time</value>
+    <value>平均时间</value>
   </data>
   <data name="Broadcast" xml:space="preserve">
-    <value>Broadcast</value>
+    <value>广播</value>
   </data>
   <data name="Buffer" xml:space="preserve">
-    <value>Buffer</value>
+    <value>缓冲</value>
   </data>
   <data name="Bytes" xml:space="preserve">
-    <value>Bytes</value>
+    <value>字节</value>
   </data>
   <data name="CIDR" xml:space="preserve">
     <value>CIDR</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Close</value>
+    <value>关闭</value>
   </data>
   <data name="DefaultGateway" xml:space="preserve">
-    <value>Default-Gateway</value>
+    <value>默认路由</value>
   </data>
   <data name="DeleteDots" xml:space="preserve">
-    <value>Delete...</value>
+    <value>删除...</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>说明</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
-    <value>DHCP enabled</value>
+    <value>DHCP已启用</value>
   </data>
   <data name="DHCPLeaseExpires" xml:space="preserve">
-    <value>DHCP lease expires</value>
+    <value>DHCP租约到期</value>
   </data>
   <data name="DHCPLeaseObtained" xml:space="preserve">
-    <value>DHCP lease obtained</value>
+    <value>已获取DHCP租约</value>
   </data>
   <data name="DHCPServer" xml:space="preserve">
-    <value>DHCP server</value>
+    <value>DHCP服务器</value>
   </data>
   <data name="DNSServers" xml:space="preserve">
-    <value>DNS server(s)</value>
+    <value>DNS服务器(多)</value>
   </data>
   <data name="DNSSuffix" xml:space="preserve">
-    <value>DNS suffix</value>
+    <value>DNS后缀</value>
   </data>
   <data name="DynamicIPv4Address" xml:space="preserve">
-    <value>Dynamic IPv4 address</value>
+    <value>动态IPv4地址</value>
   </data>
   <data name="DynamicIPv4DNSServer" xml:space="preserve">
-    <value>Dynamic IPv4 DNS server</value>
+    <value>动态IPv4 DNS地址</value>
   </data>
   <data name="Hop" xml:space="preserve">
-    <value>Hop</value>
+    <value>跳</value>
   </data>
   <data name="Hops" xml:space="preserve">
-    <value>Hops</value>
+    <value>跳</value>
   </data>
   <data name="Hostname" xml:space="preserve">
-    <value>Hostname</value>
+    <value>主机名</value>
   </data>
   <data name="IPAddress" xml:space="preserve">
-    <value>IP address</value>
+    <value>IP地址</value>
   </data>
   <data name="IPAddresses" xml:space="preserve">
-    <value>IP addresses</value>
+    <value>IP地址</value>
   </data>
   <data name="IPv4" xml:space="preserve">
     <value>IPv4</value>
@@ -496,322 +496,322 @@
     <value>IPv4 地址</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
-    <value>IPv4-Default-Gateway</value>
+    <value>IPv4默认路由</value>
   </data>
   <data name="IPv6" xml:space="preserve">
-    <value>IPv6</value>
+    <value>IPv6地址</value>
   </data>
   <data name="IPv6Address" xml:space="preserve">
     <value>IPv6 地址</value>
   </data>
   <data name="IPv6AddressLinkLocal" xml:space="preserve">
-    <value>Link-local IPv6 address</value>
+    <value>IPv6链路地址</value>
   </data>
   <data name="IPv6DefaultGateway" xml:space="preserve">
-    <value>IPv6-Default-Gateway</value>
+    <value>IPv6默认网关</value>
   </data>
   <data name="Maximum" xml:space="preserve">
-    <value>Maximum</value>
+    <value>最大值</value>
   </data>
   <data name="MaximumHopsRouter" xml:space="preserve">
-    <value>Maximum hops/router</value>
+    <value>最大跳数/路由</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
-    <value>Minimize main window instead of terminating the application</value>
+    <value>最小化窗口不退出</value>
   </data>
   <data name="MinimizeToTrayInsteadOfTaskbar" xml:space="preserve">
-    <value>Minimize to tray instead of taskbar</value>
+    <value>最小化到任务栏托盘</value>
   </data>
   <data name="Minimum" xml:space="preserve">
-    <value>Minimum</value>
+    <value>最小值</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>名称</value>
   </data>
   <data name="NetworkAddress" xml:space="preserve">
-    <value>Network address</value>
+    <value>网络地址</value>
   </data>
   <data name="NewSubnetmaskOrCIDR" xml:space="preserve">
-    <value>New subnetmask or CIDR</value>
+    <value>新的子网掩码或CIDR</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>不</value>
   </data>
   <data name="ObtainAnIPAddressAutomatically" xml:space="preserve">
-    <value>Obtain an IP address automatically</value>
+    <value>自动获取IP地址</value>
   </data>
   <data name="ObtainDNSServerAddressAutomatically" xml:space="preserve">
-    <value>Obtain DNS server address automatically</value>
+    <value>自动获取DNS</value>
   </data>
   <data name="PacketLoss" xml:space="preserve">
-    <value>Packet loss</value>
+    <value>丢包</value>
   </data>
   <data name="PacketsTransmitted" xml:space="preserve">
-    <value>Packets transmitted</value>
+    <value>传输的数据包</value>
   </data>
   <data name="PhysicalAddress" xml:space="preserve">
-    <value>PhysicalAddress</value>
+    <value>物理地址</value>
   </data>
   <data name="PreferredProtocolWhenResolvingHostname" xml:space="preserve">
-    <value>Preferred protocol when resolving hostname:</value>
+    <value>解析主机名时的首选协议：</value>
   </data>
   <data name="PrimaryDNSServer" xml:space="preserve">
-    <value>Primary DNS server</value>
+    <value>主DNS服务器</value>
   </data>
   <data name="ReceivedLost" xml:space="preserve">
-    <value>Received / Lost</value>
+    <value>收到 / 丢失</value>
   </data>
   <data name="ResolveHostname" xml:space="preserve">
-    <value>Resolve hostname</value>
+    <value>解析主机名</value>
   </data>
   <data name="RestartRequired" xml:space="preserve">
-    <value>Restart required</value>
+    <value>需要重新启动</value>
   </data>
   <data name="RestartRequiredSettingsChangedMessage" xml:space="preserve">
-    <value>Some settings are applied only after restarting the application!</value>
+    <value>某些设置需要重启后生效！</value>
   </data>
   <data name="SaveSettingsInApplicationFolder" xml:space="preserve">
-    <value>Save settings in the application folder</value>
+    <value>保存设置到应用文件夹</value>
   </data>
   <data name="SecondaryDNSServer" xml:space="preserve">
-    <value>Secondary DNS server</value>
+    <value>辅助DNS服务器</value>
   </data>
   <data name="Show" xml:space="preserve">
-    <value>Show</value>
+    <value>显示</value>
   </data>
   <data name="ShowTheFollowingApplicationOnStartup" xml:space="preserve">
-    <value>Show the following application on startup:</value>
+    <value>在启动后显示以下应用：</value>
   </data>
   <data name="Slogan" xml:space="preserve">
-    <value>A powerful tool for managing networks and troubleshoot network problems!</value>
+    <value>一个强大的网络运维管理工具！</value>
   </data>
   <data name="Speed" xml:space="preserve">
-    <value>Speed</value>
+    <value>速度</value>
   </data>
   <data name="StartMinimizedInTray" xml:space="preserve">
-    <value>Start minimized in tray</value>
+    <value>启动后最小化到托盘</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
-    <value>Start with Windows (current user)</value>
+    <value>开始菜单（当前用户）</value>
   </data>
   <data name="StaticIPv4Address" xml:space="preserve">
-    <value>Static IPv4 address</value>
+    <value>静态IPv4地址</value>
   </data>
   <data name="StaticIPv4DNSServer" xml:space="preserve">
-    <value>Static IPv4 DNS server</value>
+    <value>静态IPv4 DNS服务器</value>
   </data>
   <data name="Subnetmask" xml:space="preserve">
-    <value>Subnetmask</value>
+    <value>子网掩码</value>
   </data>
   <data name="SubnetmaskOrCIDR" xml:space="preserve">
-    <value>Subnetmask or CIDR</value>
+    <value>子网掩码或CIDR</value>
   </data>
   <data name="Threads" xml:space="preserve">
-    <value>Threads</value>
+    <value>线程</value>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>Time</value>
+    <value>时间</value>
   </data>
   <data name="Time1" xml:space="preserve">
-    <value>Time 1</value>
+    <value>时间 1</value>
   </data>
   <data name="Time2" xml:space="preserve">
-    <value>Time 2</value>
+    <value>时间 2</value>
   </data>
   <data name="Time3" xml:space="preserve">
-    <value>Time 3</value>
+    <value>时间 3</value>
   </data>
   <data name="Timeout" xml:space="preserve">
-    <value>Timeout</value>
+    <value>超时</value>
   </data>
   <data name="TimeoutMS" xml:space="preserve">
-    <value>Timeout (ms)</value>
+    <value>超时（毫秒）</value>
   </data>
   <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>Time to wait between each ping</value>
+    <value>Ping中间等待时间</value>
   </data>
   <data name="TTL" xml:space="preserve">
-    <value>TTL</value>
+    <value>生存周期</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>Type</value>
+    <value>类型</value>
   </data>
   <data name="UseTheFollowingDNSServerAddresses" xml:space="preserve">
-    <value>Use the following DNS server addresses:</value>
+    <value>使用以下DNS服务器地址：</value>
   </data>
   <data name="UseTheFollowingIPAddress" xml:space="preserve">
-    <value>Use the following IP address:</value>
+    <value>使用以下IP地址：</value>
   </data>
   <data name="WakeUp" xml:space="preserve">
-    <value>Wake up</value>
+    <value>唤醒</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>是</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Add</value>
+    <value>新增</value>
   </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
-    <value>Add a tab to perform a DNS lookup...</value>
+    <value>添加一个DNS查找页...</value>
   </data>
   <data name="AddATabToPerformANetworkScan" xml:space="preserve">
-    <value>Add a tab to perform a network scan...</value>
+    <value>添加一个网络扫描页...</value>
   </data>
   <data name="AddATabToPerformAnSNMPAction" xml:space="preserve">
-    <value>Add a tab to perform an SNMP action...</value>
+    <value>添加一个SNMP动作页...</value>
   </data>
   <data name="AddATabToPerformAPing" xml:space="preserve">
-    <value>Add a tab to perform a ping...</value>
+    <value>添加一个Ping操作页...</value>
   </data>
   <data name="AddATabToPerformAPortScan" xml:space="preserve">
-    <value>Add a tab to perform a port scan...</value>
+    <value>添加一个端口扫描页...</value>
   </data>
   <data name="AddATabToPerformATrace" xml:space="preserve">
-    <value>Add a tab to perform a trace...</value>
+    <value>添加一个路由追踪页...</value>
   </data>
   <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
-    <value>Add a tab to query the HTTP headers...</value>
+    <value>添加一个HTTP头查询页...</value>
   </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
-    <value>Add DNS suffix (primary) to hostname</value>
+    <value>主机名后添加DNS后缀(主)</value>
   </data>
   <data name="AdditionalCommandLine" xml:space="preserve">
-    <value>Additional command line</value>
+    <value>附加到命令行</value>
   </data>
   <data name="Additionals" xml:space="preserve">
-    <value>Additionals</value>
+    <value>附加</value>
   </data>
   <data name="AddProfileDots" xml:space="preserve">
-    <value>Add profile...</value>
+    <value>新增配置文件...</value>
   </data>
   <data name="AdjustScreenAutomatically" xml:space="preserve">
-    <value>Adjust screen automatically</value>
+    <value>自动调整屏幕</value>
   </data>
   <data name="Answers" xml:space="preserve">
-    <value>Answers</value>
+    <value>响应</value>
   </data>
   <data name="ApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>Application is restarted afterwards</value>
+    <value>在应用重启后</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>Apply</value>
+    <value>应用</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Apply Windows key combinations (e.g. ALT+TAB):</value>
+    <value>应用Windows键组合（例如ALT + TAB）：</value>
   </data>
   <data name="Auth" xml:space="preserve">
-    <value>Auth</value>
+    <value>验证</value>
   </data>
   <data name="AuthenticationLevel" xml:space="preserve">
-    <value>Authentication level</value>
+    <value>验证级别</value>
   </data>
   <data name="Authorities" xml:space="preserve">
-    <value>Authorities</value>
+    <value>授权</value>
   </data>
   <data name="AutomaticallyUpdateEvery" xml:space="preserve">
-    <value>Automatically update every</value>
+    <value>总是自动更新</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>back</value>
+    <value>返回</value>
   </data>
   <data name="Backup" xml:space="preserve">
     <value>备份</value>
   </data>
   <data name="Baud" xml:space="preserve">
-    <value>Baud</value>
+    <value>波特</value>
   </data>
   <data name="CanceledByUserMessage" xml:space="preserve">
-    <value>The operation has been canceled by the user!</value>
+    <value>该操作已被用户取消！</value>
   </data>
   <data name="CapsLockIsEnabled" xml:space="preserve">
-    <value>Caps lock is enabled!</value>
+    <value>大写锁定已启用！</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>Check for updates at startup</value>
+    <value>启动后检查更新</value>
   </data>
   <data name="Class" xml:space="preserve">
-    <value>Class</value>
+    <value>类</value>
   </data>
   <data name="ClearFilter" xml:space="preserve">
-    <value>Clear filter</value>
+    <value>清除筛选</value>
   </data>
   <data name="ColorDepthBit" xml:space="preserve">
-    <value>Color depth (bit)</value>
+    <value>颜色深度（位）</value>
   </data>
   <data name="Community" xml:space="preserve">
-    <value>Community</value>
+    <value>社区</value>
   </data>
   <data name="ConfigureThePathToPuTTYInTheSettingsDots" xml:space="preserve">
-    <value>Configure the path to PuTTY in the settings...</value>
+    <value>配置PuTTY应用路径...</value>
   </data>
   <data name="ConfirmClose" xml:space="preserve">
-    <value>Confirm close</value>
+    <value>确认关闭...</value>
   </data>
   <data name="ConfirmCloseMessage" xml:space="preserve">
-    <value>Are you sure you want to close the application?</value>
+    <value>您确定要关闭该应用吗？</value>
   </data>
   <data name="ConnectAsDots" xml:space="preserve">
-    <value>Connect as...</value>
+    <value>连接方式...</value>
   </data>
   <data name="ConnectExternal" xml:space="preserve">
-    <value>Connect external</value>
+    <value>使用Windows连接</value>
   </data>
   <data name="ConnectTheNetworkCardToConfigureIt" xml:space="preserve">
-    <value>Connect the network card to a network to configure it!</value>
+    <value>请配置网卡的网络连接！</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>拷贝</value>
+    <value>复制</value>
   </data>
   <data name="CopyAsDots" xml:space="preserve">
-    <value>Copy as...</value>
+    <value>复制为...</value>
   </data>
   <data name="CopyDots" xml:space="preserve">
-    <value>拷贝...</value>
+    <value>复制...</value>
   </data>
   <data name="CouldNotResolveHostnameFor" xml:space="preserve">
-    <value>Could not resolve hostname for: "{0}"</value>
+    <value>无法解析主机名："{0}"</value>
   </data>
   <data name="Credential" xml:space="preserve">
-    <value>Credential</value>
+    <value>凭据</value>
   </data>
   <data name="CredentialNotFoundMessage" xml:space="preserve">
-    <value>Edit the Profile and select a different credential or delete the existing one</value>
+    <value>编辑配置文件并选择其他凭据或删除现有凭据</value>
   </data>
   <data name="CredentialsEncryptionDisclaimer" xml:space="preserve">
-    <value>The credentials are stored encrypted with AES-256 (Rijndael) in a file. The key for the encryption results from a master password (Rfc2898DeriveBytes). The application uses a SecureString for passwords. For some functions, passwords must be converted from a SecureString to plain text, or vice versa.</value>
+    <value>凭证以AES-256（Rijndael）加密存储在文件中。 加密的密钥来自主密码（Rfc2898DeriveBytes）。 该应用程序使用SecureString进行密码。 对于某些功能，密码必须从安全字符串转换为纯文本，反之亦然。</value>
   </data>
   <data name="Custom" xml:space="preserve">
-    <value>Custom</value>
+    <value>自定义</value>
   </data>
   <data name="CustomScreenSize" xml:space="preserve">
-    <value>Custom screen size:</value>
+    <value>自定义屏幕大小...</value>
   </data>
   <data name="DataHasBeenUpdated" xml:space="preserve">
-    <value>Data has been updated!</value>
+    <value>数据已更新！</value>
   </data>
   <data name="DecryptAndLoadCredentialsMessage" xml:space="preserve">
-    <value>Credentials must be decrypted and loaded to manage them.</value>
+    <value>必须解密并加载凭据才能进行管理.</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>Default</value>
+    <value>默认</value>
   </data>
   <data name="BaudRate" xml:space="preserve">
-    <value>Baud rate</value>
+    <value>波特率</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
-    <value>Default port:</value>
+    <value>默认端口：</value>
   </data>
   <data name="RloginPort" xml:space="preserve">
-    <value>Rlogin port</value>
+    <value>Rlogin端口</value>
   </data>
   <data name="SSHPort" xml:space="preserve">
-    <value>SSH port</value>
+    <value>SSH端口</value>
   </data>
   <data name="TelnetPort" xml:space="preserve">
-    <value>Telnet port</value>
+    <value>Telnet端口</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
-    <value>The selected credential will be deleted permanently.</value>
+    <value>被选择的凭据将被永久删除.</value>
   </data>
   <data name="DeleteEntry" xml:space="preserve">
     <value>Delete entry</value>
@@ -2060,7 +2060,7 @@ URL: https://api.ipify.org/</value>
 URL: https://github.com/BornToBeRoot/NETworkManager/</value>
   </data>
   <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value>Help translate the tool on Transifex.
+    <value>Help translate the project on Transifex.
 
 URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
   </data>
@@ -2181,8 +2181,8 @@ is disabled!</value>
   <data name="Official" xml:space="preserve">
     <value>Official</value>
   </data>
-  <data name="HelpTranslate" xml:space="preserve">
-    <value>Help translate</value>
+  <data name="HelpTranslateOnTransifex" xml:space="preserve">
+    <value>Help translate on transifex</value>
   </data>
   <data name="NetworkConnectionType" xml:space="preserve">
     <value>Network connection type</value>
@@ -2333,5 +2333,20 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="DetectingNetworkDots" xml:space="preserve">
     <value>Detecting  network...</value>
+  </data>
+  <data name="ClosingInXSecondsDots" xml:space="preserve">
+    <value>Closing in {0} seconds...</value>
+  </data>
+  <data name="NetworkUnavailable" xml:space="preserve">
+    <value>Network unavailable!</value>
+  </data>
+  <data name="IPAddressToDetectLocalIPAddressBasedOnRouting" xml:space="preserve">
+    <value>IP address to detect local ip address based on routing</value>
+  </data>
+  <data name="ShowWindowOnNetworkChange" xml:space="preserve">
+    <value>Show window on network change</value>
+  </data>
+  <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
+    <value>Time in seconds how long the window should be displayed</value>
   </data>
 </root>

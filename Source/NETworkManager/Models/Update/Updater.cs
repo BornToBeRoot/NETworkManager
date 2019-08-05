@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Octokit;
 using NETworkManager.Models.Settings;
+using System.Linq;
+using System.Diagnostics;
 
 namespace NETworkManager.Models.Update
 {
@@ -40,23 +42,18 @@ namespace NETworkManager.Models.Update
         #region Methods
         public void Check()
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 try
                 {
                     var client = new GitHubClient(new ProductHeaderValue(Properties.Resources.NETworkManager_ProjectName));
 
-                    var latestRelease = client.Repository.Release.GetLatest(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo);
+                    var latestRelease = (await client.Repository.Release.GetAll(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo)).Where(x => x.TagName.StartsWith("v1")).FirstOrDefault();
 
-                    var latestVersion = new Version(latestRelease.Result.TagName.TrimStart('v'));
-                    
-                    if(ConfigurationManager.Current.OSVersion < new Version(10, 0) && latestVersion >= new Version(2,0))
-                    {
-                        OnClientIncompatibleWithNewVersion();
+                    // var latestRelease = client.Repository.Release.GetLatest(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo);
 
-                        return;
-                    }
-
+                    var latestVersion = new Version(latestRelease.TagName.TrimStart('v'));
+                   
                     // Compare versions (tag=v1.4.2.0, version=1.4.2.0)
                     if (latestVersion > AssemblyManager.Current.Version)
                         OnUpdateAvailable(new UpdateAvailableArgs(latestVersion));
