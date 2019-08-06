@@ -6,4 +6,4 @@ branches:
 configuration: Release
 platform: Any CPU
 before_build:
-   - MSBuild -t:restore .\Source\NETworkManager.sln
+   - MSBuild -t:restore .\Source\NETworkManager\NETworkManager.csproj
