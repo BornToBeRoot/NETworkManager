@@ -7,3 +7,4 @@ configuration: Release
 platform: Any CPU
 before_build:
    -cmd: dotnet restore Source/NETworkManager.sln
+   -cmd: nuget restore Source/NETworkManager.sln
