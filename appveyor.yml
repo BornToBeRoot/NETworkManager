@@ -5,6 +5,3 @@ branches:
    - master
 configuration: Release
 platform: Any CPU
-before_build:
-   - dotnet restore Source/NETworkManager.sln
-   - nuget restore Source/NETworkManager.sln
