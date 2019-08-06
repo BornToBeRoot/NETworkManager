@@ -2,6 +2,9 @@ branches:
   only:
    - master
  
+before_build:
+   - nuget restore Source/NETworkManager.sln
+ 
 image: Visual Studio 2019
 
 configuration: Release
