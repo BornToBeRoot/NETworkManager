@@ -140,18 +140,7 @@
                             </Button>
                         </Grid>
                     </StackPanel>
-                    <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Details}">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                    <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Details}" Style="{StaticResource HeaderTextBlock}" />
                     <ScrollViewer Grid.Row="2" Style="{StaticResource DefaultScrollViewer}">
                         <Grid>
                             <Grid.Resources>
@@ -417,18 +406,7 @@
                             </liveChart:Axis>
                         </liveChart:CartesianChart.AxisY>
                     </liveChart:CartesianChart>
-                    <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.Details}">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                    <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.Details}" Style="{StaticResource HeaderTextBlock}" />
                     <Grid Grid.Row="4">
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
