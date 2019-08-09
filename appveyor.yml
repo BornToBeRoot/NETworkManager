@@ -1,15 +1,9 @@
+version: 2.0.{build}
+image: Visual Studio 2019
 branches:
   only:
    - master
-  
-before_build:
- - nuget restore Source/NETworkManager.sln
- 
-image: Visual Studio 2019
-
 configuration: Release
-
 platform: Any CPU
-
-pull_requests:
-  do_not_increment_build_number: false
+before_build:
+   - MSBuild -t:restore .\Source\NETworkManager\NETworkManager.csproj
