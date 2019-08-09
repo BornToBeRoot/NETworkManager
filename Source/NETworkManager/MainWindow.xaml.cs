@@ -366,39 +366,8 @@ namespace NETworkManager
             // Search for updates... 
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
-
-            Test();
         }
-
-        private async void Test()
-        {
-            var access = await WiFiAdapter.RequestAccessAsync();
-
-            var result = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(WiFiAdapter.GetDeviceSelector());
-
-            if (result.Count >= 1)
-            {
-                // take first adapter
-                WiFiAdapter adapter = await WiFiAdapter.FromIdAsync(result[0].Id);
-                // scan for networks
-                await adapter.ScanAsync();
-                // find network with the correct SSID
-                foreach (var x in adapter.NetworkReport.AvailableNetworks)
-                {
-
-                    Console.WriteLine("=== Adapter ===");
-                    Console.WriteLine(x.Ssid);
-                    Console.WriteLine(x.Bssid);
-                    Console.WriteLine(x.SecuritySettings);
-
-                }
-
-                // connect 
-                //await nwAdapter.ConnectAsync(nw, WiFiReconnectionKind.Automatic);
-            }
-
-        }
-
+               
         private void LoadApplicationList()
         {
             isApplicationListLoading = true;

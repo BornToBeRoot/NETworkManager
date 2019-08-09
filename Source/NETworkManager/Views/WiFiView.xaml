@@ -10,9 +10,6 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
-    <UserControl.InputBindings>
-        <KeyBinding Key="F5" Command="{Binding CheckConnectionViaHotkeyCommand}" />
-    </UserControl.InputBindings>
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
@@ -22,7 +19,122 @@
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.WiFi}">
             <Grid Margin="10">
-          
+                <Grid>
+                    <Grid.Style>
+                        <Style TargetType="{x:Type Grid}" >
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Interface}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <ComboBox Grid.Column="0" x:Name="ComboBoxWiFiAdapters" ItemsSource="{Binding WiFiAdapters}" SelectedItem="{Binding SelectedWiFiAdapter}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Rectangle Width="24" Height="24">
+                                                <Rectangle.Resources>
+                                                    <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}"/>
+                                                    <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
+                                                </Rectangle.Resources>
+                                                <Rectangle.Style>
+                                                    <Style TargetType="{x:Type Rectangle}">
+                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualDown}" />
+                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsOperational}" Value="True">
+                                                                <Setter Property="OpacityMask" Value="{StaticResource VisualUp}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                            <StackPanel Margin="10,0,0,0">
+                                                <TextBlock Text="{Binding Path=NetworkInterfaceInfo.Name}" />
+                                                <TextBlock Text="{Binding Path=NetworkInterfaceInfo.Description}" Foreground="{DynamicResource GrayBrush3}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                                <ComboBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MetroComboBoxItem}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ComboBoxItem">
+                                                    <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                                                        <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                        <Grid Margin="{TemplateBinding BorderThickness}">
+                                                            <ContentPresenter x:Name="contentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                        </Grid>
+                                                    </Grid>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush9}" />
+                                                        </Trigger>
+                                                        <MultiTrigger>
+                                                            <MultiTrigger.Conditions>
+                                                                <Condition Property="IsSelected" Value="False" />
+                                                                <Condition Property="IsMouseOver" Value="True" />
+                                                            </MultiTrigger.Conditions>
+                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush10}" />
+                                                        </MultiTrigger>
+                                                        <Trigger Property="IsEnabled" Value="False">
+                                                            <Setter TargetName="contentPresenter" Property="Opacity" Value=".55" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ComboBox.ItemContainerStyle>
+                            </ComboBox>
+                            <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxWiFiAdapters, Path=ActualHeight}" Command="{Binding ReloadWiFiAdaptersCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                                <Rectangle Width="24" Height="24">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                    </Rectangle.OpacityMask>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
+                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                    <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Network}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding WifiAdapters.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
             </Grid>
         </TabItem>
     </TabControl>

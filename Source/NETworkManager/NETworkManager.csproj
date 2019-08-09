@@ -242,6 +242,9 @@
     <Compile Include="Models\Network\BandwidthMeterSpeedArgs.cs" />
     <Compile Include="Models\Network\DNSServer.cs" />
     <Compile Include="Models\Network\DNSServerInfo.cs" />
+    <Compile Include="Models\Network\WiFiAdapterInfo.cs" />
+    <Compile Include="Models\Network\WiFiNetworkInfo.cs" />
+    <Compile Include="Models\Network\WiFi.cs" />
     <Compile Include="Models\Network\IPNetworkInfo.cs" />
     <Compile Include="Models\Network\Listener.cs" />
     <Compile Include="Models\Network\Connection.cs" />
