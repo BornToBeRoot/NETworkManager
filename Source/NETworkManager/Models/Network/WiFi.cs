@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
+
+//https://docs.microsoft.com/en-us/uwp/api/windows.devices.wifi.wifiadapter.requestaccessasync
+//var access = await WiFiAdapter.RequestAccessAsync();
 
 namespace NETworkManager.Models.Network
 {
     public class WiFi
     {
-        public static async Task<List<WiFiAdapterInfo>> GetWiFiAdapterAsync()
+        public static async Task<List<WiFiAdapterInfo>> GetAdapterAsync()
         {
             List<WiFiAdapterInfo> wifiAdapters = new List<WiFiAdapterInfo>();
             List<NetworkInterfaceInfo> networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
@@ -23,7 +25,7 @@ namespace NETworkManager.Models.Network
                     wifiAdapters.Add(new WiFiAdapterInfo
                     {
                         NetworkInterfaceInfo = networkInterface,
-                        Id = wifiAdapter.NetworkAdapter.NetworkAdapterId
+                        WiFiAdapter = wifiAdapter
                     });
                 }
             }
@@ -34,42 +36,25 @@ namespace NETworkManager.Models.Network
             return wifiAdapters;
         }
 
-        public static async Task<IEnumerable<WiFiNetworkInfo>> GetWiFiNetworksAsync(Guid adapterId)
+        public static async Task<IEnumerable<WiFiNetworkInfo>> GetNetworksAsync(WiFiAdapter adapter)
         {
-            //https://docs.microsoft.com/en-us/uwp/api/windows.devices.wifi.wifiadapter.requestaccessasync
-            //var access = await WiFiAdapter.RequestAccessAsync();
+            List<WiFiNetworkInfo> wifiNetworks = new List<WiFiNetworkInfo>();
 
+            await adapter.ScanAsync();
 
-
-            return null;
-        }
-
-        private static async void Test()
-        {
-
-
-            var result = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(WiFiAdapter.GetDeviceSelector());
-
-            if (result.Count >= 1)
+            foreach (var network in adapter.NetworkReport.AvailableNetworks)
             {
-                // take first adapter
-                WiFiAdapter adapter = await WiFiAdapter.FromIdAsync(result[0].Id);
-                // scan for networks
-                await adapter.ScanAsync();
-                // find network with the correct SSID
-                foreach (var x in adapter.NetworkReport.AvailableNetworks)
+                wifiNetworks.Add(new WiFiNetworkInfo()
                 {
-
-                    Console.WriteLine("=== Adapter ===");
-                    Console.WriteLine(x.Ssid);
-                    Console.WriteLine(x.Bssid);
-                    Console.WriteLine(x.SecuritySettings);
-
-                }
-
-                // connect 
-                //await nwAdapter.ConnectAsync(nw, WiFiReconnectionKind.Automatic);
+                    BSSID = network.Bssid,
+                    SSID = network.Ssid
+                });
             }
+
+            if (wifiNetworks.Count == 0)
+                return null;
+
+            return wifiNetworks;
         }
     }
 }

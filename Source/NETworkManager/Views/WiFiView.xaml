@@ -134,6 +134,94 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
+                    <ListView Grid.Row="2" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLangauge}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="48" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="80" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Width="Auto" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding (settings:LocalizationInfo.Flag)}" />
+                                    <Grid Grid.Column="1" Margin="10,5,0,5">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="5" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Column="0" Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="5" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding (settings:LocalizationInfo.Name)}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding (settings:LocalizationInfo.NativeName), StringFormat={}({0})}" Style="{StaticResource DefaultTextBlock}" />
+                                        </Grid>
+                                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding (settings:LocalizationInfo.Translator)}" Style="{StaticResource DefaultTextBlock}" />
+                                    </Grid>
+                                    <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="#badc58" Padding="10,5" VerticalAlignment="Center" HorizontalAlignment="Right" Visibility="{Binding (settings:LocalizationInfo.IsOfficial), Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Rectangle Width="20" Height="20">
+                                                <Rectangle.Resources>
+                                                    <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Material Kind=CheckAll}" />
+                                                </Rectangle.Resources>
+                                                <Rectangle.Style>
+                                                    <Style TargetType="{x:Type Rectangle}">
+                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
+                                                        <Setter Property="Fill" Value="#badc58" />
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                            <TextBlock Text="{x:Static localization:Strings.Official}" VerticalAlignment="Center" Foreground="#badc58" Style="{StaticResource DefaultTextBlock}" Margin="10,0,0,0" />
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="{DynamicResource GrayBrush3}" Padding="10,5" VerticalAlignment="Center" Visibility="{Binding (settings:LocalizationInfo.IsOfficial), Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Rectangle Width="20" Height="20">
+                                                <Rectangle.Resources>
+                                                    <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Modern Kind=PeopleMultiple}" />
+                                                </Rectangle.Resources>
+                                                <Rectangle.Style>
+                                                    <Style TargetType="{x:Type Rectangle}">
+                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
+                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                            <TextBlock Text="{x:Static localization:Strings.Community}" VerticalAlignment="Center" Foreground="{DynamicResource GrayBrush3}" Style="{StaticResource DefaultTextBlock}" Margin="10,0,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <TextBlock Grid.Column="5" Grid.Row="0" Text="{Binding (settings:LocalizationInfo.PercentTranslated), StringFormat={}{0} %}" HorizontalAlignment="Right" Style="{StaticResource CenterTextBlock}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MetroListViewItem}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding (settings:LocalizationInfo.IsVisible)}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
+                        <ListView.Template>
+                            <ControlTemplate>
+                                <ItemsPresenter />
+                            </ControlTemplate>
+                        </ListView.Template>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <!-- /BUGFIX-->
+                    </ListView>
                 </Grid>
             </Grid>
         </TabItem>

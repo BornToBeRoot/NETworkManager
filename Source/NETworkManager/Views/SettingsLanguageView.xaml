@@ -98,7 +98,7 @@
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <ListView.ItemContainerStyle>
+            <!--<ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MetroListViewItem}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding (settings:LocalizationInfo.IsVisible)}" Value="False">
@@ -106,7 +106,7 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </ListView.ItemContainerStyle>
+            </ListView.ItemContainerStyle>-->
             <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
             <ListView.Template>
                 <ControlTemplate>

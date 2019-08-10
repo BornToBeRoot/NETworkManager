@@ -4,9 +4,11 @@ using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Devices.WiFi;
 
 namespace NETworkManager.ViewModels
 {
@@ -56,6 +58,8 @@ namespace NETworkManager.ViewModels
                 {
                     //if (!_isLoading)
                     //    SettingsManager.Current.NetworkInterface_SelectedInterfaceId = value.Id;
+
+                    ScanNetworks(value.WiFiAdapter);
                 }
 
                 _selectedWiFiAdapters = value;
@@ -73,7 +77,7 @@ namespace NETworkManager.ViewModels
             LoadSettings();
 
             LoadAdapters();
-
+                       
             _isLoading = false;
         }
 
@@ -99,17 +103,17 @@ namespace NETworkManager.ViewModels
         {
             IsWiFiAdaptersLoading = true;
 
-            WiFiAdapters = await WiFi.GetWiFiAdapterAsync();
+            WiFiAdapters = await WiFi.GetAdapterAsync();
 
             // Get the last selected interface, if it is still available on this machine...
             if (WiFiAdapters.Count > 0)
             {
-                var info = WiFiAdapters.FirstOrDefault(s => s.Id.ToString() == SettingsManager.Current.NetworkInterface_SelectedInterfaceId);
+                var info = WiFiAdapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == SettingsManager.Current.NetworkInterface_SelectedInterfaceId);
 
                 SelectedWiFiAdapter = info ?? WiFiAdapters[0];
             }
 
-            IsWiFiAdaptersLoading = false;
+            IsWiFiAdaptersLoading = false;                        
         }
 
         private async void ReloadAdapter()
@@ -118,19 +122,30 @@ namespace NETworkManager.ViewModels
 
             await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
 
-            Guid id = Guid.Empty;
+            string id = string.Empty;
 
             if (SelectedWiFiAdapter != null)
-                id = SelectedWiFiAdapter.Id;
+                id = SelectedWiFiAdapter.NetworkInterfaceInfo.Id;
 
-            WiFiAdapters = await WiFi.GetWiFiAdapterAsync();
+            WiFiAdapters = await WiFi.GetAdapterAsync();
 
             // Change interface...
-            SelectedWiFiAdapter = id == Guid.Empty ? WiFiAdapters.FirstOrDefault() : WiFiAdapters.FirstOrDefault(x => x.Id == id);
+            SelectedWiFiAdapter = string.IsNullOrEmpty(id) ? WiFiAdapters.FirstOrDefault() : WiFiAdapters.FirstOrDefault(x => x.NetworkInterfaceInfo.Id == id);
 
             IsWiFiAdaptersLoading = false;
         }
                
+        private async void ScanNetworks(WiFiAdapter adapter)
+        {
+            var x = await WiFi.GetNetworksAsync(adapter);
+
+            foreach(var i in x)
+            {
+                Debug.WriteLine(i.BSSID);
+                Debug.WriteLine(i.SSID);
+            }
+        }
+
         public void OnViewVisible()
         {
 
