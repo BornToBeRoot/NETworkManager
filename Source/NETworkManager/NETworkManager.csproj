@@ -206,6 +206,7 @@
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanToVisibilityHiddenConverter.cs" />
+    <Compile Include="Converters\WiFiChannelFrequencyConverter.cs" />
     <Compile Include="Converters\ConnectionStateToRectangleStyleConverter.cs" />
     <Compile Include="Converters\BandwidthBytesToSpeedConverter.cs" />
     <Compile Include="Converters\DNSServerInfoToString.cs" />

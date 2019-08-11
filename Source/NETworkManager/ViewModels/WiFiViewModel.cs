@@ -3,10 +3,12 @@ using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 using Windows.Devices.WiFi;
 
@@ -17,41 +19,41 @@ namespace NETworkManager.ViewModels
         #region  Variables 
         private readonly bool _isLoading;
 
-        private bool _isWiFiAdaptersLoading;
-        public bool IsWiFiAdaptersLoading
+        private bool _isAdaptersLoading;
+        public bool IsAdaptersLoading
         {
-            get => _isWiFiAdaptersLoading;
+            get => _isAdaptersLoading;
             set
             {
-                if (value == _isWiFiAdaptersLoading)
+                if (value == _isAdaptersLoading)
                     return;
 
-                _isWiFiAdaptersLoading = value;
+                _isAdaptersLoading = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<WiFiAdapterInfo> _wiFiAdapters;
-        public List<WiFiAdapterInfo> WiFiAdapters
+        private List<WiFiAdapterInfo> _adapters;
+        public List<WiFiAdapterInfo> Adapters
         {
-            get => _wiFiAdapters;
+            get => _adapters;
             set
             {
-                if (value == _wiFiAdapters)
+                if (value == _adapters)
                     return;
 
-                _wiFiAdapters = value;
+                _adapters = value;
                 OnPropertyChanged();
             }
         }
 
-        private WiFiAdapterInfo _selectedWiFiAdapters;
-        public WiFiAdapterInfo SelectedWiFiAdapter
+        private WiFiAdapterInfo _selectedAdapters;
+        public WiFiAdapterInfo SelectedAdapter
         {
-            get => _selectedWiFiAdapters;
+            get => _selectedAdapters;
             set
             {
-                if (value == _selectedWiFiAdapters)
+                if (value == _selectedAdapters)
                     return;
 
                 if (value != null)
@@ -62,7 +64,49 @@ namespace NETworkManager.ViewModels
                     ScanNetworks(value.WiFiAdapter);
                 }
 
-                _selectedWiFiAdapters = value;
+                _selectedAdapters = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isNetworksLoading;
+        public bool IsNetworksLoading
+        {
+            get => _isNetworksLoading;
+            set
+            {
+                if (value == _isNetworksLoading)
+                    return;
+
+                _isNetworksLoading = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<WiFiNetworkInfo> _networks = new ObservableCollection<WiFiNetworkInfo>();
+        public ObservableCollection<WiFiNetworkInfo> Networks
+        {
+            get => _networks;
+            set
+            {
+                if (value != null && value == _networks)
+                    return;
+
+                _networks = value;
+            }
+        }
+
+        public ICollectionView NetworksView { get; }
+
+        private WiFiNetworkInfo _selectedNetwork;
+        public WiFiNetworkInfo SelectedNetwork
+        {
+            get => _selectedNetwork;
+            set
+            {
+                if (value == _selectedNetwork)
+                    return;
+
+                _selectedNetwork = value;
                 OnPropertyChanged();
             }
         }
@@ -74,10 +118,13 @@ namespace NETworkManager.ViewModels
         {
             _isLoading = true;
 
+            // Result view
+            NetworksView = CollectionViewSource.GetDefaultView(Networks);
+
             LoadSettings();
 
             LoadAdapters();
-                       
+
             _isLoading = false;
         }
 
@@ -88,62 +135,73 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand ReloadWiFiAdaptersCommand => new RelayCommand(p => ReloadAdapterAction(), ReloadWiFiAdapters_CanExecute);
+        public ICommand ReloadAdaptersCommand => new RelayCommand(p => ReloadAdapterAction(), ReloadAdapters_CanExecute);
 
-        private bool ReloadWiFiAdapters_CanExecute(object obj) => !IsWiFiAdaptersLoading;
+        private bool ReloadAdapters_CanExecute(object obj) => !IsAdaptersLoading;
 
         private void ReloadAdapterAction()
         {
             ReloadAdapter();
         }
+
+        public ICommand ScanNetworksCommand => new RelayCommand(p => ScanNetworksAction());
+
+        private void ScanNetworksAction()
+        {
+            ScanNetworks(SelectedAdapter.WiFiAdapter);
+        }
+        
         #endregion
 
         #region Methods
         private async void LoadAdapters()
         {
-            IsWiFiAdaptersLoading = true;
+            IsAdaptersLoading = true;
 
-            WiFiAdapters = await WiFi.GetAdapterAsync();
+            Adapters = await WiFi.GetAdapterAsync();
 
             // Get the last selected interface, if it is still available on this machine...
-            if (WiFiAdapters.Count > 0)
+            if (Adapters.Count > 0)
             {
-                var info = WiFiAdapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == SettingsManager.Current.NetworkInterface_SelectedInterfaceId);
+                var info = Adapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == SettingsManager.Current.NetworkInterface_SelectedInterfaceId);
 
-                SelectedWiFiAdapter = info ?? WiFiAdapters[0];
+                SelectedAdapter = info ?? Adapters[0];
             }
 
-            IsWiFiAdaptersLoading = false;                        
+            IsAdaptersLoading = false;
         }
 
         private async void ReloadAdapter()
         {
-            IsWiFiAdaptersLoading = true;
+            IsAdaptersLoading = true;
 
             await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
 
             string id = string.Empty;
 
-            if (SelectedWiFiAdapter != null)
-                id = SelectedWiFiAdapter.NetworkInterfaceInfo.Id;
+            if (SelectedAdapter != null)
+                id = SelectedAdapter.NetworkInterfaceInfo.Id;
 
-            WiFiAdapters = await WiFi.GetAdapterAsync();
+            Adapters = await WiFi.GetAdapterAsync();
 
             // Change interface...
-            SelectedWiFiAdapter = string.IsNullOrEmpty(id) ? WiFiAdapters.FirstOrDefault() : WiFiAdapters.FirstOrDefault(x => x.NetworkInterfaceInfo.Id == id);
+            SelectedAdapter = string.IsNullOrEmpty(id) ? Adapters.FirstOrDefault() : Adapters.FirstOrDefault(x => x.NetworkInterfaceInfo.Id == id);
 
-            IsWiFiAdaptersLoading = false;
+            IsAdaptersLoading = false;
         }
-               
+
         private async void ScanNetworks(WiFiAdapter adapter)
         {
-            var x = await WiFi.GetNetworksAsync(adapter);
+            IsNetworksLoading = true;
 
-            foreach(var i in x)
-            {
-                Debug.WriteLine(i.BSSID);
-                Debug.WriteLine(i.SSID);
-            }
+            IEnumerable<WiFiNetworkInfo> networks = await WiFi.GetNetworksAsync(adapter);
+
+            Networks.Clear();
+
+            foreach (var network in networks)
+                Networks.Add(network);
+
+            IsNetworksLoading = false;
         }
 
         public void OnViewVisible()

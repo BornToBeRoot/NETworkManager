@@ -4,10 +4,12 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+             xmlns:network="clr-namespace:NETworkManager.Models.Network"
              xmlns:mahAppsControls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
     <UserControl.Resources>
@@ -15,6 +17,7 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />
+        <converters:WiFiChannelFrequencyConverter x:Key="WiFiChannelFrequencyConverter" />        
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.WiFi}">
@@ -24,7 +27,7 @@
                         <Style TargetType="{x:Type Grid}" >
                             <Setter Property="Visibility" Value="Visible" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
+                                <DataTrigger Binding="{Binding Adapters.Count}" Value="0">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -34,6 +37,8 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Margin="0,0,0,20">
                         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Interface}" />
@@ -42,7 +47,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <ComboBox Grid.Column="0" x:Name="ComboBoxWiFiAdapters" ItemsSource="{Binding WiFiAdapters}" SelectedItem="{Binding SelectedWiFiAdapter}">
+                            <ComboBox Grid.Column="0" x:Name="ComboBoxAdapters" ItemsSource="{Binding Adapters}" SelectedItem="{Binding SelectedAdapter}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -56,7 +61,7 @@
                                                         <Setter Property="OpacityMask" Value="{StaticResource VisualDown}" />
                                                         <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsOperational}" Value="True">
+                                                            <DataTrigger Binding="{Binding NetworkInterfaceInfo.IsOperational}" Value="True">
                                                                 <Setter Property="OpacityMask" Value="{StaticResource VisualUp}" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -103,7 +108,7 @@
                                     </Style>
                                 </ComboBox.ItemContainerStyle>
                             </ComboBox>
-                            <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxWiFiAdapters, Path=ActualHeight}" Command="{Binding ReloadWiFiAdaptersCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                            <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxAdapters, Path=ActualHeight}" Command="{Binding ReloadAdaptersCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsAdaptersLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
                                 <Rectangle Width="24" Height="24">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
@@ -122,31 +127,43 @@
                             </Button>
                         </Grid>
                     </StackPanel>
-                    <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Network}">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding WifiAdapters.Count}" Value="0">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                    <ListView Grid.Row="2" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLangauge}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
+                    <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Networks}" Style="{StaticResource HeaderTextBlock}" />
+                    <ListView Grid.Row="2" Visibility="{Binding IsNetworksLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ItemsSource="{Binding NetworksView}" SelectedItem="{Binding SelectedNetwork}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="48" />
                                         <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="80" />
                                     </Grid.ColumnDefinitions>
-                                    <Image Grid.Column="0" Width="Auto" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding (settings:LocalizationInfo.Flag)}" />
+                                    <Rectangle Grid.Column="0" Width="24" Height="24" Fill="{DynamicResource GrayBrush3}">
+                                        <Rectangle.Resources>
+                                            <VisualBrush x:Key="VisualBars4" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength4}"/>
+                                            <VisualBrush x:Key="VisualBars3" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength3}"/>
+                                            <VisualBrush x:Key="VisualBars2" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength2}"/>
+                                            <VisualBrush x:Key="VisualBars1" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength4}"/>
+                                            <VisualBrush x:Key="VisualBars0" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrengthOutline}"/>
+                                        </Rectangle.Resources>
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}">
+                                                <Setter Property="OpacityMask" Value="{StaticResource VisualBars0}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SignalBars}" Value="1">
+                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualBars1}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding SignalBars}" Value="2">
+                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualBars2}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding SignalBars}" Value="3">
+                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualBars3}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding SignalBars}" Value="4">
+                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualBars4}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
                                     <Grid Grid.Column="1" Margin="10,5,0,5">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
@@ -159,56 +176,14 @@
                                                 <ColumnDefinition Width="5" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Text="{Binding (settings:LocalizationInfo.Name)}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
-                                            <TextBlock Grid.Column="2" Text="{Binding (settings:LocalizationInfo.NativeName), StringFormat={}({0})}" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding (network:WiFiNetworkInfo.SSID)}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding (network:WiFiNetworkInfo.ChannelCenterFrequencyInKilohertz), Converter={StaticResource WiFiChannelFrequencyConverter}}" Style="{StaticResource DefaultTextBlock}" />
                                         </Grid>
-                                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding (settings:LocalizationInfo.Translator)}" Style="{StaticResource DefaultTextBlock}" />
-                                    </Grid>
-                                    <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="#badc58" Padding="10,5" VerticalAlignment="Center" HorizontalAlignment="Right" Visibility="{Binding (settings:LocalizationInfo.IsOfficial), Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Rectangle Width="20" Height="20">
-                                                <Rectangle.Resources>
-                                                    <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Material Kind=CheckAll}" />
-                                                </Rectangle.Resources>
-                                                <Rectangle.Style>
-                                                    <Style TargetType="{x:Type Rectangle}">
-                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
-                                                        <Setter Property="Fill" Value="#badc58" />
-                                                    </Style>
-                                                </Rectangle.Style>
-                                            </Rectangle>
-                                            <TextBlock Text="{x:Static localization:Strings.Official}" VerticalAlignment="Center" Foreground="#badc58" Style="{StaticResource DefaultTextBlock}" Margin="10,0,0,0" />
-                                        </StackPanel>
-                                    </Border>
-                                    <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="{DynamicResource GrayBrush3}" Padding="10,5" VerticalAlignment="Center" Visibility="{Binding (settings:LocalizationInfo.IsOfficial), Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Rectangle Width="20" Height="20">
-                                                <Rectangle.Resources>
-                                                    <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Modern Kind=PeopleMultiple}" />
-                                                </Rectangle.Resources>
-                                                <Rectangle.Style>
-                                                    <Style TargetType="{x:Type Rectangle}">
-                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
-                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                                                    </Style>
-                                                </Rectangle.Style>
-                                            </Rectangle>
-                                            <TextBlock Text="{x:Static localization:Strings.Community}" VerticalAlignment="Center" Foreground="{DynamicResource GrayBrush3}" Style="{StaticResource DefaultTextBlock}" Margin="10,0,0,0"/>
-                                        </StackPanel>
-                                    </Border>
-                                    <TextBlock Grid.Column="5" Grid.Row="0" Text="{Binding (settings:LocalizationInfo.PercentTranslated), StringFormat={}{0} %}" HorizontalAlignment="Right" Style="{StaticResource CenterTextBlock}" />
+                                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding (network:WiFiNetworkInfo.BSSID)}" Style="{StaticResource DefaultTextBlock}" />
+                                    </Grid>                                    
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MetroListViewItem}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding (settings:LocalizationInfo.IsVisible)}" Value="False">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListView.ItemContainerStyle>
                         <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
                         <ListView.Template>
                             <ControlTemplate>
@@ -222,6 +197,28 @@
                         </ListView.ItemsPanel>
                         <!-- /BUGFIX-->
                     </ListView>
+                    <StackPanel VerticalAlignment="Center" Grid.Row="2" Visibility="{Binding IsNetworksLoading, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>
+                        <TextBlock Text="{x:Static localization:Strings.ScanningForNetworksDots}" Style="{StaticResource MessageTextBlock}" />
+                    </StackPanel>
+                    <Grid Grid.Column="0" Grid.Row="2">
+                        <Button Grid.Column="2" Command="{Binding ScanNetworksCommand}" Style="{StaticResource ImageWithTextButton}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
         </TabItem>

@@ -2352,4 +2352,10 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="WiFi" xml:space="preserve">
     <value>WiFi</value>
   </data>
+  <data name="Networks" xml:space="preserve">
+    <value>Networks</value>
+  </data>
+  <data name="ScanningForNetworksDots" xml:space="preserve">
+    <value>Scanning for networks...</value>
+  </data>
 </root>

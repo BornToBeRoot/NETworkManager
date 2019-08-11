@@ -3353,6 +3353,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Networks.
+        /// </summary>
+        public static string Networks {
+            get {
+                return ResourceManager.GetString("Networks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network unavailable!.
         /// </summary>
         public static string NetworkUnavailable {
@@ -5154,6 +5163,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Scanned {
             get {
                 return ResourceManager.GetString("Scanned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scanning for networks....
+        /// </summary>
+        public static string ScanningForNetworksDots {
+            get {
+                return ResourceManager.GetString("ScanningForNetworksDots", resourceCulture);
             }
         }
         
