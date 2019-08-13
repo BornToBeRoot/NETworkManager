@@ -128,7 +128,10 @@
                         </Grid>
                     </StackPanel>
                     <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Networks}" Style="{StaticResource HeaderTextBlock}" />
-                    <ListView Grid.Row="2" Visibility="{Binding IsNetworksLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ItemsSource="{Binding NetworksView}" SelectedItem="{Binding SelectedNetwork}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
+                    <ListView Grid.Row="2" Visibility="{Binding IsNetworksLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ScrollViewer.PanningMode="VerticalOnly" ItemsSource="{Binding NetworksView}" SelectedItem="{Binding SelectedNetwork}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
+                        <ListView.Resources>
+                            <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ListViewScrollBar}" />
+                        </ListView.Resources>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="5">
@@ -184,24 +187,12 @@
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
-                        <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
-                        <ListView.Template>
-                            <ControlTemplate>
-                                <ItemsPresenter />
-                            </ControlTemplate>
-                        </ListView.Template>
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <!-- /BUGFIX-->
                     </ListView>
                     <StackPanel VerticalAlignment="Center" Grid.Row="2" Visibility="{Binding IsNetworksLoading, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                         <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>
                         <TextBlock Text="{x:Static localization:Strings.ScanningForNetworksDots}" Style="{StaticResource MessageTextBlock}" />
                     </StackPanel>
-                    <Grid Grid.Column="0" Grid.Row="2">
+                    <Grid Grid.Column="0" Grid.Row="4">
                         <Button Grid.Column="2" Command="{Binding ScanNetworksCommand}" Style="{StaticResource ImageWithTextButton}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                             <Button.Content>
                                 <Grid>
