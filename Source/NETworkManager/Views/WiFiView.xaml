@@ -219,38 +219,36 @@
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="10" />
                                             <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="20" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="20" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="5" />
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="20"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="5"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="20"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="5"/>
-                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>                                            
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Column="1" Grid.Row="0" Text="Infrastructure" Style="{StaticResource HeaderTextBlock}" />
                                         <TextBlock Grid.Column="1" Grid.Row="1" Text="Phy kind:" Style="{StaticResource DefaultTextBlock}" />
                                         <TextBlock Grid.Column="3" Grid.Row="1" Text="{Binding Path=(network:WiFiNetworkInfo.PhyKind)}" Style="{StaticResource DefaultTextBlock}" />
                                         <TextBlock Grid.Column="1" Grid.Row="3" Text="Network kind:" Style="{StaticResource DefaultTextBlock}" />
-                                        <TextBlock Grid.Column="3" Grid.Row="3" Text="{Binding Path=(network:WiFiNetworkInfo.NetworkKind)}" Style="{StaticResource DefaultTextBlock}" />
-                                        <TextBlock Grid.Column="1" Grid.Row="5" Text="Encryption" Style="{StaticResource HeaderTextBlock}" />
-                                        <TextBlock Grid.Column="1" Grid.Row="6" Text="Authentication:" Style="{StaticResource DefaultTextBlock}" />
-                                        <TextBlock Grid.Column="3" Grid.Row="6" DataContext="{Binding Path=(network:WiFiNetworkInfo.Security)}" Text="{Binding Path=NetworkAuthenticationType}" Style="{StaticResource DefaultTextBlock}" />
-                                        <TextBlock Grid.Column="1" Grid.Row="8" Text="Encryption:" Style="{StaticResource DefaultTextBlock}" />
-                                        <TextBlock Grid.Column="3" Grid.Row="8" DataContext="{Binding Path=(network:WiFiNetworkInfo.Security)}" Text="{Binding Path=NetworkEncryptionType}" Style="{StaticResource DefaultTextBlock}" />
-                                        <TextBlock Grid.Column="1" Grid.Row="10" Text="Time" Style="{StaticResource HeaderTextBlock}" />
-                                        <TextBlock Grid.Column="1" Grid.Row="11" Text="Beacon interval:" Style="{StaticResource DefaultTextBlock}" />
-                                        <TextBlock Grid.Column="3" Grid.Row="11" Text="{Binding Path=(network:WiFiNetworkInfo.BeaconInterval)}" Style="{StaticResource DefaultTextBlock}" />
-                                        <TextBlock Grid.Column="1" Grid.Row="13" Text="Uptime:" Style="{StaticResource DefaultTextBlock}" />
-                                        <TextBlock Grid.Column="3" Grid.Row="13" Text="{Binding Path=(network:WiFiNetworkInfo.Uptime)}" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="3" Grid.Row="3" Text="{Binding Path=(network:WiFiNetworkInfo.NetworkKind)}" Style="{StaticResource DefaultTextBlock}" />                                        
+                                        <TextBlock Grid.Column="5" Grid.Row="0" Text="Encryption" Style="{StaticResource HeaderTextBlock}" />
+                                        <TextBlock Grid.Column="5" Grid.Row="1" Text="Authentication:" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="7" Grid.Row="1" DataContext="{Binding Path=(network:WiFiNetworkInfo.Security)}" Text="{Binding Path=NetworkAuthenticationType}" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="5" Grid.Row="3" Text="Encryption:" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="7" Grid.Row="3" DataContext="{Binding Path=(network:WiFiNetworkInfo.Security)}" Text="{Binding Path=NetworkEncryptionType}" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="9" Grid.Row="0" Text="Time" Style="{StaticResource HeaderTextBlock}" />
+                                        <TextBlock Grid.Column="9" Grid.Row="1" Text="Beacon interval:" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="11" Grid.Row="1" Text="{Binding Path=(network:WiFiNetworkInfo.BeaconInterval)}" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="9" Grid.Row="3" Text="Uptime:" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="11" Grid.Row="3" Text="{Binding Path=(network:WiFiNetworkInfo.Uptime)}" Style="{StaticResource DefaultTextBlock}" />
                                     </Grid>
                                 </Grid>
                             </DataTemplate>
