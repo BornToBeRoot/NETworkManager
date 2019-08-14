@@ -8,6 +8,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
@@ -135,7 +136,7 @@
                             <DataTemplate>
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />                                        
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="0" Margin="5">
@@ -143,6 +144,8 @@
                                             <ColumnDefinition Width="48" />
                                             <ColumnDefinition Width="10" />
                                             <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <Rectangle Grid.Column="0" Width="24" Height="24" Fill="{DynamicResource GrayBrush3}">
                                             <Rectangle.Resources>
@@ -156,16 +159,16 @@
                                                 <Style TargetType="{x:Type Rectangle}">
                                                     <Setter Property="OpacityMask" Value="{StaticResource VisualBars0}" />
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding SignalBars}" Value="1">
+                                                        <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.SignalBars)}" Value="1">
                                                             <Setter Property="OpacityMask" Value="{StaticResource VisualBars1}" />
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding SignalBars}" Value="2">
+                                                        <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.SignalBars)}" Value="2">
                                                             <Setter Property="OpacityMask" Value="{StaticResource VisualBars2}" />
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding SignalBars}" Value="3">
+                                                        <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.SignalBars)}" Value="3">
                                                             <Setter Property="OpacityMask" Value="{StaticResource VisualBars3}" />
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding SignalBars}" Value="4">
+                                                        <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.SignalBars)}" Value="4">
                                                             <Setter Property="OpacityMask" Value="{StaticResource VisualBars4}" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -183,11 +186,72 @@
                                                 <RowDefinition Height="5" />
                                                 <RowDefinition Height="Auto" />
                                             </Grid.RowDefinitions>
-                                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding (network:WiFiNetworkInfo.SSID)}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
-                                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding (network:WiFiNetworkInfo.ChannelCenterFrequencyInKilohertz), Converter={StaticResource WiFiChannelFrequencyConverter}}" Style="{StaticResource DefaultTextBlock}" />
-                                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding (network:WiFiNetworkInfo.BSSID)}" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=(network:WiFiNetworkInfo.SSID)}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Path=(network:WiFiNetworkInfo.ChannelCenterFrequencyInKilohertz), Converter={StaticResource WiFiChannelFrequencyConverter}}" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding Path=(network:WiFiNetworkInfo.BSSID)}" Style="{StaticResource DefaultTextBlock}" />
                                         </Grid>
-                                    </Grid>                                  
+                                        <ToggleButton Grid.Column="4" Grid.Row="0" IsChecked="{Binding Path=(network:WiFiNetworkInfo.ExpandDetails)}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Rectangle Width="16" Height="16">
+                                                <Rectangle.Resources>
+                                                    <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinDown}"/>
+                                                    <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinUp}"/>
+                                                </Rectangle.Resources>
+                                                <Rectangle.Style>
+                                                    <Style TargetType="{x:Type Rectangle}">
+                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                        <Setter Property="OpacityMask"  Value="{StaticResource VisualDown}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.ExpandDetails)}" Value="True">
+                                                                <Setter Property="OpacityMask" Value="{StaticResource VisualUp}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Rectangle.Style>
+                                            </Rectangle>
+                                        </ToggleButton>                                                                              
+                                    </Grid>
+                                    <Grid Grid.Row="1" Margin="5,15,5,5" Visibility="{Binding Path=(network:WiFiNetworkInfo.ExpandDetails), Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="58" />                                            
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="5" />
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="5"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="5"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="1" Grid.Row="0" Text="Infrastructure" Style="{StaticResource HeaderTextBlock}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="1" Text="Phy kind:" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="3" Grid.Row="1" Text="{Binding Path=(network:WiFiNetworkInfo.PhyKind)}" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="3" Text="Network kind:" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="3" Grid.Row="3" Text="{Binding Path=(network:WiFiNetworkInfo.NetworkKind)}" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="5" Text="Encryption" Style="{StaticResource HeaderTextBlock}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="6" Text="Authentication:" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="3" Grid.Row="6" DataContext="{Binding Path=(network:WiFiNetworkInfo.Security)}" Text="{Binding Path=NetworkAuthenticationType}" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="8" Text="Encryption:" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="3" Grid.Row="8" DataContext="{Binding Path=(network:WiFiNetworkInfo.Security)}" Text="{Binding Path=NetworkEncryptionType}" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="10" Text="Time" Style="{StaticResource HeaderTextBlock}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="11" Text="Beacon interval:" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="3" Grid.Row="11" Text="{Binding Path=(network:WiFiNetworkInfo.BeaconInterval)}" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="1" Grid.Row="13" Text="Uptime:" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="3" Grid.Row="13" Text="{Binding Path=(network:WiFiNetworkInfo.Uptime)}" Style="{StaticResource DefaultTextBlock}" />
+                                    </Grid>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
