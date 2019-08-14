@@ -5,7 +5,6 @@
              xmlns:converters="clr-namespace:NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
              xmlns:network="clr-namespace:NETworkManager.Models.Network"
-             xmlns:mahAppsControls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
@@ -17,7 +16,7 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />
-        <converters:WiFiChannelFrequencyConverter x:Key="WiFiChannelFrequencyConverter" />        
+        <converters:WiFiChannelFrequencyConverter x:Key="WiFiChannelFrequencyConverter" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.WiFi}">
@@ -134,56 +133,61 @@
                         </ListView.Resources>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="48" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Rectangle Grid.Column="0" Width="24" Height="24" Fill="{DynamicResource GrayBrush3}">
-                                        <Rectangle.Resources>
-                                            <VisualBrush x:Key="VisualBars4" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength4}"/>
-                                            <VisualBrush x:Key="VisualBars3" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength3}"/>
-                                            <VisualBrush x:Key="VisualBars2" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength2}"/>
-                                            <VisualBrush x:Key="VisualBars1" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength4}"/>
-                                            <VisualBrush x:Key="VisualBars0" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrengthOutline}"/>
-                                        </Rectangle.Resources>
-                                        <Rectangle.Style>
-                                            <Style TargetType="{x:Type Rectangle}">
-                                                <Setter Property="OpacityMask" Value="{StaticResource VisualBars0}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding SignalBars}" Value="1">
-                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualBars1}" />
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding SignalBars}" Value="2">
-                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualBars2}" />
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding SignalBars}" Value="3">
-                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualBars3}" />
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding SignalBars}" Value="4">
-                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualBars4}" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Rectangle.Style>
-                                    </Rectangle>
-                                    <Grid Grid.Column="1" Margin="10,5,0,5">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="5" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <Grid Grid.Column="0" Grid.Row="0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="48" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Grid.Column="0" Width="24" Height="24" Fill="{DynamicResource GrayBrush3}">
+                                            <Rectangle.Resources>
+                                                <VisualBrush x:Key="VisualBars4" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength4}"/>
+                                                <VisualBrush x:Key="VisualBars3" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength3}"/>
+                                                <VisualBrush x:Key="VisualBars2" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength2}"/>
+                                                <VisualBrush x:Key="VisualBars1" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength4}"/>
+                                                <VisualBrush x:Key="VisualBars0" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrengthOutline}"/>
+                                            </Rectangle.Resources>
+                                            <Rectangle.Style>
+                                                <Style TargetType="{x:Type Rectangle}">
+                                                    <Setter Property="OpacityMask" Value="{StaticResource VisualBars0}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding SignalBars}" Value="1">
+                                                            <Setter Property="OpacityMask" Value="{StaticResource VisualBars1}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding SignalBars}" Value="2">
+                                                            <Setter Property="OpacityMask" Value="{StaticResource VisualBars2}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding SignalBars}" Value="3">
+                                                            <Setter Property="OpacityMask" Value="{StaticResource VisualBars3}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding SignalBars}" Value="4">
+                                                            <Setter Property="OpacityMask" Value="{StaticResource VisualBars4}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Rectangle.Style>
+                                        </Rectangle>
+                                        <Grid Grid.Column="2">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="5" />
-                                                <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="5" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="5" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
                                             <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding (network:WiFiNetworkInfo.SSID)}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
-                                            <TextBlock Grid.Column="2" Text="{Binding (network:WiFiNetworkInfo.ChannelCenterFrequencyInKilohertz), Converter={StaticResource WiFiChannelFrequencyConverter}}" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding (network:WiFiNetworkInfo.ChannelCenterFrequencyInKilohertz), Converter={StaticResource WiFiChannelFrequencyConverter}}" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding (network:WiFiNetworkInfo.BSSID)}" Style="{StaticResource DefaultTextBlock}" />
                                         </Grid>
-                                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding (network:WiFiNetworkInfo.BSSID)}" Style="{StaticResource DefaultTextBlock}" />
-                                    </Grid>                                    
+                                    </Grid>                                  
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

@@ -9,10 +9,12 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
+            if (!(value is int frequency))
                 return "-/-";
-                        
-            return $"({WiFi.ConvertChannelFrequencyToGigahertz((int)value)} GHz - Channel {WiFi.GetChannelFromChannelFrequency((int)value)})";
+
+            double ghz = WiFi.ConvertChannelFrequencyToGigahertz(frequency) > 5 ? 5 : 2.4;
+
+            return $"{ghz} GHz / Channel {WiFi.GetChannelFromChannelFrequency(frequency)}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

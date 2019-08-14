@@ -33,7 +33,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private List<WiFiAdapterInfo> _adapters;
+        private List<WiFiAdapterInfo> _adapters = new List<WiFiAdapterInfo>();
         public List<WiFiAdapterInfo> Adapters
         {
             get => _adapters;
@@ -184,8 +184,11 @@ namespace NETworkManager.ViewModels
 
             Adapters = await WiFi.GetAdapterAsync();
 
-            // Change interface...
-            SelectedAdapter = string.IsNullOrEmpty(id) ? Adapters.FirstOrDefault() : Adapters.FirstOrDefault(x => x.NetworkInterfaceInfo.Id == id);
+            if (Adapters.Count > 0)
+            {
+                // Change interface...
+                SelectedAdapter = string.IsNullOrEmpty(id) ? Adapters.FirstOrDefault() : Adapters.FirstOrDefault(x => x.NetworkInterfaceInfo.Id == id);
+            }
 
             IsAdaptersLoading = false;
         }

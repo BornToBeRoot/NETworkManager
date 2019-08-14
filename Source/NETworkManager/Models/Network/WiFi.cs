@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 
@@ -30,9 +31,6 @@ namespace NETworkManager.Models.Network
                 }
             }
 
-            if (wifiAdapters.Count == 0)
-                return null;
-
             return wifiAdapters;
         }
 
@@ -54,12 +52,11 @@ namespace NETworkManager.Models.Network
                     NetworkRssiInDecibelMilliwatts = network.NetworkRssiInDecibelMilliwatts,
                     PhyKind = network.PhyKind,
                     NetworkKind = network.NetworkKind,
-                    Security = network.SecuritySettings
+                    Security = network.SecuritySettings,
+                    BeaconInterval = network.BeaconInterval,
+                    Uptime = network.Uptime
                 });
             }
-
-            if (wifiNetworks.Count == 0)
-                return null;
 
             return wifiNetworks;
         }

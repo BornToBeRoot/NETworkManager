@@ -84,7 +84,7 @@ namespace NETworkManager
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Network });
                     break;
                 case Name.WiFi:
-                    canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.ConnectionWifiVariant });
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.AccessPointNetwork });
                     break;
                 case Name.IPScanner:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Sitemap });

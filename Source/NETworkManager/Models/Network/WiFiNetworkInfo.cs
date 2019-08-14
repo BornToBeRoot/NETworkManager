@@ -1,4 +1,5 @@
-﻿using Windows.Devices.WiFi;
+﻿using System;
+using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 
 namespace NETworkManager.Models.Network
@@ -14,6 +15,8 @@ namespace NETworkManager.Models.Network
         public WiFiPhyKind PhyKind { get; set; }
         public WiFiNetworkKind NetworkKind { get; set; }
         public NetworkSecuritySettings Security { get; set; }
+        public TimeSpan BeaconInterval { get; set; }
+        public TimeSpan Uptime { get; set; }
 
         public WiFiNetworkInfo()
         {
