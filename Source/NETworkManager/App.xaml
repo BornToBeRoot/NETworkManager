@@ -44,6 +44,7 @@
                 <ResourceDictionary Source="/Resources/Styles/TextBlockStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/TextBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ToogleSwitchStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/ToggleButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ToolTipStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/WindowStyles.xaml" />
                 <!-- Dependent styles -->

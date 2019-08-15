@@ -205,6 +205,9 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\NetworkAuthenticationTypeToHumanReadableStringConverter.cs" />
+    <Compile Include="Converters\TimeSpanToStringConverter.cs" />
+    <Compile Include="Converters\TimeSpanToMillisecondConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityHiddenConverter.cs" />
     <Compile Include="Converters\WiFiChannelFrequencyConverter.cs" />
     <Compile Include="Converters\ConnectionStateToRectangleStyleConverter.cs" />
@@ -590,6 +593,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\ContextMenu\ContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\ToggleButtonStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

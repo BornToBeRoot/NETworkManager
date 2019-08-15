@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
+using Windows.Networking.Connectivity;
 
 //https://docs.microsoft.com/en-us/uwp/api/windows.devices.wifi.wifiadapter.requestaccessasync
 //var access = await WiFiAdapter.RequestAccessAsync();
@@ -52,7 +53,8 @@ namespace NETworkManager.Models.Network
                     NetworkRssiInDecibelMilliwatts = network.NetworkRssiInDecibelMilliwatts,
                     PhyKind = network.PhyKind,
                     NetworkKind = network.NetworkKind,
-                    Security = network.SecuritySettings,
+                    AuthenticationType = network.SecuritySettings.NetworkAuthenticationType,
+                    EncryptionType = network.SecuritySettings.NetworkEncryptionType,
                     BeaconInterval = network.BeaconInterval,
                     Uptime = network.Uptime
                 });
@@ -173,6 +175,48 @@ namespace NETworkManager.Models.Network
         public static double ConvertChannelFrequencyToGigahertz(int kilohertz)
         {
             return Convert.ToDouble(kilohertz) / 1000 / 1000;
+        }
+
+        public static string GetHumanReadableNetworkAuthenticationType(NetworkAuthenticationType networkAuthenticationType)
+        {
+            string type = "-/-";
+
+            switch (networkAuthenticationType)
+            {
+                case NetworkAuthenticationType.Ihv:
+                    type = "-/-";
+                    break;
+                case NetworkAuthenticationType.None:
+                    type = "-/-";
+                    break;
+                case NetworkAuthenticationType.Open80211:
+                    type = "Open";
+                    break;
+                case NetworkAuthenticationType.Rsna:
+                    type = "-/-";
+                    break;
+                case NetworkAuthenticationType.RsnaPsk:
+                    type = "WPA2 PSK";
+                    break;
+                case NetworkAuthenticationType.SharedKey80211:
+                    type = "-/-";
+                    break;
+                case NetworkAuthenticationType.Unknown:
+                    type = "Unkown";
+                    break;
+                case NetworkAuthenticationType.Wpa:
+                    type = "-/-";
+                    break;
+                case NetworkAuthenticationType.WpaNone:
+                    type = "-/-";
+                    break;
+                case NetworkAuthenticationType.WpaPsk:
+                    type = "WPA PSK";
+                    break;
+
+            }
+
+            return type;
         }
     }
 }

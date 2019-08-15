@@ -27,7 +27,8 @@ namespace NETworkManager.Models.Network
         public double NetworkRssiInDecibelMilliwatts { get; set; }
         public WiFiPhyKind PhyKind { get; set; }
         public WiFiNetworkKind NetworkKind { get; set; }
-        public NetworkSecuritySettings Security { get; set; }
+        public NetworkAuthenticationType AuthenticationType { get; set; }
+        public NetworkEncryptionType EncryptionType { get; set; }
         public TimeSpan BeaconInterval { get; set; }
         public TimeSpan Uptime { get; set; }
         #endregion
