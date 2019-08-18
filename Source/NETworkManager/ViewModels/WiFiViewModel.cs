@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -93,6 +92,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _networks = value;
+                OnPropertyChanged();
             }
         }
 
@@ -114,7 +114,6 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-
         public WiFiViewModel()
         {
             _isLoading = true;
@@ -145,7 +144,10 @@ namespace NETworkManager.ViewModels
             ReloadAdapter();
         }
 
-        public ICommand ScanNetworksCommand => new RelayCommand(p => ScanNetworksAction());
+        public ICommand ScanNetworksCommand => new RelayCommand(p => ScanNetworksAction(), ScanNetworks_CanExecute);
+
+        private bool ScanNetworks_CanExecute(object obj) => !IsNetworksLoading;
+        
 
         private void ScanNetworksAction()
         {

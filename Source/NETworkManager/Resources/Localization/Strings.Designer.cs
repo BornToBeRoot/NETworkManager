@@ -5176,15 +5176,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scanning for networks....
-        /// </summary>
-        public static string ScanningForNetworksDots {
-            get {
-                return ResourceManager.GetString("ScanningForNetworksDots", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Search {
@@ -5226,6 +5217,24 @@ namespace NETworkManager.Resources.Localization {
         public static string SearchedSettingNotFound {
             get {
                 return ResourceManager.GetString("SearchedSettingNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching for networks....
+        /// </summary>
+        public static string SearchingForNetworksDots {
+            get {
+                return ResourceManager.GetString("SearchingForNetworksDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching for WiFi adapters....
+        /// </summary>
+        public static string SearchingWiFiAdaptersDots {
+            get {
+                return ResourceManager.GetString("SearchingWiFiAdaptersDots", resourceCulture);
             }
         }
         

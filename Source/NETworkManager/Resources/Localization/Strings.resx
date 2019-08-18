@@ -2355,10 +2355,13 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="Networks" xml:space="preserve">
     <value>Networks</value>
   </data>
-  <data name="ScanningForNetworksDots" xml:space="preserve">
-    <value>Scanning for networks...</value>
+  <data name="SearchingForNetworksDots" xml:space="preserve">
+    <value>Searching for networks...</value>
   </data>
   <data name="NoWiFiAdaptersFound" xml:space="preserve">
     <value>No WiFi adapters found!</value>
+  </data>
+  <data name="SearchingWiFiAdaptersDots" xml:space="preserve">
+    <value>Searching for WiFi adapters...</value>
   </data>
 </root>
