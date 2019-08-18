@@ -205,6 +205,8 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\IntZeroReverseToVisibilityCollapsedConverter.cs" />
+    <Compile Include="Converters\IntZeroToVisibilityCollapsedConverter.cs" />
     <Compile Include="Converters\NetworkAuthenticationTypeToHumanReadableStringConverter.cs" />
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="Converters\TimeSpanToMillisecondConverter.cs" />

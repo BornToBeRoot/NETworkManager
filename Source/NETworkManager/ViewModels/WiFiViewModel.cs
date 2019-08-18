@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Windows.Devices.WiFi;
@@ -150,7 +151,7 @@ namespace NETworkManager.ViewModels
         {
             ScanNetworks(SelectedAdapter.WiFiAdapter);
         }
-        
+
         #endregion
 
         #region Methods
@@ -197,12 +198,19 @@ namespace NETworkManager.ViewModels
         {
             IsNetworksLoading = true;
 
-            IEnumerable<WiFiNetworkInfo> networks = await WiFi.GetNetworksAsync(adapter);
+            try
+            {
+                IEnumerable<WiFiNetworkInfo> networks = await WiFi.GetNetworksAsync(adapter);
 
-            Networks.Clear();
+                Networks.Clear();
 
-            foreach (var network in networks)
-                Networks.Add(network);
+                foreach (var network in networks)
+                    Networks.Add(network);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error...", ex.Message);
+            }
 
             IsNetworksLoading = false;
         }
