@@ -20,7 +20,8 @@
         <converters:NetworkAuthenticationTypeToHumanReadableStringConverter x:Key="NetworkAuthenticationTypeToHumanReadableStringConverter" />
         <converters:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
         <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
-        <converters:WiFiChannelFrequencyConverter x:Key="WiFiChannelFrequencyConverter" />
+        <converters:WiFiChannelAndDBMConverter x:Key="WiFiChannelAndDBMConverter" />
+        <converters:WiFiPhyKindConverter x:Key="WiFiPhyKindConverter" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.WiFi}">
@@ -243,7 +244,7 @@
                                             </Grid.RowDefinitions>
                                             <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=(network:WiFiNetworkInfo.SSID)}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
                                             <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Path=(network:WiFiNetworkInfo.AuthenticationType), Converter={StaticResource NetworkAuthenticationTypeToHumanReadableStringConverter}}" Style="{StaticResource DefaultTextBlock}" />
-                                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding Path=(network:WiFiNetworkInfo.ChannelCenterFrequencyInKilohertz), Converter={StaticResource WiFiChannelFrequencyConverter}}" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding Path=., Converter={StaticResource WiFiChannelAndDBMConverter}}" Style="{StaticResource DefaultTextBlock}" />
                                             <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding Path=(network:WiFiNetworkInfo.BSSID)}" Style="{StaticResource DefaultTextBlock}" />
                                         </Grid>
                                         <ToggleButton Grid.Column="4" Grid.Row="0" IsChecked="{Binding Path=(network:WiFiNetworkInfo.ExpandDetails)}" Style="{StaticResource CleanToggleButton}">
@@ -257,7 +258,7 @@
                                                         <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
                                                         <Setter Property="OpacityMask"  Value="{StaticResource VisualDown}" />
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToggleButton}}, Path=IsMouseOver}" Value="True">
                                                                 <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.ExpandDetails)}" Value="True">
@@ -292,7 +293,7 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Column="1" Grid.Row="0" Text="Infrastructure" Style="{StaticResource HeaderTextBlock}" />
                                         <TextBlock Grid.Column="1" Grid.Row="1" Text="Phy kind:" Style="{StaticResource DefaultTextBlock}" />
-                                        <TextBlock Grid.Column="3" Grid.Row="1" Text="{Binding Path=(network:WiFiNetworkInfo.PhyKind)}" Style="{StaticResource DefaultTextBlock}" />
+                                        <TextBlock Grid.Column="3" Grid.Row="1" Text="{Binding Path=(network:WiFiNetworkInfo.PhyKind), Converter={StaticResource WiFiPhyKindConverter}}" Style="{StaticResource DefaultTextBlock}" />
                                         <TextBlock Grid.Column="1" Grid.Row="3" Text="Network kind:" Style="{StaticResource DefaultTextBlock}" />
                                         <TextBlock Grid.Column="3" Grid.Row="3" Text="{Binding Path=(network:WiFiNetworkInfo.NetworkKind)}" Style="{StaticResource DefaultTextBlock}" />
                                         <TextBlock Grid.Column="5" Grid.Row="0" Text="Encryption" Style="{StaticResource HeaderTextBlock}" />

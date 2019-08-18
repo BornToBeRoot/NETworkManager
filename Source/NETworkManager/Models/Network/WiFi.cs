@@ -218,5 +218,41 @@ namespace NETworkManager.Models.Network
 
             return type;
         }
+
+        public static string GetHumandReadablePhyKind(WiFiPhyKind phyKind)
+        {
+            string kind = "-/-";
+
+            switch (phyKind)
+            {
+                case WiFiPhyKind.Dsss:
+                case WiFiPhyKind.Fhss:                    
+                    kind = "802.11";
+                    break;
+                case WiFiPhyKind.Ofdm:
+                    kind = "802.11a";
+                    break;
+                case WiFiPhyKind.Hrdsss:
+                    kind = "802.11b";
+                    break;
+                case WiFiPhyKind.Erp:
+                    kind = "802.11g";
+                    break;
+                case WiFiPhyKind.HT:
+                    kind = "802.11n";
+                    break;
+                case WiFiPhyKind.Dmg:
+                    kind = "802.11ad";
+                    break;
+                case WiFiPhyKind.Vht:
+                    kind = "802.11ac";
+                    break;
+                case WiFiPhyKind.HE:
+                    kind = "802.11ax";
+                    break;                
+            }
+
+            return kind;
+        }
     }
 }

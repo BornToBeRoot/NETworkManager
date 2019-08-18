@@ -209,7 +209,8 @@
     <Compile Include="Converters\TimeSpanToStringConverter.cs" />
     <Compile Include="Converters\TimeSpanToMillisecondConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityHiddenConverter.cs" />
-    <Compile Include="Converters\WiFiChannelFrequencyConverter.cs" />
+    <Compile Include="Converters\WiFiPhyKindConverter.cs" />
+    <Compile Include="Converters\WiFiChannelAndDBMConverter.cs" />
     <Compile Include="Converters\ConnectionStateToRectangleStyleConverter.cs" />
     <Compile Include="Converters\BandwidthBytesToSpeedConverter.cs" />
     <Compile Include="Converters\DNSServerInfoToString.cs" />
