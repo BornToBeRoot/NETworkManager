@@ -14,7 +14,7 @@ namespace NETworkManager.Converters
 
             double ghz = WiFi.ConvertChannelFrequencyToGigahertz(info.ChannelCenterFrequencyInKilohertz) > 5 ? 5 : 2.4;
 
-            return $"{ghz} GHz / Channel {WiFi.GetChannelFromChannelFrequency(info.ChannelCenterFrequencyInKilohertz)}, {info.NetworkRssiInDecibelMilliwatts} dBm";
+            return $"{ghz} GHz / Channel {WiFi.GetChannelFromChannelFrequency(info.ChannelCenterFrequencyInKilohertz)} ({info.NetworkRssiInDecibelMilliwatts} dBm)";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

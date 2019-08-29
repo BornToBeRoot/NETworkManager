@@ -193,7 +193,7 @@ namespace NETworkManager.Models.Network
                     type = "Open";
                     break;
                 case NetworkAuthenticationType.Rsna:
-                    type = "-/-";
+                    type = "WPA2 Enterprise";
                     break;
                 case NetworkAuthenticationType.RsnaPsk:
                     type = "WPA2 PSK";
@@ -205,7 +205,7 @@ namespace NETworkManager.Models.Network
                     type = "Unkown";
                     break;
                 case NetworkAuthenticationType.Wpa:
-                    type = "-/-";
+                    type = "WPA Enterprise";
                     break;
                 case NetworkAuthenticationType.WpaNone:
                     type = "-/-";
