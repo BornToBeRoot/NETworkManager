@@ -3534,6 +3534,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No WiFi networks found!.
+        /// </summary>
+        public static string NoWiFiNetworksFound {
+            get {
+                return ResourceManager.GetString("NoWiFiNetworksFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of errors after which is canceled:.
         /// </summary>
         public static string NumberOfErrorsAfterWhichIsCanceled {

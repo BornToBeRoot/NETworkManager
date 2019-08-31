@@ -202,9 +202,9 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                IEnumerable<WiFiNetworkInfo> networks = await WiFi.GetNetworksAsync(adapter);
-
                 Networks.Clear();
+
+                IEnumerable<WiFiNetworkInfo> networks = await WiFi.GetNetworksAsync(adapter);
 
                 foreach (var network in networks)
                     Networks.Add(network);
