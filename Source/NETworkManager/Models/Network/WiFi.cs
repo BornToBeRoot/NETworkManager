@@ -182,13 +182,7 @@ namespace NETworkManager.Models.Network
             string type = "-/-";
 
             switch (networkAuthenticationType)
-            {
-                case NetworkAuthenticationType.Ihv:
-                    type = "-/-";
-                    break;
-                case NetworkAuthenticationType.None:
-                    type = "-/-";
-                    break;
+            {                           
                 case NetworkAuthenticationType.Open80211:
                     type = "Open";
                     break;
@@ -198,22 +192,27 @@ namespace NETworkManager.Models.Network
                 case NetworkAuthenticationType.RsnaPsk:
                     type = "WPA2 PSK";
                     break;
-                case NetworkAuthenticationType.SharedKey80211:
-                    type = "-/-";
-                    break;
-                case NetworkAuthenticationType.Unknown:
-                    type = "Unkown";
-                    break;
                 case NetworkAuthenticationType.Wpa:
                     type = "WPA Enterprise";
                     break;
                 case NetworkAuthenticationType.WpaNone:
-                    type = "-/-";
+                    type = "WPA None";
                     break;
                 case NetworkAuthenticationType.WpaPsk:
                     type = "WPA PSK";
                     break;
-
+                case NetworkAuthenticationType.SharedKey80211:
+                    type = "WEP";
+                    break;
+                case NetworkAuthenticationType.Ihv:
+                    type = "IHV";
+                    break;
+                case NetworkAuthenticationType.Unknown:
+                    type = "Unkown";
+                    break;
+                case NetworkAuthenticationType.None:
+                    type = "-/-";
+                    break;
             }
 
             return type;
