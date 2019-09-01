@@ -9,6 +9,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
@@ -373,6 +374,54 @@
                         <TextBlock Text="{x:Static localization:Strings.SearchingWiFiAdaptersDots}" Style="{StaticResource MessageTextBlock}" />
                     </StackPanel>
                 </StackPanel>
+            </Grid>
+        </TabItem>
+        <TabItem Header="{x:Static localization:Strings.Channels}">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="2.4 GHz" Style="{StaticResource HeaderTextBlock}" />
+                <liveChart:CartesianChart Grid.Row="1" Series="{Binding Radio1Series}" >
+                    <liveChart:CartesianChart.DataTooltip>
+                        <liveChart:DefaultTooltip SelectionMode="OnlySender" Background="Transparent"  />
+                    </liveChart:CartesianChart.DataTooltip>
+                    <liveChart:CartesianChart.AxisX>
+                        <liveChart:Axis Title="Channel" Labels="{Binding Radio1Labels}">
+                            <liveChart:Axis.Separator>
+                                <liveChart:Separator Step="1" StrokeThickness="0" />
+                            </liveChart:Axis.Separator>
+                        </liveChart:Axis>
+                    </liveChart:CartesianChart.AxisX>
+                    <liveChart:CartesianChart.AxisY>
+                        <liveChart:Axis Title="Signal strength" MinValue="0" LabelFormatter="{Binding FormatterdBm}">
+                            <liveChart:Axis.Separator>
+                                <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource GrayBrush8}" StrokeDashArray="10" />
+                            </liveChart:Axis.Separator>
+                        </liveChart:Axis>
+                    </liveChart:CartesianChart.AxisY>
+                </liveChart:CartesianChart>
+                <TextBlock Grid.Row="3" Text="5 GHz" Style="{StaticResource HeaderTextBlock}" />
+                <!--<liveChart:CartesianChart Grid.Row="4" Series="{Binding Radio1Series}">
+                    <liveChart:CartesianChart.AxisX>
+                        <liveChart:Axis Title="Channel" Labels="{Binding Radio1Labels}">
+                            <liveChart:Axis.Separator>
+                                <liveChart:Separator Step="1" StrokeThickness="0" />
+                            </liveChart:Axis.Separator>
+                        </liveChart:Axis>
+                    </liveChart:CartesianChart.AxisX>
+                    <liveChart:CartesianChart.AxisY>
+                        <liveChart:Axis Title="Signal strength" MinValue="0" LabelFormatter="{Binding FormatterdBm}">
+                            <liveChart:Axis.Separator>
+                                <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource GrayBrush8}" StrokeDashArray="10" />
+                            </liveChart:Axis.Separator>
+                        </liveChart:Axis>
+                    </liveChart:CartesianChart.AxisY>
+                </liveChart:CartesianChart>-->
             </Grid>
         </TabItem>
     </TabControl>

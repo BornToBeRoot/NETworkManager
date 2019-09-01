@@ -2367,4 +2367,7 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="NoWiFiNetworksFound" xml:space="preserve">
     <value>No WiFi networks found!</value>
   </data>
+  <data name="Channels" xml:space="preserve">
+    <value>Channels</value>
+  </data>
 </root>

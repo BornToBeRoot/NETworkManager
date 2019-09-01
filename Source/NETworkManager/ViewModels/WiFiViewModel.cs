@@ -1,4 +1,6 @@
-﻿using NETworkManager.Models.Network;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System;
@@ -111,6 +113,13 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public SeriesCollection Radio1Series { get; set; } = new SeriesCollection();
+        public string[] Radio1Labels { get; set; } = new string[] { " ", " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", " ", " " };
+        public SeriesCollection Radio2Series { get; set; } = new SeriesCollection();
+        public string[] Radio2Labels { get; set; }
+        public Func<double, string> FormatterdBm { get; set; } = value => $"- {value} dBm";
+
         #endregion
 
         #region Constructor, load settings
@@ -126,6 +135,43 @@ namespace NETworkManager.ViewModels
             LoadAdapters();
 
             _isLoading = false;
+        }
+
+        private ChartValues<double> GetDefaultValues()
+        {
+            ChartValues<double> values = new ChartValues<double>();
+
+            for (int i = 0; i < 17; i++)
+                values.Add(-1);
+
+            return values;
+        }
+
+        private void AddNetworkToRadio1Chart(WiFiNetworkInfo network)
+        {
+            int channel = WiFi.GetChannelFromChannelFrequency(network.ChannelCenterFrequencyInKilohertz);
+
+            int index = channel + 1;
+
+            ChartValues<double> values = GetDefaultValues();
+            
+            values[index - 2] = 0;
+            values[index - 1] = network.NetworkRssiInDecibelMilliwatts / 2 * -1;
+            values[index] = network.NetworkRssiInDecibelMilliwatts * -1;
+            values[index + 1] = network.NetworkRssiInDecibelMilliwatts / 2 * -1;
+            values[index + 2] = 0;
+
+            Radio1Series.Add(new LineSeries
+            {
+                Title = network.SSID,
+                Values = values,
+                PointGeometry = null
+            });
+        }
+
+        private void AddNetworkToRadio2Chart(WiFiNetworkInfo network)
+        {
+
         }
 
         private void LoadSettings()
@@ -147,7 +193,7 @@ namespace NETworkManager.ViewModels
         public ICommand ScanNetworksCommand => new RelayCommand(p => ScanNetworksAction(), ScanNetworks_CanExecute);
 
         private bool ScanNetworks_CanExecute(object obj) => !IsNetworksLoading;
-        
+
 
         private void ScanNetworksAction()
         {
@@ -200,18 +246,22 @@ namespace NETworkManager.ViewModels
         {
             IsNetworksLoading = true;
 
-            try
-            {
-                Networks.Clear();
+            Networks.Clear();
 
-                IEnumerable<WiFiNetworkInfo> networks = await WiFi.GetNetworksAsync(adapter);
+            Radio1Series.Clear();
+            Radio2Series.Clear();
 
-                foreach (var network in networks)
-                    Networks.Add(network);
-            }
-            catch (Exception ex)
+            IEnumerable<WiFiNetworkInfo> networks = await WiFi.GetNetworksAsync(adapter);
+
+            foreach (var network in networks)
             {
-                MessageBox.Show("Error...", ex.Message);
+                Networks.Add(network);
+
+                if (WiFi.ConvertChannelFrequencyToGigahertz(network.ChannelCenterFrequencyInKilohertz) < 5) // 2.4 GHz
+                    AddNetworkToRadio1Chart(network);
+                else
+                    AddNetworkToRadio2Chart(network);
+
             }
 
             IsNetworksLoading = false;
