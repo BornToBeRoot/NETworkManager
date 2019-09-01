@@ -253,5 +253,8 @@ namespace NETworkManager.Models.Network
 
             return kind;
         }
+
+        public enum Radio
+        { Radio1,Radio2}
     }
 }

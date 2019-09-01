@@ -386,7 +386,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Text="2.4 GHz" Style="{StaticResource HeaderTextBlock}" />
-                <liveChart:CartesianChart Grid.Row="1" Series="{Binding Radio1Series}" >
+                <liveChart:CartesianChart Grid.Row="1" Series="{Binding Radio1Series}" LegendLocation="Right">
                     <liveChart:CartesianChart.DataTooltip>
                         <liveChart:DefaultTooltip SelectionMode="OnlySender" Background="Transparent"  />
                     </liveChart:CartesianChart.DataTooltip>
@@ -406,9 +406,12 @@
                     </liveChart:CartesianChart.AxisY>
                 </liveChart:CartesianChart>
                 <TextBlock Grid.Row="3" Text="5 GHz" Style="{StaticResource HeaderTextBlock}" />
-                <!--<liveChart:CartesianChart Grid.Row="4" Series="{Binding Radio1Series}">
+                <liveChart:CartesianChart Grid.Row="4" Series="{Binding Radio2Series}" LegendLocation="Right">
+                    <liveChart:CartesianChart.DataTooltip>
+                        <liveChart:DefaultTooltip SelectionMode="OnlySender" Background="Transparent"  />
+                    </liveChart:CartesianChart.DataTooltip>
                     <liveChart:CartesianChart.AxisX>
-                        <liveChart:Axis Title="Channel" Labels="{Binding Radio1Labels}">
+                        <liveChart:Axis Title="Channel" Labels="{Binding Radio2Labels}">
                             <liveChart:Axis.Separator>
                                 <liveChart:Separator Step="1" StrokeThickness="0" />
                             </liveChart:Axis.Separator>
@@ -421,7 +424,7 @@
                             </liveChart:Axis.Separator>
                         </liveChart:Axis>
                     </liveChart:CartesianChart.AxisY>
-                </liveChart:CartesianChart>-->
+                </liveChart:CartesianChart>
             </Grid>
         </TabItem>
     </TabControl>
