@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Windows.Devices.WiFi;
@@ -60,8 +59,8 @@ namespace NETworkManager.ViewModels
 
                 if (value != null)
                 {
-                    //if (!_isLoading)
-                    //    SettingsManager.Current.NetworkInterface_SelectedInterfaceId = value.Id;
+                    if (!_isLoading)
+                        SettingsManager.Current.WiFi_SelectedInterfaceId = value.NetworkInterfaceInfo.Id;
 
                     ScanNetworks(value.WiFiAdapter);
                 }
@@ -135,56 +134,7 @@ namespace NETworkManager.ViewModels
             LoadAdapters();
 
             _isLoading = false;
-        }
-
-        private ChartValues<double> GetDefaultChartValues(WiFi.Radio radio)
-        {
-            ChartValues<double> values = new ChartValues<double>();                        
-
-            for (int i = 0; i < (radio == WiFi.Radio.Radio1 ? Radio1Labels.Length : Radio2Labels.Length); i++)
-                values.Add(-1);
-
-            return values;
-        }
-
-        private ChartValues<double> SetChartValues(WiFiNetworkInfo network, WiFi.Radio radio, int index)
-        {
-            ChartValues<double> values = GetDefaultChartValues(radio);
-
-            values[index - 2] = 0;
-            values[index - 1] = network.NetworkRssiInDecibelMilliwatts * -1;
-            values[index] = network.NetworkRssiInDecibelMilliwatts * -1;
-            values[index + 1] = network.NetworkRssiInDecibelMilliwatts * -1;
-            values[index + 2] = 0;
-
-            return values;
-        }
-        
-        private void AddNetworkToRadio1Chart(WiFiNetworkInfo network)
-        {
-            int index = Array.IndexOf(Radio1Labels, $"{WiFi.GetChannelFromChannelFrequency(network.ChannelCenterFrequencyInKilohertz)}");
-
-            Radio1Series.Add(new LineSeries
-            {
-                Title = network.SSID,
-                Values = SetChartValues(network, WiFi.Radio.Radio1, index),
-                PointGeometry = null,
-                LineSmoothness = 0
-            });
-        }
-
-        private void AddNetworkToRadio2Chart(WiFiNetworkInfo network)
-        {
-            int index = Array.IndexOf(Radio2Labels, $"{WiFi.GetChannelFromChannelFrequency(network.ChannelCenterFrequencyInKilohertz)}");
-            
-            Radio2Series.Add(new LineSeries
-            {
-                Title = network.SSID,
-                Values = SetChartValues(network, WiFi.Radio.Radio2, index),
-                PointGeometry = null,
-                LineSmoothness = 0          
-            });
-        }
+        }       
 
         private void LoadSettings()
         {
@@ -224,7 +174,7 @@ namespace NETworkManager.ViewModels
             // Get the last selected interface, if it is still available on this machine...
             if (Adapters.Count > 0)
             {
-                var info = Adapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == SettingsManager.Current.NetworkInterface_SelectedInterfaceId);
+                var info = Adapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == SettingsManager.Current.WiFi_SelectedInterfaceId);
 
                 SelectedAdapter = info ?? Adapters[0];
             }
@@ -276,6 +226,55 @@ namespace NETworkManager.ViewModels
             }
 
             IsNetworksLoading = false;
+        }
+
+        private ChartValues<double> GetDefaultChartValues(WiFi.Radio radio)
+        {
+            ChartValues<double> values = new ChartValues<double>();
+
+            for (int i = 0; i < (radio == WiFi.Radio.Radio1 ? Radio1Labels.Length : Radio2Labels.Length); i++)
+                values.Add(-1);
+
+            return values;
+        }
+
+        private ChartValues<double> SetChartValues(WiFiNetworkInfo network, WiFi.Radio radio, int index)
+        {
+            ChartValues<double> values = GetDefaultChartValues(radio);
+
+            values[index - 2] = 0;
+            values[index - 1] = network.NetworkRssiInDecibelMilliwatts * -1;
+            values[index] = network.NetworkRssiInDecibelMilliwatts * -1;
+            values[index + 1] = network.NetworkRssiInDecibelMilliwatts * -1;
+            values[index + 2] = 0;
+
+            return values;
+        }
+
+        private void AddNetworkToRadio1Chart(WiFiNetworkInfo network)
+        {
+            int index = Array.IndexOf(Radio1Labels, $"{WiFi.GetChannelFromChannelFrequency(network.ChannelCenterFrequencyInKilohertz)}");
+
+            Radio1Series.Add(new LineSeries
+            {
+                Title = network.SSID,
+                Values = SetChartValues(network, WiFi.Radio.Radio1, index),
+                PointGeometry = null,
+                LineSmoothness = 0
+            });
+        }
+
+        private void AddNetworkToRadio2Chart(WiFiNetworkInfo network)
+        {
+            int index = Array.IndexOf(Radio2Labels, $"{WiFi.GetChannelFromChannelFrequency(network.ChannelCenterFrequencyInKilohertz)}");
+
+            Radio2Series.Add(new LineSeries
+            {
+                Title = network.SSID,
+                Values = SetChartValues(network, WiFi.Radio.Radio2, index),
+                PointGeometry = null,
+                LineSmoothness = 0
+            });
         }
 
         public void OnViewVisible()

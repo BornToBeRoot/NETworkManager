@@ -727,6 +727,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Channel.
+        /// </summary>
+        public static string Channel {
+            get {
+                return ResourceManager.GetString("Channel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Channels.
         /// </summary>
         public static string Channels {
@@ -2408,6 +2417,24 @@ namespace NETworkManager.Resources.Localization {
         public static string General {
             get {
                 return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4 GHz.
+        /// </summary>
+        public static string GHz2dot4 {
+            get {
+                return ResourceManager.GetString("GHz2dot4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5 GHz.
+        /// </summary>
+        public static string GHz5 {
+            get {
+                return ResourceManager.GetString("GHz5", resourceCulture);
             }
         }
         
@@ -5550,6 +5577,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Sienna {
             get {
                 return ResourceManager.GetString("Sienna", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signal strength.
+        /// </summary>
+        public static string SignalStrength {
+            get {
+                return ResourceManager.GetString("SignalStrength", resourceCulture);
             }
         }
         

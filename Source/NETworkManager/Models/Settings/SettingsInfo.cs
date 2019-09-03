@@ -557,6 +557,23 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
+        #region WiFi
+        private string _wiFi_SelectedInterfaceId;
+        public string WiFi_SelectedInterfaceId
+        {
+            get => _wiFi_SelectedInterfaceId;
+            set
+            {
+                if (value == _wiFi_SelectedInterfaceId)
+                    return;
+
+                _wiFi_SelectedInterfaceId = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region IPScanner        
         private bool _ipScanner_ShowScanResultForAllIPAddresses;
         public bool IPScanner_ShowScanResultForAllIPAddresses

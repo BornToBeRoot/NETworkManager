@@ -2370,4 +2370,16 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="Channels" xml:space="preserve">
     <value>Channels</value>
   </data>
+  <data name="Channel" xml:space="preserve">
+    <value>Channel</value>
+  </data>
+  <data name="GHz2dot4" xml:space="preserve">
+    <value>2.4 GHz</value>
+  </data>
+  <data name="GHz5" xml:space="preserve">
+    <value>5 GHz</value>
+  </data>
+  <data name="SignalStrength" xml:space="preserve">
+    <value>Signal strength</value>
+  </data>
 </root>
