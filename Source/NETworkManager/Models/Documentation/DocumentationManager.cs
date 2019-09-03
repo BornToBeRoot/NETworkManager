@@ -1,4 +1,5 @@
 ﻿using NETworkManager.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace NETworkManager.Models.Documentation
         {
             new DocumentationInfo(DocumentationIdentifier.ApplicationDashboard, @"/Application/Dashboard.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"/Application/NetworkInterface.md", GetLocalizationInfoList("en-US", "de-DE")),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"/Application/WiFi.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationWiFi, @"/Application/WiFi.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationIpScanner, @"/Application/IPScanner.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPortScanner, @"/Application/PortScanner.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPing, @"/Application/Ping.md", GetLocalizationInfoList("en-US", "de-DE")),
@@ -38,10 +39,9 @@ namespace NETworkManager.Models.Documentation
             new DocumentationInfo(DocumentationIdentifier.HowToInstallRdp8Dot1OnWindows6Dot1, @"/HowTo/Install_RDP_8dot1_on_Windows6dot1.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.HowToCreateCustomThemeAndAccent, @"/HowTo/Create_custom_theme_and_accent.md", GetLocalizationInfoList("en-US", "de-DE"))
         };
-
-       
-        // Get localized documentation url (if available), else return the english webpage
-        public static string GetLocalizedUrlById(DocumentationIdentifier documentationIdentifier)
+               
+        // Get localized documentation url (if available), else return the english page
+        public static string GetLocalizedUrlByIdentifier(DocumentationIdentifier documentationIdentifier)
         {
             var info = List.FirstOrDefault(x => x.Identifier == documentationIdentifier);
 
@@ -61,7 +61,7 @@ namespace NETworkManager.Models.Documentation
 
         public static void OpenDocumentation(DocumentationIdentifier documentationIdentifier)
         {            
-            Process.Start(documentationIdentifier == DocumentationIdentifier.Default ? DocumentationUrl : GetLocalizedUrlById(documentationIdentifier));
+            Process.Start(documentationIdentifier == DocumentationIdentifier.Default ? DocumentationUrl : GetLocalizedUrlByIdentifier(documentationIdentifier));
         }
 
         #region ICommands & Actions
@@ -71,6 +71,59 @@ namespace NETworkManager.Models.Documentation
         {
             if (documentationIdentifier != null)
                 OpenDocumentation((DocumentationIdentifier) documentationIdentifier);
+        }
+
+        public static DocumentationIdentifier GetIdentifierByAppliactionName(ApplicationViewManager.Name name)
+        {
+            switch (name)
+            {
+                case ApplicationViewManager.Name.Dashboard:
+                    return DocumentationIdentifier.ApplicationDashboard;                    
+                case ApplicationViewManager.Name.NetworkInterface:
+                    return DocumentationIdentifier.ApplicationNetworkInterface;                    
+                case ApplicationViewManager.Name.WiFi:
+                    return DocumentationIdentifier.ApplicationWiFi;                    
+                case ApplicationViewManager.Name.IPScanner:
+                    return DocumentationIdentifier.ApplicationIpScanner;                    
+                case ApplicationViewManager.Name.PortScanner:
+                    return DocumentationIdentifier.ApplicationPortScanner;                    
+                case ApplicationViewManager.Name.Ping:
+                    return DocumentationIdentifier.ApplicationPing;                    
+                case ApplicationViewManager.Name.Traceroute:
+                    return DocumentationIdentifier.ApplicationTraceroute;                    
+                case ApplicationViewManager.Name.DNSLookup:
+                    return DocumentationIdentifier.ApplicationDnsLookup;                    
+                case ApplicationViewManager.Name.RemoteDesktop:
+                    return DocumentationIdentifier.ApplicationRemoteDesktop;                    
+                case ApplicationViewManager.Name.PowerShell:
+                    return DocumentationIdentifier.ApplicationPowerShell;                    
+                case ApplicationViewManager.Name.PuTTY:
+                    return DocumentationIdentifier.ApplicationPutty;                    
+                case ApplicationViewManager.Name.TigerVNC:
+                    return DocumentationIdentifier.ApplicationTigerVNC;                    
+                case ApplicationViewManager.Name.SNMP:
+                    return DocumentationIdentifier.ApplicationSnmp;                    
+                case ApplicationViewManager.Name.WakeOnLAN:
+                    return DocumentationIdentifier.ApplicationWakeOnLan;                    
+                case ApplicationViewManager.Name.HTTPHeaders:
+                    return DocumentationIdentifier.ApplicationHttpHeaders;                    
+                case ApplicationViewManager.Name.Whois:
+                    return DocumentationIdentifier.ApplicationWhois;                    
+                case ApplicationViewManager.Name.SubnetCalculator:
+                    return DocumentationIdentifier.ApplicationSubnetCalculator;                    
+                case ApplicationViewManager.Name.Lookup:
+                    return DocumentationIdentifier.ApplicationLookup;                    
+                case ApplicationViewManager.Name.Connections:
+                    return DocumentationIdentifier.ApplicationConnections;                    
+                case ApplicationViewManager.Name.Listeners:
+                    return DocumentationIdentifier.ApplicationListeners;                    
+                case ApplicationViewManager.Name.ARPTable:
+                    return DocumentationIdentifier.ApplicationArpTable;                    
+                case ApplicationViewManager.Name.None:
+                    return DocumentationIdentifier.Default;                    
+                default:
+                    return DocumentationIdentifier.Default;                    
+            }
         }
         #endregion
     }
