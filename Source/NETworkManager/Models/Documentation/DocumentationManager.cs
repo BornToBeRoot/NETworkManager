@@ -16,6 +16,7 @@ namespace NETworkManager.Models.Documentation
         {
             new DocumentationInfo(DocumentationIdentifier.ApplicationDashboard, @"/Application/Dashboard.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"/Application/NetworkInterface.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"/Application/WiFi.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationIpScanner, @"/Application/IPScanner.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPortScanner, @"/Application/PortScanner.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPing, @"/Application/Ping.md", GetLocalizationInfoList("en-US", "de-DE")),

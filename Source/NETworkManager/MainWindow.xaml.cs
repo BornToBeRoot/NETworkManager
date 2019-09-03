@@ -1136,6 +1136,9 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.NetworkInterface:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationNetworkInterface);
                     break;
+                case ApplicationViewManager.Name.WiFi:
+                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationWiFi);
+                    break;
                 case ApplicationViewManager.Name.IPScanner:
                     DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationIpScanner);
                     break;

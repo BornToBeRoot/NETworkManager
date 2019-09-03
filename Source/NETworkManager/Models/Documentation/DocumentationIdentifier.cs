@@ -5,6 +5,7 @@
         Default,
         ApplicationDashboard,
         ApplicationNetworkInterface,
+        ApplicationWiFi,
         ApplicationIpScanner,
         ApplicationPortScanner,
         ApplicationPing,
