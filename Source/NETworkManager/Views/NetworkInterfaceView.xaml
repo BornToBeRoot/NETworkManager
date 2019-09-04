@@ -27,44 +27,17 @@
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
         <converters:BandwidthBytesToSpeedConverter x:Key="BandwidthBytesToSpeedConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
+        <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
+        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
         <converters:OperationalStatusToStringConverter x:Key="OperationalStatusToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
-        <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
-        <Style x:Key="ReloadAnimation" TargetType="Rectangle">
-            <Setter Property="Height" Value="24" />
-            <Setter Property="RenderTransform">
-                <Setter.Value>
-                    <RotateTransform CenterX="12" CenterY="12" />
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Trigger.EnterActions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle" From="0" To="720" Duration="0:0:2" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </Trigger.EnterActions>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+        <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />        
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.Information}">
-            <Grid Margin="10">
-                <Grid>
-                    <Grid.Style>
-                        <Style TargetType="{x:Type Grid}" >
-                            <Setter Property="Visibility" Value="Visible" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
+            <Grid Margin="10" >
+                <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -159,18 +132,7 @@
                             </Button>
                         </Grid>
                     </StackPanel>
-                    <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Details}">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                    <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Details}" Style="{StaticResource HeaderTextBlock}" />
                     <ScrollViewer Grid.Row="2" Style="{StaticResource DefaultScrollViewer}">
                         <Grid>
                             <Grid.Resources>
@@ -270,7 +232,7 @@
                         </Button.Content>
                     </Button>
                 </Grid>
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
                     <StackPanel.Style>
                         <Style TargetType="{x:Type StackPanel}">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -303,17 +265,7 @@
         </TabItem>
         <TabItem Header="{x:Static localization:Strings.Bandwidth}">
             <Grid Margin="10">
-                <Grid>
-                    <Grid.Style>
-                        <Style TargetType="{x:Type Grid}" >
-                            <Setter Property="Visibility" Value="Visible" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
+                <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">                  
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -420,7 +372,10 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <liveChart:CartesianChart Grid.Row="2" Series="{Binding Series}" Margin="0,0,0,20">
+                    <liveChart:CartesianChart Grid.Row="2" Series="{Binding Series}" LegendLocation="Right" Margin="0,0,0,20">
+                        <liveChart:CartesianChart.DataTooltip>
+                            <liveChart:DefaultTooltip Background="Transparent" />
+                        </liveChart:CartesianChart.DataTooltip>
                         <liveChart:CartesianChart.AxisX>
                             <liveChart:Axis LabelFormatter="{Binding FormatterDate}">
                                 <liveChart:Axis.Separator>
@@ -436,18 +391,7 @@
                             </liveChart:Axis>
                         </liveChart:CartesianChart.AxisY>
                     </liveChart:CartesianChart>
-                    <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.Details}">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                    <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.Details}" Style="{StaticResource HeaderTextBlock}" />
                     <Grid Grid.Row="4">
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
@@ -478,17 +422,7 @@
                         <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding BandwidthBytesSentSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
                     </Grid>
                 </Grid>
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <StackPanel.Style>
-                        <Style TargetType="{x:Type StackPanel}">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </StackPanel.Style>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
                     <TextBlock Text="{x:Static localization:Strings.NoEnabledNetworkAdaptersFound}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
                     <Button Command="{Binding OpenNetworkConnectionsCommand}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
                         <Button.Content>
@@ -511,17 +445,7 @@
         </TabItem>
         <TabItem Header="{x:Static localization:Strings.Configure}">
             <Grid>
-                <Grid>
-                    <Grid.Style>
-                        <Style TargetType="{x:Type Grid}" >
-                            <Setter Property="Visibility" Value="Visible" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Grid.Style>
+                <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -1129,17 +1053,7 @@
                         </Grid>
                     </Expander>
                 </Grid>
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <StackPanel.Style>
-                        <Style TargetType="{x:Type StackPanel}">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </StackPanel.Style>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
                     <TextBlock Text="{x:Static localization:Strings.NoEnabledNetworkAdaptersFound}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
                     <Button Command="{Binding OpenNetworkConnectionsCommand}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
                         <Button.Content>

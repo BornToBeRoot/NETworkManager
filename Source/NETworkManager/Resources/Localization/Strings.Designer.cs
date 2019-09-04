@@ -727,6 +727,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Channel.
+        /// </summary>
+        public static string Channel {
+            get {
+                return ResourceManager.GetString("Channel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Channels.
+        /// </summary>
+        public static string Channels {
+            get {
+                return ResourceManager.GetString("Channels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check.
         /// </summary>
         public static string Check {
@@ -2403,6 +2421,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 2.4 GHz.
+        /// </summary>
+        public static string GHz2dot4 {
+            get {
+                return ResourceManager.GetString("GHz2dot4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5 GHz.
+        /// </summary>
+        public static string GHz5 {
+            get {
+                return ResourceManager.GetString("GHz5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Got &quot;{0}&quot; as public ip address from &quot;{1}&quot;!.
         /// </summary>
         public static string GotXXXAsPublicIPAddressFromXXXMessage {
@@ -3353,6 +3389,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Networks.
+        /// </summary>
+        public static string Networks {
+            get {
+                return ResourceManager.GetString("Networks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network unavailable!.
         /// </summary>
         public static string NetworkUnavailable {
@@ -3512,6 +3557,24 @@ namespace NETworkManager.Resources.Localization {
         public static string NoVendorFoundCheckYourInput {
             get {
                 return ResourceManager.GetString("NoVendorFoundCheckYourInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No WiFi adapters found!.
+        /// </summary>
+        public static string NoWiFiAdaptersFound {
+            get {
+                return ResourceManager.GetString("NoWiFiAdaptersFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No WiFi networks found!.
+        /// </summary>
+        public static string NoWiFiNetworksFound {
+            get {
+                return ResourceManager.GetString("NoWiFiNetworksFound", resourceCulture);
             }
         }
         
@@ -5203,6 +5266,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Searching for networks....
+        /// </summary>
+        public static string SearchingForNetworksDots {
+            get {
+                return ResourceManager.GetString("SearchingForNetworksDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching for WiFi adapters....
+        /// </summary>
+        public static string SearchingWiFiAdaptersDots {
+            get {
+                return ResourceManager.GetString("SearchingWiFiAdaptersDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Secondary DNS server.
         /// </summary>
         public static string SecondaryDNSServer {
@@ -5496,6 +5577,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Sienna {
             get {
                 return ResourceManager.GetString("Sienna", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signal strength.
+        /// </summary>
+        public static string SignalStrength {
+            get {
+                return ResourceManager.GetString("SignalStrength", resourceCulture);
             }
         }
         
@@ -6582,6 +6672,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Width {
             get {
                 return ResourceManager.GetString("Width", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WiFi.
+        /// </summary>
+        public static string WiFi {
+            get {
+                return ResourceManager.GetString("WiFi", resourceCulture);
             }
         }
         

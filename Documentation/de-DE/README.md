@@ -3,6 +3,7 @@
 ## Anwendung
 - [Dashboard](Application/Dashboard.md)
 - [Netzwerkinterface](Application/NetworkInterface.md)
+- [WLAN](Application/WiFi.md)
 - [IP-Scanner](Application/IPScanner.md)
 - [Port-Scanner](Application/PortScanner.md)
 - [Ping](Application/Ping.md)

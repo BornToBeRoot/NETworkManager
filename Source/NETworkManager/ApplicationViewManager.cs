@@ -28,6 +28,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.Dashboard;
                 case Name.NetworkInterface:
                     return Resources.Localization.Strings.NetworkInterface;
+                case Name.WiFi:
+                    return Resources.Localization.Strings.WiFi;
                 case Name.IPScanner:
                     return Resources.Localization.Strings.IPScanner;
                 case Name.PortScanner:
@@ -80,6 +82,9 @@ namespace NETworkManager
                     break;
                 case Name.NetworkInterface:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Network });
+                    break;
+                case Name.WiFi:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.AccessPointNetwork });
                     break;
                 case Name.IPScanner:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Sitemap });
@@ -148,6 +153,7 @@ namespace NETworkManager
             None,
             Dashboard,
             NetworkInterface,
+            WiFi,
             IPScanner,
             PortScanner,
             Ping,

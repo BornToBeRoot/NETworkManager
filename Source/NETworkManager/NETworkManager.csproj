@@ -205,7 +205,14 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\IntZeroReverseToVisibilityCollapsedConverter.cs" />
+    <Compile Include="Converters\IntZeroToVisibilityCollapsedConverter.cs" />
+    <Compile Include="Converters\NetworkAuthenticationTypeToHumanReadableStringConverter.cs" />
+    <Compile Include="Converters\TimeSpanToStringConverter.cs" />
+    <Compile Include="Converters\TimeSpanToMillisecondConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityHiddenConverter.cs" />
+    <Compile Include="Converters\WiFiPhyKindConverter.cs" />
+    <Compile Include="Converters\WiFiChannelAndDBMConverter.cs" />
     <Compile Include="Converters\ConnectionStateToRectangleStyleConverter.cs" />
     <Compile Include="Converters\BandwidthBytesToSpeedConverter.cs" />
     <Compile Include="Converters\DNSServerInfoToString.cs" />
@@ -242,6 +249,9 @@
     <Compile Include="Models\Network\BandwidthMeterSpeedArgs.cs" />
     <Compile Include="Models\Network\DNSServer.cs" />
     <Compile Include="Models\Network\DNSServerInfo.cs" />
+    <Compile Include="Models\Network\WiFiAdapterInfo.cs" />
+    <Compile Include="Models\Network\WiFiNetworkInfo.cs" />
+    <Compile Include="Models\Network\WiFi.cs" />
     <Compile Include="Models\Network\IPNetworkInfo.cs" />
     <Compile Include="Models\Network\Listener.cs" />
     <Compile Include="Models\Network\Connection.cs" />
@@ -327,6 +337,7 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
+    <Compile Include="ViewModels\WiFiViewModel.cs" />
     <Compile Include="ViewModels\FirstRunViewModel.cs" />
     <Compile Include="Models\Settings\IProfileManager.cs" />
     <Compile Include="ViewModels\NetworkInterfaceAddIPAddressViewModel.cs" />
@@ -397,6 +408,9 @@
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
     <Compile Include="Views\CustomCommandDialog.xaml.cs">
       <DependentUpon>CustomCommandDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WiFiView.xaml.cs">
+      <DependentUpon>WiFiView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FirstRunDialog.xaml.cs">
       <DependentUpon>FirstRunDialog.xaml</DependentUpon>
@@ -585,6 +599,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Styles\ToggleButtonStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Styles\DropDownButtonStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -737,6 +755,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CustomCommandDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WiFiView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

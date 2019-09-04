@@ -297,7 +297,7 @@ namespace NETworkManager
             EventSystem.RedirectProfileToApplicationEvent += EventSystem_RedirectProfileToApplicationEvent;
             EventSystem.RedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
             EventSystem.RedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
-                        
+
             _isLoading = false;
         }
 
@@ -366,7 +366,7 @@ namespace NETworkManager
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
         }
-
+               
         private void LoadApplicationList()
         {
             isApplicationListLoading = true;
@@ -469,6 +469,7 @@ namespace NETworkManager
         #region Application Views
         private DashboardView _overviewView;
         private NetworkInterfaceView _networkInterfaceView;
+        private WiFiView _wiFiView;
         private IPScannerHostView _ipScannerHostView;
         private PortScannerHostView _portScannerHostView;
         private PingHostView _pingHostView;
@@ -501,6 +502,9 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.NetworkInterface:
                     _networkInterfaceView?.OnViewHide();
                     break;
+                case ApplicationViewManager.Name.WiFi:
+                    _wiFiView?.OnViewHide();
+                    break;
                 case ApplicationViewManager.Name.Connections:
                     _connectionsView?.OnViewHide();
                     break;
@@ -530,6 +534,14 @@ namespace NETworkManager
                         _networkInterfaceView.OnViewVisible();
 
                     ContentControlApplication.Content = _networkInterfaceView;
+                    break;
+                case ApplicationViewManager.Name.WiFi:
+                    if (_wiFiView == null)
+                        _wiFiView = new WiFiView();
+                    else
+                        _wiFiView.OnViewVisible();
+
+                    ContentControlApplication.Content = _wiFiView;
                     break;
                 case ApplicationViewManager.Name.IPScanner:
                     if (_ipScannerHostView == null)
@@ -1023,7 +1035,7 @@ namespace NETworkManager
             }
 
             _notifyIcon.Text = Title;
-            _notifyIcon.Click += NotifyIcon_Click;            
+            _notifyIcon.Click += NotifyIcon_Click;
             _notifyIcon.MouseDown += NotifyIcon_MouseDown;
             _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
         }
@@ -1116,75 +1128,8 @@ namespace NETworkManager
 
         private void OpenDocumentationAction()
         {
-            switch (SelectedApplication.Name)
-            {
-                case ApplicationViewManager.Name.Dashboard:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationDashboard);
-                    break;
-                case ApplicationViewManager.Name.NetworkInterface:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationNetworkInterface);
-                    break;
-                case ApplicationViewManager.Name.IPScanner:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationIpScanner);
-                    break;
-                case ApplicationViewManager.Name.PortScanner:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationPortScanner);
-                    break;
-                case ApplicationViewManager.Name.Ping:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationPing);
-                    break;
-                case ApplicationViewManager.Name.Traceroute:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationTraceroute);
-                    break;
-                case ApplicationViewManager.Name.DNSLookup:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationDnsLookup);
-                    break;
-                case ApplicationViewManager.Name.RemoteDesktop:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationRemoteDesktop);
-                    break;
-                case ApplicationViewManager.Name.PowerShell:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationPowerShell);
-                    break;
-                case ApplicationViewManager.Name.PuTTY:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationPutty);
-                    break;
-                case ApplicationViewManager.Name.TigerVNC:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationTigerVNC);
-                    break;
-                case ApplicationViewManager.Name.SNMP:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationSnmp);
-                    break;
-                case ApplicationViewManager.Name.WakeOnLAN:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationWakeOnLan);
-                    break;
-                case ApplicationViewManager.Name.HTTPHeaders:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationHttpHeaders);
-                    break;
-                case ApplicationViewManager.Name.Whois:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationWhois);
-                    break;
-                case ApplicationViewManager.Name.SubnetCalculator:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationSubnetCalculator);
-                    break;
-                case ApplicationViewManager.Name.Lookup:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationLookup);
-                    break;
-                case ApplicationViewManager.Name.Connections:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationConnections);
-                    break;
-                case ApplicationViewManager.Name.Listeners:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationListeners);
-                    break;
-                case ApplicationViewManager.Name.ARPTable:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationArpTable);
-                    break;
-                case ApplicationViewManager.Name.None:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.Default);
-                    break;
-                default:
-                    DocumentationManager.OpenDocumentation(DocumentationIdentifier.Default);
-                    break;
-            }
+            // ToDo: if(settingsView) --> Show help for settings ?!
+            DocumentationManager.OpenDocumentation(DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));           
         }
 
         public ICommand OpenApplicationListCommand
@@ -1322,7 +1267,7 @@ namespace NETworkManager
         #region Methods
         private void OpenStatusWindow()
         {
-            statusWindow.ShowFromExternal();            
+            statusWindow.ShowFromExternal();
         }
         #endregion
 

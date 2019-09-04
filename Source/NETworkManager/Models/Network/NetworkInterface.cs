@@ -199,7 +199,7 @@ namespace NETworkManager.Models.Network
 
             return null;
         }
-
+               
         public Task ConfigureNetworkInterfaceAsync(NetworkInterfaceConfig config)
         {
             return Task.Run(() => ConfigureNetworkInterface(config));
