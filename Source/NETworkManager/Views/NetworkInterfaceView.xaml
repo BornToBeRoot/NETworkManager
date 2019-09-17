@@ -26,6 +26,7 @@
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
         <converters:BandwidthBytesToSpeedConverter x:Key="BandwidthBytesToSpeedConverter" />
+        <converters:BandwidthBytesToSizeConverter x:Key="BandwidthBytesToSizeConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
         <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
@@ -391,8 +392,8 @@
                             </liveChart:Axis>
                         </liveChart:CartesianChart.AxisY>
                     </liveChart:CartesianChart>
-                    <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.Details}" Style="{StaticResource HeaderTextBlock}" />
-                    <Grid Grid.Row="4">
+                    <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.NetworkUsage}" Style="{StaticResource HeaderTextBlock}" />
+                    <Grid Grid.Row="4" Margin="0,0,0,20">
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
@@ -403,7 +404,11 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -412,14 +417,27 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <GridSplitter Grid.Column="1" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.TotalBytesReceived}" />
-                        <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding BandwidthTotalBytesReceived}" />
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.TotalBytesSent}" />
-                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding BandwidthTotalBytesSent}" />
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Download}" />
-                        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding BandwidthBytesReceivedSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Upload}" />
-                        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding BandwidthBytesSentSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
+                        <GridSplitter Grid.Column="3" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                        <GridSplitter Grid.Column="5" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.CurrentDownload}" />
+                        <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding BandwidthBytesReceivedSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.CurrentUpload}" />
+                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding BandwidthBytesSentSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.TotalBytesReceived}" />
+                        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding BandwidthTotalBytesReceived}" />
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.TotalBytesSent}" />
+                        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding BandwidthTotalBytesSent}" />
+
+                        <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.StartTime}" />
+                        <TextBox Grid.Column="6" Grid.Row="0" Text="{Binding BandwidthStartTime}" />
+                        <TextBlock Grid.Column="4" Grid.Row="1" Text="{x:Static localization:Strings.MeasuredTime}" />
+                        <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding BandwidthMeasuredTime, StringFormat={}{0:hh\\:mm\\:ss}}" />
+
+                        <TextBlock Grid.Column="4" Grid.Row="2" Text="{x:Static localization:Strings.TotalDownload}" />
+                        <TextBox Grid.Column="6" Grid.Row="2" Text="{Binding BandwidthDiffBytesReceived, Converter={StaticResource BandwidthBytesToSizeConverter}}" />
+                        <TextBlock Grid.Column="4" Grid.Row="3" Text="{x:Static localization:Strings.TotalUpload}" />
+                        <TextBox Grid.Column="6" Grid.Row="3" Text="{Binding BandwidthDiffBytesSent, Converter={StaticResource BandwidthBytesToSizeConverter}}" />
+
                     </Grid>
                 </Grid>
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
@@ -781,7 +799,7 @@
                                     </Button.Content>
                                 </Button>
                             </WrapPanel>
-                            <Button Grid.Column="2" Command="{Binding ApplyConfigCommand}" VerticalAlignment="Bottom">
+                            <Button Grid.Column="2" Command="{Binding ApplyConfigurationCommand}" VerticalAlignment="Bottom">
                                 <Button.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>

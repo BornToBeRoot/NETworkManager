@@ -126,41 +126,13 @@ namespace NETworkManager.ViewModels
                 {
                     if (!_isLoading)
                         SettingsManager.Current.NetworkInterface_SelectedInterfaceId = value.Id;
-
+                                        
                     // Bandwidth
-                    _bandwidthMeter?.Stop();
-
-                    ResetBandwidthChart();
-
-                    _bandwidthMeter = new BandwidthMeter(value.Id);
-                    _bandwidthMeter.UpdateSpeed += BandwidthMeter_UpdateSpeed;
-                    _bandwidthMeter.Start();
+                    StopBandwidthMeter();
+                    StartBandwidthMeter(value.Id);
 
                     // Configuration
-                    if (value.DhcpEnabled)
-                    {
-                        ConfigEnableDynamicIPAddress = true;
-                    }
-                    else
-                    {
-                        ConfigEnableStaticIPAddress = true;
-                        ConfigIPAddress = value.IPv4Address.FirstOrDefault()?.ToString();
-                        ConfigSubnetmaskOrCidr = value.Subnetmask != null ? value.Subnetmask.FirstOrDefault()?.ToString() : string.Empty;
-                        ConfigGateway = value.IPv4Gateway?.Any() == true ? value.IPv4Gateway.FirstOrDefault()?.ToString() : string.Empty;
-                    }
-
-                    if (value.DNSAutoconfigurationEnabled)
-                    {
-                        ConfigEnableDynamicDNS = true;
-                    }
-                    else
-                    {
-                        ConfigEnableStaticDNS = true;
-
-                        var dnsServers = value.DNSServer.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList();
-                        ConfigPrimaryDNSServer = dnsServers.Count > 0 ? dnsServers[0].ToString() : string.Empty;
-                        ConfigSecondaryDNSServer = dnsServers.Count > 1 ? dnsServers[1].ToString() : string.Empty;
-                    }
+                    SetConfigurationDefaults(value);
 
                     CanConfigure = value.IsOperational;
                 }
@@ -172,6 +144,8 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Bandwidth
+        private long _bandwidthTotalBytesSentTemp;
+
         private long _bandwidthTotalBytesSent;
         public long BandwidthTotalBytesSent
         {
@@ -186,6 +160,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private long _bandwidthTotalBytesReceivedTemp;
         private long _bandwidthTotalBytesReceived;
         public long BandwidthTotalBytesReceived
         {
@@ -196,6 +171,34 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _bandwidthTotalBytesReceived = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private long _bandwidthDiffBytesSent;
+        public long BandwidthDiffBytesSent
+        {
+            get => _bandwidthDiffBytesSent;
+            set
+            {
+                if (value == _bandwidthDiffBytesSent)
+                    return;
+
+                _bandwidthDiffBytesSent = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private long _bandwidthDiffBytesReceived;
+        public long BandwidthDiffBytesReceived
+        {
+            get => _bandwidthDiffBytesReceived;
+            set
+            {
+                if (value == _bandwidthDiffBytesReceived)
+                    return;
+
+                _bandwidthDiffBytesReceived = value;
                 OnPropertyChanged();
             }
         }
@@ -224,6 +227,34 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _bandwidthBytesSentSpeed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime _bandwidthStartTime;
+        public DateTime BandwidthStartTime
+        {
+            get => _bandwidthStartTime;
+            set
+            {
+                if (value == _bandwidthStartTime)
+                    return;
+
+                _bandwidthStartTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TimeSpan _bandwidthMeasuredTime;
+        public TimeSpan BandwidthMeasuredTime
+        {
+            get => _bandwidthMeasuredTime;
+            set
+            {
+                if (value == _bandwidthMeasuredTime)
+                    return;
+
+                _bandwidthMeasuredTime = value;
                 OnPropertyChanged();
             }
         }
@@ -461,9 +492,9 @@ namespace NETworkManager.ViewModels
             _dialogCoordinator = instance;
 
             LoadNetworkInterfaces();
-            
+
             InitialBandwidthChart();
-            
+
             Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
@@ -597,13 +628,13 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICommand ApplyConfigCommand => new RelayCommand(p => ApplyConfigAction(), ApplyConfig_CanExecute);
+        public ICommand ApplyConfigurationCommand => new RelayCommand(p => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
 
-        private bool ApplyConfig_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+        private bool ApplyConfiguration_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        public void ApplyConfigAction()
+        public void ApplyConfigurationAction()
         {
-            ApplyConfig();
+            ApplyConfiguration();
         }
 
         public ICommand ApplyProfileConfigCommand => new RelayCommand(p => ApplyProfileProfileAction());
@@ -740,7 +771,34 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        public async void ApplyConfig()
+        private void SetConfigurationDefaults(NetworkInterfaceInfo info)
+        {
+            if (info.DhcpEnabled)
+            {
+                ConfigEnableDynamicIPAddress = true;
+            }
+            else
+            {
+                ConfigEnableStaticIPAddress = true;
+                ConfigIPAddress = info.IPv4Address.FirstOrDefault()?.ToString();
+                ConfigSubnetmaskOrCidr = info.Subnetmask != null ? info.Subnetmask.FirstOrDefault()?.ToString() : string.Empty;
+                ConfigGateway = info.IPv4Gateway?.Any() == true ? info.IPv4Gateway.FirstOrDefault()?.ToString() : string.Empty;
+            }
+
+            if (info.DNSAutoconfigurationEnabled)
+            {
+                ConfigEnableDynamicDNS = true;
+            }
+            else
+            {
+                ConfigEnableStaticDNS = true;
+
+                var dnsServers = info.DNSServer.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToList();
+                ConfigPrimaryDNSServer = dnsServers.Count > 0 ? dnsServers[0].ToString() : string.Empty;
+                ConfigSecondaryDNSServer = dnsServers.Count > 1 ? dnsServers[1].ToString() : string.Empty;
+            }
+        }
+        public async void ApplyConfiguration()
         {
             IsConfigurationRunning = true;
             DisplayStatusMessage = false;
@@ -926,24 +984,55 @@ namespace NETworkManager.ViewModels
 
             for (var i = 60; i > 0; i--)
             {
-                var bandwidthInfo =  new BandwidthInfo(currentDateTime.AddSeconds(-i), 0);
+                var bandwidthInfo = new BandwidthInfo(currentDateTime.AddSeconds(-i), 0);
 
                 Series[0].Values.Add(bandwidthInfo);
                 Series[1].Values.Add(bandwidthInfo);
             }
+        }
+        
+        private bool _resetBandwidthStatisticOnNextUpdate;
+
+        private void StartBandwidthMeter(string networkInterfaceId)
+        {
+            // Reset
+            ResetBandwidthChart();
+
+            _resetBandwidthStatisticOnNextUpdate = true;
+
+            _bandwidthMeter = new BandwidthMeter(networkInterfaceId);
+            _bandwidthMeter.UpdateSpeed += BandwidthMeter_UpdateSpeed;
+            _bandwidthMeter.Start();
+        }
+
+        private void ResumeBandwidthMeter()
+        {
+            if (_bandwidthMeter != null && !_bandwidthMeter.IsRunning)
+            {
+                ResetBandwidthChart();
+
+                _resetBandwidthStatisticOnNextUpdate = true;
+
+                _bandwidthMeter.Start();
+            }
+        }
+
+        private void StopBandwidthMeter()
+        {
+            if (_bandwidthMeter != null && _bandwidthMeter.IsRunning)
+                _bandwidthMeter.Stop();
         }
 
         public void OnViewVisible()
         {
             RefreshProfiles();
 
-            _bandwidthMeter?.Start();
-            ResetBandwidthChart();
+            ResumeBandwidthMeter();
         }
 
         public void OnViewHide()
         {
-            _bandwidthMeter?.Stop();
+            StopBandwidthMeter();
         }
 
         public void RefreshProfiles()
@@ -965,11 +1054,30 @@ namespace NETworkManager.ViewModels
         #region Events
         private void BandwidthMeter_UpdateSpeed(object sender, BandwidthMeterSpeedArgs e)
         {
+            // Reset statistics
+            if(_resetBandwidthStatisticOnNextUpdate)
+            {
+                BandwidthStartTime = DateTime.Now;
+                _bandwidthTotalBytesReceivedTemp = e.TotalBytesReceived;
+                _bandwidthTotalBytesSentTemp = e.TotalBytesSent;
+
+                _resetBandwidthStatisticOnNextUpdate = false;
+            }
+
+            // Measured time
+            BandwidthMeasuredTime = DateTime.Now - BandwidthStartTime;
+
+            // Current download/upload
             BandwidthTotalBytesReceived = e.TotalBytesReceived;
             BandwidthTotalBytesSent = e.TotalBytesSent;
             BandwidthBytesReceivedSpeed = e.ByteReceivedSpeed;
             BandwidthBytesSentSpeed = e.ByteSentSpeed;
 
+            // Total download/upload
+            BandwidthDiffBytesReceived = BandwidthTotalBytesReceived - _bandwidthTotalBytesReceivedTemp;
+            BandwidthDiffBytesSent = BandwidthTotalBytesSent - _bandwidthTotalBytesSentTemp;
+
+            // Add chart entry
             Series[0].Values.Add(new BandwidthInfo(e.DateTime, e.ByteReceivedSpeed));
             Series[1].Values.Add(new BandwidthInfo(e.DateTime, e.ByteSentSpeed));
 
@@ -989,7 +1097,7 @@ namespace NETworkManager.ViewModels
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-        }               
+        }
         #endregion
     }
 }

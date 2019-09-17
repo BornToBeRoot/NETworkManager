@@ -1285,6 +1285,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current download.
+        /// </summary>
+        public static string CurrentDownload {
+            get {
+                return ResourceManager.GetString("CurrentDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current upload.
+        /// </summary>
+        public static string CurrentUpload {
+            get {
+                return ResourceManager.GetString("CurrentUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Custom.
         /// </summary>
         public static string Custom {
@@ -3236,6 +3254,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Measured time.
+        /// </summary>
+        public static string MeasuredTime {
+            get {
+                return ResourceManager.GetString("MeasuredTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Menu and window animation.
         /// </summary>
         public static string MenuAndWindowAnimation {
@@ -3403,6 +3430,15 @@ namespace NETworkManager.Resources.Localization {
         public static string NetworkUnavailable {
             get {
                 return ResourceManager.GetString("NetworkUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network usage.
+        /// </summary>
+        public static string NetworkUsage {
+            get {
+                return ResourceManager.GetString("NetworkUsage", resourceCulture);
             }
         }
         
@@ -6276,6 +6312,24 @@ namespace NETworkManager.Resources.Localization {
         public static string TotalBytesSent {
             get {
                 return ResourceManager.GetString("TotalBytesSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total download.
+        /// </summary>
+        public static string TotalDownload {
+            get {
+                return ResourceManager.GetString("TotalDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total upload.
+        /// </summary>
+        public static string TotalUpload {
+            get {
+                return ResourceManager.GetString("TotalUpload", resourceCulture);
             }
         }
         
