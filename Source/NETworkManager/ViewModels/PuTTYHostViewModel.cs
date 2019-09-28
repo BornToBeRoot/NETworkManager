@@ -333,9 +333,9 @@ namespace NETworkManager.ViewModels
                 Title = Resources.Localization.Strings.Connect
             };
 
-            var connectViewModel = new PuTTYConnectViewModel(instance =>
+            var connectViewModel = new PuTTYConnectViewModel(async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
                 // Add host to history
@@ -359,9 +359,9 @@ namespace NETworkManager.ViewModels
 
                 // Connect
                 Connect(info);
-            }, instance =>
+            }, async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
             }, host);
 

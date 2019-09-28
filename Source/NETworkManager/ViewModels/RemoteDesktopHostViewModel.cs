@@ -366,9 +366,9 @@ namespace NETworkManager.ViewModels
                 Title = Resources.Localization.Strings.Connect
             };
 
-            var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(instance =>
+            var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+              await  _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
                 // Add host to history
@@ -401,9 +401,9 @@ namespace NETworkManager.ViewModels
                 }
 
                 Connect(sessionInfo);
-            }, instance =>
+            }, async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
             })
             {
@@ -518,9 +518,9 @@ namespace NETworkManager.ViewModels
                 Title = Resources.Localization.Strings.ConnectAs
             };
 
-            var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(instance =>
+            var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
                 if (instance.UseCredentials)
@@ -545,9 +545,9 @@ namespace NETworkManager.ViewModels
                 }
 
                 Connect(sessionInfo, instance.Name);
-            }, instance =>
+            }, async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+              await  _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
             }, true)
             {

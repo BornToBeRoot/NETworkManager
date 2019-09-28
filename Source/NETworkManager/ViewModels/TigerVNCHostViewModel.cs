@@ -305,9 +305,9 @@ namespace NETworkManager.ViewModels
                 Title = Resources.Localization.Strings.Connect
             };
 
-            var connectViewModel = new TigerVNCConnectViewModel(instance =>
+            var connectViewModel = new TigerVNCConnectViewModel(async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
                 // Add host to history
@@ -323,11 +323,11 @@ namespace NETworkManager.ViewModels
 
                 // Connect
                 Connect(info);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-            }, host);
+            }, async instance =>
+             {
+                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                 ConfigurationManager.Current.FixAirspace = false;
+             }, host);
 
             customDialog.Content = new TigerVNCConnectDialog
             {

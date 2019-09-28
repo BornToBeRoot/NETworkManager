@@ -307,9 +307,9 @@ namespace NETworkManager.ViewModels
                 Title = Resources.Localization.Strings.Connect
             };
 
-            var connectViewModel = new PowerShellConnectViewModel(instance =>
+            var connectViewModel = new PowerShellConnectViewModel(async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
                 // Add host to history
@@ -326,9 +326,9 @@ namespace NETworkManager.ViewModels
 
                 // Connect
                 Connect(info);
-            }, instance =>
+            }, async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
             }, host);
 
@@ -338,7 +338,7 @@ namespace NETworkManager.ViewModels
             };
 
             ConfigurationManager.Current.FixAirspace = true;
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
         }
 
         private void ConnectProfile()
