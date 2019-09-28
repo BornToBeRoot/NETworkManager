@@ -296,15 +296,15 @@ namespace NETworkManager.Models.Settings
                 Title = Resources.Localization.Strings.AddProfile
             };
 
-            var profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(async instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
                 AddProfile(instance);
-            }, instance =>
+            }, async instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
             }, GetGroups());
 
@@ -324,17 +324,17 @@ namespace NETworkManager.Models.Settings
                 Title = Resources.Localization.Strings.EditProfile
             };
 
-            var profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(async instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
                 RemoveProfile(selectedProfile);
 
                 AddProfile(instance);
-            }, instance =>
+            }, async instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
             }, GetGroups(), ProfileEditMode.Edit, selectedProfile);
 
@@ -354,15 +354,15 @@ namespace NETworkManager.Models.Settings
                 Title = Resources.Localization.Strings.CopyProfile
             };
 
-            var profileViewModel = new ProfileViewModel(instance =>
+            var profileViewModel = new ProfileViewModel(async instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
                 AddProfile(instance);
-            }, instance =>
+            }, async instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
             }, GetGroups(), ProfileEditMode.Copy, selectedProfile);
 
@@ -382,15 +382,15 @@ namespace NETworkManager.Models.Settings
                 Title = Resources.Localization.Strings.DeleteProfile
             };
 
-            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(async instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
                 RemoveProfile(selectedProfile);
-            }, instance =>
+            }, async instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
             }, Resources.Localization.Strings.DeleteProfileMessage);
 
@@ -410,17 +410,17 @@ namespace NETworkManager.Models.Settings
                 Title = Resources.Localization.Strings.EditGroup
             };
 
-            var editGroupViewModel = new GroupViewModel(instance =>
+            var editGroupViewModel = new GroupViewModel(async instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
                 RenameGroup(instance.OldGroup, instance.Group);
 
                 viewModel.RefreshProfiles();
-            }, instance =>
+            }, async instance =>
             {
-                dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
             }, group, GetGroups());
 
