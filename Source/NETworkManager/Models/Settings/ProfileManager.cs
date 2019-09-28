@@ -15,16 +15,23 @@ namespace NETworkManager.Models.Settings
 {
     public static class ProfileManager
     {
-        public const string ProfilesFileName = "Profiles.xml";
+        public const string ProfilesFileName = "Profiles";
+        public const string ProfilesVersion = "V2";
+        public const string ProfilesFileExtension = "xml";
 
         public const string TagIdentifier = "tag=";
 
         public static ObservableCollection<ProfileInfo> Profiles { get; set; }
         public static bool ProfilesChanged { get; set; }
 
+        public static string GetProfilesFileName()
+        {
+            return $"{ProfilesFileName}.{ProfilesVersion}.{ProfilesFileExtension}";
+        }
+
         public static string GetProfilesFilePath()
         {
-            return Path.Combine(SettingsManager.GetSettingsLocation(), ProfilesFileName);
+            return Path.Combine(SettingsManager.GetSettingsLocation(), GetProfilesFileName());
         }
 
         public static List<string> GetGroups()

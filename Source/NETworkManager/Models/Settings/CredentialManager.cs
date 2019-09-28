@@ -18,6 +18,7 @@ namespace NETworkManager.Models.Settings
     public static class CredentialManager
     {
         public const string CredentialsFileName = "Credentials";
+        public const string CredentialsVersion = "V2";
         public const string CredentialsExtension = "xml";
 
         // Collection with ID, Name, Username, Password
@@ -47,7 +48,7 @@ namespace NETworkManager.Models.Settings
 
         public static string GetCredentialsFileName()
         {
-            return $"{CredentialsFileName}.{CredentialsExtension}";
+            return $"{CredentialsFileName}.{CredentialsVersion}.{CredentialsExtension}";
         }
 
         public static string GetCredentialsFilePath()

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,9 +9,10 @@ using NETworkManager.Controls;
 namespace NETworkManager.Models.Settings
 {
     public static class SettingsManager
-    {
+    {        
         private const string SettingsFolderName = "Settings";
         private const string SettingsFileName = "Settings";
+        private const string SettingsVersion = "V2";
         private const string SettingsFileExtension = "xml";
         private const string IsPortableFileName = "IsPortable";
         private const string IsPortableExtension = "settings";
@@ -34,7 +34,7 @@ namespace NETworkManager.Models.Settings
 
         public static string GetSettingsFileName()
         {
-            return $"{SettingsFileName}.{SettingsFileExtension}";
+            return $"{SettingsFileName}.{SettingsVersion}.{SettingsFileExtension}";
         }
 
         public static string GetIsPortableFileName()
@@ -209,29 +209,10 @@ namespace NETworkManager.Models.Settings
             {
                 var reorderApplications = false;
 
-                // Features added in 1.8.0.0
-                if (settingsVersion < new Version("1.8.0.0"))
+                // Features added in 2.0.0.0
+                if (settingsVersion < new Version("2.0.0.0"))
                 {
-                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.TigerVNC));
-                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Whois));
 
-                    reorderApplications = true;
-                }
-
-                // Features added in 1.9.0.0
-                if (settingsVersion < new Version("1.9.0.0"))
-                {
-                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.PowerShell));
-                    
-                    reorderApplications = true;
-                }
-
-                // Features added in 1.10.0.0
-                if (settingsVersion < new Version("1.10.0.0"))
-                {
-                    Current.General_ApplicationList.Add(new ApplicationViewInfo(ApplicationViewManager.Name.Dashboard));
-
-                    reorderApplications = true;
                 }
 
                 // Reorder application view
