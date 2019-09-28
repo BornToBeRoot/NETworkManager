@@ -27,7 +27,9 @@ namespace NETworkManager.Models.Documentation
             new LibraryInfo("Newtonsoft.Json", "https://github.com/JamesNK/Newtonsoft.Json", "Json.NET is a popular high-performance JSON framework for .NET", "MIT License","https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md"),
             new LibraryInfo("LiveCharts", "https://github.com/Live-Charts/Live-Charts", "Simple, flexible, interactive & powerful charts, maps and gauges for .Net", "MIT License","https://github.com/Live-Charts/Live-Charts/blob/master/LICENSE.TXT"),
             new LibraryInfo("LiveCharts.Wpf", "https://github.com/Live-Charts/Live-Charts", "Simple, flexible, interactive & powerful charts, maps and gauges for .Net", "MIT License","https://github.com/Live-Charts/Live-Charts/blob/master/LICENSE.TXT"),
-            new LibraryInfo ("LoadingIndicators.WPF", "https://github.com/zeluisping/LoadingIndicators.WPF", "A collection of loading indicators for WPF", "Unlicense", "https://github.com/zeluisping/LoadingIndicators.WPF/blob/master/LICENSE")
+            new LibraryInfo("LoadingIndicators.WPF", "https://github.com/zeluisping/LoadingIndicators.WPF", "A collection of loading indicators for WPF", "Unlicense", "https://github.com/zeluisping/LoadingIndicators.WPF/blob/master/LICENSE"),
+            new LibraryInfo("DnsClient.NET", "https://github.com/MichaCo/DnsClient.NET","DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups" , "Apache License 2.0", "https://github.com/MichaCo/DnsClient.NET/blob/dev/LICENSE" )
+
         };
     }
 }
