@@ -56,12 +56,12 @@ namespace NETworkManager
         public static int IPScanner_ICMPAttempts => 2;
         public static int IPScanner_ICMPBuffer => 32;
         public static int IPScanner_DNSPort => 53;
-        public static TransportType IPScanner_DNSTransportType => TransportType.Udp;
-        public static int IPScanner_DNSAttempts => 2;
+        public static bool IPScanner_DNSTCPOnly => false;
         public static int IPScanner_DNSTimeout => 2000;
+        public static int IPScanner_DNSRetries => 3;
         public static int IPScanner_ICMPTimeout => 4000;
         public static ExportManager.ExportFileType IPScanner_ExportFileType => ExportManager.ExportFileType.CSV;
-              
+
         // Application: Port Scanner 
         public static int PortScanner_HostThreads => 5;
         public static int PortScanner_PortThreds => 100;

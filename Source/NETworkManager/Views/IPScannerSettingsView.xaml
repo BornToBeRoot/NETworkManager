@@ -28,8 +28,8 @@
         <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsChecked="{Binding ResolveHostname}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSServer}" IsChecked="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
-        <TextBlock Text="{x:Static localization:Strings.DNSServers}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServers}" Style="{StaticResource DefaultTextBox}">
+        <TextBlock Text="{x:Static localization:Strings.DNSServer}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServer}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -51,11 +51,11 @@
             </TextBox.Text>
         </TextBox>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}" IsChecked="{Binding DNSRecursion}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseResolverCache}" IsChecked="{Binding DNSUseResolverCache}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCache}" IsChecked="{Binding DNSUseCache}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.Protocol}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <ComboBox ItemsSource="{Binding DNSTransportTypes}" SelectedItem="{Binding DNSTransportType}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
-        <TextBlock Text="{x:Static localization:Strings.Attempts}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding DNSAttempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseOnlyTCP}" IsChecked="{Binding DNSTCPOnly}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Retries}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding DNSRetries}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding DNSTimeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.ARP}" Style="{StaticResource HeaderTextBlock}" />

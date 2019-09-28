@@ -147,7 +147,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.IPScanner_CustomDNSServer = value.Split(';').ToList();
+                    SettingsManager.Current.IPScanner_CustomDNSServer = value;
 
                 _customDNSServer = value;
                 OnPropertyChanged();
@@ -164,7 +164,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.IPScanner_DNSPort = value;
+                    SettingsManager.Current.IPScanner_CustomDNSPort = value;
 
                 _dnsPort = value;
                 OnPropertyChanged();
@@ -188,55 +188,53 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _dnsUseResolverCache;
-        public bool DNSUseResolverCache
+        private bool _dnsUseCache;
+        public bool DNSUseCache
         {
-            get => _dnsUseResolverCache;
+            get => _dnsUseCache;
             set
             {
-                if (value == _dnsUseResolverCache)
+                if (value == _dnsUseCache)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.IPScanner_DNSUseResolverCache = value;
+                    SettingsManager.Current.IPScanner_DNSUseCache = value;
 
-                _dnsUseResolverCache = value;
+                _dnsUseCache = value;
+                OnPropertyChanged();
+            }
+        }
+                
+        private bool _dnsTCPOnly;
+        public bool DNSTCPOnly
+        {
+            get => _dnsTCPOnly;
+            set
+            {
+                if (value == _dnsTCPOnly)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_DNSTCPOnly = value;
+
+                _dnsTCPOnly = value;
                 OnPropertyChanged();
             }
         }
 
-        public List<TransportType> DNSTransportTypes { get; set; }
-
-        private TransportType _dnsTransportType;
-        public TransportType DNSTransportType
+        private int _dnsRetries;
+        public int DNSRetries
         {
-            get => _dnsTransportType;
+            get => _dnsRetries;
             set
             {
-                if (value == _dnsTransportType)
+                if (value == _dnsRetries)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.IPScanner_DNSTransportType = value;
+                    SettingsManager.Current.IPScanner_DNSRetries = value;
 
-                _dnsTransportType = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _dnsAttempts;
-        public int DNSAttempts
-        {
-            get => _dnsAttempts;
-            set
-            {
-                if (value == _dnsAttempts)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_DNSAttempts = value;
-
-                _dnsAttempts = value;
+                _dnsRetries = value;
                 OnPropertyChanged();
             }
         }
@@ -311,7 +309,7 @@ namespace NETworkManager.ViewModels
 
         #region Constructor, load settings
         public IPScannerSettingsViewModel(IDialogCoordinator instance)
-        {            
+        {
             _isLoading = true;
 
             _dialogCoordinator = instance;
@@ -337,12 +335,11 @@ namespace NETworkManager.ViewModels
             if (SettingsManager.Current.IPScanner_CustomDNSServer != null)
                 CustomDNSServer = string.Join("; ", SettingsManager.Current.IPScanner_CustomDNSServer);
 
-            DNSPort = SettingsManager.Current.IPScanner_DNSPort;
+            DNSPort = SettingsManager.Current.IPScanner_CustomDNSPort;
             DNSRecursion = SettingsManager.Current.IPScanner_DNSRecursion;
-            DNSUseResolverCache = SettingsManager.Current.IPScanner_DNSUseResolverCache;
-            DNSTransportTypes = System.Enum.GetValues(typeof(TransportType)).Cast<TransportType>().OrderBy(x => x.ToString()).ToList();
-            DNSTransportType = DNSTransportTypes.First(x => x == SettingsManager.Current.IPScanner_DNSTransportType);
-            DNSAttempts = SettingsManager.Current.IPScanner_DNSAttempts;
+            DNSUseCache = SettingsManager.Current.IPScanner_DNSUseCache;
+            DNSTCPOnly = SettingsManager.Current.IPScanner_DNSTCPOnly;
+            DNSRetries = SettingsManager.Current.IPScanner_DNSRetries;
             DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout;
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
             ShowStatistics = SettingsManager.Current.IPScanner_ShowStatistics;
@@ -356,7 +353,7 @@ namespace NETworkManager.ViewModels
         {
             AddCustomCommand();
         }
-               
+
         public ICommand EditCustomCommandCommand => new RelayCommand(p => EditCustomCommandAction());
 
         private void EditCustomCommandAction()
@@ -385,7 +382,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.ID ,instance.Name, instance.FilePath, instance.Arguments));
+                SettingsManager.Current.IPScanner_CustomCommands.Add(new CustomCommandInfo(instance.ID, instance.Name, instance.FilePath, instance.Arguments));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

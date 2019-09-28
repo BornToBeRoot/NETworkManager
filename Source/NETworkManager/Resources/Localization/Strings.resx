@@ -2400,4 +2400,13 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="TotalUpload" xml:space="preserve">
     <value>Total upload</value>
   </data>
+  <data name="Retries" xml:space="preserve">
+    <value>Retries</value>
+  </data>
+  <data name="UseCache" xml:space="preserve">
+    <value>Use cache</value>
+  </data>
+  <data name="UseOnlyTCP" xml:space="preserve">
+    <value>Use only TCP</value>
+  </data>
 </root>

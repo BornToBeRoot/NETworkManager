@@ -5176,6 +5176,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Retries.
+        /// </summary>
+        public static string Retries {
+            get {
+                return ResourceManager.GetString("Retries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rlogin.
         /// </summary>
         public static string Rlogin {
@@ -6433,6 +6442,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use cache.
+        /// </summary>
+        public static string UseCache {
+            get {
+                return ResourceManager.GetString("UseCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use credentials.
         /// </summary>
         public static string UseCredentials {
@@ -6474,6 +6492,15 @@ namespace NETworkManager.Resources.Localization {
         public static string UseCustomDNSSuffix {
             get {
                 return ResourceManager.GetString("UseCustomDNSSuffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use only TCP.
+        /// </summary>
+        public static string UseOnlyTCP {
+            get {
+                return ResourceManager.GetString("UseOnlyTCP", resourceCulture);
             }
         }
         

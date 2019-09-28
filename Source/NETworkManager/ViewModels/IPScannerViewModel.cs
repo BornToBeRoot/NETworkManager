@@ -581,16 +581,21 @@ namespace NETworkManager.ViewModels
                 ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
                 ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
                 UseCustomDNSServer = SettingsManager.Current.IPScanner_UseCustomDNSServer,
-                CustomDNSServer = SettingsManager.Current.IPScanner_CustomDNSServer.Select(x => x.Trim()).ToList(),
-                DNSPort = SettingsManager.Current.IPScanner_DNSPort,
-                DNSTransportType = SettingsManager.Current.IPScanner_DNSTransportType,
+                DNSTCPOnly = SettingsManager.Current.IPScanner_DNSTCPOnly,
                 DNSRecursion = SettingsManager.Current.IPScanner_DNSRecursion,
-                DNSUseResolverCache = SettingsManager.Current.IPScanner_DNSUseResolverCache,
-                DNSAttempts = SettingsManager.Current.IPScanner_DNSAttempts,
-                DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout,
+                DNSUseCache = SettingsManager.Current.IPScanner_DNSUseCache,
+                DNSTimeout = new TimeSpan(SettingsManager.Current.IPScanner_DNSTimeout),
+                DNSRetries = SettingsManager.Current.IPScanner_DNSRetries,
                 ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
                 ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses
             };
+
+            // Set custom dns server...
+            if (ipScanner.ResolveHostname && ipScanner.UseCustomDNSServer)
+            {
+                ipScanner.CustomDNSServer = IPAddress.Parse(SettingsManager.Current.IPScanner_CustomDNSServer);
+                ipScanner.CustomDNSPort = SettingsManager.Current.IPScanner_CustomDNSPort;
+            }
 
             ipScanner.HostFound += HostFound;
             ipScanner.ScanComplete += ScanComplete;

@@ -23,6 +23,7 @@ using NETworkManager.Models.Documentation;
 using NETworkManager.ViewModels;
 using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
+using DnsClient;
 
 namespace NETworkManager
 {

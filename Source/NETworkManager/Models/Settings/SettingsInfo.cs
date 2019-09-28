@@ -463,7 +463,7 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-        
+
         private bool _dashboard_CheckPublicIPAddress = true;
         public bool Dashboard_CheckPublicIPAddress
         {
@@ -680,8 +680,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private List<string> _ipScanner_CustomDNSServer = new List<string>();
-        public List<string> IPScanner_CustomDNSServer
+        private string _ipScanner_CustomDNSServer;
+        public string IPScanner_CustomDNSServer
         {
             get => _ipScanner_CustomDNSServer;
             set
@@ -695,16 +695,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private int _ipScanner_DNSPort = GlobalStaticConfiguration.IPScanner_DNSPort;
-        public int IPScanner_DNSPort
+        private int _ipScanner_CustomDNSPort = GlobalStaticConfiguration.IPScanner_DNSPort;
+        public int IPScanner_CustomDNSPort
         {
-            get => _ipScanner_DNSPort;
+            get => _ipScanner_CustomDNSPort;
             set
             {
-                if (value == _ipScanner_DNSPort)
+                if (value == _ipScanner_CustomDNSPort)
                     return;
 
-                _ipScanner_DNSPort = value;
+                _ipScanner_CustomDNSPort = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -725,46 +725,31 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _ipScanner_DNSUseResolverCache;
-        public bool IPScanner_DNSUseResolverCache
+        private bool _ipScanner_DNSUseCache;
+        public bool IPScanner_DNSUseCache
         {
-            get => _ipScanner_DNSUseResolverCache;
+            get => _ipScanner_DNSUseCache;
             set
             {
-                if (value == _ipScanner_DNSUseResolverCache)
+                if (value == _ipScanner_DNSUseCache)
                     return;
 
-                _ipScanner_DNSUseResolverCache = value;
+                _ipScanner_DNSUseCache = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private TransportType _ipScanner_DNSTransportType = GlobalStaticConfiguration.IPScanner_DNSTransportType;
-        public TransportType IPScanner_DNSTransportType
+        private bool _ipScanner_DNSTCPOnly = GlobalStaticConfiguration.IPScanner_DNSTCPOnly;
+        public bool IPScanner_DNSTCPOnly
         {
-            get => _ipScanner_DNSTransportType;
+            get => _ipScanner_DNSTCPOnly;
             set
             {
-                if (value == _ipScanner_DNSTransportType)
+                if (value == _ipScanner_DNSTCPOnly)
                     return;
 
-                _ipScanner_DNSTransportType = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private int _ipScanner_DNSAttempts = GlobalStaticConfiguration.IPScanner_DNSAttempts;
-        public int IPScanner_DNSAttempts
-        {
-            get => _ipScanner_DNSAttempts;
-            set
-            {
-                if (value == _ipScanner_DNSAttempts)
-                    return;
-
-                _ipScanner_DNSAttempts = value;
+                _ipScanner_DNSTCPOnly = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -780,6 +765,21 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _ipScanner_DNSTimeout = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _ipScanner_DNSRetries = GlobalStaticConfiguration.IPScanner_DNSRetries;
+        public int IPScanner_DNSRetries
+        {
+            get => _ipScanner_DNSRetries;
+            set
+            {
+                if (value == _ipScanner_DNSRetries)
+                    return;
+
+                _ipScanner_DNSRetries = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

@@ -1,13 +1,11 @@
-﻿using NETworkManager.Models.Lookup;
+﻿using DnsClient;
+using NETworkManager.Models.Lookup;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
-using TransportType = Heijden.DNS.TransportType;
 
 namespace NETworkManager.Models.Network
 {
@@ -21,16 +19,23 @@ namespace NETworkManager.Models.Network
         public byte[] ICMPBuffer = new byte[32];
         public int ICMPAttempts = 2;
         public bool ResolveHostname = true;
+
+        // ToDo:
         public bool UseCustomDNSServer = false;
-        public List<string> CustomDNSServer = new List<string>();
-        public int DNSPort = 53;
-        public int DNSAttempts = 2;
-        public int DNSTimeout = 2000;
+        public IPAddress CustomDNSServer;
+        public int CustomDNSPort = 53;
+        public bool DNSTCPOnly = false;
+        public bool DNSUseCache = true;
+        public bool DNSRecursion = true;
+        public TimeSpan DNSTimeout = new TimeSpan(2000);
+        public int DNSRetries = 3;
+
         public bool ResolveMACAddress = false;
         public bool ShowScanResultForAllIPAddresses = false;
-        public TransportType DNSTransportType = TransportType.Udp;
-        public bool DNSUseResolverCache = false;
-        public bool DNSRecursion = false;
+        
+        // ToDo - End
+
+        private LookupClient DnsLookupClient;
         #endregion
 
         #region Events
@@ -71,6 +76,18 @@ namespace NETworkManager.Models.Network
             {
                 _progressValue = 0;
 
+                // Create dns client and set options
+
+                if (ResolveHostname)
+                {
+                    DnsLookupClient = UseCustomDNSServer ? new LookupClient(new IPEndPoint(CustomDNSServer, CustomDNSPort)) : new LookupClient();
+                    DnsLookupClient.UseCache = DNSUseCache;
+                    DnsLookupClient.Recursion = DNSRecursion;
+                    DnsLookupClient.Timeout = DNSTimeout;
+                    DnsLookupClient.Retries = DNSRetries;
+                    DnsLookupClient.UseTcpOnly = DNSTCPOnly;
+                }
+
                 // Modify the ThreadPool for better performance
                 ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);
                 ThreadPool.SetMinThreads(workerThreads + Threads, completionPortThreads + Threads);
@@ -109,9 +126,7 @@ namespace NETworkManager.Models.Network
                                         pingInfo = new PingInfo(ipAddress, pingReply.Status);
                                 }
                                 catch (PingException)
-                                {
-
-                                }
+                                { }
 
                                 // Don't scan again, if the user has canceled (when more than 1 attempt)
                                 if (cancellationToken.IsCancellationRequested)
@@ -126,27 +141,13 @@ namespace NETworkManager.Models.Network
 
                             if (ResolveHostname)
                             {
-                                var dnsLookup = new DNSLookup
-                                {
-                                    UseCustomDNSServer = UseCustomDNSServer,
-                                    CustomDNSServers = CustomDNSServer,
-                                    Port = DNSPort,
-                                    Attempts = DNSAttempts,
-                                    Timeout = DNSTimeout,
-                                    TransportType = DNSTransportType,
-                                    UseResolverCache = DNSUseResolverCache,
-                                    Recursion = DNSRecursion
-                                };
+                                var dnsQueryResponse = DnsLookupClient.QueryReverse(ipAddress);
 
-                                try
-                                {
-                                    hostname = dnsLookup.ResolvePTR(ipAddress).Item2.FirstOrDefault();
-                                }
-                                catch 
-                                {
-                                    // Could not resolve hostname... e.g. no dns server is configured
-                                }
-                            }
+                                if (!dnsQueryResponse.HasError)
+                                    hostname = dnsQueryResponse.Answers.PtrRecords().FirstOrDefault()?.PtrDomainName;
+                                else
+                                    hostname = $"{Resources.Localization.Strings.Error}: {dnsQueryResponse.ErrorMessage}";
+                            }                                
 
                             // ARP
                             PhysicalAddress macAddress = null;
