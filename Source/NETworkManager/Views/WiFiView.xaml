@@ -376,56 +376,83 @@
                 </StackPanel>
             </Grid>
         </TabItem>
-        <TabItem Header="{x:Static localization:Strings.Channels}">
+        <TabItem Header="{x:Static localization:Strings.Channels}" >
             <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="20" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.GHz2dot4}" Style="{StaticResource HeaderTextBlock}" />
-                <liveChart:CartesianChart Grid.Row="1" Series="{Binding Radio1Series}" LegendLocation="Right">
-                    <liveChart:CartesianChart.DataTooltip>
-                        <liveChart:DefaultTooltip SelectionMode="OnlySender" Background="Transparent"  />
-                    </liveChart:CartesianChart.DataTooltip>
-                    <liveChart:CartesianChart.AxisX>
-                        <liveChart:Axis Title="{x:Static localization:Strings.Channel}" Labels="{Binding Radio1Labels}">
-                            <liveChart:Axis.Separator>
-                                <liveChart:Separator Step="1" StrokeThickness="0" />
-                            </liveChart:Axis.Separator>
-                        </liveChart:Axis>
-                    </liveChart:CartesianChart.AxisX>
-                    <liveChart:CartesianChart.AxisY>
-                        <liveChart:Axis Title="{x:Static localization:Strings.SignalStrength}" MinValue="0" LabelFormatter="{Binding FormatterdBm}">
-                            <liveChart:Axis.Separator>
-                                <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource GrayBrush8}" StrokeDashArray="10" />
-                            </liveChart:Axis.Separator>
-                        </liveChart:Axis>
-                    </liveChart:CartesianChart.AxisY>
-                </liveChart:CartesianChart>
-                <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.GHz5}" Style="{StaticResource HeaderTextBlock}" />
-                <liveChart:CartesianChart Grid.Row="4" Series="{Binding Radio2Series}" LegendLocation="Right">
-                    <liveChart:CartesianChart.DataTooltip>
-                        <liveChart:DefaultTooltip SelectionMode="OnlySender" Background="Transparent"  />
-                    </liveChart:CartesianChart.DataTooltip>
-                    <liveChart:CartesianChart.AxisX>
-                        <liveChart:Axis Title="{x:Static localization:Strings.Channel}" Labels="{Binding Radio2Labels}">
-                            <liveChart:Axis.Separator>
-                                <liveChart:Separator Step="1" StrokeThickness="0" />
-                            </liveChart:Axis.Separator>
-                        </liveChart:Axis>
-                    </liveChart:CartesianChart.AxisX>
-                    <liveChart:CartesianChart.AxisY>
-                        <liveChart:Axis Title="{x:Static localization:Strings.SignalStrength}" MinValue="0" LabelFormatter="{Binding FormatterdBm}">
-                            <liveChart:Axis.Separator>
-                                <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource GrayBrush8}" StrokeDashArray="10" />
-                            </liveChart:Axis.Separator>
-                        </liveChart:Axis>
-                    </liveChart:CartesianChart.AxisY>
-                </liveChart:CartesianChart>
-            </Grid>
+                <!-- Channels -->
+                <Grid Visibility="{Binding Adapters.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.GHz2dot4}" Style="{StaticResource HeaderTextBlock}" />
+                    <liveChart:CartesianChart Grid.Row="1" Series="{Binding Radio1Series}" LegendLocation="Right">
+                        <liveChart:CartesianChart.DataTooltip>
+                            <liveChart:DefaultTooltip SelectionMode="OnlySender" Background="Transparent"  />
+                        </liveChart:CartesianChart.DataTooltip>
+                        <liveChart:CartesianChart.AxisX>
+                            <liveChart:Axis Title="{x:Static localization:Strings.Channel}" Labels="{Binding Radio1Labels}">
+                                <liveChart:Axis.Separator>
+                                    <liveChart:Separator Step="1" StrokeThickness="0" />
+                                </liveChart:Axis.Separator>
+                            </liveChart:Axis>
+                        </liveChart:CartesianChart.AxisX>
+                        <liveChart:CartesianChart.AxisY>
+                            <liveChart:Axis Title="{x:Static localization:Strings.SignalStrength}" MinValue="0" LabelFormatter="{Binding FormatterdBm}">
+                                <liveChart:Axis.Separator>
+                                    <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource GrayBrush8}" StrokeDashArray="10" />
+                                </liveChart:Axis.Separator>
+                            </liveChart:Axis>
+                        </liveChart:CartesianChart.AxisY>
+                    </liveChart:CartesianChart>
+                    <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.GHz5}" Style="{StaticResource HeaderTextBlock}" />
+                    <liveChart:CartesianChart Grid.Row="4" Series="{Binding Radio2Series}" LegendLocation="Right">
+                        <liveChart:CartesianChart.DataTooltip>
+                            <liveChart:DefaultTooltip SelectionMode="OnlySender" Background="Transparent"  />
+                        </liveChart:CartesianChart.DataTooltip>
+                        <liveChart:CartesianChart.AxisX>
+                            <liveChart:Axis Title="{x:Static localization:Strings.Channel}" Labels="{Binding Radio2Labels}">
+                                <liveChart:Axis.Separator>
+                                    <liveChart:Separator Step="1" StrokeThickness="0" />
+                                </liveChart:Axis.Separator>
+                            </liveChart:Axis>
+                        </liveChart:CartesianChart.AxisX>
+                        <liveChart:CartesianChart.AxisY>
+                            <liveChart:Axis Title="{x:Static localization:Strings.SignalStrength}" MinValue="0" LabelFormatter="{Binding FormatterdBm}">
+                                <liveChart:Axis.Separator>
+                                    <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource GrayBrush8}" StrokeDashArray="10" />
+                                </liveChart:Axis.Separator>
+                            </liveChart:Axis>
+                        </liveChart:CartesianChart.AxisY>
+                    </liveChart:CartesianChart>
+                </Grid>
+                <!-- Reload Adapter -->
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Adapters.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
+                    <TextBlock Text="{x:Static localization:Strings.NoWiFiAdaptersFound}"  Visibility="{Binding IsAdaptersLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+                    <Button Command="{Binding ReloadAdaptersCommand}" IsEnabled="{Binding IsAdaptersLoading, Converter={StaticResource BooleanReverseConverter}}" Visibility="{Binding IsAdaptersLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                    <StackPanel VerticalAlignment="Center" Grid.Row="1" Visibility="{Binding IsAdaptersLoading, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>
+                        <TextBlock Text="{x:Static localization:Strings.SearchingWiFiAdaptersDots}" Style="{StaticResource MessageTextBlock}" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>            
         </TabItem>
     </TabControl>
 </UserControl>
