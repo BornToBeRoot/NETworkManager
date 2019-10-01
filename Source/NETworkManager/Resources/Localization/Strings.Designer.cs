@@ -1816,6 +1816,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Domain name.
+        /// </summary>
+        public static string DomainName {
+            get {
+                return ResourceManager.GetString("DomainName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t fragment.
         /// </summary>
         public static string DontFragment {
@@ -4235,6 +4244,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Query {
             get {
                 return ResourceManager.GetString("Query", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Query class.
+        /// </summary>
+        public static string QueryClass {
+            get {
+                return ResourceManager.GetString("QueryClass", resourceCulture);
             }
         }
         

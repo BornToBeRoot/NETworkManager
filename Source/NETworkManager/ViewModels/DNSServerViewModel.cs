@@ -113,8 +113,8 @@ namespace NETworkManager.ViewModels
             Name = _info.Name;
 
             // List to string
-            if (_info.Server != null)
-                DNSServer = string.Join("; ", _info.Server);
+            if (_info.Servers != null)
+                DNSServer = string.Join("; ", _info.Servers);
 
             _previousDNSServerAsString = DNSServer;
 

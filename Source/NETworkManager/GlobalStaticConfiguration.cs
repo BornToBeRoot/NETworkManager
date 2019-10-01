@@ -10,6 +10,7 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Utilities;
 using NETworkManager.Enum;
 using NETworkManager.Models.RemoteDesktop;
+using DnsClient;
 
 // ReSharper disable InconsistentNaming
 
@@ -56,7 +57,7 @@ namespace NETworkManager
         public static int IPScanner_ICMPAttempts => 2;
         public static int IPScanner_ICMPBuffer => 32;
         public static int IPScanner_DNSPort => 53;
-        public static bool IPScanner_DNSTCPOnly => false;
+        public static bool IPScanner_DNSUseTCPOnly => false;
         public static int IPScanner_DNSTimeout => 2000;
         public static int IPScanner_DNSRetries => 3;
         public static int IPScanner_ICMPTimeout => 4000;
@@ -83,10 +84,10 @@ namespace NETworkManager
         public static ExportManager.ExportFileType Traceroute_ExportFileType => ExportManager.ExportFileType.CSV;
 
         // Application: DNS Lookup
-        public static QClass DNSLookup_Class => QClass.IN;
-        public static QType DNSLookup_Type => QType.ANY;
-        public static TransportType DNSLookup_TransportType => TransportType.Udp;
-        public static int DNSLookup_Attempts => 3;
+        public static QueryClass DNSLookup_QueryClass => QueryClass.IN;
+        public static QueryType DNSLookup_QueryType => QueryType.ANY;
+        public static bool DNSLookup_UseTCPOnly => false;
+        public static int DNSLookup_Retries => 3;
         public static int DNSLookup_Timeout => 2000;
         public static ExportManager.ExportFileType DNSLookup_ExportFileType => ExportManager.ExportFileType.CSV;
 

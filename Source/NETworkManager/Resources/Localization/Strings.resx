@@ -2409,4 +2409,10 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="UseOnlyTCP" xml:space="preserve">
     <value>Use only TCP</value>
   </data>
+  <data name="QueryClass" xml:space="preserve">
+    <value>Query class</value>
+  </data>
+  <data name="DomainName" xml:space="preserve">
+    <value>Domain name</value>
+  </data>
 </root>

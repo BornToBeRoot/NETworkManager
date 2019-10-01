@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
+using DnsClient;
 using Heijden.DNS;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
@@ -740,16 +740,16 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _ipScanner_DNSTCPOnly = GlobalStaticConfiguration.IPScanner_DNSTCPOnly;
-        public bool IPScanner_DNSTCPOnly
+        private bool _ipScanner_DNSUseTCPOnly = GlobalStaticConfiguration.IPScanner_DNSUseTCPOnly;
+        public bool IPScanner_DNSUseTCPOnly
         {
-            get => _ipScanner_DNSTCPOnly;
+            get => _ipScanner_DNSUseTCPOnly;
             set
             {
-                if (value == _ipScanner_DNSTCPOnly)
+                if (value == _ipScanner_DNSUseTCPOnly)
                     return;
 
-                _ipScanner_DNSTCPOnly = value;
+                _ipScanner_DNSUseTCPOnly = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -1587,46 +1587,46 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private QClass _dnsLookup_Class = GlobalStaticConfiguration.DNSLookup_Class;
-        public QClass DNSLookup_Class
+        private QueryClass _dnsLookup_QueryClass = GlobalStaticConfiguration.DNSLookup_QueryClass;
+        public QueryClass DNSLookup_QueryClass
         {
-            get => _dnsLookup_Class;
+            get => _dnsLookup_QueryClass;
             set
             {
-                if (value == _dnsLookup_Class)
+                if (value == _dnsLookup_QueryClass)
                     return;
 
-                _dnsLookup_Class = value;
+                _dnsLookup_QueryClass = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private bool _dnsLookup_ShowMostCommonQueryTypes = true;
-        public bool DNSLookup_ShowMostCommonQueryTypes
+        private bool _dnsLookup_ShowOnlyMostCommonQueryTypes = true;
+        public bool DNSLookup_ShowOnlyMostCommonQueryTypes
         {
-            get => _dnsLookup_ShowMostCommonQueryTypes;
+            get => _dnsLookup_ShowOnlyMostCommonQueryTypes;
             set
             {
-                if (value == _dnsLookup_ShowMostCommonQueryTypes)
+                if (value == _dnsLookup_ShowOnlyMostCommonQueryTypes)
                     return;
 
-                _dnsLookup_ShowMostCommonQueryTypes = value;
+                _dnsLookup_ShowOnlyMostCommonQueryTypes = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private QType _dnsLookup_Type = GlobalStaticConfiguration.DNSLookup_Type;
-        public QType DNSLookup_Type
+        private QueryType _dnsLookup_QueryType = GlobalStaticConfiguration.DNSLookup_QueryType;
+        public QueryType DNSLookup_QueryType
         {
-            get => _dnsLookup_Type;
+            get => _dnsLookup_QueryType;
             set
             {
-                if (value == _dnsLookup_Type)
+                if (value == _dnsLookup_QueryType)
                     return;
 
-                _dnsLookup_Type = value;
+                _dnsLookup_QueryType = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -1676,22 +1676,7 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _dnsLookup_ResolveCNAME = true;
-        public bool DNSLookup_ResolveCNAME
-        {
-            get => _dnsLookup_ResolveCNAME;
-            set
-            {
-                if (value == _dnsLookup_ResolveCNAME)
-                    return;
-
-                _dnsLookup_ResolveCNAME = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+        
         private bool _dnsLookup_Recursion = true;
         public bool DNSLookup_Recursion
         {
@@ -1707,46 +1692,46 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _dnsLookup_UseResolverCache;
-        public bool DNSLookup_UseResolverCache
+        private bool _dnsLookup_UseCache;
+        public bool DNSLookup_UseCache
         {
-            get => _dnsLookup_UseResolverCache;
+            get => _dnsLookup_UseCache;
             set
             {
-                if (value == _dnsLookup_UseResolverCache)
+                if (value == _dnsLookup_UseCache)
                     return;
 
-                _dnsLookup_UseResolverCache = value;
+                _dnsLookup_UseCache = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private TransportType _dnsLookup_TransportType = GlobalStaticConfiguration.DNSLookup_TransportType;
-        public TransportType DNSLookup_TransportType
+        private bool _dnsLookup_UseTCPOnly = GlobalStaticConfiguration.DNSLookup_UseTCPOnly;
+        public bool DNSLookup_UseTCPOnly
         {
-            get => _dnsLookup_TransportType;
+            get => _dnsLookup_UseTCPOnly;
             set
             {
-                if (value == _dnsLookup_TransportType)
+                if (value == _dnsLookup_UseTCPOnly)
                     return;
 
-                _dnsLookup_TransportType = value;
+                _dnsLookup_UseTCPOnly = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private int _dnsLookup_Attempts = GlobalStaticConfiguration.DNSLookup_Attempts;
-        public int DNSLookup_Attempts
+        private int _dnsLookup_Retries = GlobalStaticConfiguration.DNSLookup_Retries;
+        public int DNSLookup_Retries
         {
-            get => _dnsLookup_Attempts;
+            get => _dnsLookup_Retries;
             set
             {
-                if (value == _dnsLookup_Attempts)
+                if (value == _dnsLookup_Retries)
                     return;
 
-                _dnsLookup_Attempts = value;
+                _dnsLookup_Retries = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

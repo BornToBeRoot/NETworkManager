@@ -1,11 +1,8 @@
-﻿using Heijden.DNS;
-using MahApps.Metro.Controls.Dialogs;
+﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -205,19 +202,19 @@ namespace NETworkManager.ViewModels
             }
         }
                 
-        private bool _dnsTCPOnly;
-        public bool DNSTCPOnly
+        private bool _dnsUseTCPOnly;
+        public bool DNSUseTCPOnly
         {
-            get => _dnsTCPOnly;
+            get => _dnsUseTCPOnly;
             set
             {
-                if (value == _dnsTCPOnly)
+                if (value == _dnsUseTCPOnly)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.IPScanner_DNSTCPOnly = value;
+                    SettingsManager.Current.IPScanner_DNSUseTCPOnly = value;
 
-                _dnsTCPOnly = value;
+                _dnsUseTCPOnly = value;
                 OnPropertyChanged();
             }
         }
@@ -338,7 +335,7 @@ namespace NETworkManager.ViewModels
             DNSPort = SettingsManager.Current.IPScanner_CustomDNSPort;
             DNSRecursion = SettingsManager.Current.IPScanner_DNSRecursion;
             DNSUseCache = SettingsManager.Current.IPScanner_DNSUseCache;
-            DNSTCPOnly = SettingsManager.Current.IPScanner_DNSTCPOnly;
+            DNSUseTCPOnly = SettingsManager.Current.IPScanner_DNSUseTCPOnly;
             DNSRetries = SettingsManager.Current.IPScanner_DNSRetries;
             DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout;
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;

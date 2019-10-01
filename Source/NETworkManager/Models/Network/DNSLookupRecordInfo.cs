@@ -1,13 +1,17 @@
-﻿using Heijden.DNS;
+﻿using DnsClient;
+using DnsClient.Protocol;
+using System;
+using System.Net;
 
 namespace NETworkManager.Models.Network
 {
     public class DNSLookupRecordInfo
     {
-        public string Name { get; set; }
-        public uint TTL { get; set; }
+
+        public string DomainName { get; set; }
+        public int TTL { get; set; }
         public string Class { get; set; }
-        public string Type { get; set; }
+        public string Type { get; set; }        
         public string Result { get; set; }
         public string DNSServer { get; set; }
         public int Port { get; set; }
@@ -17,12 +21,12 @@ namespace NETworkManager.Models.Network
 
         }
 
-        public DNSLookupRecordInfo(RR resourceRecord, string result, string dnsServer, int port)
+        public DNSLookupRecordInfo(string domainName, int ttl, string xclass, string type, string result, string dnsServer, int port)
         {
-            Name = resourceRecord.NAME;
-            TTL = resourceRecord.TTL;
-            Class = resourceRecord.Class.ToString();
-            Type = resourceRecord.Type.ToString();
+            DomainName = domainName;
+            TTL = ttl;
+            Class = xclass;
+            Type = type;
             Result = result;
             DNSServer = dnsServer;
             Port = port;
@@ -30,7 +34,7 @@ namespace NETworkManager.Models.Network
 
         public static DNSLookupRecordInfo Parse(DNSLookupRecordArgs e)
         {
-            return new DNSLookupRecordInfo(e.ResourceRecord, e.Result, e.DNSServer, e.Port);
+            return new DNSLookupRecordInfo(e.DomainName, e.TTL, e.Class.ToString(), e.Type.ToString(), e.Result, e.DNSServer.Address.ToString(), e.DNSServer.Port);
         }
     }
 }

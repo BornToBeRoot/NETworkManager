@@ -5,7 +5,7 @@ namespace NETworkManager.Models.Network
     public class DNSServerInfo
     {
         public string Name { get; set; }
-        public List<string> Server { get; set; }
+        public List<string> Servers { get; set; }
         public int Port { get; set; } = 53;
         public bool UseWindowsDNSServer { get; set; }
 
@@ -14,10 +14,10 @@ namespace NETworkManager.Models.Network
 
         }
 
-        public DNSServerInfo(string name, List<string> server, int port = 53)
+        public DNSServerInfo(string name, List<string> servers, int port = 53)
         {
             Name = name;
-            Server = server;
+            Servers = servers;
             Port = port;
         }
     }

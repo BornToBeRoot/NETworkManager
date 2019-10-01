@@ -581,7 +581,7 @@ namespace NETworkManager.ViewModels
                 ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
                 ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
                 UseCustomDNSServer = SettingsManager.Current.IPScanner_UseCustomDNSServer,
-                DNSTCPOnly = SettingsManager.Current.IPScanner_DNSTCPOnly,
+                DNSUseTCPOnly = SettingsManager.Current.IPScanner_DNSUseTCPOnly,
                 DNSRecursion = SettingsManager.Current.IPScanner_DNSRecursion,
                 DNSUseCache = SettingsManager.Current.IPScanner_DNSUseCache,
                 DNSTimeout = new TimeSpan(SettingsManager.Current.IPScanner_DNSTimeout),

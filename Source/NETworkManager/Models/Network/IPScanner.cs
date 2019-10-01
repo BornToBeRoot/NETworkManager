@@ -20,11 +20,10 @@ namespace NETworkManager.Models.Network
         public int ICMPAttempts = 2;
         public bool ResolveHostname = true;
 
-        // ToDo:
         public bool UseCustomDNSServer = false;
         public IPAddress CustomDNSServer;
         public int CustomDNSPort = 53;
-        public bool DNSTCPOnly = false;
+        public bool DNSUseTCPOnly = false;
         public bool DNSUseCache = true;
         public bool DNSRecursion = true;
         public TimeSpan DNSTimeout = new TimeSpan(2000);
@@ -32,8 +31,6 @@ namespace NETworkManager.Models.Network
 
         public bool ResolveMACAddress = false;
         public bool ShowScanResultForAllIPAddresses = false;
-        
-        // ToDo - End
 
         private LookupClient DnsLookupClient;
         #endregion
@@ -85,7 +82,7 @@ namespace NETworkManager.Models.Network
                     DnsLookupClient.Recursion = DNSRecursion;
                     DnsLookupClient.Timeout = DNSTimeout;
                     DnsLookupClient.Retries = DNSRetries;
-                    DnsLookupClient.UseTcpOnly = DNSTCPOnly;
+                    DnsLookupClient.UseTcpOnly = DNSUseTCPOnly;
                 }
 
                 // Modify the ThreadPool for better performance

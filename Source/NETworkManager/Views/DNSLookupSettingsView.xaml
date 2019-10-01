@@ -45,7 +45,7 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:DNSServerInfo.Name)}" Width="1*" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.DNSServers}" Binding="{Binding (network:DNSServerInfo.Server), Converter={StaticResource ListToStringConverter}}" Width="2*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.DNSServers}" Binding="{Binding (network:DNSServerInfo.Servers), Converter={StaticResource ListToStringConverter}}" Width="2*" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:DNSServerInfo.Port)}" Width="80" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
@@ -170,16 +170,14 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveCNAMEOnANYRequests}" IsChecked="{Binding ResolveCNAME}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}" IsChecked="{Binding Recursion}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseResolverCache}" IsChecked="{Binding UseResolverCache}" Margin="0,0,0,10"/>
-        <TextBlock Text="{x:Static localization:Strings.Class}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <ComboBox ItemsSource="{Binding Classes}" SelectedItem="{Binding Class}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowOnlyMostCommonQueryTypes}" IsChecked="{Binding ShowMostCommonQueryTypes}" Margin="0,0,0,10"/>
-        <TextBlock Text="{x:Static localization:Strings.Protocol}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <ComboBox ItemsSource="{Binding TransportTypes}" SelectedItem="{Binding TransportType}" Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10"/>
-        <TextBlock Text="{x:Static localization:Strings.Attempts}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCache}" IsChecked="{Binding UseCache}" Margin="0,0,0,10"/>
+        <TextBlock Text="{x:Static localization:Strings.QueryClass}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding QueryClasses}" SelectedItem="{Binding QueryClass}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowOnlyMostCommonQueryTypes}" IsChecked="{Binding ShowOnlyMostCommonQueryTypes}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseOnlyTCP}" IsChecked="{Binding UseTCPOnly}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Retries}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding Retries}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" />

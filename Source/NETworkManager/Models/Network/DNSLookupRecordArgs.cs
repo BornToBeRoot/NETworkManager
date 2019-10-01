@@ -1,25 +1,31 @@
-﻿using Heijden.DNS;
+﻿using DnsClient;
+using DnsClient.Protocol;
+using System.Net;
 
 namespace NETworkManager.Models.Network
 {
     public class DNSLookupRecordArgs : System.EventArgs
     {        
-        public RR ResourceRecord { get; set; }
+        public string DomainName { get; set; }
+        public int TTL { get; set; }
+        public QueryClass Class { get; set; }
+        public ResourceRecordType Type { get; set; }        
         public string Result { get; set; }
-        public string DNSServer { get; set; }
-        public int Port { get; set; }
+        public IPEndPoint DNSServer { get; set; }
 
         public DNSLookupRecordArgs()
         {
 
         }
 
-        public DNSLookupRecordArgs(RR resourceRecord, object result, string dnsServer, int port)
+        public DNSLookupRecordArgs(string domainName, int ttl, QueryClass queryClass, ResourceRecordType queryType, string result, IPEndPoint dnsServer)
         {
-            ResourceRecord = resourceRecord;
-            Result = result.ToString().TrimEnd();
+            DomainName = domainName;
+            TTL = ttl;
+            Class = queryClass;
+            Type = queryType;
+            Result = result;
             DNSServer = dnsServer;
-            Port = port;
         }
     }
 }

@@ -295,10 +295,10 @@ namespace NETworkManager.Models.Export
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine($"{nameof(DNSLookupRecordInfo.Name)},{nameof(DNSLookupRecordInfo.TTL)},{nameof(DNSLookupRecordInfo.Class)},{nameof(DNSLookupRecordInfo.Type)},{nameof(DNSLookupRecordInfo.Result)},{nameof(DNSLookupRecordInfo.DNSServer)},{nameof(DNSLookupRecordInfo.Port)}");
+            stringBuilder.AppendLine($"{nameof(DNSLookupRecordInfo.DomainName)},{nameof(DNSLookupRecordInfo.TTL)},{nameof(DNSLookupRecordInfo.Class)},{nameof(DNSLookupRecordInfo.Type)},{nameof(DNSLookupRecordInfo.Result)},{nameof(DNSLookupRecordInfo.DNSServer)},{nameof(DNSLookupRecordInfo.Port)}");
 
             foreach (var info in collection)
-                stringBuilder.AppendLine($"{info.Name},{info.TTL},{info.Class},{info.Type},{info.Result},{info.DNSServer},{info.Port}");
+                stringBuilder.AppendLine($"{info.DomainName},{info.TTL},{info.Class},{info.Type},{info.Result},{info.DNSServer},{info.Port}");
 
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
@@ -486,7 +486,7 @@ namespace NETworkManager.Models.Export
                         from info in collection
                         select
                             new XElement(nameof(DNSLookupRecordInfo),
-                                new XElement(nameof(DNSLookupRecordInfo.Name), info.Name),
+                                new XElement(nameof(DNSLookupRecordInfo.DomainName), info.DomainName),
                                 new XElement(nameof(DNSLookupRecordInfo.TTL), info.TTL),
                                 new XElement(nameof(DNSLookupRecordInfo.Class), info.Class),
                                 new XElement(nameof(DNSLookupRecordInfo.Type), info.Type),
@@ -721,7 +721,7 @@ namespace NETworkManager.Models.Export
             {
                 jsonData[i] = new
                 {
-                    collection[i].Name,
+                    collection[i].DomainName,
                     collection[i].TTL,
                     collection[i].Class,
                     collection[i].Type,

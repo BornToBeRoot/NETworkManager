@@ -53,7 +53,7 @@
         <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}" IsChecked="{Binding DNSRecursion}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCache}" IsChecked="{Binding DNSUseCache}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.Protocol}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseOnlyTCP}" IsChecked="{Binding DNSTCPOnly}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseOnlyTCP}" IsChecked="{Binding DNSUseTCPOnly}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Retries}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding DNSRetries}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />

@@ -9,6 +9,7 @@ using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Network;
 using NETworkManager.Views;
+using DnsClient;
 
 namespace NETworkManager.ViewModels
 {
@@ -86,23 +87,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _resolveCNAME;
-        public bool ResolveCNAME
-        {
-            get => _resolveCNAME;
-            set
-            {
-                if (value == _resolveCNAME)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_ResolveCNAME = value;
-
-                _resolveCNAME = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _recursion;
         public bool Recursion
         {
@@ -120,91 +104,89 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _useResolverCache;
-        public bool UseResolverCache
+        private bool _useCache;
+        public bool UseCache
         {
-            get => _useResolverCache;
+            get => _useCache;
             set
             {
-                if (value == _useResolverCache)
+                if (value == _useCache)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_UseResolverCache = value;
+                    SettingsManager.Current.DNSLookup_UseCache = value;
 
-                _useResolverCache = value;
+                _useCache = value;
                 OnPropertyChanged();
             }
         }
 
-        public List<QClass> Classes { get; set; }
+        public List<QueryClass> QueryClasses { get; set; }
 
-        private QClass _class;
-        public QClass Class
+        private QueryClass _queryClass;
+        public QueryClass QueryClass
         {
-            get => _class;
+            get => _queryClass;
             set
             {
-                if (value == _class)
+                if (value == _queryClass)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_Class = value;
+                    SettingsManager.Current.DNSLookup_QueryClass = value;
 
-                _class = value;
+                _queryClass = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _showMostCommonQueryTypes;
-        public bool ShowMostCommonQueryTypes
+        private bool _showOnlyMostCommonQueryTypes;
+        public bool ShowOnlyMostCommonQueryTypes
         {
-            get => _showMostCommonQueryTypes;
+            get => _showOnlyMostCommonQueryTypes;
             set
             {
-                if (value == _showMostCommonQueryTypes)
+                if (value == _showOnlyMostCommonQueryTypes)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_ShowMostCommonQueryTypes = value;
+                    SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes = value;
 
-                _showMostCommonQueryTypes = value;
+                _showOnlyMostCommonQueryTypes = value;
                 OnPropertyChanged();
             }
         }
 
-        public List<TransportType> TransportTypes { get; set; }
-
-        private TransportType _transportType;
-        public TransportType TransportType
+        private bool _useTCPOnly;
+        public bool UseTCPOnly
         {
-            get => _transportType;
+            get => _useTCPOnly;
             set
             {
-                if (value == _transportType)
+                if (value == _useTCPOnly)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_TransportType = value;
+                    SettingsManager.Current.DNSLookup_UseTCPOnly = value;
 
-                _transportType = value;
+                _useTCPOnly = value;
                 OnPropertyChanged();
             }
         }
-
-        private int _attempts;
-        public int Attempts
+               
+        private int _retries;
+        public int Retries
         {
-            get => _attempts;
+            get => _retries;
             set
             {
-                if (value == _attempts)
+                if (value == _retries)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_Attempts = value;
+                    SettingsManager.Current.DNSLookup_Retries = value;
 
-                _attempts = value;
+                _retries = value;
                 OnPropertyChanged();
             }
         }
@@ -250,7 +232,7 @@ namespace NETworkManager.ViewModels
             _isLoading = true;
 
             _dialogCoordinator = instance;
-            
+
             DNSServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_DNSServers);
             DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.Name), ListSortDirection.Ascending));
             DNSServers.Filter = o =>
@@ -271,15 +253,13 @@ namespace NETworkManager.ViewModels
             AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix;
             UseCustomDNSSuffix = SettingsManager.Current.DNSLookup_UseCustomDNSSuffix;
             CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
-            ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME;
             Recursion = SettingsManager.Current.DNSLookup_Recursion;
-            UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache;
-            Classes = System.Enum.GetValues(typeof(QClass)).Cast<QClass>().OrderBy(x => x.ToString()).ToList();
-            Class = Classes.First(x => x == SettingsManager.Current.DNSLookup_Class);
-            ShowMostCommonQueryTypes = SettingsManager.Current.DNSLookup_ShowMostCommonQueryTypes;
-            TransportTypes = System.Enum.GetValues(typeof(TransportType)).Cast<TransportType>().OrderBy(x => x.ToString()).ToList();
-            TransportType = TransportTypes.First(x => x == SettingsManager.Current.DNSLookup_TransportType);
-            Attempts = SettingsManager.Current.DNSLookup_Attempts;
+            UseCache = SettingsManager.Current.DNSLookup_UseCache;
+            QueryClasses = System.Enum.GetValues(typeof(QueryClass)).Cast<QueryClass>().OrderBy(x => x.ToString()).ToList();
+            QueryClass = QueryClasses.First(x => x == SettingsManager.Current.DNSLookup_QueryClass);
+            ShowOnlyMostCommonQueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes;
+            UseTCPOnly = SettingsManager.Current.DNSLookup_UseTCPOnly;
+            Retries = SettingsManager.Current.DNSLookup_Retries;
             Timeout = SettingsManager.Current.DNSLookup_Timeout;
             ShowStatistics = SettingsManager.Current.DNSLookup_ShowStatistics;
         }
@@ -345,9 +325,9 @@ namespace NETworkManager.ViewModels
             var dnsServerViewModel = new DNSServerViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                
+
                 SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
-                SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerInfo(instance.Name, instance.DNSServer.Replace(" ","").Split(';').ToList(), instance.Port));
+                SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerInfo(instance.Name, instance.DNSServer.Replace(" ", "").Split(';').ToList(), instance.Port));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -384,7 +364,7 @@ namespace NETworkManager.ViewModels
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }               
+        }
         #endregion
     }
 }

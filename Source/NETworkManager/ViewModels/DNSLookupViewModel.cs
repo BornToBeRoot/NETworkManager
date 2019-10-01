@@ -19,6 +19,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
+using DnsClient;
 
 namespace NETworkManager.ViewModels
 {
@@ -72,33 +73,33 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private List<QType> _types = new List<QType>();
-        public List<QType> Types
+        private List<QueryType> _queryTypes = new List<QueryType>();
+        public List<QueryType> QueryTypes
         {
-            get => _types;
+            get => _queryTypes;
             set
             {
-                if (value == _types)
+                if (value == _queryTypes)
                     return;
 
-                _types = value;
+                _queryTypes = value;
                 OnPropertyChanged();
             }
         }
 
-        private QType _type;
-        public QType Type
+        private QueryType _queryType;
+        public QueryType QueryType
         {
-            get => _type;
+            get => _queryType;
             set
             {
-                if (value == _type)
+                if (value == _queryType)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_Type = value;
+                    SettingsManager.Current.DNSLookup_QueryType = value;
 
-                _type = value;
+                _queryType = value;
                 OnPropertyChanged();
             }
         }
@@ -304,12 +305,12 @@ namespace NETworkManager.ViewModels
         private void LoadTypes()
         {
             // Filter by common types...
-            Types = SettingsManager.Current.DNSLookup_ShowMostCommonQueryTypes ? System.Enum.GetValues(typeof(QType)).Cast<QType>().Where(x => (x == QType.A || x == QType.AAAA || x == QType.ANY || x == QType.CNAME || x == QType.MX || x == QType.NS || x == QType.PTR || x == QType.SOA || x == QType.LOC || x == QType.TXT)).OrderBy(x => x.ToString()).ToList() : System.Enum.GetValues(typeof(QType)).Cast<QType>().OrderBy(x => x.ToString()).ToList();
-            Type = Types.FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_Type);
+            QueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes ? System.Enum.GetValues(typeof(QueryType)).Cast<QueryType>().Where(x => (x == QueryType.A || x == QueryType.AAAA || x == QueryType.ANY || x == QueryType.CNAME || x == QueryType.MX || x == QueryType.NS || x == QueryType.PTR || x == QueryType.SOA || x == QueryType.TXT)).OrderBy(x => x.ToString()).ToList() : System.Enum.GetValues(typeof(QueryType)).Cast<QueryType>().OrderBy(x => x.ToString()).ToList();
+            QueryType = QueryTypes.FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_QueryType);
 
             // Fallback
-            if (Type == 0)
-                Type = QType.ANY;
+            if (QueryType == 0)
+                QueryType = QueryType.ANY;
         }
         #endregion
 
@@ -324,11 +325,11 @@ namespace NETworkManager.ViewModels
                 StartLookup();
         }
 
-        public ICommand CopySelectedNameCommand => new RelayCommand(p => CopySelectedNameAction());
+        public ICommand CopySelectedDomainNameCommand => new RelayCommand(p => CopySelectedDomainNameAction());
 
-        private void CopySelectedNameAction()
+        private void CopySelectedDomainNameAction()
         {
-            CommonMethods.SetClipboard(SelectedLookupResult.Name);
+            CommonMethods.SetClipboard(SelectedLookupResult.DomainName);
         }
 
         public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
@@ -432,21 +433,19 @@ namespace NETworkManager.ViewModels
             var dnsLookup = new DNSLookup
             {
                 AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix,
-                Class = SettingsManager.Current.DNSLookup_Class,
-                Type = Type,
+                QueryClass = SettingsManager.Current.DNSLookup_QueryClass,
+                QueryType = QueryType,
                 Recursion = SettingsManager.Current.DNSLookup_Recursion,
-                UseResolverCache = SettingsManager.Current.DNSLookup_UseResolverCache,
-                TransportType = SettingsManager.Current.DNSLookup_TransportType,
-                Attempts = SettingsManager.Current.DNSLookup_Attempts,
-                Timeout = SettingsManager.Current.DNSLookup_Timeout,
-                ResolveCNAME = SettingsManager.Current.DNSLookup_ResolveCNAME,
+                UseCache = SettingsManager.Current.DNSLookup_UseCache,
+                UseTCPOnly = SettingsManager.Current.DNSLookup_UseTCPOnly,
+                Retries = SettingsManager.Current.DNSLookup_Retries,
+                Timeout = new TimeSpan(SettingsManager.Current.DNSLookup_Timeout),
             };
 
             if (!DNSServer.UseWindowsDNSServer)
             {
                 dnsLookup.UseCustomDNSServer = true;
-                dnsLookup.CustomDNSServers = DNSServer.Server;
-                dnsLookup.Port = DNSServer.Port;
+                dnsLookup.CustomDNSServer = DNSServer;                
             }
 
             if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
@@ -529,11 +528,8 @@ namespace NETworkManager.ViewModels
         {
             if (!string.IsNullOrEmpty(StatusMessage))
                 StatusMessage += Environment.NewLine;
-
-            if (e.ErrorCode == "Timeout Error")
-                StatusMessage += string.Format(Resources.Localization.Strings.TimeoutWhenQueryingDNSServerMessage, e.DNSServer);
-            else
-                StatusMessage += Resources.Localization.Strings.UnkownError;
+            
+            StatusMessage += e.ErrorCode;
 
             DisplayStatusMessage = true;
 
@@ -557,7 +553,7 @@ namespace NETworkManager.ViewModels
                 case nameof(SettingsInfo.DNSLookup_ShowStatistics):
                     OnPropertyChanged(nameof(ShowStatistics));
                     break;
-                case nameof(SettingsInfo.DNSLookup_ShowMostCommonQueryTypes):
+                case nameof(SettingsInfo.DNSLookup_ShowOnlyMostCommonQueryTypes):
                     LoadTypes();
                     break;
             }
