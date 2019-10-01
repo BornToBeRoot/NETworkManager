@@ -661,6 +661,9 @@
     <Resource Include="Resources\Localization\Flags\nl-NL.png" />
     <Resource Include="Resources\Localization\Flags\it-IT.png" />
     <Resource Include="Resources\Localization\Flags\zh-CN.png" />
+    <Content Include="Licenses\DnsClient.NET.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\WhoisServers.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
