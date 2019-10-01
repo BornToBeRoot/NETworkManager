@@ -390,7 +390,7 @@
                     <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.GHz2dot4}" Style="{StaticResource HeaderTextBlock}" />
                     <liveChart:CartesianChart Grid.Row="1" Series="{Binding Radio1Series}" LegendLocation="Right">
                         <liveChart:CartesianChart.DataTooltip>
-                            <liveChart:DefaultTooltip SelectionMode="OnlySender" Background="Transparent"  />
+                            <liveChart:DefaultTooltip Background="Transparent"  />
                         </liveChart:CartesianChart.DataTooltip>
                         <liveChart:CartesianChart.AxisX>
                             <liveChart:Axis Title="{x:Static localization:Strings.Channel}" Labels="{Binding Radio1Labels}">
@@ -410,7 +410,7 @@
                     <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.GHz5}" Style="{StaticResource HeaderTextBlock}" />
                     <liveChart:CartesianChart Grid.Row="4" Series="{Binding Radio2Series}" LegendLocation="Right">
                         <liveChart:CartesianChart.DataTooltip>
-                            <liveChart:DefaultTooltip SelectionMode="OnlySender" Background="Transparent"  />
+                            <liveChart:DefaultTooltip Background="Transparent"  />
                         </liveChart:CartesianChart.DataTooltip>
                         <liveChart:CartesianChart.AxisX>
                             <liveChart:Axis Title="{x:Static localization:Strings.Channel}" Labels="{Binding Radio2Labels}">
