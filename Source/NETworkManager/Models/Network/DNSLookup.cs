@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using TransportType = Heijden.DNS.TransportType;
 
 namespace NETworkManager.Models.Network
 {

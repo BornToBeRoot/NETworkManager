@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Heijden.DNS;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;

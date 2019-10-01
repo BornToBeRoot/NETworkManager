@@ -6,7 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using DnsClient;
-using Heijden.DNS;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;

@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Diagnostics;
-using Heijden.DNS;
 using System.Linq;
 using System.ComponentModel;
 using System.Windows.Data;
