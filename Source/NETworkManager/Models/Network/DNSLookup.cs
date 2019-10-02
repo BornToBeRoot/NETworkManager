@@ -18,7 +18,7 @@ namespace NETworkManager.Models.Network
         public string CustomDNSSuffix;
         public QueryClass QueryClass = QueryClass.IN;
         public QueryType QueryType = QueryType.ANY;
-        
+
         public bool UseCache = false;
         public bool Recursion = true;
         public bool UseTCPOnly = false;
@@ -97,7 +97,7 @@ namespace NETworkManager.Models.Network
                         dnsLookupClient.UseCache = UseCache;
                         dnsLookupClient.Recursion = Recursion;
                         dnsLookupClient.Timeout = Timeout;
-                        dnsLookupClient.Retries = Retries;                        
+                        dnsLookupClient.Retries = Retries;
 
                         // PTR vs A, AAAA, CNAME etc.
                         var dnsResponse = QueryType == QueryType.PTR ? dnsLookupClient.QueryReverse(IPAddress.Parse(host)) : dnsLookupClient.Query(host, QueryType, QueryClass);
@@ -148,14 +148,13 @@ namespace NETworkManager.Models.Network
 
             // SOA
             foreach (var record in dnsQueryResponse.Answers.SoaRecords())
-                OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.MName + " " + record.RName, dnsServer));
+                OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.MName + ", " + record.RName, dnsServer));
 
             // TXT
             foreach (var record in dnsQueryResponse.Answers.TxtRecords())
-                OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.Text.ToString(), dnsServer));
+                OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, string.Join(", ", record.Text), dnsServer));
 
             // ToDo: implement more
-
         }
         #endregion
     }
