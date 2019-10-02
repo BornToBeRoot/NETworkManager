@@ -452,7 +452,7 @@
                         <TextBlock Text="{x:Static localization:Strings.SearchingWiFiAdaptersDots}" Style="{StaticResource MessageTextBlock}" />
                     </StackPanel>
                 </StackPanel>
-            </Grid>            
+            </Grid>
         </TabItem>
     </TabControl>
 </UserControl>

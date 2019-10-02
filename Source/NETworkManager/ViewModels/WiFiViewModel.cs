@@ -157,12 +157,10 @@ namespace NETworkManager.ViewModels
 
         private bool ScanNetworks_CanExecute(object obj) => !IsNetworksLoading;
 
-
         private void ScanNetworksAction()
         {
             ScanNetworks(SelectedAdapter.WiFiAdapter);
         }
-
         #endregion
 
         #region Methods
@@ -297,4 +295,3 @@ namespace NETworkManager.ViewModels
         #endregion
     }
 }
-
