@@ -1,6 +1,7 @@
 ﻿using DnsClient;
 using NETworkManager.Models.Lookup;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -26,7 +27,7 @@ namespace NETworkManager.Models.Network
         public bool DNSUseTCPOnly = false;
         public bool DNSUseCache = true;
         public bool DNSRecursion = true;
-        public TimeSpan DNSTimeout = new TimeSpan(2000);
+        public TimeSpan DNSTimeout = TimeSpan.FromSeconds(2);
         public int DNSRetries = 3;
 
         public bool ResolveMACAddress = false;
@@ -98,90 +99,98 @@ namespace NETworkManager.Models.Network
                     };
 
                     Parallel.ForEach(ipAddresses, parallelOptions, ipAddress =>
-                    {
-                        var pingInfo = new PingInfo();
-                        var pingable = false;
+                     {
+                         var pingInfo = new PingInfo();
+                         var pingable = false;
 
-                        // PING
-                        using (var ping = new System.Net.NetworkInformation.Ping())
-                        {
-                            for (var i = 0; i < ICMPAttempts; i++)
-                            {
-                                try
-                                {
-                                    var pingReply = ping.Send(ipAddress, ICMPTimeout, ICMPBuffer);
+                         // PING
+                         using (var ping = new System.Net.NetworkInformation.Ping())
+                         {
+                             for (var i = 0; i < ICMPAttempts; i++)
+                             {
+                                 try
+                                 {
+                                     var pingReply = ping.Send(ipAddress, ICMPTimeout, ICMPBuffer);
 
-                                    if (pingReply != null && IPStatus.Success == pingReply.Status)
-                                    {
-                                        pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status);
+                                     if (pingReply != null && IPStatus.Success == pingReply.Status)
+                                     {
+                                         pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status);
 
-                                        pingable = true;
-                                        break; // Continue with the next checks...
-                                    }
+                                         pingable = true;
+                                         break; // Continue with the next checks...
+                                     }
 
-                                    if (pingReply != null)
-                                        pingInfo = new PingInfo(ipAddress, pingReply.Status);
-                                }
-                                catch (PingException)
-                                { }
+                                     if (pingReply != null)
+                                         pingInfo = new PingInfo(ipAddress, pingReply.Status);
+                                 }
+                                 catch (PingException)
+                                 { }
 
-                                // Don't scan again, if the user has canceled (when more than 1 attempt)
-                                if (cancellationToken.IsCancellationRequested)
-                                    break;
-                            }
-                        }
+                                 // Don't scan again, if the user has canceled (when more than 1 attempt)
+                                 if (cancellationToken.IsCancellationRequested)
+                                     break;
+                             }
+                         }
 
-                        if (pingable || ShowScanResultForAllIPAddresses)
-                        {
-                            // DNS
-                            var hostname = string.Empty;
+                         if (pingable || ShowScanResultForAllIPAddresses)
+                         {
+                             // DNS
+                             var hostname = string.Empty;
 
-                            if (ResolveHostname)
-                            {
-                                var dnsQueryResponse = DnsLookupClient.QueryReverse(ipAddress);
+                             if (ResolveHostname)
+                             {
+                                 try
+                                 {
+                                     var dnsQueryResponse = DnsLookupClient.QueryReverse(ipAddress);
 
-                                if (!dnsQueryResponse.HasError)
-                                    hostname = dnsQueryResponse.Answers.PtrRecords().FirstOrDefault()?.PtrDomainName;
-                                else
-                                    hostname = $"{Resources.Localization.Strings.Error}: {dnsQueryResponse.ErrorMessage}";
-                            }                                
+                                     if (dnsQueryResponse != null && !dnsQueryResponse.HasError)
+                                         hostname = dnsQueryResponse.Answers.PtrRecords().FirstOrDefault()?.PtrDomainName;
+                                     else
+                                         hostname = $"{Resources.Localization.Strings.Error}: {dnsQueryResponse.ErrorMessage}";
+                                 }
+                                 catch (Exception ex)
+                                 {
+                                     hostname = $"{Resources.Localization.Strings.Error}: {ex.Message}";
+                                 }
+                             }
 
-                            // ARP
-                            PhysicalAddress macAddress = null;
-                            var vendor = string.Empty;
+                             // ARP
+                             PhysicalAddress macAddress = null;
+                             var vendor = string.Empty;
 
-                            if (ResolveMACAddress)
-                            {
-                                // Get info from arp table
-                                var arpTableInfo = ARP.GetTable().FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
+                             if (ResolveMACAddress)
+                             {
+                                 // Get info from arp table
+                                 var arpTableInfo = ARP.GetTable().FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
 
-                                if (arpTableInfo != null)
-                                    macAddress = arpTableInfo.MACAddress;
+                                 if (arpTableInfo != null)
+                                     macAddress = arpTableInfo.MACAddress;
 
-                                // Check if it is the local mac
-                                if (macAddress == null)
-                                {
-                                    var networkInferfaceInfo = NetworkInterface.GetNetworkInterfaces().FirstOrDefault(p => p.IPv4Address.Contains(ipAddress));
+                                 // Check if it is the local mac
+                                 if (macAddress == null)
+                                 {
+                                     var networkInferfaceInfo = NetworkInterface.GetNetworkInterfaces().FirstOrDefault(p => p.IPv4Address.Contains(ipAddress));
 
-                                    if (networkInferfaceInfo != null)
-                                        macAddress = networkInferfaceInfo.PhysicalAddress;
-                                }
+                                     if (networkInferfaceInfo != null)
+                                         macAddress = networkInferfaceInfo.PhysicalAddress;
+                                 }
 
-                                // Vendor lookup
-                                if (macAddress != null)
-                                {
-                                    var info = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault();
+                                 // Vendor lookup
+                                 if (macAddress != null)
+                                 {
+                                     var info = OUILookup.Lookup(macAddress.ToString()).FirstOrDefault();
 
-                                    if (info != null)
-                                        vendor = info.Vendor;
-                                }
-                            }
+                                     if (info != null)
+                                         vendor = info.Vendor;
+                                 }
+                             }
 
-                            OnHostFound(new HostFoundArgs(pingInfo, hostname, macAddress, vendor));
-                        }
+                             OnHostFound(new HostFoundArgs(pingInfo, hostname, macAddress, vendor));
+                         }
 
-                        IncreaseProcess();
-                    });
+                         IncreaseProcess();
+                     });
+
 
                     OnScanComplete();
                 }

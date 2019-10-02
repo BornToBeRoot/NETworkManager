@@ -167,6 +167,24 @@ namespace NETworkManager.Models.Network
                 case 5.700:
                     channel = 140;
                     break;
+                case 5.720:
+                    channel = 144;
+                    break;
+                case 5.745:
+                    channel = 149;
+                    break;
+                case 5.765:
+                    channel = 153;
+                    break;
+                case 5.785:
+                    channel = 157;
+                    break;
+                case 5.805:
+                    channel = 161;
+                    break;
+                case 5.825:
+                    channel = 165;
+                    break;
             }
 
             return channel;

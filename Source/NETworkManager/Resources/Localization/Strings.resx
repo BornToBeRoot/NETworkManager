@@ -2415,4 +2415,7 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="DomainName" xml:space="preserve">
     <value>Domain name</value>
   </data>
+  <data name="TimeoutS" xml:space="preserve">
+    <value>Timeout (s)</value>
+  </data>
 </root>

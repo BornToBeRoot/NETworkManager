@@ -438,7 +438,7 @@ namespace NETworkManager.ViewModels
                 UseCache = SettingsManager.Current.DNSLookup_UseCache,
                 UseTCPOnly = SettingsManager.Current.DNSLookup_UseTCPOnly,
                 Retries = SettingsManager.Current.DNSLookup_Retries,
-                Timeout = new TimeSpan(SettingsManager.Current.DNSLookup_Timeout),
+                Timeout = TimeSpan.FromSeconds(SettingsManager.Current.DNSLookup_Timeout),
             };
 
             if (!DNSServer.UseWindowsDNSServer)

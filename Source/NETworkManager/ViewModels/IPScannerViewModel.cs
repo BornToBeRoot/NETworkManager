@@ -584,7 +584,7 @@ namespace NETworkManager.ViewModels
                 DNSUseTCPOnly = SettingsManager.Current.IPScanner_DNSUseTCPOnly,
                 DNSRecursion = SettingsManager.Current.IPScanner_DNSRecursion,
                 DNSUseCache = SettingsManager.Current.IPScanner_DNSUseCache,
-                DNSTimeout = new TimeSpan(SettingsManager.Current.IPScanner_DNSTimeout),
+                DNSTimeout = TimeSpan.FromSeconds(SettingsManager.Current.IPScanner_DNSTimeout),
                 DNSRetries = SettingsManager.Current.IPScanner_DNSRetries,
                 ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
                 ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses

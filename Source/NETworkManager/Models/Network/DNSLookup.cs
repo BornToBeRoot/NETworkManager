@@ -23,7 +23,7 @@ namespace NETworkManager.Models.Network
         public bool Recursion = true;
         public bool UseTCPOnly = false;
         public int Retries = 3;
-        public TimeSpan Timeout = new TimeSpan(2000);
+        public TimeSpan Timeout = TimeSpan.FromSeconds(2);
         #endregion
 
         #region Events

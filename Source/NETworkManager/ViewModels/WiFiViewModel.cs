@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -116,7 +117,7 @@ namespace NETworkManager.ViewModels
         public SeriesCollection Radio1Series { get; set; } = new SeriesCollection();
         public string[] Radio1Labels { get; set; } = new string[] { " ", " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", " ", " " };
         public SeriesCollection Radio2Series { get; set; } = new SeriesCollection();
-        public string[] Radio2Labels { get; set; } = new string[] { " ", " ", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136", "140", " ", " " };
+        public string[] Radio2Labels { get; set; } = new string[] { " ", " ", "36", "40", "44", "48", "52", "56", "60", "64", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136", "140", "144", "149", "153", "157", "161", "165", " ", " " };
         public Func<double, string> FormatterdBm { get; set; } = value => $"- {value} dBm";
 
         #endregion
@@ -134,7 +135,7 @@ namespace NETworkManager.ViewModels
             LoadAdapters();
 
             _isLoading = false;
-        }       
+        }
 
         private void LoadSettings()
         {
