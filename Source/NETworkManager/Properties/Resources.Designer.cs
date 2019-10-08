@@ -106,6 +106,15 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/issues/new/choose.
+        /// </summary>
+        public static string NETworkManager_NewIssueUrl {
+            get {
+                return ResourceManager.GetString("NETworkManager_NewIssueUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NETworkManager.
         /// </summary>
         public static string NETworkManager_ProjectName {
@@ -120,6 +129,24 @@ namespace NETworkManager.Properties {
         public static string NETworkManager_ProjectUrl {
             get {
                 return ResourceManager.GetString("NETworkManager_ProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://www.transifex.com/BornToBeRoot/NETworkManager/.
+        /// </summary>
+        public static string NETworkManager_TranslationUrl {
+            get {
+                return ResourceManager.GetString("NETworkManager_TranslationUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://twitter.com/BornToBeRoot_DE.
+        /// </summary>
+        public static string NETworkManager_TwitterUrl {
+            get {
+                return ResourceManager.GetString("NETworkManager_TwitterUrl", resourceCulture);
             }
         }
     }

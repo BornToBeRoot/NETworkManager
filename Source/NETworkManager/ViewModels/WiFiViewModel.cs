@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -155,7 +154,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ScanNetworksCommand => new RelayCommand(p => ScanNetworksAction(), ScanNetworks_CanExecute);
 
-        private bool ScanNetworks_CanExecute(object obj) => !IsNetworksLoading;
+        private bool ScanNetworks_CanExecute(object obj) => !IsAdaptersLoading && !IsNetworksLoading;
 
         private void ScanNetworksAction()
         {

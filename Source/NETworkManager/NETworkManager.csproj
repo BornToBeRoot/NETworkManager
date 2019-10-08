@@ -171,7 +171,6 @@
     <Compile Include="Converters\ValidateSubnetCalculatorSubnettingConverter.cs" />
     <Compile Include="Models\Documentation\BaseInfo.cs" />
     <Compile Include="Models\Documentation\DocumentationIdentifier.cs" />
-    <Compile Include="Models\Documentation\CommunityManager.cs" />
     <Compile Include="Models\Documentation\ExternalServicesInfo.cs" />
     <Compile Include="Models\Documentation\ResourceInfo.cs" />
     <Compile Include="Models\Documentation\ExternalServicesManager.cs" />
@@ -1333,7 +1332,7 @@
       <Version>12.0.2</Version>
     </PackageReference>
     <PackageReference Include="Octokit">
-      <Version>0.34.0</Version>
+      <Version>0.36.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -319,7 +319,7 @@ namespace NETworkManager.ViewModels
             var saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
                 Filter = ImportExportFileExtensionFilter,
-                FileName = $"{Resources.Localization.StaticStrings.ProductName}_{Resources.Localization.Strings.Backup}_{TimestampHelper.GetTimestamp()}{ImportExportManager.ImportExportFileExtension}"
+                FileName = $"{Properties.Resources.NETworkManager_ProjectName}_{Resources.Localization.Strings.Backup}_{TimestampHelper.GetTimestamp()}{ImportExportManager.ImportExportFileExtension}"
             };
 
             if (saveFileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)

@@ -8,9 +8,10 @@
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"                             
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
-        Title="{x:Static localization:StaticStrings.ProductName}" Height="300" Width="250" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" Style="{StaticResource DefaultWindow}" ShowMinButton="False" ShowMaxRestoreButton="False" Closing="StatusWindow_Closing">
+        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Height="300" Width="250" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" Style="{StaticResource DefaultWindow}" ShowMinButton="False" ShowMaxRestoreButton="False" Closing="StatusWindow_Closing">
     <mahAppsControls:MetroWindow.Resources>
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />

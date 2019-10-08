@@ -9,7 +9,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"             
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -36,7 +36,7 @@
                 </Grid.ColumnDefinitions>
                 <Image Grid.Column="0" Grid.Row="0" Width="128" Height="128" Source="/Resources/Images/NETworkManager.ico" VerticalAlignment="Center" />
                 <StackPanel Grid.Column="1" Margin="20,0,0,0">
-                    <TextBlock FontSize="32" Text="{x:Static localization:StaticStrings.ProductName}" Style="{StaticResource HeaderTextBlock}" />
+                    <TextBlock FontSize="32" Text="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock Text="{x:Static localization:Strings.Slogan}" Style="{DynamicResource WrapTextBlock}" Margin="0,0,0,5" />
                     <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" Margin="0,0,0,5" />
                     <TextBlock Text="{x:Static resources:Resources.NETworkManager_License}" Style="{StaticResource LinkTextBlock}" Margin="0,0,0,5">
@@ -44,14 +44,14 @@
                             <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LicenseUrl}" MouseAction="LeftClick" />
                         </TextBlock.InputBindings>
                     </TextBlock>
-                    <TextBlock Text="Developed and maintained by GitHub.com/BornToBeRoot" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
+                    <TextBlock Text="Developed and maintained by BornToBeRoot" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                 <Setter Property="Cursor" Value="Hand"></Setter>
                             </Style>
                         </StackPanel.Resources>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.GithubUrl}">
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:SimpleIcons Kind=GitHub}" />
@@ -68,7 +68,7 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_TransifexProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.TransifexUrl}" Margin="10,0,0,0">
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_TransifexProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_TranslationUrl}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24" >
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Translate}" />
@@ -85,7 +85,24 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_TwitterContact}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.TwitterUrl}" Margin="10,0,0,0">
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GithubNewIssueUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" Margin="10,0,0,0">
+                            <Rectangle Width="24" Height="24" >
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=Bug}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_TwitterContactUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_TwitterUrl}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24" >
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Twitter}" />

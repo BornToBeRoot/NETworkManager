@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
-        xmlns:documentation="clr-namespace:NETworkManager.Models.Documentation"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"        
+        xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
@@ -155,7 +155,7 @@
         </Grid>
         <StackPanel Grid.Row="3" Orientation="Horizontal" ToolTip="{x:Static localization:Strings.ToolTip_TransifexProjectUrl}">
             <StackPanel.InputBindings>
-                <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static documentation:CommunityManager.TransifexUrl}" />
+                <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_TranslationUrl}" />
             </StackPanel.InputBindings>
             <StackPanel.Style>
                 <Style TargetType="{x:Type StackPanel}">

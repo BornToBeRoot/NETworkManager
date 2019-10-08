@@ -132,10 +132,19 @@
   <data name="NETworkManager_LicenseUrl" xml:space="preserve">
     <value>https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE</value>
   </data>
+  <data name="NETworkManager_NewIssueUrl" xml:space="preserve">
+    <value>https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
+  </data>
   <data name="NETworkManager_ProjectName" xml:space="preserve">
     <value>NETworkManager</value>
   </data>
   <data name="NETworkManager_ProjectUrl" xml:space="preserve">
     <value>https://github.com/BornToBeRoot/NETworkManager</value>
+  </data>
+  <data name="NETworkManager_TranslationUrl" xml:space="preserve">
+    <value>https://www.transifex.com/BornToBeRoot/NETworkManager/</value>
+  </data>
+  <data name="NETworkManager_TwitterUrl" xml:space="preserve">
+    <value>https://twitter.com/BornToBeRoot_DE</value>
   </data>
 </root>

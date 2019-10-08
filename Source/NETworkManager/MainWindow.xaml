@@ -12,7 +12,7 @@
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         mc:Ignorable="d"
-        Title="{x:Static localization:StaticStrings.ProductName}" Style="{DynamicResource DefaultWindow}" MinWidth="1050" MinHeight="700" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
+        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" MinWidth="1050" MinHeight="700" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
         d:DataContext="{d:DesignInstance networkManager:MainWindow}">
     <!-- MetroDialogStyles.xaml must be adjusted if MinWidth/MinHeight is changed -->
     <mahAppsControls:MetroWindow.Resources>
@@ -84,7 +84,16 @@
                     </Rectangle>
                 </StackPanel>
             </Button>
-            <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}" Cursor="Hand">
+                <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.ReportAnIssueOrCreateAFeatureRequest}" CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=Bug}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </StackPanel>
+                </Button>
+                <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}" Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>

@@ -168,7 +168,6 @@ namespace NETworkManager.Utilities
 
                     if (ipAddress != null)
                         bag.Add(ipHostOrRange.Contains('/') ? $"{ipAddress.ToString()}/{hostAndSubnet[1]}" : ipAddress.ToString());
-
                 }
             });
 

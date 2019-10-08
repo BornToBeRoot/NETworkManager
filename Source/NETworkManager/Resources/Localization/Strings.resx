@@ -2064,7 +2064,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/</value>
 
 URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
   </data>
-  <data name="ToolTip_TwitterContact" xml:space="preserve">
+  <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
     <value>Contact via Twitter.
 
 URL: https://twitter.com/BornToBeRoot_DE</value>
@@ -2417,5 +2417,13 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="TimeoutS" xml:space="preserve">
     <value>Timeout (s)</value>
+  </data>
+  <data name="ReportAnIssueOrCreateAFeatureRequest" xml:space="preserve">
+    <value>Report an issue or create a feature request</value>
+  </data>
+  <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
+    <value>Report an issue or create a feature request.
+
+URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   </data>
 </root>

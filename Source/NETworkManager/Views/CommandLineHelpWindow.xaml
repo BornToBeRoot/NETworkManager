@@ -7,8 +7,9 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:resources="clr-namespace:NETworkManager.Properties"
         mc:Ignorable="d"
-        Title="{x:Static localization:StaticStrings.ProductName}" Topmost="True" Style="{DynamicResource DefaultWindow}" MinHeight="500" Height="500" MinWidth="500" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False"
+        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Topmost="True" Style="{DynamicResource DefaultWindow}" MinHeight="500" Height="500" MinWidth="500" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False"
         d:DataContext="{d:DesignInstance viewModels:CommandLineHelpViewModel}">
     <mahAppsControls:MetroWindow.WindowButtonCommands>
         <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
