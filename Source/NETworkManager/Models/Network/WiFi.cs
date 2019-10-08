@@ -42,7 +42,7 @@ namespace NETworkManager.Models.Network
             await adapter.ScanAsync();
 
             foreach (var network in adapter.NetworkReport.AvailableNetworks)
-            {                
+            {
                 wifiNetworks.Add(new WiFiNetworkInfo()
                 {
                     BSSID = network.Bssid,
@@ -200,7 +200,7 @@ namespace NETworkManager.Models.Network
             string type = "-/-";
 
             switch (networkAuthenticationType)
-            {                           
+            {
                 case NetworkAuthenticationType.Open80211:
                     type = "Open";
                     break;
@@ -243,7 +243,7 @@ namespace NETworkManager.Models.Network
             switch (phyKind)
             {
                 case WiFiPhyKind.Dsss:
-                case WiFiPhyKind.Fhss:                    
+                case WiFiPhyKind.Fhss:
                     kind = "802.11";
                     break;
                 case WiFiPhyKind.Ofdm:
@@ -266,13 +266,16 @@ namespace NETworkManager.Models.Network
                     break;
                 case WiFiPhyKind.HE:
                     kind = "802.11ax";
-                    break;                
+                    break;
             }
 
             return kind;
         }
 
         public enum Radio
-        { Radio1,Radio2}
+        {
+            Radio1,
+            Radio2
+        }
     }
 }
