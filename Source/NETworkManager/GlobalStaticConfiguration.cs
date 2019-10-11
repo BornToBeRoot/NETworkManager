@@ -91,6 +91,7 @@ namespace NETworkManager
         public static ExportManager.ExportFileType DNSLookup_ExportFileType => ExportManager.ExportFileType.CSV;
 
         // Application: RemoteDesktop
+        public static bool RemoteDesktop_UseCurrentViewSize => true;
         public static int RemoteDesktop_ScreenWidth => 1280;
         public static int RemoteDesktop_ScreenHeight => 768;
 

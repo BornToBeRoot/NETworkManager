@@ -1873,7 +1873,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _remoteDesktop_UseCurrentViewSize;
+        private bool _remoteDesktop_UseCurrentViewSize = GlobalStaticConfiguration.RemoteDesktop_UseCurrentViewSize;
         public bool RemoteDesktop_UseCurrentViewSize
         {
             get => _remoteDesktop_UseCurrentViewSize;
@@ -1888,7 +1888,7 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _remoteDesktop_UseFixedScreenSize = true;
+        private bool _remoteDesktop_UseFixedScreenSize;
         public bool RemoteDesktop_UseFixedScreenSize
         {
             get => _remoteDesktop_UseFixedScreenSize;
