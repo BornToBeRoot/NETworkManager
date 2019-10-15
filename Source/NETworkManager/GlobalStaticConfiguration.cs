@@ -54,6 +54,7 @@ namespace NETworkManager
         // Application: WiFi
         public static bool WiFi_Show2dot4GHzNetworks => true;
         public static bool WiFi_Show5GHzNetworks => true;
+        public static AutoRefreshTimeInfo WiFi_AutoRefreshTime => AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
         // Application: IP Scanner
         public static int IPScanner_Threads => 256;

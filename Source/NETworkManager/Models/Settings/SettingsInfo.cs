@@ -601,6 +601,36 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _wiFi_AutoRefresh;
+        public bool WiFi_AutoRefresh
+        {
+            get => _wiFi_AutoRefresh;
+            set
+            {
+                if (value == _wiFi_AutoRefresh)
+                    return;
+
+                _wiFi_AutoRefresh = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private AutoRefreshTimeInfo _wiFi_AutoRefreshTime = GlobalStaticConfiguration.WiFi_AutoRefreshTime;
+        public AutoRefreshTimeInfo WiFi_AutoRefreshTime
+        {
+            get => _wiFi_AutoRefreshTime;
+            set
+            {
+                if (value == _wiFi_AutoRefreshTime)
+                    return;
+
+                _wiFi_AutoRefreshTime = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region IPScanner        

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Windows.Devices.WiFi;
 
 namespace NETworkManager.ViewModels
@@ -19,6 +20,8 @@ namespace NETworkManager.ViewModels
     {
         #region  Variables 
         private readonly bool _isLoading;
+        private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
+        private bool _isTimerPaused;
 
         private bool _isAdaptersLoading;
         public bool IsAdaptersLoading
@@ -84,6 +87,56 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _autoRefresh;
+        public bool AutoRefresh
+        {
+            get => _autoRefresh;
+            set
+            {
+                if (value == _autoRefresh)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.WiFi_AutoRefresh = value;
+
+                _autoRefresh = value;
+
+                // Start timer to refresh automatically
+                if (!_isLoading)
+                {
+                    if (value)
+                        StartAutoRefreshTimer();
+                    else
+                        StopAutoRefreshTimer();
+                }
+
+                OnPropertyChanged();
+            }
+        }
+
+        public ICollectionView AutoRefreshTimes { get; }
+
+        private AutoRefreshTimeInfo _selectedAutoRefreshTime;
+        public AutoRefreshTimeInfo SelectedAutoRefreshTime
+        {
+            get => _selectedAutoRefreshTime;
+            set
+            {
+                if (value == _selectedAutoRefreshTime)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.WiFi_AutoRefreshTime = value;
+
+                _selectedAutoRefreshTime = value;
+
+                if (AutoRefresh)
+                    ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(value));
+
+                OnPropertyChanged();
+            }
+        }
+
         private string _search;
         public string Search
         {
@@ -100,7 +153,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
 
         private bool _show2dot4GHzNetworks;
         public bool Show2dot4GHzNetworks
@@ -210,6 +262,11 @@ namespace NETworkManager.ViewModels
                 }
             };
 
+            AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
+            SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.WiFi_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.WiFi_AutoRefreshTime.TimeUnit));
+
+            _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+
             LoadSettings();
 
             LoadAdapters();
@@ -238,9 +295,9 @@ namespace NETworkManager.ViewModels
 
         private bool ScanNetworks_CanExecute(object obj) => !IsAdaptersLoading && !IsNetworksLoading;
 
-        private void ScanNetworksAction()
+        private async void ScanNetworksAction()
         {
-            ScanNetworks(SelectedAdapter.WiFiAdapter);
+            await ScanNetworks(SelectedAdapter.WiFiAdapter);
         }
         #endregion
 
@@ -276,15 +333,12 @@ namespace NETworkManager.ViewModels
             Adapters = await WiFi.GetAdapterAsync();
 
             if (Adapters.Count > 0)
-            {
-                // Change interface...
                 SelectedAdapter = string.IsNullOrEmpty(id) ? Adapters.FirstOrDefault() : Adapters.FirstOrDefault(x => x.NetworkInterfaceInfo.Id == id);
-            }
 
             IsAdaptersLoading = false;
         }
 
-        private async void ScanNetworks(WiFiAdapter adapter)
+        private async Task ScanNetworks(WiFiAdapter adapter)
         {
             IsNetworksLoading = true;
 
@@ -357,21 +411,67 @@ namespace NETworkManager.ViewModels
             });
         }
 
+        private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
+        {
+            _autoRefreshTimer.Interval = timeSpan;
+        }
+
+        private void StartAutoRefreshTimer()
+        {
+            ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
+
+            _autoRefreshTimer.Start();
+        }
+
+        private void StopAutoRefreshTimer()
+        {
+            _autoRefreshTimer.Stop();
+        }
+
+        private void PauseAutoRefreshTimer()
+        {
+            if (!_autoRefreshTimer.IsEnabled)
+                return;
+
+            _autoRefreshTimer.Stop();
+            _isTimerPaused = true;
+        }
+
+        private void ResumeAutoRefreshTimer()
+        {
+            if (!_isTimerPaused)
+                return;
+
+            _autoRefreshTimer.Start();
+            _isTimerPaused = false;
+        }
+
         public void OnViewVisible()
         {
-
+            ResumeAutoRefreshTimer();
         }
 
         public void OnViewHide()
         {
-
+            PauseAutoRefreshTimer();
         }
+
         #endregion
 
         #region Events
+        private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            // Stop timer...
+            _autoRefreshTimer.Stop();
+
+            // Scan networks
+            await ScanNetworks(SelectedAdapter.WiFiAdapter);
+
+            // Restart timer...
+            _autoRefreshTimer.Start();
+        }
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-
         }
         #endregion
     }

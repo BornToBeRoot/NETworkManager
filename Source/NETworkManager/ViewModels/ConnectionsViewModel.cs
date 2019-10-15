@@ -361,15 +361,17 @@ namespace NETworkManager.ViewModels
             _autoRefreshTimer.Start();
             _isTimerPaused = false;
         }
+                
+        public void OnViewVisible()
+        {
+            ResumeAutoRefreshTimer();
+        }
+
         public void OnViewHide()
         {
             PauseAutoRefreshTimer();
         }
 
-        public void OnViewVisible()
-        {
-            ResumeAutoRefreshTimer();
-        }
         #endregion
 
         #region Events
