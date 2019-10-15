@@ -571,6 +571,36 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        private bool _wiFi_Show2dot4GHzNetworks = GlobalStaticConfiguration.WiFi_Show2dot4GHzNetworks;
+        public bool WiFi_Show2dot4GHzNetworks
+        {
+            get => _wiFi_Show2dot4GHzNetworks;
+            set
+            {
+                if (value == _wiFi_Show2dot4GHzNetworks)
+                    return;
+
+                _wiFi_Show2dot4GHzNetworks = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _wiFi_Show5GHzNetworks = GlobalStaticConfiguration.WiFi_Show5GHzNetworks;
+        public bool WiFi_Show5GHzNetworks
+        {
+            get => _wiFi_Show5GHzNetworks;
+            set
+            {
+                if (value == _wiFi_Show5GHzNetworks)
+                    return;
+
+                _wiFi_Show5GHzNetworks = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region IPScanner        

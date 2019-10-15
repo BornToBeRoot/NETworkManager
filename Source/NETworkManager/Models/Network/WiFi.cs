@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
@@ -62,6 +61,8 @@ namespace NETworkManager.Models.Network
 
             return wifiNetworks;
         }
+
+
 
         public static int GetChannelFromChannelFrequency(int kilohertz)
         {
@@ -193,6 +194,20 @@ namespace NETworkManager.Models.Network
         public static double ConvertChannelFrequencyToGigahertz(int kilohertz)
         {
             return Convert.ToDouble(kilohertz) / 1000 / 1000;
+        }
+
+        public static bool Is2dot4GHzNetwork(int kilohertz)
+        {
+            var x = ConvertChannelFrequencyToGigahertz(kilohertz);
+
+            return x >= 2.412 && x <= 2.472;
+        }
+
+        public static bool Is5GHzNetwork(int kilohertz)
+        {
+            var x = ConvertChannelFrequencyToGigahertz(kilohertz);
+
+            return x >= 5.180 && x <= 5.825;
         }
 
         public static string GetHumanReadableNetworkAuthenticationType(NetworkAuthenticationType networkAuthenticationType)

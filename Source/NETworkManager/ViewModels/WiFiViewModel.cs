@@ -101,6 +101,48 @@ namespace NETworkManager.ViewModels
             }
         }
 
+
+        private bool _show2dot4GHzNetworks;
+        public bool Show2dot4GHzNetworks
+        {
+            get => _show2dot4GHzNetworks;
+            set
+            {
+                if (value == _show2dot4GHzNetworks)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.WiFi_Show2dot4GHzNetworks = value;
+
+                _show2dot4GHzNetworks = value;
+
+                NetworksView.Refresh();
+
+                OnPropertyChanged();
+            }
+        }
+
+
+        private bool _show5GHzNetworks;
+        public bool Show5GHzNetworks
+        {
+            get => _show5GHzNetworks;
+            set
+            {
+                if (value == _show5GHzNetworks)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.WiFi_Show5GHzNetworks = value;
+
+                _show5GHzNetworks = value;
+
+                NetworksView.Refresh();
+
+                OnPropertyChanged();
+            }
+        }
+
         private ObservableCollection<WiFiNetworkInfo> _networks = new ObservableCollection<WiFiNetworkInfo>();
         public ObservableCollection<WiFiNetworkInfo> Networks
         {
@@ -149,11 +191,23 @@ namespace NETworkManager.ViewModels
             NetworksView.SortDescriptions.Add(new SortDescription(nameof(WiFiNetworkInfo.SSID), ListSortDirection.Ascending));
             NetworksView.Filter = o =>
             {
-                if (string.IsNullOrEmpty(Search))
-                    return true;
-                
-                // Search by SSID, MAC-Adress (BSSID)
-                return o is WiFiNetworkInfo info && (info.SSID.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.BSSID.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1);
+                if (o is WiFiNetworkInfo info)
+                {
+                    if (WiFi.Is2dot4GHzNetwork(info.ChannelCenterFrequencyInKilohertz) && !Show2dot4GHzNetworks)
+                        return false;
+
+                    if (WiFi.Is5GHzNetwork(info.ChannelCenterFrequencyInKilohertz) && !Show5GHzNetworks)
+                        return false;
+
+                    if (string.IsNullOrEmpty(Search))
+                        return true;
+
+                    return info.SSID.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.BSSID.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+                }
+                else
+                {
+                    return false;
+                }
             };
 
             LoadSettings();
@@ -165,7 +219,8 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-
+            Show2dot4GHzNetworks = SettingsManager.Current.WiFi_Show2dot4GHzNetworks;
+            Show5GHzNetworks = SettingsManager.Current.WiFi_Show5GHzNetworks;
         }
         #endregion
 

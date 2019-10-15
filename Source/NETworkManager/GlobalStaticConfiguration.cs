@@ -51,6 +51,10 @@ namespace NETworkManager
         public static string Dashboard_PublicDNSTestDomain => "one.one.one.one";
         public static string Dashboard_PublicDNSTestIPAddress => "1.1.1.1";
 
+        // Application: WiFi
+        public static bool WiFi_Show2dot4GHzNetworks => true;
+        public static bool WiFi_Show5GHzNetworks => true;
+
         // Application: IP Scanner
         public static int IPScanner_Threads => 256;
         public static int IPScanner_ICMPAttempts => 2;
