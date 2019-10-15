@@ -2426,4 +2426,28 @@ $$hostname$$	--&gt;	Hostname</value>
 
 URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   </data>
+  <data name="AuthenticationColon" xml:space="preserve">
+    <value>Authentication:</value>
+  </data>
+  <data name="BeaconIntervalColon" xml:space="preserve">
+    <value>Beacon interval:</value>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>Encryption</value>
+  </data>
+  <data name="EncryptionColon" xml:space="preserve">
+    <value>Encryption:</value>
+  </data>
+  <data name="Infrastructure" xml:space="preserve">
+    <value>Infrastructure</value>
+  </data>
+  <data name="NetworkKindColon" xml:space="preserve">
+    <value>Network kind:</value>
+  </data>
+  <data name="PhyKindColon" xml:space="preserve">
+    <value>Phy kind:</value>
+  </data>
+  <data name="UptimeColon" xml:space="preserve">
+    <value>Uptime:</value>
+  </data>
 </root>

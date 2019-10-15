@@ -493,6 +493,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authentication:.
+        /// </summary>
+        public static string AuthenticationColon {
+            get {
+                return ResourceManager.GetString("AuthenticationColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Authentication level.
         /// </summary>
         public static string AuthenticationLevel {
@@ -606,6 +615,15 @@ namespace NETworkManager.Resources.Localization {
         public static string BaudRate {
             get {
                 return ResourceManager.GetString("BaudRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beacon interval:.
+        /// </summary>
+        public static string BeaconIntervalColon {
+            get {
+                return ResourceManager.GetString("BeaconIntervalColon", resourceCulture);
             }
         }
         
@@ -1960,6 +1978,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Encryption.
+        /// </summary>
+        public static string Encryption {
+            get {
+                return ResourceManager.GetString("Encryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encryption:.
+        /// </summary>
+        public static string EncryptionColon {
+            get {
+                return ResourceManager.GetString("EncryptionColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to End time.
         /// </summary>
         public static string EndTime {
@@ -2822,6 +2858,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Infrastructure.
+        /// </summary>
+        public static string Infrastructure {
+            get {
+                return ResourceManager.GetString("Infrastructure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inherit host from default.
         /// </summary>
         public static string InheritHostFromDefault {
@@ -3416,6 +3461,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network kind:.
+        /// </summary>
+        public static string NetworkKindColon {
+            get {
+                return ResourceManager.GetString("NetworkKindColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help..
         /// </summary>
         public static string NetworkLocationCannotBeReachedMessage {
@@ -3928,6 +3982,15 @@ namespace NETworkManager.Resources.Localization {
         public static string PersistentBitmapCaching {
             get {
                 return ResourceManager.GetString("PersistentBitmapCaching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phy kind:.
+        /// </summary>
+        public static string PhyKindColon {
+            get {
+                return ResourceManager.GetString("PhyKindColon", resourceCulture);
             }
         }
         
@@ -6476,6 +6539,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Upload {
             get {
                 return ResourceManager.GetString("Upload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uptime:.
+        /// </summary>
+        public static string UptimeColon {
+            get {
+                return ResourceManager.GetString("UptimeColon", resourceCulture);
             }
         }
         

@@ -310,20 +310,20 @@
                                                 <RowDefinition Height="5" />
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock Grid.Column="1" Grid.Row="0" Text="Infrastructure" Style="{StaticResource HeaderTextBlock}" />
-                                            <TextBlock Grid.Column="1" Grid.Row="1" Text="Phy kind:" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{x:Static localization:Strings.Infrastructure}" Style="{StaticResource HeaderTextBlock}" />
+                                            <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Static localization:Strings.PhyKindColon}" Style="{StaticResource DefaultTextBlock}" />
                                             <TextBlock Grid.Column="3" Grid.Row="1" Text="{Binding Path=(network:WiFiNetworkInfo.PhyKind), Converter={StaticResource WiFiPhyKindConverter}}" Style="{StaticResource DefaultTextBlock}" />
-                                            <TextBlock Grid.Column="1" Grid.Row="3" Text="Network kind:" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="1" Grid.Row="3" Text="{x:Static localization:Strings.NetworkKindColon}" Style="{StaticResource DefaultTextBlock}" />
                                             <TextBlock Grid.Column="3" Grid.Row="3" Text="{Binding Path=(network:WiFiNetworkInfo.NetworkKind)}" Style="{StaticResource DefaultTextBlock}" />
-                                            <TextBlock Grid.Column="5" Grid.Row="0" Text="Encryption" Style="{StaticResource HeaderTextBlock}" />
-                                            <TextBlock Grid.Column="5" Grid.Row="1" Text="Authentication:" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="5" Grid.Row="0" Text="{x:Static localization:Strings.Encryption}" Style="{StaticResource HeaderTextBlock}" />
+                                            <TextBlock Grid.Column="5" Grid.Row="1" Text="{x:Static localization:Strings.AuthenticationColon}" Style="{StaticResource DefaultTextBlock}" />
                                             <TextBlock Grid.Column="7" Grid.Row="1" Text="{Binding Path=(network:WiFiNetworkInfo.AuthenticationType)}" Style="{StaticResource DefaultTextBlock}" />
-                                            <TextBlock Grid.Column="5" Grid.Row="3" Text="Encryption:" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="5" Grid.Row="3" Text="{x:Static localization:Strings.EncryptionColon}" Style="{StaticResource DefaultTextBlock}" />
                                             <TextBlock Grid.Column="7" Grid.Row="3" Text="{Binding Path=(network:WiFiNetworkInfo.EncryptionType)}" Style="{StaticResource DefaultTextBlock}" />
-                                            <TextBlock Grid.Column="9" Grid.Row="0" Text="Time" Style="{StaticResource HeaderTextBlock}" />
-                                            <TextBlock Grid.Column="9" Grid.Row="1" Text="Beacon interval:" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="9" Grid.Row="0" Text="{x:Static localization:Strings.Time}" Style="{StaticResource HeaderTextBlock}" />
+                                            <TextBlock Grid.Column="9" Grid.Row="1" Text="{x:Static localization:Strings.BeaconIntervalColon}" Style="{StaticResource DefaultTextBlock}" />
                                             <TextBlock Grid.Column="11" Grid.Row="1" Text="{Binding Path=(network:WiFiNetworkInfo.BeaconInterval), Converter={StaticResource TimeSpanToMillisecondConverter}}" Style="{StaticResource DefaultTextBlock}" />
-                                            <TextBlock Grid.Column="9" Grid.Row="3" Text="Uptime:" Style="{StaticResource DefaultTextBlock}" />
+                                            <TextBlock Grid.Column="9" Grid.Row="3" Text="{x:Static localization:Strings.UptimeColon}" Style="{StaticResource DefaultTextBlock}" />
                                             <TextBlock Grid.Column="11" Grid.Row="3" Text="{Binding Path=(network:WiFiNetworkInfo.Uptime), Converter={StaticResource TimeSpanToStringConverter}}" Style="{StaticResource DefaultTextBlock}" />
                                         </Grid>
                                     </Grid>
