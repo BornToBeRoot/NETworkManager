@@ -225,69 +225,7 @@ namespace NETworkManager.ViewModels
             AutoRefresh = SettingsManager.Current.Listeners_AutoRefresh;
         }
         #endregion
-        
-        #region Methods
-        private async void Refresh()
-        {
-            IsRefreshing = true;
-
-            ListenerResults.Clear();
-
-            (await Listener.GetAllActiveListenersAsync()).ForEach(x => ListenerResults.Add(x));
-            
-            IsRefreshing = false;
-        }
-
-        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
-        {
-            Refresh();
-        }
-
-        private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
-        {
-            _autoRefreshTimer.Interval = timeSpan;
-        }
-
-        private void StartAutoRefreshTimer()
-        {
-            ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
-
-            _autoRefreshTimer.Start();
-        }
-
-        private void StopAutoRefreshTimer()
-        {
-            _autoRefreshTimer.Stop();
-        }
-
-        private void PauseRefresh()
-        {
-            if (!_autoRefreshTimer.IsEnabled)
-                return;
-
-            _autoRefreshTimer.Stop();
-            _isTimerPaused = true;
-        }
-
-        private void ResumeRefresh()
-        {
-            if (!_isTimerPaused)
-                return;
-
-                _autoRefreshTimer.Start();
-            _isTimerPaused = false;
-        }
-        public void OnViewHide()
-        {
-            PauseRefresh();
-        }
-
-        public void OnViewVisible()
-        {
-            ResumeRefresh();
-        }
-        #endregion
-
+    
         #region ICommands & Actions
         public ICommand RefreshCommand => new RelayCommand(p => RefreshAction(), Refresh_CanExecute);
 
@@ -356,6 +294,77 @@ namespace NETworkManager.ViewModels
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+        #endregion
+    
+        #region Methods
+        private async void Refresh()
+        {
+            IsRefreshing = true;
+
+            ListenerResults.Clear();
+
+            (await Listener.GetAllActiveListenersAsync()).ForEach(x => ListenerResults.Add(x));
+            
+            IsRefreshing = false;
+        }
+               
+        private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
+        {
+            _autoRefreshTimer.Interval = timeSpan;
+        }
+
+        private void StartAutoRefreshTimer()
+        {
+            ChangeAutoRefreshTimerInterval(AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime));
+
+            _autoRefreshTimer.Start();
+        }
+
+        private void StopAutoRefreshTimer()
+        {
+            _autoRefreshTimer.Stop();
+        }
+
+        private void PauseAutoRefreshTimer()
+        {
+            if (!_autoRefreshTimer.IsEnabled)
+                return;
+
+            _autoRefreshTimer.Stop();
+            _isTimerPaused = true;
+        }
+
+        private void ResumeAutoRefreshTimer()
+        {
+            if (!_isTimerPaused)
+                return;
+
+                _autoRefreshTimer.Start();
+            _isTimerPaused = false;
+        }
+        public void OnViewHide()
+        {
+            PauseAutoRefreshTimer();
+        }
+
+        public void OnViewVisible()
+        {
+            ResumeAutoRefreshTimer();
+        }
+        #endregion
+
+        #region Events
+        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            // Stop timer...
+            _autoRefreshTimer.Stop();
+
+            // Refresh
+            Refresh();
+
+            // Restart timer...
+            _autoRefreshTimer.Start();
         }
         #endregion
     }

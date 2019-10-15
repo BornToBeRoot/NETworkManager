@@ -424,31 +424,34 @@ namespace NETworkManager.ViewModels
             _autoRefreshTimer.Stop();
         }
 
-        private void PauseRefresh()
+        private void PauseAutoRefreshTimer()
         {
             if (!_autoRefreshTimer.IsEnabled)
                 return;
 
             _autoRefreshTimer.Stop();
+
             _isTimerPaused = true;
         }
 
-        private void ResumeRefresh()
+        private void ResumeAutoRefreshTimer()
         {
             if (!_isTimerPaused)
                 return;
 
             _autoRefreshTimer.Start();
+
             _isTimerPaused = false;
         }
+
         public void OnViewHide()
         {
-            PauseRefresh();
+            PauseAutoRefreshTimer();
         }
 
         public void OnViewVisible()
         {
-            ResumeRefresh();
+            ResumeAutoRefreshTimer();
         }
         #endregion
 
@@ -461,7 +464,14 @@ namespace NETworkManager.ViewModels
 
         private void AutoRefreshTimer_Tick(object sender, EventArgs e)
         {
+            // Stop timer...
+            _autoRefreshTimer.Stop();
+
+            // Refresh
             Refresh();
+
+            // Restart timer...
+            _autoRefreshTimer.Start();
         }
         #endregion
     }
