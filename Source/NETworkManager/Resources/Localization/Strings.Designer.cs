@@ -5644,6 +5644,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show error message.
+        /// </summary>
+        public static string ShowErrorMessage {
+            get {
+                return ResourceManager.GetString("ShowErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show local licenses.
         /// </summary>
         public static string ShowLocalLicenses {

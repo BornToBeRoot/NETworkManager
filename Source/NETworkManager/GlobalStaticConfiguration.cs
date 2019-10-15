@@ -63,6 +63,7 @@ namespace NETworkManager
         public static bool IPScanner_DNSUseTCPOnly => false;
         public static int IPScanner_DNSTimeout => 2;
         public static int IPScanner_DNSRetries => 3;
+        public static bool IPScanner_DNSShowErrorMessage => false;
         public static int IPScanner_ICMPTimeout => 4000;
         public static ExportManager.ExportFileType IPScanner_ExportFileType => ExportManager.ExportFileType.CSV;
 

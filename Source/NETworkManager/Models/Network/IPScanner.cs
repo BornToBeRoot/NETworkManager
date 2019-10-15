@@ -1,7 +1,6 @@
 ﻿using DnsClient;
 using NETworkManager.Models.Lookup;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -29,6 +28,7 @@ namespace NETworkManager.Models.Network
         public bool DNSRecursion = true;
         public TimeSpan DNSTimeout = TimeSpan.FromSeconds(2);
         public int DNSRetries = 3;
+        public bool DNSShowErrorMessage = false;
 
         public bool ResolveMACAddress = false;
         public bool ShowScanResultForAllIPAddresses = false;
@@ -146,11 +146,11 @@ namespace NETworkManager.Models.Network
                                      if (dnsQueryResponse != null && !dnsQueryResponse.HasError)
                                          hostname = dnsQueryResponse.Answers.PtrRecords().FirstOrDefault()?.PtrDomainName;
                                      else
-                                         hostname = $"{Resources.Localization.Strings.Error}: {dnsQueryResponse.ErrorMessage}";
+                                         hostname = DNSShowErrorMessage ? $"{Resources.Localization.Strings.Error}: {dnsQueryResponse.ErrorMessage}" : "";
                                  }
                                  catch (Exception ex)
                                  {
-                                     hostname = $"{Resources.Localization.Strings.Error}: {ex.Message}";
+                                     hostname = DNSShowErrorMessage ? $"{Resources.Localization.Strings.Error}: {ex.Message}" : "";
                                  }
                              }
 

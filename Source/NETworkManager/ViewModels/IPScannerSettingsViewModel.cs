@@ -253,6 +253,23 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _dnsShowErrorMessage;
+        public bool DNSShowErrorMessage
+        {
+            get => _dnsShowErrorMessage;
+            set
+            {
+                if (value == _dnsShowErrorMessage)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.IPScanner_DNSShowErrorMessage = value;
+
+                _dnsShowErrorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _resolveMACAddress;
         public bool ResolveMACAddress
         {
@@ -338,6 +355,7 @@ namespace NETworkManager.ViewModels
             DNSUseTCPOnly = SettingsManager.Current.IPScanner_DNSUseTCPOnly;
             DNSRetries = SettingsManager.Current.IPScanner_DNSRetries;
             DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout;
+            DNSShowErrorMessage = SettingsManager.Current.IPScanner_DNSShowErrorMessage;
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
             ShowStatistics = SettingsManager.Current.IPScanner_ShowStatistics;
         }

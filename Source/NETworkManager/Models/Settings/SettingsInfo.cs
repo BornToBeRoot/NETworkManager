@@ -814,6 +814,21 @@ namespace NETworkManager.Models.Settings
             }
         }
 
+        private bool _ipScanner_DNSShowErrorMessage = GlobalStaticConfiguration.IPScanner_DNSShowErrorMessage;
+        public bool IPScanner_DNSShowErrorMessage
+        {
+            get => _ipScanner_DNSShowErrorMessage;
+            set
+            {
+                if (value == _ipScanner_DNSShowErrorMessage)
+                    return;
+
+                _ipScanner_DNSShowErrorMessage = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         private bool _ipScanner_ResolveMACAddress;
         public bool IPScanner_ResolveMACAddress
         {
@@ -1705,7 +1720,7 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-        
+
         private bool _dnsLookup_Recursion = true;
         public bool DNSLookup_Recursion
         {

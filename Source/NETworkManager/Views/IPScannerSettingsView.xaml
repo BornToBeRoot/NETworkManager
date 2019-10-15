@@ -57,7 +57,8 @@
         <TextBlock Text="{x:Static localization:Strings.Retries}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding DNSRetries}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.TimeoutS}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding DNSTimeout}" Maximum="15" Minimum="1" Interval="1" Margin="0,0,0,20" />
+        <mah:NumericUpDown Value="{Binding DNSTimeout}" Maximum="15" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowErrorMessage}" IsChecked="{Binding DNSShowErrorMessage}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.ARP}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveMACAddressAndVendor}" IsChecked="{Binding ResolveMACAddress}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.CustomCommands}" Style="{StaticResource HeaderTextBlock}" />

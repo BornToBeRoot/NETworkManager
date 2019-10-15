@@ -586,6 +586,7 @@ namespace NETworkManager.ViewModels
                 DNSUseCache = SettingsManager.Current.IPScanner_DNSUseCache,
                 DNSTimeout = TimeSpan.FromSeconds(SettingsManager.Current.IPScanner_DNSTimeout),
                 DNSRetries = SettingsManager.Current.IPScanner_DNSRetries,
+                DNSShowErrorMessage = SettingsManager.Current.IPScanner_DNSShowErrorMessage,
                 ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
                 ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses
             };
