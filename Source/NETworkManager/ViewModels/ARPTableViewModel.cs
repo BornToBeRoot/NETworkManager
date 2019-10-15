@@ -186,6 +186,7 @@ namespace NETworkManager.ViewModels
             _isLoading = true;
             _dialogCoordinator = instance;
 
+            // Result view + search
             ARPInfoResultsView = CollectionViewSource.GetDefaultView(ARPInfoResults);
             ARPInfoResultsView.SortDescriptions.Add(new SortDescription(nameof(ARPInfo.IPAddressInt32), ListSortDirection.Ascending));
             ARPInfoResultsView.Filter = o =>
@@ -195,11 +196,9 @@ namespace NETworkManager.ViewModels
 
                 if (string.IsNullOrEmpty(Search))
                     return true;
-
-                var filter = Search.Replace(" ", "").Replace("-", "").Replace(":", "");
-
+                
                 // Search by IPAddress and MACAddress
-                return info.IPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No).IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
+                return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
             AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);

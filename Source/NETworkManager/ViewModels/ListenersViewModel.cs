@@ -187,6 +187,7 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
+            // Result view + search
             ListenerResultsView = CollectionViewSource.GetDefaultView(ListenerResults);
             ListenerResultsView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.Protocol), ListSortDirection.Ascending));
             ListenerResultsView.SortDescriptions.Add(new SortDescription(nameof(ListenerInfo.IPAddressInt32), ListSortDirection.Ascending));
@@ -199,10 +200,8 @@ namespace NETworkManager.ViewModels
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                var filter = Search.Replace(" ", "").Replace("-", "").Replace(":", "");
-
                 // Search by IP Address, Port and Protocol
-                return info.IPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.Port.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1;
+                return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Port.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
             AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);

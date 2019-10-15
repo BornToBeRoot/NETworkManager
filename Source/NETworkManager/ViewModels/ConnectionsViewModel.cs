@@ -187,6 +187,7 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
+            // Result view + search
             ConnectionResultsView = CollectionViewSource.GetDefaultView(ConnectionResults);
             ConnectionResultsView.SortDescriptions.Add(new SortDescription(nameof(ConnectionInfo.LocalIPAddressInt32), ListSortDirection.Ascending));
             ConnectionResultsView.Filter = o =>
@@ -194,10 +195,8 @@ namespace NETworkManager.ViewModels
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                var filter = Search.Replace(" ", "").Replace("-", "").Replace(":", "");
-
                 // Search by local/remote IP Address, local/remote Port, Protocol and State
-                return o is ConnectionInfo info && (info.LocalIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1 || Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + info.TcpState.ToString(), LocalizationManager.Culture).IndexOf(filter, StringComparison.OrdinalIgnoreCase) > -1);
+                return o is ConnectionInfo info && (info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + info.TcpState.ToString(), LocalizationManager.Culture).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
