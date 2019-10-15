@@ -83,6 +83,24 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private string _search;
+        public string Search
+        {
+            get => _search;
+            set
+            {
+                if (value == _search)
+                    return;
+
+                _search = value;
+
+                NetworksView.Refresh();
+
+                OnPropertyChanged();
+            }
+        }
+
         private ObservableCollection<WiFiNetworkInfo> _networks = new ObservableCollection<WiFiNetworkInfo>();
         public ObservableCollection<WiFiNetworkInfo> Networks
         {
@@ -126,8 +144,17 @@ namespace NETworkManager.ViewModels
         {
             _isLoading = true;
 
-            // Result view
+            // Result view + search
             NetworksView = CollectionViewSource.GetDefaultView(Networks);
+            NetworksView.SortDescriptions.Add(new SortDescription(nameof(WiFiNetworkInfo.SSID), ListSortDirection.Ascending));
+            NetworksView.Filter = o =>
+            {
+                if (string.IsNullOrEmpty(Search))
+                    return true;
+                
+                // Search by SSID, MAC-Adress (BSSID)
+                return o is WiFiNetworkInfo info && (info.SSID.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.BSSID.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1);
+            };
 
             LoadSettings();
 
