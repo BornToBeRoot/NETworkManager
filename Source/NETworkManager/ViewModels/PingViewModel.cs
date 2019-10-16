@@ -402,7 +402,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + SelectedPingResult.Status, LocalizationManager.Culture));
+            CommonMethods.SetClipboard(LocalizationManager.TranslateIPStatus(SelectedPingResult.Status));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

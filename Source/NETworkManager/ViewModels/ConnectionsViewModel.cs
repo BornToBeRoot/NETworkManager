@@ -197,7 +197,7 @@ namespace NETworkManager.ViewModels
                     return true;
 
                 // Search by local/remote IP Address, local/remote Port, Protocol and State
-                return o is ConnectionInfo info && (info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + info.TcpState.ToString(), LocalizationManager.Culture).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1);
+                return o is ConnectionInfo info && (info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || LocalizationManager.TranslateTcpState(info.TcpState).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
@@ -280,7 +280,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStateAction()
         {
-            CommonMethods.SetClipboard(Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + SelectedConnectionInfo.TcpState, LocalizationManager.Culture));
+            CommonMethods.SetClipboard(LocalizationManager.TranslateTcpState(SelectedConnectionInfo.TcpState));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

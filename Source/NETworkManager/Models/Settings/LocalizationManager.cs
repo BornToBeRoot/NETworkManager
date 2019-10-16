@@ -11,6 +11,15 @@ namespace NETworkManager.Models.Settings
 {
     public static class LocalizationManager
     {
+        public const string TcpStateIdentifier = "TcpState_";
+        public const string IPStatusIdentifier = "IPStatus_";
+        public const string PortStateIdentifier = "PortState_";
+        public const string ConnectionStateIdentifier = "ConnectionState_";
+        public const string RemoteDesktopNetworkConnectionTypeIdentifier = "RemoteDesktopNetworkConnectionType_";
+        public const string RemoteDesktopKeyboardHookModeIdentifier = "RemoteDesktopKeyboardHookMode_";
+        public const string RemoteDesktopAudioRedirectionModeIdentifier = "RemoteDesktopAudioRedirectionMode_";
+        public const string RemoteDesktopAudioCaptureRedirectionModeIdentifier = "RemoteDesktopAudioCaptureRedirectionMode_";
+
         public static List<LocalizationInfo> List => new List<LocalizationInfo>
         {
             new LocalizationInfo("English", "English", new Uri("/Resources/Localization/Flags/en-US.png", UriKind.Relative), "BornToBeRoot", "en-US", 100,true),
@@ -70,7 +79,7 @@ namespace NETworkManager.Models.Settings
             if (!(value is IPStatus ipStatus))
                 return "-/-";
 
-            var status = Resources.Localization.Strings.ResourceManager.GetString("IPStatus_" + ipStatus, Culture);
+            var status = Resources.Localization.Strings.ResourceManager.GetString(IPStatusIdentifier + ipStatus, Culture);
 
             return string.IsNullOrEmpty(status) ? ipStatus.ToString() : status;
         }
@@ -80,7 +89,7 @@ namespace NETworkManager.Models.Settings
             if (!(value is PortInfo.PortStatus portStatus))
                 return "-/-";
 
-            var status = Resources.Localization.Strings.ResourceManager.GetString("PortState_" + portStatus, Culture);
+            var status = Resources.Localization.Strings.ResourceManager.GetString(PortStateIdentifier + portStatus, Culture);
 
             return string.IsNullOrEmpty(status) ? portStatus.ToString() : status;
         }
@@ -90,7 +99,7 @@ namespace NETworkManager.Models.Settings
             if (!(value is TcpState tcpState))
                 return "-/-";
 
-            var status = Resources.Localization.Strings.ResourceManager.GetString("TcpState_" + tcpState, Culture);
+            var status = Resources.Localization.Strings.ResourceManager.GetString(TcpStateIdentifier + tcpState, Culture);
 
             return string.IsNullOrEmpty(status) ? tcpState.ToString() : status;
         }
@@ -100,7 +109,7 @@ namespace NETworkManager.Models.Settings
             if (!(value is ConnectionState connectionState))
                 return "-/-";
 
-            var status = Resources.Localization.Strings.ResourceManager.GetString("ConnectionState_" + connectionState, Culture);
+            var status = Resources.Localization.Strings.ResourceManager.GetString(ConnectionStateIdentifier + connectionState, Culture);
 
             return string.IsNullOrEmpty(status) ? connectionState.ToString() : status;
         }
@@ -110,7 +119,7 @@ namespace NETworkManager.Models.Settings
             if (!(value is NetworkConnectionType networkConnectionType))
                 return "-/-";
 
-            var status = Resources.Localization.Strings.ResourceManager.GetString("RemoteDesktopNetworkConnectionType_" + networkConnectionType, Culture);
+            var status = Resources.Localization.Strings.ResourceManager.GetString(RemoteDesktopNetworkConnectionTypeIdentifier + networkConnectionType, Culture);
 
             return string.IsNullOrEmpty(status) ? networkConnectionType.ToString() : status;
         }
@@ -120,7 +129,7 @@ namespace NETworkManager.Models.Settings
             if (!(value is KeyboardHookMode keyboardHookMode))
                 return "-/-";
 
-            var status = Resources.Localization.Strings.ResourceManager.GetString("RemoteDesktopKeyboardHookMode_" + keyboardHookMode, Culture);
+            var status = Resources.Localization.Strings.ResourceManager.GetString(RemoteDesktopKeyboardHookModeIdentifier + keyboardHookMode, Culture);
 
             return string.IsNullOrEmpty(status) ? keyboardHookMode.ToString() : status;
         }
@@ -130,7 +139,7 @@ namespace NETworkManager.Models.Settings
             if (!(value is AudioRedirectionMode audioRedirectionMode))
                 return "-/-";
 
-            var status = Resources.Localization.Strings.ResourceManager.GetString("RemoteDesktopAudioRedirectionMode_" + audioRedirectionMode, Culture);
+            var status = Resources.Localization.Strings.ResourceManager.GetString(RemoteDesktopAudioRedirectionModeIdentifier + audioRedirectionMode, Culture);
 
             return string.IsNullOrEmpty(status) ? audioRedirectionMode.ToString() : status;
         }
@@ -140,7 +149,7 @@ namespace NETworkManager.Models.Settings
             if (!(value is AudioCaptureRedirectionMode audioCaptureRedirectionMode))
                 return "-/-";
 
-            var status = Resources.Localization.Strings.ResourceManager.GetString("RemoteDesktopAudioCaptureRedirectionMode_" + audioCaptureRedirectionMode, Culture);
+            var status = Resources.Localization.Strings.ResourceManager.GetString(RemoteDesktopAudioCaptureRedirectionModeIdentifier + audioCaptureRedirectionMode, Culture);
 
             return string.IsNullOrEmpty(status) ? audioCaptureRedirectionMode.ToString() : status;
         }
