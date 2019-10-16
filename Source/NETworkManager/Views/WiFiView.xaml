@@ -148,8 +148,8 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Networks}" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,0" />
-                            <mahAppsControls:ToggleSwitch Grid.Column="4" OffLabel="{x:Static localization:Strings.GHz2dot4}" OnLabel="{x:Static localization:Strings.GHz2dot4}" IsChecked="{Binding Show2dot4GHzNetworks}" />
-                            <mahAppsControls:ToggleSwitch Grid.Column="6" OffLabel="{x:Static localization:Strings.GHz5}" OnLabel="{x:Static localization:Strings.GHz5}" IsChecked="{Binding Show5GHzNetworks}" /> 
+                            <CheckBox Grid.Column="4" Content="{x:Static localization:Strings.GHz2dot4}" IsChecked="{Binding Show2dot4GHzNetworks}" />
+                            <CheckBox Grid.Column="6" Content="{x:Static localization:Strings.GHz5}" IsChecked="{Binding Show5GHzNetworks}" /> 
                             <TextBox x:Name="TextBoxSearch" Grid.Column="8" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
                         </Grid>
                         <ListView Grid.Row="2" Visibility="{Binding IsNetworksLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ScrollViewer.PanningMode="VerticalOnly" ItemsSource="{Binding NetworksView}" SelectedItem="{Binding SelectedNetwork}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
