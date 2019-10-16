@@ -14,6 +14,7 @@ using System.Linq;
 using System.Windows;
 using MahApps.Metro.Controls;
 using NETworkManager.Models.Export;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -86,7 +87,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private bool _autoRefresh;
         public bool AutoRefresh
         {
@@ -196,7 +197,7 @@ namespace NETworkManager.ViewModels
 
                 if (string.IsNullOrEmpty(Search))
                     return true;
-                
+
                 // Search by IPAddress and MACAddress
                 return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
             };
@@ -210,7 +211,12 @@ namespace NETworkManager.ViewModels
 
             _isLoading = false;
 
-            Refresh();
+            Run();
+        }
+
+        private async void Run()
+        {
+            await Refresh();
 
             if (AutoRefresh)
                 StartAutoRefreshTimer();
@@ -230,11 +236,11 @@ namespace NETworkManager.ViewModels
             return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
-        private void RefreshAction()
+        private async void RefreshAction()
         {
             DisplayStatusMessage = false;
 
-            Refresh();
+            await Refresh();
         }
 
         public ICommand DeleteTableCommand => new RelayCommand(p => DeleteTableAction(), DeleteTable_CanExecute);
@@ -256,7 +262,7 @@ namespace NETworkManager.ViewModels
 
                 await arpTable.DeleteTableAsync();
 
-                Refresh();
+                await Refresh();
             }
             catch (Exception ex)
             {
@@ -281,7 +287,7 @@ namespace NETworkManager.ViewModels
 
                 await arpTable.DeleteEntryAsync(SelectedARPInfo.IPAddress.ToString());
 
-                Refresh();
+                await Refresh();
             }
             catch (Exception ex)
             {
@@ -315,7 +321,7 @@ namespace NETworkManager.ViewModels
 
                     await arpTable.AddEntryAsync(instance.IPAddress, MACAddressHelper.Format(instance.MACAddress, "-"));
 
-                    Refresh();
+                    await Refresh();
                 }
                 catch (Exception ex)
                 {
@@ -395,14 +401,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void Refresh()
+        private async Task Refresh()
         {
             IsRefreshing = true;
 
             ARPInfoResults.Clear();
 
             (await ARP.GetTableAsync()).ForEach(x => ARPInfoResults.Add(x));
-            
+
             IsRefreshing = false;
         }
 
@@ -461,13 +467,13 @@ namespace NETworkManager.ViewModels
             DisplayStatusMessage = true;
         }
 
-        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
+        private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
         {
             // Stop timer...
             _autoRefreshTimer.Stop();
 
             // Refresh
-            Refresh();
+            await Refresh();
 
             // Restart timer...
             _autoRefreshTimer.Start();

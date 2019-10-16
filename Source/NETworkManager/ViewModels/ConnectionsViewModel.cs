@@ -14,6 +14,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -208,7 +209,12 @@ namespace NETworkManager.ViewModels
 
             _isLoading = false;
 
-            Refresh();
+            Run();
+        }
+
+        private async void Run()
+        {
+            await Refresh();
 
             if (AutoRefresh)
                 StartAutoRefreshTimer();
@@ -228,11 +234,11 @@ namespace NETworkManager.ViewModels
             return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
-        private void RefreshAction()
+        private async void RefreshAction()
         {
             DisplayStatusMessage = false;
 
-            Refresh();
+            await Refresh();
         }
 
         public ICommand CopySelectedLocalIpAddressCommand => new RelayCommand(p => CopySelectedLocalIpAddressAction());
@@ -316,16 +322,16 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void Refresh()
+        private async Task Refresh()
         {
             IsRefreshing = true;
 
             ConnectionResults.Clear();
 
             (await Connection.GetActiveTcpConnectionsAsync()).ForEach(x => ConnectionResults.Add(x));
-            
+
             IsRefreshing = false;
-        }         
+        }
 
         private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
         {
@@ -361,7 +367,7 @@ namespace NETworkManager.ViewModels
             _autoRefreshTimer.Start();
             _isTimerPaused = false;
         }
-                
+
         public void OnViewVisible()
         {
             ResumeAutoRefreshTimer();
@@ -375,13 +381,13 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Events
-        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
+        private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
         {
             // Stop timer...
             _autoRefreshTimer.Stop();
 
             // Refresh
-            Refresh();
+            await Refresh();
 
             // Restart timer...
             _autoRefreshTimer.Start();

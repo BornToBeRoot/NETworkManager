@@ -14,6 +14,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -213,28 +214,34 @@ namespace NETworkManager.ViewModels
 
             _isLoading = false;
 
-            Refresh();
+            Run();
+        }
+
+        private async void Run()
+        {
+            await Refresh();
 
             if (AutoRefresh)
                 StartAutoRefreshTimer();
         }
+
 
         private void LoadSettings()
         {
             AutoRefresh = SettingsManager.Current.Listeners_AutoRefresh;
         }
         #endregion
-    
+
         #region ICommands & Actions
         public ICommand RefreshCommand => new RelayCommand(p => RefreshAction(), Refresh_CanExecute);
 
         private bool Refresh_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        private void RefreshAction()
+        private async void RefreshAction()
         {
             DisplayStatusMessage = false;
 
-            Refresh();
+            await Refresh();
         }
 
         public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
@@ -295,19 +302,19 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
-    
+
         #region Methods
-        private async void Refresh()
+        private async Task Refresh()
         {
             IsRefreshing = true;
 
             ListenerResults.Clear();
 
             (await Listener.GetAllActiveListenersAsync()).ForEach(x => ListenerResults.Add(x));
-            
+
             IsRefreshing = false;
         }
-               
+
         private void ChangeAutoRefreshTimerInterval(TimeSpan timeSpan)
         {
             _autoRefreshTimer.Interval = timeSpan;
@@ -339,7 +346,7 @@ namespace NETworkManager.ViewModels
             if (!_isTimerPaused)
                 return;
 
-                _autoRefreshTimer.Start();
+            _autoRefreshTimer.Start();
             _isTimerPaused = false;
         }
         public void OnViewHide()
@@ -354,13 +361,13 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Events
-        private void AutoRefreshTimer_Tick(object sender, EventArgs e)
+        private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
         {
             // Stop timer...
             _autoRefreshTimer.Stop();
 
             // Refresh
-            Refresh();
+            await Refresh();
 
             // Restart timer...
             _autoRefreshTimer.Start();
