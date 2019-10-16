@@ -2064,7 +2064,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/</value>
 
 URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
   </data>
-  <data name="ToolTip_TwitterContact" xml:space="preserve">
+  <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
     <value>Contact via Twitter.
 
 URL: https://twitter.com/BornToBeRoot_DE</value>
@@ -2348,5 +2348,109 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
     <value>Time in seconds how long the window should be displayed</value>
+  </data>
+  <data name="WiFi" xml:space="preserve">
+    <value>WiFi</value>
+  </data>
+  <data name="Networks" xml:space="preserve">
+    <value>Networks</value>
+  </data>
+  <data name="SearchingForNetworksDots" xml:space="preserve">
+    <value>Searching for networks...</value>
+  </data>
+  <data name="NoWiFiAdaptersFound" xml:space="preserve">
+    <value>No WiFi adapters found!</value>
+  </data>
+  <data name="SearchingWiFiAdaptersDots" xml:space="preserve">
+    <value>Searching for WiFi adapters...</value>
+  </data>
+  <data name="NoWiFiNetworksFound" xml:space="preserve">
+    <value>No WiFi networks found!</value>
+  </data>
+  <data name="Channels" xml:space="preserve">
+    <value>Channels</value>
+  </data>
+  <data name="Channel" xml:space="preserve">
+    <value>Channel</value>
+  </data>
+  <data name="GHz2dot4" xml:space="preserve">
+    <value>2.4 GHz</value>
+  </data>
+  <data name="GHz5" xml:space="preserve">
+    <value>5 GHz</value>
+  </data>
+  <data name="SignalStrength" xml:space="preserve">
+    <value>Signal strength</value>
+  </data>
+  <data name="CurrentDownload" xml:space="preserve">
+    <value>Current download</value>
+  </data>
+  <data name="CurrentUpload" xml:space="preserve">
+    <value>Current upload</value>
+  </data>
+  <data name="MeasuredTime" xml:space="preserve">
+    <value>Measured time</value>
+  </data>
+  <data name="NetworkUsage" xml:space="preserve">
+    <value>Network usage</value>
+  </data>
+  <data name="TotalDownload" xml:space="preserve">
+    <value>Total download</value>
+  </data>
+  <data name="TotalUpload" xml:space="preserve">
+    <value>Total upload</value>
+  </data>
+  <data name="Retries" xml:space="preserve">
+    <value>Retries</value>
+  </data>
+  <data name="UseCache" xml:space="preserve">
+    <value>Use cache</value>
+  </data>
+  <data name="UseOnlyTCP" xml:space="preserve">
+    <value>Use only TCP</value>
+  </data>
+  <data name="QueryClass" xml:space="preserve">
+    <value>Query class</value>
+  </data>
+  <data name="DomainName" xml:space="preserve">
+    <value>Domain name</value>
+  </data>
+  <data name="TimeoutS" xml:space="preserve">
+    <value>Timeout (s)</value>
+  </data>
+  <data name="ReportAnIssueOrCreateAFeatureRequest" xml:space="preserve">
+    <value>Report an issue or create a feature request</value>
+  </data>
+  <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
+    <value>Report an issue or create a feature request.
+
+URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
+  </data>
+  <data name="AuthenticationColon" xml:space="preserve">
+    <value>Authentication:</value>
+  </data>
+  <data name="BeaconIntervalColon" xml:space="preserve">
+    <value>Beacon interval:</value>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>Encryption</value>
+  </data>
+  <data name="EncryptionColon" xml:space="preserve">
+    <value>Encryption:</value>
+  </data>
+  <data name="Infrastructure" xml:space="preserve">
+    <value>Infrastructure</value>
+  </data>
+  <data name="NetworkKindColon" xml:space="preserve">
+    <value>Network kind:</value>
+  </data>
+  <data name="PhyKindColon" xml:space="preserve">
+    <value>Phy kind:</value>
+  </data>
+  <data name="UptimeColon" xml:space="preserve">
+    <value>Uptime:</value>
+  </data>
+  <data name="ShowErrorMessage" xml:space="preserve">
+    <value>Show error message</value>
   </data>
 </root>

@@ -1,6 +1,11 @@
 ﻿# Rename language files from transifex
 
-$items = Get-ChildItem -Path $PSScriptRoot\language_files
+[CmdletBinding()]
+param(
+	[string]$FolderPath	
+)
+
+$items = Get-ChildItem -Path $FolderPath
 
 foreach($item in $items)
 {

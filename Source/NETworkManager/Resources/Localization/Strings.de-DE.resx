@@ -916,7 +916,7 @@
     <value>IP-Bereich</value>
   </data>
   <data name="LastUsableIPAddress" xml:space="preserve">
-    <value>Erste nutzbare IP-Adresse</value>
+    <value>Letzte nutzbare IP-Adresse</value>
   </data>
   <data name="LocalIPAddress" xml:space="preserve">
     <value>Lokale IP-Adresse</value>
@@ -2064,7 +2064,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/</value>
 
 URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
   </data>
-  <data name="ToolTip_TwitterContact" xml:space="preserve">
+  <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
     <value>Kontakt via Twitter.
 
 URL: https://twitter.com/BornToBeRoot_DE</value>
@@ -2348,5 +2348,109 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
     <value>Zeit in Sekunden, wie lange das Fenster angezeigt werden soll</value>
+  </data>
+  <data name="WiFi" xml:space="preserve">
+    <value>WLAN</value>
+  </data>
+  <data name="Networks" xml:space="preserve">
+    <value>Netzwerke</value>
+  </data>
+  <data name="SearchingForNetworksDots" xml:space="preserve">
+    <value>Suche nach Netzwerken...</value>
+  </data>
+  <data name="NoWiFiAdaptersFound" xml:space="preserve">
+    <value>Keine WLAN-Adapter gefunden!</value>
+  </data>
+  <data name="SearchingWiFiAdaptersDots" xml:space="preserve">
+    <value>Suche nach WLAN-Adaptern...</value>
+  </data>
+  <data name="NoWiFiNetworksFound" xml:space="preserve">
+    <value>Keine WLAN-Netzwerke gefunden!</value>
+  </data>
+  <data name="Channels" xml:space="preserve">
+    <value>Kanäle</value>
+  </data>
+  <data name="Channel" xml:space="preserve">
+    <value>Kanal</value>
+  </data>
+  <data name="GHz2dot4" xml:space="preserve">
+    <value>2.4 GHz</value>
+  </data>
+  <data name="GHz5" xml:space="preserve">
+    <value>5 GHz</value>
+  </data>
+  <data name="SignalStrength" xml:space="preserve">
+    <value>Signalstärke</value>
+  </data>
+  <data name="CurrentDownload" xml:space="preserve">
+    <value>Download aktuell</value>
+  </data>
+  <data name="CurrentUpload" xml:space="preserve">
+    <value>Upload aktuell</value>
+  </data>
+  <data name="MeasuredTime" xml:space="preserve">
+    <value>Gemessene Zeit</value>
+  </data>
+  <data name="NetworkUsage" xml:space="preserve">
+    <value>Netzwerknutzung</value>
+  </data>
+  <data name="TotalDownload" xml:space="preserve">
+    <value>Download gesamt</value>
+  </data>
+  <data name="TotalUpload" xml:space="preserve">
+    <value>Upload gesamt</value>
+  </data>
+  <data name="Retries" xml:space="preserve">
+    <value>Wiederholungen</value>
+  </data>
+  <data name="UseCache" xml:space="preserve">
+    <value>Verwende Cache</value>
+  </data>
+  <data name="UseOnlyTCP" xml:space="preserve">
+    <value>Nur TCP verwenden</value>
+  </data>
+  <data name="QueryClass" xml:space="preserve">
+    <value>Abfrageklasse</value>
+  </data>
+  <data name="DomainName" xml:space="preserve">
+    <value>Domainname</value>
+  </data>
+  <data name="TimeoutS" xml:space="preserve">
+    <value>Timeout (s)</value>
+  </data>
+  <data name="ReportAnIssueOrCreateAFeatureRequest" xml:space="preserve">
+    <value>Problem melden oder einen Feature-Request erstellen</value>
+  </data>
+  <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
+    <value>Problem melden oder Feature-Request erstellen.
+
+URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
+  </data>
+  <data name="AuthenticationColon" xml:space="preserve">
+    <value>Authentifizierung:</value>
+  </data>
+  <data name="BeaconIntervalColon" xml:space="preserve">
+    <value>Beacon-Intervall:</value>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>Verschlüsselung</value>
+  </data>
+  <data name="EncryptionColon" xml:space="preserve">
+    <value>Verschlüsselung:</value>
+  </data>
+  <data name="Infrastructure" xml:space="preserve">
+    <value>Infrastruktur</value>
+  </data>
+  <data name="NetworkKindColon" xml:space="preserve">
+    <value>Netzwerk-Typ:</value>
+  </data>
+  <data name="PhyKindColon" xml:space="preserve">
+    <value>Phy-Typ:</value>
+  </data>
+  <data name="UptimeColon" xml:space="preserve">
+    <value>Betriebszeit:</value>
+  </data>
+  <data name="ShowErrorMessage" xml:space="preserve">
+    <value>Fehlermeldung anzeigen</value>
   </data>
 </root>
