@@ -99,18 +99,25 @@ namespace NETworkManager.Models.Network
                         dnsLookupClient.Timeout = Timeout;
                         dnsLookupClient.Retries = Retries;
 
-                        // PTR vs A, AAAA, CNAME etc.
-                        var dnsResponse = QueryType == QueryType.PTR ? dnsLookupClient.QueryReverse(IPAddress.Parse(host)) : dnsLookupClient.Query(host, QueryType, QueryClass);
-
-                        // If there was an error... return
-                        if (dnsResponse.HasError)
+                        try
                         {
-                            OnLookupError(new DNSLookupErrorArgs(dnsResponse.ErrorMessage, dnsResponse.NameServer.Endpoint));
-                            return;
-                        }
+                            // PTR vs A, AAAA, CNAME etc.
+                            var dnsResponse = QueryType == QueryType.PTR ? dnsLookupClient.QueryReverse(IPAddress.Parse(host)) : dnsLookupClient.Query(host, QueryType, QueryClass);
 
-                        // Process the results...
-                        ProcessDnsQueryResponse(dnsResponse);
+                            // If there was an error... return
+                            if (dnsResponse.HasError)
+                            {
+                                OnLookupError(new DNSLookupErrorArgs(dnsResponse.ErrorMessage, dnsResponse.NameServer.Endpoint));
+                                return;
+                            }
+
+                            // Process the results...
+                            ProcessDnsQueryResponse(dnsResponse);
+                        }
+                        catch(Exception ex)
+                        {
+                            OnLookupError(new DNSLookupErrorArgs(ex.Message, dnsServer));
+                        }
                     });
                 }
 
