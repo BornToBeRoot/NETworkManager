@@ -11,6 +11,11 @@ using NETworkManager.Utilities;
 using System.Threading.Tasks;
 using System.Linq;
 using MahApps.Metro.Controls;
+using System.Collections.ObjectModel;
+using NETworkManager.Views;
+using DnsClient;
+using System.Net.Sockets;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
@@ -18,8 +23,11 @@ namespace NETworkManager.ViewModels
     {
         #region  Variables 
         private readonly IDialogCoordinator _dialogCoordinator;
+        private LookupClient DnsLookupClient = new LookupClient();
 
         private readonly bool _isLoading;
+
+        private int _hostId;
 
         private string _host;
         public string Host
@@ -36,6 +44,22 @@ namespace NETworkManager.ViewModels
         }
 
         public ICollectionView HostHistoryView { get; }
+
+        private ObservableCollection<PingMonitorClientView> _hosts = new ObservableCollection<PingMonitorClientView>();
+        public ObservableCollection<PingMonitorClientView> Hosts
+        {
+            get => _hosts;
+            set
+            {
+                if (value != null && value == _hosts)
+                    return;
+
+                _hosts = value;
+            }
+        }
+
+        public ICollectionView HostsView { get; }
+
 
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
@@ -76,7 +100,7 @@ namespace NETworkManager.ViewModels
             {
                 if (value == _selectedProfile)
                     return;
-                                
+
                 _selectedProfile = value;
                 OnPropertyChanged();
             }
@@ -149,10 +173,17 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public PingMonitorViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true; 
+            _isLoading = true;
 
             _dialogCoordinator = instance;
 
+            // Host history
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PingMonitor_HostHistory);
+
+            // Hosts
+            HostsView = CollectionViewSource.GetDefaultView(Hosts);
+
+            // Profiles
             Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
@@ -163,39 +194,46 @@ namespace NETworkManager.ViewModels
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
-                    return info.Ping_Enabled;
+                    return info.PingMonitor_Enabled;
 
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                    return !string.IsNullOrEmpty(info.Tags) && info.Ping_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                    return !string.IsNullOrEmpty(info.Tags) && info.PingMonitor_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
                 // Search by: Name, Ping_Host
-                return info.Ping_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Ping_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                return info.PingMonitor_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Ping_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             // This will select the first entry as selected item...
-            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.Ping_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
-
-
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PingMonitor_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+            
             LoadSettings();
 
             _isLoading = false;
         }
 
         private void LoadSettings()
-        {            
-            ExpandProfileView = SettingsManager.Current.Ping_ExpandProfileView;
+        {
+            ExpandProfileView = SettingsManager.Current.PingMonitor_ExpandProfileView;
 
-            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.Ping_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.PingMonitor_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
-            _tempProfileWidth = SettingsManager.Current.Ping_ProfileWidth;
+            _tempProfileWidth = SettingsManager.Current.PingMonitor_ProfileWidth;
         }
         #endregion
 
         #region ICommands & Actions
-        
+        public ICommand AddHostCommand => new RelayCommand(p => AddHostAction());
+
+        private void AddHostAction()
+        {
+            AddHost(Host);
+
+            // Add the hostname or ip address to the history
+            AddHostToHistory(Host);
+        }
 
         public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
@@ -241,7 +279,94 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        
+
+        private async void AddHost(string host)
+        {
+            _hostId++;
+
+            // Try to parse the string into an IP-Address
+            var hostIsIP = IPAddress.TryParse(Host, out var ipAddress);
+
+            if (!hostIsIP) // Lookup
+            {
+                try
+                {
+                    // Try to resolve the hostname
+                    var ipHostEntrys = await DnsLookupClient.GetHostEntryAsync(host);
+
+                    if(ipHostEntrys.AddressList.Length == 0)
+                    {
+                        StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
+                        DisplayStatusMessage = true;
+
+                        return;
+                    }
+
+                    foreach (var ip in ipHostEntrys.AddressList)
+                    {
+                        switch (ip.AddressFamily)
+                        {
+                            // ToDo: Setting
+                            case AddressFamily.InterNetwork when SettingsManager.Current.Ping_ResolveHostnamePreferIPv4:
+                                ipAddress = ip;
+                                break;
+                            // ToDo: Setting
+                            case AddressFamily.InterNetworkV6 when !SettingsManager.Current.Ping_ResolveHostnamePreferIPv4:
+                                ipAddress = ip;
+                                break;
+                        }
+                    }
+
+                    // Fallback --> If we could not resolve our prefered ip protocol for the hostname
+                    foreach (var ip in ipHostEntrys.AddressList)
+                    {
+                        ipAddress = ip;
+                        break;
+                    }
+                }
+                catch // This will catch DNS resolve errors
+                {
+                    StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
+                    DisplayStatusMessage = true;
+
+                    return;
+                }
+            }
+            else // Reverse lookup
+            {
+                try
+                {
+                    var x = await DnsLookupClient.GetHostNameAsync(ipAddress);
+
+                    if (!string.IsNullOrEmpty(x))
+                        host = x;
+                }
+                catch
+                {
+
+                }
+            }                        
+
+            Debug.WriteLine("Add new host:");
+            Debug.WriteLine(host);
+            Debug.WriteLine(ipAddress);
+
+            Hosts.Add(new PingMonitorClientView(_hostId, new PingMonitorOptions(host, ipAddress)));
+        }
+
+        private void AddHostToHistory(string host)
+        {
+            // Create the new list
+            var list = ListHelper.Modify(SettingsManager.Current.PingMonitor_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PingMonitor_HostHistory.Clear();
+            OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PingMonitor_HostHistory.Add(x));
+        }
+
         private void ResizeProfile(bool dueToChangedSize)
         {
             _canProfileWidthChange = false;

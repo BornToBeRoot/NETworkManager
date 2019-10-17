@@ -2456,4 +2456,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   <data name="PingMonitor" xml:space="preserve">
     <value>Ping Monitor</value>
   </data>
+  <data name="AddHost" xml:space="preserve">
+    <value>Add host</value>
+  </data>
 </root>

@@ -171,7 +171,7 @@
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <Rectangle Grid.Column="0" Width="24" Height="24" Fill="{DynamicResource GrayBrush3}">
+                                            <Rectangle Grid.Column="0" Width="32" Height="32" Fill="{DynamicResource GrayBrush3}">
                                                 <Rectangle.Resources>
                                                     <VisualBrush x:Key="VisualBars4" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength4}"/>
                                                     <VisualBrush x:Key="VisualBars4Lock" Stretch="Uniform" Visual="{iconPacks:Material Kind=WifiStrength4Lock}"/>

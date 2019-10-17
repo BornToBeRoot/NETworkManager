@@ -35,6 +35,10 @@ namespace NETworkManager.Models.Settings
         public bool Ping_InheritHost { get; set; } = true;
         public string Ping_Host { get; set; }
 
+        public bool PingMonitor_Enabled { get; set; }
+        public bool PingMonitor_InheritHost { get; set; } = true;
+        public string PingMonitor_Host { get; set; }
+
         public bool Traceroute_Enabled { get; set; }
         public bool Traceroute_InheritHost { get; set; } = true;
         public string Traceroute_Host { get; set; }

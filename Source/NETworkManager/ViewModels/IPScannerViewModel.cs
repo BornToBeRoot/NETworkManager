@@ -305,7 +305,7 @@ namespace NETworkManager.ViewModels
             _tabId = tabId;
             Host = hostOrIPRange;
 
-            // Set collection view
+            // Host history
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostHistory);
 
             // Result view

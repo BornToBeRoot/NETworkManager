@@ -1433,6 +1433,69 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
+        #region Ping Monitor
+        private ObservableCollection<string> _pingMonitor_HostHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PingMonitor_HostHistory
+        {
+            get => _pingMonitor_HostHistory;
+            set
+            {
+                if (value == _pingMonitor_HostHistory)
+                    return;
+
+                _pingMonitor_HostHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _pingMonitor_ResolveHostnamePreferIPv4 = true;
+        public bool PingMonitor_ResolveHostnamePreferIPv4
+        {
+            get => _pingMonitor_ResolveHostnamePreferIPv4;
+            set
+            {
+                if (value == _pingMonitor_ResolveHostnamePreferIPv4)
+                    return;
+
+                _pingMonitor_ResolveHostnamePreferIPv4 = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+
+        private bool _pingMonitor_ExpandProfileView = true;
+        public bool PingMonitor_ExpandProfileView
+        {
+            get => _pingMonitor_ExpandProfileView;
+            set
+            {
+                if (value == _pingMonitor_ExpandProfileView)
+                    return;
+
+                _pingMonitor_ExpandProfileView = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private double _pingMonitor_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+        public double PingMonitor_ProfileWidth
+        {
+            get => _pingMonitor_ProfileWidth;
+            set
+            {
+                if (Math.Abs(value - _pingMonitor_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+                    return;
+
+                _pingMonitor_ProfileWidth = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region Traceroute
         private ObservableCollection<string> _traceroute_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> Traceroute_HostHistory

@@ -456,8 +456,7 @@ namespace NETworkManager.ViewModels
                 {
                     // Try to resolve the hostname
                     var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
-
-
+                    
                     foreach (var ip in ipHostEntrys.AddressList)
                     {
                         switch (ip.AddressFamily)

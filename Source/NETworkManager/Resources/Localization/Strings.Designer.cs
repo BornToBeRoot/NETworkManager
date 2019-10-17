@@ -223,6 +223,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add host.
+        /// </summary>
+        public static string AddHost {
+            get {
+                return ResourceManager.GetString("AddHost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add IPv4 address.
         /// </summary>
         public static string AddIPv4Address {
