@@ -474,6 +474,7 @@ namespace NETworkManager
         private IPScannerHostView _ipScannerHostView;
         private PortScannerHostView _portScannerHostView;
         private PingHostView _pingHostView;
+        private PingMonitorView _pingMonitorView;
         private TracerouteHostView _tracerouteHostView;
         private DNSLookupHostView _dnsLookupHostView;
         private RemoteDesktopHostView _remoteDesktopHostView;
@@ -567,6 +568,14 @@ namespace NETworkManager
                         _pingHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _pingHostView;
+                    break;
+                case ApplicationViewManager.Name.PingMonitor:
+                    if (_pingMonitorView == null)
+                        _pingMonitorView = new PingMonitorView();
+                    else
+                        _pingMonitorView.OnViewVisible();
+
+                    ContentControlApplication.Content = _pingMonitorView;
                     break;
                 case ApplicationViewManager.Name.Traceroute:
                     if (_tracerouteHostView == null)

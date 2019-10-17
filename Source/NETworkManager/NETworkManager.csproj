@@ -268,6 +268,7 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
+    <Compile Include="ViewModels\PingMonitorViewModel.cs" />
     <Compile Include="ViewModels\WiFiViewModel.cs" />
     <Compile Include="ViewModels\FirstRunViewModel.cs" />
     <Compile Include="Models\Settings\IProfileManager.cs" />
@@ -339,6 +340,9 @@
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
     <Compile Include="Views\CustomCommandDialog.xaml.cs">
       <DependentUpon>CustomCommandDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PingMonitorView.xaml.cs">
+      <DependentUpon>PingMonitorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WiFiView.xaml.cs">
       <DependentUpon>WiFiView.xaml</DependentUpon>
@@ -686,6 +690,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CustomCommandDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PingMonitorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
