@@ -146,11 +146,11 @@ namespace NETworkManager.Models.Network
                                      if (dnsQueryResponse != null && !dnsQueryResponse.HasError)
                                          hostname = dnsQueryResponse.Answers.PtrRecords().FirstOrDefault()?.PtrDomainName;
                                      else
-                                         hostname = DNSShowErrorMessage ? $"{Resources.Localization.Strings.Error}: {dnsQueryResponse.ErrorMessage}" : "";
+                                         hostname = DNSShowErrorMessage ? dnsQueryResponse.ErrorMessage : "";
                                  }
                                  catch (Exception ex)
                                  {
-                                     hostname = DNSShowErrorMessage ? $"{Resources.Localization.Strings.Error}: {ex.Message}" : "";
+                                     hostname = DNSShowErrorMessage ? ex.Message : "";
                                  }
                              }
 
