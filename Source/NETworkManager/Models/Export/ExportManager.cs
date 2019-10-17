@@ -436,7 +436,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(ApplicationViewManager.Name.PingMonitor.ToString(),
+                new XElement(ApplicationViewManager.Name.Ping.ToString(),
                     new XElement(nameof(PingInfo) + "s",
 
                         from info in collection

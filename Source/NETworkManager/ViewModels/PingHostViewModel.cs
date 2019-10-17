@@ -1,74 +1,50 @@
-﻿using NETworkManager.Models.Settings;
-using System.Net;
+﻿using System.Collections.ObjectModel;
+using NETworkManager.Controls;
+using Dragablz;
 using System.Windows.Input;
+using NETworkManager.Views;
+using NETworkManager.Utilities;
+using NETworkManager.Models.Settings;
+using System.ComponentModel;
+using System;
+using System.Windows.Data;
+using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
-using System;
-using NETworkManager.Models.Network;
-using System.ComponentModel;
-using System.Windows.Data;
-using NETworkManager.Utilities;
-using System.Threading.Tasks;
-using System.Linq;
-using MahApps.Metro.Controls;
 
 namespace NETworkManager.ViewModels
 {
-    public class PingMonitorViewModel : ViewModelBase, IProfileManager
+    public class PingHostViewModel : ViewModelBase, IProfileManager
     {
-        #region  Variables 
+        #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
+
+        public IInterTabClient InterTabClient { get; }
+        public ObservableCollection<DragablzTabItem> TabItems { get; }
 
         private readonly bool _isLoading;
 
-        private string _host;
-        public string Host
+        private int _tabId;
+
+        private int _selectedTabIndex;
+        public int SelectedTabIndex
         {
-            get => _host;
+            get => _selectedTabIndex;
             set
             {
-                if (value == _host)
+                if (value == _selectedTabIndex)
                     return;
 
-                _host = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ICollectionView HostHistoryView { get; }
-
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
-        {
-            get => _displayStatusMessage;
-            set
-            {
-                if (value == _displayStatusMessage)
-                    return;
-
-                _displayStatusMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _statusMessage;
-        public string StatusMessage
-        {
-            get => _statusMessage;
-            set
-            {
-                if (value == _statusMessage)
-                    return;
-
-                _statusMessage = value;
+                _selectedTabIndex = value;
                 OnPropertyChanged();
             }
         }
 
         #region Profiles
+
         public ICollectionView Profiles { get; }
 
-        private ProfileInfo _selectedProfile;
+        private ProfileInfo _selectedProfile = new ProfileInfo();
         public ProfileInfo SelectedProfile
         {
             get => _selectedProfile;
@@ -76,7 +52,7 @@ namespace NETworkManager.ViewModels
             {
                 if (value == _selectedProfile)
                     return;
-                                
+
                 _selectedProfile = value;
                 OnPropertyChanged();
             }
@@ -147,11 +123,18 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public PingMonitorViewModel(IDialogCoordinator instance)
+        public PingHostViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true; 
+            _isLoading = true;
 
             _dialogCoordinator = instance;
+
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.Ping);
+
+            TabItems = new ObservableCollection<DragablzTabItem>
+            {
+                new DragablzTabItem(Resources.Localization.Strings.NewTab, new PingView(_tabId), _tabId)
+            };
 
             Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
@@ -159,6 +142,8 @@ namespace NETworkManager.ViewModels
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>
             {
+
+
                 if (!(o is ProfileInfo info))
                     return false;
 
@@ -178,14 +163,13 @@ namespace NETworkManager.ViewModels
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.Ping_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
-
             LoadSettings();
 
             _isLoading = false;
         }
 
         private void LoadSettings()
-        {            
+        {
             ExpandProfileView = SettingsManager.Current.Ping_ExpandProfileView;
 
             ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.Ping_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
@@ -194,8 +178,20 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        #region ICommands & Actions
-        
+        #region ICommand & Actions
+        public ICommand AddTabCommand => new RelayCommand(p => AddTabAction());
+
+        private void AddTabAction()
+        {
+            AddTab();
+        }
+
+        public ICommand PingProfileCommand => new RelayCommand(p => PingProfileAction());
+
+        private void PingProfileAction()
+        {
+            AddTab(SelectedProfile);
+        }
 
         public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
@@ -238,10 +234,16 @@ namespace NETworkManager.ViewModels
         {
             Search = string.Empty;
         }
+
+        public ItemActionCallback CloseItemCommand => CloseItemAction;
+
+        private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
+        {
+            ((args.DragablzItem.Content as DragablzTabItem)?.View as PingView)?.CloseTab();
+        }
         #endregion
 
         #region Methods
-        
         private void ResizeProfile(bool dueToChangedSize)
         {
             _canProfileWidthChange = false;
@@ -264,6 +266,20 @@ namespace NETworkManager.ViewModels
             }
 
             _canProfileWidthChange = true;
+        }
+
+        public void AddTab(string host = null)
+        {
+            _tabId++;
+
+            TabItems.Add(new DragablzTabItem(host ?? Resources.Localization.Strings.NewTab, new PingView(_tabId, host), _tabId));
+
+            SelectedTabIndex = TabItems.Count - 1;
+        }
+
+        public void AddTab(ProfileInfo profile)
+        {
+            AddTab(profile.Ping_Host);
         }
 
         public void OnViewVisible()

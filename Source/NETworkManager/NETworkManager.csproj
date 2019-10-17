@@ -268,7 +268,6 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
-    <Compile Include="ViewModels\PingMonitorViewModel.cs" />
     <Compile Include="ViewModels\WiFiViewModel.cs" />
     <Compile Include="ViewModels\FirstRunViewModel.cs" />
     <Compile Include="Models\Settings\IProfileManager.cs" />
@@ -301,6 +300,7 @@
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
     <Compile Include="ViewModels\PuTTYHostViewModel.cs" />
+    <Compile Include="ViewModels\PingHostViewModel.cs" />
     <Compile Include="ViewModels\SNMPViewModel.cs" />
     <Compile Include="ViewModels\HTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\ARPTableViewModel.cs" />
@@ -339,9 +339,6 @@
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
     <Compile Include="Views\CustomCommandDialog.xaml.cs">
       <DependentUpon>CustomCommandDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PingMonitorView.xaml.cs">
-      <DependentUpon>PingMonitorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WiFiView.xaml.cs">
       <DependentUpon>WiFiView.xaml</DependentUpon>
@@ -429,6 +426,9 @@
     </Compile>
     <Compile Include="Views\PuTTYHostView.xaml.cs">
       <DependentUpon>PuTTYHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PingHostView.xaml.cs">
+      <DependentUpon>PingHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PingSettingsView.xaml.cs">
       <DependentUpon>PingSettingsView.xaml</DependentUpon>
@@ -689,10 +689,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PingMonitorView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\WiFiView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -806,6 +802,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PuTTYHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PingHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
