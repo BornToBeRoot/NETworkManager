@@ -24,7 +24,7 @@ namespace NETworkManager
             new SettingsViewInfo(Name.Dashboard, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Dashboard), Group.Applications),
             new SettingsViewInfo(Name.IPScanner, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.IPScanner), Group.Applications),
             new SettingsViewInfo(Name.PortScanner,ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PortScanner), Group.Applications),
-            new SettingsViewInfo(Name.Ping, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Ping), Group.Applications),
+            new SettingsViewInfo(Name.PingMonitor, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PingMonitor), Group.Applications),
             new SettingsViewInfo(Name.Traceroute, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Traceroute), Group.Applications),
             new SettingsViewInfo(Name.DNSLookup, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.DNSLookup), Group.Applications ),
             new SettingsViewInfo(Name.RemoteDesktop, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.RemoteDesktop), Group.Applications),
@@ -67,8 +67,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.IPScanner;
                 case Name.PortScanner:
                     return Resources.Localization.Strings.PortScanner;
-                case Name.Ping:
-                    return Resources.Localization.Strings.Ping;
+                case Name.PingMonitor:
+                    return Resources.Localization.Strings.PingMonitor;
                 case Name.Traceroute:
                     return Resources.Localization.Strings.Traceroute;
                 case Name.DNSLookup:
@@ -122,7 +122,7 @@ namespace NETworkManager
             Dashboard,
             IPScanner,
             PortScanner,
-            Ping,
+            PingMonitor,
             Traceroute,
             DNSLookup,
             RemoteDesktop,

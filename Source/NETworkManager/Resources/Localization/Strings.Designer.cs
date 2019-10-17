@@ -4013,6 +4013,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ping Monitor.
+        /// </summary>
+        public static string PingMonitor {
+            get {
+                return ResourceManager.GetString("PingMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pink.
         /// </summary>
         public static string Pink {

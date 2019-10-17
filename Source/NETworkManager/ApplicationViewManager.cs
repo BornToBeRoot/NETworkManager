@@ -34,8 +34,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.IPScanner;
                 case Name.PortScanner:
                     return Resources.Localization.Strings.PortScanner;
-                case Name.Ping:
-                    return Resources.Localization.Strings.Ping;
+                case Name.PingMonitor:
+                    return Resources.Localization.Strings.PingMonitor;
                 case Name.Traceroute:
                     return Resources.Localization.Strings.Traceroute;
                 case Name.DNSLookup:
@@ -92,7 +92,7 @@ namespace NETworkManager
                 case Name.PortScanner:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.NetworkPort });
                     break;
-                case Name.Ping:
+                case Name.PingMonitor:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.LanConnect });
                     break;
                 case Name.Traceroute:
@@ -156,7 +156,7 @@ namespace NETworkManager
             WiFi,
             IPScanner,
             PortScanner,
-            Ping,
+            PingMonitor,
             Traceroute,
             DNSLookup,
             RemoteDesktop,

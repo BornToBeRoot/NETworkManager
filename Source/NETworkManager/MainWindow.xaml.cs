@@ -23,7 +23,6 @@ using NETworkManager.Models.Documentation;
 using NETworkManager.ViewModels;
 using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
-using DnsClient;
 
 namespace NETworkManager
 {
@@ -473,7 +472,7 @@ namespace NETworkManager
         private WiFiView _wiFiView;
         private IPScannerHostView _ipScannerHostView;
         private PortScannerHostView _portScannerHostView;
-        private PingHostView _pingHostView;
+        private PingMonitorView _pingMonitorView;
         private TracerouteHostView _tracerouteHostView;
         private DNSLookupHostView _dnsLookupHostView;
         private RemoteDesktopHostView _remoteDesktopHostView;
@@ -560,13 +559,13 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _portScannerHostView;
                     break;
-                case ApplicationViewManager.Name.Ping:
-                    if (_pingHostView == null)
-                        _pingHostView = new PingHostView();
+                case ApplicationViewManager.Name.PingMonitor:
+                    if (_pingMonitorView == null)
+                        _pingMonitorView = new PingMonitorView();
                     else
-                        _pingHostView.OnViewVisible();
+                        _pingMonitorView.OnViewVisible();
 
-                    ContentControlApplication.Content = _pingHostView;
+                    ContentControlApplication.Content = _pingMonitorView;
                     break;
                 case ApplicationViewManager.Name.Traceroute:
                     if (_tracerouteHostView == null)
@@ -734,8 +733,8 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.PortScanner:
                     _portScannerHostView.AddTab(profile.Profile);
                     break;
-                case ApplicationViewManager.Name.Ping:
-                    _pingHostView.AddTab(profile.Profile);
+                case ApplicationViewManager.Name.PingMonitor:
+                    //_pingMonitorView.AddTab(profile.Profile);
                     break;
                 case ApplicationViewManager.Name.Traceroute:
                     _tracerouteHostView.AddTab(profile.Profile);
@@ -790,8 +789,8 @@ namespace NETworkManager
                 case ApplicationViewManager.Name.PortScanner:
                     _portScannerHostView.AddTab(data.Args);
                     break;
-                case ApplicationViewManager.Name.Ping:
-                    _pingHostView.AddTab(data.Args);
+                case ApplicationViewManager.Name.PingMonitor:
+                   // _pingMonitorView.AddTab(data.Args);
                     break;
                 case ApplicationViewManager.Name.Traceroute:
                     _tracerouteHostView.AddTab(data.Args);

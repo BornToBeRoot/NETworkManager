@@ -87,7 +87,7 @@ namespace NETworkManager.Models.Documentation
                     return DocumentationIdentifier.ApplicationIpScanner;                    
                 case ApplicationViewManager.Name.PortScanner:
                     return DocumentationIdentifier.ApplicationPortScanner;                    
-                case ApplicationViewManager.Name.Ping:
+                case ApplicationViewManager.Name.PingMonitor:
                     return DocumentationIdentifier.ApplicationPing;                    
                 case ApplicationViewManager.Name.Traceroute:
                     return DocumentationIdentifier.ApplicationTraceroute;                    

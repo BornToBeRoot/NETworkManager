@@ -248,7 +248,7 @@ namespace NETworkManager.ViewModels
                     SettingsContent = _portScannerSettingsView;
                     break;
 
-                case SettingsViewManager.Name.Ping:
+                case SettingsViewManager.Name.PingMonitor:
                     if (_pingSettingsViewModel == null)
                         _pingSettingsViewModel = new PingSettingsView();
 
