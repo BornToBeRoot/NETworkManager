@@ -16,6 +16,7 @@ namespace NETworkManager
             new ProfileViewInfo(Name.IPScanner, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.IPScanner)),
             new ProfileViewInfo(Name.PortScanner,ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PortScanner)),
             new ProfileViewInfo(Name.Ping, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Ping)),
+            new ProfileViewInfo(Name.PingMonitor, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PingMonitor)),
             new ProfileViewInfo(Name.Traceroute, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Traceroute)),
             new ProfileViewInfo(Name.DNSLookup, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.DNSLookup)),
             new ProfileViewInfo(Name.RemoteDesktop, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.RemoteDesktop)),
@@ -41,6 +42,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.PortScanner;
                 case Name.Ping:
                     return Resources.Localization.Strings.Ping;
+                case Name.PingMonitor:
+                    return Resources.Localization.Strings.PingMonitor;
                 case Name.Traceroute:
                     return Resources.Localization.Strings.Traceroute;
                 case Name.DNSLookup:
@@ -71,6 +74,7 @@ namespace NETworkManager
             IPScanner,
             PortScanner,
             Ping,
+            PingMonitor,
             Traceroute,
             DNSLookup,
             RemoteDesktop,

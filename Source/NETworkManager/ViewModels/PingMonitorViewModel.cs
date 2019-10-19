@@ -242,6 +242,13 @@ namespace NETworkManager.ViewModels
             AddHostToHistory(Host);
         }
 
+        public ICommand AddHostProfileCommand => new RelayCommand(p => AddHostProfileAction());
+
+        private void AddHostProfileAction()
+        {
+            AddHost(SelectedProfile.PingMonitor_Host);
+        }
+
         public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
         private void AddProfileAction()

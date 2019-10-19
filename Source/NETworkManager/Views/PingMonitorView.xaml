@@ -146,12 +146,12 @@
                         <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
                         <ListBox Grid.Column="0" Grid.Row="2" x:Name="ListBoxProfiles" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                             <ListBox.Resources>
-                                <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                    <MenuItem Header="{x:Static localization:Strings.WakeUp}" Command="{Binding WakeUpProfileCommand}">
+                                <ContextMenu x:Key="ProfileContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                    <MenuItem Header="{x:Static localization:Strings.Ping}" Command="{Binding AddHostProfileCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                                 <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Power}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}" />
                                                 </Rectangle.OpacityMask>
                                             </Rectangle>
                                         </MenuItem.Icon>
@@ -235,6 +235,12 @@
                                     </GroupStyle.ContainerStyle>
                                 </GroupStyle>
                             </ListBox.GroupStyle>
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                                    <Setter Property="ContextMenu" Value="{StaticResource ProfileContextMenu}" />
+                                    <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick" />
+                                </Style>
+                            </ListBox.ItemContainerStyle>
                         </ListBox>
                         <Grid Grid.Row="2" VerticalAlignment="Center">
                             <Grid.Style>

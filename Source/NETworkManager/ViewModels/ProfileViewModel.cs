@@ -442,6 +442,51 @@ namespace NETworkManager.ViewModels
 
         #endregion
 
+        #region Ping Monitor
+        private bool _pingMonitor_Enabled;
+        public bool PingMonitor_Enabled
+        {
+            get => _pingMonitor_Enabled;
+            set
+            {
+                if (value == _pingMonitor_Enabled)
+                    return;
+
+                _pingMonitor_Enabled = value;
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _pingMonitor_InheritHost;
+        public bool PingMonitor_InheritHost
+        {
+            get => _pingMonitor_InheritHost;
+            set
+            {
+                if (value == _pingMonitor_InheritHost)
+                    return;
+
+                _pingMonitor_InheritHost = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _pingMonitor_Host;
+        public string PingMonitor_Host
+        {
+            get => _pingMonitor_Host;
+            set
+            {
+                if (value == _pingMonitor_Host)
+                    return;
+
+                _pingMonitor_Host = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         #region Traceroute
         private bool _traceroute_Enabled;
         public bool Traceroute_Enabled
@@ -1951,6 +1996,11 @@ namespace NETworkManager.ViewModels
             Ping_Enabled = profileInfo.Ping_Enabled;
             Ping_InheritHost = profileInfo.Ping_InheritHost;
             Ping_Host = profileInfo.Ping_Host;
+
+            // Ping Monitor
+            PingMonitor_Enabled = profileInfo.PingMonitor_Enabled;
+            PingMonitor_InheritHost = profileInfo.PingMonitor_InheritHost;
+            PingMonitor_Host = profileInfo.PingMonitor_Host;
 
             // Traceroute
             Traceroute_Enabled = profileInfo.Traceroute_Enabled;

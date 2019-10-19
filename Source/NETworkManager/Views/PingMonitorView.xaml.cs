@@ -20,7 +20,13 @@ namespace NETworkManager.Views
             if (sender is ContextMenu menu)
                 menu.DataContext = _viewModel;
         }
-             
+
+        private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+                _viewModel.AddHostProfileCommand.Execute(null);
+        }
+
         public void OnViewHide()
         {
             _viewModel.OnViewHide();
@@ -29,6 +35,6 @@ namespace NETworkManager.Views
         public void OnViewVisible()
         {
             _viewModel.OnViewVisible();
-        }
+        }      
     }
 }

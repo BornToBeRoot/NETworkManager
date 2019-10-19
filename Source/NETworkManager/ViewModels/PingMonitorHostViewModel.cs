@@ -241,7 +241,7 @@ namespace NETworkManager.ViewModels
             _pingMonitorOptions = options;
 
             Host = options.Host;
-            IPAddress = options.IPAddress;            
+            IPAddress = options.IPAddress;
         }
 
         public void OnLoaded()
@@ -279,12 +279,12 @@ namespace NETworkManager.ViewModels
 
         private void CloseAction()
         {
-            _closeCallback(HostId);   
+            _closeCallback(HostId);
         }
         #endregion
 
         #region Methods      
-        private async void StartPing()
+        private void StartPing()
         {
             IsPingRunning = true;
 
@@ -351,25 +351,11 @@ namespace NETworkManager.ViewModels
             _stopwatch.Reset();
         }
 
-        private void AddHostToHistory(string host)
-        {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.Ping_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
-
-            // Clear the old items
-            SettingsManager.Current.Ping_HostHistory.Clear();
-            OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.Ping_HostHistory.Add(x));
-        }
-
         public void OnClose()
         {
-            Debug.WriteLine("Closing...");
             // Stop the ping
-            //if (IsPingRunning)
-            //    PingAction();
+            if (IsPingRunning)
+                StopPing();
         }
         #endregion
 
