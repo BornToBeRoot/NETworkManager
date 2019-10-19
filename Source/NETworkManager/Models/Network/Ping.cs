@@ -9,8 +9,7 @@ namespace NETworkManager.Models.Network
 {
     public class Ping
     {
-        #region Varaibles
-        public int Attempts = 0;
+        #region Varaibles        
         public int WaitTime = 1000;
         public int Timeout = 4000;
         public byte[] Buffer = new byte[32];
@@ -133,7 +132,7 @@ namespace NETworkManager.Models.Network
                             if (cancellationToken.IsCancellationRequested)
                                 break;
                         }
-                    } while ((Attempts == 0 || pingTotal < Attempts) && !cancellationToken.IsCancellationRequested);
+                    } while (!cancellationToken.IsCancellationRequested);
                 }
 
                 if (cancellationToken.IsCancellationRequested)

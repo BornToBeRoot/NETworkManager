@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Models.Settings;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {
@@ -7,24 +6,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly bool _isLoading;
-
-        private int _attempts;
-        public int Attempts
-        {
-            get => _attempts;
-            set
-            {
-                if (value == _attempts)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Ping_Attempts = value;
-
-                _attempts = value;
-                OnPropertyChanged();
-            }
-        }
-
+        
         private int _timeout;
         public int Timeout
         {
@@ -204,8 +186,7 @@ namespace NETworkManager.ViewModels
         }
 
         private void LoadSettings()
-        {
-            Attempts = SettingsManager.Current.Ping_Attempts;
+        {            
             Timeout = SettingsManager.Current.Ping_Timeout;
             Buffer = SettingsManager.Current.Ping_Buffer;
             TTL = SettingsManager.Current.Ping_TTL;

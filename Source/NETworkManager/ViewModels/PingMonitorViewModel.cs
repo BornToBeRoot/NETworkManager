@@ -96,6 +96,20 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView HostsView { get; }
 
+        private PingMonitorHostView _selectedHost;
+        public PingMonitorHostView SelectedHost
+        {
+            get => _selectedHost;
+            set
+            {
+                if (value == _selectedHost)
+                    return;
+
+                _selectedHost = value;
+                OnPropertyChanged();
+            }
+        }
+
         #region Profiles
         public ICollectionView Profiles { get; }
 

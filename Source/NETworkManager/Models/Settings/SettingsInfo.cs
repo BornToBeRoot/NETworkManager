@@ -1192,21 +1192,6 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Ping
-        private int _ping_Attempts;
-        public int Ping_Attempts
-        {
-            get => _ping_Attempts;
-            set
-            {
-                if (value == _ping_Attempts)
-                    return;
-
-                _ping_Attempts = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
         private int _ping_Buffer = GlobalStaticConfiguration.Ping_Buffer;
         public int Ping_Buffer
         {

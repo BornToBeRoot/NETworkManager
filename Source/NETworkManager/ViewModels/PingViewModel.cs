@@ -498,8 +498,7 @@ namespace NETworkManager.ViewModels
 
 
             var ping = new Ping
-            {
-                Attempts = SettingsManager.Current.Ping_Attempts,
+            {                
                 Timeout = SettingsManager.Current.Ping_Timeout,
                 Buffer = new byte[SettingsManager.Current.Ping_Buffer],
                 TTL = SettingsManager.Current.Ping_TTL,
