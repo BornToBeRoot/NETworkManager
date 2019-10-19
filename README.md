@@ -30,6 +30,9 @@
 
 <div align="center"> 
   <p>      
+    :heavy_exclamation_mark: <a href="https://github.com/BornToBeRoot/NETworkManager/blob/master/README.v2.md">Check out version 2 with WiFi and Ping Monitor</a> :heavy_exclamation_mark:
+  </p>
+  <p>      
     :package: Download:
       <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.11.0.0/NETworkManager_v1.11.0.0_Portable.zip">Portable</a>, 
       <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.11.0.0/NETworkManager_v1.11.0.0_Setup.msi">MSI</a> or

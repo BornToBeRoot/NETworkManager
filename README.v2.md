@@ -1,6 +1,6 @@
 <div align="center">  
   <img alt="NETworkManager" src="NETworkManager.svg" height="128" width="128" />
-  <h1>NETworkManager v2</h1>  
+  <h1>NETworkManager - Version 2</h1>  
   <p>A powerful tool for managing networks and troubleshoot network problems!</p>
   <p>   
   <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
@@ -31,7 +31,7 @@
 <div align="center"> 
   <p>      
     :package: Download:
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.11.0.0/NETworkManager_v1.11.0.0_Portable.zip">Portable</a> <!--, -->
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre001/NETworkManager_v2.0.0-pre001_Portable.zip">Portable</a> <!--, -->
       <!-- <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.11.0.0/NETworkManager_v1.11.0.0_Setup.msi">MSI</a> or -->
       <!-- <a href="https://chocolatey.org/packages/networkmanager">Chocolatey</a> -->
   </p>
