@@ -350,10 +350,7 @@ namespace NETworkManager.ViewModels
 
         private void PingAction()
         {
-            if (IsPingRunning)
-                StopPing();
-            else
-                StartPing();
+            Ping();
         }
 
         public ICommand CopySelectedTimestampCommand => new RelayCommand(p => CopySelectedTimestampAction());
@@ -414,6 +411,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods      
+        private void Ping()
+        {
+            if (IsPingRunning)
+                StopPing();
+            else
+                StartPing();
+        }
+
         private async void StartPing()
         {
             DisplayStatusMessage = false;

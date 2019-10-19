@@ -2462,4 +2462,10 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   <data name="AddAHostToMonitor" xml:space="preserve">
     <value>Add a host to monitor</value>
   </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
 </root>

@@ -3,14 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:NETworkManager.Controls"
-        xmlns:validators="clr-namespace:NETworkManager.Validators"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingMonitorHostViewModel}">
@@ -36,9 +31,19 @@
                     <Setter Property="OpacityMask" Value="{StaticResource VisualDisconnected}" />
                     <Setter Property="Fill" Value="Red" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsReachable}" Value="True">
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsReachable}" Value="True" />
+                                <Condition Binding="{Binding IsPingRunning}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="OpacityMask" Value="{StaticResource VisualConnected}" />
+                                <Setter Property="Fill" Value="#badc58" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding IsPingRunning}" Value="False">
                             <Setter Property="OpacityMask" Value="{StaticResource VisualConnected}" />
-                            <Setter Property="Fill" Value="#badc58" />
+                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -51,15 +56,15 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />                
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -70,10 +75,12 @@
                 <RowDefinition Height="5" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" />
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Hostname}" />
             <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Host}" Style="{StaticResource BoldTextBlock}" />
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPAddress}" />
             <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding IPAddress}" Style="{StaticResource BoldTextBlock}" />
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Duration}" />
+            <TextBlock Grid.Column="2" Grid.Row="4" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
             <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.PacketsTransmitted}" />
             <TextBlock Grid.Column="6" Grid.Row="0" Text="{Binding PingsTransmitted}" />
             <TextBlock Grid.Column="4" Grid.Row="2" Text="{x:Static localization:Strings.ReceivedLost}" />
@@ -107,17 +114,24 @@
                 <RowDefinition Height="10" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource CleanButton}">
+            <Button Grid.Column="0" Grid.Row="0" Command="{Binding PingCommand}" Style="{StaticResource CleanButton}">
                 <Rectangle Width="16" Height="16">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Pause}" />
-                    </Rectangle.OpacityMask>
+                    <Rectangle.Resources>
+                        <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}" />
+                        <VisualBrush x:Key="VisualControlPause" Stretch="Uniform" Visual="{iconPacks:Material Kind=Pause}" />
+                    </Rectangle.Resources>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
                             <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                            <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                            <Setter Property="ToolTip" Value="{x:Static localization:Strings.Resume}" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsPingRunning}" Value="True">
+                                    <Setter Property="OpacityMask" Value="{StaticResource VisualControlPause}" />
+                                    <Setter Property="ToolTip" Value="{x:Static localization:Strings.Pause}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -141,6 +155,6 @@
                     </Rectangle.Style>
                 </Rectangle>
             </Button>
-        </Grid>        
+        </Grid>
     </Grid>
 </UserControl>

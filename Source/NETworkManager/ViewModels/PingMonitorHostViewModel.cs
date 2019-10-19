@@ -1,26 +1,15 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
 using System;
-using System.Collections;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Threading;
-using System.Windows.Data;
-using Dragablz;
-using NETworkManager.Controls;
 using NETworkManager.Utilities;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Export;
-using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
@@ -256,24 +245,12 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        /*
-         // Start
-         // Stop
-         // Delete
-
-
-        public ICommand PingCommand => new RelayCommand(p => PingAction(), Ping_CanExecute);
-
-        private bool Ping_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+        public ICommand PingCommand => new RelayCommand(p => PingAction());
 
         private void PingAction()
         {
-            if (IsPingRunning)
-                StopPing();
-            else
-                StartPing();
+            Ping();
         }
-        */
 
         public ICommand CloseCommand => new RelayCommand(p => CloseAction());
 
@@ -284,6 +261,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods      
+        private void Ping()
+        {
+            if (IsPingRunning)
+                StopPing();
+            else
+                StartPing();
+        }
+
         private void StartPing()
         {
             IsPingRunning = true;

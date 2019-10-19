@@ -254,6 +254,8 @@ namespace NETworkManager.ViewModels
 
             // Add the hostname or ip address to the history
             AddHostToHistory(Host);
+                        
+            Host = "";
         }
 
         public ICommand AddHostProfileCommand => new RelayCommand(p => AddHostProfileAction());
