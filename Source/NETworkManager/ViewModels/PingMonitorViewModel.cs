@@ -298,15 +298,32 @@ namespace NETworkManager.ViewModels
 
             if (dnsLookup.Item2 != null)
             {
-                Hosts.Add(new PingMonitorHostView(_hostId, new PingMonitorOptions(dnsLookup.Item1, dnsLookup.Item2)));
+                Hosts.Add(new PingMonitorHostView(_hostId, RemoveHost, new PingMonitorOptions(dnsLookup.Item1, dnsLookup.Item2)));
             }
             else
             {
                 StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, host);
-                DisplayStatusMessage = true;                
+                DisplayStatusMessage = true;
             }
 
             IsWorking = false;
+        }
+
+        private void RemoveHost(int hostId)
+        {
+            var index = -1;
+
+            foreach (var host in Hosts)
+            {
+                if (host.HostId == hostId)
+                    index = Hosts.IndexOf(host);
+            }
+
+            if (index != -1)
+            {
+                Hosts[index].CloseView();
+                Hosts.RemoveAt(index);
+            }
         }
 
         private void AddHostToHistory(string host)

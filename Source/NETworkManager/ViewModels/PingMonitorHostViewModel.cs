@@ -29,7 +29,8 @@ namespace NETworkManager.ViewModels
         #region Variables        
         private CancellationTokenSource _cancellationTokenSource;
 
-        private readonly int _hostId;
+        public readonly int HostId;
+        private readonly Action<int> _closeCallback;
         private readonly PingMonitorOptions _pingMonitorOptions;
         private bool _firstLoad = true;
 
@@ -233,13 +234,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings    
-        public PingMonitorHostViewModel(int tabId, PingMonitorOptions options)
-        {            
-            _hostId = tabId;
+        public PingMonitorHostViewModel(int hostId, Action<int> closeCallback, PingMonitorOptions options)
+        {
+            HostId = hostId;
+            _closeCallback = closeCallback;
             _pingMonitorOptions = options;
 
             Host = options.Host;
-            IPAddress = options.IPAddress;
+            IPAddress = options.IPAddress;            
         }
 
         public void OnLoaded()
@@ -272,6 +274,13 @@ namespace NETworkManager.ViewModels
                 StartPing();
         }
         */
+
+        public ICommand CloseCommand => new RelayCommand(p => CloseAction());
+
+        private void CloseAction()
+        {
+            _closeCallback(HostId);   
+        }
         #endregion
 
         #region Methods      
@@ -357,6 +366,7 @@ namespace NETworkManager.ViewModels
 
         public void OnClose()
         {
+            Debug.WriteLine("Closing...");
             // Stop the ping
             //if (IsPingRunning)
             //    PingAction();
@@ -401,7 +411,7 @@ namespace NETworkManager.ViewModels
                     // I hope this won't slow the application or causes a hight cpu load
                     lock (PingResults)
                         AverageTime = (int)PingResults.Average(s => s.Time);
-                }                
+                }
             }
             else
             {

@@ -8,11 +8,13 @@ namespace NETworkManager.Views
     {
         private readonly PingMonitorHostViewModel _viewModel;
 
-        public PingMonitorHostView(int hostId, PingMonitorOptions options)
+        public int HostId => _viewModel.HostId;
+
+        public PingMonitorHostView(int hostId, Action<int> closeCallback, PingMonitorOptions options)
         {
             InitializeComponent();
 
-            _viewModel = new PingMonitorHostViewModel(hostId, options);
+            _viewModel = new PingMonitorHostViewModel(hostId, closeCallback, options);
 
             DataContext = _viewModel;
 
@@ -29,7 +31,7 @@ namespace NETworkManager.Views
             _viewModel.OnClose();
         }
 
-        public void CloseTab()
+        public void CloseView()
         {
             _viewModel.OnClose();
         }

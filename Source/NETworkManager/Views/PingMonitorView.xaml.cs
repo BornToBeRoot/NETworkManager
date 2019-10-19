@@ -20,7 +20,7 @@ namespace NETworkManager.Views
             if (sender is ContextMenu menu)
                 menu.DataContext = _viewModel;
         }
-
+             
         public void OnViewHide()
         {
             _viewModel.OnViewHide();
@@ -30,6 +30,5 @@ namespace NETworkManager.Views
         {
             _viewModel.OnViewVisible();
         }
-
     }
 }

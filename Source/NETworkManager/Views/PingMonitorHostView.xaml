@@ -13,7 +13,7 @@
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         Loaded="UserControl_Loaded"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingViewModel}">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingMonitorHostViewModel}">
     <UserControl.Resources>
         <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <converters:PercentConverter x:Key="PercentConverter" />
@@ -103,11 +103,44 @@
         </Grid>
         <Grid Grid.Column="4">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="10" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-        </Grid>
-        <!-- Buttons Col 4 -->
+            <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource CleanButton}">
+                <Rectangle Width="16" Height="16">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Pause}" />
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+            </Button>
+            <Button Grid.Column="0" Grid.Row="2" Command="{Binding CloseCommand}" Style="{StaticResource CleanButton}" ToolTip="{x:Static localization:Strings.Close}">
+                <Rectangle Width="16" Height="16">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=WindowClose}" />
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Fill" Value="Red" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+            </Button>
+        </Grid>        
     </Grid>
 </UserControl>
