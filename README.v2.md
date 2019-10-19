@@ -1,6 +1,6 @@
 <div align="center">  
   <img alt="NETworkManager" src="NETworkManager.svg" height="128" width="128" />
-  <h1>NETworkManager v2</h1>  
+  <h1>NETworkManager - Version 2</h1>  
   <p>A powerful tool for managing networks and troubleshoot network problems!</p>
   <p>   
   <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
