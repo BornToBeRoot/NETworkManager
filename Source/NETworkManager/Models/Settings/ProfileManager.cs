@@ -160,6 +160,10 @@ namespace NETworkManager.Models.Settings
                 Ping_InheritHost = instance.Ping_InheritHost,
                 Ping_Host = instance.Ping_InheritHost ? instance.Host?.Trim() : instance.Ping_Host?.Trim(),
 
+                PingMonitor_Enabled = instance.PingMonitor_Enabled,
+                PingMonitor_InheritHost = instance.PingMonitor_InheritHost,
+                PingMonitor_Host = instance.PingMonitor_InheritHost ? instance.Host?.Trim() : instance.PingMonitor_Host?.Trim(),
+
                 Traceroute_Enabled = instance.Traceroute_Enabled,
                 Traceroute_InheritHost = instance.Traceroute_InheritHost,
                 Traceroute_Host = instance.Traceroute_InheritHost ? instance.Host?.Trim() : instance.Traceroute_Host?.Trim(),

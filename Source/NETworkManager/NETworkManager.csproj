@@ -180,6 +180,7 @@
     <Compile Include="Models\Network\BandwidthMeterSpeedArgs.cs" />
     <Compile Include="Models\Network\DNSServer.cs" />
     <Compile Include="Models\Network\DNSServerInfo.cs" />
+    <Compile Include="Models\Network\PingMonitorOptions.cs" />
     <Compile Include="Models\Network\WiFiAdapterInfo.cs" />
     <Compile Include="Models\Network\WiFiNetworkInfo.cs" />
     <Compile Include="Models\Network\WiFi.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="Models\EventSystem\EventSystemRedirectProfileApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystemRedirectDataApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystem.cs" />
+    <Compile Include="Utilities\DnsLookupHelper.cs" />
     <Compile Include="Utilities\FileSizeConverter.cs" />
     <Compile Include="Utilities\JsonIPAddressConverter.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
@@ -268,6 +270,8 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
+    <Compile Include="ViewModels\PingMonitorViewModel.cs" />
+    <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
     <Compile Include="ViewModels\WiFiViewModel.cs" />
     <Compile Include="ViewModels\FirstRunViewModel.cs" />
     <Compile Include="Models\Settings\IProfileManager.cs" />
@@ -339,6 +343,12 @@
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
     <Compile Include="Views\CustomCommandDialog.xaml.cs">
       <DependentUpon>CustomCommandDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PingMonitorView.xaml.cs">
+      <DependentUpon>PingMonitorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PingMonitorHostView.xaml.cs">
+      <DependentUpon>PingMonitorHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WiFiView.xaml.cs">
       <DependentUpon>WiFiView.xaml</DependentUpon>
@@ -686,6 +696,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CustomCommandDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PingMonitorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PingMonitorHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

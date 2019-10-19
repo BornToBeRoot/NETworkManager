@@ -31,7 +31,7 @@ namespace NETworkManager.ViewModels
 
         private CancellationTokenSource _cancellationTokenSource;
 
-        private readonly int _tabId;
+        public readonly int TabId;
         private bool _firstLoad = true;
 
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
@@ -309,7 +309,7 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            _tabId = tabId;
+            TabId = tabId;
             Host = host;
 
             // Set collection view
@@ -350,10 +350,7 @@ namespace NETworkManager.ViewModels
 
         private void PingAction()
         {
-            if (IsPingRunning)
-                StopPing();
-            else
-                StartPing();
+            Ping();
         }
 
         public ICommand CopySelectedTimestampCommand => new RelayCommand(p => CopySelectedTimestampAction());
@@ -414,6 +411,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods      
+        private void Ping()
+        {
+            if (IsPingRunning)
+                StopPing();
+            else
+                StartPing();
+        }
+
         private async void StartPing()
         {
             DisplayStatusMessage = false;
@@ -443,7 +448,7 @@ namespace NETworkManager.ViewModels
             {
                 foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
-                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
+                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Host;
                 }
             }
 
@@ -456,8 +461,7 @@ namespace NETworkManager.ViewModels
                 {
                     // Try to resolve the hostname
                     var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
-
-
+                    
                     foreach (var ip in ipHostEntrys.AddressList)
                     {
                         switch (ip.AddressFamily)
@@ -499,8 +503,7 @@ namespace NETworkManager.ViewModels
 
 
             var ping = new Ping
-            {
-                Attempts = SettingsManager.Current.Ping_Attempts,
+            {                
                 Timeout = SettingsManager.Current.Ping_Timeout,
                 Buffer = new byte[SettingsManager.Current.Ping_Buffer],
                 TTL = SettingsManager.Current.Ping_TTL,

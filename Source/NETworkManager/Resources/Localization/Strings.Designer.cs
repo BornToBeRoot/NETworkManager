@@ -88,6 +88,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add a host to monitor.
+        /// </summary>
+        public static string AddAHostToMonitor {
+            get {
+                return ResourceManager.GetString("AddAHostToMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a tab to perform a DNS lookup....
         /// </summary>
         public static string AddATabToPerformADNSLookup {
@@ -219,6 +228,15 @@ namespace NETworkManager.Resources.Localization {
         public static string AddEntryDots {
             get {
                 return ResourceManager.GetString("AddEntryDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add host.
+        /// </summary>
+        public static string AddHost {
+            get {
+                return ResourceManager.GetString("AddHost", resourceCulture);
             }
         }
         
@@ -3968,6 +3986,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pause.
+        /// </summary>
+        public static string Pause {
+            get {
+                return ResourceManager.GetString("Pause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Performance.
         /// </summary>
         public static string Performance {
@@ -4009,6 +4036,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Ping {
             get {
                 return ResourceManager.GetString("Ping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping Monitor.
+        /// </summary>
+        public static string PingMonitor {
+            get {
+                return ResourceManager.GetString("PingMonitor", resourceCulture);
             }
         }
         
@@ -5262,6 +5298,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Result {
             get {
                 return ResourceManager.GetString("Result", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resume.
+        /// </summary>
+        public static string Resume {
+            get {
+                return ResourceManager.GetString("Resume", resourceCulture);
             }
         }
         

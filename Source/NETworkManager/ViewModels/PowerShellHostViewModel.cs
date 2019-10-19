@@ -15,7 +15,6 @@ using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.EventSystem;
-using MahApps.Metro.Controls;
 
 namespace NETworkManager.ViewModels
 {

@@ -32,7 +32,7 @@ namespace NETworkManager.ViewModels
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
-        private readonly int _tabId;
+        public readonly int TabId;
 
         private readonly bool _isLoading;
 
@@ -403,7 +403,7 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
             
-            _tabId = tabId;
+            TabId = tabId;
             Host = host;
 
             // Set collection view
@@ -532,7 +532,7 @@ namespace NETworkManager.ViewModels
             {
                 foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
-                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
+                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Host;
                 }
             }
 

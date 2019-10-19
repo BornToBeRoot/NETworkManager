@@ -27,7 +27,7 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private readonly int _tabId;
+        public readonly int TabId;
         private bool _firstLoad = true;
 
         private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
@@ -257,7 +257,7 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            _tabId = tabId;
+            TabId = tabId;
             Host = host;
 
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
@@ -423,7 +423,7 @@ namespace NETworkManager.ViewModels
             {
                 foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
-                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == _tabId).Header = Host;
+                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Host;
                 }
             }
 

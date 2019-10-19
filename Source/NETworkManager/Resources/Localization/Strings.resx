@@ -2453,4 +2453,19 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   <data name="ShowErrorMessage" xml:space="preserve">
     <value>Show error message</value>
   </data>
+  <data name="PingMonitor" xml:space="preserve">
+    <value>Ping Monitor</value>
+  </data>
+  <data name="AddHost" xml:space="preserve">
+    <value>Add host</value>
+  </data>
+  <data name="AddAHostToMonitor" xml:space="preserve">
+    <value>Add a host to monitor</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
 </root>
