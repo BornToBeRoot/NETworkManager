@@ -24,7 +24,7 @@ using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels
 {
-    public class PingMonitorClientViewModel : ViewModelBase
+    public class PingMonitorHostViewModel : ViewModelBase
     {
         #region Variables        
         private CancellationTokenSource _cancellationTokenSource;
@@ -233,7 +233,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings    
-        public PingMonitorClientViewModel(int tabId, PingMonitorOptions options)
+        public PingMonitorHostViewModel(int tabId, PingMonitorOptions options)
         {            
             _hostId = tabId;
             _pingMonitorOptions = options;

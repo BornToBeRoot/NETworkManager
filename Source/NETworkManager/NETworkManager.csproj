@@ -231,6 +231,7 @@
     <Compile Include="Models\EventSystem\EventSystemRedirectProfileApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystemRedirectDataApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystem.cs" />
+    <Compile Include="Utilities\DnsLookupHelper.cs" />
     <Compile Include="Utilities\FileSizeConverter.cs" />
     <Compile Include="Utilities\JsonIPAddressConverter.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
@@ -270,7 +271,7 @@
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorViewModel.cs" />
-    <Compile Include="ViewModels\PingMonitorClientViewModel.cs" />
+    <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
     <Compile Include="ViewModels\WiFiViewModel.cs" />
     <Compile Include="ViewModels\FirstRunViewModel.cs" />
     <Compile Include="Models\Settings\IProfileManager.cs" />
@@ -346,8 +347,8 @@
     <Compile Include="Views\PingMonitorView.xaml.cs">
       <DependentUpon>PingMonitorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PingMonitorClientView.xaml.cs">
-      <DependentUpon>PingMonitorClientView.xaml</DependentUpon>
+    <Compile Include="Views\PingMonitorHostView.xaml.cs">
+      <DependentUpon>PingMonitorHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WiFiView.xaml.cs">
       <DependentUpon>WiFiView.xaml</DependentUpon>
@@ -702,7 +703,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PingMonitorClientView.xaml">
+    <Page Include="Views\PingMonitorHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

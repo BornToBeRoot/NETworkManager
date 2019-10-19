@@ -4,15 +4,15 @@ using NETworkManager.Models.Network;
 
 namespace NETworkManager.Views
 {
-    public partial class PingMonitorClientView
+    public partial class PingMonitorHostView
     {
-        private readonly PingMonitorClientViewModel _viewModel;
+        private readonly PingMonitorHostViewModel _viewModel;
 
-        public PingMonitorClientView(int hostId, PingMonitorOptions options)
+        public PingMonitorHostView(int hostId, PingMonitorOptions options)
         {
             InitializeComponent();
 
-            _viewModel = new PingMonitorClientViewModel(hostId, options);
+            _viewModel = new PingMonitorHostViewModel(hostId, options);
 
             DataContext = _viewModel;
 

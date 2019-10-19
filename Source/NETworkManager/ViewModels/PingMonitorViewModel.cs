@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Models.Settings;
-using System.Net;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
@@ -8,14 +7,9 @@ using NETworkManager.Models.Network;
 using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.Utilities;
-using System.Threading.Tasks;
 using System.Linq;
-using MahApps.Metro.Controls;
 using System.Collections.ObjectModel;
 using NETworkManager.Views;
-using DnsClient;
-using System.Net.Sockets;
-using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
@@ -23,7 +17,7 @@ namespace NETworkManager.ViewModels
     {
         #region  Variables 
         private readonly IDialogCoordinator _dialogCoordinator;
-        private LookupClient DnsLookupClient = new LookupClient();
+
 
         private readonly bool _isLoading;
 
@@ -45,21 +39,19 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView HostHistoryView { get; }
 
-        private ObservableCollection<PingMonitorClientView> _hosts = new ObservableCollection<PingMonitorClientView>();
-        public ObservableCollection<PingMonitorClientView> Hosts
+        private bool _isWorking;
+        public bool IsWorking
         {
-            get => _hosts;
+            get => _isWorking;
             set
             {
-                if (value != null && value == _hosts)
+                if (value == _isWorking)
                     return;
 
-                _hosts = value;
+                _isWorking = value;
+                OnPropertyChanged();
             }
         }
-
-        public ICollectionView HostsView { get; }
-
 
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
@@ -88,6 +80,21 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private ObservableCollection<PingMonitorHostView> _hosts = new ObservableCollection<PingMonitorHostView>();
+        public ObservableCollection<PingMonitorHostView> Hosts
+        {
+            get => _hosts;
+            set
+            {
+                if (value != null && value == _hosts)
+                    return;
+
+                _hosts = value;
+            }
+        }
+
+        public ICollectionView HostsView { get; }
 
         #region Profiles
         public ICollectionView Profiles { get; }
@@ -208,7 +215,7 @@ namespace NETworkManager.ViewModels
 
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PingMonitor_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
-            
+
             LoadSettings();
 
             _isLoading = false;
@@ -282,76 +289,24 @@ namespace NETworkManager.ViewModels
 
         private async void AddHost(string host)
         {
+            IsWorking = true;
+            DisplayStatusMessage = false;
+
             _hostId++;
 
-            // Try to parse the string into an IP-Address
-            var hostIsIP = IPAddress.TryParse(Host, out var ipAddress);
+            var dnsLookup = await DnsLookupHelper.ResolveHost(host);
 
-            if (!hostIsIP) // Lookup
+            if (dnsLookup.Item2 != null)
             {
-                try
-                {
-                    // Try to resolve the hostname
-                    var ipHostEntrys = await DnsLookupClient.GetHostEntryAsync(host);
-
-                    if(ipHostEntrys.AddressList.Length == 0)
-                    {
-                        StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
-                        DisplayStatusMessage = true;
-
-                        return;
-                    }
-
-                    foreach (var ip in ipHostEntrys.AddressList)
-                    {
-                        switch (ip.AddressFamily)
-                        {
-                            // ToDo: Setting
-                            case AddressFamily.InterNetwork when SettingsManager.Current.Ping_ResolveHostnamePreferIPv4:
-                                ipAddress = ip;
-                                break;
-                            // ToDo: Setting
-                            case AddressFamily.InterNetworkV6 when !SettingsManager.Current.Ping_ResolveHostnamePreferIPv4:
-                                ipAddress = ip;
-                                break;
-                        }
-                    }
-
-                    // Fallback --> If we could not resolve our prefered ip protocol for the hostname
-                    foreach (var ip in ipHostEntrys.AddressList)
-                    {
-                        ipAddress = ip;
-                        break;
-                    }
-                }
-                catch // This will catch DNS resolve errors
-                {
-                    StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
-                    DisplayStatusMessage = true;
-
-                    return;
-                }
+                Hosts.Add(new PingMonitorHostView(_hostId, new PingMonitorOptions(dnsLookup.Item1, dnsLookup.Item2)));
             }
-            else // Reverse lookup
+            else
             {
-                try
-                {
-                    var x = await DnsLookupClient.GetHostNameAsync(ipAddress);
+                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, host);
+                DisplayStatusMessage = true;                
+            }
 
-                    if (!string.IsNullOrEmpty(x))
-                        host = x;
-                }
-                catch
-                {
-
-                }
-            }                        
-
-            Debug.WriteLine("Add new host:");
-            Debug.WriteLine(host);
-            Debug.WriteLine(ipAddress);
-
-            Hosts.Add(new PingMonitorClientView(_hostId, new PingMonitorOptions(host, ipAddress)));
+            IsWorking = false;
         }
 
         private void AddHostToHistory(string host)

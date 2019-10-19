@@ -16,6 +16,8 @@
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingMonitorViewModel}">
     <UserControl.Resources>
+        <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
+        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
     </UserControl.Resources>
@@ -67,6 +69,9 @@
                                             <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}" Value="True" >
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsWorking}" Value="True" >
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Resources>
@@ -98,10 +103,21 @@
                                 </Button.Content>
                             </Button>
                         </Grid>
+                        <mahAppsControls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
+                            <mahAppsControls:MetroProgressBar.Style>
+                                <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsWorking}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </mahAppsControls:MetroProgressBar.Style>
+                        </mahAppsControls:MetroProgressBar>
                         <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
                     </Grid>
                     <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Hosts}" />
-                    <ListView Grid.Row="3" ItemsSource="{Binding Hosts}" SelectedItem="{Binding SelectedHost}" Background="Transparent" BorderThickness="0" SelectionMode="Single">                                                           
+                    <ListView Grid.Row="3" ItemsSource="{Binding Hosts}" SelectedItem="{Binding SelectedHost}" Visibility="{Binding Hosts.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}" Background="Transparent" BorderThickness="0" SelectionMode="Single">                                                           
                         <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
                         <ListView.Template>
                             <ControlTemplate>
@@ -115,6 +131,7 @@
                         </ListView.ItemsPanel>
                         <!-- /BUGFIX-->
                     </ListView>
+                    <TextBlock Grid.Row="3" Foreground="{DynamicResource GrayBrush3}" Text="{x:Static localization:Strings.AddAHostToMonitor}" Visibility="{Binding Hosts.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
                 </Grid>
                 <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
                 <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
@@ -300,7 +317,6 @@
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                         <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-
                                     </Style>
                                 </Button.Style>
                                 <Grid>
