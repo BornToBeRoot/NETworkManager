@@ -303,22 +303,16 @@ namespace NETworkManager.ViewModels
                 Hostname = Host
             };
 
-            ping.PingReceived += Ping_PingReceived;
-            //ping.PingCompleted += Ping_PingCompleted;
-            //ping.PingException += Ping_PingException;
+            ping.PingReceived += Ping_PingReceived;            
+            ping.PingException += Ping_PingException;
             ping.UserHasCanceled += Ping_UserHasCanceled;
 
             ping.SendAsync(IPAddress, _cancellationTokenSource.Token);
         }
-
+           
         private void StopPing()
         {
             _cancellationTokenSource?.Cancel();
-        }
-
-        private void UserHasCanceled()
-        {
-            PingFinished();
         }
 
         private void PingFinished()
@@ -393,7 +387,12 @@ namespace NETworkManager.ViewModels
 
         private void Ping_UserHasCanceled(object sender, EventArgs e)
         {
-            UserHasCanceled();
+            PingFinished();
+        }
+
+        private void Ping_PingException(object sender, PingExceptionArgs e)
+        {
+            PingFinished();
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
