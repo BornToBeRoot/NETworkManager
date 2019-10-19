@@ -12,7 +12,6 @@ namespace NETworkManager.Views
 
         private bool _loaded;
 
-
         public PowerShellHostView()
         {
             InitializeComponent();
