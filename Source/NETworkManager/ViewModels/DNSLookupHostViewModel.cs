@@ -183,7 +183,12 @@ namespace NETworkManager.ViewModels
             AddTab();
         }
 
-        public ICommand LookupProfileCommand => new RelayCommand(p => LookupProfileAction());
+        public ICommand LookupProfileCommand => new RelayCommand(p => LookupProfileAction(), LookupProfile_CanExecute);
+
+        private bool LookupProfile_CanExecute(object obj)
+        {
+            return SelectedProfile != null;
+        }
 
         private void LookupProfileAction()
         {

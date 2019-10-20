@@ -184,6 +184,19 @@ namespace NETworkManager.ViewModels
             AddTab();
         }
 
+        public ICommand QueryProfileCommand => new RelayCommand(p => QueryProfileAction(), QueryProfile_CanExecute);
+
+        private bool QueryProfile_CanExecute(object obj)
+        {
+            return SelectedProfile != null;
+        }
+
+        private void QueryProfileAction()
+        {
+            AddTab(SelectedProfile.Whois_Domain);
+        }
+
+
         public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
         private void AddProfileAction()
@@ -218,14 +231,7 @@ namespace NETworkManager.ViewModels
         {
             ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
-
-        public ICommand QueryProfileCommand => new RelayCommand(p => QueryProfileAction());
-
-        private void QueryProfileAction()
-        {
-            AddTab(SelectedProfile.Whois_Domain);
-        }
-
+              
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()

@@ -232,7 +232,11 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
+                    <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}">
+                        <TextBox.InputBindings>
+                            <KeyBinding Command="{Binding ConnectProfileCommand}" Key="Enter" />
+                        </TextBox.InputBindings>
+                    </TextBox>
                     <ListBox Grid.Row="2" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                         <ListBox.Resources>
                             <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -295,6 +299,7 @@
                         <ListBox.InputBindings>
                             <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
                             <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
+                            <KeyBinding Command="{Binding ConnectProfileCommand}" Key="Enter" />
                         </ListBox.InputBindings>
                         <ListBox.GroupStyle>
                             <GroupStyle>

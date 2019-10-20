@@ -183,7 +183,12 @@ namespace NETworkManager.ViewModels
             AddTab();
         }
 
-        public ICommand ScanProfileCommand => new RelayCommand(p => ScanProfileAction());
+        public ICommand ScanProfileCommand => new RelayCommand(p => ScanProfileAction(), ScanProfile_CanExecute);
+
+        private bool ScanProfile_CanExecute(object obj)
+        {
+            return SelectedProfile != null;
+        }
 
         private void ScanProfileAction()
         {

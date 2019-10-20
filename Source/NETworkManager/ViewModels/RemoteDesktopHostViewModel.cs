@@ -279,7 +279,12 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction());
+        public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
+
+        private bool ConnectProfile_CanExecute(object obj)
+        {
+            return SelectedProfile != null;
+        }
 
         private void ConnectProfileAction()
         {

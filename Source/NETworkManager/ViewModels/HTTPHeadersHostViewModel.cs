@@ -183,6 +183,19 @@ namespace NETworkManager.ViewModels
             AddTab();
         }
 
+        public ICommand CheckProfileCommand => new RelayCommand(p => CheckProfileAction(), CheckProfile_CanExecute);
+
+        private bool CheckProfile_CanExecute(object obj)
+        {
+            return SelectedProfile != null;
+        }
+
+        private void CheckProfileAction()
+        {
+            AddTab(SelectedProfile.HTTPHeaders_Website);
+        }
+
+
         public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
         private void AddProfileAction()
@@ -217,14 +230,7 @@ namespace NETworkManager.ViewModels
         {
             ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
-
-        public ICommand CheckProfileCommand => new RelayCommand(p => CheckProfileAction());
-
-        private void CheckProfileAction()
-        {
-            AddTab(SelectedProfile.HTTPHeaders_Website);
-        }
-
+            
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()

@@ -110,7 +110,11 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" >
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding CheckProfileCommand}" Key="Enter" />
+                    </TextBox.InputBindings>
+                </TextBox>
                 <ListBox Grid.Column="0" Grid.Row="2" x:Name="ListBoxProfiles" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                     <ListBox.Resources>
                         <ContextMenu x:Key="ProfileContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -155,6 +159,7 @@
                     <ListBox.InputBindings>
                         <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
                         <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
+                        <KeyBinding Command="{Binding CheckProfileCommand}" Key="Enter" />
                     </ListBox.InputBindings>
                     <ListBox.GroupStyle>
                         <GroupStyle>
@@ -220,8 +225,7 @@
                     <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
-                                <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-                                
+                                <Setter Property="Command" Value="{Binding AddProfileCommand}" />                                
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                         <Setter Property="Command" Value="{Binding ClearSearchCommand}" />

@@ -183,7 +183,12 @@ namespace NETworkManager.ViewModels
             AddTab();
         }
 
-        public ICommand TraceProfileCommand => new RelayCommand(p => TraceProfileAction());
+        public ICommand TraceProfileCommand => new RelayCommand(p => TraceProfileAction(), TraceProfile_CanExecute);
+
+        private bool TraceProfile_CanExecute(object obj)
+        {
+            return SelectedProfile != null;
+        }
 
         private void TraceProfileAction()
         {

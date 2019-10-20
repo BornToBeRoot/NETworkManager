@@ -186,7 +186,12 @@ namespace NETworkManager.ViewModels
             AddTab();
         }
 
-        public ICommand PingProfileCommand => new RelayCommand(p => PingProfileAction());
+        public ICommand PingProfileCommand => new RelayCommand(p => PingProfileAction(), PingProfile_CanExecute);
+
+        private bool PingProfile_CanExecute(object obj)
+        {
+            return SelectedProfile != null;
+        }
 
         private void PingProfileAction()
         {
