@@ -139,6 +139,7 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\WiFiTooltipChannelConverter.cs" />
     <Compile Include="Converters\BandwidthBytesToSizeConverter.cs" />
     <Compile Include="Converters\IntZeroReverseToVisibilityCollapsedConverter.cs" />
     <Compile Include="Converters\IntZeroToVisibilityCollapsedConverter.cs" />
