@@ -10,6 +10,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"             
              xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:controls="clr-namespace:NETworkManager.Controls"
              xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
@@ -448,7 +449,8 @@
                     <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.GHz2dot4}" Style="{StaticResource HeaderTextBlock}" />
                     <liveChart:CartesianChart Grid.Row="1" Series="{Binding Radio1Series}" LegendLocation="Right">
                         <liveChart:CartesianChart.DataTooltip>
-                            <liveChart:DefaultTooltip Background="Transparent"  />
+                            <controls:LvlChartsTooltipWiFi Background="Transparent" />
+                            <!--<liveChart:DefaultTooltip Background="Transparent"  />-->
                         </liveChart:CartesianChart.DataTooltip>
                         <liveChart:CartesianChart.AxisX>
                             <liveChart:Axis Title="{x:Static localization:Strings.Channel}" Labels="{Binding Radio1Labels}">
@@ -468,7 +470,8 @@
                     <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.GHz5}" Style="{StaticResource HeaderTextBlock}" />
                     <liveChart:CartesianChart Grid.Row="4" Series="{Binding Radio2Series}" LegendLocation="Right">
                         <liveChart:CartesianChart.DataTooltip>
-                            <liveChart:DefaultTooltip Background="Transparent"  />
+                            <controls:LvlChartsTooltipWiFi Background="Transparent" />
+                            <!--<liveChart:DefaultTooltip Background="Transparent"  />-->
                         </liveChart:CartesianChart.DataTooltip>
                         <liveChart:CartesianChart.AxisX>
                             <liveChart:Axis Title="{x:Static localization:Strings.Channel}" Labels="{Binding Radio2Labels}">

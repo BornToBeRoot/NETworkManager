@@ -126,6 +126,9 @@
       <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzTabItem.cs" />
+    <Compile Include="Controls\LvlChartsTooltipWiFi.xaml.cs">
+      <DependentUpon>LvlChartsTooltipWiFi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ObservableSetCollection.cs" />
     <Compile Include="Controls\PowerShellControl.xaml.cs">
       <DependentUpon>PowerShellControl.xaml</DependentUpon>
@@ -523,6 +526,10 @@
     <Page Include="Controls\DragablzTabHostWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LvlChartsTooltipWiFi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PowerShellControl.xaml">
       <Generator>MSBuild:Compile</Generator>
