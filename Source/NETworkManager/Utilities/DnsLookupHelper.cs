@@ -1,10 +1,7 @@
 ﻿using DnsClient;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NETworkManager.Utilities
@@ -12,6 +9,13 @@ namespace NETworkManager.Utilities
     class DnsLookupHelper
     {
         private static LookupClient DnsLookupClient = new LookupClient();
+
+        /// <summary>
+        /// Resolve hostname and ip address, if only an ip or a hostname was passed
+        /// </summary>
+        /// <param name="host">example.com</param>
+        /// <param name="preferIPv4">true</param>
+        /// <returns></returns>
         public async static Task<Tuple<string, IPAddress>> ResolveHost(string host, bool preferIPv4 = true)
         {
             // Try to parse the string into an IP-Address
@@ -71,6 +75,5 @@ namespace NETworkManager.Utilities
 
             return new Tuple<string, IPAddress>(host, ipAddress);
         }
-
     }
 }
