@@ -10,7 +10,8 @@
     <UserControl.Resources>
         <converter:WiFiTooltipChannelConverter x:Key="WiFiTooltipChannelConverter" />
     </UserControl.Resources>
-    <StackPanel>
+    <Grid Background="{DynamicResource WhiteColorBrush}"  >
+    <StackPanel Margin="10">
         <TextBlock Style="{StaticResource HeaderTextBlock}">
             <TextBlock.Text>
                 <MultiBinding StringFormat="{}{0} {1}">
@@ -47,4 +48,5 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
     </StackPanel>
+    </Grid>
 </UserControl>

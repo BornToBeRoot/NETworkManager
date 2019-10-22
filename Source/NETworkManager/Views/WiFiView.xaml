@@ -150,7 +150,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Networks}" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,0" />
                             <CheckBox Grid.Column="4" Content="{x:Static localization:Strings.GHz2dot4}" IsChecked="{Binding Show2dot4GHzNetworks}" />
-                            <CheckBox Grid.Column="6" Content="{x:Static localization:Strings.GHz5}" IsChecked="{Binding Show5GHzNetworks}" /> 
+                            <CheckBox Grid.Column="6" Content="{x:Static localization:Strings.GHz5}" IsChecked="{Binding Show5GHzNetworks}" />
                             <TextBox x:Name="TextBoxSearch" Grid.Column="8" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
                         </Grid>
                         <ListView Grid.Row="2" Visibility="{Binding IsNetworksLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ScrollViewer.PanningMode="VerticalOnly" ItemsSource="{Binding NetworksView}" SelectedItem="{Binding SelectedNetwork}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
@@ -406,7 +406,7 @@
                                 </Button.Content>
                             </Button>
                         </Grid>
-                       
+
                     </Grid>
                 </Grid>
                 <!-- Reload Adapter -->
@@ -460,10 +460,32 @@
                             </liveChart:Axis>
                         </liveChart:CartesianChart.AxisX>
                         <liveChart:CartesianChart.AxisY>
-                            <liveChart:Axis Title="{x:Static localization:Strings.SignalStrength}" MinValue="0" LabelFormatter="{Binding FormatterdBm}">
+                            <liveChart:Axis Title="{x:Static localization:Strings.SignalStrength}" MaxValue="100" MinValue="0" LabelFormatter="{Binding FormatterdBm}">
                                 <liveChart:Axis.Separator>
                                     <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource GrayBrush8}" StrokeDashArray="10" />
                                 </liveChart:Axis.Separator>
+                                <liveChart:Axis.Sections>
+                                    <liveChart:AxisSection Value="0" SectionWidth="30">
+                                        <liveChart:AxisSection.Fill>
+                                            <SolidColorBrush Opacity="0.4" Color="#5EA4BF" />
+                                        </liveChart:AxisSection.Fill>
+                                    </liveChart:AxisSection>
+                                    <liveChart:AxisSection Value="30" SectionWidth="37" >
+                                        <liveChart:AxisSection.Fill>
+                                            <SolidColorBrush Opacity="0.4" Color="#badc58" />
+                                        </liveChart:AxisSection.Fill>
+                                    </liveChart:AxisSection>
+                                    <liveChart:AxisSection Value="67" SectionWidth="13" >
+                                        <liveChart:AxisSection.Fill>
+                                            <SolidColorBrush Opacity="0.4" Color="#FF970D" />
+                                        </liveChart:AxisSection.Fill>
+                                    </liveChart:AxisSection>
+                                    <liveChart:AxisSection Value="80" SectionWidth="20">
+                                        <liveChart:AxisSection.Fill>
+                                            <SolidColorBrush Opacity="0.4" Color="#A4442B" />
+                                        </liveChart:AxisSection.Fill>
+                                    </liveChart:AxisSection>
+                                </liveChart:Axis.Sections>
                             </liveChart:Axis>
                         </liveChart:CartesianChart.AxisY>
                     </liveChart:CartesianChart>
@@ -481,10 +503,32 @@
                             </liveChart:Axis>
                         </liveChart:CartesianChart.AxisX>
                         <liveChart:CartesianChart.AxisY>
-                            <liveChart:Axis Title="{x:Static localization:Strings.SignalStrength}" MinValue="0" LabelFormatter="{Binding FormatterdBm}">
+                            <liveChart:Axis Title="{x:Static localization:Strings.SignalStrength}" MaxValue="100" MinValue="0" LabelFormatter="{Binding FormatterdBm}">
                                 <liveChart:Axis.Separator>
                                     <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource GrayBrush8}" StrokeDashArray="10" />
                                 </liveChart:Axis.Separator>
+                                <liveChart:Axis.Sections>
+                                    <liveChart:AxisSection Value="0" SectionWidth="30">
+                                        <liveChart:AxisSection.Fill>
+                                            <SolidColorBrush Opacity="0.4" Color="#5EA4BF" />
+                                        </liveChart:AxisSection.Fill>
+                                    </liveChart:AxisSection>
+                                    <liveChart:AxisSection Value="30" SectionWidth="37" >
+                                        <liveChart:AxisSection.Fill>
+                                            <SolidColorBrush Opacity="0.4" Color="#badc58" />
+                                        </liveChart:AxisSection.Fill>
+                                    </liveChart:AxisSection>
+                                    <liveChart:AxisSection Value="67" SectionWidth="13" >
+                                        <liveChart:AxisSection.Fill>
+                                            <SolidColorBrush Opacity="0.4" Color="#FF970D" />
+                                        </liveChart:AxisSection.Fill>
+                                    </liveChart:AxisSection>
+                                    <liveChart:AxisSection Value="80" SectionWidth="20">
+                                        <liveChart:AxisSection.Fill>
+                                            <SolidColorBrush Opacity="0.4" Color="#A4442B" />
+                                        </liveChart:AxisSection.Fill>
+                                    </liveChart:AxisSection>
+                                </liveChart:Axis.Sections>
                             </liveChart:Axis>
                         </liveChart:CartesianChart.AxisY>
                     </liveChart:CartesianChart>
