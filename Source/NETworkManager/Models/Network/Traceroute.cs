@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DnsClient;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace NETworkManager.Models.Network
     public class Traceroute
     {
         #region Variables
+        private LookupClient DnsLookupClient = new LookupClient();
+
         public int Timeout = 4000;
         public byte[] Buffer = new byte[32];
         public int MaximumHops = 30;
@@ -49,7 +52,7 @@ namespace NETworkManager.Models.Network
         #region Methods
         public void TraceAsync(IPAddress ipAddress, CancellationToken cancellationToken)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 for (var i = 1; i < MaximumHops + 1; i++)
                 {
@@ -69,7 +72,7 @@ namespace NETworkManager.Models.Network
                             {
                                 stopwatch.Start();
 
-                                pingReply = ping.Send(ipAddress, Timeout, Buffer, new System.Net.NetworkInformation.PingOptions { Ttl = i1, DontFragment = DontFragement });
+                                pingReply = ping.Send(ipAddress, Timeout, Buffer, new PingOptions { Ttl = i1, DontFragment = DontFragement });
 
                                 stopwatch.Stop();
                             }
@@ -83,14 +86,20 @@ namespace NETworkManager.Models.Network
 
                     var ipAddressHop = tasks.FirstOrDefault(x => x.Result.Item1 != null)?.Result.Item1.Address;
 
+                   // Resolve Hostname
                     var hostname = string.Empty;
 
-                    try
+                    if (ResolveHostname && ipAddressHop != null)
                     {
-                        if (ResolveHostname && ipAddressHop != null)
-                            hostname = Dns.GetHostEntry(ipAddressHop).HostName;
+                        try
+                        {
+                            var answer = await DnsLookupClient.GetHostNameAsync(ipAddressHop);
+
+                            if (!string.IsNullOrEmpty(answer))
+                                hostname = answer;
+                        }
+                        catch { } // Couldn't resolve hostname
                     }
-                    catch (SocketException) { } // Couldn't resolve hostname
 
                     OnHopReceived(new TracerouteHopReceivedArgs(i, tasks[0].Result.Item2, tasks[1].Result.Item2, tasks[2].Result.Item2, ipAddressHop, hostname, tasks[0].Result.Item1.Status, tasks[1].Result.Item1.Status, tasks[2].Result.Item1.Status));
 

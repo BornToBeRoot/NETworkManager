@@ -13,13 +13,13 @@ namespace NETworkManager.Utilities
         /// <summary>
         /// Resolve hostname and ip address, if only an ip or a hostname was passed
         /// </summary>
-        /// <param name="host">example.com</param>
+        /// <param name="hostname">example.com</param>
         /// <param name="preferIPv4">true</param>
-        /// <returns></returns>
-        public async static Task<Tuple<string, IPAddress>> ResolveHost(string host, bool preferIPv4 = true)
+        /// <returns>Item1: Hostname, Item2: IPAddress</returns>
+        public async static Task<Tuple<string, IPAddress>> ResolveHost(string hostname, bool preferIPv4 = true)
         {
             // Try to parse the string into an IP-Address
-            var hostIsIP = IPAddress.TryParse(host, out var ipAddress);
+            var hostIsIP = IPAddress.TryParse(hostname, out var ipAddress);
 
             if (!hostIsIP) // Lookup
             {
@@ -27,10 +27,10 @@ namespace NETworkManager.Utilities
                 {
 
                     // Try to resolve the hostname
-                    var ipHostEntrys = await DnsLookupClient.GetHostEntryAsync(host);
+                    var ipHostEntrys = await DnsLookupClient.GetHostEntryAsync(hostname);
 
                     if (ipHostEntrys.AddressList.Length == 0)
-                        return new Tuple<string, IPAddress>(host, null);
+                        return new Tuple<string, IPAddress>(hostname, null);
 
                     foreach (var ip in ipHostEntrys.AddressList)
                     {
@@ -55,17 +55,17 @@ namespace NETworkManager.Utilities
                 }
                 catch // This will catch DNS resolve errors
                 {
-                    return new Tuple<string, IPAddress>(host, null);
+                    return new Tuple<string, IPAddress>(hostname, null);
                 }
             }
             else // Reverse lookup
             {
                 try
                 {
-                    var hostname = await DnsLookupClient.GetHostNameAsync(ipAddress);
+                    var answer = await DnsLookupClient.GetHostNameAsync(ipAddress);
 
-                    if (!string.IsNullOrEmpty(hostname))
-                        host = hostname;
+                    if (!string.IsNullOrEmpty(answer))
+                        hostname = answer;
                 }
                 catch
                 {
@@ -73,7 +73,7 @@ namespace NETworkManager.Utilities
                 }
             }
 
-            return new Tuple<string, IPAddress>(host, ipAddress);
+            return new Tuple<string, IPAddress>(hostname, ipAddress);
         }
     }
 }
