@@ -367,14 +367,32 @@ namespace NETworkManager
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
         }
-               
+
         private void LoadApplicationList()
         {
             isApplicationListLoading = true;
 
-            // Need to add items here... if in SettingsInfo/Constructor --> same item will appear multiple times...
+            // Create a new list if empty
             if (SettingsManager.Current.General_ApplicationList.Count == 0)
+            {
                 SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationViewInfo>(ApplicationViewManager.GetList());
+            }
+            else // Check for missing applications and add them
+            {
+                foreach (ApplicationViewInfo info in ApplicationViewManager.GetList())
+                {
+                    bool isInList = false;
+
+                    foreach (ApplicationViewInfo info2 in SettingsManager.Current.General_ApplicationList)
+                    {
+                        if (info.Name == info2.Name)
+                            isInList = true;
+                    }
+
+                    if (!isInList)
+                        SettingsManager.Current.General_ApplicationList.Add(info);
+                }
+            }
 
             Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
 
@@ -391,8 +409,8 @@ namespace NETworkManager
 
                 var search = regex.Replace(Search, "");
 
-                // Search by TranslatedName and Name
-                return info.IsVisible && (regex.Replace(ApplicationViewManager.GetTranslatedNameByName(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
+                    // Search by TranslatedName and Name
+                    return info.IsVisible && (regex.Replace(ApplicationViewManager.GetTranslatedNameByName(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
             };
 
             SettingsManager.Current.General_ApplicationList.CollectionChanged += (sender, args) => Applications.Refresh();
@@ -1139,7 +1157,7 @@ namespace NETworkManager
         private void OpenDocumentationAction()
         {
             // ToDo: if(settingsView) --> Show help for settings ?!
-            DocumentationManager.OpenDocumentation(DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));           
+            DocumentationManager.OpenDocumentation(DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
         }
 
         public ICommand OpenApplicationListCommand
