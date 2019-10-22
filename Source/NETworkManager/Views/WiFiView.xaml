@@ -453,7 +453,7 @@
                             <!--<liveChart:DefaultTooltip Background="Transparent"  />-->
                         </liveChart:CartesianChart.DataTooltip>
                         <liveChart:CartesianChart.AxisX>
-                            <liveChart:Axis Title="{x:Static localization:Strings.Channel}" Labels="{Binding Radio1Labels}">
+                            <liveChart:Axis Title="{x:Static localization:Strings.Channel}" MinValue="0" MaxValue="16" Labels="{Binding Radio1Labels}">
                                 <liveChart:Axis.Separator>
                                     <liveChart:Separator Step="1" StrokeThickness="0" />
                                 </liveChart:Axis.Separator>
@@ -496,7 +496,7 @@
                             <!--<liveChart:DefaultTooltip Background="Transparent"  />-->
                         </liveChart:CartesianChart.DataTooltip>
                         <liveChart:CartesianChart.AxisX>
-                            <liveChart:Axis Title="{x:Static localization:Strings.Channel}" Labels="{Binding Radio2Labels}">
+                            <liveChart:Axis Title="{x:Static localization:Strings.Channel}" MinValue="0" MaxValue="28" Labels="{Binding Radio2Labels}">
                                 <liveChart:Axis.Separator>
                                     <liveChart:Separator Step="1" StrokeThickness="0" />
                                 </liveChart:Axis.Separator>
