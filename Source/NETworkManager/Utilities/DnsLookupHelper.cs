@@ -1,6 +1,7 @@
 ﻿using DnsClient;
 using System;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -25,6 +26,14 @@ namespace NETworkManager.Utilities
             {
                 try
                 {
+                    // Append dns suffix to hostname
+                    if (hostname.IndexOf(".", StringComparison.OrdinalIgnoreCase) == -1)
+                    {
+                        var dnsSuffix = IPGlobalProperties.GetIPGlobalProperties().DomainName;
+
+                        if (!string.IsNullOrEmpty(dnsSuffix))
+                            hostname += $".{dnsSuffix}";
+                    }
 
                     // Try to resolve the hostname
                     var ipHostEntrys = await DnsLookupClient.GetHostEntryAsync(hostname);

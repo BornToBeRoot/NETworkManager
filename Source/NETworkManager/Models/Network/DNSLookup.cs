@@ -75,21 +75,18 @@ namespace NETworkManager.Models.Network
                 // Foreach host
                 foreach (var host in hosts)
                 {
-                    // Default
-                    var name = host;
-
-                    var dnsSuffix = string.Empty;
-
-                    if (name.IndexOf(".", StringComparison.OrdinalIgnoreCase) == -1)
-                    {
-                        if (AddDNSSuffix)
-                            dnsSuffix = UseCustomDNSSuffix ? CustomDNSSuffix : IPGlobalProperties.GetIPGlobalProperties().DomainName;
-                    }
+                    var query = host;
 
                     // Append dns suffix to hostname
-                    if (!string.IsNullOrEmpty(dnsSuffix))
-                        name += $".{dnsSuffix}";
-
+                    if (QueryType != QueryType.PTR && AddDNSSuffix && query.IndexOf(".", StringComparison.OrdinalIgnoreCase) == -1)
+                    {
+                        var dnsSuffix = UseCustomDNSSuffix ? CustomDNSSuffix : IPGlobalProperties.GetIPGlobalProperties().DomainName;
+                                                
+                        if (!string.IsNullOrEmpty(dnsSuffix))
+                            query += $".{dnsSuffix}";
+                    }                    
+                    
+                    // Foreach dns server
                     Parallel.ForEach(GetDnsServer(), dnsServer =>
                     {
                         LookupClient dnsLookupClient = new LookupClient(dnsServer);
@@ -102,7 +99,7 @@ namespace NETworkManager.Models.Network
                         try
                         {
                             // PTR vs A, AAAA, CNAME etc.
-                            var dnsResponse = QueryType == QueryType.PTR ? dnsLookupClient.QueryReverse(IPAddress.Parse(host)) : dnsLookupClient.Query(host, QueryType, QueryClass);
+                            var dnsResponse = QueryType == QueryType.PTR ? dnsLookupClient.QueryReverse(IPAddress.Parse(query)) : dnsLookupClient.Query(query, QueryType, QueryClass);
 
                             // If there was an error... return
                             if (dnsResponse.HasError)
@@ -114,7 +111,7 @@ namespace NETworkManager.Models.Network
                             // Process the results...
                             ProcessDnsQueryResponse(dnsResponse);
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             OnLookupError(new DNSLookupErrorArgs(ex.Message, dnsServer));
                         }
