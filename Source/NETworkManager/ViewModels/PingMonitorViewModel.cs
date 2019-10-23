@@ -10,6 +10,7 @@ using NETworkManager.Utilities;
 using System.Linq;
 using System.Collections.ObjectModel;
 using NETworkManager.Views;
+using System.Net;
 
 namespace NETworkManager.ViewModels
 {
@@ -322,15 +323,26 @@ namespace NETworkManager.ViewModels
 
             _hostId++;
 
-            var dnsLookup = await DnsLookupHelper.ResolveHost(host);
+            string hostname = string.Empty;
 
-            if (dnsLookup.Item2 != null)
+            // Resolve hostname
+            if (IPAddress.TryParse(host, out IPAddress ipAddress))
             {
-                Hosts.Add(new PingMonitorHostView(_hostId, RemoveHost, new PingMonitorOptions(dnsLookup.Item1, dnsLookup.Item2)));
+                hostname = await DnsLookupHelper.ResolveHostname(ipAddress);
+            }
+            else // Resolve ip address
+            {
+                hostname = host;
+                ipAddress = await DnsLookupHelper.ResolveIPAddress(host);
+            }
+                       
+            if (ipAddress != null)
+            {
+                Hosts.Add(new PingMonitorHostView(_hostId, RemoveHost, new PingMonitorOptions(hostname, ipAddress)));
             }
             else
             {
-                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, host);
+                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveIPAddressFor, host);
                 DisplayStatusMessage = true;
             }
 

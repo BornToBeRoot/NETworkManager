@@ -1222,11 +1222,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not resolve hostname for ip address &quot;{0}&quot;!.
+        ///   Looks up a localized string similar to Could not resolve ip address for: &quot;{0}&quot;.
         /// </summary>
-        public static string CouldNotResolveHostnameForXXXMessage {
+        public static string CouldNotResolveIPAddressFor {
             get {
-                return ResourceManager.GetString("CouldNotResolveHostnameForXXXMessage", resourceCulture);
+                return ResourceManager.GetString("CouldNotResolveIPAddressFor", resourceCulture);
             }
         }
         

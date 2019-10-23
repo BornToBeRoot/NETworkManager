@@ -2105,9 +2105,6 @@ URL: https://twitter.com/BornToBeRoot_DE</value>
   <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Could not get public ip address via WebRequest (http/https) from "{0}"! Check your network connection (firewall, proxy, etc.).</value>
   </data>
-  <data name="CouldNotResolveHostnameForXXXMessage" xml:space="preserve">
-    <value>Could not resolve hostname for ip address "{0}"!</value>
-  </data>
   <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
     <value>No A dns records resolved for "{0}"!</value>
   </data>
@@ -2467,5 +2464,8 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   </data>
   <data name="Resume" xml:space="preserve">
     <value>Resume</value>
+  </data>
+  <data name="CouldNotResolveIPAddressFor" xml:space="preserve">
+    <value>Could not resolve ip address for: "{0}"</value>
   </data>
 </root>
