@@ -573,7 +573,7 @@ namespace NETworkManager.ViewModels
             {
                 HostConnectionState = ConnectionState.Warning;
                 AddToHostDetails(ConnectionState.Warning,
-                    string.Format(Resources.Localization.Strings.CouldNotResolveHostnameForXXXMessage, HostIPAddress) +
+                    string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, HostIPAddress) +
                     " " + Resources.Localization.Strings
                         .CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
             }
@@ -661,7 +661,7 @@ namespace NETworkManager.ViewModels
             {
                 GatewayConnectionState = ConnectionState.Warning;
                 AddToGatewayDetails(ConnectionState.Warning,
-                    string.Format(Resources.Localization.Strings.CouldNotResolveHostnameForXXXMessage,
+                    string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor,
                         GatewayIPAddress) + " " + Resources.Localization.Strings
                         .CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
             }
@@ -845,7 +845,7 @@ namespace NETworkManager.ViewModels
                 catch (SocketException)
                 {
                     InternetConnectionState = ConnectionState.Warning;
-                    AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.CouldNotResolveHostnameForXXXMessage, PublicIPAddress) + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
+                    AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, PublicIPAddress) + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
 
                     IsInternetCheckRunning = false;
 
