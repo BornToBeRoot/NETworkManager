@@ -410,11 +410,11 @@ namespace NETworkManager.ViewModels
             }
 
             if (ipAddress == null)
-            {
+            {                
+                TracerouteFinished();
+
                 StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveIPAddressFor, Host);
                 DisplayStatusMessage = true;
-
-                TracerouteFinished();
 
                 return;
             }

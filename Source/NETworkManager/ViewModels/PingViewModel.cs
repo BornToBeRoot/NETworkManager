@@ -467,11 +467,11 @@ namespace NETworkManager.ViewModels
 
             if (ipAddress == null)
             {
-                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveIPAddressFor, Host);
-                DisplayStatusMessage = true;
-
                 PingFinished();
 
+                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveIPAddressFor, Host);
+                DisplayStatusMessage = true;
+                
                 return;
             }
 

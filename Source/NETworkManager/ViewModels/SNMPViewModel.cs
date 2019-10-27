@@ -537,44 +537,16 @@ namespace NETworkManager.ViewModels
             }
 
             // Try to parse the string into an IP-Address
-            IPAddress.TryParse(Host, out var ipAddress);
-
-            try
+            if (!IPAddress.TryParse(Host, out var ipAddress))
             {
-                // Try to resolve the hostname
-                if (ipAddress == null)
-                {
-                    var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
-
-                    foreach (var ipAddr in ipHostEntrys.AddressList)
-                    {
-                        switch (ipAddr.AddressFamily)
-                        {
-                            case AddressFamily.InterNetwork when SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4:
-                                ipAddress = ipAddr;
-                                break;
-                            case AddressFamily.InterNetworkV6 when !SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4:
-                                ipAddress = ipAddr;
-                                break;
-                        }
-                    }
-
-                    // Fallback --> If we could not resolve our prefered ip protocol for the hostname
-                    if (ipAddress == null)
-                    {
-                        foreach (var ipAddr in ipHostEntrys.AddressList)
-                        {
-                            ipAddress = ipAddr;
-                            break;
-                        }
-                    }
-                }
+                ipAddress = await DnsLookupHelper.ResolveIPAddress(Host);
             }
-            catch (SocketException) // This will catch DNS resolve errors
-            {
+
+            if (ipAddress == null)
+            {                
                 Finished();
 
-                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
+                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveIPAddressFor, Host);
                 DisplayStatusMessage = true;
 
                 return;
