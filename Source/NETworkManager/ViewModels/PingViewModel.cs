@@ -451,57 +451,35 @@ namespace NETworkManager.ViewModels
                     tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Host;
                 }
             }
+            
+            string hostname = string.Empty;
 
-            // Try to parse the string into an IP-Address
-            var hostIsIP = IPAddress.TryParse(Host, out var ipAddress);
-
-            if (!hostIsIP)
+            // Resolve hostname
+            if (IPAddress.TryParse(Host, out IPAddress ipAddress))
             {
-                try
-                {
-                    // Try to resolve the hostname
-                    var ipHostEntrys = await Dns.GetHostEntryAsync(Host);
-                    
-                    foreach (var ip in ipHostEntrys.AddressList)
-                    {
-                        switch (ip.AddressFamily)
-                        {
-                            case AddressFamily.InterNetwork when SettingsManager.Current.Ping_ResolveHostnamePreferIPv4:
-                                ipAddress = ip;
-                                break;
-                            case AddressFamily.InterNetworkV6 when !SettingsManager.Current.Ping_ResolveHostnamePreferIPv4:
-                                ipAddress = ip;
-                                break;
-                        }
-                    }
+                hostname = await DnsLookupHelper.ResolveHostname(ipAddress);
+            }
+            else // Resolve ip address
+            {
+                hostname = Host;
+                ipAddress = await DnsLookupHelper.ResolveIPAddress(Host);
+            }
 
-                    // Fallback --> If we could not resolve our prefered ip protocol for the hostname
-                    foreach (var ip in ipHostEntrys.AddressList)
-                    {
-                        ipAddress = ip;
-                        break;
-                    }
-                }
-                catch (SocketException) // This will catch DNS resolve errors
-                {
-                    if (CancelPing)
-                        UserHasCanceled();
-                    else
-                        PingFinished();
+            if (ipAddress == null)
+            {
+                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveIPAddressFor, Host);
+                DisplayStatusMessage = true;
 
-                    StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
-                    DisplayStatusMessage = true;
+                PingFinished();
 
-                    return;
-                }
+                return;
             }
 
             // Add the hostname or ip address to the history
             AddHostToHistory(Host);
 
             _cancellationTokenSource = new CancellationTokenSource();
-
-
+            
             var ping = new Ping
             {                
                 Timeout = SettingsManager.Current.Ping_Timeout,
@@ -510,7 +488,7 @@ namespace NETworkManager.ViewModels
                 DontFragment = SettingsManager.Current.Ping_DontFragment,
                 WaitTime = SettingsManager.Current.Ping_WaitTime,
                 ExceptionCancelCount = SettingsManager.Current.Ping_ExceptionCancelCount,
-                Hostname = hostIsIP ? string.Empty : Host
+                Hostname = hostname
             };
 
             ping.PingReceived += Ping_PingReceived;

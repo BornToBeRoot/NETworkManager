@@ -256,7 +256,7 @@ namespace NETworkManager.ViewModels
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
 
             _isLoading = false;
-        } 
+        }
 
         public void OnLoaded()
         {
@@ -404,39 +404,23 @@ namespace NETworkManager.ViewModels
             _cancellationTokenSource = new CancellationTokenSource();
 
             // Try to parse the string into an IP-Address
-            IPAddress.TryParse(Host, out var ipAddress);
+            if (!IPAddress.TryParse(Host, out var ipAddress))
+            {
+                ipAddress = await DnsLookupHelper.ResolveIPAddress(Host);
+            }
+
+            if (ipAddress == null)
+            {
+                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveIPAddressFor, Host);
+                DisplayStatusMessage = true;
+
+                TracerouteFinished();
+
+                return;
+            }
 
             try
             {
-                // Try to resolve the hostname
-                if (ipAddress == null)
-                {
-                    var ipHostEntries = await Dns.GetHostEntryAsync(Host);
-
-                    foreach (var ipAddr in ipHostEntries.AddressList)
-                    {
-                        switch (ipAddr.AddressFamily)
-                        {
-                            case AddressFamily.InterNetwork when SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4:
-                                ipAddress = ipAddr;
-                                break;
-                            case AddressFamily.InterNetworkV6 when SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4:
-                                ipAddress = ipAddr;
-                                break;
-                        }
-                    }
-
-                    // Fallback --> If we could not resolve our prefered ip protocol
-                    if (ipAddress == null)
-                    {
-                        foreach (var ip in ipHostEntries.AddressList)
-                        {
-                            ipAddress = ip;
-                            break;
-                        }
-                    }
-                }
-
                 var traceroute = new Traceroute
                 {
                     Timeout = SettingsManager.Current.Traceroute_Timeout,
@@ -456,13 +440,6 @@ namespace NETworkManager.ViewModels
                 // Add the host to history
                 AddHostToHistory(Host);
             }
-            catch (SocketException) // This will catch DNS resolve errors
-            {
-                TracerouteFinished();
-
-                StatusMessage = string.Format( Resources.Localization.Strings.CouldNotResolveHostnameFor, Host);
-                DisplayStatusMessage = true;
-            }
             catch (Exception ex) // This will catch any exception
             {
                 TracerouteFinished();
@@ -472,8 +449,17 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private void UserHasCanceled()
+        {
+            CancelTrace = false;
+
+            TracerouteFinished();
+        }
+
         private void TracerouteFinished()
         {
+            IsTraceRunning = false;
+
             // Stop timer and stopwatch
             _stopwatch.Stop();
             _dispatcherTimer.Stop();
@@ -481,10 +467,7 @@ namespace NETworkManager.ViewModels
             Duration = _stopwatch.Elapsed;
             EndTime = DateTime.Now;
 
-            _stopwatch.Reset();
-
-            CancelTrace = false;
-            IsTraceRunning = false;
+            _stopwatch.Reset();          
         }
 
         private async void Export()
@@ -566,7 +549,7 @@ namespace NETworkManager.ViewModels
 
         private void Traceroute_UserHasCanceled(object sender, EventArgs e)
         {
-            TracerouteFinished();
+            UserHasCanceled();
 
             StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
