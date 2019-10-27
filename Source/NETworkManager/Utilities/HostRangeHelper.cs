@@ -138,7 +138,7 @@ namespace NETworkManager.Utilities
 
             var exceptions = new ConcurrentQueue<HostNotFoundException>();
 
-            Parallel.ForEach(ipRanges, new ParallelOptions { CancellationToken = cancellationToken }, ipHostOrRange =>
+            Parallel.ForEach(ipRanges, new ParallelOptions { CancellationToken = cancellationToken }, async ipHostOrRange =>
             {
                 // like 192.168.0.1, 192.168.0.0/24, 192.168.0.0/255.255.255.0, 192.168.0.0 - 192.168.0.100, 192.168.[50-100].1
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSubnetmaskRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
@@ -147,27 +147,20 @@ namespace NETworkManager.Utilities
                 } // like example.com, example.com/24 or example.com/255.255.255.128
                 else if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex))
                 {
-                    IPHostEntry ipHostEntrys;
-
                     var hostAndSubnet = ipHostOrRange.Split('/');
 
-                    try
-                    {
-                        ipHostEntrys = Dns.GetHostEntry(hostAndSubnet[0]);
-                    }
-                    catch (SocketException)
+                    // Wait for task inside a Parallel.Foreach
+                    var dnsResovlerTask = DnsLookupHelper.ResolveIPAddress(hostAndSubnet[0]);
+
+                    Task.WaitAll(dnsResovlerTask);
+
+                    if (dnsResovlerTask.Result == null || dnsResovlerTask.Result.AddressFamily != AddressFamily.InterNetwork)
                     {
                         exceptions.Enqueue(new HostNotFoundException(hostAndSubnet[0]));
                         return;
                     }
 
-                    var ipAddress = ipHostEntrys.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
-
-                    if (ipAddress == null)
-                        exceptions.Enqueue(new HostNotFoundException(hostAndSubnet[0]));
-
-                    if (ipAddress != null)
-                        bag.Add(ipHostOrRange.Contains('/') ? $"{ipAddress.ToString()}/{hostAndSubnet[1]}" : ipAddress.ToString());
+                    bag.Add(ipHostOrRange.Contains('/') ? $"{dnsResovlerTask.Result}/{hostAndSubnet[1]}" : $"{dnsResovlerTask.Result}");
                 }
             });
 
