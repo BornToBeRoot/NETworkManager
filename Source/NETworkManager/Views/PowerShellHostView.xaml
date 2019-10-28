@@ -125,7 +125,7 @@
                                                             <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                                    <Setter Property="Fill" Value="Red" />
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
@@ -177,7 +177,7 @@
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Foreground" Value="Red" />
+                                                    <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
