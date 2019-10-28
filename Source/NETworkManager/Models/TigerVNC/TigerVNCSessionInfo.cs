@@ -1,6 +1,4 @@
-﻿using NETworkManager.Models.Settings;
-
-namespace NETworkManager.Models.TigerVNC
+﻿namespace NETworkManager.Models.TigerVNC
 {
     public class TigerVNCSessionInfo
     {
