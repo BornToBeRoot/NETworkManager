@@ -31,7 +31,7 @@
 <div align="center"> 
   <p>      
     :package: Download:
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre001/NETworkManager_v2.0.0-pre001_Portable.zip">Portable</a> <!--, -->
+      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre002/NETworkManager_v2.0.0-pre002_Portable.zip">Portable</a> <!--, -->
       <!-- <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.11.0.0/NETworkManager_v1.11.0.0_Setup.msi">MSI</a> or -->
       <!-- <a href="https://chocolatey.org/packages/networkmanager">Chocolatey</a> -->
   </p>
