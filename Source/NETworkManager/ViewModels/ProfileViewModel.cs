@@ -83,22 +83,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private Guid _credentialID;
-        public Guid CredentialID
-        {
-            get => _credentialID;
-            set
-            {
-                if (value == _credentialID)
-                    return;
-
-                _credentialID = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ICollectionView Credentials { get; }
-
         private string _group;
         public string Group
         {
@@ -1949,20 +1933,6 @@ namespace NETworkManager.ViewModels
                 Name += " - " + Resources.Localization.Strings.CopyNoun;
 
             Host = profileInfo.Host;
-
-            if (CredentialManager.IsLoaded)
-            {
-                Credentials = CollectionViewSource.GetDefaultView(CredentialManager.CredentialInfoList);
-            }
-            else
-            {
-                ShowUnlockCredentialsHint = true;
-
-                Credentials = profileInfo.CredentialID == Guid.Empty ? new CollectionViewSource { Source = new List<CredentialInfo>() }.View : new CollectionViewSource { Source = new List<CredentialInfo> { new CredentialInfo(profileInfo.CredentialID) } }.View;
-            }
-
-            CredentialID = profileInfo.CredentialID;
-
             Group = string.IsNullOrEmpty(profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Resources.Localization.Strings.Default) : profileInfo.Group;
             Tags = profileInfo.Tags;
 
@@ -2162,13 +2132,6 @@ namespace NETworkManager.ViewModels
             }
 
             IsResolveHostnameRunning = false;
-        }
-
-        public ICommand UnselectCredentialCommand => new RelayCommand(p => UnselectCredentialAction());
-
-        private void UnselectCredentialAction()
-        {
-            CredentialID = Guid.Empty;
         }
         #endregion
 

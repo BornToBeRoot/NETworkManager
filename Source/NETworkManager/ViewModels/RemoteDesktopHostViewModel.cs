@@ -373,7 +373,7 @@ namespace NETworkManager.ViewModels
 
             var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
             {
-              await  _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
                 // Add host to history
@@ -388,21 +388,8 @@ namespace NETworkManager.ViewModels
                 {
                     sessionInfo.CustomCredentials = true;
 
-                    if (instance.CustomCredentials)
-                    {
-                        sessionInfo.Username = instance.Username;
-                        sessionInfo.Password = instance.Password;
-                    }
-                    else
-                    {
-                        if (instance.CredentialID != Guid.Empty)
-                        {
-                            var credentialInfo = CredentialManager.GetCredentialByID(instance.CredentialID);
-
-                            sessionInfo.Username = credentialInfo.Username;
-                            sessionInfo.Password = credentialInfo.Password;
-                        }
-                    }
+                    sessionInfo.Username = instance.Username;
+                    sessionInfo.Password = instance.Password;
                 }
 
                 Connect(sessionInfo);
@@ -425,90 +412,13 @@ namespace NETworkManager.ViewModels
         }
 
         // Connect via Profile
-        private async void ConnectProfile()
+        private void ConnectProfile()
         {
             var profileInfo = SelectedProfile;
 
             var sessionInfo = RemoteDesktop.CreateSessionInfo(profileInfo);
 
-            if (profileInfo.CredentialID != Guid.Empty)
-            {
-                // Credentials need to be unlocked first
-                if (!CredentialManager.IsLoaded)
-                {
-                    var customDialog = new CustomDialog
-                    {
-                        Title = Resources.Localization.Strings.MasterPassword
-                    };
-
-                    var credentialsMasterPasswordViewModel = new CredentialsMasterPasswordViewModel(async instance =>
-                    {
-                        await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                        ConfigurationManager.Current.FixAirspace = false;
-
-                        if (CredentialManager.Load(instance.Password))
-                        {
-                            var credentialInfo = CredentialManager.GetCredentialByID(profileInfo.CredentialID);
-
-                            if (credentialInfo == null)
-                            {
-                                ConfigurationManager.Current.FixAirspace = true;
-                                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.CredentialNotFound, Resources.Localization.Strings.CredentialNotFoundMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-                                ConfigurationManager.Current.FixAirspace = false;
-
-                                return;
-                            }
-
-                            sessionInfo.CustomCredentials = true;
-                            sessionInfo.Username = credentialInfo.Username;
-                            sessionInfo.Password = credentialInfo.Password;
-
-                            Connect(sessionInfo, profileInfo.Name);
-                        }
-                        else
-                        {
-                            ConfigurationManager.Current.FixAirspace = true;
-                            await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.WrongPassword, Resources.Localization.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-                            ConfigurationManager.Current.FixAirspace = false;
-                        }
-                    }, instance =>
-                    {
-                        _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                        ConfigurationManager.Current.FixAirspace = false;
-                    });
-
-                    customDialog.Content = new CredentialsMasterPasswordDialog
-                    {
-                        DataContext = credentialsMasterPasswordViewModel
-                    };
-
-                    ConfigurationManager.Current.FixAirspace = true;
-                    await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-                }
-                else // already unlocked
-                {
-                    var credentialInfo = CredentialManager.GetCredentialByID(profileInfo.CredentialID);
-
-                    if (credentialInfo == null)
-                    {
-                        ConfigurationManager.Current.FixAirspace = true;
-                        await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.CredentialNotFound, Resources.Localization.Strings.CredentialNotFoundMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-                        ConfigurationManager.Current.FixAirspace = false;
-
-                        return;
-                    }
-
-                    sessionInfo.CustomCredentials = true;
-                    sessionInfo.Username = credentialInfo.Username;
-                    sessionInfo.Password = credentialInfo.Password;
-
-                    Connect(sessionInfo, profileInfo.Name);
-                }
-            }
-            else // Connect without credentials
-            {
-                Connect(sessionInfo, profileInfo.Name);
-            }
+            Connect(sessionInfo, profileInfo.Name);
         }
 
         // Connect via Profile with Credentials
@@ -531,28 +441,14 @@ namespace NETworkManager.ViewModels
                 if (instance.UseCredentials)
                 {
                     sessionInfo.CustomCredentials = true;
-
-                    if (instance.CustomCredentials)
-                    {
-                        sessionInfo.Username = instance.Username;
-                        sessionInfo.Password = instance.Password;
-                    }
-                    else
-                    {
-                        if (instance.CredentialID != Guid.Empty)
-                        {
-                            var credentialInfo = CredentialManager.GetCredentialByID(instance.CredentialID);
-
-                            sessionInfo.Username = credentialInfo.Username;
-                            sessionInfo.Password = credentialInfo.Password;
-                        }
-                    }
+                    sessionInfo.Username = instance.Username;
+                    sessionInfo.Password = instance.Password;
                 }
 
                 Connect(sessionInfo, instance.Name);
             }, async instance =>
             {
-              await  _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
             }, true)
             {

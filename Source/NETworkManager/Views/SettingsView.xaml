@@ -163,9 +163,6 @@
             <TabItem Header="{x:Static localization:Strings.Profiles}">
                 <views:ProfilesView x:Name="ProfilesView" Margin="10" />
             </TabItem>
-            <TabItem Header="{x:Static localization:Strings.Credentials}">
-                <views:CredentialsView Margin="10" />
-            </TabItem>
             <!-- About -->
             <TabItem Header="{x:Static localization:Strings.About}">
                 <views:AboutView Margin="10" />

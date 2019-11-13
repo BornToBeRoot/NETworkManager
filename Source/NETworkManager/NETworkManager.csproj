@@ -236,6 +236,7 @@
     <Compile Include="Models\EventSystem\EventSystemRedirectDataApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystem.cs" />
     <Compile Include="Utilities\DnsLookupHelper.cs" />
+    <Compile Include="Models\Cryptographie\FileCryptoManager.cs" />
     <Compile Include="Utilities\FileSizeConverter.cs" />
     <Compile Include="Utilities\JsonIPAddressConverter.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
@@ -255,16 +256,12 @@
     <Compile Include="Models\Network\SNMP.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktop.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
-    <Compile Include="Models\Settings\CredentialInfoSerializable.cs" />
-    <Compile Include="Models\Settings\CredentialInfo.cs" />
-    <Compile Include="Models\Settings\CredentialManager.cs" />
     <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
     <Compile Include="Models\Update\Updater.cs" />
     <Compile Include="Validators\FilePathValidator.cs" />
     <Compile Include="Validators\DomainValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetmaskOrCIDRValidator.cs" />
-    <Compile Include="Validators\IsCredentialNameUnique.cs" />
-    <Compile Include="Validators\IsDNSServerNameUnique.cs" />
+    <Compile Include="Validators\IsDNSLookupDNSServersNameUnique.cs" />
     <Compile Include="Validators\NoSpacesValidator.cs" />
     <Compile Include="Validators\BaudValidator.cs" />
     <Compile Include="Validators\PrivacyAESValidator.cs" />
@@ -314,7 +311,6 @@
     <Compile Include="ViewModels\ARPTableViewModel.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
     <Compile Include="ViewModels\CredentialsMasterPasswordViewModel.cs" />
-    <Compile Include="ViewModels\CredentialViewModel.cs" />
     <Compile Include="ViewModels\CredentialsSetMasterPasswordViewModel.cs" />
     <Compile Include="ViewModels\ConfirmRemoveViewModel.cs" />
     <Compile Include="ViewModels\ARPTableAddEntryViewModel.cs" />
@@ -334,7 +330,6 @@
     <Compile Include="ViewModels\LookupOUILookupViewModel.cs" />
     <Compile Include="ViewModels\RemoteDesktopHostViewModel.cs" />
     <Compile Include="ViewModels\CommandLineHelpViewModel.cs" />
-    <Compile Include="ViewModels\CredentialsViewModel.cs" />
     <Compile Include="ViewModels\HTTPHeadersSettingsViewModel.cs" />
     <Compile Include="ViewModels\PuTTYSettingsViewModel.cs" />
     <Compile Include="ViewModels\SNMPSettingsViewModel.cs" />
@@ -471,9 +466,6 @@
     <Compile Include="Views\RemoteDesktopHostView.xaml.cs">
       <DependentUpon>RemoteDesktopHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CredentialDialog.xaml.cs">
-      <DependentUpon>CredentialDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\GroupDialog.xaml.cs">
       <DependentUpon>GroupDialog.xaml</DependentUpon>
     </Compile>
@@ -494,9 +486,6 @@
     </Compile>
     <Compile Include="Views\RemoteDesktopConnectDialog.xaml.cs">
       <DependentUpon>RemoteDesktopConnectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CredentialsView.xaml.cs">
-      <DependentUpon>CredentialsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HTTPHeadersSettingsView.xaml.cs">
       <DependentUpon>HTTPHeadersSettingsView.xaml</DependentUpon>
@@ -895,10 +884,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CredentialDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\GroupDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -926,10 +911,6 @@
     <Page Include="Views\RemoteDesktopConnectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CredentialsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\HTTPHeadersSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -1360,6 +1341,10 @@
     <PackageReference Include="Octokit">
       <Version>0.36.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\Notification\" />
+    <Folder Include="Models\Profile\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

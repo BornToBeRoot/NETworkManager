@@ -134,7 +134,6 @@ namespace NETworkManager.Models.Settings
             {
                 Name = instance.Name?.Trim(),
                 Host = instance.Host?.Trim(),
-                CredentialID = instance.CredentialID,
                 Group = instance.Group?.Trim(),
                 Tags = instance.Tags?.Trim(),
 

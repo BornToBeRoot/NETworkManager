@@ -191,8 +191,6 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
@@ -256,14 +254,8 @@
                                         <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                                     </Rectangle.Resources>
                                 </Rectangle>
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Credential}" />
-                                <ComboBox x:Name="ComboBoxCredential" Grid.Column="2" Grid.Row="4" SelectedValue="{Binding CredentialID}" DisplayMemberPath="Name" SelectedValuePath="ID" Style="{StaticResource DefaultComboBox}" ItemsSource="{Binding Credentials}">
-                                    <ComboBox.InputBindings>
-                                        <KeyBinding Command="{Binding UnselectCredentialCommand}" Key="Delete"/>
-                                    </ComboBox.InputBindings>
-                                </ComboBox>
-                                <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Group}" />
-                                <ComboBox x:Name="ComboBoxGroup" Grid.Column="2" Grid.Row="6" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}">
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Group}" />
+                                <ComboBox x:Name="ComboBoxGroup" Grid.Column="2" Grid.Row="4" Style="{StaticResource EditableComboBox}" ItemsSource="{Binding Groups}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}">
                                     <ComboBox.Text>
                                         <Binding Path="Group" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -272,13 +264,8 @@
                                         </Binding>
                                     </ComboBox.Text>
                                 </ComboBox>
-                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="4" ToolTip="{x:Static localization:Strings.HelpMessage_Credentials}" Visibility="{Binding ShowUnlockCredentialsHint, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
-                                    <Rectangle.Resources>
-                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
-                                    </Rectangle.Resources>
-                                </Rectangle>
-                                <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Tags}" />
-                                <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding Tags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleTags}"/>
+                                <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Tags}" />
+                                <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Tags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleTags}"/>
                                 <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="8" ToolTip="{x:Static localization:Strings.HelpMessage_Tags}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                                     <Rectangle.Resources>
                                         <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />

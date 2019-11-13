@@ -170,9 +170,6 @@ namespace NETworkManager
 
             if (ProfileManager.ProfilesChanged)
                 ProfileManager.Save();
-
-            if (CredentialManager.CredentialsChanged)
-                CredentialManager.Save();
         }
     }
 }
