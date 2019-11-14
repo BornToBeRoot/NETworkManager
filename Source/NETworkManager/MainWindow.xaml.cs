@@ -278,7 +278,7 @@ namespace NETworkManager
                 ConfigurationManager.Current.IsTransparencyEnabled = true;
             }
 
-            // NotifyIcon for Autostart
+            // NotifyIcon for autostart
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)
                 InitNotifyIcon();
 
@@ -286,7 +286,7 @@ namespace NETworkManager
             if (ConfigurationManager.Current.IsAdmin)
                 Title = $"[{NETworkManager.Resources.Localization.Strings.Administrator}] {Title}";
 
-            // Load Profiles
+            // Load profiles
             ProfileManager.Load();
 
             // Load settings

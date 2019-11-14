@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using NETworkManager.Controls;
 
 namespace NETworkManager.Models.Settings
 {
@@ -200,28 +199,6 @@ namespace NETworkManager.Models.Settings
             InitDefault();
 
             ForceRestart = true;
-        }
-
-        public static void Update(Version assemblyVersion, Version settingsVersion)
-        {
-            // Version is 0.0.0.0 on first run or settings reset --> skip updates 
-            if (settingsVersion > new Version("0.0.0.0"))
-            {
-                var reorderApplications = false;
-
-                // Features added in 2.0.0.0
-                if (settingsVersion < new Version("2.0.0.0"))
-                {
-
-                }
-
-                // Reorder application view
-                if (reorderApplications)
-                    Current.General_ApplicationList = new ObservableSetCollection<ApplicationViewInfo>(Current.General_ApplicationList.OrderBy(info => info.Name));
-            }
-
-            // Update settings version
-            Current.SettingsVersion = assemblyVersion.ToString();
         }
     }
 }

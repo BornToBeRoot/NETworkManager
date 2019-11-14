@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
-using System.Xml;
 using System.Xml.Serialization;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Enum;
@@ -435,34 +434,6 @@ namespace NETworkManager.Models.Profile
 
             viewModel.OnProfileDialogOpen();
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
-        }
-        #endregion
-
-        #region Upgrade
-        public static void Upgrade()
-        {
-            string filePath = GetProfilesFilePath();
-
-            if (!File.Exists(filePath))
-                return;
-
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(filePath);
-
-            /* Version 1.10.1.0 */
-
-            // RemoteDesktop_KeyboardHookMode has changed from integer to enum
-            foreach (XmlNode x in xmlDocument.SelectNodes(@"/ArrayOfProfileInfo/ProfileInfo/RemoteDesktop_KeyboardHookMode"))
-            {
-                if (x.InnerText == "0")
-                    x.InnerText = "OnThisComputer";
-                else if (x.InnerText == "1")
-                    x.InnerText = "OnTheRemoteComputer";
-                else if (x.InnerText == "2")
-                    x.InnerText = "OnlyWhenUsingTheFullScreen";
-            }
-
-            xmlDocument.Save(filePath);
         }
         #endregion
     }

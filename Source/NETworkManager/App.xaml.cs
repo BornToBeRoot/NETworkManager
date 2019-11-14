@@ -11,6 +11,19 @@ using NETworkManager.Models.Profile;
 
 namespace NETworkManager
 {
+    /* 
+     * Class: App
+     * 1) Get command line args
+     * 2) Detect current configuration
+     * 3) Get assembly info
+     * 4) Load settings
+     * 5) Load localization / language
+     * 
+     * Class: MainWindow
+     * 6) Load appearance
+     * 7) Load profiles                 
+     */
+
     public partial class App
     {
         // Single instance identifier
@@ -46,49 +59,23 @@ namespace NETworkManager
             // Get assembly informations   
             AssemblyManager.Load();
 
-            bool profileUpdateRequired = false;
+            // Update integrated settings %LocalAppData%\NETworkManager\NETworkManager_GUID (custom settings path)
+            if (Settings.Default.UpgradeRequired)
+            {
+                Settings.Default.Upgrade();
+                Settings.Default.UpgradeRequired = false;
+            }
 
-            // Load application settings
+            // Load settings
             try
             {
-                // Update integrated settings %LocalAppData%\NETworkManager\NETworkManager_GUID (custom settings path)
-                if (Settings.Default.UpgradeRequired)
-                {
-                    Settings.Default.Upgrade();
-                    Settings.Default.UpgradeRequired = false;
-                }
-
                 SettingsManager.Load();
-
-                // Update settings (Default --> %AppData%\NETworkManager\Settings)
-                Version assemblyVersion = AssemblyManager.Current.Version;
-                Version settingsVersion = new Version(SettingsManager.Current.SettingsVersion);
-
-                if (AssemblyManager.Current.Version > settingsVersion)
-                {
-                    SettingsManager.Update(AssemblyManager.Current.Version, settingsVersion);
-                }
             }
             catch (InvalidOperationException)
             {
                 SettingsManager.InitDefault();
 
-                profileUpdateRequired = true; // Because we don't know if a profile update is required
-
                 ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
-            }
-
-            // Upgrade profile if version has changed or settings have been reset (mthis happens mostly, because the version has changed and values are wrong)
-            if(profileUpdateRequired)
-            {
-                try
-                {
-                    ProfileManager.Upgrade();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Failed to update profiles...\n\n" + ex.Message, "Profile Manager - Update Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
             }
 
             // Load localization (requires settings to be loaded first)
