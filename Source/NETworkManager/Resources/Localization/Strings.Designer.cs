@@ -6438,7 +6438,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Star/Fork the Project on Github.
+        ///   Looks up a localized string similar to Star/Fork the Project on GitHub.
         ///
         ///URL: https://github.com/BornToBeRoot/NETworkManager/.
         /// </summary>
