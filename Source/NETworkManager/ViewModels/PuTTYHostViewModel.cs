@@ -15,6 +15,7 @@ using System.Diagnostics;
 using NETworkManager.Models.PuTTY;
 using System.Windows;
 using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.Profile;
 
 namespace NETworkManager.ViewModels
 {

@@ -12,6 +12,7 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Enum;
 using static NETworkManager.Models.PuTTY.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.Models.Profile;
 // ReSharper disable InconsistentNaming
 
 namespace NETworkManager.ViewModels

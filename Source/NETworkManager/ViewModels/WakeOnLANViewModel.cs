@@ -11,6 +11,7 @@ using NETworkManager.Utilities;
 using System.Threading.Tasks;
 using System.Linq;
 using MahApps.Metro.Controls;
+using NETworkManager.Models.Profile;
 
 namespace NETworkManager.ViewModels
 {

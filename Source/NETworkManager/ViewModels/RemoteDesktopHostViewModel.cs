@@ -14,6 +14,7 @@ using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.Profile;
 
 namespace NETworkManager.ViewModels
 {

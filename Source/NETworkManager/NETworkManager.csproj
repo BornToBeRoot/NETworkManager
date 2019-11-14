@@ -201,8 +201,8 @@
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopPerformanceConstants.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopKeystrokeInfo.cs" />
-    <Compile Include="Models\Settings\ProfileInfo.cs" />
-    <Compile Include="Models\Settings\ProfileManager.cs" />
+    <Compile Include="Models\Profile\ProfileInfo.cs" />
+    <Compile Include="Models\Profile\ProfileManager.cs" />
     <Compile Include="Models\PowerShell\PowerShell.cs" />
     <Compile Include="Models\PowerShell\PowerShellSessionInfo.cs" />
     <Compile Include="Models\TigerVNC\TigerVNC.cs" />
@@ -275,7 +275,7 @@
     <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
     <Compile Include="ViewModels\WiFiViewModel.cs" />
     <Compile Include="ViewModels\FirstRunViewModel.cs" />
-    <Compile Include="Models\Settings\IProfileManager.cs" />
+    <Compile Include="Models\Profile\IProfileManager.cs" />
     <Compile Include="ViewModels\NetworkInterfaceAddIPAddressViewModel.cs" />
     <Compile Include="ViewModels\ExportViewModel.cs" />
     <Compile Include="ViewModels\DNSServerViewModel.cs" />
@@ -1344,7 +1344,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Notification\" />
-    <Folder Include="Models\Profile\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

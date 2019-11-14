@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO.Compression;
 using System.IO;
+using NETworkManager.Models.Profile;
 
 namespace NETworkManager.Models.Settings
 {

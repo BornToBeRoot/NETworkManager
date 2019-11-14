@@ -10,7 +10,7 @@
         xmlns:validators="clr-namespace:NETworkManager.Validators"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsStatusViewModel}">
     <StackPanel>
-        <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.ShowWindowOnNetworkChange}" IsChecked="{Binding ShowWindowOnNetworkChange}" Margin="0,0,0,10"/>
+        <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.ShowStatusWindowOnNetworkChange}" IsChecked="{Binding ShowWindowOnNetworkChange}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.IPAddressToDetectLocalIPAddressBasedOnRouting}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" mahAppsControls:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort53}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>

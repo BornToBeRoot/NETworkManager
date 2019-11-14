@@ -3,6 +3,7 @@ using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using NETworkManager.Models.Settings;
+using NETworkManager.Models.Profile;
 
 namespace NETworkManager.Views
 {

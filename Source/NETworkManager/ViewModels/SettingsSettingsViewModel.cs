@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Profile;
 using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System;

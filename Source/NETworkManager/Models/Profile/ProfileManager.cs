@@ -8,10 +8,11 @@ using System.Xml;
 using System.Xml.Serialization;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Enum;
+using NETworkManager.Models.Settings;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Models.Profile
 {
     public static class ProfileManager
     {

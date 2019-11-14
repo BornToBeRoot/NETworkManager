@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using NETworkManager.Properties;
+using NETworkManager.Models.Profile;
 
 namespace NETworkManager
 {

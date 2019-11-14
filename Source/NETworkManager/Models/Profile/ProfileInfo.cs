@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using static NETworkManager.Models.PuTTY.PuTTY;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Models.Profile
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class ProfileInfo

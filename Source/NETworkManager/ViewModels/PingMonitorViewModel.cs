@@ -11,6 +11,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using NETworkManager.Views;
 using System.Net;
+using NETworkManager.Models.Profile;
 
 namespace NETworkManager.ViewModels
 {

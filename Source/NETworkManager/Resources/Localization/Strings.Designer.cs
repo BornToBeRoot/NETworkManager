@@ -5734,6 +5734,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show status window on network change.
+        /// </summary>
+        public static string ShowStatusWindowOnNetworkChange {
+            get {
+                return ResourceManager.GetString("ShowStatusWindowOnNetworkChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show the following application on startup:.
         /// </summary>
         public static string ShowTheFollowingApplicationOnStartup {
@@ -5748,15 +5757,6 @@ namespace NETworkManager.Resources.Localization {
         public static string ShowWindowContentsWhileDragging {
             get {
                 return ResourceManager.GetString("ShowWindowContentsWhileDragging", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show window on network change.
-        /// </summary>
-        public static string ShowWindowOnNetworkChange {
-            get {
-                return ResourceManager.GetString("ShowWindowOnNetworkChange", resourceCulture);
             }
         }
         
