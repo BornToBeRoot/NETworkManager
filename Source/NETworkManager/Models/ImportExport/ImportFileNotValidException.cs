@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Models.ImportExport
 {
     public class ImportFileNotValidException : Exception
     {

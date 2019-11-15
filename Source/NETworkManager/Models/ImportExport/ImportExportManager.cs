@@ -2,8 +2,9 @@
 using System.IO.Compression;
 using System.IO;
 using NETworkManager.Models.Profile;
+using NETworkManager.Models.Settings;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Models.ImportExport
 {
     public class ImportExportManager
     {

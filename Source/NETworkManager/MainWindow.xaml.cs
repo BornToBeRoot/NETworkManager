@@ -25,6 +25,7 @@ using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using DnsClient;
 using NETworkManager.Models.Profile;
+using NETworkManager.Models.ImportExport;
 
 namespace NETworkManager
 {

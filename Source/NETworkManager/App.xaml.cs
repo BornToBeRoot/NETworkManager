@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Threading;
 using NETworkManager.Properties;
 using NETworkManager.Models.Profile;
+using NETworkManager.Models.ImportExport;
 
 namespace NETworkManager
 {

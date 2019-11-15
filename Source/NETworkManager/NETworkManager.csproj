@@ -1040,8 +1040,8 @@
     <Compile Include="Models\Lookup\PortLookup.cs" />
     <Compile Include="Models\Lookup\OUILookup.cs" />
     <Compile Include="Models\Network\PortScanner.cs" />
-    <Compile Include="Models\Settings\ImportExportManager.cs" />
-    <Compile Include="Models\Settings\ImportFileNotValidException.cs" />
+    <Compile Include="Models\ImportExport\ImportExportManager.cs" />
+    <Compile Include="Models\ImportExport\ImportFileNotValidException.cs" />
     <Compile Include="Models\Settings\SettingsFileInfo.cs" />
     <Compile Include="Validators\FileExistsValidator.cs" />
     <Compile Include="Validators\PortRangeValidator.cs" />
