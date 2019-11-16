@@ -6,17 +6,17 @@ namespace NETworkManager.Models.Settings
     {
         public static AssemblyInfo Current { get; set; }
 
-        public static void Load()
+        static AssemblyManager()
         {
             var assembly = Assembly.GetExecutingAssembly();
 
-            var title = assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), false)[0] as AssemblyTitleAttribute;
             var name = assembly.GetName();
 
             Current = new AssemblyInfo
             {
-                Title = title?.Title,
-                Version = name.Version
+                Version = name.Version,
+                Location = assembly.Location,
+                Name = name.Name
             };
         }
     }

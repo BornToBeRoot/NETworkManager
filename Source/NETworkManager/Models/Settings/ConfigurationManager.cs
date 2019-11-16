@@ -1,24 +1,25 @@
-﻿using System.Reflection;
-using System.Security.Principal;
+﻿using System.Security.Principal;
 using System.IO;
 
 namespace NETworkManager.Models.Settings
 {
     public static class ConfigurationManager
     {
-        public static ConfigurationInfo Current { get; set; }
-        
-        public static void Detect()
-        {
-            var applicationLocation = Assembly.GetExecutingAssembly().Location;
+        private const string IsPortableFileName = "IsPortable";
+        private const string IsPortableExtension = "settings";
 
+        public static ConfigurationInfo Current { get; set; }
+
+        static ConfigurationManager()
+        {
             Current = new ConfigurationInfo
             {
                 IsAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator),
-                ExecutionPath = Path.GetDirectoryName(applicationLocation),
-                ApplicationFullName = applicationLocation,
-                ApplicationName = Path.GetFileNameWithoutExtension(Path.GetFileName(applicationLocation)),
-                OSVersion = System.Environment.OSVersion.Version
+                ExecutionPath = Path.GetDirectoryName(AssemblyManager.Current.Location),
+                ApplicationFullName = AssemblyManager.Current.Location,
+                ApplicationName = AssemblyManager.Current.Name,
+                OSVersion = System.Environment.OSVersion.Version,
+                IsPortable = File.Exists(Path.Combine(Path.GetDirectoryName(AssemblyManager.Current.Location), $"{IsPortableFileName}.{IsPortableExtension}"))
             };
         }
     }

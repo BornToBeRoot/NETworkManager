@@ -55,10 +55,10 @@ namespace NETworkManager
             }
 
             // Detect the current configuration
-            ConfigurationManager.Detect();
+            //////ConfigurationManager.Detect();
 
             // Get assembly informations   
-            AssemblyManager.Load();
+            //////AssemblyManager.Load();
 
             // Update integrated settings %LocalAppData%\NETworkManager\NETworkManager_GUID (custom settings path)
             if (Settings.Default.UpgradeRequired)

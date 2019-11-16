@@ -165,7 +165,7 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             LocationSelectedPath = SettingsManager.GetSettingsLocationNotPortable();
-            IsPortable = SettingsManager.GetIsPortable();
+            //IsPortable = SettingsManager.GetIsPortable();
         }
         #endregion
 
@@ -342,7 +342,7 @@ namespace NETworkManager.ViewModels
             // Try moving files (permissions, file is in use...)
             try
             {
-                await SettingsManager.MakePortableAsync(isPortable, true);
+               // await SettingsManager.MakePortableAsync(isPortable, true);
 
                 Properties.Settings.Default.Settings_CustomSettingsLocation = string.Empty;
                 LocationSelectedPath = SettingsManager.GetSettingsLocationNotPortable();

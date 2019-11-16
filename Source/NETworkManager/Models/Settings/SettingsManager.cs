@@ -13,38 +13,21 @@ namespace NETworkManager.Models.Settings
         private const string SettingsFileName = "Settings";
         private const string SettingsVersion = "V2";
         private const string SettingsFileExtension = "xml";
-        private const string IsPortableFileName = "IsPortable";
-        private const string IsPortableExtension = "settings";
-
+        
         public static SettingsInfo Current { get; set; }
 
         public static bool ForceRestart { get; set; }
         public static bool HotKeysChanged { get; set; }
 
-        private static string GetApplicationName()
-        {
-            return Assembly.GetEntryAssembly().GetName().Name;
-        }
-
-        private static string GetApplicationLocation()
-        {
-            return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        }
-
         public static string GetSettingsFileName()
         {
             return $"{SettingsFileName}.{SettingsVersion}.{SettingsFileExtension}";
         }
-
-        public static string GetIsPortableFileName()
-        {
-            return $"{IsPortableFileName}.{IsPortableExtension}";
-        }
-
+        
         #region Settings locations (default, custom, portable)
         public static string GetDefaultSettingsLocation()
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), GetApplicationName(), SettingsFolderName);
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AssemblyManager.Current.Name, SettingsFolderName);
         }
 
         public static string GetCustomSettingsLocation()
@@ -59,11 +42,6 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region File paths
-        private static string GetIsPortableFilePath()
-        {
-            return Path.Combine(GetApplicationLocation(), GetIsPortableFileName());
-        }
-
         public static string GetSettingsFilePath()
         {
             return Path.Combine(GetSettingsLocation(), GetSettingsFileName());
@@ -71,14 +49,9 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region IsPortable, SettingsLocation, SettingsLocationNotPortable
-        public static bool GetIsPortable()
-        {
-            return File.Exists(GetIsPortableFilePath());
-        }
-
         public static string GetSettingsLocation()
         {
-            return GetIsPortable() ? GetPortableSettingsLocation() : GetSettingsLocationNotPortable();
+            return ConfigurationManager.Current.IsPortable ? GetPortableSettingsLocation() : GetSettingsLocationNotPortable();
         }
 
         public static string GetSettingsLocationNotPortable()
@@ -131,7 +104,7 @@ namespace NETworkManager.Models.Settings
             // Set the setting changed to false after saving them as file...
             Current.SettingsChanged = false;
         }
-
+                
         public static Task MoveSettingsAsync(string sourceLocation, string targedLocation, bool overwrite, string[] filesTargedLocation)
         {
             return Task.Run(() => MoveSettings(sourceLocation, targedLocation, overwrite, filesTargedLocation));
@@ -162,6 +135,7 @@ namespace NETworkManager.Models.Settings
                 Directory.Delete(sourceLocation);
         }
 
+        /*
         public static Task MakePortableAsync(bool isPortable, bool overwrite)
         {
             return Task.Run(() => MakePortable(isPortable, overwrite));
@@ -184,6 +158,7 @@ namespace NETworkManager.Models.Settings
                 File.Delete(GetIsPortableFilePath());
             }
         }
+        */
 
         public static void InitDefault()
         {
