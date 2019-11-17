@@ -1131,8 +1131,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
     <value>Select the settings you want to import:</value>
   </data>
-  <data name="SelectTheSettingsYouWantToReset" xml:space="preserve">
-    <value>Select the settings you want to reset:</value>
+  <data name="ThisWillResetAllSettings" xml:space="preserve">
+    <value>This will reset all settings!</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>Serial</value>
@@ -2467,5 +2467,8 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   </data>
   <data name="CouldNotResolveIPAddressFor" xml:space="preserve">
     <value>Could not resolve ip address for: "{0}"</value>
+  </data>
+  <data name="TheApplicationWillBeRestarted" xml:space="preserve">
+    <value>The application will be restarted...</value>
   </data>
 </root>

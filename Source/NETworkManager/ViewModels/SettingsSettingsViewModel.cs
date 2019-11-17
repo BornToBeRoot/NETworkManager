@@ -48,51 +48,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _isPortable;
-        public bool IsPortable
-        {
-            get => _isPortable;
-            set
-            {
-                if (value == _isPortable)
-                    return;
-
-                if (!_isLoading)
-                    MakePortable(value);
-
-                _isPortable = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _makingPortable;
-        public bool MakingPortable
-        {
-            get => _makingPortable;
-            set
-            {
-                if (value == _makingPortable)
-                    return;
-
-                _makingPortable = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetEverything;
-        public bool ResetEverything
-        {
-            get => _resetEverything;
-            set
-            {
-                if (value == _resetEverything)
-                    return;
-
-                _resetEverything = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _settingsExists;
         public bool SettingsExists
         {
@@ -117,34 +72,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _resetSettings = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _profilesExists;
-        public bool ProfilesExists
-        {
-            get => _profilesExists;
-            set
-            {
-                if (value == _profilesExists)
-                    return;
-
-                _profilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetProfiles;
-        public bool ResetProfiles
-        {
-            get => _resetProfiles;
-            set
-            {
-                if (value == _resetProfiles)
-                    return;
-
-                _resetProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -296,80 +223,33 @@ namespace NETworkManager.ViewModels
 
             var message = Resources.Localization.Strings.SelectedSettingsAreReset;
 
-            if (ResetEverything || ResetSettings)
-            {
-                message += Environment.NewLine + Environment.NewLine + $"* {Resources.Localization.Strings.TheSettingsLocationIsNotAffected}";
-                message += Environment.NewLine + $"* {Resources.Localization.Strings.ApplicationIsRestartedAfterwards}";
-            }
+            message += Environment.NewLine + Environment.NewLine + $"* {Resources.Localization.Strings.TheSettingsLocationIsNotAffected}";
+            message += Environment.NewLine + $"* {Resources.Localization.Strings.ApplicationIsRestartedAfterwards}";
 
             if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
-            var forceRestart = false;
+            SettingsManager.Reset();
 
-            if (SettingsExists && (ResetEverything || ResetSettings))
-            {
-                SettingsManager.Reset();
-                forceRestart = true;
-            }
+            message = Resources.Localization.Strings.SettingsSuccessfullyReset;
+            message += Environment.NewLine + Environment.NewLine + Resources.Localization.Strings.TheApplicationWillBeRestarted;
 
-            if (ProfilesExists && (ResetEverything || ResetProfiles))
-                ProfileManager.Reset();
+            await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, message, MessageDialogStyle.Affirmative, settings);
 
-            // Restart after reset or show a completed message
-            if (forceRestart)
-            {
-                CloseAction();
-            }
-            else
-            {
-                settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, Resources.Localization.Strings.SettingsSuccessfullyReset, MessageDialogStyle.Affirmative, settings);
-            }
+            // Restart
+            CloseAction();
         }
         #endregion
 
         #region Methods
-        private async void MakePortable(bool isPortable)
-        {
-            MakingPortable = true;
-
-            // Save settings before moving them
-            if (SettingsManager.Current.SettingsChanged)
-                SettingsManager.Save();
-
-            // Try moving files (permissions, file is in use...)
-            try
-            {
-               // await SettingsManager.MakePortableAsync(isPortable, true);
-
-                Properties.Settings.Default.Settings_CustomSettingsLocation = string.Empty;
-                LocationSelectedPath = SettingsManager.GetSettingsLocationNotPortable();
-
-                // Show the user some awesome animation to indicate we are working on it :)
-                await Task.Delay(2000);
-            }
-            catch (Exception ex)
-            {
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-            }
-
-            MakingPortable = false;
-        }
-
         public void SaveAndCheckSettings()
         {
             // Save everything
             if (SettingsManager.Current.SettingsChanged)
                 SettingsManager.Save();
 
-            if (ProfileManager.ProfilesChanged)
-                ProfileManager.Save();
-
             // Check if files exist
             SettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
-            ProfilesExists = File.Exists(ProfileManager.GetProfilesFilePath());
         }
 
         public void SetLocationPathFromDragDrop(string path)

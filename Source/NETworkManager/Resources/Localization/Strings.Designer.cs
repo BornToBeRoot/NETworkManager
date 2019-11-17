@@ -5545,15 +5545,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the settings you want to reset:.
-        /// </summary>
-        public static string SelectTheSettingsYouWantToReset {
-            get {
-                return ResourceManager.GetString("SelectTheSettingsYouWantToReset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Send.
         /// </summary>
         public static string Send {
@@ -6193,6 +6184,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The application will be restarted....
+        /// </summary>
+        public static string TheApplicationWillBeRestarted {
+            get {
+                return ResourceManager.GetString("TheApplicationWillBeRestarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The following hostnames could not be resolved:.
         /// </summary>
         public static string TheFollowingHostnamesCouldNotBeResolved {
@@ -6252,6 +6252,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater {
             get {
                 return ResourceManager.GetString("ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will reset all settings!.
+        /// </summary>
+        public static string ThisWillResetAllSettings {
+            get {
+                return ResourceManager.GetString("ThisWillResetAllSettings", resourceCulture);
             }
         }
         

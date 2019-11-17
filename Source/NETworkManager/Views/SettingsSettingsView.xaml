@@ -23,7 +23,7 @@
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Location}" />
-        <TextBox x:Name="TextBoxLocation" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.EnterLocationDots}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFolderCommand}" AllowDrop="True" Drop="TextBoxLocation_Drop" PreviewDragOver="TextBoxLocation_PreviewDragOver" Margin="0,0,0,10">
+        <TextBox x:Name="TextBoxLocation" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.EnterLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFolderCommand}" AllowDrop="True" Drop="TextBoxLocation_Drop" PreviewDragOver="TextBoxLocation_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="LocationSelectedPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -31,17 +31,7 @@
                         <validators:SettingsFolderExistsValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
-            </TextBox.Text>
-            <TextBox.Style>
-                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BrowseFolderTextBox}">
-                    <Setter Property="IsEnabled" Value="True" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=ToggleSwitchIsPortable,Path=IsChecked}" Value="True" >
-                            <Setter Property="IsEnabled" Value="False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBox.Style>
+            </TextBox.Text>            
         </TextBox>
         <StackPanel Margin="0,0,0,20">
             <Grid>
@@ -54,12 +44,8 @@
                     <Button Content="{x:Static localization:Strings.Default}" Command="{Binding RestoreDefaultSettingsLocationCommand}" Margin="0,0,10,0">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
-                                <Setter Property="IsEnabled" Value="False" />
                                 <Setter Property="Visibility" Value="Collapsed" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=ToggleSwitchIsPortable,Path=IsChecked}" Value="False" >
-                                        <Setter Property="IsEnabled" Value="True" />
-                                    </DataTrigger>
+                                <Style.Triggers>                                    
                                     <DataTrigger Value="False">
                                         <DataTrigger.Binding>
                                             <Binding Converter="{StaticResource IsDefaultSettingsLocationToBoolConverter}" ElementName="TextBoxLocation" Path="Text"/>
@@ -76,12 +62,10 @@
                                 <Setter Property="IsEnabled" Value="False" />
                                 <Style.Triggers>
                                     <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding ElementName=ToggleSwitchIsPortable, Path=IsChecked}" Value="False" />
+                                        <MultiDataTrigger.Conditions>                                            
                                             <Condition Binding="{Binding ElementName=TextBoxLocation, Path=(Validation.HasError)}" Value="False" />
                                             <Condition Binding="{Binding ElementName=TextBoxLocation, Path=Text, Converter={StaticResource IsSettingsLocationToBoolConverter}}" Value="False" />
-                                            <Condition Binding="{Binding MovingFiles}" Value="False" />
-                                            <Condition Binding="{Binding MakingPortable}" Value="False" />
+                                            <Condition Binding="{Binding MovingFiles}" Value="False" />                                            
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="IsEnabled" Value="True" />
                                     </MultiDataTrigger>
@@ -107,70 +91,11 @@
                     </Button.Content>
                 </Button>
             </Grid>
-            <mahAppsControls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}"  Visibility="{Binding MovingFiles, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0"/>
-        </StackPanel>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Portable}" />
-        <StackPanel Margin="0,0,0,20">
-            <mahAppsControls:ToggleSwitch x:Name="ToggleSwitchIsPortable" Header="{x:Static localization:Strings.SaveSettingsInApplicationFolder}"   IsChecked="{Binding IsPortable}" IsEnabled="{Binding MakingPortable, Converter={StaticResource BooleanReverseConverter}}">
-                <mahAppsControls:ToggleSwitch.Style>
-                    <Style TargetType="{x:Type mahAppsControls:ToggleSwitch}" BasedOn="{StaticResource DefaultToggleSwitch}">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding MovingFiles}" Value="False" />
-                                    <Condition Binding="{Binding MakingPortable}" Value="False" />
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="True" />
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </mahAppsControls:ToggleSwitch.Style>
-            </mahAppsControls:ToggleSwitch>
-            <mahAppsControls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding MakingPortable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0"/>
+            <mahAppsControls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding MovingFiles, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0"/>
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Reset}" />
-        <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{x:Static localization:Strings.SelectTheSettingsYouWantToReset}" Margin="0,0,0,10" />
-        <RadioButton x:Name="RadioButtonResetEverything" Content="{x:Static localization:Strings.Everything}" IsChecked="{Binding ResetEverything}" Margin="0,0,0,10"/>
-        <RadioButton x:Name="RadioButtonResetCustom" Content="{x:Static localization:Strings.Custom}" Margin="0,0,0,10"/>
-        <GroupBox Margin="20,0,0,10" MinWidth="250" HorizontalAlignment="Left">
-            <GroupBox.Style>
-                <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource WithoutHeaderGroupBox}">
-                    <Setter Property="IsEnabled" Value="False" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=RadioButtonResetCustom, Path=IsChecked}" Value="True">
-                            <Setter Property="IsEnabled" Value="True" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </GroupBox.Style>
-            <StackPanel>
-                <CheckBox Content="{x:Static localization:Strings.Settings}" IsEnabled="{Binding SettingsExists}" IsChecked="{Binding ResetSettings}" Margin="0,0,0,10" />
-                <CheckBox Content="{x:Static localization:Strings.Profiles}" IsEnabled="{Binding ProfilesExists}" IsChecked="{Binding ResetProfiles}" />
-            </StackPanel>
-        </GroupBox>
-        <Button Content="{x:Static localization:Strings.Reset}" Command="{Binding ResetSettingsCommand}" HorizontalAlignment="Left">
-            <Button.Style>
-                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
-                    <Setter Property="IsEnabled" Value="False" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ResetEverything}" Value="True">
-                            <Setter Property="IsEnabled" Value="True" />
-                        </DataTrigger>
-                        <DataTrigger Value="True">
-                            <DataTrigger.Binding>
-                                <MultiBinding Converter="{StaticResource ValidateSettingsResetConverter}">
-                                    <Binding Path="ResetEverything" />
-                                    <Binding Path="ResetSettings" />
-                                    <Binding Path="ResetProfiles" />
-                                </MultiBinding>
-                            </DataTrigger.Binding>
-                            <Setter  Property="IsEnabled" Value="True" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
+        <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{x:Static localization:Strings.ThisWillResetAllSettings}" Margin="0,0,0,10" />
+        <Button Content="{x:Static localization:Strings.Reset}" Command="{Binding ResetSettingsCommand}" IsEnabled="{Binding SettingsExists}" HorizontalAlignment="Left" />
     </StackPanel>
 </UserControl>
 
