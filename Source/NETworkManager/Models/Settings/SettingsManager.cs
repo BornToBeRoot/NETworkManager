@@ -8,12 +8,12 @@ using System.Xml.Serialization;
 namespace NETworkManager.Models.Settings
 {
     public static class SettingsManager
-    {        
+    {
         private const string SettingsFolderName = "Settings";
         private const string SettingsFileName = "Settings";
         private const string SettingsVersion = "V2";
         private const string SettingsFileExtension = "xml";
-        
+
         public static SettingsInfo Current { get; set; }
 
         public static bool ForceRestart { get; set; }
@@ -23,7 +23,7 @@ namespace NETworkManager.Models.Settings
         {
             return $"{SettingsFileName}.{SettingsVersion}.{SettingsFileExtension}";
         }
-        
+
         #region Settings locations (default, custom, portable)
         public static string GetDefaultSettingsLocation()
         {
@@ -48,7 +48,7 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region IsPortable, SettingsLocation, SettingsLocationNotPortable
+        #region SettingsLocation, SettingsLocationNotPortable
         public static string GetSettingsLocation()
         {
             return ConfigurationManager.Current.IsPortable ? GetPortableSettingsLocation() : GetSettingsLocationNotPortable();
@@ -104,61 +104,27 @@ namespace NETworkManager.Models.Settings
             // Set the setting changed to false after saving them as file...
             Current.SettingsChanged = false;
         }
-                
-        public static Task MoveSettingsAsync(string sourceLocation, string targedLocation, bool overwrite, string[] filesTargedLocation)
+
+        public static Task MoveSettingsAsync(string targedLocation)
         {
-            return Task.Run(() => MoveSettings(sourceLocation, targedLocation, overwrite, filesTargedLocation));
+            return Task.Run(() => MoveSettings(targedLocation));
         }
 
-        private static void MoveSettings(string sourceLocation, string targedLocation, bool overwrite, string[] filesTargedLocation = null)
+        private static void MoveSettings(string targedLocation)
         {
-            var sourceFiles = Directory.GetFiles(sourceLocation);
-
             // Create the dircetory and copy the files to the new location
             Directory.CreateDirectory(targedLocation);
 
-            foreach (var file in sourceFiles)
-            {
-                // Skip if file exists and user don't want to overwrite it
-                if (!overwrite && (filesTargedLocation ?? throw new ArgumentNullException(nameof(filesTargedLocation))).Any(x => Path.GetFileName(x) == Path.GetFileName(file)))
-                    continue;
+            // Copy file
+            File.Copy(GetSettingsFilePath(), Path.Combine(targedLocation, GetSettingsFileName()), true);
 
-                File.Copy(file, Path.Combine(targedLocation, Path.GetFileName(file)), overwrite);
-            }
+            // Delte file
+            File.Delete(GetSettingsFilePath());
 
-            // Delete the old files
-            foreach (var file in sourceFiles)
-                File.Delete(file);
-
-            // Delete the folder, if it is not the default settings locations and does not contain any files or directories
-            if (sourceLocation != GetDefaultSettingsLocation() && Directory.GetFiles(sourceLocation).Length == 0 && Directory.GetDirectories(sourceLocation).Length == 0)
-                Directory.Delete(sourceLocation);
+            // Delete folder, if it is empty not the default settings locations and does not contain any files or directories
+            if (GetSettingsLocation() != GetDefaultSettingsLocation() && Directory.GetFiles(GetSettingsLocation()).Length == 0 && Directory.GetDirectories(GetSettingsLocation()).Length == 0)
+                Directory.Delete(GetSettingsLocation());
         }
-
-        /*
-        public static Task MakePortableAsync(bool isPortable, bool overwrite)
-        {
-            return Task.Run(() => MakePortable(isPortable, overwrite));
-        }
-
-        public static void MakePortable(bool isPortable, bool overwrite)
-        {
-            if (isPortable)
-            {
-                MoveSettings(GetSettingsLocationNotPortable(), GetPortableSettingsLocation(), overwrite);
-
-                // After moving the files, set the indicator that the settings are now portable
-                File.Create(GetIsPortableFilePath());
-            }
-            else
-            {
-                MoveSettings(GetPortableSettingsLocation(), GetSettingsLocationNotPortable(), overwrite);
-
-                // Remove the indicator after moving the files...
-                File.Delete(GetIsPortableFilePath());
-            }
-        }
-        */
 
         public static void InitDefault()
         {

@@ -6687,6 +6687,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use other.
+        /// </summary>
+        public static string UseOther {
+            get {
+                return ResourceManager.GetString("UseOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use resolver cache.
         /// </summary>
         public static string UseResolverCache {

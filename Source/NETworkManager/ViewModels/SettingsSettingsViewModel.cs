@@ -1,9 +1,7 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Profile;
 using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -92,7 +90,6 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             LocationSelectedPath = SettingsManager.GetSettingsLocationNotPortable();
-            //IsPortable = SettingsManager.GetIsPortable();
         }
         #endregion
 
@@ -101,15 +98,16 @@ namespace NETworkManager.ViewModels
 
         private void BrowseFolderAction()
         {
-            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                if (Directory.Exists(LocationSelectedPath))
+                    dialog.SelectedPath = LocationSelectedPath;
 
-            if (Directory.Exists(LocationSelectedPath))
-                dialog.SelectedPath = LocationSelectedPath;
+                var dialogResult = dialog.ShowDialog();
 
-            var dialogResult = dialog.ShowDialog();
-
-            if (dialogResult == System.Windows.Forms.DialogResult.OK)
-                LocationSelectedPath = dialog.SelectedPath;
+                if (dialogResult == System.Windows.Forms.DialogResult.OK)
+                    LocationSelectedPath = dialog.SelectedPath;
+            }
         }
 
         public ICommand OpenLocationCommand => new RelayCommand(p => OpenLocationAction());
@@ -121,39 +119,20 @@ namespace NETworkManager.ViewModels
 
         public ICommand ChangeSettingsCommand => new RelayCommand(p => ChangeSettingsAction());
 
-        // Check if a file(name) is a settings file
-        private static bool FilesContainsSettingsFiles(IEnumerable<string> files)
-        {
-            foreach (var file in files)
-            {
-                var fileName = Path.GetFileName(file);
-
-                if (SettingsManager.GetSettingsFileName() == fileName)
-                    return true;
-
-                if (ProfileManager.ProfilesFileName == fileName)
-                    return true;
-            }
-
-            return false;
-        }
-
         private async void ChangeSettingsAction()
         {
             MovingFiles = true;
-            var overwrite = false;
-            var forceRestart = false;
+            //var overwrite = false;
+            var useFileInOtherLocation = false;
 
-            var filesTargedLocation = Directory.GetFiles(LocationSelectedPath);
-
-            // Check if there are any settings files in the folder...
-            if (FilesContainsSettingsFiles(filesTargedLocation))
+            // Check if settings file exists in new location
+            if (File.Exists(Path.Combine(LocationSelectedPath, SettingsManager.GetSettingsFileName())))
             {
                 var settings = AppearanceManager.MetroDialog;
 
                 settings.AffirmativeButtonText = Resources.Localization.Strings.Overwrite;
                 settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
-                settings.FirstAuxiliaryButtonText = Resources.Localization.Strings.MoveAndRestart;
+                settings.FirstAuxiliaryButtonText = Resources.Localization.Strings.UseOther;
                 settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
 
                 var result = await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Overwrite, Resources.Localization.Strings.OverwriteSettingsInTheDestinationFolder, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
@@ -163,19 +142,30 @@ namespace NETworkManager.ViewModels
                     case MessageDialogResult.Negative:
                         MovingFiles = false;
                         return;
-                    case MessageDialogResult.Affirmative:
-                        overwrite = true;
-                        break;
                     case MessageDialogResult.FirstAuxiliary:
-                        forceRestart = true;
+                        useFileInOtherLocation = true;
                         break;
                 }
             }
 
-            // Try moving files (permissions, file is in use...)
+            // Use other location
+            if(useFileInOtherLocation)
+            {
+                Properties.Settings.Default.Settings_CustomSettingsLocation = LocationSelectedPath;
+
+                SettingsManager.ForceRestart = true;
+                                
+                CloseAction();
+
+                MovingFiles = false;
+
+                return;
+            }
+
+            // Move files...
             try
             {
-                await SettingsManager.MoveSettingsAsync(SettingsManager.GetSettingsLocation(), LocationSelectedPath, overwrite, filesTargedLocation);
+                await SettingsManager.MoveSettingsAsync(LocationSelectedPath);
 
                 Properties.Settings.Default.Settings_CustomSettingsLocation = LocationSelectedPath;
 
@@ -193,12 +183,6 @@ namespace NETworkManager.ViewModels
 
             LocationSelectedPath = string.Empty;
             LocationSelectedPath = Properties.Settings.Default.Settings_CustomSettingsLocation;
-
-            if (forceRestart)
-            {
-                SettingsManager.ForceRestart = true;
-                CloseAction();
-            }
 
             MovingFiles = false;
         }
