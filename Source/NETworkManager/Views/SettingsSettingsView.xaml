@@ -23,7 +23,7 @@
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Location}" />
-        <TextBox x:Name="TextBoxLocation" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.EnterLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFolderCommand}" AllowDrop="True" Drop="TextBoxLocation_Drop" PreviewDragOver="TextBoxLocation_PreviewDragOver" Margin="0,0,0,10">
+        <TextBox x:Name="TextBoxLocation" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.EnterLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseLocationFolderCommand}" AllowDrop="True" Drop="TextBoxLocation_Drop" PreviewDragOver="TextBoxLocation_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="LocationSelectedPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -31,7 +31,7 @@
                         <validators:SettingsFolderExistsValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
-            </TextBox.Text>            
+            </TextBox.Text>
         </TextBox>
         <StackPanel Margin="0,0,0,20">
             <Grid>
@@ -45,7 +45,7 @@
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
                                 <Setter Property="Visibility" Value="Collapsed" />
-                                <Style.Triggers>                                    
+                                <Style.Triggers>
                                     <DataTrigger Value="False">
                                         <DataTrigger.Binding>
                                             <Binding Converter="{StaticResource IsDefaultSettingsLocationToBoolConverter}" ElementName="TextBoxLocation" Path="Text"/>
@@ -62,10 +62,10 @@
                                 <Setter Property="IsEnabled" Value="False" />
                                 <Style.Triggers>
                                     <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>                                            
+                                        <MultiDataTrigger.Conditions>
                                             <Condition Binding="{Binding ElementName=TextBoxLocation, Path=(Validation.HasError)}" Value="False" />
                                             <Condition Binding="{Binding ElementName=TextBoxLocation, Path=Text, Converter={StaticResource IsSettingsLocationToBoolConverter}}" Value="False" />
-                                            <Condition Binding="{Binding MovingFiles}" Value="False" />                                            
+                                            <Condition Binding="{Binding MovingFiles}" Value="False" />
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="IsEnabled" Value="True" />
                                     </MultiDataTrigger>
@@ -92,6 +92,36 @@
                 </Button>
             </Grid>
             <mahAppsControls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding MovingFiles, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0"/>
+        </StackPanel>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Import}" />
+        <TextBox x:Name="TextBoxImportFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseImportFileCommand}" AllowDrop="True" Drop="TextBoxImportFilePath_Drop" PreviewDragOver="TextBoxImportFilePath_PreviewDragOver" Margin="0,0,0,10">
+            <TextBox.Text>
+                <Binding Path="ImportFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:FileExistsValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <StackPanel Margin="0,0,0,20">
+            <Button Content="{x:Static localization:Strings.Import}" Command="{Binding ImportSettingsCommand}" HorizontalAlignment="Left" >
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=TextBoxImportFilePath, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <TextBlock Foreground="{DynamicResource AccentColorBrush}" Text="{Binding ImportStatusMessage}" Visibility="{Binding ImportExportStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+        </StackPanel>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Export}" />
+        <StackPanel Margin="0,0,0,20">
+            <Button Content="{x:Static localization:Strings.Export}" Command="{Binding ExportSettingsCommand}" IsEnabled="{Binding SettingsExists}" HorizontalAlignment="Left"  />
+            <TextBlock Foreground="{DynamicResource AccentColorBrush}" Text="{Binding ExportStatusMessage}" Visibility="{Binding DisplayExportStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Reset}" />
         <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{x:Static localization:Strings.ThisWillResetAllSettings}" Margin="0,0,0,10" />

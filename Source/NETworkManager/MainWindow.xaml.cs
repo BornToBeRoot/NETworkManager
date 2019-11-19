@@ -430,7 +430,7 @@ namespace NETworkManager
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {
             // Force restart (if user has reset the settings or import them)
-            if (SettingsManager.ForceRestart || ImportExportManager.ForceRestart)
+            if (ConfigurationManager.Current.ForceRestart || ImportExportManager.ForceRestart)
             {
                 RestartApplication(false);
 

@@ -1119,8 +1119,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Select a screen resolution</value>
   </data>
-  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>The selected settings are overwritten.</value>
+  <data name="SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards" xml:space="preserve">
+    <value>The selected settings are overwritten and the application is restarted afterwards!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>The selected settings are reset.</value>
@@ -1144,7 +1144,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Service</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles and credentials are not affected!)</value>
+    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles are not affected!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Settings successfully exported!</value>
@@ -2473,5 +2473,14 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Use other</value>
+  </data>
+  <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
+    <value>Could not export file! See error message: "{0}"</value>
+  </data>
+  <data name="FileExportedToXX" xml:space="preserve">
+    <value>File exported to "{0}"!</value>
+  </data>
+  <data name="ClouldNotImportFileSeeErrorMessageXX" xml:space="preserve">
+    <value>Could not import file! See error message: "{0}"</value>
   </data>
 </root>

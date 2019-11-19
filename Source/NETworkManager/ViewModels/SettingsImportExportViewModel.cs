@@ -258,7 +258,7 @@ namespace NETworkManager.ViewModels
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            var message = Resources.Localization.Strings.SelectedSettingsAreOverwritten;
+            var message = Resources.Localization.Strings.SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards;
 
             if (ImportSettingsExists && (ImportEverything || ImportSettings))
                 message += Environment.NewLine + Environment.NewLine + $"* {Resources.Localization.Strings.ApplicationIsRestartedAfterwards}";

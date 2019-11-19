@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
+using System.IO.Compression;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -16,7 +16,7 @@ namespace NETworkManager.Models.Settings
 
         public static SettingsInfo Current { get; set; }
 
-        public static bool ForceRestart { get; set; }
+        //public static bool ForceRestart { get; set; }
         public static bool HotKeysChanged { get; set; }
 
         public static string GetSettingsFileName()
@@ -135,11 +135,30 @@ namespace NETworkManager.Models.Settings
             };
         }
 
+        public static void Import(string filePath)
+        {
+            using (var zipArchive = ZipFile.OpenRead(filePath))
+            {
+                zipArchive.GetEntry(GetSettingsFileName()).ExtractToFile(GetSettingsFilePath(), true);
+            }
+        }
+
+        public static void Export(string filePath)
+        {
+            // Delete existing file
+            File.Delete(filePath);
+
+            // Create archiv
+            using (var zipArchive = ZipFile.Open(filePath, ZipArchiveMode.Create))
+            {
+                // Copy file
+                zipArchive.CreateEntryFromFile(GetSettingsFilePath(), GetSettingsFileName(), CompressionLevel.Optimal);
+            }
+        }
+
         public static void Reset()
         {
             InitDefault();
-
-            ForceRestart = true;
         }
     }
 }

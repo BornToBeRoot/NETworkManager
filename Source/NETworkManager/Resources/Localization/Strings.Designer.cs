@@ -898,6 +898,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not export file! See error message: &quot;{0}&quot;.
+        /// </summary>
+        public static string ClouldNotExportFileSeeErrorMessageXX {
+            get {
+                return ResourceManager.GetString("ClouldNotExportFileSeeErrorMessageXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not import file! See error message: &quot;{0}&quot;.
+        /// </summary>
+        public static string ClouldNotImportFileSeeErrorMessageXX {
+            get {
+                return ResourceManager.GetString("ClouldNotImportFileSeeErrorMessageXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cobalt.
         /// </summary>
         public static string Cobalt {
@@ -2361,6 +2379,15 @@ namespace NETworkManager.Resources.Localization {
         public static string FileDoesNotExist {
             get {
                 return ResourceManager.GetString("FileDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File exported to &quot;{0}&quot;!.
+        /// </summary>
+        public static string FileExportedToXX {
+            get {
+                return ResourceManager.GetString("FileExportedToXX", resourceCulture);
             }
         }
         
@@ -5509,11 +5536,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The selected settings are overwritten..
+        ///   Looks up a localized string similar to The selected settings are overwritten and the application is restarted afterwards!.
         /// </summary>
-        public static string SelectedSettingsAreOverwritten {
+        public static string SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards {
             get {
-                return ResourceManager.GetString("SelectedSettingsAreOverwritten", resourceCulture);
+                return ResourceManager.GetString("SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards", resourceCulture);
             }
         }
         
@@ -5608,7 +5635,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles and credentials are not affected!).
+        ///   Looks up a localized string similar to The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles are not affected!).
         /// </summary>
         public static string SettingsFileFoundWasCorruptOrNotCompatibleMessage {
             get {

@@ -60,6 +60,76 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private string _importFilePath;
+        public string ImportFilePath
+        {
+            get => _importFilePath;
+            set
+            {
+                if (value == _importFilePath)
+                    return;
+
+                _importFilePath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _displayImportStatusMessage;
+        public bool DisplayImportStatusMessage
+        {
+            get => _displayImportStatusMessage;
+            set
+            {
+                if (value == _displayImportStatusMessage)
+                    return;
+
+                _displayImportStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _importStatusMessage;
+        public string ImportStatusMessage
+        {
+            get => _importStatusMessage;
+            set
+            {
+                if (value == _importStatusMessage)
+                    return;
+
+                _importStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _displayExportStatusMessage;
+        public bool DisplayExportStatusMessage
+        {
+            get => _displayExportStatusMessage;
+            set
+            {
+                if (value == _displayExportStatusMessage)
+                    return;
+
+                _displayExportStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _exportStatusMessage;
+        public string ExportStatusMessage
+        {
+            get => _exportStatusMessage;
+            set
+            {
+                if (value == _exportStatusMessage)
+                    return;
+
+                _exportStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _resetSettings;
         public bool ResetSettings
         {
@@ -94,9 +164,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand BrowseFolderCommand => new RelayCommand(p => BrowseFolderAction());
+        public ICommand BrowseLocationFolderCommand => new RelayCommand(p => BrowseLocationFolderAction());
 
-        private void BrowseFolderAction()
+        private void BrowseLocationFolderAction()
         {
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
             {
@@ -149,15 +219,15 @@ namespace NETworkManager.ViewModels
             }
 
             // Use other location
-            if(useFileInOtherLocation)
+            if (useFileInOtherLocation)
             {
                 Properties.Settings.Default.Settings_CustomSettingsLocation = LocationSelectedPath;
 
-                SettingsManager.ForceRestart = true;
-                                
-                CloseAction();
-
                 MovingFiles = false;
+
+                // Restart the application
+                ConfigurationManager.Current.ForceRestart = true;
+                CloseAction();
 
                 return;
             }
@@ -194,6 +264,79 @@ namespace NETworkManager.ViewModels
             LocationSelectedPath = SettingsManager.GetDefaultSettingsLocation();
         }
 
+        public ICommand BrowseImportFileCommand => new RelayCommand(p => BrowseFileAction());
+
+        private void BrowseFileAction()
+        {
+            using (var openFileDialog = new System.Windows.Forms.OpenFileDialog
+            {
+                Filter = GlobalStaticConfiguration.ZipFileExtensionFilter
+            })
+            {
+                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    ImportFilePath = openFileDialog.FileName;
+            }
+        }
+
+        public ICommand ImportSettingsCommand => new RelayCommand(p => ImportSettingsAction());
+
+        private async void ImportSettingsAction()
+        {
+            var settings = AppearanceManager.MetroDialog;
+
+            settings.AffirmativeButtonText = Resources.Localization.Strings.Continue;
+            settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
+
+            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
+                        
+            if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, Resources.Localization.Strings.SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+                return;
+
+            try
+            {
+                SettingsManager.Import(ImportFilePath);
+
+                // Restart the application
+                ConfigurationManager.Current.ForceRestart = true;
+                CloseAction();
+            }
+            catch (Exception ex)
+            {
+                ImportStatusMessage = string.Format(Resources.Localization.Strings.ClouldNotImportFileSeeErrorMessageXX, ex.Message);
+                DisplayImportStatusMessage = true;
+            }
+        }
+
+        public ICommand ExportSettingsCommand => new RelayCommand(p => ExportSettingsAction());
+
+        private void ExportSettingsAction()
+        {
+            DisplayExportStatusMessage = false;
+
+            using (var saveFileDialog = new System.Windows.Forms.SaveFileDialog()
+            {
+                Filter = GlobalStaticConfiguration.ZipFileExtensionFilter,
+                FileName = $"{AssemblyManager.Current.Name}_{Resources.Localization.Strings.Settings}_{Resources.Localization.Strings.Backup}#{TimestampHelper.GetTimestamp()}.zip"
+            })
+            {
+                if (saveFileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                    return;
+
+                try
+                {
+                    SettingsManager.Export(saveFileDialog.FileName);
+
+                    ExportStatusMessage = string.Format(Resources.Localization.Strings.FileExportedToXX, saveFileDialog.FileName);
+                    DisplayExportStatusMessage = true;
+                }
+                catch (Exception ex)
+                {
+                    ExportStatusMessage = string.Format(Resources.Localization.Strings.ClouldNotExportFileSeeErrorMessageXX, ex.Message);
+                    DisplayExportStatusMessage = true;
+                }
+            }
+        }
+
         public ICommand ResetSettingsCommand => new RelayCommand(p => ResetSettingsAction());
 
         public async void ResetSettingsAction()
@@ -220,7 +363,8 @@ namespace NETworkManager.ViewModels
 
             await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, message, MessageDialogStyle.Affirmative, settings);
 
-            // Restart
+            // Restart the application
+            ConfigurationManager.Current.ForceRestart = true;
             CloseAction();
         }
         #endregion
@@ -241,6 +385,13 @@ namespace NETworkManager.ViewModels
             LocationSelectedPath = path;
 
             OnPropertyChanged(nameof(LocationSelectedPath));
+        }
+
+        public void SetImportFilePathFromDragDrop(string filePath)
+        {
+            ImportFilePath = filePath;
+
+            OnPropertyChanged(nameof(ImportFilePath));
         }
         #endregion
     }

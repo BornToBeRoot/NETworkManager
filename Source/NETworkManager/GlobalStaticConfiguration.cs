@@ -23,6 +23,8 @@ namespace NETworkManager
 
         // Filter
         public static string ApplicationFileExtensionFilter => "Application (*.exe)|*.exe";
+        public static string ZipFileExtensionFilter => "ZIP Archive (*.zip)|*.zip";
+        public static string XmlFileExtensionFilter => "XML-File (*.xml)|*.xml";
 
         // Settings
         public static ApplicationViewManager.Name General_DefaultApplicationViewName => ApplicationViewManager.Name.Dashboard;
