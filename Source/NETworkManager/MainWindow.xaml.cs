@@ -23,9 +23,7 @@ using NETworkManager.Models.Documentation;
 using NETworkManager.ViewModels;
 using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
-using DnsClient;
 using NETworkManager.Models.Profile;
-using NETworkManager.Models.ImportExport;
 
 namespace NETworkManager
 {
@@ -429,8 +427,8 @@ namespace NETworkManager
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {
-            // Force restart (if user has reset the settings or import them)
-            if (ConfigurationManager.Current.ForceRestart || ImportExportManager.ForceRestart)
+            // Force restart --> Import, Reset, etc.
+            if (ConfigurationManager.Current.ForceRestart)
             {
                 RestartApplication(false);
 

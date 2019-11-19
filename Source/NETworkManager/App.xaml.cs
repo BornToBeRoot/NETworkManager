@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Threading;
 using NETworkManager.Properties;
 using NETworkManager.Models.Profile;
-using NETworkManager.Models.ImportExport;
 
 namespace NETworkManager
 {
@@ -141,7 +140,7 @@ namespace NETworkManager
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             // Save settings, when the application is normally closed
-            if (_singleInstanceClose || ImportExportManager.ForceRestart || CommandLineManager.Current.Help)
+            if (_singleInstanceClose || ConfigurationManager.Current.ForceRestart || CommandLineManager.Current.Help)
                 return;
 
             _dispatcherTimer?.Stop();

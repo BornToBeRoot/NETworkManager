@@ -956,10 +956,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsImportExportView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\SettingsSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1040,8 +1036,6 @@
     <Compile Include="Models\Lookup\PortLookup.cs" />
     <Compile Include="Models\Lookup\OUILookup.cs" />
     <Compile Include="Models\Network\PortScanner.cs" />
-    <Compile Include="Models\ImportExport\ImportExportManager.cs" />
-    <Compile Include="Models\ImportExport\ImportFileNotValidException.cs" />
     <Compile Include="Models\Settings\SettingsFileInfo.cs" />
     <Compile Include="Validators\FileExistsValidator.cs" />
     <Compile Include="Validators\PortRangeValidator.cs" />
@@ -1111,7 +1105,6 @@
     <Compile Include="ViewModels\SettingsAppearanceViewModel.cs" />
     <Compile Include="ViewModels\SettingsLanguageViewModel.cs" />
     <Compile Include="ViewModels\SettingsHotKeysViewModel.cs" />
-    <Compile Include="ViewModels\SettingsImportExportViewModel.cs" />
     <Compile Include="ViewModels\SettingsSettingsViewModel.cs" />
     <Compile Include="ViewModels\SettingsAutostartViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
@@ -1145,9 +1138,6 @@
     </Compile>
     <Compile Include="Views\SettingsGeneralView.xaml.cs">
       <DependentUpon>SettingsGeneralView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsImportExportView.xaml.cs">
-      <DependentUpon>SettingsImportExportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsSettingsView.xaml.cs">
       <DependentUpon>SettingsSettingsView.xaml</DependentUpon>
