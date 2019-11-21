@@ -18,7 +18,7 @@ namespace NETworkManager.Models.Settings
         /// <summary>
         /// Load Appearance (AppTheme and Accent) from the user settings.
         /// </summary>
-        public static void Load()
+        static AppearanceManager()
         {
             // Add custom themes
             foreach (var file in Directory.GetFiles(ThemesFilePath))

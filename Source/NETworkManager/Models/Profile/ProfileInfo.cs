@@ -9,7 +9,6 @@ namespace NETworkManager.Models.Profile
     {
         public string Name { get; set; }
         public string Host { get; set; }
-        public Guid CredentialID { get; set; } = Guid.Empty;
         public string Group { get; set; }
         public string Tags { get; set; }
 

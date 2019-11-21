@@ -252,6 +252,37 @@ namespace NETworkManager
                 OnPropertyChanged();
             }
         }
+
+        private ICollectionView _profiles;
+        public ICollectionView Profiles
+        {
+            get => _profiles;
+            set
+            {
+                if (value == _profiles)
+                    return;
+
+                _profiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ProfileLocationInfo _selectedProfile;
+        public ProfileLocationInfo SelectedProfile
+        {
+            get => _selectedProfile;
+            set
+            {
+                if (Equals(value, _selectedProfile))
+                    return;
+
+                 if (value != null)
+                      ProfileManager.ChangeProfileSource(value);
+
+                _selectedProfile = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, window load and close events
@@ -264,9 +295,6 @@ namespace NETworkManager
 
             // Language Meta
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
-
-            // Load appearance
-            AppearanceManager.Load();
 
             // Transparency
             if (SettingsManager.Current.Appearance_EnableTransparency)
@@ -285,16 +313,11 @@ namespace NETworkManager
             if (ConfigurationManager.Current.IsAdmin)
                 Title = $"[{NETworkManager.Resources.Localization.Strings.Administrator}] {Title}";
 
-            // Load profiles
-            ProfileManager.Load();
-
             // Load settings
             ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
 
-            // Check if settings have changed
-            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
             // Register event system...
+            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
             EventSystem.RedirectProfileToApplicationEvent += EventSystem_RedirectProfileToApplicationEvent;
             EventSystem.RedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
             EventSystem.RedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
@@ -356,6 +379,9 @@ namespace NETworkManager
             // Load application list, filter, sort, etc.
             LoadApplicationList();
 
+            // Load profiles
+            Profiles = new CollectionViewSource { Source = ProfileManager.ProfilesLocations }.View;
+
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
@@ -409,8 +435,8 @@ namespace NETworkManager
 
                 var search = regex.Replace(Search, "");
 
-                    // Search by TranslatedName and Name
-                    return info.IsVisible && (regex.Replace(ApplicationViewManager.GetTranslatedNameByName(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
+                // Search by TranslatedName and Name
+                return info.IsVisible && (regex.Replace(ApplicationViewManager.GetTranslatedNameByName(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
             };
 
             SettingsManager.Current.General_ApplicationList.CollectionChanged += (sender, args) => Applications.Refresh();

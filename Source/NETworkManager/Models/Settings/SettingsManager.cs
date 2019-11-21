@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -10,10 +9,9 @@ namespace NETworkManager.Models.Settings
     public static class SettingsManager
     {
         #region Variables
-        private const string SettingsFolderName = "Settings";
-        private const string SettingsFileName = "Settings";
-        private const string SettingsVersion = "V2";
-        private const string SettingsFileExtension = "xml";
+        private static string SettingsFolderName => "Settings";
+        private static string SettingsFileName => "Settings";
+        private static string SettingsFileExtension => "xml";
 
         public static SettingsInfo Current { get; set; }
 
@@ -35,7 +33,7 @@ namespace NETworkManager.Models.Settings
 
         public static string GetPortableSettingsLocation()
         {
-            
+
             return Path.Combine(Path.GetDirectoryName(AssemblyManager.Current.Location) ?? throw new InvalidOperationException(), SettingsFolderName);
         }
 
@@ -58,33 +56,25 @@ namespace NETworkManager.Models.Settings
         #region FileName, FilePath
         public static string GetSettingsFileName()
         {
-            return $"{SettingsFileName}.{SettingsVersion}.{SettingsFileExtension}";
+            return $"{SettingsFileName}.{SettingsFileExtension}";
         }
 
         public static string GetSettingsFilePath()
         {
             return Path.Combine(GetSettingsLocation(), GetSettingsFileName());
         }
-        
+
         #endregion
 
         #region Load, Save
         public static void Load()
         {
-            if (File.Exists(GetSettingsFilePath()) && !CommandLineManager.Current.ResetSettings)
+            var filePath = GetSettingsFilePath();
+
+            if (File.Exists(filePath) && !CommandLineManager.Current.ResetSettings)
             {
-                SettingsInfo settingsInfo;
+                Current = DeserializeFromFile(filePath);
 
-                var xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
-
-                using (var fileStream = new FileStream(GetSettingsFilePath(), FileMode.Open))
-                {
-                    settingsInfo = (SettingsInfo)xmlSerializer.Deserialize(fileStream);
-                }
-
-                Current = settingsInfo;
-
-                // Set the setting changed to false after loading them from a file...
                 Current.SettingsChanged = false;
             }
             else
@@ -93,20 +83,42 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        public static void Save()
+        private static SettingsInfo DeserializeFromFile(string filePath)
         {
-            // Create the directory if it does not exist
-            Directory.CreateDirectory(GetSettingsLocation());
+            SettingsInfo settingsInfo;
 
             var xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
 
-            using (var fileStream = new FileStream(Path.Combine(GetSettingsFilePath()), FileMode.Create))
+            using (var fileStream = new FileStream(filePath, FileMode.Open))
             {
-                xmlSerializer.Serialize(fileStream, Current);
+                settingsInfo = (SettingsInfo)xmlSerializer.Deserialize(fileStream);
             }
+
+            return settingsInfo;
+        }
+
+        public static void Save()
+        {
+            var location = GetSettingsLocation();
+
+            // Create the directory if it does not exist
+            if (!Directory.Exists(location))
+                Directory.CreateDirectory(location);
+
+            SerializeToFile(GetSettingsFilePath());
 
             // Set the setting changed to false after saving them as file...
             Current.SettingsChanged = false;
+        }
+
+        private static void SerializeToFile(string filePath)
+        {
+            var xmlSerializer = new XmlSerializer(typeof(SettingsInfo));
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                xmlSerializer.Serialize(fileStream, Current);
+            }
         }
         #endregion
 

@@ -197,6 +197,7 @@
     <Compile Include="Models\Network\BandwidthMeter.cs" />
     <Compile Include="Models\Network\Whois.cs" />
     <Compile Include="Models\Network\WhoisServerInfo.cs" />
+    <Compile Include="Models\Profile\ProfileLocationInfo.cs" />
     <Compile Include="Models\PuTTY\PuTTYSessionInfo.cs" />
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopPerformanceConstants.cs" />

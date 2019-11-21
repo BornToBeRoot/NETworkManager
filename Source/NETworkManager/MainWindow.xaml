@@ -65,7 +65,8 @@
     <mahAppsControls:MetroWindow.RightWindowCommands>
         <mahAppsControls:WindowCommands>
             <StackPanel Orientation="Horizontal">
-            <Button Command="{Binding OpenWebsiteCommand}" Opacity="1" Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" Cursor="Hand">
+                <ComboBox ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" Foreground="{DynamicResource AccentColorBrush}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0" />
+                <Button Command="{Binding OpenWebsiteCommand}" Opacity="1" Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>

@@ -40,9 +40,6 @@ namespace NETworkManager
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            // Parse the command line arguments and store them in the current configuration
-            CommandLineManager.Parse();
-
             // If we have restart our application... wait until it has finished
             if (CommandLineManager.Current.RestartPid != 0)
             {
@@ -52,12 +49,6 @@ namespace NETworkManager
 
                 process?.WaitForExit();
             }
-
-            // Detect the current configuration
-            //////ConfigurationManager.Detect();
-
-            // Get assembly informations   
-            //////AssemblyManager.Load();
 
             // Update integrated settings %LocalAppData%\NETworkManager\NETworkManager_GUID (custom settings path)
             if (Settings.Default.UpgradeRequired)
@@ -77,9 +68,6 @@ namespace NETworkManager
 
                 ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
             }
-
-            // Load localization (requires settings to be loaded first)
-            LocalizationManager.Load();
 
             NETworkManager.Resources.Localization.Strings.Culture = LocalizationManager.Culture;
 
