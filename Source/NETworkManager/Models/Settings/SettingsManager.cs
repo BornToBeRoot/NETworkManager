@@ -9,6 +9,7 @@ namespace NETworkManager.Models.Settings
 {
     public static class SettingsManager
     {
+        #region Variables
         private const string SettingsFolderName = "Settings";
         private const string SettingsFileName = "Settings";
         private const string SettingsVersion = "V2";
@@ -18,12 +19,9 @@ namespace NETworkManager.Models.Settings
 
         //public static bool ForceRestart { get; set; }
         public static bool HotKeysChanged { get; set; }
+        #endregion
 
-        public static string GetSettingsFileName()
-        {
-            return $"{SettingsFileName}.{SettingsVersion}.{SettingsFileExtension}";
-        }
-
+        #region Methods        
         #region Settings locations (default, custom, portable)
         public static string GetDefaultSettingsLocation()
         {
@@ -37,18 +35,10 @@ namespace NETworkManager.Models.Settings
 
         public static string GetPortableSettingsLocation()
         {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new InvalidOperationException(), SettingsFolderName);
+            
+            return Path.Combine(Path.GetDirectoryName(AssemblyManager.Current.Location) ?? throw new InvalidOperationException(), SettingsFolderName);
         }
-        #endregion
 
-        #region File paths
-        public static string GetSettingsFilePath()
-        {
-            return Path.Combine(GetSettingsLocation(), GetSettingsFileName());
-        }
-        #endregion
-
-        #region SettingsLocation, SettingsLocationNotPortable
         public static string GetSettingsLocation()
         {
             return ConfigurationManager.Current.IsPortable ? GetPortableSettingsLocation() : GetSettingsLocationNotPortable();
@@ -65,6 +55,20 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
+        #region FileName, FilePath
+        public static string GetSettingsFileName()
+        {
+            return $"{SettingsFileName}.{SettingsVersion}.{SettingsFileExtension}";
+        }
+
+        public static string GetSettingsFilePath()
+        {
+            return Path.Combine(GetSettingsLocation(), GetSettingsFileName());
+        }
+        
+        #endregion
+
+        #region Load, Save
         public static void Load()
         {
             if (File.Exists(GetSettingsFilePath()) && !CommandLineManager.Current.ResetSettings)
@@ -104,7 +108,9 @@ namespace NETworkManager.Models.Settings
             // Set the setting changed to false after saving them as file...
             Current.SettingsChanged = false;
         }
+        #endregion
 
+        #region Move settings
         public static Task MoveSettingsAsync(string targedLocation)
         {
             return Task.Run(() => MoveSettings(targedLocation));
@@ -126,15 +132,9 @@ namespace NETworkManager.Models.Settings
                 Directory.Delete(GetSettingsLocation());
         }
 
-        public static void InitDefault()
-        {
-            // Init new Settings with default data
-            Current = new SettingsInfo
-            {
-                SettingsChanged = true
-            };
-        }
+        #endregion
 
+        #region Import, Export
         public static void Import(string filePath)
         {
             using (var zipArchive = ZipFile.OpenRead(filePath))
@@ -155,10 +155,23 @@ namespace NETworkManager.Models.Settings
                 zipArchive.CreateEntryFromFile(GetSettingsFilePath(), GetSettingsFileName(), CompressionLevel.Optimal);
             }
         }
+        #endregion
+
+        #region Init, Reset
+        public static void InitDefault()
+        {
+            // Init new Settings with default data
+            Current = new SettingsInfo
+            {
+                SettingsChanged = true
+            };
+        }
 
         public static void Reset()
         {
             InitDefault();
         }
+        #endregion
+        #endregion
     }
 }

@@ -57,8 +57,6 @@ namespace NETworkManager
                     return Resources.Localization.Strings.Autostart;
                 case Name.Update:
                     return Resources.Localization.Strings.Update;
-                case Name.ImportExport:
-                    return Resources.Localization.Strings.ImportExport;
                 case Name.Settings:
                     return Resources.Localization.Strings.Settings;
                 case Name.Profiles:
@@ -119,7 +117,6 @@ namespace NETworkManager
             HotKeys,
             Autostart,
             Update,
-            ImportExport,
             Settings,
             Profiles,
             Dashboard,

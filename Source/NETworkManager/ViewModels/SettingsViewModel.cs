@@ -87,9 +87,10 @@ namespace NETworkManager.ViewModels
         private SettingsStatusView _settingsStatusView;
         private SettingsHotKeysView _settingsHotKeysView;
         private SettingsAutostartView _settingsAutostartView;
-        private SettingsSettingsView _settingsSettingsView;
         private SettingsUpdateView _settingsUpdateView;
-        private DashboardSettingsView _dashboardSettingsView;
+        private SettingsSettingsView _settingsSettingsView;
+        private SettingsProfilesView _settingsProfilesView;
+        private DashboardSettingsView _dashboardSettingsView;        
         private IPScannerSettingsView _ipScannerSettingsView;
         private PortScannerSettingsView _portScannerSettingsView;
         private PingSettingsView _pingSettingsViewModel;
@@ -203,6 +204,12 @@ namespace NETworkManager.ViewModels
                         _settingsAutostartView = new SettingsAutostartView();
 
                     SettingsContent = _settingsAutostartView;
+                    break;              
+                case SettingsViewManager.Name.Update:
+                    if (_settingsUpdateView == null)
+                        _settingsUpdateView = new SettingsUpdateView();
+
+                    SettingsContent = _settingsUpdateView;
                     break;
                 case SettingsViewManager.Name.Settings:
                     if (_settingsSettingsView == null)
@@ -213,11 +220,14 @@ namespace NETworkManager.ViewModels
 
                     SettingsContent = _settingsSettingsView;
                     break;
-                case SettingsViewManager.Name.Update:
-                    if (_settingsUpdateView == null)
-                        _settingsUpdateView = new SettingsUpdateView();
+                case SettingsViewManager.Name.Profiles:
+                    if (_settingsProfilesView == null)
+                        _settingsProfilesView = new SettingsProfilesView();
 
-                    SettingsContent = _settingsUpdateView;
+                    // Save settings (if changed) and check if files exists
+                    _settingsProfilesView.OnVisible();
+
+                    SettingsContent = _settingsProfilesView;
                     break;
                 case SettingsViewManager.Name.Dashboard:
                     if (_dashboardSettingsView == null)

@@ -397,6 +397,22 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
+
+        // Profiles
+        private string _profiles_CustomProfilesLocation;
+        public string Profiles_CustomProfilesLocation
+        {
+            get => _profiles_CustomProfilesLocation;
+            set
+            {
+                if (value == _profiles_CustomProfilesLocation)
+                    return;
+
+                _profiles_CustomProfilesLocation = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Others

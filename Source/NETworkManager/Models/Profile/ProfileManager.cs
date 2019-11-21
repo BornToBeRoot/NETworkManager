@@ -15,15 +15,53 @@ namespace NETworkManager.Models.Profile
 {
     public static class ProfileManager
     {
-        public const string ProfilesFileName = "Profiles";
-        public const string ProfilesVersion = "V2";
-        public const string ProfilesFileExtension = "xml";
+        #region Variables
+        private const string ProfilesFolderName = "Profiles";
+        private const string ProfilesFileName = "Profiles";
+        private const string ProfilesVersion = "V2";
+        private const string ProfilesFileExtension = "xml";
 
         public const string TagIdentifier = "tag=";
 
         public static ObservableCollection<ProfileInfo> Profiles { get; set; }
         public static bool ProfilesChanged { get; set; }
 
+        // public static bool IsEncrypted { get; set; }
+        #endregion
+
+        #region Profiles locations (default, custom, portable)
+        public static string GetDefaultProfilesLocation()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AssemblyManager.Current.Name, ProfilesFolderName);
+        }
+
+        public static string GetCustomProfilesLocation()
+        {
+            return SettingsManager.Current.Profiles_CustomProfilesLocation;
+        }
+
+        public static string GetPortableProfilesLocation()
+        {
+            return Path.Combine(Path.GetDirectoryName(AssemblyManager.Current.Location) ?? throw new InvalidOperationException(), ProfilesFolderName);
+        }
+
+        public static string GetProfilesLocation()
+        {
+            return ConfigurationManager.Current.IsPortable ? GetPortableProfilesLocation() : GetProfilesLocationNotPortable();
+        }
+
+        public static string GetProfilesLocationNotPortable()
+        {
+            var location = GetCustomProfilesLocation();
+
+            if (!string.IsNullOrEmpty(location) && Directory.Exists(location))
+                return location;
+
+            return GetDefaultProfilesLocation();
+        }
+        #endregion
+
+        #region FileName, FilePath
         public static string GetProfilesFileName()
         {
             return $"{ProfilesFileName}.{ProfilesVersion}.{ProfilesFileExtension}";
@@ -31,8 +69,9 @@ namespace NETworkManager.Models.Profile
 
         public static string GetProfilesFilePath()
         {
-            return Path.Combine(SettingsManager.GetSettingsLocation(), GetProfilesFileName());
+            return Path.Combine(GetProfilesLocation(), GetProfilesFileName());
         }
+        #endregion
 
         public static List<string> GetGroups()
         {
@@ -118,6 +157,7 @@ namespace NETworkManager.Models.Profile
             }
         }
 
+        #region Methods --> Add profile, Remove profile, Rename group
         public static void AddProfile(ProfileInfo profile)
         {
             // Possible fix for appcrash --> when icollection view is refreshed...
@@ -272,7 +312,7 @@ namespace NETworkManager.Models.Profile
             {
                 lock (Profiles)
                     Profiles.Remove(profile);
-            }));            
+            }));
         }
 
         public static void RenameGroup(string oldGroup, string group)
@@ -290,8 +330,9 @@ namespace NETworkManager.Models.Profile
                 ProfilesChanged = true;
             }
         }
+        #endregion
 
-        #region Dialogs
+        #region Dialogs --> Add profile, Edit profile, CopyAs profile, Delete profile, Edit group
         public static async void ShowAddProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator)
         {
             var customDialog = new CustomDialog

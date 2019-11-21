@@ -273,6 +273,7 @@
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
+    <Compile Include="ViewModels\SettingsProfilesViewModel.cs" />
     <Compile Include="ViewModels\WiFiViewModel.cs" />
     <Compile Include="ViewModels\FirstRunViewModel.cs" />
     <Compile Include="Models\Profile\IProfileManager.cs" />
@@ -348,6 +349,9 @@
     </Compile>
     <Compile Include="Views\PingMonitorHostView.xaml.cs">
       <DependentUpon>PingMonitorHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsProfilesView.xaml.cs">
+      <DependentUpon>SettingsProfilesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WiFiView.xaml.cs">
       <DependentUpon>WiFiView.xaml</DependentUpon>
@@ -701,6 +705,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PingMonitorHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SettingsProfilesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
