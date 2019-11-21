@@ -18,6 +18,7 @@ namespace NETworkManager
             new SettingsViewInfo(Name.Autostart, new PackIconMaterial { Kind = PackIconMaterialKind.Power }, Group.General),
             new SettingsViewInfo(Name.Update, new PackIconMaterial { Kind = PackIconMaterialKind.Download }, Group.General),
             new SettingsViewInfo(Name.Settings, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Cog }, Group.General),
+            new SettingsViewInfo(Name.Profiles, new PackIconMaterial { Kind = PackIconMaterialKind.FormatListBulletedType }, Group.General),
 
             // Applications
             new SettingsViewInfo(Name.Dashboard, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Dashboard), Group.Applications),
@@ -60,6 +61,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.ImportExport;
                 case Name.Settings:
                     return Resources.Localization.Strings.Settings;
+                case Name.Profiles:
+                    return Resources.Localization.Strings.Profiles;
                 case Name.Dashboard:
                     return Resources.Localization.Strings.Dashboard;
                 case Name.IPScanner:
@@ -118,6 +121,7 @@ namespace NETworkManager
             Update,
             ImportExport,
             Settings,
+            Profiles,
             Dashboard,
             IPScanner,
             PortScanner,
@@ -141,3 +145,4 @@ namespace NETworkManager
         }
     }
 }
+

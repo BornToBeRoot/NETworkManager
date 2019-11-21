@@ -116,7 +116,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <TextBlock Foreground="{DynamicResource AccentColorBrush}" Text="{Binding ImportStatusMessage}" Visibility="{Binding ImportExportStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+            <TextBlock Foreground="{DynamicResource AccentColorBrush}" Text="{Binding ImportStatusMessage}" Visibility="{Binding DisplayImportStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Export}" />
         <StackPanel Margin="0,0,0,20">
