@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
@@ -16,6 +17,7 @@ namespace NETworkManager.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+
             /*
             if (_viewModel.CloseAction != null)
                 return;
@@ -66,6 +68,16 @@ namespace NETworkManager.Views
         public void OnVisible()
         {
             _viewModel.SaveAndCheckSettings();
+        }
+        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
+        {
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
+        }
+
+        private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            //_viewModel.EditProfileLocation();
         }
     }
 }

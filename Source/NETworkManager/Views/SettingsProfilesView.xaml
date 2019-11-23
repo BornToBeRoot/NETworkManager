@@ -11,8 +11,9 @@
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:profile="clr-namespace:NETworkManager.Models.Profile"
         dialogs:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:SettingsSettingsViewModel}">
+        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:SettingsProfilesViewModel}">
     <UserControl.Resources>
         <!-- Converter -->
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -103,6 +104,71 @@
             </Grid>
             <mahAppsControls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding MovingFiles, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0"/>
         </StackPanel>
+        <DataGrid x:Name="DataGridProfileLocations" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile}" Height="200" Margin="0,0,0,10">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
+                    <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileFileCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileFileCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profile:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
+                <!--<DataGridTextColumn Header="{x:Static localization:Strings.Path}" Binding="{Binding (profile:ProfileFileInfo.Path)}" Width="*" />-->
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.IsEncrypted}" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                <Rectangle.Resources>
+                                    <VisualBrush x:Key="VisualLockOpen" Stretch="Uniform" Visual="{iconPacks:Material Kind=LockOpenOutline}"/>
+                                    <VisualBrush x:Key="VisualLockClosed" Stretch="Uniform" Visual="{iconPacks:Material Kind=LockOutline}"/>
+                                </Rectangle.Resources>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="OpacityMask" Value="{StaticResource VisualLockOpen}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=(profile:ProfileFileInfo.IsEncrypted)}" Value="True">
+                                                <Setter Property="OpacityMask" Value="{StaticResource VisualLockClosed}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.InputBindings>
+                <KeyBinding Command="{Binding EditProfileFileCommand}" Key="F2" />
+                <KeyBinding Command="{Binding DeleteProfileFileCommand}" Key="Delete" />
+            </DataGrid.InputBindings>
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"     />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
+                            <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
         <!--
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Import}" />
         <TextBox x:Name="TextBoxImportFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.LocationOfTheImport}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseImportFileCommand}" AllowDrop="True" Drop="TextBoxImportFilePath_Drop" PreviewDragOver="TextBoxImportFilePath_PreviewDragOver" Margin="0,0,0,10">

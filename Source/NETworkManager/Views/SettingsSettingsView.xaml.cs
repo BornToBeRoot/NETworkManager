@@ -15,14 +15,14 @@ namespace NETworkManager.Views
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
+        {            
             if (_viewModel.CloseAction != null)
                 return;
 
             var window = Window.GetWindow(this);
 
             if (window != null)
-                _viewModel.CloseAction = window.Close;
+                _viewModel.CloseAction = window.Close;                
         }
 
         private void TextBoxLocation_Drop(object sender, DragEventArgs e)

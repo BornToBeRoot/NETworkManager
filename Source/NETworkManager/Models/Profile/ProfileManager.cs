@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using System.Xml.Serialization;
@@ -20,28 +21,47 @@ namespace NETworkManager.Models.Profile
         #region Variables
         private static string ProfilesFolderName => "Profiles";
         private static string ProfilesDefaultFileName => "Default";
-        private static string ProfilesFileExtension => "xml";
+        public static string ProfilesFileExtension => ".xml";
 
         public static string TagIdentifier => "tag=";
 
-        public static ObservableCollection<ProfileLocationInfo> ProfilesLocations { get; set; } = new ObservableCollection<ProfileLocationInfo>();
-        public static ProfileLocationInfo CurrentLoadedProfilesLocation;
+        public static ObservableCollection<ProfileFileInfo> ProfileFiles { get; set; } = new ObservableCollection<ProfileFileInfo>();
+
+        private static ProfileFileInfo _profileFileInfo;
+        public static ProfileFileInfo LoadedProfileFile
+        {
+            get => _profileFileInfo;
+            set
+            {
+                if (value == _profileFileInfo)
+                    return;
+
+                if (value != null)
+                    LoadedProfileFileChanged(value);
+
+                _profileFileInfo = value;
+            }
+        }
         public static ObservableCollection<ProfileInfo> Profiles { get; set; } = new ObservableCollection<ProfileInfo>();
         public static bool ProfilesChanged { get; set; }
 
-        // public static bool IsEncrypted { get; set; }
+        public static event EventHandler<ProfileFileInfoArgs> LoadedProfileFilesChangedEvent;
+
+        private static void LoadedProfileFileChanged(ProfileFileInfo profileFileInfo)
+        {
+            LoadedProfileFilesChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo));
+        }
         #endregion
 
         static ProfileManager()
         {
+            // Load files
             LoadFiles();
-
-            // Create default
-            if (ProfilesLocations.Count == 0)
-                ProfilesLocations.Add(new ProfileLocationInfo(ProfilesDefaultFileName, GetProfilesDefaultFilePath()));
 
             Profiles.CollectionChanged += Profiles_CollectionChanged;
 
+            // Load profile
+            Load(ProfileFiles[0]);
         }
 
         #region Profiles locations (default, custom, portable)
@@ -79,7 +99,7 @@ namespace NETworkManager.Models.Profile
         #region FileName, FilePath
         public static string GetProfilesDefaultFileName()
         {
-            return $"{ProfilesDefaultFileName}.{ProfilesFileExtension}";
+            return $"{ProfilesDefaultFileName}{ProfilesFileExtension}";
         }
 
         public static string GetProfilesDefaultFilePath()
@@ -103,6 +123,12 @@ namespace NETworkManager.Models.Profile
             return list;
         }
 
+        private static IEnumerable<string> GetProfileFiles(string location)
+        {
+            return Directory.GetFiles(location).Where(x => Path.GetExtension(x) == ProfilesFileExtension);
+        }
+
+        #region Load files, refresh files
         private static void LoadFiles()
         {
             var location = GetProfilesLocation();
@@ -110,20 +136,51 @@ namespace NETworkManager.Models.Profile
             if (!Directory.Exists(location))
                 return;
 
-            ProfilesLocations.Clear();
+            ProfileFiles.Clear();
 
-            foreach (var file in Directory.GetFiles(location).Where(x => Path.GetExtension(x) == $".{ProfilesFileExtension}"))
-                ProfilesLocations.Add(new ProfileLocationInfo(Path.GetFileNameWithoutExtension(file), file));
+            foreach (var file in GetProfileFiles(location))
+                ProfileFiles.Add(new ProfileFileInfo(Path.GetFileNameWithoutExtension(file), file));
+
+            // Create default
+            if (ProfileFiles.Count == 0)
+                ProfileFiles.Add(new ProfileFileInfo(ProfilesDefaultFileName, GetProfilesDefaultFilePath()));
         }
 
-        private static void Load()
+        public static void RefreshFiles()
         {
+            LoadFiles();
+
+            if (LoadedProfileFile != null)
+            {
+                var name = LoadedProfileFile.Name;
+
+                var profileFile = ProfileFiles.FirstOrDefault(x => x.Name == name);
+
+                Load(profileFile != null ? profileFile : ProfileFiles[0]);
+            }
+        }
+        #endregion
+
+        public static void SwitchProfile(ProfileFileInfo info)
+        {
+            // Save
+            if (LoadedProfileFile != null && ProfilesChanged)
+                Save();
+
+            // Load             
             Profiles.Clear();
 
-            if (File.Exists(CurrentLoadedProfilesLocation.Path)) // Default file does not exist on first start...
-                DeserializeFromFile(CurrentLoadedProfilesLocation.Path);
+            Load(info);
+        }
+
+        private static void Load(ProfileFileInfo info)
+        {
+            if (File.Exists(info.Path)) // Load if exists...
+                DeserializeFromFile(info.Path);
 
             ProfilesChanged = false;
+
+            LoadedProfileFile = info;
         }
 
         private static void DeserializeFromFile(string filePath)
@@ -144,7 +201,7 @@ namespace NETworkManager.Models.Profile
             if (!Directory.Exists(location))
                 Directory.CreateDirectory(location);
 
-            SerializeToFile(CurrentLoadedProfilesLocation.Path);
+            SerializeToFile(LoadedProfileFile.Path);
 
             ProfilesChanged = false;
         }
@@ -163,6 +220,35 @@ namespace NETworkManager.Models.Profile
         {
             Profiles.Clear();
         }
+
+
+        #region Move settings
+        public static Task MoveProfilesAsync(string targedLocation)
+        {
+            return Task.Run(() => MoveProfiles(targedLocation));
+        }
+
+        private static void MoveProfiles(string targedLocation)
+        {
+            // Create the dircetory and copy the files to the new location
+            if (!Directory.Exists(targedLocation))
+                Directory.CreateDirectory(targedLocation);
+
+            var sourceFiles = GetProfileFiles(GetProfilesLocation());
+
+            // Copy files
+            foreach (var file in sourceFiles)
+                File.Copy(file, Path.Combine(targedLocation, Path.GetFileName(file)), true);
+
+            // Delete files
+            foreach (var file in sourceFiles)
+                File.Delete(file);
+
+            // Delete folder, if it is empty not the default profiles location and does not contain any files or directories
+            if (GetProfilesLocation() != GetDefaultProfilesLocation() && Directory.GetFiles(GetProfilesLocation()).Length == 0 && Directory.GetDirectories(GetProfilesLocation()).Length == 0)
+                Directory.Delete(GetProfilesLocation());
+        }
+        #endregion
 
         #region Methods --> Add profile, Remove profile, Rename group
         public static void AddProfile(ProfileInfo profile)
@@ -310,19 +396,6 @@ namespace NETworkManager.Models.Profile
                 Whois_InheritHost = instance.Whois_InheritHost,
                 Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim()
             });
-        }
-
-        public static void ChangeProfileSource(ProfileLocationInfo value)
-        {
-            Debug.WriteLine("Change location from " + CurrentLoadedProfilesLocation + " to " + value.Path);
-
-            // Save
-            if (CurrentLoadedProfilesLocation != null && ProfilesChanged)
-                Save();
-
-            // Load             
-            CurrentLoadedProfilesLocation = value;
-            Load();
         }
 
         public static void RemoveProfile(ProfileInfo profile)

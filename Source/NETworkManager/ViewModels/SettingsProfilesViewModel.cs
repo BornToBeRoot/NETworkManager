@@ -3,9 +3,12 @@ using NETworkManager.Models.Profile;
 using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
@@ -18,8 +21,6 @@ namespace NETworkManager.ViewModels
         private readonly bool _isLoading;
 
         public bool IsPortable => ConfigurationManager.Current.IsPortable;
-
-        //public Action CloseAction { get; set; }
 
         private string _location;
         public string Location
@@ -45,6 +46,34 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _movingFiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ICollectionView _profileFiles;
+        public ICollectionView ProfileFiles
+        {
+            get => _profileFiles;
+            set
+            {
+                if (value == _profileFiles)
+                    return;
+
+                _profileFiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ProfileFileInfo _selectedProfileFile;
+        public ProfileFileInfo SelectedProfileFile
+        {
+            get => _selectedProfileFile;
+            set
+            {
+                if (Equals(value, _selectedProfileFile))
+                    return;
+
+                _selectedProfileFile = value;
                 OnPropertyChanged();
             }
         }
@@ -156,6 +185,9 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
+            ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
+            ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
+
             LoadSettings();
 
             _isLoading = false;
@@ -197,10 +229,13 @@ namespace NETworkManager.ViewModels
         {
             MovingFiles = true;
 
-            var useFileInOtherLocation = false;
+            // Get files from new location and check if there are files with the same name
+            var containsFile = Directory.GetFiles(Location).Where(x => Path.GetExtension(x) == ProfileManager.ProfilesFileExtension).Count() > 0;
+
+            var copyFiles = false;
 
             // Check if settings file exists in new location
-            if (File.Exists(Path.Combine(Location, SettingsManager.GetSettingsFileName())))
+            if (containsFile)
             {
                 var settings = AppearanceManager.MetroDialog;
 
@@ -216,47 +251,37 @@ namespace NETworkManager.ViewModels
                     case MessageDialogResult.Negative:
                         MovingFiles = false;
                         return;
-                    case MessageDialogResult.FirstAuxiliary:
-                        useFileInOtherLocation = true;
+                    case MessageDialogResult.Affirmative:
+                        copyFiles = true;
                         break;
                 }
             }
 
-            // Use other location
-            if (useFileInOtherLocation)
+            if (copyFiles)
             {
-                Properties.Settings.Default.Settings_CustomSettingsLocation = Location;
+                try
+                {
+                    await ProfileManager.MoveProfilesAsync(Location);
 
-                MovingFiles = false;
+                    // Show the user some awesome animation to indicate we are working on it :)
+                    await Task.Delay(2000);
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
 
-                // Restart the application
-                //  ConfigurationManager.Current.ForceRestart = true;
-                //  CloseAction();
+                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
 
-                return;
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
             }
 
-            // Move files...
-            try
-            {
-                await SettingsManager.MoveSettingsAsync(Location);
+            SettingsManager.Current.Profiles_CustomProfilesLocation = Location;
 
-                Properties.Settings.Default.Settings_CustomSettingsLocation = Location;
-
-                // Show the user some awesome animation to indicate we are working on it :)
-                await Task.Delay(2000);
-            }
-            catch (Exception ex)
-            {
-                var settings = AppearanceManager.MetroDialog;
-
-                settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
-            }
+            ProfileManager.RefreshFiles();
 
             Location = string.Empty;
-            Location = Properties.Settings.Default.Settings_CustomSettingsLocation;
+            Location = SettingsManager.Current.Profiles_CustomProfilesLocation;
 
             MovingFiles = false;
         }
@@ -267,6 +292,7 @@ namespace NETworkManager.ViewModels
         {
             Location = ProfileManager.GetDefaultProfilesLocation();
         }
+
         /*
         public ICommand BrowseImportFileCommand => new RelayCommand(p => BrowseFileAction());
 

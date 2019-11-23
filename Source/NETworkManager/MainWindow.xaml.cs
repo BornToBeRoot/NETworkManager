@@ -253,33 +253,35 @@ namespace NETworkManager
             }
         }
 
-        private ICollectionView _profiles;
-        public ICollectionView Profiles
+        private ICollectionView _profileFiles;
+        public ICollectionView ProfileFiles
         {
-            get => _profiles;
+            get => _profileFiles;
             set
             {
-                if (value == _profiles)
+                if (value == _profileFiles)
                     return;
 
-                _profiles = value;
+                _profileFiles = value;
                 OnPropertyChanged();
             }
         }
 
-        private ProfileLocationInfo _selectedProfile;
-        public ProfileLocationInfo SelectedProfile
+        private ProfileFileInfo _selectedProfileFile;
+        public ProfileFileInfo SelectedProfileFile
         {
-            get => _selectedProfile;
+            get => _selectedProfileFile;
             set
             {
-                if (Equals(value, _selectedProfile))
+                if (Equals(value, _selectedProfileFile))
                     return;
 
-                 if (value != null)
-                      ProfileManager.ChangeProfileSource(value);
+                _selectedProfileFile = value;
 
-                _selectedProfile = value;
+                // Event will fire on change...
+                if (value != null && ProfileManager.LoadedProfileFile != value)
+                    ProfileManager.SwitchProfile(value);
+
                 OnPropertyChanged();
             }
         }
@@ -383,7 +385,9 @@ namespace NETworkManager
             LoadApplicationList();
 
             // Load profiles
-            Profiles = new CollectionViewSource { Source = ProfileManager.ProfilesLocations }.View;
+            ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
+            ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
+            ProfileManager.LoadedProfileFilesChangedEvent += ProfileManager_LoadedProfileFilesChangedEvent;
 
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
@@ -452,6 +456,13 @@ namespace NETworkManager
             // Scroll into view
             if (SelectedApplication != null)
                 ListViewApplication.ScrollIntoView(SelectedApplication);
+        }
+
+        private void ProfileManager_LoadedProfileFilesChangedEvent(object sender, ProfileFileInfoArgs e)
+        {
+            // Check for local changes...
+            if (SelectedProfileFile == null || SelectedProfileFile.Path != e.ProfileFileInfo.Path)
+                SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Path == e.ProfileFileInfo.Path);
         }
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)

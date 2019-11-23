@@ -3128,6 +3128,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is encrypted.
+        /// </summary>
+        public static string IsEncrypted {
+            get {
+                return ResourceManager.GetString("IsEncrypted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Keyboard.
         /// </summary>
         public static string Keyboard {

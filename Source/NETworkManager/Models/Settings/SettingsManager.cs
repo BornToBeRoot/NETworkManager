@@ -11,7 +11,7 @@ namespace NETworkManager.Models.Settings
         #region Variables
         private static string SettingsFolderName => "Settings";
         private static string SettingsFileName => "Settings";
-        private static string SettingsFileExtension => "xml";
+        private static string SettingsFileExtension => ".xml";
 
         public static SettingsInfo Current { get; set; }
 
@@ -56,7 +56,7 @@ namespace NETworkManager.Models.Settings
         #region FileName, FilePath
         public static string GetSettingsFileName()
         {
-            return $"{SettingsFileName}.{SettingsFileExtension}";
+            return $"{SettingsFileName}{SettingsFileExtension}";
         }
 
         public static string GetSettingsFilePath()
@@ -131,15 +131,16 @@ namespace NETworkManager.Models.Settings
         private static void MoveSettings(string targedLocation)
         {
             // Create the dircetory and copy the files to the new location
-            Directory.CreateDirectory(targedLocation);
+            if (!Directory.Exists(targedLocation))
+                Directory.CreateDirectory(targedLocation);
 
             // Copy file
             File.Copy(GetSettingsFilePath(), Path.Combine(targedLocation, GetSettingsFileName()), true);
 
-            // Delte file
+            // Delete file
             File.Delete(GetSettingsFilePath());
 
-            // Delete folder, if it is empty not the default settings locations and does not contain any files or directories
+            // Delete folder, if it is empty not the default settings location and does not contain any files or directories
             if (GetSettingsLocation() != GetDefaultSettingsLocation() && Directory.GetFiles(GetSettingsLocation()).Length == 0 && Directory.GetDirectories(GetSettingsLocation()).Length == 0)
                 Directory.Delete(GetSettingsLocation());
         }
