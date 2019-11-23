@@ -296,6 +296,9 @@ namespace NETworkManager
             // Language Meta
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
 
+            // Load / Change appearance
+            AppearanceManager.Load();
+
             // Transparency
             if (SettingsManager.Current.Appearance_EnableTransparency)
             {

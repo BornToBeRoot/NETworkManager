@@ -139,6 +139,8 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\IsDefaultProfilesLocationToBooleanConverter.cs" />
+    <Compile Include="Converters\IsProfilesLocationToBooleanConverter.cs" />
     <Compile Include="Converters\WiFiTooltipChannelConverter.cs" />
     <Compile Include="Converters\BandwidthBytesToSizeConverter.cs" />
     <Compile Include="Converters\IntZeroReverseToVisibilityCollapsedConverter.cs" />
@@ -1177,7 +1179,7 @@
     <Compile Include="Converters\IPAddressArrayToStringConverter.cs" />
     <Compile Include="Converters\Bytes1000ToSpeedConverter.cs" />
     <Compile Include="Converters\IsSettingsLocationToBooleanConverter.cs" />
-    <Compile Include="Converters\IsDefaultLocationToBooleanConverter.cs" />
+    <Compile Include="Converters\IsDefaultSettingsLocationToBooleanConverter.cs" />
     <Compile Include="Converters\AccentToBrushConverter.cs" />
     <Compile Include="Converters\AppThemeToBrushConverter.cs" />
     <Compile Include="Views\PortScannerView.xaml.cs">

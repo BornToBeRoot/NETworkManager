@@ -19,16 +19,16 @@ namespace NETworkManager.ViewModels
         public bool IsPortable => ConfigurationManager.Current.IsPortable;
         public Action CloseAction { get; set; }
 
-        private string _locationSelectedPath;
-        public string LocationSelectedPath
+        private string _location;
+        public string Location
         {
-            get => _locationSelectedPath;
+            get => _location;
             set
             {
-                if (value == _locationSelectedPath)
+                if (value == _location)
                     return;
 
-                _locationSelectedPath = value;
+                _location = value;
                 OnPropertyChanged();
             }
         }
@@ -160,7 +160,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            LocationSelectedPath = SettingsManager.GetSettingsLocationNotPortable();
+            Location = SettingsManager.GetSettingsLocation();
         }
         #endregion
 
@@ -171,13 +171,13 @@ namespace NETworkManager.ViewModels
         {
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
             {
-                if (Directory.Exists(LocationSelectedPath))
-                    dialog.SelectedPath = LocationSelectedPath;
+                if (Directory.Exists(Location))
+                    dialog.SelectedPath = Location;
 
                 var dialogResult = dialog.ShowDialog();
 
                 if (dialogResult == System.Windows.Forms.DialogResult.OK)
-                    LocationSelectedPath = dialog.SelectedPath;
+                    Location = dialog.SelectedPath;
             }
         }
 
@@ -188,16 +188,16 @@ namespace NETworkManager.ViewModels
             Process.Start("explorer.exe", SettingsManager.GetSettingsLocation());
         }
 
-        public ICommand ChangeSettingsCommand => new RelayCommand(p => ChangeSettingsAction());
+        public ICommand ChangeLocationCommand => new RelayCommand(p => ChangeLocationAction());
 
-        private async void ChangeSettingsAction()
+        private async void ChangeLocationAction()
         {
             MovingFiles = true;
-            //var overwrite = false;
+            
             var useFileInOtherLocation = false;
 
             // Check if settings file exists in new location
-            if (File.Exists(Path.Combine(LocationSelectedPath, SettingsManager.GetSettingsFileName())))
+            if (File.Exists(Path.Combine(Location, SettingsManager.GetSettingsFileName())))
             {
                 var settings = AppearanceManager.MetroDialog;
 
@@ -222,7 +222,7 @@ namespace NETworkManager.ViewModels
             // Use other location
             if (useFileInOtherLocation)
             {
-                Properties.Settings.Default.Settings_CustomSettingsLocation = LocationSelectedPath;
+                Properties.Settings.Default.Settings_CustomSettingsLocation = Location;
 
                 MovingFiles = false;
 
@@ -236,9 +236,9 @@ namespace NETworkManager.ViewModels
             // Move files...
             try
             {
-                await SettingsManager.MoveSettingsAsync(LocationSelectedPath);
+                await SettingsManager.MoveSettingsAsync(Location);
 
-                Properties.Settings.Default.Settings_CustomSettingsLocation = LocationSelectedPath;
+                Properties.Settings.Default.Settings_CustomSettingsLocation = Location;
 
                 // Show the user some awesome animation to indicate we are working on it :)
                 await Task.Delay(2000);
@@ -252,8 +252,8 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
-            LocationSelectedPath = string.Empty;
-            LocationSelectedPath = Properties.Settings.Default.Settings_CustomSettingsLocation;
+            Location = string.Empty;
+            Location = Properties.Settings.Default.Settings_CustomSettingsLocation;
 
             MovingFiles = false;
         }
@@ -262,7 +262,7 @@ namespace NETworkManager.ViewModels
 
         private void RestoreDefaultSettingsLocationAction()
         {
-            LocationSelectedPath = SettingsManager.GetDefaultSettingsLocation();
+            Location = SettingsManager.GetDefaultSettingsLocation();
         }
 
         public ICommand BrowseImportFileCommand => new RelayCommand(p => BrowseFileAction());
@@ -383,9 +383,9 @@ namespace NETworkManager.ViewModels
 
         public void SetLocationPathFromDragDrop(string path)
         {
-            LocationSelectedPath = path;
+            Location = path;
 
-            OnPropertyChanged(nameof(LocationSelectedPath));
+            OnPropertyChanged(nameof(Location));
         }
 
         public void SetImportFilePathFromDragDrop(string filePath)

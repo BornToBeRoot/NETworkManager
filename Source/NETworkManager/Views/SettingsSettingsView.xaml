@@ -17,7 +17,7 @@
         <!-- Converter -->
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:IsDefaultSettingsLocationToBooleanConverter x:Key="IsDefaultSettingsLocationToBoolConverter" />
+        <converters:IsDefaultSettingsLocationToBooleanConverter x:Key="IsDefaultSettingsLocationToBooleanConverter" />
         <converters:IsSettingsLocationToBooleanConverter x:Key="IsSettingsLocationToBoolConverter" />
         <converters:ValidateSettingsResetConverter x:Key="ValidateSettingsResetConverter" />
     </UserControl.Resources>
@@ -25,7 +25,7 @@
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Location}" />
         <TextBox x:Name="TextBoxLocation" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.EnterLocationDots}" IsEnabled="{Binding IsPortable, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseLocationFolderCommand}" AllowDrop="True" Drop="TextBoxLocation_Drop" PreviewDragOver="TextBoxLocation_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="LocationSelectedPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="Location" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                         <validators:SettingsFolderExistsValidator ValidatesOnTargetUpdated="True" />
@@ -48,7 +48,7 @@
                                 <Style.Triggers>
                                     <DataTrigger Value="False">
                                         <DataTrigger.Binding>
-                                            <Binding Converter="{StaticResource IsDefaultSettingsLocationToBoolConverter}" ElementName="TextBoxLocation" Path="Text"/>
+                                            <Binding Converter="{StaticResource IsDefaultSettingsLocationToBooleanConverter}" ElementName="TextBoxLocation" Path="Text"/>
                                         </DataTrigger.Binding>
                                         <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
@@ -56,7 +56,7 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button Content="{x:Static localization:Strings.Change}" Command="{Binding ChangeSettingsCommand}">
+                    <Button Content="{x:Static localization:Strings.Change}" Command="{Binding ChangeLocationCommand}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
                                 <Setter Property="IsEnabled" Value="False" />
