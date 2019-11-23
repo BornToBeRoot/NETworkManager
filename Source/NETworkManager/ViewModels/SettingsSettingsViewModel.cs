@@ -16,6 +16,7 @@ namespace NETworkManager.ViewModels
 
         private readonly bool _isLoading;
 
+        public bool IsPortable => ConfigurationManager.Current.IsPortable;
         public Action CloseAction { get; set; }
 
         private string _locationSelectedPath;

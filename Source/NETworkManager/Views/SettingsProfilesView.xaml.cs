@@ -6,7 +6,7 @@ namespace NETworkManager.Views
 {
     public partial class SettingsProfilesView
     {
-        private readonly SettingsSettingsViewModel _viewModel = new SettingsSettingsViewModel(DialogCoordinator.Instance);
+        private readonly SettingsProfilesViewModel _viewModel = new SettingsProfilesViewModel(DialogCoordinator.Instance);
 
         public SettingsProfilesView()
         {
@@ -16,13 +16,15 @@ namespace NETworkManager.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            /*
             if (_viewModel.CloseAction != null)
                 return;
-
+            
             var window = Window.GetWindow(this);
 
             if (window != null)
                 _viewModel.CloseAction = window.Close;
+                */
         }
 
         private void TextBoxLocation_Drop(object sender, DragEventArgs e)
@@ -42,6 +44,7 @@ namespace NETworkManager.Views
             e.Handled = true;
         }
 
+        /*
         private void TextBoxImportFilePath_Drop(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -58,6 +61,7 @@ namespace NETworkManager.Views
             e.Effects = DragDropEffects.Copy;
             e.Handled = true;
         }
+        */
 
         public void OnVisible()
         {

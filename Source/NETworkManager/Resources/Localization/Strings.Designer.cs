@@ -3245,6 +3245,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location cannot be changed in portable version!.
+        /// </summary>
+        public static string LocationCannotBeChangedInThePortableVersion {
+            get {
+                return ResourceManager.GetString("LocationCannotBeChangedInThePortableVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Location....
         /// </summary>
         public static string LocationDots {
@@ -5635,6 +5644,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Some features can not be used when transparency is enabled. If you change this setting, the application must be restarted..
+        /// </summary>
+        public static string SettingsAppearanceTransparencyWarning {
+            get {
+                return ResourceManager.GetString("SettingsAppearanceTransparencyWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles are not affected!).
         /// </summary>
         public static string SettingsFileFoundWasCorruptOrNotCompatibleMessage {
@@ -6899,15 +6917,6 @@ namespace NETworkManager.Resources.Localization {
         public static string WarningMessage_CouldNotResolvIPAddressForHostname {
             get {
                 return ResourceManager.GetString("WarningMessage_CouldNotResolvIPAddressForHostname", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Some graphics cards / drivers have problems maximizing the application when transparency is enabled. The function must be disabled for using &quot;Remote Desktop&quot;! Enabling or disabling this feature requires a restart of the application..
-        /// </summary>
-        public static string WarningMessage_SettingsGeneralAppearanceTransparency {
-            get {
-                return ResourceManager.GetString("WarningMessage_SettingsGeneralAppearanceTransparency", resourceCulture);
             }
         }
         

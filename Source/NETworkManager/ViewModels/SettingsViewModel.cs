@@ -215,7 +215,7 @@ namespace NETworkManager.ViewModels
                     if (_settingsSettingsView == null)
                         _settingsSettingsView = new SettingsSettingsView();
 
-                    // Save settings (if changed) and check if files exists
+                    // Save settings
                     _settingsSettingsView.OnVisible();
 
                     SettingsContent = _settingsSettingsView;
@@ -224,7 +224,7 @@ namespace NETworkManager.ViewModels
                     if (_settingsProfilesView == null)
                         _settingsProfilesView = new SettingsProfilesView();
 
-                    // Save settings (if changed) and check if files exists
+                    // Save profiles
                     _settingsProfilesView.OnVisible();
 
                     SettingsContent = _settingsProfilesView;

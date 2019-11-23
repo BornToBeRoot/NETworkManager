@@ -1431,8 +1431,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Validate" xml:space="preserve">
     <value>Validate</value>
   </data>
-  <data name="WarningMessage_SettingsGeneralAppearanceTransparency" xml:space="preserve">
-    <value>Some graphics cards / drivers have problems maximizing the application when transparency is enabled. The function must be disabled for using "Remote Desktop"! Enabling or disabling this feature requires a restart of the application.</value>
+  <data name="SettingsAppearanceTransparencyWarning" xml:space="preserve">
+    <value>Some features can not be used when transparency is enabled. If you change this setting, the application must be restarted.</value>
   </data>
   <data name="Connections" xml:space="preserve">
     <value>Connections</value>
@@ -2482,5 +2482,8 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   </data>
   <data name="ClouldNotImportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Could not import file! See error message: "{0}"</value>
+  </data>
+  <data name="LocationCannotBeChangedInThePortableVersion" xml:space="preserve">
+    <value>Location cannot be changed in portable version!</value>
   </data>
 </root>

@@ -17,7 +17,9 @@ namespace NETworkManager.ViewModels
 
         private readonly bool _isLoading;
 
-        public Action CloseAction { get; set; }
+        public bool IsPortable => ConfigurationManager.Current.IsPortable;
+
+        //public Action CloseAction { get; set; }
 
         private string _locationSelectedPath;
         public string LocationSelectedPath
@@ -47,6 +49,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        /*
         private bool _settingsExists;
         public bool SettingsExists
         {
@@ -143,7 +146,7 @@ namespace NETworkManager.ViewModels
                 _resetSettings = value;
                 OnPropertyChanged();
             }
-        }
+        }*/
         #endregion
 
         #region Constructor, LoadSettings
@@ -227,8 +230,8 @@ namespace NETworkManager.ViewModels
                 MovingFiles = false;
 
                 // Restart the application
-                ConfigurationManager.Current.ForceRestart = true;
-                CloseAction();
+              //  ConfigurationManager.Current.ForceRestart = true;
+              //  CloseAction();
 
                 return;
             }
@@ -258,13 +261,13 @@ namespace NETworkManager.ViewModels
             MovingFiles = false;
         }
 
-        public ICommand RestoreDefaultSettingsLocationCommand => new RelayCommand(p => RestoreDefaultSettingsLocationAction());
+                public ICommand RestoreDefaultSettingsLocationCommand => new RelayCommand(p => RestoreDefaultSettingsLocationAction());
 
         private void RestoreDefaultSettingsLocationAction()
         {
             LocationSelectedPath = SettingsManager.GetDefaultSettingsLocation();
         }
-
+        /*
         public ICommand BrowseImportFileCommand => new RelayCommand(p => BrowseFileAction());
 
         private void BrowseFileAction()
@@ -368,6 +371,7 @@ namespace NETworkManager.ViewModels
             ConfigurationManager.Current.ForceRestart = true;
             CloseAction();
         }
+        */
         #endregion
 
         #region Methods
@@ -378,7 +382,7 @@ namespace NETworkManager.ViewModels
                 ProfileManager.Save();
 
             // Check if files exist
-            SettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
+            //SettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
         }
 
         public void SetLocationPathFromDragDrop(string path)
@@ -388,12 +392,14 @@ namespace NETworkManager.ViewModels
             OnPropertyChanged(nameof(LocationSelectedPath));
         }
 
+        /*
         public void SetImportFilePathFromDragDrop(string filePath)
         {
             ImportFilePath = filePath;
 
             OnPropertyChanged(nameof(ImportFilePath));
         }
+        */
         #endregion
     }
 }
