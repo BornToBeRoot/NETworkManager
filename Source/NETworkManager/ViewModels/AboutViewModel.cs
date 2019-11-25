@@ -164,6 +164,16 @@ namespace NETworkManager.ViewModels
             Process.Start((string)url);
         }
 
+        public ICommand OpenDocumentationCommand
+        {
+            get { return new RelayCommand(p => OpenDocumentationAction()); }
+        }
+
+        private void OpenDocumentationAction()
+        {
+            DocumentationManager.OpenDocumentation(DocumentationIdentifier.Default);
+        }
+
         public ICommand OpenLicenseFolderCommand => new RelayCommand(p => OpenLicenseFolderAction());
 
         private void OpenLicenseFolderAction()

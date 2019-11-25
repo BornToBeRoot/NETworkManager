@@ -883,7 +883,7 @@
     <value>Fixed screen size:</value>
   </data>
   <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork the Project on Github</value>
+    <value>Star/Fork the Project on GitHub</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Found</value>
@@ -2036,7 +2036,7 @@ Changing this value requires a restart of the application to take effect.</value
 To provide additional features the application uses services on the Internet that are not operated by me. No data will be sent to me at any time.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>When starting the program, it checks in the background whether a new program version is available on Github.
+    <value>When starting the program, it checks in the background whether a new program version is available on GitHub.
 
 URL: https://api.github.com/</value>
   </data>
@@ -2488,5 +2488,9 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   </data>
   <data name="IsEncrypted" xml:space="preserve">
     <value>Is encrypted</value>
+  <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
+    <value>Open documentation on GitHub.
+
+URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</value>
   </data>
 </root>

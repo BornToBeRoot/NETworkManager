@@ -2605,7 +2605,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When starting the program, it checks in the background whether a new program version is available on Github.
+        ///   Looks up a localized string similar to When starting the program, it checks in the background whether a new program version is available on GitHub.
         ///
         ///URL: https://api.github.com/.
         /// </summary>
@@ -5887,7 +5887,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Star/Fork the Project on Github.
+        ///   Looks up a localized string similar to Star/Fork the Project on GitHub.
         /// </summary>
         public static string StarForkTheProjectOnGitHub {
             get {
@@ -6486,6 +6486,17 @@ namespace NETworkManager.Resources.Localization {
         public static string TimeUnit_Second {
             get {
                 return ResourceManager.GetString("TimeUnit_Second", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open documentation on GitHub.
+        ///
+        ///URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation.
+        /// </summary>
+        public static string ToolTip_GithubDocumentationUrl {
+            get {
+                return ResourceManager.GetString("ToolTip_GithubDocumentationUrl", resourceCulture);
             }
         }
         
