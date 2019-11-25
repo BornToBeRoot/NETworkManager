@@ -216,14 +216,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StaticStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="GlobalStaticConfiguration.cs" />
+    <Compile Include="ProfileViewInfo.cs" />
+    <Compile Include="ProfileViewManager.cs" />
     <Compile Include="Resources\Localization\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="GlobalStaticConfiguration.cs" />
-    <Compile Include="ProfileViewInfo.cs" />
-    <Compile Include="ProfileViewManager.cs" />
     <Compile Include="StatusWindow.xaml.cs">
       <DependentUpon>StatusWindow.xaml</DependentUpon>
     </Compile>
@@ -1283,8 +1283,8 @@
     <EmbeddedResource Include="Resources\Localization\Strings.nl-NL.resx" />
     <EmbeddedResource Include="Resources\Localization\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Localization\Strings.de-DE.resx" />
     <EmbeddedResource Include="Resources\Localization\Strings.ru-RU.resx" />
