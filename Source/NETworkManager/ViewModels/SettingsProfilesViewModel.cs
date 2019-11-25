@@ -293,6 +293,27 @@ namespace NETworkManager.ViewModels
             Location = ProfileManager.GetDefaultProfilesLocation();
         }
 
+        public ICommand AddProfileFileCommand => new RelayCommand(p => AddProfileFileAction());
+
+        private void AddProfileFileAction()
+        {
+
+        }
+
+        public ICommand EditProfileFileCommand => new RelayCommand(p => EditProfileFileAction());
+
+        private void EditProfileFileAction()
+        {
+
+        }
+
+        public ICommand RemoveProfileFileCommand => new RelayCommand(p => RemoveProfileFileAction());
+
+        private void RemoveProfileFileAction()
+        {
+
+        }
+
         /*
         public ICommand BrowseImportFileCommand => new RelayCommand(p => BrowseFileAction());
 
