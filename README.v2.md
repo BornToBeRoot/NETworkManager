@@ -1,9 +1,3 @@
-<style>
-table {
-    width:100%;
-}
-</style>
-
 <div align="center">  
   <img alt="NETworkManager" src="NETworkManager.svg" height="128" width="128" />
   <h1>NETworkManager - Version 2</h1>  
@@ -38,14 +32,9 @@ table {
 
 <h2>Download</h2>
 <div align="center">  
-<table width="100%">
-  <tr>
-    <th><a href="">:package: MSI Installer</a></th>
-    <th><a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre002/NETworkManager_v2.0.0-pre002_Portable.zip"> :package: Portable</a></th>
-    <th><a href="">:package: ZIP Archiv</a></th>
-    <th><a href="">:package: Chocolatey</a></th>
-  </tr>
-</table>
+<a href="">:package: MSI Installer</a> | <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre002/NETworkManager_v2.0.0-pre002_Portable.zip"> :package: Portable</a> | <a href="">:package: ZIP Archiv</a> | <a href="">:package: Chocolatey</a>
+
+
 <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a>
 <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">:book: Documentation</a>
 </div>
@@ -62,7 +51,7 @@ table {
 - Traceroute
 - DNS Lookup
 - Remote Desktop
-- PowerShell (requires Windows 10)
+- PowerShell
 - PuTTY ([requires PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html))
 - TigerVNC ([requires TigerVNC](https://tigervnc.org/))
 - SNMP - Get, Walk, Set (v1, v2c, v3)
