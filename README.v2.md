@@ -17,7 +17,7 @@
     <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
       <img alt="Transifex" src="https://img.shields.io/badge/Transifex-translate-green.svg?style=flat-square" />
     </a>   
-    <a href="https://twitter.com/intent/tweet?text=NETworkManager%20-%20A%20powerful%20tool%20for%20managing%20networks%20and%20troubleshoot network problems!&url=https%3A%2F%2Fgithub.com%2FBornToBeRoot%2FNETworkManager&hashtags=networkmanager,ipscanner,portscanner,ssh,tightvnc,remotedesktop,snmp,dns,traceroute" target="_blank">
+    <a href="https://twitter.com/intent/tweet?text=NETworkManager%20-%20A%20powerful%20tool%20for%20managing%20networks%20and%20troubleshoot network problems!&url=https%3A%2F%2Fgithub.com%2FBornToBeRoot%2FNETworkManager&hashtags=networkmanager,ipscanner,portscanner,ssh,vnc,remotedesktop,dns,traceroute,pingmonitor" target="_blank">
      <img alt="Transifex" src="https://img.shields.io/badge/Twitter-tweet-blue.svg?style=flat-square" />     
     </a>        
     <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
