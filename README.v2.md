@@ -26,14 +26,8 @@
      <img alt="Tweet" src="https://img.shields.io/twitter/url/https/github.com/BornToBeRoot/NETworkManager.svg?style=flat-square" />
   </a>        
   </p>
-</div>
-
-<img alt="NETworkManager" src="NETworkManager.gif" />
-
-<h2>Download</h2>
-<div align="center">  
   <p>
-    <a href="">:package: MSI Installer</a> | <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre002/NETworkManager_v2.0.0-pre002_Portable.zip"> :package: Portable</a> | <a href="">:package: ZIP Archiv</a> | <a href="">:package: Chocolatey</a>
+    Download: <a href="">:package: MSI Installer</a> | <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre002/NETworkManager_v2.0.0-pre002_Portable.zip"> :package: Portable</a> | <a href="">:package: ZIP Archiv</a> | <a href="">:package: Chocolatey</a>
   </p>
 
   <p>
@@ -41,6 +35,8 @@
     <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">:book: Documentation</a>
   </p>
 </div>
+
+<img alt="NETworkManager" src="NETworkManager.gif" />
 
 <h2>Features</h2>
 
