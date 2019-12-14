@@ -1,3 +1,9 @@
+<style>
+table {
+    width:100%;
+}
+</style>
+
 <div align="center">  
   <img alt="NETworkManager" src="NETworkManager.svg" height="128" width="128" />
   <h1>NETworkManager - Version 2</h1>  
