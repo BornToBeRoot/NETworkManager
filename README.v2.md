@@ -17,23 +17,31 @@
     <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
       <img alt="Transifex" src="https://img.shields.io/badge/Transifex-translate-green.svg?style=flat-square" />
     </a>   
+    <a href="https://twitter.com/intent/tweet?text=NETworkManager%20-%20A%20powerful%20tool%20for%20managing%20networks%20and%20troubleshoot network problems!&url=https%3A%2F%2Fgithub.com%2FBornToBeRoot%2FNETworkManager&hashtags=networkmanager,ipscanner,portscanner,ssh,tightvnc,remotedesktop,snmp,dns,traceroute" target="_blank">
+     <img alt="Tweet" src="https://img.shields.io/twitter/url/https/github.com/BornToBeRoot/NETworkManager.svg?style=flat-square" />
+    </a>        
     <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
       <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=flat-square&&label=master" />
     </a>   
   </p>
   </p>
-  <a href="https://twitter.com/intent/tweet?text=NETworkManager%20-%20A%20powerful%20tool%20for%20managing%20networks%20and%20troubleshoot network problems!&url=https%3A%2F%2Fgithub.com%2FBornToBeRoot%2FNETworkManager&hashtags=networkmanager,ipscanner,portscanner,ssh,tightvnc,remotedesktop,snmp,dns,traceroute" target="_blank">
-     <img alt="Tweet" src="https://img.shields.io/twitter/url/https/github.com/BornToBeRoot/NETworkManager.svg?style=flat-square" />
-  </a>        
-  </p>
-  <p>
-    Download: <a href="">:package: MSI Installer</a> | <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre002/NETworkManager_v2.0.0-pre002_Portable.zip"> :package: Portable</a> | <a href="">:package: ZIP Archiv</a> | <a href="">:package: Chocolatey</a>
-  </p>
-
+ 
+  </p> 
   <p>
     <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a>
     <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">:book: Documentation</a>
   </p>
+  <p>
+    <table>
+      <tr>
+        <th><a href="">:package: Setup (MSI-Installer)</a></th>
+        <th><a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre002/NETworkManager_v2.0.0-pre002_Portable.zip"> :package: Portable</a></th>
+        <th><a href="">:package: Binaries (ZIP-Archiv)</a></th>
+        <th><a href="">:package: Chocolatey (Package Manager)</a></th>               
+      </tr>
+    </table>    
+  </p>
+
 </div>
 
 <img alt="NETworkManager" src="NETworkManager.gif" />
