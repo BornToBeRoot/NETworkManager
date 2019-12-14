@@ -28,17 +28,20 @@
   </p>
 </div>
 
-<div align="center"> 
-  <p>      
-    :package: Download:
-      <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre002/NETworkManager_v2.0.0-pre002_Portable.zip">Portable</a> <!--, -->
-      <!-- <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v1.11.0.0/NETworkManager_v1.11.0.0_Setup.msi">MSI</a> or -->
-      <!-- <a href="https://chocolatey.org/packages/networkmanager">Chocolatey</a> -->
-  </p>
-  <p>
-    <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a>
-    <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">:book: Documentation</a>
-  </p>
+<h2>Download</h2>
+<div align="center">  
+<table>
+  <tr>
+    <th><a href="">:package: MSI Installer</a></th>
+    <th><a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre002/NETworkManager_v2.0.0-pre002_Portable.zip"> :package: Portable</a></th>
+    <th><a href="">:package: ZIP Archiv</a></th>
+    <th><a href="">:package: Chocolatey</a></th>
+  </tr>
+</table>
+
+<a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a>
+<a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">:book: Documentation</a>
+ 
 </div>
 
 <img alt="NETworkManager" src="NETworkManager.gif" />
@@ -87,12 +90,6 @@ Community:
 - Spanish
 
 Help translate on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager).
-
-<h2>Documentation</h2>
-
-You can find it [here](https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation).
-
-Help to improve the documentation is welcome :)
 
 <h2>System requirements</h2>
 
