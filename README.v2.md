@@ -32,11 +32,14 @@
 
 <h2>Download</h2>
 <div align="center">  
-<a href="">:package: MSI Installer</a> | <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre002/NETworkManager_v2.0.0-pre002_Portable.zip"> :package: Portable</a> | <a href="">:package: ZIP Archiv</a> | <a href="">:package: Chocolatey</a>
+  <p>
+    <a href="">:package: MSI Installer</a> | <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre002/NETworkManager_v2.0.0-pre002_Portable.zip"> :package: Portable</a> | <a href="">:package: ZIP Archiv</a> | <a href="">:package: Chocolatey</a>
+  </p>
 
-
-<a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a>
-<a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">:book: Documentation</a>
+  <p>
+    <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a>
+    <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">:book: Documentation</a>
+  </p>
 </div>
 
 <h2>Features</h2>
