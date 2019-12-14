@@ -1,6 +1,6 @@
 <div align="center">  
-  <img alt="NETworkManager" src="NETworkManager.svg" height="128" width="128" />
-  <h1>NETworkManager - Version 2</h1>  
+  <img alt="NETworkManager" src="NETworkManager.svg" height="128" width="128" /><h1>NETworkManager</h1>  
+  
   <p>A powerful tool for managing networks and troubleshoot network problems!</p>
   <p>   
   <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
@@ -25,8 +25,7 @@
     </a>   
   </p>
   </p>
- 
-  </p> 
+ </p> 
   <p>
     <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a>
     <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">:book: Documentation</a>
