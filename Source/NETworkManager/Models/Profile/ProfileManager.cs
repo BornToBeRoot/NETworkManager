@@ -22,6 +22,7 @@ namespace NETworkManager.Models.Profile
         private static string ProfilesFolderName => "Profiles";
         private static string ProfilesDefaultFileName => "Default";
         public static string ProfilesFileExtension => ".xml";
+        public static string ProfilesEncryptionIdentifier => ".encrypted";
 
         public static string TagIdentifier => "tag=";
 
@@ -36,20 +37,17 @@ namespace NETworkManager.Models.Profile
                 if (value == _profileFileInfo)
                     return;
 
-                if (value != null)
-                    LoadedProfileFileChanged(value);
-
                 _profileFileInfo = value;
             }
         }
         public static ObservableCollection<ProfileInfo> Profiles { get; set; } = new ObservableCollection<ProfileInfo>();
         public static bool ProfilesChanged { get; set; }
 
-        public static event EventHandler<ProfileFileInfoArgs> LoadedProfileFilesChangedEvent;
+        public static event EventHandler<ProfileFileInfoArgs> LoadedProfileFileChangedEvent;
 
         private static void LoadedProfileFileChanged(ProfileFileInfo profileFileInfo)
         {
-            LoadedProfileFilesChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo));
+            LoadedProfileFileChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo));
         }
         #endregion
 
@@ -110,6 +108,7 @@ namespace NETworkManager.Models.Profile
         }
         #endregion
 
+        #region GetGroups
         public static List<string> GetGroups()
         {
             var list = new List<string>();
@@ -122,13 +121,13 @@ namespace NETworkManager.Models.Profile
 
             return list;
         }
+        #endregion
 
+        #region Get profile files, load profile files, refresh profile files  
         private static IEnumerable<string> GetProfileFiles(string location)
         {
             return Directory.GetFiles(location).Where(x => Path.GetExtension(x) == ProfilesFileExtension);
         }
-
-        #region Load files, refresh files
         private static void LoadFiles()
         {
             var location = GetProfilesLocation();
@@ -136,10 +135,17 @@ namespace NETworkManager.Models.Profile
             if (!Directory.Exists(location))
                 return;
 
-            ProfileFiles.Clear();
-
             foreach (var file in GetProfileFiles(location))
-                ProfileFiles.Add(new ProfileFileInfo(Path.GetFileNameWithoutExtension(file), file));
+            {
+                var isEncryptionEnabled = Path.GetFileNameWithoutExtension(file).EndsWith(ProfilesEncryptionIdentifier);
+
+                var name = Path.GetFileNameWithoutExtension(file);
+
+                if (isEncryptionEnabled)
+                    name = name.Substring(0, name.Length - ProfilesEncryptionIdentifier.Length);
+
+                ProfileFiles.Add(new ProfileFileInfo(name, file, isEncryptionEnabled));
+            }
 
             // Create default
             if (ProfileFiles.Count == 0)
@@ -148,19 +154,25 @@ namespace NETworkManager.Models.Profile
 
         public static void RefreshFiles()
         {
+            ProfileFiles.Clear();
+
             LoadFiles();
 
             if (LoadedProfileFile != null)
             {
-                var name = LoadedProfileFile.Name;
+                var path = LoadedProfileFile.Path;
 
-                var profileFile = ProfileFiles.FirstOrDefault(x => x.Name == name);
+                var profileFile = ProfileFiles.FirstOrDefault(x => x.Path == path);
 
-                Load(profileFile != null ? profileFile : ProfileFiles[0]);
+                Load(profileFile ?? ProfileFiles[0]);
             }
+
+            // Update other views...
+            LoadedProfileFileChanged(LoadedProfileFile);
         }
         #endregion
 
+        #region Switch profile
         public static void SwitchProfile(ProfileFileInfo info)
         {
             // Save
@@ -172,7 +184,9 @@ namespace NETworkManager.Models.Profile
 
             Load(info);
         }
+        #endregion
 
+        #region Load profile, save profile
         private static void Load(ProfileFileInfo info)
         {
             if (File.Exists(info.Path)) // Load if exists...
@@ -181,16 +195,6 @@ namespace NETworkManager.Models.Profile
             ProfilesChanged = false;
 
             LoadedProfileFile = info;
-        }
-
-        private static void DeserializeFromFile(string filePath)
-        {
-            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
-
-            using (var fileStream = new FileStream(filePath, FileMode.Open))
-            {
-                ((List<ProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(AddProfile);
-            }
         }
 
         public static void Save()
@@ -205,6 +209,18 @@ namespace NETworkManager.Models.Profile
 
             ProfilesChanged = false;
         }
+        #endregion
+
+        #region Deserialize from file, serialize to file
+        private static void DeserializeFromFile(string filePath)
+        {
+            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
+
+            using (var fileStream = new FileStream(filePath, FileMode.Open))
+            {
+                ((List<ProfileInfo>)xmlSerializer.Deserialize(fileStream)).ForEach(AddProfile);
+            }
+        }
 
         private static void SerializeToFile(string filePath)
         {
@@ -215,14 +231,16 @@ namespace NETworkManager.Models.Profile
                 xmlSerializer.Serialize(fileStream, new List<ProfileInfo>(Profiles));
             }
         }
+        #endregion
 
+        #region Reset
         public static void Reset()
         {
             Profiles.Clear();
         }
+        #endregion
 
-
-        #region Move settings
+        #region Move profiles
         public static Task MoveProfilesAsync(string targedLocation)
         {
             return Task.Run(() => MoveProfiles(targedLocation));
@@ -247,6 +265,8 @@ namespace NETworkManager.Models.Profile
             // Delete folder, if it is empty not the default profiles location and does not contain any files or directories
             if (GetProfilesLocation() != GetDefaultProfilesLocation() && Directory.GetFiles(GetProfilesLocation()).Length == 0 && Directory.GetDirectories(GetProfilesLocation()).Length == 0)
                 Directory.Delete(GetProfilesLocation());
+
+            RefreshFiles();
         }
         #endregion
 

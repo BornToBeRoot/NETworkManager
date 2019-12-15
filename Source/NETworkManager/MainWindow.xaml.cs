@@ -387,7 +387,7 @@ namespace NETworkManager
             // Load profiles
             ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
             ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
-            ProfileManager.LoadedProfileFilesChangedEvent += ProfileManager_LoadedProfileFilesChangedEvent;
+            ProfileManager.LoadedProfileFileChangedEvent += ProfileManager_LoadedProfileFileChangedEvent;
 
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
@@ -457,13 +457,13 @@ namespace NETworkManager
             if (SelectedApplication != null)
                 ListViewApplication.ScrollIntoView(SelectedApplication);
         }
-
-        private void ProfileManager_LoadedProfileFilesChangedEvent(object sender, ProfileFileInfoArgs e)
+                
+        private void ProfileManager_LoadedProfileFileChangedEvent(object sender, ProfileFileInfoArgs e)
         {
             // Check for local changes...
             if (SelectedProfileFile == null || SelectedProfileFile.Path != e.ProfileFileInfo.Path)
                 SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Path == e.ProfileFileInfo.Path);
-        }
+        }        
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {

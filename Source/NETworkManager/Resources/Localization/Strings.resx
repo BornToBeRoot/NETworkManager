@@ -2494,4 +2494,25 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
 
 URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</value>
   </data>
+  <data name="ExampleProfileFileName" xml:space="preserve">
+    <value>Customer 1</value>
+  </data>
+  <data name="AddProfileFile" xml:space="preserve">
+    <value>Add profile file</value>
+  </data>
+  <data name="DisableEncryptionDots" xml:space="preserve">
+    <value>Disable encryption...</value>
+  </data>
+  <data name="EditProfileFile" xml:space="preserve">
+    <value>Edit profile file</value>
+  </data>
+  <data name="EnableEncryptionDots" xml:space="preserve">
+    <value>Enable encryption...</value>
+  </data>
+  <data name="EncryptionDots" xml:space="preserve">
+    <value>Encryption...</value>
+  </data>
+  <data name="RemoveProfileFile" xml:space="preserve">
+    <value>Remove profile file</value>
+  </data>
 </root>

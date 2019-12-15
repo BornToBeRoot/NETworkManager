@@ -295,6 +295,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add profile file.
+        /// </summary>
+        public static string AddProfileFile {
+            get {
+                return ResourceManager.GetString("AddProfileFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add tab....
         /// </summary>
         public static string AddTabDots {
@@ -1708,6 +1717,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable encryption....
+        /// </summary>
+        public static string DisableEncryptionDots {
+            get {
+                return ResourceManager.GetString("DisableEncryptionDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PowerShell..
         /// </summary>
         public static string DisableTransparencyInTheSettingsToUsePowerShell {
@@ -1978,6 +1996,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit profile file.
+        /// </summary>
+        public static string EditProfileFile {
+            get {
+                return ResourceManager.GetString("EditProfileFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Emerald.
         /// </summary>
         public static string Emerald {
@@ -2005,6 +2032,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable encryption....
+        /// </summary>
+        public static string EnableEncryptionDots {
+            get {
+                return ResourceManager.GetString("EnableEncryptionDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable transparency.
         /// </summary>
         public static string EnableTransparency {
@@ -2028,6 +2064,15 @@ namespace NETworkManager.Resources.Localization {
         public static string EncryptionColon {
             get {
                 return ResourceManager.GetString("EncryptionColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encryption....
+        /// </summary>
+        public static string EncryptionDots {
+            get {
+                return ResourceManager.GetString("EncryptionDots", resourceCulture);
             }
         }
         
@@ -2280,6 +2325,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Everything {
             get {
                 return ResourceManager.GetString("Everything", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer 1.
+        /// </summary>
+        public static string ExampleProfileFileName {
+            get {
+                return ResourceManager.GetString("ExampleProfileFileName", resourceCulture);
             }
         }
         
@@ -5162,6 +5216,15 @@ namespace NETworkManager.Resources.Localization {
         public static string RemotePort {
             get {
                 return ResourceManager.GetString("RemotePort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove profile file.
+        /// </summary>
+        public static string RemoveProfileFile {
+            get {
+                return ResourceManager.GetString("RemoveProfileFile", resourceCulture);
             }
         }
         

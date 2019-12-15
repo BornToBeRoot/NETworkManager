@@ -1,6 +1,4 @@
-﻿using NETworkManager.Utilities;
-
-namespace NETworkManager.ViewModels
+﻿namespace NETworkManager.ViewModels
 {
     public class LookupHostViewModel : ViewModelBase
     {

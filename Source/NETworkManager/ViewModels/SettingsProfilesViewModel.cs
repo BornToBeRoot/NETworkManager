@@ -2,6 +2,7 @@
 using NETworkManager.Models.Profile;
 using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Views;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -77,105 +78,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        /*
-        private bool _settingsExists;
-        public bool SettingsExists
-        {
-            get => _settingsExists;
-            set
-            {
-                if (value == _settingsExists)
-                    return;
-
-                _settingsExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _importFilePath;
-        public string ImportFilePath
-        {
-            get => _importFilePath;
-            set
-            {
-                if (value == _importFilePath)
-                    return;
-
-                _importFilePath = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _displayImportStatusMessage;
-        public bool DisplayImportStatusMessage
-        {
-            get => _displayImportStatusMessage;
-            set
-            {
-                if (value == _displayImportStatusMessage)
-                    return;
-
-                _displayImportStatusMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _importStatusMessage;
-        public string ImportStatusMessage
-        {
-            get => _importStatusMessage;
-            set
-            {
-                if (value == _importStatusMessage)
-                    return;
-
-                _importStatusMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _displayExportStatusMessage;
-        public bool DisplayExportStatusMessage
-        {
-            get => _displayExportStatusMessage;
-            set
-            {
-                if (value == _displayExportStatusMessage)
-                    return;
-
-                _displayExportStatusMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _exportStatusMessage;
-        public string ExportStatusMessage
-        {
-            get => _exportStatusMessage;
-            set
-            {
-                if (value == _exportStatusMessage)
-                    return;
-
-                _exportStatusMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetSettings;
-        public bool ResetSettings
-        {
-            get => _resetSettings;
-            set
-            {
-                if (value == _resetSettings)
-                    return;
-
-                _resetSettings = value;
-                OnPropertyChanged();
-            }
-        }*/
         #endregion
 
         #region Constructor, LoadSettings
@@ -278,8 +180,6 @@ namespace NETworkManager.ViewModels
 
             SettingsManager.Current.Profiles_CustomProfilesLocation = Location;
 
-            ProfileManager.RefreshFiles();
-
             Location = string.Empty;
             Location = SettingsManager.Current.Profiles_CustomProfilesLocation;
 
@@ -295,23 +195,64 @@ namespace NETworkManager.ViewModels
 
         public ICommand AddProfileFileCommand => new RelayCommand(p => AddProfileFileAction());
 
-        private void AddProfileFileAction()
+        private async void AddProfileFileAction()
         {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.AddProfileFile
+            };
 
+            var profileFileViewModel = new ProfileFileViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                //ProfileManager.AddProfileFile(instance.Name);
+            }, async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new ProfileFileDialog
+            {
+                DataContext = profileFileViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
         }
 
         public ICommand EditProfileFileCommand => new RelayCommand(p => EditProfileFileAction());
 
-        private void EditProfileFileAction()
+        private async void EditProfileFileAction()
         {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.EditProfileFile
+            };
 
+            var profileFileViewModel = new ProfileFileViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                //ProfileManager.EditProfileFile(SelectedProfile, instance.Name);
+            }, async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, SelectedProfileFile);
+
+            customDialog.Content = new ProfileFileDialog
+            {
+                DataContext = profileFileViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand RemoveProfileFileCommand => new RelayCommand(p => RemoveProfileFileAction());
 
         private void RemoveProfileFileAction()
         {
-
+            
+            //ProfileManager.RemoveProfileFile(SelectedProfileFile);
         }
 
         /*

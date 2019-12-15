@@ -8,6 +8,7 @@
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"      
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
@@ -18,6 +19,8 @@
         <!-- Converter -->
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        
         <converters:IsDefaultProfilesLocationToBooleanConverter x:Key="IsDefaultProfilesLocationToBoolConverter" />
         <converters:IsProfilesLocationToBooleanConverter x:Key="IsProfilesLocationToBooleanConverter" />
         <converters:ValidateSettingsResetConverter x:Key="ValidateSettingsResetConverter" />
@@ -107,6 +110,7 @@
         <DataGrid x:Name="DataGridProfileLocations" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding ProfileFiles}" SelectionMode="Single" SelectedItem="{Binding SelectedProfileFile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileFileCommand}">
                         <MenuItem.Icon>
@@ -116,6 +120,42 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{x:Static localization:Strings.EncryptionDots}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyVariant}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                        <MenuItem Header="{x:Static localization:Strings.EnableEncryptionDots}" Command="{Binding EnableEncryptionCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncryptionEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyVariant}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{x:Static localization:Strings.ChangeMasterPasswordDots}" Command="{Binding EditProfileFileCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncryptionEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyVariant}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{x:Static localization:Strings.DisableEncryptionDots}" Command="{Binding EditProfileFileCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncryptionEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyVariant}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileFileCommand}">
                         <MenuItem.Icon>
@@ -129,21 +169,20 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profile:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
-                <!--<DataGridTextColumn Header="{x:Static localization:Strings.Path}" Binding="{Binding (profile:ProfileFileInfo.Path)}" Width="*" />-->
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profile:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />                
                 <DataGridTemplateColumn Header="{x:Static localization:Strings.IsEncrypted}" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
                                 <Rectangle.Resources>
-                                    <VisualBrush x:Key="VisualLockOpen" Stretch="Uniform" Visual="{iconPacks:Material Kind=LockOpenOutline}"/>
-                                    <VisualBrush x:Key="VisualLockClosed" Stretch="Uniform" Visual="{iconPacks:Material Kind=LockOutline}"/>
+                                    <VisualBrush x:Key="VisualLockOpen" Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=UnlockSolid}"/>
+                                    <VisualBrush x:Key="VisualLockClosed" Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=LockSolid}"/>
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualLockOpen}" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=(profile:ProfileFileInfo.IsEncrypted)}" Value="True">
+                                            <DataTrigger Binding="{Binding Path=(profile:ProfileFileInfo.IsEncryptionEnabled)}" Value="True">
                                                 <Setter Property="OpacityMask" Value="{StaticResource VisualLockClosed}" />
                                             </DataTrigger>
                                         </Style.Triggers>
