@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a bug
+about: Use this if you found a bug...
 labels: Issue
 ---
 
