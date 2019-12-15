@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Use this if you need a feature
+about: Create a feature request
 labels: Feature-Request
 ---
 
