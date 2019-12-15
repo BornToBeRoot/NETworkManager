@@ -20,10 +20,10 @@
     <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
       <img alt="Transifex" src="https://img.shields.io/badge/transifex-translate-green.svg?style=flat-square" />
     </a>   
-         <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
+         <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Feature-Request&template=Feature_request.md">
       <img alt="Transifex" src="https://img.shields.io/badge/github-feature_request-green.svg?style=flat-square" />
     </a>   
-    <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
+    <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Issue&template=Bug_report.md">
       <img alt="Transifex" src="https://img.shields.io/badge/github-bug_report-red.svg?style=flat-square" />
     </a>   
     <a href="https://twitter.com/intent/tweet?text=NETworkManager%20-%20A%20powerful%20tool%20for%20managing%20networks%20and%20troubleshoot network problems!&url=https%3A%2F%2Fgithub.com%2FBornToBeRoot%2FNETworkManager&hashtags=networkmanager,ipscanner,portscanner,ssh,vnc,remotedesktop,dns,traceroute,pingmonitor" target="_blank">
