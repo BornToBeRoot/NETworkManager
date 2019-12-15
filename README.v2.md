@@ -33,10 +33,10 @@
   <p>
     <table>
       <tr>
-        <th><a href="">:package: Setup (MSI-Installer)</a></th>
+        <th><a href="">:package: <s>Setup (MSI-Installer)</s></a></th>
         <th><a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/v2.0.0-pre002/NETworkManager_v2.0.0-pre002_Portable.zip"> :package: Portable</a></th>
-        <th><a href="">:package: Binaries (ZIP-Archiv)</a></th>
-        <th><a href="">:package: Chocolatey (Package Manager)</a></th>               
+        <th><a href="">:package: <s>Binaries (ZIP-Archiv)</s></a></th>
+        <th><a href="">:package: <s>Chocolatey (Package Manager)</s></a></th>               
       </tr>
     </table>    
   </p>
