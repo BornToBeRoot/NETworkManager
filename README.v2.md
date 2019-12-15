@@ -70,10 +70,6 @@
 - Listeners
 - ARP Table
 
-If you miss a feature, don't hesitate to create a [feature request](https://github.com/BornToBeRoot/NETworkManager/issues/new).
-
-You can also send me a [pull requests](https://github.com/BornToBeRoot/NETworkManager/pulls), when you have implemented the feature or fixed a bug.
-
 <h2>Languages</h2>
 
 Official:
@@ -94,10 +90,6 @@ Help translate on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkMana
 
 - Windows 10 Build 1809 or later
 - .NET-Framework 4.7.2
-
-<h2>Found a bug?</h2>
-
-Check the [Issues](https://github.com/BornToBeRoot/NETworkManager/issues) if the bug has already been reported. If not, submit a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new) and provide as many informations as you can.
 
 <h2>License</h2>
 
