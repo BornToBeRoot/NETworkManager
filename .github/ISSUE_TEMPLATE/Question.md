@@ -1,5 +1,5 @@
 ---
 name: Question
-about: Questions about functions etc.
+about: Use this if you have a question!
 labels: Question
 ---
