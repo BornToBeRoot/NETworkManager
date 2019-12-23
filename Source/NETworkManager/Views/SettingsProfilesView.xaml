@@ -121,7 +121,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.EncryptionDots}">
+                    <MenuItem Header="{x:Static localization:Strings.EncryptionDots}" Visibility="Collapsed">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
@@ -170,7 +170,7 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profile:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
-                <DataGridTemplateColumn Header="{x:Static localization:Strings.IsEncrypted}" Width="Auto">
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.IsEncrypted}" Width="Auto" Visibility="Collapsed">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
