@@ -9,7 +9,7 @@ namespace NETworkManager.ViewModels
     {
         private readonly bool _isLoading;
 
-        public ICommand AddCommand { get; }
+        public ICommand AcceptCommand { get; }
 
         public ICommand CancelCommand { get; }
 
@@ -26,35 +26,33 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private bool _isEncryptionEnabled;
-        public bool IsEncryptionEnabled
+            
+        private bool _isEdit;
+        public bool IsEdit
         {
-            get => _isEncryptionEnabled;
+            get => _isEdit;
             set
             {
-                if (value == _isEncryptionEnabled)
+                if (value == _isEdit)
                     return;
 
-                _isEncryptionEnabled = value;
+                _isEdit = value;
                 OnPropertyChanged();
             }
         }
-
-
-
 
         public ProfileFileViewModel(Action<ProfileFileViewModel> addCommand, Action<ProfileFileViewModel> cancelHandler, ProfileFileInfo info = null)
         {
             _isLoading = true;
 
-            AddCommand = new RelayCommand(p => addCommand(this));
+            AcceptCommand = new RelayCommand(p => addCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
             if (info != null)
             {
                 Name = info.Name;
-                IsEncryptionEnabled = info.IsEncryptionEnabled;
+                
+                IsEdit = true;
             }
 
             _isLoading = false;

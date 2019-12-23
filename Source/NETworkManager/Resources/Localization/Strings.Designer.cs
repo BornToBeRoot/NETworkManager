@@ -1591,6 +1591,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete profile file.
+        /// </summary>
+        public static string DeleteProfileFile {
+            get {
+                return ResourceManager.GetString("DeleteProfileFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected profile file will be deleted permanently..
+        /// </summary>
+        public static string DeleteProfileFileMessage {
+            get {
+                return ResourceManager.GetString("DeleteProfileFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selected profiles will be deleted permanently..
         /// </summary>
         public static string DeleteProfileMessage {
@@ -4301,6 +4319,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile name already exists!.
+        /// </summary>
+        public static string ProfileNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("ProfileNameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profiles.
         /// </summary>
         public static string Profiles {
@@ -5225,6 +5252,15 @@ namespace NETworkManager.Resources.Localization {
         public static string RemoveProfileFile {
             get {
                 return ResourceManager.GetString("RemoveProfileFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        public static string Rename {
+            get {
+                return ResourceManager.GetString("Rename", resourceCulture);
             }
         }
         

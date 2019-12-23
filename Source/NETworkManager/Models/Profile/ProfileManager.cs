@@ -54,7 +54,7 @@ namespace NETworkManager.Models.Profile
         static ProfileManager()
         {
             // Load files
-            LoadFiles();
+            LoadProfileFiles();
 
             Profiles.CollectionChanged += Profiles_CollectionChanged;
 
@@ -78,6 +78,10 @@ namespace NETworkManager.Models.Profile
             return Path.Combine(Path.GetDirectoryName(AssemblyManager.Current.Location) ?? throw new InvalidOperationException(), ProfilesFolderName);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static string GetProfilesLocation()
         {
             return ConfigurationManager.Current.IsPortable ? GetPortableProfilesLocation() : GetProfilesLocationNotPortable();
@@ -108,27 +112,12 @@ namespace NETworkManager.Models.Profile
         }
         #endregion
 
-        #region GetGroups
-        public static List<string> GetGroups()
-        {
-            var list = new List<string>();
-
-            foreach (var profile in Profiles)
-            {
-                if (!list.Contains(profile.Group))
-                    list.Add(profile.Group);
-            }
-
-            return list;
-        }
-        #endregion
-
         #region Get profile files, load profile files, refresh profile files  
         private static IEnumerable<string> GetProfileFiles(string location)
         {
             return Directory.GetFiles(location).Where(x => Path.GetExtension(x) == ProfilesFileExtension);
         }
-        private static void LoadFiles()
+        private static void LoadProfileFiles()
         {
             var location = GetProfilesLocation();
 
@@ -152,91 +141,128 @@ namespace NETworkManager.Models.Profile
                 ProfileFiles.Add(new ProfileFileInfo(ProfilesDefaultFileName, GetProfilesDefaultFilePath()));
         }
 
-        public static void RefreshFiles()
+        public static void RefreshProfileFiles()
         {
             ProfileFiles.Clear();
 
-            LoadFiles();
-
-            if (LoadedProfileFile != null)
-            {
-                var path = LoadedProfileFile.Path;
-
-                var profileFile = ProfileFiles.FirstOrDefault(x => x.Path == path);
-
-                Load(profileFile ?? ProfileFiles[0]);
-            }
-
-            // Update other views...
-            LoadedProfileFileChanged(LoadedProfileFile);
+            LoadProfileFiles();
         }
         #endregion
 
-        #region Switch profile
-        public static void SwitchProfile(ProfileFileInfo info)
+        #region Add profile file, edit profile file, delete profile file
+        public static void AddProfileFile(string profileName)
         {
-            // Save
-            if (LoadedProfileFile != null && ProfilesChanged)
+            Save(new ProfileFileInfo(profileName, Path.Combine(GetDefaultProfilesLocation(), $"{profileName}{ProfilesFileExtension}")), new List<ProfileInfo>());
+
+            RefreshProfileFiles();
+        }
+
+        public static void RenameProfileFile(ProfileFileInfo profileFileInfo, string newProfileName)
+        {
+            bool switchProfile = false;
+
+            if (LoadedProfileFile.Equals(profileFileInfo))
+            {
                 Save();
 
-            // Load             
-            Profiles.Clear();
+                switchProfile = true;
+            }
 
-            Load(info);
+            ProfileFileInfo newProfileFileInfo = new ProfileFileInfo(newProfileName, Path.Combine(GetProfilesLocation(), profileFileInfo.IsEncryptionEnabled ? $"{newProfileName}{ProfilesEncryptionIdentifier}{ProfilesFileExtension}" : $"{newProfileName}{ProfilesFileExtension}"), profileFileInfo.IsEncryptionEnabled)
+            {
+                Password = profileFileInfo.Password,
+            };
+
+            File.Move(profileFileInfo.Path, newProfileFileInfo.Path);
+
+            RefreshProfileFiles();
+
+            if (switchProfile)
+                SwitchProfile(newProfileFileInfo, false);
         }
+
+        public static void DeleteProfileFile(ProfileFileInfo profileFileInfo)
+        {
+            if(LoadedProfileFile.Equals(profileFileInfo))
+            {
+                SwitchProfile(ProfileFiles.FirstOrDefault(x => x.Path != profileFileInfo.Path));
+            }
+
+            File.Delete(profileFileInfo.Path);
+
+            RefreshProfileFiles();
+        }
+        #endregion
+
+        #region Enable encryption, disable encryption, change master password
+
         #endregion
 
         #region Load profile, save profile
         private static void Load(ProfileFileInfo info)
         {
             if (File.Exists(info.Path)) // Load if exists...
-                DeserializeFromFile(info.Path);
+                DeserializeFromFile(info.Path).ForEach(AddProfile);
 
             ProfilesChanged = false;
 
             LoadedProfileFile = info;
         }
 
-        public static void Save()
+        public static void Save(ProfileFileInfo profileFileInfo = null, List<ProfileInfo> profiles = null)
         {
             var location = GetProfilesLocation();
 
-            // Create the directory if it does not exist
             if (!Directory.Exists(location))
                 Directory.CreateDirectory(location);
 
-            SerializeToFile(LoadedProfileFile.Path);
+            if (profileFileInfo == null)
+                profileFileInfo = LoadedProfileFile;
+
+            if (profiles == null)
+                profiles = new List<ProfileInfo>(Profiles);
+
+            SerializeToFile(profileFileInfo.Path, profiles);
 
             ProfilesChanged = false;
         }
         #endregion
 
-        #region Deserialize from file, serialize to file
-        private static void DeserializeFromFile(string filePath)
+        #region Deserialize, serialize to file
+        private static List<ProfileInfo> DeserializeFromFile(string filePath)
         {
+            var profiles = new List<ProfileInfo>();
+
             var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
 
             using (var fileStream = new FileStream(filePath, FileMode.Open))
             {
-                ((List<ProfileInfo>)xmlSerializer.Deserialize(fileStream)).ForEach(AddProfile);
+                ((List<ProfileInfo>)xmlSerializer.Deserialize(fileStream)).ForEach(x => profiles.Add(x));
             }
+
+            return profiles;
         }
 
-        private static void SerializeToFile(string filePath)
+        private static void SerializeToFile(string filePath, List<ProfileInfo> profiles)
         {
             var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
-                xmlSerializer.Serialize(fileStream, new List<ProfileInfo>(Profiles));
+                xmlSerializer.Serialize(fileStream, profiles);
             }
         }
         #endregion
 
-        #region Reset
-        public static void Reset()
+        #region Switch profile
+        public static void SwitchProfile(ProfileFileInfo info, bool saveLoadedProfiles = true)
         {
+            if (saveLoadedProfiles && LoadedProfileFile != null && ProfilesChanged)
+                Save();
+
             Profiles.Clear();
+
+            Load(info);
         }
         #endregion
 
@@ -266,11 +292,18 @@ namespace NETworkManager.Models.Profile
             if (GetProfilesLocation() != GetDefaultProfilesLocation() && Directory.GetFiles(GetProfilesLocation()).Length == 0 && Directory.GetDirectories(GetProfilesLocation()).Length == 0)
                 Directory.Delete(GetProfilesLocation());
 
-            RefreshFiles();
+            RefreshProfileFiles();
         }
         #endregion
 
-        #region Methods --> Add profile, Remove profile, Rename group
+        #region Reset profiles
+        public static void Reset()
+        {
+            Profiles.Clear();
+        }
+        #endregion
+
+        #region Add profile, Remove profile, Rename group
         public static void AddProfile(ProfileInfo profile)
         {
             // Possible fix for appcrash --> when icollection view is refreshed...
@@ -445,7 +478,7 @@ namespace NETworkManager.Models.Profile
         }
         #endregion
 
-        #region Dialogs --> Add profile, Edit profile, CopyAs profile, Delete profile, Edit group
+        #region Add profile, Edit profile, CopyAs profile, Delete profile, Edit group
         public static async void ShowAddProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator)
         {
             var customDialog = new CustomDialog
@@ -588,6 +621,21 @@ namespace NETworkManager.Models.Profile
 
             viewModel.OnProfileDialogOpen();
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        }
+        #endregion
+
+        #region GetGroups
+        public static List<string> GetGroups()
+        {
+            var list = new List<string>();
+
+            foreach (var profile in Profiles)
+            {
+                if (!list.Contains(profile.Group))
+                    list.Add(profile.Group);
+            }
+
+            return list;
         }
         #endregion
 

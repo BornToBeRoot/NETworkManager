@@ -33,7 +33,7 @@
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <!--<validators:ProfileFileUniqueValidator ValidatesOnTargetUpdated="True" />-->
+                            <validators:ProfileFileUniqueValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -41,20 +41,23 @@
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
-            <Button Content="{x:Static localization:Strings.Add}" Command="{Binding AddCommand}" IsDefault="True" Margin="10,0,0,0">
+            <Button Command="{Binding AcceptCommand}" IsDefault="True" Margin="10,0,0,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="Content" Value="{x:Static localization:Strings.Add}" />
                         <Style.Triggers>                            
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxName}" Value="False" />
-                                    <!--<Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxSubnetmask}" Value="False" />-->
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxName}" Value="False" />                                    
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True" />
                                 </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
+                            </MultiDataTrigger>                            
+                            <DataTrigger Binding="{Binding IsEdit}" Value="True">
+                                <Setter Property="Content" Value="{x:Static localization:Strings.Rename}" />
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

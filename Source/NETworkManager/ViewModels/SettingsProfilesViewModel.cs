@@ -206,7 +206,7 @@ namespace NETworkManager.ViewModels
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                //ProfileManager.AddProfileFile(instance.Name);
+                ProfileManager.AddProfileFile(instance.Name);
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -217,7 +217,7 @@ namespace NETworkManager.ViewModels
                 DataContext = profileFileViewModel
             };
 
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand EditProfileFileCommand => new RelayCommand(p => EditProfileFileAction());
@@ -233,7 +233,7 @@ namespace NETworkManager.ViewModels
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                //ProfileManager.EditProfileFile(SelectedProfile, instance.Name);
+                ProfileManager.RenameProfileFile(SelectedProfileFile, instance.Name);
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -247,12 +247,31 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand RemoveProfileFileCommand => new RelayCommand(p => RemoveProfileFileAction());
+        public ICommand DeleteProfileFileCommand => new RelayCommand(p => DeleteProfileFileAction());
 
-        private void RemoveProfileFileAction()
+        private async void DeleteProfileFileAction()
         {
-            
-            //ProfileManager.RemoveProfileFile(SelectedProfileFile);
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.DeleteProfileFile
+            };
+
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                ProfileManager.DeleteProfileFile(SelectedProfileFile);
+            }, async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, Resources.Localization.Strings.DeleteProfileFileMessage);
+
+            customDialog.Content = new ConfirmRemoveDialog
+            {
+                DataContext = confirmRemoveViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         /*

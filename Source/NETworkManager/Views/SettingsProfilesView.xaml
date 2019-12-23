@@ -19,8 +19,7 @@
         <!-- Converter -->
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />        
         <converters:IsDefaultProfilesLocationToBooleanConverter x:Key="IsDefaultProfilesLocationToBoolConverter" />
         <converters:IsProfilesLocationToBooleanConverter x:Key="IsProfilesLocationToBooleanConverter" />
         <converters:ValidateSettingsResetConverter x:Key="ValidateSettingsResetConverter" />

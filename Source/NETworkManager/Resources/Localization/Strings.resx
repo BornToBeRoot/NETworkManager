@@ -2515,4 +2515,16 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="RemoveProfileFile" xml:space="preserve">
     <value>Remove profile file</value>
   </data>
+  <data name="ProfileNameAlreadyExists" xml:space="preserve">
+    <value>Profile name already exists!</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="DeleteProfileFile" xml:space="preserve">
+    <value>Delete profile file</value>
+  </data>
+  <data name="DeleteProfileFileMessage" xml:space="preserve">
+    <value>Selected profile file will be deleted permanently.</value>
+  </data>
 </root>
