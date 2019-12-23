@@ -247,7 +247,12 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public ICommand DeleteProfileFileCommand => new RelayCommand(p => DeleteProfileFileAction());
+        public ICommand DeleteProfileFileCommand => new RelayCommand(p => DeleteProfileFileAction(), DeleteProfileFile_CanExecute);
+
+        private bool DeleteProfileFile_CanExecute(object obj)
+        {
+            return ProfileFiles.Cast<ProfileFileInfo>().Count() > 1;
+        }
 
         private async void DeleteProfileFileAction()
         {
@@ -273,112 +278,6 @@ namespace NETworkManager.ViewModels
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-
-        /*
-        public ICommand BrowseImportFileCommand => new RelayCommand(p => BrowseFileAction());
-
-        private void BrowseFileAction()
-        {
-            using (var openFileDialog = new System.Windows.Forms.OpenFileDialog
-            {
-                Filter = GlobalStaticConfiguration.ZipFileExtensionFilter
-            })
-            {
-                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    ImportFilePath = openFileDialog.FileName;
-            }
-        }
-
-        public ICommand ImportSettingsCommand => new RelayCommand(p => ImportSettingsAction());
-
-        private async void ImportSettingsAction()
-        {
-            var settings = AppearanceManager.MetroDialog;
-
-            settings.AffirmativeButtonText = Resources.Localization.Strings.Continue;
-            settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
-
-            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
-                        
-            if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, Resources.Localization.Strings.SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
-                return;
-
-            try
-            {
-                SettingsManager.Import(ImportFilePath);
-
-                // Restart the application
-                ConfigurationManager.Current.ForceRestart = true;
-                CloseAction();
-            }
-            catch (Exception ex)
-            {
-                ImportStatusMessage = string.Format(Resources.Localization.Strings.ClouldNotImportFileSeeErrorMessageXX, ex.Message);
-                DisplayImportStatusMessage = true;
-            }
-        }
-
-        public ICommand ExportSettingsCommand => new RelayCommand(p => ExportSettingsAction());
-
-        private void ExportSettingsAction()
-        {
-            DisplayExportStatusMessage = false;
-
-            using (var saveFileDialog = new System.Windows.Forms.SaveFileDialog()
-            {
-                Filter = GlobalStaticConfiguration.ZipFileExtensionFilter,
-                FileName = $"{AssemblyManager.Current.Name}_{Resources.Localization.Strings.Settings}_{Resources.Localization.Strings.Backup}#{TimestampHelper.GetTimestamp()}.zip"
-            })
-            {
-                if (saveFileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
-                    return;
-
-                try
-                {
-                    SettingsManager.Export(saveFileDialog.FileName);
-
-                    ExportStatusMessage = string.Format(Resources.Localization.Strings.FileExportedToXX, saveFileDialog.FileName);
-                    DisplayExportStatusMessage = true;
-                }
-                catch (Exception ex)
-                {
-                    ExportStatusMessage = string.Format(Resources.Localization.Strings.ClouldNotExportFileSeeErrorMessageXX, ex.Message);
-                    DisplayExportStatusMessage = true;
-                }
-            }
-        }
-
-        public ICommand ResetSettingsCommand => new RelayCommand(p => ResetSettingsAction());
-
-        public async void ResetSettingsAction()
-        {
-            var settings = AppearanceManager.MetroDialog;
-
-            settings.AffirmativeButtonText = Resources.Localization.Strings.Continue;
-            settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
-
-            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
-
-            var message = Resources.Localization.Strings.SelectedSettingsAreReset;
-
-            message += Environment.NewLine + Environment.NewLine + $"* {Resources.Localization.Strings.TheSettingsLocationIsNotAffected}";
-            message += Environment.NewLine + $"* {Resources.Localization.Strings.ApplicationIsRestartedAfterwards}";
-
-            if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
-                return;
-
-            SettingsManager.Reset();
-
-            message = Resources.Localization.Strings.SettingsSuccessfullyReset;
-            message += Environment.NewLine + Environment.NewLine + Resources.Localization.Strings.TheApplicationWillBeRestarted;
-
-            await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, message, MessageDialogStyle.Affirmative, settings);
-
-            // Restart the application
-            ConfigurationManager.Current.ForceRestart = true;
-            CloseAction();
-        }
-        */
         #endregion
 
         #region Methods
@@ -387,9 +286,6 @@ namespace NETworkManager.ViewModels
             // Save everything
             if (ProfileManager.ProfilesChanged)
                 ProfileManager.Save();
-
-            // Check if files exist
-            //SettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
         }
 
         public void SetLocationPathFromDragDrop(string path)
@@ -398,15 +294,6 @@ namespace NETworkManager.ViewModels
 
             OnPropertyChanged(nameof(Location));
         }
-
-        /*
-        public void SetImportFilePathFromDragDrop(string filePath)
-        {
-            ImportFilePath = filePath;
-
-            OnPropertyChanged(nameof(ImportFilePath));
-        }
-        */
         #endregion
     }
 }

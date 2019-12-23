@@ -273,13 +273,12 @@ namespace NETworkManager
             get => _selectedProfileFile;
             set
             {
-                if (Equals(value, _selectedProfileFile))
+                if (value == _selectedProfileFile || (value != null && value.Equals(_selectedProfileFile)))
                     return;
 
                 _selectedProfileFile = value;
-
-                // Event will fire on change...
-                if (value != null && ProfileManager.LoadedProfileFile != value)
+                
+                if (value != null && !value.Equals(ProfileManager.LoadedProfileFile))
                     ProfileManager.SwitchProfile(value);
 
                 OnPropertyChanged();
@@ -387,7 +386,7 @@ namespace NETworkManager
             // Load profiles
             ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
             ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
-            ProfileManager.LoadedProfileFileChangedEvent += ProfileManager_LoadedProfileFileChangedEvent;
+            ProfileManager.OnProfileFileChangedEvent += ProfileManager_OnProfileFileChangedEvent;
 
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
@@ -457,13 +456,21 @@ namespace NETworkManager
             if (SelectedApplication != null)
                 ListViewApplication.ScrollIntoView(SelectedApplication);
         }
-                
-        private void ProfileManager_LoadedProfileFileChangedEvent(object sender, ProfileFileInfoArgs e)
+
+        /// <summary>
+        /// Update the view when the loaded profile file changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProfileManager_OnProfileFileChangedEvent(object sender, ProfileFileInfoArgs e)
         {
-            // Check for local changes...
-            if (SelectedProfileFile == null || SelectedProfileFile.Path != e.ProfileFileInfo.Path)
-                SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Path == e.ProfileFileInfo.Path);
-        }        
+            SelectedProfileFile = null;
+
+            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == e.ProfileFileInfo.Name);
+
+            if (SelectedProfileFile == null)
+                SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
+        }
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {
@@ -795,6 +802,8 @@ namespace NETworkManager
                     break;
                 case ApplicationViewManager.Name.NetworkInterface:
                     break;
+                case ApplicationViewManager.Name.WiFi:
+                    break;
                 case ApplicationViewManager.Name.IPScanner:
                     _ipScannerHostView.AddTab(profile.Profile);
                     break;
@@ -803,6 +812,8 @@ namespace NETworkManager
                     break;
                 case ApplicationViewManager.Name.Ping:
                     _pingHostView.AddTab(profile.Profile);
+                    break;
+                case ApplicationViewManager.Name.PingMonitor:
                     break;
                 case ApplicationViewManager.Name.Traceroute:
                     _tracerouteHostView.AddTab(profile.Profile);

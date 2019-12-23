@@ -14,12 +14,13 @@
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:profile="clr-namespace:NETworkManager.Models.Profile"
         dialogs:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:SettingsProfilesViewModel}">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsProfilesViewModel}">
     <UserControl.Resources>
         <!-- Converter -->
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />        
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:IntGreater1ToBooleanConverter x:Key="IntGreater1ToBooleanConverter" />
         <converters:IsDefaultProfilesLocationToBooleanConverter x:Key="IsDefaultProfilesLocationToBoolConverter" />
         <converters:IsProfilesLocationToBooleanConverter x:Key="IsProfilesLocationToBooleanConverter" />
         <converters:ValidateSettingsResetConverter x:Key="ValidateSettingsResetConverter" />
@@ -168,7 +169,7 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profile:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />                
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profile:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
                 <DataGridTemplateColumn Header="{x:Static localization:Strings.IsEncrypted}" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -213,14 +214,11 @@
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                         <Setter Property="IsEnabled" Value="False"/>
                         <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridProfileLocations, Path=SelectedItems.Count}" Value="1" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
+                            <DataTrigger Binding="{Binding ElementName=DataGridProfileLocations, Path=SelectedItems.Count}" Value="1">
+                                <DataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True"/>
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
+                                </DataTrigger.Setters>
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

@@ -16,19 +16,50 @@ using NETworkManager.Views;
 
 namespace NETworkManager.Models.Profile
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ProfileManager
     {
         #region Variables
+        /// <summary>
+        /// Name of the profiles directory in the %appdata%\NETworkManager or in the portable location.
+        /// </summary>
         private static string ProfilesFolderName => "Profiles";
+
+        /// <summary>
+        /// Default profile name
+        /// </summary>
         private static string ProfilesDefaultFileName => "Default";
+
+        /// <summary>
+        /// Profile file extension
+        /// </summary>
         public static string ProfilesFileExtension => ".xml";
+
+        /// <summary>
+        /// String to identify encrypted profile files
+        /// </summary>
         public static string ProfilesEncryptionIdentifier => ".encrypted";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static string TagIdentifier => "tag=";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static ObservableCollection<ProfileFileInfo> ProfileFiles { get; set; } = new ObservableCollection<ProfileFileInfo>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         private static ProfileFileInfo _profileFileInfo;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static ProfileFileInfo LoadedProfileFile
         {
             get => _profileFileInfo;
@@ -40,14 +71,29 @@ namespace NETworkManager.Models.Profile
                 _profileFileInfo = value;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static ObservableCollection<ProfileInfo> Profiles { get; set; } = new ObservableCollection<ProfileInfo>();
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool ProfilesChanged { get; set; }
 
-        public static event EventHandler<ProfileFileInfoArgs> LoadedProfileFileChangedEvent;
+        /// <summary>
+        /// 
+        /// </summary>
+        public static event EventHandler<ProfileFileInfoArgs> OnProfileFileChangedEvent;
 
-        private static void LoadedProfileFileChanged(ProfileFileInfo profileFileInfo)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profileFileInfo"></param>
+        private static void ProfileFileChanged(ProfileFileInfo profileFileInfo)
         {
-            LoadedProfileFileChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo));
+            OnProfileFileChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo));
         }
         #endregion
 
@@ -117,6 +163,7 @@ namespace NETworkManager.Models.Profile
         {
             return Directory.GetFiles(location).Where(x => Path.GetExtension(x) == ProfilesFileExtension);
         }
+
         private static void LoadProfileFiles()
         {
             var location = GetProfilesLocation();
@@ -141,7 +188,7 @@ namespace NETworkManager.Models.Profile
                 ProfileFiles.Add(new ProfileFileInfo(ProfilesDefaultFileName, GetProfilesDefaultFilePath()));
         }
 
-        public static void RefreshProfileFiles()
+        private static void RefreshProfileFiles()
         {
             ProfileFiles.Clear();
 
@@ -155,6 +202,10 @@ namespace NETworkManager.Models.Profile
             Save(new ProfileFileInfo(profileName, Path.Combine(GetDefaultProfilesLocation(), $"{profileName}{ProfilesFileExtension}")), new List<ProfileInfo>());
 
             RefreshProfileFiles();
+
+            SwitchProfile(ProfileFiles.FirstOrDefault(x => x.Name == profileName));
+
+            ProfileFileChanged(LoadedProfileFile);
         }
 
         public static void RenameProfileFile(ProfileFileInfo profileFileInfo, string newProfileName)
@@ -179,18 +230,20 @@ namespace NETworkManager.Models.Profile
 
             if (switchProfile)
                 SwitchProfile(newProfileFileInfo, false);
+
+            ProfileFileChanged(LoadedProfileFile);
         }
 
         public static void DeleteProfileFile(ProfileFileInfo profileFileInfo)
         {
-            if(LoadedProfileFile.Equals(profileFileInfo))
-            {
-                SwitchProfile(ProfileFiles.FirstOrDefault(x => x.Path != profileFileInfo.Path));
-            }
+            if (LoadedProfileFile.Equals(profileFileInfo))
+                SwitchProfile(ProfileFiles.FirstOrDefault(x => !x.Equals(profileFileInfo)));
 
             File.Delete(profileFileInfo.Path);
 
             RefreshProfileFiles();
+
+            ProfileFileChanged(LoadedProfileFile);
         }
         #endregion
 
@@ -201,7 +254,7 @@ namespace NETworkManager.Models.Profile
         #region Load profile, save profile
         private static void Load(ProfileFileInfo info)
         {
-            if (File.Exists(info.Path)) // Load if exists...
+            if (File.Exists(info.Path))
                 DeserializeFromFile(info.Path).ForEach(AddProfile);
 
             ProfilesChanged = false;
@@ -274,7 +327,9 @@ namespace NETworkManager.Models.Profile
 
         private static void MoveProfiles(string targedLocation)
         {
-            // Create the dircetory and copy the files to the new location
+            Save();
+
+            // Create the directory
             if (!Directory.Exists(targedLocation))
                 Directory.CreateDirectory(targedLocation);
 
@@ -293,6 +348,10 @@ namespace NETworkManager.Models.Profile
                 Directory.Delete(GetProfilesLocation());
 
             RefreshProfileFiles();
+
+            SwitchProfile(ProfileFiles.FirstOrDefault(x => x.Name == LoadedProfileFile.Name), false);
+
+            ProfileFileChanged(LoadedProfileFile);
         }
         #endregion
 

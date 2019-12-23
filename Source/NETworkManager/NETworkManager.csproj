@@ -139,6 +139,7 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\IntGreater1ToBooleanConverter.cs" />
     <Compile Include="Converters\IsDefaultProfilesLocationToBooleanConverter.cs" />
     <Compile Include="Converters\IsProfilesLocationToBooleanConverter.cs" />
     <Compile Include="Converters\WiFiTooltipChannelConverter.cs" />
