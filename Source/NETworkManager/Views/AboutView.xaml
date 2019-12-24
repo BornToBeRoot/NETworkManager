@@ -38,7 +38,10 @@
                 <StackPanel Grid.Column="1" Margin="20,0,0,0">
                     <TextBlock FontSize="32" Text="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock Text="{x:Static localization:Strings.Slogan}" Style="{DynamicResource WrapTextBlock}" Margin="0,0,0,5" />
-                    <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" Margin="0,0,0,5" />
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                        <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding Patch}" Style="{StaticResource DefaultTextBlock}" Visibility="{Binding IsPatchVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    </StackPanel>
                     <TextBlock Text="{x:Static resources:Resources.NETworkManager_License}" Style="{StaticResource LinkTextBlock}" Margin="0,0,0,5">
                         <TextBlock.InputBindings>
                             <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LicenseUrl}" MouseAction="LeftClick" />
@@ -100,7 +103,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Rectangle.Style>
-                            </Rectangle>                            
+                            </Rectangle>
                         </Button>
                         <Button ToolTip="{x:Static localization:Strings.ToolTip_TransifexProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_TranslationUrl}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24" >
