@@ -97,7 +97,7 @@ Help translate on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkMana
 - Windows 10 Build 1809 or later
 - .NET-Framework 4.7.2
 
-<a align="center" href="https://github.com/BornToBeRoot/NETworkManager/releases/tag/v1.11.0.0">Last release for Windows 7 / 8.1 and Server 2008 R2 / 2012 R2 / 2016</a>
+[Last release for Windows 7 / 8.1 and Server 2008 R2 / 2012 R2 / 2016](https://github.com/BornToBeRoot/NETworkManager/releases/tag/v1.11.0.0)
 
 <h2>License</h2>
 
