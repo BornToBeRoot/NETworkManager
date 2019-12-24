@@ -15,9 +15,6 @@ namespace NETworkManager.Models.Settings
 
         public static MetroDialogSettings MetroDialog = new MetroDialogSettings();
 
-        /// <summary>
-        /// Load Appearance (AppTheme and Accent) from the user settings.
-        /// </summary>
         public static void Load()
         {
             // Add custom themes

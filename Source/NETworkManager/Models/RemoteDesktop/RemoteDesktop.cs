@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using NETworkManager.Models.Profile;
 using NETworkManager.Models.Settings;
 using System;
 using System.Collections.Generic;

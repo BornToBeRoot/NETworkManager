@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Models.Profile;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Models.PowerShell
 {

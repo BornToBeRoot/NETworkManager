@@ -1,5 +1,5 @@
 ﻿using System;
-using NETworkManager.Models.Settings;
+using NETworkManager.Models.Profile;
 
 namespace NETworkManager.Models.EventSystem
 {
@@ -10,7 +10,7 @@ namespace NETworkManager.Models.EventSystem
 
         public static void RedirectProfileToApplication(ApplicationViewManager.Name application, ProfileInfo profile)
         {
-            RedirectProfileToApplicationEvent?.Invoke(typeof(string), new EventSystemRedirectProfileApplicationArgs(application, profile));
+            RedirectProfileToApplicationEvent?.Invoke(null, new EventSystemRedirectProfileApplicationArgs(application, profile));
         }
 
         // This will notify the mail window, to change the view to another application and redirect some data (hostname, ip)
@@ -18,7 +18,7 @@ namespace NETworkManager.Models.EventSystem
 
         public static void RedirectDataToApplication(ApplicationViewManager.Name application, string data)
         {
-            RedirectDataToApplicationEvent?.Invoke(typeof(string), new EventSystemRedirectDataApplicationArgs(application, data));
+            RedirectDataToApplicationEvent?.Invoke(null, new EventSystemRedirectDataApplicationArgs(application, data));
         }
 
         // This will notify the main window, to change the view to the settings...
@@ -26,7 +26,7 @@ namespace NETworkManager.Models.EventSystem
 
         public static void RedirectToSettings()
         {
-            RedirectToSettingsEvent?.Invoke(typeof(string), EventArgs.Empty);
+            RedirectToSettingsEvent?.Invoke(null, EventArgs.Empty);
         }
     }
 }

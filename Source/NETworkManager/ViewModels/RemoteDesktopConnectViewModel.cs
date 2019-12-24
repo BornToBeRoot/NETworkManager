@@ -71,21 +71,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private bool _customCredentials = true;
-        public bool CustomCredentials
-        {
-            get => _customCredentials;
-            set
-            {
-                if (value == _customCredentials)
-                    return;
-
-                _customCredentials = value;
-                OnPropertyChanged();
-            }
-        }
-
+              
         private string _username;
         public string Username
         {
@@ -114,36 +100,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private Guid _credentialID;
-        public Guid CredentialID
-        {
-            get => _credentialID;
-            set
-            {
-                if (value == _credentialID)
-                    return;
-
-                _credentialID = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ICollectionView Credentials { get; }
-
-        private bool _credentialsLocked;
-        public bool CredentialsLocked
-        {
-            get => _credentialsLocked;
-            set
-            {
-                if (value == _credentialsLocked)
-                    return;
-
-                _credentialsLocked = value;
-                OnPropertyChanged();
-            }
-        }
-
+      
         public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand, Action<RemoteDesktopConnectViewModel> cancelHandler, bool connectAs = false)
         {
             ConnectCommand = new RelayCommand(p => connectCommand(this));
@@ -153,20 +110,6 @@ namespace NETworkManager.ViewModels
 
             if (!ConnectAs)
                 HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
-
-            if (CredentialManager.IsLoaded)
-                Credentials = new CollectionViewSource { Source = CredentialManager.CredentialInfoList }.View;
-            else
-                CredentialsLocked = true;
         }
-
-        #region ICommand & Actions
-        public ICommand UnselectCredentialCommand => new RelayCommand(p => UnselectCredentialAction());
-
-        private void UnselectCredentialAction()
-        {
-            CredentialID = Guid.Empty;
-        }
-        #endregion
     }
 }

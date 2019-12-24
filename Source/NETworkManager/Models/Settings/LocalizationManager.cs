@@ -41,7 +41,7 @@ namespace NETworkManager.Models.Settings
 
         public static CultureInfo Culture { get; set; }
 
-        public static void Load()
+        static LocalizationManager()
         {
             // Get the language from the user settings
             var cultureCode = SettingsManager.Current.Localization_CultureCode;

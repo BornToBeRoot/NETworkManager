@@ -17,7 +17,7 @@ namespace NETworkManager.Models.Settings
 
         public static CommandLineInfo Current { get; set; }
 
-        public static void Parse()
+        static CommandLineManager()
         {
             Current = new CommandLineInfo();
 

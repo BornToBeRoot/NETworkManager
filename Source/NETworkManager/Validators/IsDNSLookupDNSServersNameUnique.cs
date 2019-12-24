@@ -6,7 +6,7 @@ using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Validators
 {
-    public class IsDNSServerNameUnique : ValidationRule
+    public class IsDNSLookupDNSServersNameUnique : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

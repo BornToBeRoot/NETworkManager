@@ -138,7 +138,7 @@ namespace NETworkManager.Utilities
 
             var exceptions = new ConcurrentQueue<HostNotFoundException>();
 
-            Parallel.ForEach(ipRanges, new ParallelOptions { CancellationToken = cancellationToken }, async ipHostOrRange =>
+            Parallel.ForEach(ipRanges, new ParallelOptions { CancellationToken = cancellationToken }, ipHostOrRange =>
             {
                 // like 192.168.0.1, 192.168.0.0/24, 192.168.0.0/255.255.255.0, 192.168.0.0 - 192.168.0.100, 192.168.[50-100].1
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSubnetmaskRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))

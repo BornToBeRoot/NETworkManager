@@ -23,6 +23,7 @@ using NETworkManager.Views;
 using NETworkManager.Models.EventSystem;
 using NETworkManager.Enum;
 using System.Text.RegularExpressions;
+using NETworkManager.Models.Profile;
 
 namespace NETworkManager.ViewModels
 {

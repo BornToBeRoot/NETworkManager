@@ -295,6 +295,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add profile file.
+        /// </summary>
+        public static string AddProfileFile {
+            get {
+                return ResourceManager.GetString("AddProfileFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add tab....
         /// </summary>
         public static string AddTabDots {
@@ -894,6 +903,24 @@ namespace NETworkManager.Resources.Localization {
         public static string ClosingInXSecondsDots {
             get {
                 return ResourceManager.GetString("ClosingInXSecondsDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not export file! See error message: &quot;{0}&quot;.
+        /// </summary>
+        public static string ClouldNotExportFileSeeErrorMessageXX {
+            get {
+                return ResourceManager.GetString("ClouldNotExportFileSeeErrorMessageXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not import file! See error message: &quot;{0}&quot;.
+        /// </summary>
+        public static string ClouldNotImportFileSeeErrorMessageXX {
+            get {
+                return ResourceManager.GetString("ClouldNotImportFileSeeErrorMessageXX", resourceCulture);
             }
         }
         
@@ -1564,6 +1591,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete profile file.
+        /// </summary>
+        public static string DeleteProfileFile {
+            get {
+                return ResourceManager.GetString("DeleteProfileFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected profile file will be deleted permanently..
+        /// </summary>
+        public static string DeleteProfileFileMessage {
+            get {
+                return ResourceManager.GetString("DeleteProfileFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selected profiles will be deleted permanently..
         /// </summary>
         public static string DeleteProfileMessage {
@@ -1686,6 +1731,15 @@ namespace NETworkManager.Resources.Localization {
         public static string DHCPServer {
             get {
                 return ResourceManager.GetString("DHCPServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable encryption....
+        /// </summary>
+        public static string DisableEncryptionDots {
+            get {
+                return ResourceManager.GetString("DisableEncryptionDots", resourceCulture);
             }
         }
         
@@ -1960,6 +2014,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit profile file.
+        /// </summary>
+        public static string EditProfileFile {
+            get {
+                return ResourceManager.GetString("EditProfileFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Emerald.
         /// </summary>
         public static string Emerald {
@@ -1987,6 +2050,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable encryption....
+        /// </summary>
+        public static string EnableEncryptionDots {
+            get {
+                return ResourceManager.GetString("EnableEncryptionDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable transparency.
         /// </summary>
         public static string EnableTransparency {
@@ -2010,6 +2082,15 @@ namespace NETworkManager.Resources.Localization {
         public static string EncryptionColon {
             get {
                 return ResourceManager.GetString("EncryptionColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encryption....
+        /// </summary>
+        public static string EncryptionDots {
+            get {
+                return ResourceManager.GetString("EncryptionDots", resourceCulture);
             }
         }
         
@@ -2266,6 +2347,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer 1.
+        /// </summary>
+        public static string ExampleProfileFileName {
+            get {
+                return ResourceManager.GetString("ExampleProfileFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Execution Policy.
         /// </summary>
         public static string ExecutionPolicy {
@@ -2361,6 +2451,15 @@ namespace NETworkManager.Resources.Localization {
         public static string FileDoesNotExist {
             get {
                 return ResourceManager.GetString("FileDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File exported to &quot;{0}&quot;!.
+        /// </summary>
+        public static string FileExportedToXX {
+            get {
+                return ResourceManager.GetString("FileExportedToXX", resourceCulture);
             }
         }
         
@@ -3101,6 +3200,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is encrypted.
+        /// </summary>
+        public static string IsEncrypted {
+            get {
+                return ResourceManager.GetString("IsEncrypted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Keyboard.
         /// </summary>
         public static string Keyboard {
@@ -3214,6 +3322,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Location {
             get {
                 return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location cannot be changed in portable version!.
+        /// </summary>
+        public static string LocationCannotBeChangedInThePortableVersion {
+            get {
+                return ResourceManager.GetString("LocationCannotBeChangedInThePortableVersion", resourceCulture);
             }
         }
         
@@ -4202,6 +4319,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile name already exists!.
+        /// </summary>
+        public static string ProfileNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("ProfileNameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profiles.
         /// </summary>
         public static string Profiles {
@@ -5121,6 +5247,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove profile file.
+        /// </summary>
+        public static string RemoveProfileFile {
+            get {
+                return ResourceManager.GetString("RemoveProfileFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename.
+        /// </summary>
+        public static string Rename {
+            get {
+                return ResourceManager.GetString("Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Renew.
         /// </summary>
         public static string Renew {
@@ -5509,11 +5653,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The selected settings are overwritten..
+        ///   Looks up a localized string similar to The selected settings are overwritten and the application is restarted afterwards!.
         /// </summary>
-        public static string SelectedSettingsAreOverwritten {
+        public static string SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards {
             get {
-                return ResourceManager.GetString("SelectedSettingsAreOverwritten", resourceCulture);
+                return ResourceManager.GetString("SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards", resourceCulture);
             }
         }
         
@@ -5541,15 +5685,6 @@ namespace NETworkManager.Resources.Localization {
         public static string SelectTheSettingsYouWantToImport {
             get {
                 return ResourceManager.GetString("SelectTheSettingsYouWantToImport", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select the settings you want to reset:.
-        /// </summary>
-        public static string SelectTheSettingsYouWantToReset {
-            get {
-                return ResourceManager.GetString("SelectTheSettingsYouWantToReset", resourceCulture);
             }
         }
         
@@ -5617,7 +5752,16 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles and credentials are not affected!).
+        ///   Looks up a localized string similar to Some features can not be used when transparency is enabled. If you change this setting, the application must be restarted..
+        /// </summary>
+        public static string SettingsAppearanceTransparencyWarning {
+            get {
+                return ResourceManager.GetString("SettingsAppearanceTransparencyWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles are not affected!).
         /// </summary>
         public static string SettingsFileFoundWasCorruptOrNotCompatibleMessage {
             get {
@@ -5734,6 +5878,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show status window on network change.
+        /// </summary>
+        public static string ShowStatusWindowOnNetworkChange {
+            get {
+                return ResourceManager.GetString("ShowStatusWindowOnNetworkChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show the following application on startup:.
         /// </summary>
         public static string ShowTheFollowingApplicationOnStartup {
@@ -5748,15 +5901,6 @@ namespace NETworkManager.Resources.Localization {
         public static string ShowWindowContentsWhileDragging {
             get {
                 return ResourceManager.GetString("ShowWindowContentsWhileDragging", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show window on network change.
-        /// </summary>
-        public static string ShowWindowOnNetworkChange {
-            get {
-                return ResourceManager.GetString("ShowWindowOnNetworkChange", resourceCulture);
             }
         }
         
@@ -6193,6 +6337,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The application will be restarted....
+        /// </summary>
+        public static string TheApplicationWillBeRestarted {
+            get {
+                return ResourceManager.GetString("TheApplicationWillBeRestarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The following hostnames could not be resolved:.
         /// </summary>
         public static string TheFollowingHostnamesCouldNotBeResolved {
@@ -6252,6 +6405,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater {
             get {
                 return ResourceManager.GetString("ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will reset all settings!.
+        /// </summary>
+        public static string ThisWillResetAllSettings {
+            get {
+                return ResourceManager.GetString("ThisWillResetAllSettings", resourceCulture);
             }
         }
         
@@ -6689,6 +6851,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use other.
+        /// </summary>
+        public static string UseOther {
+            get {
+                return ResourceManager.GetString("UseOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use resolver cache.
         /// </summary>
         public static string UseResolverCache {
@@ -6865,15 +7036,6 @@ namespace NETworkManager.Resources.Localization {
         public static string WarningMessage_CouldNotResolvIPAddressForHostname {
             get {
                 return ResourceManager.GetString("WarningMessage_CouldNotResolvIPAddressForHostname", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Some graphics cards / drivers have problems maximizing the application when transparency is enabled. The function must be disabled for using &quot;Remote Desktop&quot;! Enabling or disabling this feature requires a restart of the application..
-        /// </summary>
-        public static string WarningMessage_SettingsGeneralAppearanceTransparency {
-            get {
-                return ResourceManager.GetString("WarningMessage_SettingsGeneralAppearanceTransparency", resourceCulture);
             }
         }
         

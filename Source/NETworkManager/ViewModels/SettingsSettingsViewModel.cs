@@ -2,7 +2,6 @@
 using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -17,18 +16,19 @@ namespace NETworkManager.ViewModels
 
         private readonly bool _isLoading;
 
+        public bool IsPortable => ConfigurationManager.Current.IsPortable;
         public Action CloseAction { get; set; }
 
-        private string _locationSelectedPath;
-        public string LocationSelectedPath
+        private string _location;
+        public string Location
         {
-            get => _locationSelectedPath;
+            get => _location;
             set
             {
-                if (value == _locationSelectedPath)
+                if (value == _location)
                     return;
 
-                _locationSelectedPath = value;
+                _location = value;
                 OnPropertyChanged();
             }
         }
@@ -47,51 +47,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _isPortable;
-        public bool IsPortable
-        {
-            get => _isPortable;
-            set
-            {
-                if (value == _isPortable)
-                    return;
-
-                if (!_isLoading)
-                    MakePortable(value);
-
-                _isPortable = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _makingPortable;
-        public bool MakingPortable
-        {
-            get => _makingPortable;
-            set
-            {
-                if (value == _makingPortable)
-                    return;
-
-                _makingPortable = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetEverything;
-        public bool ResetEverything
-        {
-            get => _resetEverything;
-            set
-            {
-                if (value == _resetEverything)
-                    return;
-
-                _resetEverything = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _settingsExists;
         public bool SettingsExists
         {
@@ -106,6 +61,76 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private string _importFilePath;
+        public string ImportFilePath
+        {
+            get => _importFilePath;
+            set
+            {
+                if (value == _importFilePath)
+                    return;
+
+                _importFilePath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _displayImportStatusMessage;
+        public bool DisplayImportStatusMessage
+        {
+            get => _displayImportStatusMessage;
+            set
+            {
+                if (value == _displayImportStatusMessage)
+                    return;
+
+                _displayImportStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _importStatusMessage;
+        public string ImportStatusMessage
+        {
+            get => _importStatusMessage;
+            set
+            {
+                if (value == _importStatusMessage)
+                    return;
+
+                _importStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _displayExportStatusMessage;
+        public bool DisplayExportStatusMessage
+        {
+            get => _displayExportStatusMessage;
+            set
+            {
+                if (value == _displayExportStatusMessage)
+                    return;
+
+                _displayExportStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _exportStatusMessage;
+        public string ExportStatusMessage
+        {
+            get => _exportStatusMessage;
+            set
+            {
+                if (value == _exportStatusMessage)
+                    return;
+
+                _exportStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _resetSettings;
         public bool ResetSettings
         {
@@ -116,34 +141,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _resetSettings = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _profilesExists;
-        public bool ProfilesExists
-        {
-            get => _profilesExists;
-            set
-            {
-                if (value == _profilesExists)
-                    return;
-
-                _profilesExists = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resetProfiles;
-        public bool ResetProfiles
-        {
-            get => _resetProfiles;
-            set
-            {
-                if (value == _resetProfiles)
-                    return;
-
-                _resetProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -163,25 +160,25 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            LocationSelectedPath = SettingsManager.GetSettingsLocationNotPortable();
-            IsPortable = SettingsManager.GetIsPortable();
+            Location = SettingsManager.GetSettingsLocation();
         }
         #endregion
 
         #region ICommands & Actions
-        public ICommand BrowseFolderCommand => new RelayCommand(p => BrowseFolderAction());
+        public ICommand BrowseLocationFolderCommand => new RelayCommand(p => BrowseLocationFolderAction());
 
-        private void BrowseFolderAction()
+        private void BrowseLocationFolderAction()
         {
-            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                if (Directory.Exists(Location))
+                    dialog.SelectedPath = Location;
 
-            if (Directory.Exists(LocationSelectedPath))
-                dialog.SelectedPath = LocationSelectedPath;
+                var dialogResult = dialog.ShowDialog();
 
-            var dialogResult = dialog.ShowDialog();
-
-            if (dialogResult == System.Windows.Forms.DialogResult.OK)
-                LocationSelectedPath = dialog.SelectedPath;
+                if (dialogResult == System.Windows.Forms.DialogResult.OK)
+                    Location = dialog.SelectedPath;
+            }
         }
 
         public ICommand OpenLocationCommand => new RelayCommand(p => OpenLocationAction());
@@ -191,41 +188,22 @@ namespace NETworkManager.ViewModels
             Process.Start("explorer.exe", SettingsManager.GetSettingsLocation());
         }
 
-        public ICommand ChangeSettingsCommand => new RelayCommand(p => ChangeSettingsAction());
+        public ICommand ChangeLocationCommand => new RelayCommand(p => ChangeLocationAction());
 
-        // Check if a file(name) is a settings file
-        private static bool FilesContainsSettingsFiles(IEnumerable<string> files)
-        {
-            foreach (var file in files)
-            {
-                var fileName = Path.GetFileName(file);
-
-                if (SettingsManager.GetSettingsFileName() == fileName)
-                    return true;
-
-                if (ProfileManager.ProfilesFileName == fileName)
-                    return true;
-            }
-
-            return false;
-        }
-
-        private async void ChangeSettingsAction()
+        private async void ChangeLocationAction()
         {
             MovingFiles = true;
-            var overwrite = false;
-            var forceRestart = false;
+            
+            var useFileInOtherLocation = false;
 
-            var filesTargedLocation = Directory.GetFiles(LocationSelectedPath);
-
-            // Check if there are any settings files in the folder...
-            if (FilesContainsSettingsFiles(filesTargedLocation))
+            // Check if settings file exists in new location
+            if (File.Exists(Path.Combine(Location, SettingsManager.GetSettingsFileName())))
             {
                 var settings = AppearanceManager.MetroDialog;
 
                 settings.AffirmativeButtonText = Resources.Localization.Strings.Overwrite;
                 settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
-                settings.FirstAuxiliaryButtonText = Resources.Localization.Strings.MoveAndRestart;
+                settings.FirstAuxiliaryButtonText = Resources.Localization.Strings.UseOther;
                 settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
 
                 var result = await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Overwrite, Resources.Localization.Strings.OverwriteSettingsInTheDestinationFolder, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
@@ -235,21 +213,32 @@ namespace NETworkManager.ViewModels
                     case MessageDialogResult.Negative:
                         MovingFiles = false;
                         return;
-                    case MessageDialogResult.Affirmative:
-                        overwrite = true;
-                        break;
                     case MessageDialogResult.FirstAuxiliary:
-                        forceRestart = true;
+                        useFileInOtherLocation = true;
                         break;
                 }
             }
 
-            // Try moving files (permissions, file is in use...)
+            // Use other location
+            if (useFileInOtherLocation)
+            {
+                Properties.Settings.Default.Settings_CustomSettingsLocation = Location;
+
+                MovingFiles = false;
+
+                // Restart the application
+                ConfigurationManager.Current.ForceRestart = true;
+                CloseAction();
+
+                return;
+            }
+
+            // Move files...
             try
             {
-                await SettingsManager.MoveSettingsAsync(SettingsManager.GetSettingsLocation(), LocationSelectedPath, overwrite, filesTargedLocation);
+                await SettingsManager.MoveSettingsAsync(Location);
 
-                Properties.Settings.Default.Settings_CustomSettingsLocation = LocationSelectedPath;
+                Properties.Settings.Default.Settings_CustomSettingsLocation = Location;
 
                 // Show the user some awesome animation to indicate we are working on it :)
                 await Task.Delay(2000);
@@ -263,14 +252,8 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
-            LocationSelectedPath = string.Empty;
-            LocationSelectedPath = Properties.Settings.Default.Settings_CustomSettingsLocation;
-
-            if (forceRestart)
-            {
-                SettingsManager.ForceRestart = true;
-                CloseAction();
-            }
+            Location = string.Empty;
+            Location = Properties.Settings.Default.Settings_CustomSettingsLocation;
 
             MovingFiles = false;
         }
@@ -279,7 +262,80 @@ namespace NETworkManager.ViewModels
 
         private void RestoreDefaultSettingsLocationAction()
         {
-            LocationSelectedPath = SettingsManager.GetDefaultSettingsLocation();
+            Location = SettingsManager.GetDefaultSettingsLocation();
+        }
+
+        public ICommand BrowseImportFileCommand => new RelayCommand(p => BrowseFileAction());
+
+        private void BrowseFileAction()
+        {
+            using (var openFileDialog = new System.Windows.Forms.OpenFileDialog
+            {
+                Filter = GlobalStaticConfiguration.ZipFileExtensionFilter
+            })
+            {
+                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    ImportFilePath = openFileDialog.FileName;
+            }
+        }
+
+        public ICommand ImportSettingsCommand => new RelayCommand(p => ImportSettingsAction());
+
+        private async void ImportSettingsAction()
+        {
+            var settings = AppearanceManager.MetroDialog;
+
+            settings.AffirmativeButtonText = Resources.Localization.Strings.Continue;
+            settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
+
+            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
+                        
+            if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, Resources.Localization.Strings.SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+                return;
+
+            try
+            {
+                SettingsManager.Import(ImportFilePath);
+
+                // Restart the application
+                ConfigurationManager.Current.ForceRestart = true;
+                CloseAction();
+            }
+            catch (Exception ex)
+            {
+                ImportStatusMessage = string.Format(Resources.Localization.Strings.ClouldNotImportFileSeeErrorMessageXX, ex.Message);
+                DisplayImportStatusMessage = true;
+            }
+        }
+
+        public ICommand ExportSettingsCommand => new RelayCommand(p => ExportSettingsAction());
+
+        private void ExportSettingsAction()
+        {
+            DisplayExportStatusMessage = false;
+
+            using (var saveFileDialog = new System.Windows.Forms.SaveFileDialog()
+            {
+                Filter = GlobalStaticConfiguration.ZipFileExtensionFilter,
+                FileName = $"{AssemblyManager.Current.Name}_{Resources.Localization.Strings.Settings}_{Resources.Localization.Strings.Backup}#{TimestampHelper.GetTimestamp()}.zip"
+            })
+            {
+                if (saveFileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                    return;
+
+                try
+                {
+                    SettingsManager.Export(saveFileDialog.FileName);
+
+                    ExportStatusMessage = string.Format(Resources.Localization.Strings.FileExportedToXX, saveFileDialog.FileName);
+                    DisplayExportStatusMessage = true;
+                }
+                catch (Exception ex)
+                {
+                    ExportStatusMessage = string.Format(Resources.Localization.Strings.ClouldNotExportFileSeeErrorMessageXX, ex.Message);
+                    DisplayExportStatusMessage = true;
+                }
+            }
         }
 
         public ICommand ResetSettingsCommand => new RelayCommand(p => ResetSettingsAction());
@@ -295,87 +351,48 @@ namespace NETworkManager.ViewModels
 
             var message = Resources.Localization.Strings.SelectedSettingsAreReset;
 
-            if (ResetEverything || ResetSettings)
-            {
-                message += Environment.NewLine + Environment.NewLine + $"* {Resources.Localization.Strings.TheSettingsLocationIsNotAffected}";
-                message += Environment.NewLine + $"* {Resources.Localization.Strings.ApplicationIsRestartedAfterwards}";
-            }
+            message += Environment.NewLine + Environment.NewLine + $"* {Resources.Localization.Strings.TheSettingsLocationIsNotAffected}";
+            message += Environment.NewLine + $"* {Resources.Localization.Strings.ApplicationIsRestartedAfterwards}";
 
             if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
-            var forceRestart = false;
+            SettingsManager.Reset();
 
-            if (SettingsExists && (ResetEverything || ResetSettings))
-            {
-                SettingsManager.Reset();
-                forceRestart = true;
-            }
+            message = Resources.Localization.Strings.SettingsSuccessfullyReset;
+            message += Environment.NewLine + Environment.NewLine + Resources.Localization.Strings.TheApplicationWillBeRestarted;
 
-            if (ProfilesExists && (ResetEverything || ResetProfiles))
-                ProfileManager.Reset();
+            await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, message, MessageDialogStyle.Affirmative, settings);
 
-            // Restart after reset or show a completed message
-            if (forceRestart)
-            {
-                CloseAction();
-            }
-            else
-            {
-                settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
-
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, Resources.Localization.Strings.SettingsSuccessfullyReset, MessageDialogStyle.Affirmative, settings);
-            }
+            // Restart the application
+            ConfigurationManager.Current.ForceRestart = true;
+            CloseAction();
         }
         #endregion
 
         #region Methods
-        private async void MakePortable(bool isPortable)
-        {
-            MakingPortable = true;
-
-            // Save settings before moving them
-            if (SettingsManager.Current.SettingsChanged)
-                SettingsManager.Save();
-
-            // Try moving files (permissions, file is in use...)
-            try
-            {
-                await SettingsManager.MakePortableAsync(isPortable, true);
-
-                Properties.Settings.Default.Settings_CustomSettingsLocation = string.Empty;
-                LocationSelectedPath = SettingsManager.GetSettingsLocationNotPortable();
-
-                // Show the user some awesome animation to indicate we are working on it :)
-                await Task.Delay(2000);
-            }
-            catch (Exception ex)
-            {
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-            }
-
-            MakingPortable = false;
-        }
-
         public void SaveAndCheckSettings()
         {
             // Save everything
             if (SettingsManager.Current.SettingsChanged)
                 SettingsManager.Save();
 
-            if (ProfileManager.ProfilesChanged)
-                ProfileManager.Save();
-
             // Check if files exist
             SettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
-            ProfilesExists = File.Exists(ProfileManager.GetProfilesFilePath());
         }
 
         public void SetLocationPathFromDragDrop(string path)
         {
-            LocationSelectedPath = path;
+            Location = path;
 
-            OnPropertyChanged(nameof(LocationSelectedPath));
+            OnPropertyChanged(nameof(Location));
+        }
+
+        public void SetImportFilePathFromDragDrop(string filePath)
+        {
+            ImportFilePath = filePath;
+
+            OnPropertyChanged(nameof(ImportFilePath));
         }
         #endregion
     }

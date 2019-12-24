@@ -1,123 +1,368 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using System.Xml;
 using System.Xml.Serialization;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Enum;
+using NETworkManager.Models.Settings;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Models.Profile
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ProfileManager
     {
-        public const string ProfilesFileName = "Profiles";
-        public const string ProfilesVersion = "V2";
-        public const string ProfilesFileExtension = "xml";
+        #region Variables
+        /// <summary>
+        /// Name of the profiles directory in the %appdata%\NETworkManager or in the portable location.
+        /// </summary>
+        private static string ProfilesFolderName => "Profiles";
 
-        public const string TagIdentifier = "tag=";
+        /// <summary>
+        /// Default profile name
+        /// </summary>
+        private static string ProfilesDefaultFileName => "Default";
 
-        public static ObservableCollection<ProfileInfo> Profiles { get; set; }
+        /// <summary>
+        /// Profile file extension
+        /// </summary>
+        public static string ProfilesFileExtension => ".xml";
+
+        /// <summary>
+        /// String to identify encrypted profile files
+        /// </summary>
+        public static string ProfilesEncryptionIdentifier => ".encrypted";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static string TagIdentifier => "tag=";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static ObservableCollection<ProfileFileInfo> ProfileFiles { get; set; } = new ObservableCollection<ProfileFileInfo>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static ProfileFileInfo _profileFileInfo;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static ProfileFileInfo LoadedProfileFile
+        {
+            get => _profileFileInfo;
+            set
+            {
+                if (value == _profileFileInfo)
+                    return;
+
+                _profileFileInfo = value;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static ObservableCollection<ProfileInfo> Profiles { get; set; } = new ObservableCollection<ProfileInfo>();
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool ProfilesChanged { get; set; }
 
-        public static string GetProfilesFileName()
+        /// <summary>
+        /// 
+        /// </summary>
+        public static event EventHandler<ProfileFileInfoArgs> OnProfileFileChangedEvent;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profileFileInfo"></param>
+        private static void ProfileFileChanged(ProfileFileInfo profileFileInfo)
         {
-            return $"{ProfilesFileName}.{ProfilesVersion}.{ProfilesFileExtension}";
+            OnProfileFileChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo));
+        }
+        #endregion
+
+        static ProfileManager()
+        {
+            // Load files
+            LoadProfileFiles();
+
+            Profiles.CollectionChanged += Profiles_CollectionChanged;
+
+            // Load profile
+            Load(ProfileFiles[0]);
         }
 
-        public static string GetProfilesFilePath()
+        #region Profiles locations (default, custom, portable)
+        public static string GetDefaultProfilesLocation()
         {
-            return Path.Combine(SettingsManager.GetSettingsLocation(), GetProfilesFileName());
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AssemblyManager.Current.Name, ProfilesFolderName);
         }
 
-        public static List<string> GetGroups()
+        public static string GetCustomProfilesLocation()
         {
-            var list = new List<string>();
-
-            foreach (var profile in Profiles)
-            {
-                if (!list.Contains(profile.Group))
-                    list.Add(profile.Group);
-            }
-
-            return list;
+            return SettingsManager.Current.Profiles_CustomProfilesLocation;
         }
 
-        public static void Load(bool deserialize = true)
+        public static string GetPortableProfilesLocation()
         {
-            Profiles = new ObservableCollection<ProfileInfo>();
-
-            if (deserialize)
-                DeserializeFromFile();
-
-            Profiles.CollectionChanged += Profiles_CollectionChanged; ;
+            return Path.Combine(Path.GetDirectoryName(AssemblyManager.Current.Location) ?? throw new InvalidOperationException(), ProfilesFolderName);
         }
 
-        public static void Import(bool overwrite)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string GetProfilesLocation()
         {
-            if (overwrite)
-                Profiles.Clear();
-
-            DeserializeFromFile();
+            return ConfigurationManager.Current.IsPortable ? GetPortableProfilesLocation() : GetProfilesLocationNotPortable();
         }
 
-        private static void DeserializeFromFile()
+        public static string GetProfilesLocationNotPortable()
         {
-            if (!File.Exists(GetProfilesFilePath()))
+            var location = GetCustomProfilesLocation();
+
+            if (!string.IsNullOrEmpty(location) && Directory.Exists(location))
+                return location;
+
+            return GetDefaultProfilesLocation();
+        }
+        #endregion
+
+        #region FileName, FilePath
+        public static string GetProfilesDefaultFileName()
+        {
+            return $"{ProfilesDefaultFileName}{ProfilesFileExtension}";
+        }
+
+        public static string GetProfilesDefaultFilePath()
+        {
+            var path = Path.Combine(GetProfilesLocation(), GetProfilesDefaultFileName());
+            Debug.WriteLine(path);
+            return path;
+        }
+        #endregion
+
+        #region Get profile files, load profile files, refresh profile files  
+        private static IEnumerable<string> GetProfileFiles(string location)
+        {
+            return Directory.GetFiles(location).Where(x => Path.GetExtension(x) == ProfilesFileExtension);
+        }
+
+        private static void LoadProfileFiles()
+        {
+            var location = GetProfilesLocation();
+
+            if (!Directory.Exists(location))
                 return;
 
-            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
-
-            using (var fileStream = new FileStream(GetProfilesFilePath(), FileMode.Open))
+            foreach (var file in GetProfileFiles(location))
             {
-                ((List<ProfileInfo>)(xmlSerializer.Deserialize(fileStream))).ForEach(AddProfile);
+                var isEncryptionEnabled = Path.GetFileNameWithoutExtension(file).EndsWith(ProfilesEncryptionIdentifier);
+
+                var name = Path.GetFileNameWithoutExtension(file);
+
+                if (isEncryptionEnabled)
+                    name = name.Substring(0, name.Length - ProfilesEncryptionIdentifier.Length);
+
+                ProfileFiles.Add(new ProfileFileInfo(name, file, isEncryptionEnabled));
             }
+
+            // Create default
+            if (ProfileFiles.Count == 0)
+                ProfileFiles.Add(new ProfileFileInfo(ProfilesDefaultFileName, GetProfilesDefaultFilePath()));
         }
 
-        private static void Profiles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private static void RefreshProfileFiles()
         {
-            ProfilesChanged = true;
+            ProfileFiles.Clear();
+
+            LoadProfileFiles();
+        }
+        #endregion
+
+        #region Add profile file, edit profile file, delete profile file
+        public static void AddProfileFile(string profileName)
+        {
+            Save(new ProfileFileInfo(profileName, Path.Combine(GetDefaultProfilesLocation(), $"{profileName}{ProfilesFileExtension}")), new List<ProfileInfo>());
+
+            RefreshProfileFiles();
+
+            SwitchProfile(ProfileFiles.FirstOrDefault(x => x.Name == profileName));
+
+            ProfileFileChanged(LoadedProfileFile);
         }
 
-        public static void Save()
+        public static void RenameProfileFile(ProfileFileInfo profileFileInfo, string newProfileName)
         {
-            SerializeToFile();
+            bool switchProfile = false;
+
+            if (LoadedProfileFile.Equals(profileFileInfo))
+            {
+                Save();
+
+                switchProfile = true;
+            }
+
+            ProfileFileInfo newProfileFileInfo = new ProfileFileInfo(newProfileName, Path.Combine(GetProfilesLocation(), profileFileInfo.IsEncryptionEnabled ? $"{newProfileName}{ProfilesEncryptionIdentifier}{ProfilesFileExtension}" : $"{newProfileName}{ProfilesFileExtension}"), profileFileInfo.IsEncryptionEnabled)
+            {
+                Password = profileFileInfo.Password,
+            };
+
+            File.Move(profileFileInfo.Path, newProfileFileInfo.Path);
+
+            RefreshProfileFiles();
+
+            if (switchProfile)
+                SwitchProfile(newProfileFileInfo, false);
+
+            ProfileFileChanged(LoadedProfileFile);
+        }
+
+        public static void DeleteProfileFile(ProfileFileInfo profileFileInfo)
+        {
+            if (LoadedProfileFile.Equals(profileFileInfo))
+                SwitchProfile(ProfileFiles.FirstOrDefault(x => !x.Equals(profileFileInfo)));
+
+            File.Delete(profileFileInfo.Path);
+
+            RefreshProfileFiles();
+
+            ProfileFileChanged(LoadedProfileFile);
+        }
+        #endregion
+
+        #region Enable encryption, disable encryption, change master password
+
+        #endregion
+
+        #region Load profile, save profile
+        private static void Load(ProfileFileInfo info)
+        {
+            if (File.Exists(info.Path))
+                DeserializeFromFile(info.Path).ForEach(AddProfile);
+
+            ProfilesChanged = false;
+
+            LoadedProfileFile = info;
+        }
+
+        public static void Save(ProfileFileInfo profileFileInfo = null, List<ProfileInfo> profiles = null)
+        {
+            var location = GetProfilesLocation();
+
+            if (!Directory.Exists(location))
+                Directory.CreateDirectory(location);
+
+            if (profileFileInfo == null)
+                profileFileInfo = LoadedProfileFile;
+
+            if (profiles == null)
+                profiles = new List<ProfileInfo>(Profiles);
+
+            SerializeToFile(profileFileInfo.Path, profiles);
 
             ProfilesChanged = false;
         }
+        #endregion
 
-        private static void SerializeToFile()
+        #region Deserialize, serialize to file
+        private static List<ProfileInfo> DeserializeFromFile(string filePath)
+        {
+            var profiles = new List<ProfileInfo>();
+
+            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
+
+            using (var fileStream = new FileStream(filePath, FileMode.Open))
+            {
+                ((List<ProfileInfo>)xmlSerializer.Deserialize(fileStream)).ForEach(x => profiles.Add(x));
+            }
+
+            return profiles;
+        }
+
+        private static void SerializeToFile(string filePath, List<ProfileInfo> profiles)
         {
             var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
 
-            using (var fileStream = new FileStream(GetProfilesFilePath(), FileMode.Create))
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
-                xmlSerializer.Serialize(fileStream, new List<ProfileInfo>(Profiles));
+                xmlSerializer.Serialize(fileStream, profiles);
             }
         }
+        #endregion
 
-        internal static void Update(Version assemblyVersion, Version settingsVersion)
+        #region Switch profile
+        public static void SwitchProfile(ProfileFileInfo info, bool saveLoadedProfiles = true)
         {
-            throw new NotImplementedException();
+            if (saveLoadedProfiles && LoadedProfileFile != null && ProfilesChanged)
+                Save();
+
+            Profiles.Clear();
+
+            Load(info);
+        }
+        #endregion
+
+        #region Move profiles
+        public static Task MoveProfilesAsync(string targedLocation)
+        {
+            return Task.Run(() => MoveProfiles(targedLocation));
         }
 
+        private static void MoveProfiles(string targedLocation)
+        {
+            Save();
+
+            // Create the directory
+            if (!Directory.Exists(targedLocation))
+                Directory.CreateDirectory(targedLocation);
+
+            var sourceFiles = GetProfileFiles(GetProfilesLocation());
+
+            // Copy files
+            foreach (var file in sourceFiles)
+                File.Copy(file, Path.Combine(targedLocation, Path.GetFileName(file)), true);
+
+            // Delete files
+            foreach (var file in sourceFiles)
+                File.Delete(file);
+
+            // Delete folder, if it is empty not the default profiles location and does not contain any files or directories
+            if (GetProfilesLocation() != GetDefaultProfilesLocation() && Directory.GetFiles(GetProfilesLocation()).Length == 0 && Directory.GetDirectories(GetProfilesLocation()).Length == 0)
+                Directory.Delete(GetProfilesLocation());
+
+            RefreshProfileFiles();
+
+            SwitchProfile(ProfileFiles.FirstOrDefault(x => x.Name == LoadedProfileFile.Name), false);
+
+            ProfileFileChanged(LoadedProfileFile);
+        }
+        #endregion
+
+        #region Reset profiles
         public static void Reset()
         {
-            if (Profiles == null)
-            {
-                Load(false);
-                ProfilesChanged = true;
-            }
-            else
-            {
-                Profiles.Clear();
-            }
+            Profiles.Clear();
         }
+        #endregion
 
+        #region Add profile, Remove profile, Rename group
         public static void AddProfile(ProfileInfo profile)
         {
             // Possible fix for appcrash --> when icollection view is refreshed...
@@ -134,7 +379,6 @@ namespace NETworkManager.Models.Settings
             {
                 Name = instance.Name?.Trim(),
                 Host = instance.Host?.Trim(),
-                CredentialID = instance.CredentialID,
                 Group = instance.Group?.Trim(),
                 Tags = instance.Tags?.Trim(),
 
@@ -273,7 +517,7 @@ namespace NETworkManager.Models.Settings
             {
                 lock (Profiles)
                     Profiles.Remove(profile);
-            }));            
+            }));
         }
 
         public static void RenameGroup(string oldGroup, string group)
@@ -291,8 +535,9 @@ namespace NETworkManager.Models.Settings
                 ProfilesChanged = true;
             }
         }
+        #endregion
 
-        #region Dialogs
+        #region Add profile, Edit profile, CopyAs profile, Delete profile, Edit group
         public static async void ShowAddProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator)
         {
             var customDialog = new CustomDialog
@@ -438,31 +683,25 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region Upgrade
-        public static void Upgrade()
+        #region GetGroups
+        public static List<string> GetGroups()
         {
-            string filePath = GetProfilesFilePath();
+            var list = new List<string>();
 
-            if (!File.Exists(filePath))
-                return;
-
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.Load(filePath);
-
-            /* Version 1.10.1.0 */
-
-            // RemoteDesktop_KeyboardHookMode has changed from integer to enum
-            foreach (XmlNode x in xmlDocument.SelectNodes(@"/ArrayOfProfileInfo/ProfileInfo/RemoteDesktop_KeyboardHookMode"))
+            foreach (var profile in Profiles)
             {
-                if (x.InnerText == "0")
-                    x.InnerText = "OnThisComputer";
-                else if (x.InnerText == "1")
-                    x.InnerText = "OnTheRemoteComputer";
-                else if (x.InnerText == "2")
-                    x.InnerText = "OnlyWhenUsingTheFullScreen";
+                if (!list.Contains(profile.Group))
+                    list.Add(profile.Group);
             }
 
-            xmlDocument.Save(filePath);
+            return list;
+        }
+        #endregion
+
+        #region Events
+        private static void Profiles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ProfilesChanged = true;
         }
         #endregion
     }

@@ -34,7 +34,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -139,6 +139,9 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\IntGreater1ToBooleanConverter.cs" />
+    <Compile Include="Converters\IsDefaultProfilesLocationToBooleanConverter.cs" />
+    <Compile Include="Converters\IsProfilesLocationToBooleanConverter.cs" />
     <Compile Include="Converters\WiFiTooltipChannelConverter.cs" />
     <Compile Include="Converters\BandwidthBytesToSizeConverter.cs" />
     <Compile Include="Converters\IntZeroReverseToVisibilityCollapsedConverter.cs" />
@@ -197,12 +200,14 @@
     <Compile Include="Models\Network\BandwidthMeter.cs" />
     <Compile Include="Models\Network\Whois.cs" />
     <Compile Include="Models\Network\WhoisServerInfo.cs" />
+    <Compile Include="Models\Profile\ProfileFileInfoArgs.cs" />
+    <Compile Include="Models\Profile\ProfileFileInfo.cs" />
     <Compile Include="Models\PuTTY\PuTTYSessionInfo.cs" />
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopPerformanceConstants.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopKeystrokeInfo.cs" />
-    <Compile Include="Models\Settings\ProfileInfo.cs" />
-    <Compile Include="Models\Settings\ProfileManager.cs" />
+    <Compile Include="Models\Profile\ProfileInfo.cs" />
+    <Compile Include="Models\Profile\ProfileManager.cs" />
     <Compile Include="Models\PowerShell\PowerShell.cs" />
     <Compile Include="Models\PowerShell\PowerShellSessionInfo.cs" />
     <Compile Include="Models\TigerVNC\TigerVNC.cs" />
@@ -212,14 +217,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StaticStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="GlobalStaticConfiguration.cs" />
+    <Compile Include="ProfileViewInfo.cs" />
+    <Compile Include="ProfileViewManager.cs" />
     <Compile Include="Resources\Localization\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="GlobalStaticConfiguration.cs" />
-    <Compile Include="ProfileViewInfo.cs" />
-    <Compile Include="ProfileViewManager.cs" />
     <Compile Include="StatusWindow.xaml.cs">
       <DependentUpon>StatusWindow.xaml</DependentUpon>
     </Compile>
@@ -236,6 +241,7 @@
     <Compile Include="Models\EventSystem\EventSystemRedirectDataApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystem.cs" />
     <Compile Include="Utilities\DnsLookupHelper.cs" />
+    <Compile Include="Models\Cryptographie\FileCryptoManager.cs" />
     <Compile Include="Utilities\FileSizeConverter.cs" />
     <Compile Include="Utilities\JsonIPAddressConverter.cs" />
     <Compile Include="Utilities\NativeMethods.cs" />
@@ -255,16 +261,13 @@
     <Compile Include="Models\Network\SNMP.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktop.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
-    <Compile Include="Models\Settings\CredentialInfoSerializable.cs" />
-    <Compile Include="Models\Settings\CredentialInfo.cs" />
-    <Compile Include="Models\Settings\CredentialManager.cs" />
     <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
     <Compile Include="Models\Update\Updater.cs" />
+    <Compile Include="Validators\ProfileFileUniqueValidator.cs" />
     <Compile Include="Validators\FilePathValidator.cs" />
     <Compile Include="Validators\DomainValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetmaskOrCIDRValidator.cs" />
-    <Compile Include="Validators\IsCredentialNameUnique.cs" />
-    <Compile Include="Validators\IsDNSServerNameUnique.cs" />
+    <Compile Include="Validators\IsDNSLookupDNSServersNameUnique.cs" />
     <Compile Include="Validators\NoSpacesValidator.cs" />
     <Compile Include="Validators\BaudValidator.cs" />
     <Compile Include="Validators\PrivacyAESValidator.cs" />
@@ -274,11 +277,13 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
+    <Compile Include="ViewModels\ProfileFileViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
+    <Compile Include="ViewModels\SettingsProfilesViewModel.cs" />
     <Compile Include="ViewModels\WiFiViewModel.cs" />
     <Compile Include="ViewModels\FirstRunViewModel.cs" />
-    <Compile Include="Models\Settings\IProfileManager.cs" />
+    <Compile Include="Models\Profile\IProfileManager.cs" />
     <Compile Include="ViewModels\NetworkInterfaceAddIPAddressViewModel.cs" />
     <Compile Include="ViewModels\ExportViewModel.cs" />
     <Compile Include="ViewModels\DNSServerViewModel.cs" />
@@ -314,7 +319,6 @@
     <Compile Include="ViewModels\ARPTableViewModel.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
     <Compile Include="ViewModels\CredentialsMasterPasswordViewModel.cs" />
-    <Compile Include="ViewModels\CredentialViewModel.cs" />
     <Compile Include="ViewModels\CredentialsSetMasterPasswordViewModel.cs" />
     <Compile Include="ViewModels\ConfirmRemoveViewModel.cs" />
     <Compile Include="ViewModels\ARPTableAddEntryViewModel.cs" />
@@ -334,7 +338,6 @@
     <Compile Include="ViewModels\LookupOUILookupViewModel.cs" />
     <Compile Include="ViewModels\RemoteDesktopHostViewModel.cs" />
     <Compile Include="ViewModels\CommandLineHelpViewModel.cs" />
-    <Compile Include="ViewModels\CredentialsViewModel.cs" />
     <Compile Include="ViewModels\HTTPHeadersSettingsViewModel.cs" />
     <Compile Include="ViewModels\PuTTYSettingsViewModel.cs" />
     <Compile Include="ViewModels\SNMPSettingsViewModel.cs" />
@@ -348,11 +351,17 @@
     <Compile Include="Views\CustomCommandDialog.xaml.cs">
       <DependentUpon>CustomCommandDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProfileFileDialog.xaml.cs">
+      <DependentUpon>ProfileFileDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PingMonitorView.xaml.cs">
       <DependentUpon>PingMonitorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PingMonitorHostView.xaml.cs">
       <DependentUpon>PingMonitorHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsProfilesView.xaml.cs">
+      <DependentUpon>SettingsProfilesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WiFiView.xaml.cs">
       <DependentUpon>WiFiView.xaml</DependentUpon>
@@ -471,9 +480,6 @@
     <Compile Include="Views\RemoteDesktopHostView.xaml.cs">
       <DependentUpon>RemoteDesktopHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CredentialDialog.xaml.cs">
-      <DependentUpon>CredentialDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\GroupDialog.xaml.cs">
       <DependentUpon>GroupDialog.xaml</DependentUpon>
     </Compile>
@@ -494,9 +500,6 @@
     </Compile>
     <Compile Include="Views\RemoteDesktopConnectDialog.xaml.cs">
       <DependentUpon>RemoteDesktopConnectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CredentialsView.xaml.cs">
-      <DependentUpon>CredentialsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HTTPHeadersSettingsView.xaml.cs">
       <DependentUpon>HTTPHeadersSettingsView.xaml</DependentUpon>
@@ -707,11 +710,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ProfileFileDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\PingMonitorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PingMonitorHostView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SettingsProfilesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -895,10 +906,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CredentialDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\GroupDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -926,10 +933,6 @@
     <Page Include="Views\RemoteDesktopConnectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CredentialsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\HTTPHeadersSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -972,10 +975,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SettingsGeneralView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsImportExportView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1059,8 +1058,6 @@
     <Compile Include="Models\Lookup\PortLookup.cs" />
     <Compile Include="Models\Lookup\OUILookup.cs" />
     <Compile Include="Models\Network\PortScanner.cs" />
-    <Compile Include="Models\Settings\ImportExportManager.cs" />
-    <Compile Include="Models\Settings\ImportFileNotValidException.cs" />
     <Compile Include="Models\Settings\SettingsFileInfo.cs" />
     <Compile Include="Validators\FileExistsValidator.cs" />
     <Compile Include="Validators\PortRangeValidator.cs" />
@@ -1130,7 +1127,6 @@
     <Compile Include="ViewModels\SettingsAppearanceViewModel.cs" />
     <Compile Include="ViewModels\SettingsLanguageViewModel.cs" />
     <Compile Include="ViewModels\SettingsHotKeysViewModel.cs" />
-    <Compile Include="ViewModels\SettingsImportExportViewModel.cs" />
     <Compile Include="ViewModels\SettingsSettingsViewModel.cs" />
     <Compile Include="ViewModels\SettingsAutostartViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
@@ -1165,9 +1161,6 @@
     <Compile Include="Views\SettingsGeneralView.xaml.cs">
       <DependentUpon>SettingsGeneralView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsImportExportView.xaml.cs">
-      <DependentUpon>SettingsImportExportView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\SettingsSettingsView.xaml.cs">
       <DependentUpon>SettingsSettingsView.xaml</DependentUpon>
     </Compile>
@@ -1197,7 +1190,7 @@
     <Compile Include="Converters\IPAddressArrayToStringConverter.cs" />
     <Compile Include="Converters\Bytes1000ToSpeedConverter.cs" />
     <Compile Include="Converters\IsSettingsLocationToBooleanConverter.cs" />
-    <Compile Include="Converters\IsDefaultLocationToBooleanConverter.cs" />
+    <Compile Include="Converters\IsDefaultSettingsLocationToBooleanConverter.cs" />
     <Compile Include="Converters\AccentToBrushConverter.cs" />
     <Compile Include="Converters\AppThemeToBrushConverter.cs" />
     <Compile Include="Views\PortScannerView.xaml.cs">
@@ -1300,8 +1293,8 @@
     <EmbeddedResource Include="Resources\Localization\Strings.nl-NL.resx" />
     <EmbeddedResource Include="Resources\Localization\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Localization\Strings.de-DE.resx" />
     <EmbeddedResource Include="Resources\Localization\Strings.ru-RU.resx" />
@@ -1360,6 +1353,9 @@
     <PackageReference Include="Octokit">
       <Version>0.36.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\Notification\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

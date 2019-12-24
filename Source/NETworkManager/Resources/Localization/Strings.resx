@@ -1119,8 +1119,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Select a screen resolution</value>
   </data>
-  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>The selected settings are overwritten.</value>
+  <data name="SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards" xml:space="preserve">
+    <value>The selected settings are overwritten and the application is restarted afterwards!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>The selected settings are reset.</value>
@@ -1131,8 +1131,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
     <value>Select the settings you want to import:</value>
   </data>
-  <data name="SelectTheSettingsYouWantToReset" xml:space="preserve">
-    <value>Select the settings you want to reset:</value>
+  <data name="ThisWillResetAllSettings" xml:space="preserve">
+    <value>This will reset all settings!</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>Serial</value>
@@ -1144,7 +1144,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Service</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles and credentials are not affected!)</value>
+    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles are not affected!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Settings successfully exported!</value>
@@ -1431,8 +1431,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Validate" xml:space="preserve">
     <value>Validate</value>
   </data>
-  <data name="WarningMessage_SettingsGeneralAppearanceTransparency" xml:space="preserve">
-    <value>Some graphics cards / drivers have problems maximizing the application when transparency is enabled. The function must be disabled for using "Remote Desktop"! Enabling or disabling this feature requires a restart of the application.</value>
+  <data name="SettingsAppearanceTransparencyWarning" xml:space="preserve">
+    <value>Some features can not be used when transparency is enabled. If you change this setting, the application must be restarted.</value>
   </data>
   <data name="Connections" xml:space="preserve">
     <value>Connections</value>
@@ -2340,8 +2340,8 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="IPAddressToDetectLocalIPAddressBasedOnRouting" xml:space="preserve">
     <value>IP address to detect local ip address based on routing</value>
   </data>
-  <data name="ShowWindowOnNetworkChange" xml:space="preserve">
-    <value>Show window on network change</value>
+  <data name="ShowStatusWindowOnNetworkChange" xml:space="preserve">
+    <value>Show status window on network change</value>
   </data>
   <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
     <value>Time in seconds how long the window should be displayed</value>
@@ -2468,9 +2468,63 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   <data name="CouldNotResolveIPAddressFor" xml:space="preserve">
     <value>Could not resolve ip address for: "{0}"</value>
   </data>
+  <data name="TheApplicationWillBeRestarted" xml:space="preserve">
+    <value>The application will be restarted...</value>
+  </data>
+  <data name="UseOther" xml:space="preserve">
+    <value>Use other</value>
+  </data>
+  <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
+    <value>Could not export file! See error message: "{0}"</value>
+  </data>
+  <data name="FileExportedToXX" xml:space="preserve">
+    <value>File exported to "{0}"!</value>
+  </data>
+  <data name="ClouldNotImportFileSeeErrorMessageXX" xml:space="preserve">
+    <value>Could not import file! See error message: "{0}"</value>
+  </data>
+  <data name="LocationCannotBeChangedInThePortableVersion" xml:space="preserve">
+    <value>Location cannot be changed in portable version!</value>
+  </data>
+  <data name="IsEncrypted" xml:space="preserve">
+    <value>Is encrypted</value>
+  </data>
   <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
     <value>Open documentation on GitHub.
 
 URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</value>
+  </data>
+  <data name="ExampleProfileFileName" xml:space="preserve">
+    <value>Customer 1</value>
+  </data>
+  <data name="AddProfileFile" xml:space="preserve">
+    <value>Add profile file</value>
+  </data>
+  <data name="DisableEncryptionDots" xml:space="preserve">
+    <value>Disable encryption...</value>
+  </data>
+  <data name="EditProfileFile" xml:space="preserve">
+    <value>Edit profile file</value>
+  </data>
+  <data name="EnableEncryptionDots" xml:space="preserve">
+    <value>Enable encryption...</value>
+  </data>
+  <data name="EncryptionDots" xml:space="preserve">
+    <value>Encryption...</value>
+  </data>
+  <data name="RemoveProfileFile" xml:space="preserve">
+    <value>Remove profile file</value>
+  </data>
+  <data name="ProfileNameAlreadyExists" xml:space="preserve">
+    <value>Profile name already exists!</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="DeleteProfileFile" xml:space="preserve">
+    <value>Delete profile file</value>
+  </data>
+  <data name="DeleteProfileFileMessage" xml:space="preserve">
+    <value>Selected profile file will be deleted permanently.</value>
   </data>
 </root>

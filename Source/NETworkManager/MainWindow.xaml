@@ -65,6 +65,17 @@
     <mahAppsControls:MetroWindow.RightWindowCommands>
         <mahAppsControls:WindowCommands>
             <StackPanel Orientation="Horizontal">
+                <ComboBox ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile}" DisplayMemberPath="Name" Foreground="{DynamicResource AccentColorBrush}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0" />
+                <Button Command="{Binding OpenWebsiteCommand}" Opacity="1" Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=DesktopDownload}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="{Binding UpdateText}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
                 <Button Command="{Binding OpenWebsiteCommand}" Opacity="1" Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
@@ -93,6 +104,7 @@
                         </Rectangle>
                     </StackPanel>
                 </Button>
+
                 <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.ReportAnIssueOrCreateAFeatureRequest}" CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">

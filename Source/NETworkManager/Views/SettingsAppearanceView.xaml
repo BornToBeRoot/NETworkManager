@@ -100,21 +100,9 @@
                 <TextBlock Text="{x:Static localization:Strings.DocumentationTitle_00002}" FontSize="14" Margin="10,0,0,0" />
             </StackPanel>
         </StackPanel>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Transparency}" />
-            <Rectangle Grid.Column="2" Width="24" Height="24" ToolTip="{x:Static localization:Strings.WarningMessage_SettingsGeneralAppearanceTransparency}" Style="{StaticResource WarnImageRectangle}" Margin="0,0,0,10">
-                <Rectangle.Resources>
-                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WarnToolTip}" />
-                </Rectangle.Resources>
-            </Rectangle>
-        </Grid>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Transparency}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.EnableTransparency}"   IsChecked="{Binding EnableTransparency}" Margin="0,0,0,10"/>
-        <Grid>
+        <Grid Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -130,6 +118,15 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Width="24" Height="24" Style="{StaticResource WarnImageRectangle}" />
+            <TextBlock Grid.Column="2" Text="{x:Static localization:Strings.SettingsAppearanceTransparencyWarning}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
         </Grid>
     </StackPanel>
 </UserControl>

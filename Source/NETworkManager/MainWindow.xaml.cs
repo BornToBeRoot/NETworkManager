@@ -23,6 +23,7 @@ using NETworkManager.Models.Documentation;
 using NETworkManager.ViewModels;
 using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
+using NETworkManager.Models.Profile;
 
 namespace NETworkManager
 {
@@ -251,6 +252,38 @@ namespace NETworkManager
                 OnPropertyChanged();
             }
         }
+
+        private ICollectionView _profileFiles;
+        public ICollectionView ProfileFiles
+        {
+            get => _profileFiles;
+            set
+            {
+                if (value == _profileFiles)
+                    return;
+
+                _profileFiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ProfileFileInfo _selectedProfileFile;
+        public ProfileFileInfo SelectedProfileFile
+        {
+            get => _selectedProfileFile;
+            set
+            {
+                if (value == _selectedProfileFile || (value != null && value.Equals(_selectedProfileFile)))
+                    return;
+
+                _selectedProfileFile = value;
+                
+                if (value != null && !value.Equals(ProfileManager.LoadedProfileFile))
+                    ProfileManager.SwitchProfile(value);
+
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, window load and close events
@@ -264,7 +297,7 @@ namespace NETworkManager
             // Language Meta
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
 
-            // Load appearance
+            // Load / Change appearance
             AppearanceManager.Load();
 
             // Transparency
@@ -276,7 +309,7 @@ namespace NETworkManager
                 ConfigurationManager.Current.IsTransparencyEnabled = true;
             }
 
-            // NotifyIcon for Autostart
+            // NotifyIcon for autostart
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)
                 InitNotifyIcon();
 
@@ -284,16 +317,11 @@ namespace NETworkManager
             if (ConfigurationManager.Current.IsAdmin)
                 Title = $"[{NETworkManager.Resources.Localization.Strings.Administrator}] {Title}";
 
-            // Load Profiles
-            ProfileManager.Load();
-
             // Load settings
             ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
 
-            // Check if settings have changed
-            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
             // Register event system...
+            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
             EventSystem.RedirectProfileToApplicationEvent += EventSystem_RedirectProfileToApplicationEvent;
             EventSystem.RedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
             EventSystem.RedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
@@ -355,6 +383,11 @@ namespace NETworkManager
             // Load application list, filter, sort, etc.
             LoadApplicationList();
 
+            // Load profiles
+            ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
+            ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
+            ProfileManager.OnProfileFileChangedEvent += ProfileManager_OnProfileFileChangedEvent;
+
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
@@ -408,8 +441,8 @@ namespace NETworkManager
 
                 var search = regex.Replace(Search, "");
 
-                    // Search by TranslatedName and Name
-                    return info.IsVisible && (regex.Replace(ApplicationViewManager.GetTranslatedNameByName(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
+                // Search by TranslatedName and Name
+                return info.IsVisible && (regex.Replace(ApplicationViewManager.GetTranslatedNameByName(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
             };
 
             SettingsManager.Current.General_ApplicationList.CollectionChanged += (sender, args) => Applications.Refresh();
@@ -424,10 +457,25 @@ namespace NETworkManager
                 ListViewApplication.ScrollIntoView(SelectedApplication);
         }
 
+        /// <summary>
+        /// Update the view when the loaded profile file changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProfileManager_OnProfileFileChangedEvent(object sender, ProfileFileInfoArgs e)
+        {
+            SelectedProfileFile = null;
+
+            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == e.ProfileFileInfo.Name);
+
+            if (SelectedProfileFile == null)
+                SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
+        }
+
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {
-            // Force restart (if user has reset the settings or import them)
-            if (SettingsManager.ForceRestart || ImportExportManager.ForceRestart)
+            // Force restart --> Import, Reset, etc.
+            if (ConfigurationManager.Current.ForceRestart)
             {
                 RestartApplication(false);
 
@@ -754,6 +802,8 @@ namespace NETworkManager
                     break;
                 case ApplicationViewManager.Name.NetworkInterface:
                     break;
+                case ApplicationViewManager.Name.WiFi:
+                    break;
                 case ApplicationViewManager.Name.IPScanner:
                     _ipScannerHostView.AddTab(profile.Profile);
                     break;
@@ -762,6 +812,8 @@ namespace NETworkManager
                     break;
                 case ApplicationViewManager.Name.Ping:
                     _pingHostView.AddTab(profile.Profile);
+                    break;
+                case ApplicationViewManager.Name.PingMonitor:
                     break;
                 case ApplicationViewManager.Name.Traceroute:
                     _tracerouteHostView.AddTab(profile.Profile);

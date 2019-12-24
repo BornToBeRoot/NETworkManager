@@ -1,8 +1,8 @@
 ﻿namespace NETworkManager.Views
 {
-    public partial class CredentialDialog
+    public partial class ProfileFileDialog
     {
-        public CredentialDialog()
+        public ProfileFileDialog()
         {
             InitializeComponent();
         }
