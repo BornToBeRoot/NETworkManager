@@ -1932,10 +1932,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="AddTabDots" xml:space="preserve">
     <value>Add tab...</value>
   </data>
-  <data name="ResetCredentialsMessage" xml:space="preserve">
-    <value>If you have forgotten your password and want to start over, delete the following file and restart the application.
-Path: "{0}"</value>
-  </data>
   <data name="AddIPv4AddressDots" xml:space="preserve">
     <value>Add IPv4 address...</value>
   </data>
@@ -2526,5 +2522,8 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   </data>
   <data name="DeleteProfileFileMessage" xml:space="preserve">
     <value>Selected profile file will be deleted permanently.</value>
+  </data>
+  <data name="ResetProfilesMessage" xml:space="preserve">
+    <value>All profiles in this profile file will be permanently deleted!</value>
   </data>
 </root>

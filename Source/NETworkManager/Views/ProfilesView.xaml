@@ -152,8 +152,13 @@
                 <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.Whois}" Binding="{Binding (profile:ProfileInfo.Whois_Enabled)}" SortMemberPath="Whois_Enabled" />
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>
-        <StackPanel Grid.Row="4" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Command="{Binding DeleteProfileCommand}">
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Command="{Binding ResetProfilesCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                         <Style.Triggers>
@@ -176,92 +181,124 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Reset}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Reset}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Command="{Binding EditProfileCommand}" Margin="10,0,0,0">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False"/>
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}" Value="1" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True"/>
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.EditDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-            <Button Command="{Binding CopyAsProfileCommand}" Margin="10,0,0,0">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                        <Setter Property="IsEnabled" Value="False"/>
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}" Value="1" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True"/>
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentDuplicate}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.CopyAsDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
-                    </Grid>
-                </Button.Content>
-            </Button>
+            <StackPanel Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Command="{Binding DeleteProfileCommand}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}" Value="0" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.Setters>
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </MultiDataTrigger.Setters>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding EditProfileCommand}" Margin="10,0,0,0">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}" Value="1" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.Setters>
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                    </MultiDataTrigger.Setters>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.EditDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding CopyAsProfileCommand}" Margin="10,0,0,0">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}" Value="1" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.Setters>
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                    </MultiDataTrigger.Setters>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentDuplicate}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.CopyAsDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
 
-            <Button Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
-                    </Grid>
-                </Button.Content>
-            </Button>
-        </StackPanel>
+                <Button Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

@@ -5301,12 +5301,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you have forgotten your password and want to start over, delete the following file and restart the application.
-        ///Path: &quot;{0}&quot;.
+        ///   Looks up a localized string similar to All profiles in this profile file will be permanently deleted!.
         /// </summary>
-        public static string ResetCredentialsMessage {
+        public static string ResetProfilesMessage {
             get {
-                return ResourceManager.GetString("ResetCredentialsMessage", resourceCulture);
+                return ResourceManager.GetString("ResetProfilesMessage", resourceCulture);
             }
         }
         

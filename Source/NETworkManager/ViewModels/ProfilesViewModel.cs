@@ -220,7 +220,7 @@ namespace NETworkManager.ViewModels
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-        
+
         public async void DeleteProfile()
         {
             var customDialog = new CustomDialog
@@ -271,6 +271,33 @@ namespace NETworkManager.ViewModels
             customDialog.Content = new GroupDialog
             {
                 DataContext = editGroupViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand ResetProfilesCommand => new RelayCommand(p => ResetProfilesAction());
+
+        private async void ResetProfilesAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Confirm
+            };
+
+            var confirmRemoveViewModel = new ConfirmRemoveViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                ProfileManager.ResetProfiles();
+            }, async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, Resources.Localization.Strings.ResetProfilesMessage);
+
+            customDialog.Content = new ConfirmRemoveDialog
+            {
+                DataContext = confirmRemoveViewModel
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);

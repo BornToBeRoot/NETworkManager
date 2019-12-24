@@ -258,7 +258,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.DeleteProfileFile
+                Title = Resources.Localization.Strings.Confirm
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(async instance =>
@@ -269,7 +269,7 @@ namespace NETworkManager.ViewModels
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Resources.Localization.Strings.DeleteProfileFileMessage);
+            }, Resources.Localization.Strings.DeleteProfileFile);
 
             customDialog.Content = new ConfirmRemoveDialog
             {

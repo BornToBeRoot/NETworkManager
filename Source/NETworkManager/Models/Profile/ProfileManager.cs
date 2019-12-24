@@ -356,7 +356,7 @@ namespace NETworkManager.Models.Profile
         #endregion
 
         #region Reset profiles
-        public static void Reset()
+        public static void ResetProfiles()
         {
             Profiles.Clear();
         }
