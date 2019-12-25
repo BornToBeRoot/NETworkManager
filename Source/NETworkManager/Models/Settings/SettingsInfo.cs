@@ -30,20 +30,6 @@ namespace NETworkManager.Models.Settings
         #region Variables
         [XmlIgnore] public bool SettingsChanged { get; set; }
 
-        private string _settingsVersion = "0.0.0.0";
-        public string SettingsVersion
-        {
-            get => _settingsVersion;
-            set
-            {
-                if (value == _settingsVersion)
-                    return;
-
-                _settingsVersion = value;
-                SettingsChanged = true;
-            }
-        }
-
         private bool _firstRun = true;
         public bool FirstRun
         {
