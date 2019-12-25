@@ -1,5 +1,5 @@
 <div align="center">  
-  <img alt="NETworkManager" src="NETworkManager.svg" height="128" width="128" />
+  <img alt="NETworkManager" src="NETworkManager_SplashScreen.png" height="128" width="128" />
   <h1>NETworkManager</h1>
   <p>A powerful tool for managing networks and troubleshoot network problems!</p>
   <p>   
@@ -49,7 +49,7 @@
 
 </div>
 
-<img alt="NETworkManager" src="NETworkManager.gif" />
+<img alt="NETworkManager" src="NETworkManager_Preview.gif" />
 
 <h2>Features</h2>
 
