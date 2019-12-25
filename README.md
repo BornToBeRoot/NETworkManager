@@ -81,11 +81,11 @@ Official:
 
 Community:
 - Chinese
+- Brazilian Portuguese
 - Dutch
 - French
 - Italy
 - Spanish
-- Brazilian Portuguese
 
 Help translate on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager).
 
