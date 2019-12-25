@@ -5769,7 +5769,8 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles are not affected!).
+        ///   Looks up a localized string similar to The settings file found was corrupted or is not compatible with this version. All settings have been reset!
+        ///(Profile files are not affected!).
         /// </summary>
         public static string SettingsFileFoundWasCorruptOrNotCompatibleMessage {
             get {

@@ -1144,7 +1144,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Service</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles are not affected!)</value>
+    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset!
+(Profile files are not affected!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Settings successfully exported!</value>
