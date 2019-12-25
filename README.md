@@ -36,14 +36,10 @@
     <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">:book: Documentation</a>
   </p>
   <p>
-    <table>
-      <tr>
-        <th><a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Setup.exe">:package: Setup</a></th>
-        <th><a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Portable.zip"> :package: Portable</a></th>
-        <th><a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Archiv.zip">:package: Archiv</a></th>
-        <th><a href="https://chocolatey.org/packages/NETworkManager">:link: Chocolatey</a></th>               
-      </tr>
-    </table>    
+    <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Setup.exe">:package: Setup</a>
+    <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Portable.zip"> :package: Portable</a>
+    <a href="https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Archiv.zip">:package: Archiv</a>
+    <a href="https://chocolatey.org/packages/NETworkManager">:link: Chocolatey</a>               
   </p>
 </div>
 
