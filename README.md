@@ -30,9 +30,9 @@
     </a>          
   </p> 
   <p>
-    <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up: Changelog</a>
-    <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">:book: Documentation</a>
-    <a href="https://github.com/BornToBeRoot/NETworkManager/blob/master/README.md#download">:package: Download</a>  
+    <a href="https://github.com/BornToBeRoot/NETworkManager/wiki/Changelog">:page_facing_up:&nbsp;Changelog</a>
+    <a href="https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/README.md">:book:&nbsp;Documentation</a>
+    <a href="https://github.com/BornToBeRoot/NETworkManager/blob/master/README.md#download">:package:&nbsp;Download</a>  
   </p>
 </div>
 
