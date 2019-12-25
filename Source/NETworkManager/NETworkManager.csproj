@@ -684,6 +684,7 @@
     <Content Include="Licenses\DnsClient.NET.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Localization\Flags\pt-BR.png" />
     <Content Include="Resources\WhoisServers.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1291,6 +1292,7 @@
     <EmbeddedResource Include="Resources\Localization\Strings.fr-FR.resx" />
     <EmbeddedResource Include="Resources\Localization\Strings.it-IT.resx" />
     <EmbeddedResource Include="Resources\Localization\Strings.nl-NL.resx" />
+    <EmbeddedResource Include="Resources\Localization\Strings.pt-BR.resx" />
     <EmbeddedResource Include="Resources\Localization\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -1327,7 +1329,7 @@
       <Version>0.0.3.203</Version>
     </PackageReference>
     <PackageReference Include="IPNetwork2">
-      <Version>2.4.0.147</Version>
+      <Version>2.4.0.163</Version>
     </PackageReference>
     <PackageReference Include="Lextm.SharpSnmpLib">
       <Version>11.3.0</Version>
@@ -1342,13 +1344,13 @@
       <Version>1.6.5</Version>
     </PackageReference>
     <PackageReference Include="MahApps.Metro.IconPacks">
-      <Version>2.3.0</Version>
+      <Version>3.0.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
-      <Version>10.0.17763.1000-preview</Version>
+      <Version>10.0.17763.1000</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.2</Version>
+      <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="Octokit">
       <Version>0.36.0</Version>

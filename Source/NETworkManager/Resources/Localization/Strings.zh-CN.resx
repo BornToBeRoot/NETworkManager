@@ -883,13 +883,13 @@
     <value>固定屏幕大小：</value>
   </data>
   <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value>在Github上点赞或创建副本</value>
+    <value>Star/Fork the Project on GitHub</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>查找</value>
   </data>
   <data name="Group" xml:space="preserve">
-    <value>Group</value>
+    <value>组</value>
   </data>
   <data name="Height" xml:space="preserve">
     <value>高度</value>
@@ -1054,10 +1054,10 @@
     <value>问题</value>
   </data>
   <data name="RAW" xml:space="preserve">
-    <value>RAW</value>
+    <value>原始</value>
   </data>
   <data name="Recursion" xml:space="preserve">
-    <value>Recursion</value>
+    <value>递归</value>
   </data>
   <data name="RedirectClipboard" xml:space="preserve">
     <value>重定向剪贴板</value>
@@ -1087,7 +1087,7 @@
     <value>远程端口</value>
   </data>
   <data name="Repeat" xml:space="preserve">
-    <value>Repeat</value>
+    <value>重复</value>
   </data>
   <data name="ResolveCNAMEOnANYRequests" xml:space="preserve">
     <value>解析所有请求的CNAME</value>
@@ -1114,13 +1114,13 @@
     <value>未找到搜索的设置！</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>Security</value>
+    <value>安全</value>
   </data>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>选择一个分辨率</value>
   </data>
-  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>选中的设置将被覆盖。</value>
+  <data name="SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards" xml:space="preserve">
+    <value>The selected settings are overwritten and the application is restarted afterwards!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>选中的设置将被重置。</value>
@@ -1131,21 +1131,20 @@
   <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
     <value>选择你想导入的设置：</value>
   </data>
-  <data name="SelectTheSettingsYouWantToReset" xml:space="preserve">
-    <value>选择你想重置的设置：</value>
+  <data name="ThisWillResetAllSettings" xml:space="preserve">
+    <value>This will reset all settings!</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>Serial</value>
+    <value>串</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
-    <value>SerialLine</value>
+    <value>串行</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>Service</value>
+    <value>服务</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>找到的设置文件已损坏或与此版本不兼容。
-所有设置都已重置（配置文件和凭据不受影响！）</value>
+    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles are not affected!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>设置已成功导出！</value>
@@ -1175,7 +1174,7 @@
     <value>SSH</value>
   </data>
   <data name="StartTime" xml:space="preserve">
-    <value>Start time</value>
+    <value>开始时间</value>
   </data>
   <data name="State" xml:space="preserve">
     <value>状态</value>
@@ -1226,7 +1225,7 @@
     <value>未知错误！</value>
   </data>
   <data name="UntrayBringWindowToFront" xml:space="preserve">
-    <value>Untray / Bring window to front</value>
+    <value>托盘/窗口移到前面</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -1317,7 +1316,7 @@
     <value>删除</value>
   </data>
   <data name="DeleteTable" xml:space="preserve">
-    <value>Delete table</value>
+    <value>删除表单</value>
   </data>
   <data name="DocumentationTitle_00001" xml:space="preserve">
     <value>如何在Windows 7/Server 2008 R2上安装RDP 8.1 </value>
@@ -1329,7 +1328,7 @@
     <value>输入位置</value>
   </data>
   <data name="Everything" xml:space="preserve">
-    <value>Everything</value>
+    <value>所有</value>
   </data>
   <data name="FilterDots" xml:space="preserve">
     <value>过滤器...</value>
@@ -1341,7 +1340,7 @@
     <value>解密并载入你选择的的凭据。</value>
   </data>
   <data name="HelpMessage_ParameterHelp" xml:space="preserve">
-    <value>Displays this dialog.</value>
+    <value>查看此对话框。</value>
   </data>
   <data name="HelpMessage_ParameterResetSettings" xml:space="preserve">
     <value>重置所有设置。</value>
@@ -1433,10 +1432,8 @@
   <data name="Validate" xml:space="preserve">
     <value>验证</value>
   </data>
-  <data name="WarningMessage_SettingsGeneralAppearanceTransparency" xml:space="preserve">
-    <value>某些显卡或驱动程序在启用透明度后且最大化应用程序时存在问题。
-必须禁用该功能才能使用“远程桌面”！
-启用或禁用此功能需要重新启动应用程序。</value>
+  <data name="SettingsAppearanceTransparencyWarning" xml:space="preserve">
+    <value>Some features can not be used when transparency is enabled. If you change this setting, the application must be restarted.</value>
   </data>
   <data name="Connections" xml:space="preserve">
     <value>Connections</value>
@@ -1481,19 +1478,19 @@
     <value>应用</value>
   </data>
   <data name="BaseDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>暗</value>
   </data>
   <data name="BaseLight" xml:space="preserve">
-    <value>Light</value>
+    <value>亮</value>
   </data>
   <data name="Black" xml:space="preserve">
-    <value>Black</value>
+    <value>黑</value>
   </data>
   <data name="Blue" xml:space="preserve">
-    <value>Blue</value>
+    <value>蓝</value>
   </data>
   <data name="Brown" xml:space="preserve">
-    <value>Brown</value>
+    <value>棕</value>
   </data>
   <data name="Cobalt" xml:space="preserve">
     <value>Cobalt</value>
@@ -1535,7 +1532,7 @@
     <value>输入有效的网址（例如 https://example.com/index.html）</value>
   </data>
   <data name="Green" xml:space="preserve">
-    <value>Green</value>
+    <value>绿</value>
   </data>
   <data name="ImportExport" xml:space="preserve">
     <value>导入／导出</value>
@@ -1583,7 +1580,7 @@
     <value>Orange</value>
   </data>
   <data name="Pink" xml:space="preserve">
-    <value>Pink</value>
+    <value>粉</value>
   </data>
   <data name="Purple" xml:space="preserve">
     <value>Purple</value>
@@ -1938,10 +1935,6 @@
   <data name="AddTabDots" xml:space="preserve">
     <value>Add tab...</value>
   </data>
-  <data name="ResetCredentialsMessage" xml:space="preserve">
-    <value>If you have forgotten your password and want to start over, delete the following file and restart the application.
-Path: "{0}"</value>
-  </data>
   <data name="AddIPv4AddressDots" xml:space="preserve">
     <value>添加IPv4地址</value>
   </data>
@@ -2042,9 +2035,9 @@ Changing this value requires a restart of the application to take effect.</value
 此程序使用网络上一些公开的服务以提供众多附加功能，我不会收集您的任何数据。</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>启动程序时，它会在后台检查Github上是否有新的程序版本。
+    <value>When starting the program, it checks in the background whether a new program version is available on GitHub.
 
-地址: https://api.github.com/</value>
+URL: https://api.github.com/</value>
   </data>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
     <value>公网IP通过 ipify.org 提供的服务完成检测。
@@ -2061,7 +2054,7 @@ Changing this value requires a restart of the application to take effect.</value
     <value>第三方服务</value>
   </data>
   <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
-    <value>Star/Fork the Project on Github.
+    <value>Star/Fork the Project on GitHub.
 
 URL: https://github.com/BornToBeRoot/NETworkManager/</value>
   </data>
@@ -2110,9 +2103,6 @@ URL: https://twitter.com/BornToBeRoot_DE</value>
   </data>
   <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Could not get public ip address via WebRequest (http/https) from "{0}"! Check your network connection (firewall, proxy, etc.).</value>
-  </data>
-  <data name="CouldNotResolveHostnameForXXXMessage" xml:space="preserve">
-    <value>Could not resolve hostname for ip address "{0}"!</value>
   </data>
   <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
     <value>无法解析“{0}”的A记录！</value>
@@ -2348,8 +2338,8 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="IPAddressToDetectLocalIPAddressBasedOnRouting" xml:space="preserve">
     <value>基于路由检测本地IP地址</value>
   </data>
-  <data name="ShowWindowOnNetworkChange" xml:space="preserve">
-    <value>显示网络更改窗口</value>
+  <data name="ShowStatusWindowOnNetworkChange" xml:space="preserve">
+    <value>Show status window on network change</value>
   </data>
   <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
     <value>窗口停留时长（单位：秒）</value>
@@ -2457,5 +2447,88 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   </data>
   <data name="ShowErrorMessage" xml:space="preserve">
     <value>Show error message</value>
+  </data>
+  <data name="PingMonitor" xml:space="preserve">
+    <value>Ping Monitor</value>
+  </data>
+  <data name="AddHost" xml:space="preserve">
+    <value>Add host</value>
+  </data>
+  <data name="AddAHostToMonitor" xml:space="preserve">
+    <value>Add a host to monitor</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="CouldNotResolveIPAddressFor" xml:space="preserve">
+    <value>Could not resolve ip address for: "{0}"</value>
+  </data>
+  <data name="TheApplicationWillBeRestarted" xml:space="preserve">
+    <value>The application will be restarted...</value>
+  </data>
+  <data name="UseOther" xml:space="preserve">
+    <value>Use other</value>
+  </data>
+  <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
+    <value>Could not export file! See error message: "{0}"</value>
+  </data>
+  <data name="FileExportedToXX" xml:space="preserve">
+    <value>File exported to "{0}"!</value>
+  </data>
+  <data name="ClouldNotImportFileSeeErrorMessageXX" xml:space="preserve">
+    <value>Could not import file! See error message: "{0}"</value>
+  </data>
+  <data name="LocationCannotBeChangedInThePortableVersion" xml:space="preserve">
+    <value>Location cannot be changed in portable version!</value>
+  </data>
+  <data name="IsEncrypted" xml:space="preserve">
+    <value>Is encrypted</value>
+  </data>
+  <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
+    <value>Open documentation on GitHub.
+
+URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</value>
+  </data>
+  <data name="ExampleProfileFileName" xml:space="preserve">
+    <value>Customer 1</value>
+  </data>
+  <data name="AddProfileFile" xml:space="preserve">
+    <value>Add profile file</value>
+  </data>
+  <data name="DisableEncryptionDots" xml:space="preserve">
+    <value>Disable encryption...</value>
+  </data>
+  <data name="EditProfileFile" xml:space="preserve">
+    <value>Edit profile file</value>
+  </data>
+  <data name="EnableEncryptionDots" xml:space="preserve">
+    <value>Enable encryption...</value>
+  </data>
+  <data name="EncryptionDots" xml:space="preserve">
+    <value>Encryption...</value>
+  </data>
+  <data name="RemoveProfileFile" xml:space="preserve">
+    <value>Remove profile file</value>
+  </data>
+  <data name="ProfileNameAlreadyExists" xml:space="preserve">
+    <value>Profile name already exists!</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="DeleteProfileFile" xml:space="preserve">
+    <value>Delete profile file</value>
+  </data>
+  <data name="DeleteProfileFileMessage" xml:space="preserve">
+    <value>Selected profile file will be deleted permanently.</value>
+  </data>
+  <data name="ResetProfilesMessage" xml:space="preserve">
+    <value>All profiles in this profile file will be permanently deleted!</value>
+  </data>
+  <data name="Patch" xml:space="preserve">
+    <value>Patch</value>
   </data>
 </root>

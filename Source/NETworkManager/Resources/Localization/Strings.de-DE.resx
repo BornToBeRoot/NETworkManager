@@ -883,7 +883,7 @@
     <value>Feste Bildschirmgröße:</value>
   </data>
   <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork das Projekt auf Github</value>
+    <value>Star/Fork das Projekt auf GitHub</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Gefunden</value>
@@ -1119,8 +1119,8 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Wählen Sie eine Bildschirmauflösung</value>
   </data>
-  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>Die ausgewählten Einstellungen werden überschrieben.</value>
+  <data name="SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards" xml:space="preserve">
+    <value>Die gewählten Einstellungen werden überschrieben und die Anwendung anschließend neu gestartet!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>Die ausgewählten Einstellungen werden zurückgesetzt.</value>
@@ -1131,8 +1131,8 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
     <value>Wählen Sie die Einstellungen aus, die Sie importieren möchten:</value>
   </data>
-  <data name="SelectTheSettingsYouWantToReset" xml:space="preserve">
-    <value>Wählen Sie die Einstellungen aus, die Sie zurücksetzen möchten:</value>
+  <data name="ThisWillResetAllSettings" xml:space="preserve">
+    <value>Dadurch werden alle Einstellungen zurückgesetzt!</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>Seriell</value>
@@ -1144,7 +1144,7 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
     <value>Dienst</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>Die gefundene Einstellungsdatei war beschädigt oder nicht mit dieser Version kompatibel. Alle Einstellungen wurden zurückgesetzt (Profile und Anmeldeinformationen sind nicht betroffen!)</value>
+    <value>Die gefundene Einstellungsdatei ist beschädigt oder mit dieser Version nicht kompatibel. Alle Einstellungen wurden zurückgesetzt (Profile sind nicht betroffen!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Einstellungen erfolgreich exportiert!</value>
@@ -1431,8 +1431,8 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="Validate" xml:space="preserve">
     <value>Validieren</value>
   </data>
-  <data name="WarningMessage_SettingsGeneralAppearanceTransparency" xml:space="preserve">
-    <value>Einige Grafikkarten / Treiber haben Probleme bei der Maximierung der Anwendung, wenn die Transparenz aktiviert ist. Die Funktion muss für die Verwendung von "Remote Desktop" deaktiviert sein! Das Aktivieren oder Deaktivieren dieser Funktion erfordert einen Neustart der Anwendung.</value>
+  <data name="SettingsAppearanceTransparencyWarning" xml:space="preserve">
+    <value>Einige Funktionen können nicht verwendet werden, wenn Transparenz aktiviert ist. Wenn Sie diese Einstellung ändern, muss die Anwendung neu gestartet werden.</value>
   </data>
   <data name="Connections" xml:space="preserve">
     <value>Verbindungen</value>
@@ -1932,10 +1932,6 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="AddTabDots" xml:space="preserve">
     <value>Tab hinzufügen...</value>
   </data>
-  <data name="ResetCredentialsMessage" xml:space="preserve">
-    <value>Wenn Sie Ihr Passwort vergessen haben und neu beginnen möchten, löschen Sie die folgende Datei und starten Sie die Anwendung erneut.
-Pfad: "{0}"</value>
-  </data>
   <data name="AddIPv4AddressDots" xml:space="preserve">
     <value>IPv4-Adresse hinzufügen...</value>
   </data>
@@ -2036,7 +2032,7 @@ Wenn der Wert geändert wird, muss die Anwendung muss neu gestartet werden, dami
 Um zusätzliche Funktionen bereitzustellen, verwendet die Anwendung Dienste im Internet, die nicht von mir betrieben werden. Es werden zu keinem Zeitpunkt Daten an mich gesendet.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>Beim Starten des Programms wird im Hintergrund geprüft, ob eine neue Programmversion auf Github verfügbar ist.
+    <value>Beim Programmstart wird im Hintergrund geprüft, ob eine neue Programmversion auf GitHub verfügbar ist.
 
 URL: https://api.github.com/</value>
   </data>
@@ -2055,7 +2051,7 @@ URL: https://api.ipify.org/</value>
     <value>Externe Dienste</value>
   </data>
   <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
-    <value>Star/Fork das Projekt auf Github.
+    <value>Star/Fork das Projekt auf GitHub.
 
 URL: https://github.com/BornToBeRoot/NETworkManager/</value>
   </data>
@@ -2104,9 +2100,6 @@ URL: https://twitter.com/BornToBeRoot_DE</value>
   </data>
   <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Öffentliche IP-Adresse konnte nicht über WebRequest (http / https) von "{0}" abgerufen werden! Überprüfen Sie Ihre Netzwerkverbindung (Firewall, Proxy usw.).</value>
-  </data>
-  <data name="CouldNotResolveHostnameForXXXMessage" xml:space="preserve">
-    <value>Hostname für IP-Adresse {0} konnte nicht aufgelöst werden!</value>
   </data>
   <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
     <value>Kein A DNS Eintrag aufgelöst für "{0}"!</value>
@@ -2343,8 +2336,8 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="IPAddressToDetectLocalIPAddressBasedOnRouting" xml:space="preserve">
     <value>IP-Adresse zur Erkennung der lokalen IP-Adresse basierend auf dem Routing</value>
   </data>
-  <data name="ShowWindowOnNetworkChange" xml:space="preserve">
-    <value>Zeige Fenster beim wechsel des Netzwerkes</value>
+  <data name="ShowStatusWindowOnNetworkChange" xml:space="preserve">
+    <value>Statusfenster bei Netzwerkwechsel anzeigen</value>
   </data>
   <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
     <value>Zeit in Sekunden, wie lange das Fenster angezeigt werden soll</value>
@@ -2452,5 +2445,88 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   </data>
   <data name="ShowErrorMessage" xml:space="preserve">
     <value>Fehlermeldung anzeigen</value>
+  </data>
+  <data name="PingMonitor" xml:space="preserve">
+    <value>Ping Monitor</value>
+  </data>
+  <data name="AddHost" xml:space="preserve">
+    <value>Host hinzufügen</value>
+  </data>
+  <data name="AddAHostToMonitor" xml:space="preserve">
+    <value>Host zum überwachen hinzufügen</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Fortsetzen</value>
+  </data>
+  <data name="CouldNotResolveIPAddressFor" xml:space="preserve">
+    <value>Konnte die IP-Adresse nicht auflösen für: "{0}"</value>
+  </data>
+  <data name="TheApplicationWillBeRestarted" xml:space="preserve">
+    <value>Die Anwendung wird neu gestartet...</value>
+  </data>
+  <data name="UseOther" xml:space="preserve">
+    <value>Anderen Verwenden</value>
+  </data>
+  <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
+    <value>Datei konnte nicht exportiert werden! Siehe Fehlermeldung: "{0}"</value>
+  </data>
+  <data name="FileExportedToXX" xml:space="preserve">
+    <value>Datei nach "{0}" exportiert!</value>
+  </data>
+  <data name="ClouldNotImportFileSeeErrorMessageXX" xml:space="preserve">
+    <value>Datei konnte nicht importiert werden! Siehe Fehlermeldung: "{0}"</value>
+  </data>
+  <data name="LocationCannotBeChangedInThePortableVersion" xml:space="preserve">
+    <value>Standort kann in portabler Version nicht geändert werden!</value>
+  </data>
+  <data name="IsEncrypted" xml:space="preserve">
+    <value>Ist Verschlüsselt</value>
+  </data>
+  <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
+    <value>Dokumentation auf GitHub öffnen.
+
+URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</value>
+  </data>
+  <data name="ExampleProfileFileName" xml:space="preserve">
+    <value>Kunde 1</value>
+  </data>
+  <data name="AddProfileFile" xml:space="preserve">
+    <value>Profildatei hinzufügen</value>
+  </data>
+  <data name="DisableEncryptionDots" xml:space="preserve">
+    <value>Verschlüsselung deaktivieren...</value>
+  </data>
+  <data name="EditProfileFile" xml:space="preserve">
+    <value>Profildatei bearbeiten</value>
+  </data>
+  <data name="EnableEncryptionDots" xml:space="preserve">
+    <value>Verschlüsselung aktivieren...</value>
+  </data>
+  <data name="EncryptionDots" xml:space="preserve">
+    <value>Verschlüsselung...</value>
+  </data>
+  <data name="RemoveProfileFile" xml:space="preserve">
+    <value>Profildatei löschen</value>
+  </data>
+  <data name="ProfileNameAlreadyExists" xml:space="preserve">
+    <value>Profilname existiert bereits!</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Umbenennen</value>
+  </data>
+  <data name="DeleteProfileFile" xml:space="preserve">
+    <value>Profildatei löschen</value>
+  </data>
+  <data name="DeleteProfileFileMessage" xml:space="preserve">
+    <value>Die ausgewählte Profildatei wird dauerhaft gelöscht.</value>
+  </data>
+  <data name="ResetProfilesMessage" xml:space="preserve">
+    <value>Alle Profile in dieser Profildatei werden dauerhaft gelöscht!</value>
+  </data>
+  <data name="Patch" xml:space="preserve">
+    <value>Patch</value>
   </data>
 </root>

@@ -883,7 +883,7 @@
     <value>Фиксированный размер экрана:</value>
   </data>
   <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value>Стар/Форк проект на Github</value>
+    <value>Star/Fork the Project on GitHub</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Найдено</value>
@@ -1119,8 +1119,8 @@
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Выберите разрешение экрана</value>
   </data>
-  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>Выбранные настройки будут перезаписаны.</value>
+  <data name="SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards" xml:space="preserve">
+    <value>The selected settings are overwritten and the application is restarted afterwards!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>Выбранные настройки будут сброшены.</value>
@@ -1131,8 +1131,8 @@
   <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
     <value>Выберите параметры для импорта:</value>
   </data>
-  <data name="SelectTheSettingsYouWantToReset" xml:space="preserve">
-    <value>Выберите параметры, которые необходимо сбросить:</value>
+  <data name="ThisWillResetAllSettings" xml:space="preserve">
+    <value>This will reset all settings!</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>Serial</value>
@@ -1144,7 +1144,7 @@
     <value>Служба</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>Найденный файл настроек поврежден или несовместим с этой версией. Все настройки были сброшены (профили и учетные данные не затрагиваются!)</value>
+    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles are not affected!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Настройки успешно экспортированы!</value>
@@ -1431,8 +1431,8 @@
   <data name="Validate" xml:space="preserve">
     <value>Подтвердить</value>
   </data>
-  <data name="WarningMessage_SettingsGeneralAppearanceTransparency" xml:space="preserve">
-    <value>Некоторые графические карты / драйверы имеют проблемы с максимизацией приложения при включенной прозрачности. Функция должна быть отключена для использования "удаленного рабочего стола"! Включение или отключение этой функции требует перезапуска приложения.</value>
+  <data name="SettingsAppearanceTransparencyWarning" xml:space="preserve">
+    <value>Some features can not be used when transparency is enabled. If you change this setting, the application must be restarted.</value>
   </data>
   <data name="Connections" xml:space="preserve">
     <value>Соединения</value>
@@ -1932,10 +1932,6 @@
   <data name="AddTabDots" xml:space="preserve">
     <value>Добавить вкладку...</value>
   </data>
-  <data name="ResetCredentialsMessage" xml:space="preserve">
-    <value>Если вы забыли пароль и хотите начать все сначала, удалите следующий файл и перезапустите приложение.
-Путь: "{0}"</value>
-  </data>
   <data name="AddIPv4AddressDots" xml:space="preserve">
     <value>Добавить адрес IPv4...</value>
   </data>
@@ -2036,7 +2032,7 @@
 Для предоставления дополнительных функций, приложение использует сервисы в интернете, которыми я не управляю. Данные не будут отправлены мне.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>При запуске программы в фоновом режиме проверяется, доступна ли новая версия программы на Github.
+    <value>When starting the program, it checks in the background whether a new program version is available on GitHub.
 
 URL: https://api.github.com/</value>
   </data>
@@ -2055,7 +2051,7 @@ URL: https://api.ipify.org/</value>
     <value>Внешние услуги</value>
   </data>
   <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
-    <value>Star/Fork the Project on Github.
+    <value>Star/Fork the Project on GitHub.
 
 URL: https://github.com/BornToBeRoot/NETworkManager/</value>
   </data>
@@ -2104,9 +2100,6 @@ URL: https://twitter.com/BornToBeRoot_DE</value>
   </data>
   <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Не удалось получить публичный IP-адрес через WebRequest (http / https) из "{0}"! Проверьте подключение к сети (брандмауэр, прокси и т. Д.).</value>
-  </data>
-  <data name="CouldNotResolveHostnameForXXXMessage" xml:space="preserve">
-    <value>Не удалось определить имя хоста для IP-адреса "{0}"!</value>
   </data>
   <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
     <value>Нет записей A в DNS, разрешенных для "{0}"!</value>
@@ -2343,8 +2336,8 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="IPAddressToDetectLocalIPAddressBasedOnRouting" xml:space="preserve">
     <value>IP address to detect local ip address based on routing</value>
   </data>
-  <data name="ShowWindowOnNetworkChange" xml:space="preserve">
-    <value>Show window on network change</value>
+  <data name="ShowStatusWindowOnNetworkChange" xml:space="preserve">
+    <value>Show status window on network change</value>
   </data>
   <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
     <value>Time in seconds how long the window should be displayed</value>
@@ -2452,5 +2445,88 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   </data>
   <data name="ShowErrorMessage" xml:space="preserve">
     <value>Show error message</value>
+  </data>
+  <data name="PingMonitor" xml:space="preserve">
+    <value>Ping Monitor</value>
+  </data>
+  <data name="AddHost" xml:space="preserve">
+    <value>Add host</value>
+  </data>
+  <data name="AddAHostToMonitor" xml:space="preserve">
+    <value>Add a host to monitor</value>
+  </data>
+  <data name="Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="CouldNotResolveIPAddressFor" xml:space="preserve">
+    <value>Could not resolve ip address for: "{0}"</value>
+  </data>
+  <data name="TheApplicationWillBeRestarted" xml:space="preserve">
+    <value>The application will be restarted...</value>
+  </data>
+  <data name="UseOther" xml:space="preserve">
+    <value>Use other</value>
+  </data>
+  <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
+    <value>Could not export file! See error message: "{0}"</value>
+  </data>
+  <data name="FileExportedToXX" xml:space="preserve">
+    <value>File exported to "{0}"!</value>
+  </data>
+  <data name="ClouldNotImportFileSeeErrorMessageXX" xml:space="preserve">
+    <value>Could not import file! See error message: "{0}"</value>
+  </data>
+  <data name="LocationCannotBeChangedInThePortableVersion" xml:space="preserve">
+    <value>Location cannot be changed in portable version!</value>
+  </data>
+  <data name="IsEncrypted" xml:space="preserve">
+    <value>Is encrypted</value>
+  </data>
+  <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
+    <value>Open documentation on GitHub.
+
+URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</value>
+  </data>
+  <data name="ExampleProfileFileName" xml:space="preserve">
+    <value>Customer 1</value>
+  </data>
+  <data name="AddProfileFile" xml:space="preserve">
+    <value>Add profile file</value>
+  </data>
+  <data name="DisableEncryptionDots" xml:space="preserve">
+    <value>Disable encryption...</value>
+  </data>
+  <data name="EditProfileFile" xml:space="preserve">
+    <value>Edit profile file</value>
+  </data>
+  <data name="EnableEncryptionDots" xml:space="preserve">
+    <value>Enable encryption...</value>
+  </data>
+  <data name="EncryptionDots" xml:space="preserve">
+    <value>Encryption...</value>
+  </data>
+  <data name="RemoveProfileFile" xml:space="preserve">
+    <value>Remove profile file</value>
+  </data>
+  <data name="ProfileNameAlreadyExists" xml:space="preserve">
+    <value>Profile name already exists!</value>
+  </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="DeleteProfileFile" xml:space="preserve">
+    <value>Delete profile file</value>
+  </data>
+  <data name="DeleteProfileFileMessage" xml:space="preserve">
+    <value>Selected profile file will be deleted permanently.</value>
+  </data>
+  <data name="ResetProfilesMessage" xml:space="preserve">
+    <value>All profiles in this profile file will be permanently deleted!</value>
+  </data>
+  <data name="Patch" xml:space="preserve">
+    <value>Patch</value>
   </data>
 </root>

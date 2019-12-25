@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 08/05/2019 18:50:00-->
+Generated 12/25/2019 03:15:31-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -12361,26 +12361,30 @@ Generated 08/05/2019 18:50:00-->
   <Port>
     <Number>1301</Number>
     <Protocol>tcp</Protocol>
-    <Name>ci3-software-1</Name>
-    <Description>CI3-Software-1</Description>
+    <Name>
+    </Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>1301</Number>
     <Protocol>udp</Protocol>
-    <Name>ci3-software-1</Name>
-    <Description>CI3-Software-1</Description>
+    <Name>
+    </Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>1302</Number>
     <Protocol>tcp</Protocol>
-    <Name>ci3-software-2</Name>
-    <Description>CI3-Software-2</Description>
+    <Name>
+    </Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>1302</Number>
     <Protocol>udp</Protocol>
-    <Name>ci3-software-2</Name>
-    <Description>CI3-Software-2</Description>
+    <Name>
+    </Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>1303</Number>
@@ -26557,13 +26561,13 @@ Generated 08/05/2019 18:50:00-->
   <Port>
     <Number>2459</Number>
     <Protocol>tcp</Protocol>
-    <Name>community</Name>
+    <Name>xrpl</Name>
     <Description>Community</Description>
   </Port>
   <Port>
     <Number>2459</Number>
     <Protocol>udp</Protocol>
-    <Name>community</Name>
+    <Name>xrpl</Name>
     <Description>Community</Description>
   </Port>
   <Port>
@@ -38418,13 +38422,13 @@ Generated 08/05/2019 18:50:00-->
     <Number>3445</Number>
     <Protocol>tcp</Protocol>
     <Name>monp</Name>
-    <Description>Media Object Network</Description>
+    <Description>Media Object Network Protocol</Description>
   </Port>
   <Port>
     <Number>3445</Number>
     <Protocol>udp</Protocol>
     <Name>monp</Name>
-    <Description>Media Object Network</Description>
+    <Description>Media Object Network Protocol</Description>
   </Port>
   <Port>
     <Number>3446</Number>
@@ -40439,14 +40443,14 @@ Generated 08/05/2019 18:50:00-->
   <Port>
     <Number>3612</Number>
     <Protocol>tcp</Protocol>
-    <Name>hp-dataprotect</Name>
-    <Description>HP Data Protector</Description>
+    <Name>dataprotector</Name>
+    <Description>Micro Focus Data Protector</Description>
   </Port>
   <Port>
     <Number>3612</Number>
     <Protocol>udp</Protocol>
-    <Name>hp-dataprotect</Name>
-    <Description>HP Data Protector</Description>
+    <Name>dataprotector</Name>
+    <Description>Micro Focus Data Protector</Description>
   </Port>
   <Port>
     <Number>3613</Number>
@@ -55031,8 +55035,8 @@ Generated 08/05/2019 18:50:00-->
   <Port>
     <Number>5565</Number>
     <Protocol>tcp</Protocol>
-    <Name>hpe-dp-bura</Name>
-    <Description>HPE Advanced BURA</Description>
+    <Name>dp-bura</Name>
+    <Description>Data Protector BURA</Description>
   </Port>
   <Port>
     <Number>5565</Number>
@@ -62090,13 +62094,13 @@ Generated 08/05/2019 18:50:00-->
     <Number>7547</Number>
     <Protocol>tcp</Protocol>
     <Name>cwmp</Name>
-    <Description>DSL Forum CWMP</Description>
+    <Description>Broadband Forum CWMP</Description>
   </Port>
   <Port>
     <Number>7547</Number>
     <Protocol>udp</Protocol>
     <Name>cwmp</Name>
-    <Description>DSL Forum CWMP</Description>
+    <Description>Broadband Forum CWMP</Description>
   </Port>
   <Port>
     <Number>7548</Number>
@@ -63785,6 +63789,18 @@ Generated 08/05/2019 18:50:00-->
     <Description>Utilistor (Server)</Description>
   </Port>
   <Port>
+    <Number>8084</Number>
+    <Protocol>tcp</Protocol>
+    <Name>websnp</Name>
+    <Description>Snarl Network Protocol over HTTP</Description>
+  </Port>
+  <Port>
+    <Number>8084</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>8086</Number>
     <Protocol>tcp</Protocol>
     <Name>d-s-n</Name>
@@ -65286,6 +65302,30 @@ Generated 08/05/2019 18:50:00-->
   </Port>
   <Port>
     <Number>8767</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>8768</Number>
+    <Protocol>tcp</Protocol>
+    <Name>sandpolis</Name>
+    <Description>Sandpolis Server</Description>
+  </Port>
+  <Port>
+    <Number>8768</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>8769</Number>
+    <Protocol>tcp</Protocol>
+    <Name>oktaauthenticat</Name>
+    <Description>Okta MultiPlatform Access Mgmt for Cloud Svcs</Description>
+  </Port>
+  <Port>
+    <Number>8769</Number>
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
@@ -67623,6 +67663,18 @@ Generated 08/05/2019 18:50:00-->
     <Protocol>tcp</Protocol>
     <Name>sd</Name>
     <Description>Session Director</Description>
+  </Port>
+  <Port>
+    <Number>9877</Number>
+    <Protocol>tcp</Protocol>
+    <Name>x510</Name>
+    <Description>The X.510 wrapper protocol</Description>
+  </Port>
+  <Port>
+    <Number>9877</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>9878</Number>
@@ -74654,6 +74706,18 @@ Generated 08/05/2019 18:50:00-->
   </Port>
   <Port>
     <Number>44444</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>44445</Number>
+    <Protocol>tcp</Protocol>
+    <Name>acronis-backup</Name>
+    <Description>Acronis Backup Gateway service port</Description>
+  </Port>
+  <Port>
+    <Number>44445</Number>
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>

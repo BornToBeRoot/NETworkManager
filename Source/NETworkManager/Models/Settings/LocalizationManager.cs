@@ -24,16 +24,16 @@ namespace NETworkManager.Models.Settings
         {
             new LocalizationInfo("English", "English", new Uri("/Resources/Localization/Flags/en-US.png", UriKind.Relative), "BornToBeRoot", "en-US", 100,true),
             new LocalizationInfo("German", "Deutsch", new Uri("/Resources/Localization/Flags/de-DE.png", UriKind.Relative), "BornToBeRoot", "de-DE", 100, true),
-            new LocalizationInfo("Russian", "Русский", new Uri("/Resources/Localization/Flags/ru-RU.png", UriKind.Relative), "LaXe", "ru-RU", 87.78, true),
-            new LocalizationInfo("Spanish", "Español", new Uri("/Resources/Localization/Flags/es-ES.png", UriKind.Relative), "MS-PC", "es-ES", 98.83, false),
-            new LocalizationInfo("Italian", "Italiano", new Uri("/Resources/Localization/Flags/it-IT.png", UriKind.Relative), "simone.ferrari", "it-IT", 94.54, false),
-            new LocalizationInfo("Dutch", "Nederlands", new Uri("/Resources/Localization/Flags/nl-NL.png", UriKind.Relative), "Get_r3kt_by_Me", "nl-NL", 46.42, false),
-            new LocalizationInfo("French", "Français", new Uri("/Resources/Localization/Flags/fr-FR.png", UriKind.Relative), "f4alm", "fr-FR", 15.73, false),            
-            new LocalizationInfo("Chinese", "汉语", new Uri("/Resources/Localization/Flags/zh-CN.png", UriKind.Relative), "dockernes, pedoc, Bonelol, ccstorm", "zh-CN", 81.40, false),
+            new LocalizationInfo("Russian", "Русский", new Uri("/Resources/Localization/Flags/ru-RU.png", UriKind.Relative), "LaXe", "ru-RU", 84.01, true),
+            new LocalizationInfo("Spanish", "Español", new Uri("/Resources/Localization/Flags/es-ES.png", UriKind.Relative), "MS-PC", "es-ES", 100, false),
+            new LocalizationInfo("Italian", "Italiano", new Uri("/Resources/Localization/Flags/it-IT.png", UriKind.Relative), "simone.ferrari", "it-IT", 90.43, false),
+            new LocalizationInfo("Dutch", "Nederlands", new Uri("/Resources/Localization/Flags/nl-NL.png", UriKind.Relative), "Get_r3kt_by_Me", "nl-NL", 44.71, false),
+            new LocalizationInfo("French", "Français", new Uri("/Resources/Localization/Flags/fr-FR.png", UriKind.Relative), "f4alm", "fr-FR", 15.24, false),            
+            new LocalizationInfo("Chinese", "汉语", new Uri("/Resources/Localization/Flags/zh-CN.png", UriKind.Relative), "dockernes, pedoc, Bonelol, ccstorm", "zh-CN", 80.86, false),
+            new LocalizationInfo("Brazilian Portuguese", "português brasileiro", new Uri("/Resources/Localization/Flags/pt-BR.png", UriKind.Relative), "ghroll", "pt-BR", 8.31, false),            
             
             /*
             new LocalizationInfo("Latvian", "", new Uri("/Resources/Localization/Flags/lv-LV.png", UriKind.Relative), "", "lv-LV", 0, false),
-            new LocalizationInfo("Portuguese", "", new Uri("/Resources/Localization/Flags/pt-BR.png", UriKind.Relative), "", "pt-BR", 0, false),            
             */
         };
 
