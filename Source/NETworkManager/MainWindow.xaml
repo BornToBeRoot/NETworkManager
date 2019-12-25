@@ -69,7 +69,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=DesktopDownload}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Download}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Text="{Binding UpdateText}" VerticalAlignment="Center" Margin="5,0,0,0" />

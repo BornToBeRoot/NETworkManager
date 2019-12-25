@@ -167,7 +167,7 @@
                     </StackPanel.Style>
                     <Rectangle Width="16" Height="20">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=DesktopDownload}"/>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Download}"/>
                         </Rectangle.OpacityMask>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
