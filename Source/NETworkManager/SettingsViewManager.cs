@@ -9,14 +9,14 @@ namespace NETworkManager
         public static List<SettingsViewInfo> List => new List<SettingsViewInfo>
         {
             // General
-            new SettingsViewInfo(Name.General, new PackIconModern{ Kind = PackIconModernKind.Box }, Group.General),
-            new SettingsViewInfo(Name.Window, new PackIconMaterial { Kind = PackIconMaterialKind.Application }, Group.General),
-            new SettingsViewInfo(Name.Appearance, new PackIconMaterial { Kind = PackIconMaterialKind.AutoFix }, Group.General),
-            new SettingsViewInfo(Name.Language, new PackIconMaterial { Kind = PackIconMaterialKind.Flag }, Group.General),
+            new SettingsViewInfo(Name.General, new PackIconMaterial{ Kind = PackIconMaterialKind.Layers }, Group.General),
+            new SettingsViewInfo(Name.Window, new PackIconPicolIcons { Kind = PackIconPicolIconsKind.BrowserWindow }, Group.General),
+            new SettingsViewInfo(Name.Appearance, new PackIconMaterial { Kind = PackIconMaterialKind.Palette }, Group.General),
+            new SettingsViewInfo(Name.Language, new PackIconMaterial { Kind = PackIconMaterialKind.Translate }, Group.General),
             new SettingsViewInfo(Name.Status, new PackIconModern { Kind = PackIconModernKind.Network }, Group.General),
             new SettingsViewInfo(Name.HotKeys, new PackIconOcticons { Kind = PackIconOcticonsKind.Keyboard }, Group.General),
             new SettingsViewInfo(Name.Autostart, new PackIconMaterial { Kind = PackIconMaterialKind.Power }, Group.General),
-            new SettingsViewInfo(Name.Update, new PackIconMaterial { Kind = PackIconMaterialKind.Download }, Group.General),
+            new SettingsViewInfo(Name.Update, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Download }, Group.General),
             new SettingsViewInfo(Name.Settings, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Cog }, Group.General),
             new SettingsViewInfo(Name.Profiles, new PackIconMaterial { Kind = PackIconMaterialKind.FormatListBulletedType }, Group.General),
 

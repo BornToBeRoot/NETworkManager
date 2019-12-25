@@ -38,7 +38,7 @@ namespace NETworkManager
                     return Resources.Localization.Strings.Ping;
                 case Name.PingMonitor:
                     return Resources.Localization.Strings.PingMonitor;
-                case Name.Traceroute:                                   
+                case Name.Traceroute:
                     return Resources.Localization.Strings.Traceroute;
                 case Name.DNSLookup:
                     return Resources.Localization.Strings.DNSLookup;
@@ -80,7 +80,7 @@ namespace NETworkManager
             switch (name)
             {
                 case Name.Dashboard:
-                    canvas.Children.Add(new PackIconOcticons { Kind = PackIconOcticonsKind.Dashboard });
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.ViewDashboardVariant });
                     break;
                 case Name.NetworkInterface:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Network });
@@ -89,7 +89,7 @@ namespace NETworkManager
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.AccessPointNetwork });
                     break;
                 case Name.IPScanner:
-                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Sitemap });
+                    canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.NetworkWiredSolid });
                     break;
                 case Name.PortScanner:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.NetworkPort });
@@ -110,13 +110,13 @@ namespace NETworkManager
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.RemoteDesktop });
                     break;
                 case Name.PowerShell:
-                    canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.TerminalSolid });
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Powershell });
                     break;
                 case Name.PuTTY:
-                    canvas.Children.Add(new PackIconOcticons { Kind = PackIconOcticonsKind.Terminal });
+                    canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.TerminalSolid });
                     break;
                 case Name.TigerVNC:
-                    canvas.Children.Add(new PackIconMaterial {Kind = PackIconMaterialKind.EyeOutline});
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.EyeOutline });
                     break;
                 case Name.SNMP:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Switch });
@@ -128,13 +128,13 @@ namespace NETworkManager
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Web });
                     break;
                 case Name.Whois:
-                    canvas.Children.Add(new PackIconMaterial {Kind = PackIconMaterialKind.CloudSearchOutline});
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.CloudSearchOutline });
                     break;
                 case Name.SubnetCalculator:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Calculator });
                     break;
                 case Name.Lookup:
-                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Magnify });
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.DatabaseSearch });
                     break;
                 case Name.Connections:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Connect });

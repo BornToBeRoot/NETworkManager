@@ -57,7 +57,7 @@
                         <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:SimpleIcons Kind=GitHub}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=GithubCircle}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -91,7 +91,7 @@
                         <Button ToolTip="{x:Static localization:Strings.ToolTip_GithubNewIssueUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24" >
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=Bug}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:JamIcons Kind=BugF}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
