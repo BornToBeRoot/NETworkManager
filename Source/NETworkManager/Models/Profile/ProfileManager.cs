@@ -168,19 +168,19 @@ namespace NETworkManager.Models.Profile
         {
             var location = GetProfilesLocation();
 
-            if (!Directory.Exists(location))
-                return;
-
-            foreach (var file in GetProfileFiles(location))
+            if (Directory.Exists(location))
             {
-                var isEncryptionEnabled = Path.GetFileNameWithoutExtension(file).EndsWith(ProfilesEncryptionIdentifier);
+                foreach (var file in GetProfileFiles(location))
+                {
+                    var isEncryptionEnabled = Path.GetFileNameWithoutExtension(file).EndsWith(ProfilesEncryptionIdentifier);
 
-                var name = Path.GetFileNameWithoutExtension(file);
+                    var name = Path.GetFileNameWithoutExtension(file);
 
-                if (isEncryptionEnabled)
-                    name = name.Substring(0, name.Length - ProfilesEncryptionIdentifier.Length);
+                    if (isEncryptionEnabled)
+                        name = name.Substring(0, name.Length - ProfilesEncryptionIdentifier.Length);
 
-                ProfileFiles.Add(new ProfileFileInfo(name, file, isEncryptionEnabled));
+                    ProfileFiles.Add(new ProfileFileInfo(name, file, isEncryptionEnabled));
+                }
             }
 
             // Create default

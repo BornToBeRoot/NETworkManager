@@ -383,7 +383,7 @@ namespace NETworkManager
             // Load application list, filter, sort, etc.
             LoadApplicationList();
 
-            // Load profiles
+            // Load profiles            
             ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
             ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
             ProfileManager.OnProfileFileChangedEvent += ProfileManager_OnProfileFileChangedEvent;
