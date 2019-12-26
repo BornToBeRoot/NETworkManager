@@ -45,7 +45,7 @@
 |[:package:&nbsp;Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Setup.exe)| `C615367946A818B4E67632FA99937723` `B4006385D86F62F52842709DC35CBA1F` | Installs the software in `%ProgramFiles(x86)%`. Settings are saved in `%AppData%`. See [available parameters](http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline) |
 |[:package:&nbsp;Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Portable.zip)| `1A5A16A863425D827E1C58D711C33787` `3C4C44B914D44F3FC27E327043597078` | Portable version for USB-Stick/Cloud. Settings are saved in the program folder. |
 |[:package:&nbsp;Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Archiv.zip)| `1942EF7B3541782CB83F37ED802E8FF9` `8DD63579F5772D792462EACF82BE7E72` | Binaries can be deployed anywhere (network share, etc.). Settings are saved in %AppData%. |
-|[:link:&nbsp;Chocolatey](https://chocolatey.org/packages/NETworkManager)| -/- | Package Manager for Windows |
+|[:link:&nbsp;Chocolatey](https://chocolatey.org/packages/NETworkManager)| -/- | Package Manager for Windows. Installs the setup via Chocolatey. |
 
 <h2>Features</h2>
 
