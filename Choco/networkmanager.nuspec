@@ -2,10 +2,10 @@
 <!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
-    <id>NETworkManager</id>
+    <id>NETworkManager-v1</id>
     <version>1.11.0.0</version>
     <owners>BornToBeRoot</owners>
-    <title>NETworkManager</title>
+    <title>NETworkManager - Version 1.x</title>
     <authors>BornToBeRoot</authors>
     <projectUrl>https://github.com/BornToBeRoot/NETworkManager</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/BornToBeRoot/NETworkManager/master/Icon/NETworkManager.svg</iconUrl>
