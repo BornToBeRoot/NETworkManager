@@ -1744,42 +1744,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PowerShell..
-        /// </summary>
-        public static string DisableTransparencyInTheSettingsToUsePowerShell {
-            get {
-                return ResourceManager.GetString("DisableTransparencyInTheSettingsToUsePowerShell", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PuTTY..
-        /// </summary>
-        public static string DisableTransparencyInTheSettingsToUsePuTTY {
-            get {
-                return ResourceManager.GetString("DisableTransparencyInTheSettingsToUsePuTTY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use Remote Desktop..
-        /// </summary>
-        public static string DisableTransparencyInTheSettingsToUseRemoteDesktop {
-            get {
-                return ResourceManager.GetString("DisableTransparencyInTheSettingsToUseRemoteDesktop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TigerVNC..
-        /// </summary>
-        public static string DisableTransparencyInTheSettingsToUseTigerVNC {
-            get {
-                return ResourceManager.GetString("DisableTransparencyInTheSettingsToUseTigerVNC", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Disconnect.
         /// </summary>
         public static string Disconnect {
@@ -2055,15 +2019,6 @@ namespace NETworkManager.Resources.Localization {
         public static string EnableEncryptionDots {
             get {
                 return ResourceManager.GetString("EnableEncryptionDots", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable transparency.
-        /// </summary>
-        public static string EnableTransparency {
-            get {
-                return ResourceManager.GetString("EnableTransparency", resourceCulture);
             }
         }
         
@@ -5760,15 +5715,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Some features can not be used when transparency is enabled. If you change this setting, the application must be restarted..
-        /// </summary>
-        public static string SettingsAppearanceTransparencyWarning {
-            get {
-                return ResourceManager.GetString("SettingsAppearanceTransparencyWarning", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The settings file found was corrupted or is not compatible with this version. All settings have been reset!
         ///(Profile files are not affected!).
         /// </summary>
@@ -6703,15 +6649,6 @@ namespace NETworkManager.Resources.Localization {
         public static string Traceroute {
             get {
                 return ResourceManager.GetString("Traceroute", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Transparency.
-        /// </summary>
-        public static string Transparency {
-            get {
-                return ResourceManager.GetString("Transparency", resourceCulture);
             }
         }
         

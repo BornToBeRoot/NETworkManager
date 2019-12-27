@@ -381,9 +381,6 @@
   <data name="Traceroute" xml:space="preserve">
     <value>Traceroute</value>
   </data>
-  <data name="Transparency" xml:space="preserve">
-    <value>Transparency</value>
-  </data>
   <data name="Tray" xml:space="preserve">
     <value>Tray</value>
   </data>
@@ -819,12 +816,6 @@
   <data name="DeleteProfileMessage" xml:space="preserve">
     <value>Selected profiles will be deleted permanently.</value>
   </data>
-  <data name="DisableTransparencyInTheSettingsToUsePuTTY" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PuTTY.</value>
-  </data>
-  <data name="DisableTransparencyInTheSettingsToUseRemoteDesktop" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use Remote Desktop.</value>
-  </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>DNS autconfiguration</value>
   </data>
@@ -851,9 +842,6 @@
   </data>
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
     <value>Enable Credential Security Support Provider</value>
-  </data>
-  <data name="EnableTransparency" xml:space="preserve">
-    <value>Enable transparency</value>
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>End time</value>
@@ -1432,9 +1420,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Validate" xml:space="preserve">
     <value>Validate</value>
   </data>
-  <data name="SettingsAppearanceTransparencyWarning" xml:space="preserve">
-    <value>Some features can not be used when transparency is enabled. If you change this setting, the application must be restarted.</value>
-  </data>
   <data name="Connections" xml:space="preserve">
     <value>Connections</value>
   </data>
@@ -1870,9 +1855,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
     <value>Configure the path to TigerVNC in the settings...</value>
   </data>
-  <data name="DisableTransparencyInTheSettingsToUseTigerVNC" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TigerVNC.</value>
-  </data>
   <data name="TigerVNCLocationDots" xml:space="preserve">
     <value>TigerVNC location...</value>
   </data>
@@ -1950,9 +1932,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   </data>
   <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
     <value>Configure the path to PowerShell in the settings...</value>
-  </data>
-  <data name="DisableTransparencyInTheSettingsToUsePowerShell" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PowerShell.</value>
   </data>
   <data name="PowerShellProcessHasEnded" xml:space="preserve">
     <value>PowerShell process has ended!</value>
