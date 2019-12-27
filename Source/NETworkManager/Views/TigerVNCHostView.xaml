@@ -32,9 +32,6 @@
                         <DataTrigger Binding="{Binding IsConfigured}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled}" Value="True">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
@@ -433,32 +430,10 @@
                         <DataTrigger Binding="{Binding IsConfigured}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled}" Value="True">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </StackPanel.Style>
             <TextBlock Text="{x:Static localization:Strings.ConfigureThePathToTigerVNCInTheSettingsDots}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-            <Button HorizontalAlignment="Center" Command="{Binding OpenSettingsCommand}" Style="{StaticResource ImageWithTextButton}">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.OpenSettings}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                    </Grid>
-                </Button.Content>
-            </Button>
-        </StackPanel>
-        <StackPanel VerticalAlignment="Center" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTransparencyEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10">
-            <TextBlock Text="{x:Static localization:Strings.DisableTransparencyInTheSettingsToUseTigerVNC}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
             <Button HorizontalAlignment="Center" Command="{Binding OpenSettingsCommand}" Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>
                     <Grid>

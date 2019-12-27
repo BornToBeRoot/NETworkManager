@@ -60,13 +60,6 @@ namespace NETworkManager.Controls
             InitializeComponent();
             DataContext = this;
 
-            // Transparency
-            if (SettingsManager.Current.Appearance_EnableTransparency)
-            {
-                AllowsTransparency = true;
-                Opacity = SettingsManager.Current.Appearance_Opacity;
-            }
-
             ApplicationName = applicationName;
 
             InterTabClient = new DragablzInterTabClient(applicationName);

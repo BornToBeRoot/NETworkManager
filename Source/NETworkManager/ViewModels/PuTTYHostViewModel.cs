@@ -249,7 +249,7 @@ namespace NETworkManager.ViewModels
 
         private bool Connect_CanExecute(object obj)
         {
-            return IsConfigured && !ConfigurationManager.Current.IsTransparencyEnabled;
+            return IsConfigured;
         }
 
         private void ConnectAction()

@@ -21,7 +21,6 @@ namespace NETworkManager.Models.Settings
         public Version OSVersion { get; set; }
 
         // Everything below will be set dynamically in the application
-        public bool IsTransparencyEnabled { get; set; }
         public bool ShowSettingsResetNoteOnStartup { get; set; }
         public bool ForceRestart { get; set; }
 

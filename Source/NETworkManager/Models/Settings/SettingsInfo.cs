@@ -214,36 +214,6 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private bool _appearance_EnableTransparency;
-        public bool Appearance_EnableTransparency
-        {
-            get => _appearance_EnableTransparency;
-            set
-            {
-                if (value == _appearance_EnableTransparency)
-                    return;
-
-                _appearance_EnableTransparency = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private double _appearance_Opacity = GlobalStaticConfiguration.Appearance_Opacity;
-        public double Appearance_Opacity
-        {
-            get => _appearance_Opacity;
-            set
-            {
-                if (Math.Abs(value - _appearance_Opacity) < GlobalStaticConfiguration.FloatPointFix)
-                    return;
-
-                _appearance_Opacity = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
         // Localization
         private string _localization_CultureCode;
         public string Localization_CultureCode

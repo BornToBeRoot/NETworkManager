@@ -222,7 +222,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
 
-        private bool Connect_CanExecute(object obj) => IsConfigured && !ConfigurationManager.Current.IsTransparencyEnabled;
+        private bool Connect_CanExecute(object obj) => IsConfigured;
 
         private void ConnectAction()
         {

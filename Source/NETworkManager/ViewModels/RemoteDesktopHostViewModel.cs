@@ -198,7 +198,7 @@ namespace NETworkManager.ViewModels
         #region ICommand & Actions        
         public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
 
-        private bool Connect_CanExecute(object parameter) => IsRDP8Dot1Available && !ConfigurationManager.Current.IsTransparencyEnabled;
+        private bool Connect_CanExecute(object parameter) => IsRDP8Dot1Available;
 
         private void ConnectAction()
         {
@@ -353,14 +353,7 @@ namespace NETworkManager.ViewModels
         private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
             ((args.DragablzItem.Content as DragablzTabItem)?.View as RemoteDesktopControl)?.CloseTab();
-        }
-
-        public ICommand OpenSettingsCommand => new RelayCommand(p => OpenSettingsAction());
-
-        private static void OpenSettingsAction()
-        {
-            EventSystem.RedirectToSettings();
-        }
+        }               
         #endregion
 
         #region Methods

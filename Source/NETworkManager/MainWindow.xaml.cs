@@ -300,15 +300,6 @@ namespace NETworkManager
             // Load / Change appearance
             AppearanceManager.Load();
 
-            // Transparency
-            if (SettingsManager.Current.Appearance_EnableTransparency)
-            {
-                AllowsTransparency = true;
-                Opacity = SettingsManager.Current.Appearance_Opacity;
-
-                ConfigurationManager.Current.IsTransparencyEnabled = true;
-            }
-
             // NotifyIcon for autostart
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)
                 InitNotifyIcon();
@@ -966,7 +957,7 @@ namespace NETworkManager
             }
 
             // Ask the user to restart (if he has changed the language)
-            if (_cultureCode != SettingsManager.Current.Localization_CultureCode || AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency)
+            if (_cultureCode != SettingsManager.Current.Localization_CultureCode)
             {
                 ShowWindowAction();
 
@@ -985,15 +976,6 @@ namespace NETworkManager
                 }
 
                 ConfigurationManager.Current.FixAirspace = false;
-            }
-
-            // Change the transparency
-            if (AllowsTransparency != SettingsManager.Current.Appearance_EnableTransparency || (Opacity != SettingsManager.Current.Appearance_Opacity))
-            {
-                if (!AllowsTransparency || !SettingsManager.Current.Appearance_EnableTransparency)
-                    Opacity = 1;
-                else
-                    Opacity = SettingsManager.Current.Appearance_Opacity;
             }
 
             // Change HotKeys
