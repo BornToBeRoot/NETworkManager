@@ -1083,9 +1083,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Responses" xml:space="preserve">
     <value>Responses</value>
   </data>
-  <data name="RestartTheApplicationSoThatAllChangesAreApplied" xml:space="preserve">
-    <value>Restart the application so that all settings are applied!</value>
-  </data>
   <data name="Rlogin" xml:space="preserve">
     <value>Rlogin</value>
   </data>
@@ -2508,5 +2505,8 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   </data>
   <data name="Patch" xml:space="preserve">
     <value>Patch</value>
+  </data>
+  <data name="RestartTheApplicationToChangeTheLanguage" xml:space="preserve">
+    <value>Restart the application to change the language!</value>
   </data>
 </root>

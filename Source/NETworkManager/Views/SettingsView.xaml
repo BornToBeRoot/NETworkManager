@@ -155,7 +155,17 @@
                             </Grid>
                         </Grid>
                     </Border>
-                    <ScrollViewer Grid.Column="1" Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled" Margin="10">
+                    <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" Margin="10">
+                        <ScrollViewer.Style>
+                            <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaultScrollViewer}">
+                                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedSettingsView.Name}" Value="{x:Static networkManager:SettingsViewManager+Name.Language}">
+                                        <Setter Property="VerticalScrollBarVisibility" Value="Disabled" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ScrollViewer.Style>
                         <ContentControl Content="{Binding SettingsContent}" />
                     </ScrollViewer>
                 </Grid>

@@ -5391,11 +5391,11 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restart the application so that all settings are applied!.
+        ///   Looks up a localized string similar to Restart the application to change the language!.
         /// </summary>
-        public static string RestartTheApplicationSoThatAllChangesAreApplied {
+        public static string RestartTheApplicationToChangeTheLanguage {
             get {
-                return ResourceManager.GetString("RestartTheApplicationSoThatAllChangesAreApplied", resourceCulture);
+                return ResourceManager.GetString("RestartTheApplicationToChangeTheLanguage", resourceCulture);
             }
         }
         
