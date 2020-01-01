@@ -4,8 +4,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-             xmlns:network="clr-namespace:NETworkManager.Models.Network"
-             xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:network="clr-namespace:NETworkManager.Models.Network"             
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"             
@@ -449,8 +448,7 @@
                     <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.GHz2dot4}" Style="{StaticResource HeaderTextBlock}" />
                     <liveChart:CartesianChart Grid.Row="1" Series="{Binding Radio1Series}" LegendLocation="Right">
                         <liveChart:CartesianChart.DataTooltip>
-                            <controls:LvlChartsTooltipWiFi Background="Transparent" />
-                            <!--<liveChart:DefaultTooltip Background="Transparent"  />-->
+                            <controls:LvlChartsWiFiChannelTooltip Background="Transparent" />                            
                         </liveChart:CartesianChart.DataTooltip>
                         <liveChart:CartesianChart.AxisX>
                             <liveChart:Axis Title="{x:Static localization:Strings.Channel}" MinValue="0" MaxValue="16" Labels="{Binding Radio1Labels}">
@@ -492,8 +490,7 @@
                     <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.GHz5}" Style="{StaticResource HeaderTextBlock}" />
                     <liveChart:CartesianChart Grid.Row="4" Series="{Binding Radio2Series}" LegendLocation="Right">
                         <liveChart:CartesianChart.DataTooltip>
-                            <controls:LvlChartsTooltipWiFi Background="Transparent" />
-                            <!--<liveChart:DefaultTooltip Background="Transparent"  />-->
+                            <controls:LvlChartsWiFiChannelTooltip Background="Transparent" />                            
                         </liveChart:CartesianChart.DataTooltip>
                         <liveChart:CartesianChart.AxisX>
                             <liveChart:Axis Title="{x:Static localization:Strings.Channel}" MinValue="0" MaxValue="28" Labels="{Binding Radio2Labels}">

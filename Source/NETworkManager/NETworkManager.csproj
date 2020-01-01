@@ -126,8 +126,11 @@
       <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzTabItem.cs" />
-    <Compile Include="Controls\LvlChartsTooltipWiFi.xaml.cs">
-      <DependentUpon>LvlChartsTooltipWiFi.xaml</DependentUpon>
+    <Compile Include="Controls\LvlChartsBandwidthTooltip.xaml.cs">
+      <DependentUpon>LvlChartsBandwidthTooltip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LvlChartsWiFiChannelTooltip.xaml.cs">
+      <DependentUpon>LvlChartsWiFiChannelTooltip.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ObservableSetCollection.cs" />
     <Compile Include="Controls\PowerShellControl.xaml.cs">
@@ -144,7 +147,8 @@
     <Compile Include="Converters\IntGreater1ToBooleanConverter.cs" />
     <Compile Include="Converters\IsDefaultProfilesLocationToBooleanConverter.cs" />
     <Compile Include="Converters\IsProfilesLocationToBooleanConverter.cs" />
-    <Compile Include="Converters\WiFiTooltipChannelConverter.cs" />
+    <Compile Include="Converters\LvlChartsBandwidthValueConverter.cs" />
+    <Compile Include="Converters\LvlChartsHeaderConverter.cs" />
     <Compile Include="Converters\IntZeroReverseToVisibilityCollapsedConverter.cs" />
     <Compile Include="Converters\IntZeroToVisibilityCollapsedConverter.cs" />
     <Compile Include="Converters\NetworkAuthenticationTypeToHumanReadableStringConverter.cs" />
@@ -532,7 +536,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\LvlChartsTooltipWiFi.xaml">
+    <Page Include="Controls\LvlChartsBandwidthTooltip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LvlChartsWiFiChannelTooltip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1284,6 +1292,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Localization\StaticStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

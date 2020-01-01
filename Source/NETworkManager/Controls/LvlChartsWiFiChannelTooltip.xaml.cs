@@ -6,10 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace NETworkManager.Controls
 {
-    /// <summary>
-    /// Interaction logic for LvlChartsTooltipWiFi.xaml
-    /// </summary>
-    public partial class LvlChartsTooltipWiFi : IChartTooltip
+    public partial class LvlChartsWiFiChannelTooltip : IChartTooltip
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -32,7 +29,7 @@ namespace NETworkManager.Controls
 
         public TooltipSelectionMode? SelectionMode { get; set; }
                 
-        public LvlChartsTooltipWiFi()
+        public LvlChartsWiFiChannelTooltip()
         {
             InitializeComponent();
 

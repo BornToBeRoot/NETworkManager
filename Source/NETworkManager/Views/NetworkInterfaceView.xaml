@@ -13,6 +13,7 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:controls="clr-namespace:NETworkManager.Controls"
         xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:NetworkInterfaceViewModel}">
@@ -376,7 +377,7 @@
                     </TextBlock>
                     <liveChart:CartesianChart Grid.Row="2" Series="{Binding Series}" LegendLocation="Right" Margin="0,0,0,20">
                         <liveChart:CartesianChart.DataTooltip>
-                            <liveChart:DefaultTooltip Background="Transparent" />
+                            <controls:LvlChartsBandwidthTooltip Background="Transparent" />
                         </liveChart:CartesianChart.DataTooltip>
                         <liveChart:CartesianChart.AxisX>
                             <liveChart:Axis LabelFormatter="{Binding FormatterDate}">
