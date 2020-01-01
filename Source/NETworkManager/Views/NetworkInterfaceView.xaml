@@ -419,9 +419,9 @@
                         <GridSplitter Grid.Column="1" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
                         <GridSplitter Grid.Column="3" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
                         <GridSplitter Grid.Column="5" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.CurrentDownload}" />
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.CurrentDownloadSpeed}" />
                         <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding BandwidthBytesReceivedSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.CurrentUpload}" />
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.CurrentUploadSpeed}" />
                         <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding BandwidthBytesSentSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.TotalBytesReceived}" />
                         <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding BandwidthTotalBytesReceived}" />

@@ -2352,11 +2352,11 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="SignalStrength" xml:space="preserve">
     <value>Signal strength</value>
   </data>
-  <data name="CurrentDownload" xml:space="preserve">
-    <value>Current download</value>
+  <data name="CurrentDownloadSpeed" xml:space="preserve">
+    <value>Current download speed</value>
   </data>
-  <data name="CurrentUpload" xml:space="preserve">
-    <value>Current upload</value>
+  <data name="CurrentUploadSpeed" xml:space="preserve">
+    <value>Current upload speed</value>
   </data>
   <data name="MeasuredTime" xml:space="preserve">
     <value>Measured time</value>

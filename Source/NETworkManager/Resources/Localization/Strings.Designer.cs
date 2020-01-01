@@ -1348,20 +1348,20 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current download.
+        ///   Looks up a localized string similar to Current download speed.
         /// </summary>
-        public static string CurrentDownload {
+        public static string CurrentDownloadSpeed {
             get {
-                return ResourceManager.GetString("CurrentDownload", resourceCulture);
+                return ResourceManager.GetString("CurrentDownloadSpeed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current upload.
+        ///   Looks up a localized string similar to Current upload speed.
         /// </summary>
-        public static string CurrentUpload {
+        public static string CurrentUploadSpeed {
             get {
-                return ResourceManager.GetString("CurrentUpload", resourceCulture);
+                return ResourceManager.GetString("CurrentUploadSpeed", resourceCulture);
             }
         }
         
