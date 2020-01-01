@@ -153,7 +153,7 @@ namespace NETworkManager.Models.Profile
         public static string GetProfilesDefaultFilePath()
         {
             var path = Path.Combine(GetProfilesLocation(), GetProfilesDefaultFileName());
-            Debug.WriteLine(path);
+            
             return path;
         }
         #endregion

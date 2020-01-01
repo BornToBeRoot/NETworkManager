@@ -10,7 +10,7 @@ namespace NETworkManager.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var x = value is int count && count > 1;
-            Debug.WriteLine(x);
+            
             return x;
         }
 
