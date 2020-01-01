@@ -5,7 +5,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Converters
 {
-    public sealed class BandwidthBytesToSizeConverter : IValueConverter
+    public sealed class Bytes1000ToSizeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

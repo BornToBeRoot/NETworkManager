@@ -139,11 +139,12 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BandwidthBytesWithSizeConverter.cs" />
+    <Compile Include="Converters\Bytes1000ToSizeConverter.cs" />
     <Compile Include="Converters\IntGreater1ToBooleanConverter.cs" />
     <Compile Include="Converters\IsDefaultProfilesLocationToBooleanConverter.cs" />
     <Compile Include="Converters\IsProfilesLocationToBooleanConverter.cs" />
     <Compile Include="Converters\WiFiTooltipChannelConverter.cs" />
-    <Compile Include="Converters\BandwidthBytesToSizeConverter.cs" />
     <Compile Include="Converters\IntZeroReverseToVisibilityCollapsedConverter.cs" />
     <Compile Include="Converters\IntZeroToVisibilityCollapsedConverter.cs" />
     <Compile Include="Converters\NetworkAuthenticationTypeToHumanReadableStringConverter.cs" />

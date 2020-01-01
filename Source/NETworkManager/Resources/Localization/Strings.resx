@@ -2509,4 +2509,10 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="RestartTheApplicationToChangeTheLanguage" xml:space="preserve">
     <value>Restart the application to change the language!</value>
   </data>
+  <data name="CurrentlyDownloaded" xml:space="preserve">
+    <value>Currently downloaded</value>
+  </data>
+  <data name="CurrentlyUploaded" xml:space="preserve">
+    <value>Currently uploaded</value>
+  </data>
 </root>

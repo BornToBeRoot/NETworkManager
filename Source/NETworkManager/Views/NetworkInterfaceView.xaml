@@ -25,8 +25,9 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
+        <converters:Bytes1000ToSizeConverter x:Key="Bytes1000ToSizeConverter" />
         <converters:BandwidthBytesToSpeedConverter x:Key="BandwidthBytesToSpeedConverter" />
-        <converters:BandwidthBytesToSizeConverter x:Key="BandwidthBytesToSizeConverter" />
+        <converters:BandwidthBytesWithSizeConverter x:Key="BandwidthBytesWithSizeConverter" />        
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
         <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
@@ -424,20 +425,19 @@
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.CurrentUploadSpeed}" />
                         <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding BandwidthBytesSentSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.TotalBytesReceived}" />
-                        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding BandwidthTotalBytesReceived}" />
+                        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding BandwidthTotalBytesReceived, Converter={StaticResource BandwidthBytesWithSizeConverter}}" />
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.TotalBytesSent}" />
-                        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding BandwidthTotalBytesSent}" />
+                        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding BandwidthTotalBytesSent, Converter={StaticResource BandwidthBytesWithSizeConverter}}" />
 
                         <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.StartTime}" />
                         <TextBox Grid.Column="6" Grid.Row="0" Text="{Binding BandwidthStartTime}" />
                         <TextBlock Grid.Column="4" Grid.Row="1" Text="{x:Static localization:Strings.MeasuredTime}" />
                         <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding BandwidthMeasuredTime, StringFormat={}{0:hh\\:mm\\:ss}}" />
 
-                        <TextBlock Grid.Column="4" Grid.Row="2" Text="{x:Static localization:Strings.TotalDownload}" />
-                        <TextBox Grid.Column="6" Grid.Row="2" Text="{Binding BandwidthDiffBytesReceived, Converter={StaticResource BandwidthBytesToSizeConverter}}" />
-                        <TextBlock Grid.Column="4" Grid.Row="3" Text="{x:Static localization:Strings.TotalUpload}" />
-                        <TextBox Grid.Column="6" Grid.Row="3" Text="{Binding BandwidthDiffBytesSent, Converter={StaticResource BandwidthBytesToSizeConverter}}" />
-
+                        <TextBlock Grid.Column="4" Grid.Row="2" Text="{x:Static localization:Strings.CurrentlyDownloaded}" />
+                        <TextBox Grid.Column="6" Grid.Row="2" Text="{Binding BandwidthDiffBytesReceived, Converter={StaticResource Bytes1000ToSizeConverter}}" />
+                        <TextBlock Grid.Column="4" Grid.Row="3" Text="{x:Static localization:Strings.CurrentlyUploaded}" />                         
+                        <TextBox Grid.Column="6" Grid.Row="3" Text="{Binding BandwidthDiffBytesSent, Converter={StaticResource Bytes1000ToSizeConverter}}" />
                     </Grid>
                 </Grid>
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">

@@ -1357,6 +1357,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Currently downloaded.
+        /// </summary>
+        public static string CurrentlyDownloaded {
+            get {
+                return ResourceManager.GetString("CurrentlyDownloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currently uploaded.
+        /// </summary>
+        public static string CurrentlyUploaded {
+            get {
+                return ResourceManager.GetString("CurrentlyUploaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current upload speed.
         /// </summary>
         public static string CurrentUploadSpeed {
