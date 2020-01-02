@@ -6,6 +6,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:settings="clr-namespace:NETworkManager.Models.Settings"     
@@ -134,7 +135,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.Protocol}" />
                             <ComboBox Grid.Column="2">
-                                <ComboBoxItem>LLDP/CDP</ComboBoxItem>
+                                <ComboBoxItem>LLDP / CDP</ComboBoxItem>
                                 <ComboBoxItem>LLDP</ComboBoxItem>
                                 <ComboBoxItem>CDP</ComboBoxItem>
                             </ComboBox>
@@ -179,7 +180,19 @@
                             </Button>
                         </Grid>
                         <TextBlock Grid.Row="4" Text="{x:Static localization:Strings.Details}" Style="{StaticResource HeaderTextBlock}" />
-                        <ScrollViewer Grid.Row="5" Style="{StaticResource DefaultScrollViewer}">
+                        <ScrollViewer Grid.Row="5">
+                            <ScrollViewer.Style>
+                                <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaultScrollViewer}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding DiscoveryInfo}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsCapturing}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ScrollViewer.Style>
                             <Grid>
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
@@ -222,6 +235,41 @@
                                 <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding DiscoveryInfo.Time}" />
                             </Grid>
                         </ScrollViewer>
+                        <TextBlock Grid.Row="5" Text="{x:Static localization:Strings.CaptureNetworkPacketsToViewLLDPorCDPInformation}" >
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding FirstRun}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>                                        
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Grid.Row="5" Text="{x:Static localization:Strings.NoLLDPorCDPPackagesReceived}" >
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding DiscoveryInfo}" Value="{x:Null}" />
+                                                <Condition Binding="{Binding FirstRun}" Value="False" />
+                                                <Condition Binding="{Binding IsCapturing}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            </MultiDataTrigger.Setters>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <StackPanel VerticalAlignment="Center" Grid.Row="5" Visibility="{Binding IsCapturing, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                            <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>
+                            <TextBlock Text="{x:Static localization:Strings.CapturingNetworkPackagesDots}" Style="{StaticResource MessageTextBlock}" />
+                        </StackPanel>
                     </Grid>
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
                         <StackPanel.Style>

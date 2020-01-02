@@ -2539,4 +2539,13 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="VLAN" xml:space="preserve">
     <value>VLAN</value>
   </data>
+  <data name="CaptureNetworkPacketsToViewLLDPorCDPInformation" xml:space="preserve">
+    <value>Capture network packets to view LLDP or CDP information!</value>
+  </data>
+  <data name="NoLLDPorCDPPackagesReceived" xml:space="preserve">
+    <value>No LLDP or CDP packages received!</value>
+  </data>
+  <data name="CapturingNetworkPackagesDots" xml:space="preserve">
+    <value>Capturing network packages...</value>
+  </data>
 </root>

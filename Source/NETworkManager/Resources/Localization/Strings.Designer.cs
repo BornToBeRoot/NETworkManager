@@ -763,6 +763,24 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Capture network packets to view LLDP or CDP information!.
+        /// </summary>
+        public static string CaptureNetworkPacketsToViewLLDPorCDPInformation {
+            get {
+                return ResourceManager.GetString("CaptureNetworkPacketsToViewLLDPorCDPInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Capturing network packages....
+        /// </summary>
+        public static string CapturingNetworkPackagesDots {
+            get {
+                return ResourceManager.GetString("CapturingNetworkPackagesDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change {
@@ -3727,6 +3745,15 @@ namespace NETworkManager.Resources.Localization {
         public static string NoEnabledNetworkAdaptersFound {
             get {
                 return ResourceManager.GetString("NoEnabledNetworkAdaptersFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No LLDP or CDP packages received!.
+        /// </summary>
+        public static string NoLLDPorCDPPackagesReceived {
+            get {
+                return ResourceManager.GetString("NoLLDPorCDPPackagesReceived", resourceCulture);
             }
         }
         

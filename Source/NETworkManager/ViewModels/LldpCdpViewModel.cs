@@ -12,6 +12,8 @@ using System.Diagnostics;
 using NETworkManager.Utilities;
 using System.Windows;
 using MahApps.Metro.Controls;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels
 {
@@ -22,6 +24,21 @@ namespace NETworkManager.ViewModels
 
         private DiscoveryProtocol _discoveryProtocol = new DiscoveryProtocol();
         private readonly bool _isLoading;
+
+        private bool _firstRun = true;
+        public bool FirstRun
+        {
+            get => _firstRun;
+            set
+            {
+                if (value == _firstRun)
+                    return;
+
+                _firstRun = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool _isNetworkInteraceLoading;
         public bool IsNetworkInterfaceLoading
@@ -100,7 +117,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
+      
         /*
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
@@ -245,6 +262,9 @@ namespace NETworkManager.ViewModels
 
         public async void CaptureAction()
         {
+            if (FirstRun)
+                FirstRun = false;
+
             IsCapturing = true;
 
             try
