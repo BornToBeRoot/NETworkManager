@@ -282,6 +282,7 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
+    <Compile Include="ViewModels\LldpCdpViewModel.cs" />
     <Compile Include="ViewModels\ProfileFileViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
@@ -355,6 +356,9 @@
     <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
     <Compile Include="Views\CustomCommandDialog.xaml.cs">
       <DependentUpon>CustomCommandDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LldpCdpView.xaml.cs">
+      <DependentUpon>LldpCdpView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProfileFileDialog.xaml.cs">
       <DependentUpon>ProfileFileDialog.xaml</DependentUpon>
@@ -717,6 +721,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CustomCommandDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LldpCdpView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1267,6 +1275,7 @@
     </Compile>
     <None Include="app.config" />
     <AppDesigner Include="Properties\" />
+    <EmbeddedResource Include="Scripts\DiscoveryProtocol.ps1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />

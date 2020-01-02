@@ -3263,6 +3263,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LLDP / CDP.
+        /// </summary>
+        public static string LldpCdp {
+            get {
+                return ResourceManager.GetString("LldpCdp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Local devices and resources.
         /// </summary>
         public static string LocalDevicesAndResources {
@@ -3583,6 +3592,15 @@ namespace NETworkManager.Resources.Localization {
         public static string NetworkLocationCannotBeReachedMessage {
             get {
                 return ResourceManager.GetString("NetworkLocationCannotBeReachedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To analyze network packets, the application must be started with elevated rights!.
+        /// </summary>
+        public static string NetworkPacketsCaptureAdminMessage {
+            get {
+                return ResourceManager.GetString("NetworkPacketsCaptureAdminMessage", resourceCulture);
             }
         }
         
@@ -5369,6 +5387,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Restart {
             get {
                 return ResourceManager.GetString("Restart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restart as Admininistrator.
+        /// </summary>
+        public static string RestartAsAdmin {
+            get {
+                return ResourceManager.GetString("RestartAsAdmin", resourceCulture);
             }
         }
         

@@ -2515,4 +2515,13 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="CurrentlyUploaded" xml:space="preserve">
     <value>Currently uploaded</value>
   </data>
+  <data name="LldpCdp" xml:space="preserve">
+    <value>LLDP / CDP</value>
+  </data>
+  <data name="RestartAsAdmin" xml:space="preserve">
+    <value>Restart as Admininistrator</value>
+  </data>
+  <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
+    <value>To analyze network packets, the application must be started with elevated rights!</value>
+  </data>
 </root>
