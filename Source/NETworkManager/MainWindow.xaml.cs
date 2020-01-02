@@ -304,10 +304,6 @@ namespace NETworkManager
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)
                 InitNotifyIcon();
 
-            // Set windows title if admin
-            if (ConfigurationManager.Current.IsAdmin)
-                Title = $"[{NETworkManager.Resources.Localization.Strings.Administrator}] {Title}";
-
             // Load settings
             ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
 

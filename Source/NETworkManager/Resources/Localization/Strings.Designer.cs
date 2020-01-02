@@ -1942,6 +1942,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duration (s).
+        /// </summary>
+        public static string DurationS {
+            get {
+                return ResourceManager.GetString("DurationS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dynamic IPv4 address.
         /// </summary>
         public static string DynamicIPv4Address {

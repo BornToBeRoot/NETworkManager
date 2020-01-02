@@ -2530,6 +2530,9 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="Device" xml:space="preserve">
     <value>Device</value>
   </data>
+  <data name="DurationS" xml:space="preserve">
+    <value>Duration (s)</value>
+  </data>
   <data name="Model" xml:space="preserve">
     <value>Model</value>
   </data>
