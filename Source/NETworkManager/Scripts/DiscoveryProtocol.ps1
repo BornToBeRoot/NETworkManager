@@ -137,20 +137,7 @@ function Invoke-DiscoveryProtocolCapture {
 
                 Start-NetEventSession -Name $SessionName
 
-                Start-Sleep -Seconds $Duration
-                <#
-                $Seconds = $Duration
-                $End = (Get-Date).AddSeconds($Seconds)
-
-                while ($End -gt (Get-Date)) {
-                    $SecondsLeft = $End.Subtract((Get-Date)).TotalSeconds                    
-                    $Percent = ($Seconds - $SecondsLeft) / $Seconds * 100
-                    
-                    Write-Progress -Activity "Discovery Protocol Packet Capture" -Status "Capturing on $Computer..." -SecondsRemaining $SecondsLeft -PercentComplete $Percent
-                    
-                    [System.Threading.Thread]::Sleep(500)
-                }
-                #>
+                Start-Sleep -Seconds $Duration               
 
                 Stop-NetEventSession -Name $SessionName
 

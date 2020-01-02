@@ -190,8 +190,10 @@
     <Compile Include="Models\Export\ExportManager.cs" />
     <Compile Include="Models\Network\BandwidthInfo.cs" />
     <Compile Include="Models\Network\BandwidthMeterSpeedArgs.cs" />
+    <Compile Include="Models\Network\DiscoveryProtocolInfo.cs" />
     <Compile Include="Models\Network\DNSServer.cs" />
     <Compile Include="Models\Network\DNSServerInfo.cs" />
+    <Compile Include="Models\Network\DiscoveryProtocol.cs" />
     <Compile Include="Models\Network\PingMonitorOptions.cs" />
     <Compile Include="Models\Network\WiFiAdapterInfo.cs" />
     <Compile Include="Models\Network\WiFiNetworkInfo.cs" />
@@ -1364,6 +1366,9 @@
     </PackageReference>
     <PackageReference Include="MahApps.Metro.IconPacks">
       <Version>3.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies">
+      <Version>1.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
       <Version>10.0.17763.1000</Version>

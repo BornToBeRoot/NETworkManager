@@ -20,6 +20,7 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
 
+        private DiscoveryProtocol _discoveryProtocol = new DiscoveryProtocol();
         private readonly bool _isLoading;
 
         private bool _isNetworkInteraceLoading;
@@ -36,63 +37,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _canConfigure;
-        public bool CanCapture
-        {
-            get => _canConfigure;
-            set
-            {
-                if (value == _canConfigure)
-                    return;
-
-                _canConfigure = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isCapturing;
-        public bool IsCapturing
-        {
-            get => _isCapturing;
-            set
-            {
-                if (value == _isCapturing)
-                    return;
-
-                _isCapturing = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
-        {
-            get => _displayStatusMessage;
-            set
-            {
-                if (value == _displayStatusMessage)
-                    return;
-
-                _displayStatusMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _statusMessage;
-        public string StatusMessage
-        {
-            get => _statusMessage;
-            set
-            {
-                if (value == _statusMessage)
-                    return;
-
-                _statusMessage = value;
-                OnPropertyChanged();
-            }
-        }
-
-        #region NetworkInterfaces, SelectedNetworkInterface
         private List<NetworkInterfaceInfo> _networkInterfaces;
         public List<NetworkInterfaceInfo> NetworkInterfaces
         {
@@ -120,7 +64,7 @@ namespace NETworkManager.ViewModels
                 {
                     if (!_isLoading)
                         SettingsManager.Current.NetworkInterface_SelectedInterfaceId = value.Id;
-                                        
+
                     CanCapture = value.IsOperational;
                 }
 
@@ -128,8 +72,78 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        #endregion
-                
+
+        private bool _canCapture;
+        public bool CanCapture
+        {
+            get => _canCapture;
+            set
+            {
+                if (value == _canCapture)
+                    return;
+
+                _canCapture = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isCapturing;
+        public bool IsCapturing
+        {
+            get => _isCapturing;
+            set
+            {
+                if (value == _isCapturing)
+                    return;
+
+                _isCapturing = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /*
+        private bool _displayStatusMessage;
+        public bool DisplayStatusMessage
+        {
+            get => _displayStatusMessage;
+            set
+            {
+                if (value == _displayStatusMessage)
+                    return;
+
+                _displayStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                if (value == _statusMessage)
+                    return;
+
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+        */
+
+        private DiscoveryProtocolInfo _discoveryInfo;
+        public DiscoveryProtocolInfo DiscoveryInfo
+        {
+            get => _discoveryInfo;
+            set
+            {
+                if (value == _discoveryInfo)
+                    return;
+
+                _discoveryInfo = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, LoadSettings, OnShutdown
@@ -225,6 +239,24 @@ namespace NETworkManager.ViewModels
             {
                 await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
+        }
+
+        public ICommand CaptureCommand => new RelayCommand(p => CaptureAction());
+
+        public async void CaptureAction()
+        {
+            IsCapturing = true;
+
+            try
+            {
+                DiscoveryProtocolInfo info = await _discoveryProtocol.GetDiscoveryProtocolAsync("Ethernet", 32, DiscoveryProtocol.Protocol.LLDP_CDP);
+            }
+            catch (Exception ex)
+            {
+                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            }
+
+            IsCapturing = false;
         }
         #endregion
 
