@@ -754,6 +754,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Capture.
+        /// </summary>
+        public static string Capture {
+            get {
+                return ResourceManager.GetString("Capture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change {
@@ -1713,6 +1722,15 @@ namespace NETworkManager.Resources.Localization {
         public static string DetectLocalIPAddressAndSubnetmask {
             get {
                 return ResourceManager.GetString("DetectLocalIPAddressAndSubnetmask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Device.
+        /// </summary>
+        public static string Device {
+            get {
+                return ResourceManager.GetString("Device", resourceCulture);
             }
         }
         
@@ -3484,6 +3502,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Mode {
             get {
                 return ResourceManager.GetString("Mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Model.
+        /// </summary>
+        public static string Model {
+            get {
+                return ResourceManager.GetString("Model", resourceCulture);
             }
         }
         
@@ -6991,6 +7018,15 @@ namespace NETworkManager.Resources.Localization {
         public static string VisualStyles {
             get {
                 return ResourceManager.GetString("VisualStyles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VLAN.
+        /// </summary>
+        public static string VLAN {
+            get {
+                return ResourceManager.GetString("VLAN", resourceCulture);
             }
         }
         

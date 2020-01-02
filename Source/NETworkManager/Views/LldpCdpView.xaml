@@ -33,10 +33,10 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Margin="0,0,0,20">
                             <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Interface}" />
-                            <Grid>
+                            <Grid Margin="0,0,0,10">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="Auto" />                                 
                                 </Grid.ColumnDefinitions>
                                 <ComboBox Grid.Column="0" x:Name="ComboBoxNetworkInterfaceProfiles" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
                                     <ComboBox.ItemTemplate>
@@ -117,6 +117,49 @@
                                     </Rectangle>
                                 </Button>
                             </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Style="{StaticResource CenterTextBlock}" Text="Protocol" />
+                                <ComboBox Grid.Column="2">
+                                    <ComboBoxItem>LLDP/CDP</ComboBoxItem>
+                                    <ComboBoxItem>LLDP</ComboBoxItem>
+                                    <ComboBoxItem>CDP</ComboBoxItem>
+                                </ComboBox>
+                                <TextBlock Grid.Column="4" Style="{StaticResource CenterTextBlock}" Text="Duration (s)" />
+                                <ComboBox Grid.Column="6">
+                                    <ComboBoxItem>15</ComboBoxItem>
+                                    <ComboBoxItem>30</ComboBoxItem>
+                                    <ComboBoxItem>60</ComboBoxItem>
+                                    <ComboBoxItem>90</ComboBoxItem>
+                                    <ComboBoxItem>120</ComboBoxItem>
+                                </ComboBox>
+                                <Button Grid.Column="8" Command="{Binding CaptureCommand}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
+                                    <Button.Content>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=TimerRecord}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Capture}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
                         </StackPanel>
                         <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Details}" Style="{StaticResource HeaderTextBlock}" />
                         <ScrollViewer Grid.Row="2" Style="{StaticResource DefaultScrollViewer}">
@@ -142,37 +185,25 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <GridSplitter Grid.Column="1" Grid.RowSpan="19" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
-                                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding SelectedNetworkInterface.Name}" />
-                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Description}" />
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SelectedNetworkInterface.Description}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Type}" />
-                                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding SelectedNetworkInterface.Type}" />
-                                <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.PhysicalAddress}" />
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Status}" />
-                                <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.Speed}" />
-                                <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.IPv4ProtocolAvailable}" />
-                                <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.DHCPEnabled}" />
-                                <TextBlock Grid.Column="0" Grid.Row="14" Text="{x:Static localization:Strings.IPv6ProtocolAvailable}" />
-                                <TextBlock Grid.Column="0" Grid.Row="18" Text="{x:Static localization:Strings.DNSAutoconfiguration}" />
-                                <TextBlock Grid.Column="0" Grid.Row="19" Text="{x:Static localization:Strings.DNSSuffix}" />
-                                <TextBox Grid.Column="2" Grid.Row="19" Text="{Binding SelectedNetworkInterface.DNSSuffix}" />
-                                <TextBlock Grid.Column="0" Grid.Row="20" Text="{x:Static localization:Strings.DNSServers}" />
+                                <GridSplitter Grid.Column="1" Grid.RowSpan="9" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Device}" />
+                                <TextBox Grid.Column="2" Grid.Row="0" Text="" />
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Port}" />
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Description}" />
+                                <TextBox Grid.Column="2" Grid.Row="2" Text="" />
+                                <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Model}" />
+                                <TextBox Grid.Column="2" Grid.Row="3" Text="" />
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.VLAN}" />
+                                <TextBox Grid.Column="2" Grid.Row="4" Text="" />
+                                <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.IPAddress}" />
+                                <TextBox Grid.Column="2" Grid.Row="5" Text="" />
+                                <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Protocol}" />
+                                <TextBox Grid.Column="2" Grid.Row="6" Text="" />
+                                <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Time}" />
+                                <TextBox Grid.Column="2" Grid.Row="7" Text="" />
+
                             </Grid>
                         </ScrollViewer>
                     </Grid>
@@ -207,16 +238,6 @@
                     </StackPanel>
                 </Grid>
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                    <StackPanel.Style>
-                        <Style TargetType="{x:Type StackPanel}">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </StackPanel.Style>
                     <TextBlock Text="{x:Static localization:Strings.NetworkPacketsCaptureAdminMessage}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
                     <Button Command="{Binding RestartAsAdminCommand}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
                         <Button.Content>
