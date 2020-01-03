@@ -126,7 +126,7 @@ namespace NETworkManager.ViewModels
                 if (value != null)
                 {
                     if (!_isLoading)
-                        SettingsManager.Current.NetworkInterface_SelectedInterfaceId = value.Id;
+                        SettingsManager.Current.NetworkInterface_InterfaceId = value.Id;
                                         
                     // Bandwidth
                     StopBandwidthMeter();
@@ -571,7 +571,7 @@ namespace NETworkManager.ViewModels
             // Get the last selected interface, if it is still available on this machine...
             if (NetworkInterfaces.Count > 0)
             {
-                var info = NetworkInterfaces.FirstOrDefault(s => s.Id == SettingsManager.Current.NetworkInterface_SelectedInterfaceId);
+                var info = NetworkInterfaces.FirstOrDefault(s => s.Id == SettingsManager.Current.NetworkInterface_InterfaceId);
 
                 SelectedNetworkInterface = info ?? NetworkInterfaces[0];
             }

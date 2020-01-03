@@ -10,6 +10,7 @@ using NETworkManager.Utilities;
 using NETworkManager.Enum;
 using NETworkManager.Models.RemoteDesktop;
 using DnsClient;
+using static NETworkManager.Models.Network.DiscoveryProtocol;
 
 // ReSharper disable InconsistentNaming
 
@@ -137,6 +138,10 @@ namespace NETworkManager
         public static SNMP.SNMPV3AuthenticationProvider SNMP_AuthenticationProvider => SNMP.SNMPV3AuthenticationProvider.SHA1;
         public static SNMP.SNMPV3PrivacyProvider SNMP_PrivacyProvider => SNMP.SNMPV3PrivacyProvider.AES;
         public static ExportManager.ExportFileType SNMP_ExportFileType => ExportManager.ExportFileType.CSV;
+
+        // Application: Discovery Protocol
+        public static Protocol DiscoveryProtocol_Protocol => Protocol.LLDP_CDP;
+        public static int DiscoveryProtocol_Duration => 60;
 
         // Application: Wake on LAN
         public static int WakeOnLAN_Port => 7;

@@ -534,7 +534,7 @@ namespace NETworkManager
         private PuTTYHostView _puttyHostView;
         private TigerVNCHostView _tigerVNCHostView;
         private SNMPHostView _snmpHostView;
-        private LldpCdpView _lldpCdpView;
+        private DiscoveryProtocolView _discoveryProtocolView;
         private WakeOnLANView _wakeOnLanView;
         private SubnetCalculatorHostView _subnetCalculatorHostView;
         private HTTPHeadersHostView _httpHeadersHostView;
@@ -686,13 +686,13 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _snmpHostView;
                     break;
-                case ApplicationViewManager.Name.LldpCdp:
-                    if (_lldpCdpView == null)
-                        _lldpCdpView = new LldpCdpView();
+                case ApplicationViewManager.Name.DiscoveryProtocol:
+                    if (_discoveryProtocolView == null)
+                        _discoveryProtocolView = new DiscoveryProtocolView();
                     else
-                        _lldpCdpView.OnViewVisible();
+                        _discoveryProtocolView.OnViewVisible();
 
-                    ContentControlApplication.Content = _lldpCdpView;
+                    ContentControlApplication.Content = _discoveryProtocolView;
                     break;
                 case ApplicationViewManager.Name.WakeOnLAN:
                     if (_wakeOnLanView == null)

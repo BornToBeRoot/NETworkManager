@@ -5,11 +5,11 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
 {
-    public partial class LldpCdpView
+    public partial class DiscoveryProtocolView
     {
-        private readonly LldpCdpViewModel _viewModel = new LldpCdpViewModel(DialogCoordinator.Instance);
+        private readonly DiscoveryProtocolViewModel _viewModel = new DiscoveryProtocolViewModel(DialogCoordinator.Instance);
 
-        public LldpCdpView()
+        public DiscoveryProtocolView()
         {
             InitializeComponent();
             DataContext = _viewModel;

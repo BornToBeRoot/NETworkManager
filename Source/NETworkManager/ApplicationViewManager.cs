@@ -52,8 +52,8 @@ namespace NETworkManager
                     return Resources.Localization.Strings.TigerVNC;                    
                 case Name.SNMP:
                     return Resources.Localization.Strings.SNMP;
-                case Name.LldpCdp:
-                    return Resources.Localization.Strings.LldpCdp;
+                case Name.DiscoveryProtocol:
+                    return Resources.Localization.Strings.DiscoveryProtocol;
                 case Name.WakeOnLAN:
                     return Resources.Localization.Strings.WakeOnLAN;
                 case Name.HTTPHeaders:
@@ -123,7 +123,7 @@ namespace NETworkManager
                 case Name.SNMP:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Switch });
                     break;
-                case Name.LldpCdp:
+                case Name.DiscoveryProtocol:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.SwapHorizontal });
                     break;
                 case Name.WakeOnLAN:
@@ -175,7 +175,7 @@ namespace NETworkManager
             PuTTY,
             TigerVNC,
             SNMP,
-            LldpCdp,
+            DiscoveryProtocol,
             WakeOnLAN,
             HTTPHeaders,
             Whois,

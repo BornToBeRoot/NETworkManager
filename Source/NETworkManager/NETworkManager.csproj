@@ -142,6 +142,7 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DiscoveryProtocolToStringConverter.cs" />
     <Compile Include="Converters\BandwidthBytesWithSizeConverter.cs" />
     <Compile Include="Converters\Bytes1000ToSizeConverter.cs" />
     <Compile Include="Converters\IntGreater1ToBooleanConverter.cs" />
@@ -284,7 +285,7 @@
     <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
-    <Compile Include="ViewModels\LldpCdpViewModel.cs" />
+    <Compile Include="ViewModels\DiscoveryProtocolViewModel.cs" />
     <Compile Include="ViewModels\ProfileFileViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
@@ -359,8 +360,8 @@
     <Compile Include="Views\CustomCommandDialog.xaml.cs">
       <DependentUpon>CustomCommandDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LldpCdpView.xaml.cs">
-      <DependentUpon>LldpCdpView.xaml</DependentUpon>
+    <Compile Include="Views\DiscoveryProtocolView.xaml.cs">
+      <DependentUpon>DiscoveryProtocolView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProfileFileDialog.xaml.cs">
       <DependentUpon>ProfileFileDialog.xaml</DependentUpon>
@@ -726,7 +727,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\LldpCdpView.xaml">
+    <Page Include="Views\DiscoveryProtocolView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

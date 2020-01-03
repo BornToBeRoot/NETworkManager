@@ -1816,6 +1816,42 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Discovery Protocol.
+        /// </summary>
+        public static string DiscoveryProtocol {
+            get {
+                return ResourceManager.GetString("DiscoveryProtocol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CDP.
+        /// </summary>
+        public static string DiscoveryProtocolIdentifier_CDP {
+            get {
+                return ResourceManager.GetString("DiscoveryProtocolIdentifier_CDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LLDP.
+        /// </summary>
+        public static string DiscoveryProtocolIdentifier_LLDP {
+            get {
+                return ResourceManager.GetString("DiscoveryProtocolIdentifier_LLDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LLDP / CDP.
+        /// </summary>
+        public static string DiscoveryProtocolIdentifier_LLDP_CDP {
+            get {
+                return ResourceManager.GetString("DiscoveryProtocolIdentifier_LLDP_CDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display.
         /// </summary>
         public static string Display {

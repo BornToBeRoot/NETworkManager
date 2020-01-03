@@ -12,12 +12,11 @@ using System.Diagnostics;
 using NETworkManager.Utilities;
 using System.Windows;
 using MahApps.Metro.Controls;
-using System.Threading;
-using System.Windows.Threading;
+using static NETworkManager.Models.Network.DiscoveryProtocol;
 
 namespace NETworkManager.ViewModels
 {
-    public class LldpCdpViewModel : ViewModelBase
+    public class DiscoveryProtocolViewModel : ViewModelBase
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
@@ -79,13 +78,75 @@ namespace NETworkManager.ViewModels
 
                 if (value != null)
                 {
-                    if (!_isLoading)
-                        SettingsManager.Current.NetworkInterface_SelectedInterfaceId = value.Id;
+                   if (!_isLoading)
+                        SettingsManager.Current.DiscoveryProtocol_InterfaceId = value.Id;
 
                     CanCapture = value.IsOperational;
                 }
 
                 _selectedNetworkInterface = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<Protocol> _protocols = new List<Protocol>();
+        public List<Protocol> Protocols
+        {
+            get => _protocols;
+            set
+            {
+                if (value == _protocols)
+                    return;
+
+                _protocols = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Protocol _selectedProtocol;
+        public Protocol SelectedProtocol
+        {
+            get => _selectedProtocol;
+            set
+            {
+                if (value == _selectedProtocol)
+                    return;
+
+                 if (!_isLoading)
+                     SettingsManager.Current.DiscoveryProtocol_Protocol = value;
+
+                _selectedProtocol = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<int> _durations;
+        public List<int> Durations
+        {
+            get => _durations;
+            set
+            {
+                if (value == _durations)
+                    return;
+
+                _durations = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int _selectedDuration;
+        public int SelectedDuration
+        {
+            get => _selectedDuration;
+            set
+            {
+                if (value == _selectedDuration)
+                    return;
+
+                if (!_isLoading)
+                   SettingsManager.Current.DiscoveryProtocol_Duration = value;
+
+                _selectedDuration = value;
                 OnPropertyChanged();
             }
         }
@@ -117,7 +178,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-      
+
         /*
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
@@ -164,7 +225,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, LoadSettings
-        public LldpCdpViewModel(IDialogCoordinator instance)
+        public DiscoveryProtocolViewModel(IDialogCoordinator instance)
         {
             _isLoading = true;
 
@@ -192,7 +253,7 @@ namespace NETworkManager.ViewModels
             // Get the last selected interface, if it is still available on this machine...
             if (NetworkInterfaces.Count > 0)
             {
-                var info = NetworkInterfaces.FirstOrDefault(s => s.Id == SettingsManager.Current.NetworkInterface_SelectedInterfaceId);
+                var info = NetworkInterfaces.FirstOrDefault(s => s.Id == SettingsManager.Current.DiscoveryProtocol_InterfaceId);
 
                 SelectedNetworkInterface = info ?? NetworkInterfaces[0];
             }
@@ -202,7 +263,10 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-
+            Protocols = System.Enum.GetValues(typeof(Protocol)).Cast<Protocol>().OrderBy(x => x.ToString()).ToList();
+            SelectedProtocol = Protocols.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Protocol);
+            Durations = new List<int>() { 15, 30, 60, 120 };
+            SelectedDuration = Durations.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Duration);
         }
         #endregion
 
@@ -269,7 +333,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                DiscoveryInfo = await _discoveryProtocol.GetDiscoveryProtocolAsync("Ethernet", 32, DiscoveryProtocol.Protocol.LLDP_CDP);
+                DiscoveryInfo = await _discoveryProtocol.GetDiscoveryProtocolAsync(SelectedNetworkInterface.Name, SelectedDuration + 2, SelectedProtocol);
             }
             catch (Exception ex)
             {
@@ -289,16 +353,6 @@ namespace NETworkManager.ViewModels
         }
 
         public void OnViewHide()
-        {
-
-        }
-
-        public void OnProfileDialogOpen()
-        {
-
-        }
-
-        public void OnProfileDialogClose()
         {
 
         }

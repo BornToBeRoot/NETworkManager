@@ -11,6 +11,7 @@ using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
+using static NETworkManager.Models.Network.DiscoveryProtocol;
 using static NETworkManager.Models.Network.SNMP;
 
 namespace NETworkManager.Models.Settings
@@ -482,16 +483,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region Network Interface       
-        private string _networkInterface_SelectedInterfaceId;
-        public string NetworkInterface_SelectedInterfaceId
+        private string _networkInterface_InterfaceId;
+        public string NetworkInterface_InterfaceId
         {
-            get => _networkInterface_SelectedInterfaceId;
+            get => _networkInterface_InterfaceId;
             set
             {
-                if (value == _networkInterface_SelectedInterfaceId)
+                if (value == _networkInterface_InterfaceId)
                     return;
 
-                _networkInterface_SelectedInterfaceId = value;
+                _networkInterface_InterfaceId = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -529,16 +530,16 @@ namespace NETworkManager.Models.Settings
         #endregion
 
         #region WiFi
-        private string _wiFi_SelectedInterfaceId;
-        public string WiFi_SelectedInterfaceId
+        private string _wiFi_InterfaceId;
+        public string WiFi_InterfaceId
         {
-            get => _wiFi_SelectedInterfaceId;
+            get => _wiFi_InterfaceId;
             set
             {
-                if (value == _wiFi_SelectedInterfaceId)
+                if (value == _wiFi_InterfaceId)
                     return;
 
-                _wiFi_SelectedInterfaceId = value;
+                _wiFi_InterfaceId = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -1937,7 +1938,7 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
-        #region RemoteDesktop 
+        #region Remote Desktop 
         private ObservableCollection<string> _remoteDesktop_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> RemoteDesktop_HostHistory
         {
@@ -3126,6 +3127,53 @@ namespace NETworkManager.Models.Settings
                     return;
 
                 _snmp_ExportFileType = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region Discovery Protocol
+        private string _discoveryProtocol_SelectedInterfaceId;
+        public string DiscoveryProtocol_InterfaceId
+        {
+            get => _discoveryProtocol_SelectedInterfaceId;
+            set
+            {
+                if (value == _discoveryProtocol_SelectedInterfaceId)
+                    return;
+
+                _discoveryProtocol_SelectedInterfaceId = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private Protocol _discoveryProtocol_Protocol = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
+        public Protocol DiscoveryProtocol_Protocol
+        {
+            get => _discoveryProtocol_Protocol;
+            set
+            {
+                if (value == _discoveryProtocol_Protocol)
+                    return;
+
+                _discoveryProtocol_Protocol = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _discoveryProtocol_Duration = GlobalStaticConfiguration.DiscoveryProtocol_Duration;
+        public int DiscoveryProtocol_Duration
+        {
+            get => _discoveryProtocol_Duration;
+            set
+            {
+                if (value == _discoveryProtocol_Duration)
+                    return;
+
+                _discoveryProtocol_Duration = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

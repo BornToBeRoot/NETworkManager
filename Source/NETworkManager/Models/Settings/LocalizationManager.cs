@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using NETworkManager.Models.Network;
 using NETworkManager.Enum;
 using static NETworkManager.Models.RemoteDesktop.RemoteDesktop;
+using static NETworkManager.Models.Network.DiscoveryProtocol;
 
 namespace NETworkManager.Models.Settings
 {
@@ -19,6 +20,7 @@ namespace NETworkManager.Models.Settings
         public const string RemoteDesktopKeyboardHookModeIdentifier = "RemoteDesktopKeyboardHookMode_";
         public const string RemoteDesktopAudioRedirectionModeIdentifier = "RemoteDesktopAudioRedirectionMode_";
         public const string RemoteDesktopAudioCaptureRedirectionModeIdentifier = "RemoteDesktopAudioCaptureRedirectionMode_";
+        public const string DiscoveryProtocolIdentifier = "DiscoveryProtocolIdentifier_";
 
         public static List<LocalizationInfo> List => new List<LocalizationInfo>
         {
@@ -153,5 +155,16 @@ namespace NETworkManager.Models.Settings
 
             return string.IsNullOrEmpty(status) ? audioCaptureRedirectionMode.ToString() : status;
         }
+
+        public static string TranslateDiscoveryProtocol(object value)
+        {
+            if (!(value is Protocol protocol))
+                return "-/-";
+
+            var status = Resources.Localization.Strings.ResourceManager.GetString(DiscoveryProtocolIdentifier + protocol, Culture);
+
+            return string.IsNullOrEmpty(status) ? protocol.ToString() : status;
+        }
+
     }
 }
