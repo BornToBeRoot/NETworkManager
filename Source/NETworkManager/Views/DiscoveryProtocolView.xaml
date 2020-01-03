@@ -245,7 +245,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock Grid.Row="5" Text="{x:Static localization:Strings.NoLLDPorCDPPackagesReceived}" >
+                        <TextBlock Grid.Row="5" Text="{x:Static localization:Strings.NoDiscoveryProtocolPackagesReceived}" >
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -266,7 +266,8 @@
                         </TextBlock>
                         <StackPanel VerticalAlignment="Center" Grid.Row="5" Visibility="{Binding IsCapturing, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>
-                            <TextBlock Text="{x:Static localization:Strings.CapturingNetworkPackagesDots}" Style="{StaticResource MessageTextBlock}" />
+                            <TextBlock Text="{x:Static localization:Strings.CapturingNetworkPackagesDots}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+                            <TextBlock Text="{Binding TimeRemainingMessage}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" HorizontalAlignment="Center" />                            
                         </StackPanel>
                     </Grid>
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">

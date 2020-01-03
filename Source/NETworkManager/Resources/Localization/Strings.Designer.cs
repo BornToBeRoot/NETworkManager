@@ -3767,6 +3767,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No discovery protocol packages received!.
+        /// </summary>
+        public static string NoDiscoveryProtocolPackagesReceived {
+            get {
+                return ResourceManager.GetString("NoDiscoveryProtocolPackagesReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No DNS record found for &quot;{0}&quot;! Check your input and the settings..
         /// </summary>
         public static string NoDNSRecordFoundCheckYourInputAndSettings {
@@ -3781,15 +3790,6 @@ namespace NETworkManager.Resources.Localization {
         public static string NoEnabledNetworkAdaptersFound {
             get {
                 return ResourceManager.GetString("NoEnabledNetworkAdaptersFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No LLDP or CDP packages received!.
-        /// </summary>
-        public static string NoLLDPorCDPPackagesReceived {
-            get {
-                return ResourceManager.GetString("NoLLDPorCDPPackagesReceived", resourceCulture);
             }
         }
         
@@ -7261,6 +7261,15 @@ namespace NETworkManager.Resources.Localization {
         public static string XADNSRecordsResolvedForXXXMessage {
             get {
                 return ResourceManager.GetString("XADNSRecordsResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} seconds remaining....
+        /// </summary>
+        public static string XXSecondsRemainingDots {
+            get {
+                return ResourceManager.GetString("XXSecondsRemainingDots", resourceCulture);
             }
         }
         

@@ -3,6 +3,7 @@ using System.Management.Automation;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.IO;
+using System.Diagnostics;
 
 namespace NETworkManager.Models.Network
 {
@@ -32,24 +33,26 @@ namespace NETworkManager.Models.Network
             using (System.Management.Automation.PowerShell powerShell = System.Management.Automation.PowerShell.Create())
             {
                 powerShell.AddScript(DiscoveryScript);
-                powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -NetAdapter {netAdapter} -Duration {duration}" + (protocol != Protocol.LLDP_CDP ? $" -Type {protocol.ToString()}" : "") + "| Get-DiscoveryProtocolData");
+                powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -NetAdapter \"{netAdapter}\" -Duration {duration}" + (protocol != Protocol.LLDP_CDP ? $" -Type {protocol.ToString()}" : "") + "| Get-DiscoveryProtocolData");
 
                 Collection<PSObject> PSOutput = powerShell.Invoke();
 
                 if (powerShell.Streams.Error.Count > 0)
                 {
-                    // ToDo: Error
+                    foreach (var error in powerShell.Streams.Error)
+                        Debug.WriteLine("Error: " + error.Exception.Message);
                 }
                 if (powerShell.Streams.Warning.Count > 0)
                 {
-                    // ToDo: Warning
+                    foreach (var warning in powerShell.Streams.Warning)
+                        Debug.WriteLine("Warning: " + warning.Message);
                 }
 
                 foreach (PSObject outputItem in PSOutput)
                 {
                     if (outputItem != null)
                     {
-                       return new DiscoveryProtocolInfo()
+                        return new DiscoveryProtocolInfo()
                         {
                             Device = outputItem.Properties["Device"]?.Value.ToString(),
                             Port = outputItem.Properties["Port"]?.Value.ToString(),

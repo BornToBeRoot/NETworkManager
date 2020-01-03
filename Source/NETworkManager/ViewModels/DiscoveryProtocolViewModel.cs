@@ -13,6 +13,7 @@ using NETworkManager.Utilities;
 using System.Windows;
 using MahApps.Metro.Controls;
 using static NETworkManager.Models.Network.DiscoveryProtocol;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels
 {
@@ -23,6 +24,8 @@ namespace NETworkManager.ViewModels
 
         private DiscoveryProtocol _discoveryProtocol = new DiscoveryProtocol();
         private readonly bool _isLoading;
+        System.Timers.Timer _remainingTimer;
+        private int _secondsRemaining;
 
         private bool _firstRun = true;
         public bool FirstRun
@@ -78,7 +81,7 @@ namespace NETworkManager.ViewModels
 
                 if (value != null)
                 {
-                   if (!_isLoading)
+                    if (!_isLoading)
                         SettingsManager.Current.DiscoveryProtocol_InterfaceId = value.Id;
 
                     CanCapture = value.IsOperational;
@@ -112,8 +115,8 @@ namespace NETworkManager.ViewModels
                 if (value == _selectedProtocol)
                     return;
 
-                 if (!_isLoading)
-                     SettingsManager.Current.DiscoveryProtocol_Protocol = value;
+                if (!_isLoading)
+                    SettingsManager.Current.DiscoveryProtocol_Protocol = value;
 
                 _selectedProtocol = value;
                 OnPropertyChanged();
@@ -144,7 +147,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                   SettingsManager.Current.DiscoveryProtocol_Duration = value;
+                    SettingsManager.Current.DiscoveryProtocol_Duration = value;
 
                 _selectedDuration = value;
                 OnPropertyChanged();
@@ -175,6 +178,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _isCapturing = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _timeRemainingMessage;
+        public string TimeRemainingMessage
+        {
+            get => _timeRemainingMessage;
+            set
+            {
+                if (value == _timeRemainingMessage)
+                    return;
+
+                _timeRemainingMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -237,6 +254,13 @@ namespace NETworkManager.ViewModels
             NetworkChange.NetworkAvailabilityChanged += (sender, args) => ReloadNetworkInterfacesAction();
             NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfacesAction();
 
+            _remainingTimer = new System.Timers.Timer
+            {
+                Interval = 1000
+            };
+
+            _remainingTimer.Elapsed += Timer_Elapsed;
+
             LoadSettings();
 
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
@@ -265,7 +289,7 @@ namespace NETworkManager.ViewModels
         {
             Protocols = System.Enum.GetValues(typeof(Protocol)).Cast<Protocol>().OrderBy(x => x.ToString()).ToList();
             SelectedProtocol = Protocols.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Protocol);
-            Durations = new List<int>() { 15, 30, 60, 120 };
+            Durations = new List<int>() { 15, 30, 60, 90, 120 };
             SelectedDuration = Durations.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Duration);
         }
         #endregion
@@ -331,22 +355,41 @@ namespace NETworkManager.ViewModels
 
             IsCapturing = true;
 
+            int duration = SelectedDuration + 2; // Capture 2 seconds more than the user chose
+
+            _secondsRemaining = duration + 1; // Init powershell etc. takes some time... 
+
+            TimeRemainingMessage = string.Format(Resources.Localization.Strings.XXSecondsRemainingDots, _secondsRemaining);
+
+            _remainingTimer.Start();
+
             try
             {
-                DiscoveryInfo = await _discoveryProtocol.GetDiscoveryProtocolAsync(SelectedNetworkInterface.Name, SelectedDuration + 2, SelectedProtocol);
+                DiscoveryInfo = await _discoveryProtocol.GetDiscoveryProtocolAsync(SelectedNetworkInterface.Name, duration, SelectedProtocol);
             }
             catch (Exception ex)
             {
                 await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
+            _remainingTimer.Stop();
+
             IsCapturing = false;
+        }
+
+        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                TimeRemainingMessage = string.Format(Resources.Localization.Strings.XXSecondsRemainingDots, _secondsRemaining);
+
+                if (_secondsRemaining > 0)
+                    _secondsRemaining--;
+            }));
         }
         #endregion
 
         #region Methods
-
-
         public void OnViewVisible()
         {
 
