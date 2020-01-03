@@ -49,7 +49,7 @@ namespace NETworkManager.Models.Network
                 {
                     if (outputItem != null)
                     {
-                        return new DiscoveryProtocolInfo()
+                       return new DiscoveryProtocolInfo()
                         {
                             Device = outputItem.Properties["Device"]?.Value.ToString(),
                             Port = outputItem.Properties["Port"]?.Value.ToString(),

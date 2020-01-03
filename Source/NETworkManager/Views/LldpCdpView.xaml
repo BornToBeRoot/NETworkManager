@@ -21,6 +21,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
+        <converters:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.LldpCdp}">
@@ -218,21 +219,21 @@
                                 </Grid.RowDefinitions>
                                 <GridSplitter Grid.Column="1" Grid.RowSpan="9" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Device}" />
-                                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding DiscoveryInfo.Device}" />
+                                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding DiscoveryInfo.Device, Converter={StaticResource NullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Port}" />
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding DiscoveryInfo.Port}" />
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding DiscoveryInfo.Port, Converter={StaticResource NullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Description}" />
-                                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding DiscoveryInfo.Description}" />
+                                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding DiscoveryInfo.Description, Converter={StaticResource NullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Model}" />
-                                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding DiscoveryInfo.Model}" />
+                                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding DiscoveryInfo.Model, Converter={StaticResource NullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.VLAN}" />
-                                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DiscoveryInfo.VLAN}" />
+                                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DiscoveryInfo.VLAN, Converter={StaticResource NullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.IPAddress}" />
-                                <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DiscoveryInfo.IPAddress}" />
+                                <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DiscoveryInfo.IPAddress, Converter={StaticResource NullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Protocol}" />
-                                <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DiscoveryInfo.Protocol}" />
+                                <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DiscoveryInfo.Protocol, Converter={StaticResource NullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Time}" />
-                                <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding DiscoveryInfo.Time}" />
+                                <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding DiscoveryInfo.Time, Converter={StaticResource NullOrEmptyToStringConverter}}" />
                             </Grid>
                         </ScrollViewer>
                         <TextBlock Grid.Row="5" Text="{x:Static localization:Strings.CaptureNetworkPacketsToViewLLDPorCDPInformation}" >

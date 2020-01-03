@@ -163,7 +163,7 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        #region Constructor, LoadSettings, OnShutdown
+        #region Constructor, LoadSettings
         public LldpCdpViewModel(IDialogCoordinator instance)
         {
             _isLoading = true;
@@ -269,7 +269,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                DiscoveryProtocolInfo info = await _discoveryProtocol.GetDiscoveryProtocolAsync("Ethernet", 32, DiscoveryProtocol.Protocol.LLDP_CDP);
+                DiscoveryInfo = await _discoveryProtocol.GetDiscoveryProtocolAsync("Ethernet", 32, DiscoveryProtocol.Protocol.LLDP_CDP);
             }
             catch (Exception ex)
             {
