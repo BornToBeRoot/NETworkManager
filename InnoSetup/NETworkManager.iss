@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "NETworkManager"
-#define MyAppVersion "2019.12.0"
+#define MyAppVersion "2020.1.0"
 #define MyAppPublisher "BornToBeRoot"
 #define MyAppURL "https://github.com/BornToBeRoot/NETworkManager/"
 #define MyAppExeName "NETworkManager.exe"
@@ -22,7 +22,7 @@ UninstallDisplayName={#MyAppName}
 UninstallDisplayIcon={app}\{#MyAppExeName}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=X:\NETworkManager\Builds\2019.12.0\Licenses\NETworkManager.txt
+LicenseFile=X:\NETworkManager\Builds\2020.1.0\Licenses\NETworkManager.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 OutputDir=X:\NETworkManager\Builds
@@ -40,8 +40,8 @@ Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "X:\NETworkManager\Builds\2019.12.0\NETworkManager.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "X:\NETworkManager\Builds\2019.12.0\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "X:\NETworkManager\Builds\2020.1.0\NETworkManager.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "X:\NETworkManager\Builds\2020.1.0\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
