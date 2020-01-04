@@ -25,7 +25,7 @@
         <converters:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />        
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
-        <TabItem Header="{x:Static localization:Strings.LldpCdp}">
+        <TabItem Header="{x:Static localization:Strings.DiscoveryProtocol}">
             <Grid Margin="10" >
                 <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
