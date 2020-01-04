@@ -22,7 +22,7 @@ namespace NETworkManager.Views
             var window = Window.GetWindow(this);
 
             if (window != null)
-                _viewModel.CloseAction = window.Close;                
+                _viewModel.CloseAction = window.Close;      
         }
 
         private void TextBoxLocation_Drop(object sender, DragEventArgs e)

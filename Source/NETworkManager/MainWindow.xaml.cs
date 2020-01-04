@@ -277,7 +277,7 @@ namespace NETworkManager
                     return;
 
                 _selectedProfileFile = value;
-                
+
                 if (value != null && !value.Equals(ProfileManager.LoadedProfileFile))
                     ProfileManager.SwitchProfile(value);
 
@@ -303,10 +303,6 @@ namespace NETworkManager
             // NotifyIcon for autostart
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)
                 InitNotifyIcon();
-
-            // Set windows title if admin
-            if (ConfigurationManager.Current.IsAdmin)
-                Title = $"[{NETworkManager.Resources.Localization.Strings.Administrator}] {Title}";
 
             // Load settings
             ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
@@ -538,6 +534,7 @@ namespace NETworkManager
         private PuTTYHostView _puttyHostView;
         private TigerVNCHostView _tigerVNCHostView;
         private SNMPHostView _snmpHostView;
+        private DiscoveryProtocolView _discoveryProtocolView;
         private WakeOnLANView _wakeOnLanView;
         private SubnetCalculatorHostView _subnetCalculatorHostView;
         private HTTPHeadersHostView _httpHeadersHostView;
@@ -688,6 +685,14 @@ namespace NETworkManager
                         _snmpHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _snmpHostView;
+                    break;
+                case ApplicationViewManager.Name.DiscoveryProtocol:
+                    if (_discoveryProtocolView == null)
+                        _discoveryProtocolView = new DiscoveryProtocolView();
+                    else
+                        _discoveryProtocolView.OnViewVisible();
+
+                    ContentControlApplication.Content = _discoveryProtocolView;
                     break;
                 case ApplicationViewManager.Name.WakeOnLAN:
                     if (_wakeOnLanView == null)
@@ -1249,16 +1254,18 @@ namespace NETworkManager
             Close();
         }
 
-        private void RestartApplication(bool closeApplication = true)
+        public void RestartApplication(bool closeApplication = true, bool asAdmin = false)
         {
-            new Process
+            ProcessStartInfo info = new ProcessStartInfo
             {
-                StartInfo =
-                {
-                    FileName = ConfigurationManager.Current.ApplicationFullName,
-                    Arguments = $"--restart-pid:{Process.GetCurrentProcess().Id}"
-                }
-            }.Start();
+                FileName = ConfigurationManager.Current.ApplicationFullName,
+                Arguments = $"--restart-pid:{Process.GetCurrentProcess().Id}"
+            };
+
+            if (asAdmin)
+                info.Verb = "runas";
+
+            Process.Start(info);
 
             if (!closeApplication)
                 return;

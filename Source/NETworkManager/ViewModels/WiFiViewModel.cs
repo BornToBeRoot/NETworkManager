@@ -63,7 +63,7 @@ namespace NETworkManager.ViewModels
                 if (value != null)
                 {
                     if (!_isLoading)
-                        SettingsManager.Current.WiFi_SelectedInterfaceId = value.NetworkInterfaceInfo.Id;
+                        SettingsManager.Current.WiFi_InterfaceId = value.NetworkInterfaceInfo.Id;
 
                     ScanNetworks(value.WiFiAdapter);
                 }
@@ -311,7 +311,7 @@ namespace NETworkManager.ViewModels
             // Get the last selected interface, if it is still available on this machine...
             if (Adapters.Count > 0)
             {
-                var info = Adapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == SettingsManager.Current.WiFi_SelectedInterfaceId);
+                var info = Adapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == SettingsManager.Current.WiFi_InterfaceId);
 
                 SelectedAdapter = info ?? Adapters[0];
             }

@@ -49,9 +49,11 @@ namespace NETworkManager
                 case Name.PuTTY:
                     return Resources.Localization.Strings.PuTTY;
                 case Name.TigerVNC:
-                    return Resources.Localization.Strings.TigerVNC;
+                    return Resources.Localization.Strings.TigerVNC;                    
                 case Name.SNMP:
                     return Resources.Localization.Strings.SNMP;
+                case Name.DiscoveryProtocol:
+                    return Resources.Localization.Strings.DiscoveryProtocol;
                 case Name.WakeOnLAN:
                     return Resources.Localization.Strings.WakeOnLAN;
                 case Name.HTTPHeaders:
@@ -121,6 +123,9 @@ namespace NETworkManager
                 case Name.SNMP:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Switch });
                     break;
+                case Name.DiscoveryProtocol:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.SwapHorizontal });
+                    break;
                 case Name.WakeOnLAN:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Power });
                     break;
@@ -170,7 +175,7 @@ namespace NETworkManager
             PuTTY,
             TigerVNC,
             SNMP,
-            //LinkLayer,
+            DiscoveryProtocol,
             WakeOnLAN,
             HTTPHeaders,
             Whois,

@@ -10,6 +10,7 @@
         xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:settings="clr-namespace:NETworkManager.Models.Settings"     
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         mc:Ignorable="d"
         Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" MinWidth="1050" MinHeight="700" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
@@ -62,6 +63,15 @@
     <mahAppsControls:MetroWindow.WindowButtonCommands>
         <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </mahAppsControls:MetroWindow.WindowButtonCommands>
+    <mahAppsControls:MetroWindow.LeftWindowCommands>
+        <mahAppsControls:WindowCommands>
+            <StackPanel Orientation="Horizontal">
+                <Grid Background="{DynamicResource GrayBrush8}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <TextBlock Text="Administrator" Foreground="{DynamicResource GrayBrush3}" Style="{StaticResource CenterTextBlock}" Margin="10,0"/>
+                </Grid>
+            </StackPanel>
+        </mahAppsControls:WindowCommands>
+    </mahAppsControls:MetroWindow.LeftWindowCommands>
     <mahAppsControls:MetroWindow.RightWindowCommands>
         <mahAppsControls:WindowCommands>
             <StackPanel Orientation="Horizontal">
@@ -75,7 +85,7 @@
                         <TextBlock Text="{Binding UpdateText}" VerticalAlignment="Center" Margin="5,0,0,0" />
                     </StackPanel>
                 </Button>
-                <ComboBox ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile}" DisplayMemberPath="Name" Foreground="{DynamicResource AccentColorBrush}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0" />
+                <ComboBox ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile}" DisplayMemberPath="Name" Foreground="{DynamicResource GrayBrush5}" Background="{DynamicResource GrayBrush8}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0" />
                 <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
@@ -102,7 +112,7 @@
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </StackPanel>
-                </Button>
+                </Button>              
             </StackPanel>
         </mahAppsControls:WindowCommands>
     </mahAppsControls:MetroWindow.RightWindowCommands>

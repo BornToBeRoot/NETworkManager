@@ -754,6 +754,33 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Capture.
+        /// </summary>
+        public static string Capture {
+            get {
+                return ResourceManager.GetString("Capture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Capture network packets to view LLDP or CDP information!.
+        /// </summary>
+        public static string CaptureNetworkPacketsToViewLLDPorCDPInformation {
+            get {
+                return ResourceManager.GetString("CaptureNetworkPacketsToViewLLDPorCDPInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Capturing network packages....
+        /// </summary>
+        public static string CapturingNetworkPackagesDots {
+            get {
+                return ResourceManager.GetString("CapturingNetworkPackagesDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change {
@@ -1717,6 +1744,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Device.
+        /// </summary>
+        public static string Device {
+            get {
+                return ResourceManager.GetString("Device", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DHCP enabled.
         /// </summary>
         public static string DHCPEnabled {
@@ -1776,6 +1812,42 @@ namespace NETworkManager.Resources.Localization {
         public static string Disconnected {
             get {
                 return ResourceManager.GetString("Disconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discovery Protocol.
+        /// </summary>
+        public static string DiscoveryProtocol {
+            get {
+                return ResourceManager.GetString("DiscoveryProtocol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CDP.
+        /// </summary>
+        public static string DiscoveryProtocolIdentifier_CDP {
+            get {
+                return ResourceManager.GetString("DiscoveryProtocolIdentifier_CDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LLDP.
+        /// </summary>
+        public static string DiscoveryProtocolIdentifier_LLDP {
+            get {
+                return ResourceManager.GetString("DiscoveryProtocolIdentifier_LLDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LLDP / CDP.
+        /// </summary>
+        public static string DiscoveryProtocolIdentifier_LLDP_CDP {
+            get {
+                return ResourceManager.GetString("DiscoveryProtocolIdentifier_LLDP_CDP", resourceCulture);
             }
         }
         
@@ -1920,6 +1992,15 @@ namespace NETworkManager.Resources.Localization {
         public static string Duration {
             get {
                 return ResourceManager.GetString("Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration (s).
+        /// </summary>
+        public static string DurationS {
+            get {
+                return ResourceManager.GetString("DurationS", resourceCulture);
             }
         }
         
@@ -3263,6 +3344,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to LLDP / CDP.
+        /// </summary>
+        public static string LldpCdp {
+            get {
+                return ResourceManager.GetString("LldpCdp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Local devices and resources.
         /// </summary>
         public static string LocalDevicesAndResources {
@@ -3479,6 +3569,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Model.
+        /// </summary>
+        public static string Model {
+            get {
+                return ResourceManager.GetString("Model", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move &amp; Restart.
         /// </summary>
         public static string MoveAndRestart {
@@ -3587,6 +3686,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To analyze network packets, the application must be started with elevated rights!.
+        /// </summary>
+        public static string NetworkPacketsCaptureAdminMessage {
+            get {
+                return ResourceManager.GetString("NetworkPacketsCaptureAdminMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Networks.
         /// </summary>
         public static string Networks {
@@ -3655,6 +3763,15 @@ namespace NETworkManager.Resources.Localization {
         public static string NoADNSRecordsResolvedForXXXMessage {
             get {
                 return ResourceManager.GetString("NoADNSRecordsResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No discovery protocol packages received!.
+        /// </summary>
+        public static string NoDiscoveryProtocolPackagesReceived {
+            get {
+                return ResourceManager.GetString("NoDiscoveryProtocolPackagesReceived", resourceCulture);
             }
         }
         
@@ -5373,6 +5490,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restart as Admininistrator.
+        /// </summary>
+        public static string RestartAsAdmin {
+            get {
+                return ResourceManager.GetString("RestartAsAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restart now.
         /// </summary>
         public static string RestartNow {
@@ -6968,6 +7094,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VLAN.
+        /// </summary>
+        public static string VLAN {
+            get {
+                return ResourceManager.GetString("VLAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wake on LAN.
         /// </summary>
         public static string WakeOnLAN {
@@ -7126,6 +7261,15 @@ namespace NETworkManager.Resources.Localization {
         public static string XADNSRecordsResolvedForXXXMessage {
             get {
                 return ResourceManager.GetString("XADNSRecordsResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} seconds remaining....
+        /// </summary>
+        public static string XXSecondsRemainingDots {
+            get {
+                return ResourceManager.GetString("XXSecondsRemainingDots", resourceCulture);
             }
         }
         
