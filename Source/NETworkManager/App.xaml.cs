@@ -41,7 +41,7 @@ namespace NETworkManager
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             // If we have restart our application... wait until it has finished
-            if (CommandLineManager.Current.RestartPid != 0)
+            if (CommandLineManager.Current.RestartPid != -1)
             {
                 var processList = Process.GetProcesses();
 

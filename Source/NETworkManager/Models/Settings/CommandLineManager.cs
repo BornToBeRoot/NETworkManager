@@ -1,22 +1,24 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace NETworkManager.Models.Settings
 {
     public static class CommandLineManager
     {
         public const string ParameterIdentifier = "--";
-        public const char ParameterSplit = ':';
+        public const char ValueSplitIdentifier = ':';
 
-        // Public + Help
-        public const string ParameterHelp = ParameterIdentifier + "help";
-        public const string ParameterResetSettings = ParameterIdentifier + "reset-settings";
+        // Public 
+        public static string ParameterHelp => $"{ParameterIdentifier}help";
+        public static string ParameterResetSettings => $"{ParameterIdentifier}reset-settings";
+        public static string ParameterApplication => $"{ParameterIdentifier}application";
 
         // Internal use only
-        public const string ParameterAutostart = ParameterIdentifier + "autostart";
-        public const string ParameterRestartPid = ParameterIdentifier + "restart-pid";
+        public static string ParameterAutostart => $"{ParameterIdentifier}autostart";
+        public static string ParameterRestartPid => $"{ParameterIdentifier}restart-pid";
 
         public static CommandLineInfo Current { get; set; }
-
+                
         static CommandLineManager()
         {
             Current = new CommandLineInfo();
@@ -24,9 +26,9 @@ namespace NETworkManager.Models.Settings
             // Detect start parameters
             var parameters = Environment.GetCommandLineArgs();
 
-            for (var i = 0; i < parameters.Length; i++)
+            for (var i = 1; i < parameters.Length; i++)
             {
-                var param = parameters[i].Split(ParameterSplit);
+                var param = parameters[i].Split(ValueSplitIdentifier);
 
                 if (param[0].StartsWith(ParameterIdentifier))
                 {
@@ -44,9 +46,27 @@ namespace NETworkManager.Models.Settings
                     } // Restart
                     else if (param[0].Equals(ParameterRestartPid, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        int.TryParse(param[1], out int restartPid);
-
-                        Current.RestartPid = restartPid;
+                        if (int.TryParse(param[1], out int restartPid))
+                        {
+                            Current.RestartPid = restartPid;
+                        }
+                        else
+                        {
+                            WrongParameterDetected(parameters);
+                            return;
+                        }
+                    } // Application
+                    else if (param[0].Equals(ParameterApplication, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        if (System.Enum.TryParse(param[1], out ApplicationViewManager.Name application))
+                        {
+                            Current.Application = application;
+                        }
+                        else
+                        {
+                            WrongParameterDetected(parameters);
+                            return;
+                        }
                     }
                     else
                     {
@@ -64,6 +84,11 @@ namespace NETworkManager.Models.Settings
                     return;
                 }
             }
+        }
+
+        public static string GetParameterWithSplitIdentifier(string parameter)
+        {
+            return $"{parameter}{ValueSplitIdentifier}";
         }
 
         private static void WrongParameterDetected(string[] parameters)

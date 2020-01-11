@@ -1,5 +1,7 @@
 ﻿using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
+using System;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -62,6 +64,34 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private string _parameterApplication;
+        public string ParameterApplication
+        {
+            get => _parameterApplication;
+            set
+            {
+                if (value == _parameterApplication)
+                    return;
+
+                _parameterApplication = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _parameterApplicationValues;
+        public string ParameterApplicationValues
+        {
+            get => _parameterApplicationValues;
+            set
+            {
+                if (value == _parameterApplicationValues)
+                    return;
+
+                _parameterApplicationValues = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Constructor, load settings
@@ -75,7 +105,9 @@ namespace NETworkManager.ViewModels
 
             ParameterHelp = CommandLineManager.ParameterHelp;
             ParameterResetSettings = CommandLineManager.ParameterResetSettings;
-        }       
+            ParameterApplication = CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication);
+            ParameterApplicationValues = string.Join(" ,", System.Enum.GetValues(typeof(ApplicationViewManager.Name)).Cast<ApplicationViewManager.Name>().ToList());
+        }
         #endregion
     }
 }

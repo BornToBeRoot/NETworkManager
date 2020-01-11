@@ -437,7 +437,7 @@ namespace NETworkManager
             isApplicationListLoading = false;
 
             // Select the application
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != ApplicationViewManager.Name.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
 
             // Scroll into view
             if (SelectedApplication != null)
@@ -544,7 +544,7 @@ namespace NETworkManager
         private ListenersView _listenersView;
         private ARPTableView _arpTableView;
 
-        private ApplicationViewManager.Name? _currentApplicationViewName;
+        private ApplicationViewManager.Name _currentApplicationViewName = ApplicationViewManager.Name.None;
 
         private void ChangeApplicationView(ApplicationViewManager.Name name, bool refresh = false)
         {
@@ -1259,7 +1259,7 @@ namespace NETworkManager
             ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = ConfigurationManager.Current.ApplicationFullName,
-                Arguments = $"--restart-pid:{Process.GetCurrentProcess().Id}"
+                Arguments = $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Process.GetCurrentProcess().Id} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{_currentApplicationViewName}"
             };
 
             if (asAdmin)

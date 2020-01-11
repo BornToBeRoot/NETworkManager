@@ -2718,6 +2718,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        public static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The background job will save settings, profiles and credentials every x-minutes.
         ///
         ///Value 0 will disable this feature.
@@ -2779,6 +2788,15 @@ namespace NETworkManager.Resources.Localization {
         public static string HelpMessage_CustomPublicIPAddressAPI {
             get {
                 return ResourceManager.GetString("HelpMessage_CustomPublicIPAddressAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application to display..
+        /// </summary>
+        public static string HelpMessage_ParameterApplication {
+            get {
+                return ResourceManager.GetString("HelpMessage_ParameterApplication", resourceCulture);
             }
         }
         
@@ -4153,6 +4171,15 @@ namespace NETworkManager.Resources.Localization {
         public static string PacketsTransmitted {
             get {
                 return ResourceManager.GetString("PacketsTransmitted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter.
+        /// </summary>
+        public static string Parameter {
+            get {
+                return ResourceManager.GetString("Parameter", resourceCulture);
             }
         }
         
@@ -7027,6 +7054,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ValidationFailed {
             get {
                 return ResourceManager.GetString("ValidationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string Value {
+            get {
+                return ResourceManager.GetString("Value", resourceCulture);
             }
         }
         
