@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Data;
+﻿using System.Collections.ObjectModel;
 using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
+using System.Linq;
 using NETworkManager.Views;
+using System.ComponentModel;
+using System.Windows.Data;
+using System;
 using NETworkManager.Utilities;
+using System.Windows;
+using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Profile;
+using NETworkManager.Models.WebConsole;
 
 namespace NETworkManager.ViewModels
 {
@@ -19,13 +21,11 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
-        
+
         public IInterTabClient InterTabClient { get; }
         public ObservableCollection<DragablzTabItem> TabItems { get; }
-        
+
         private readonly bool _isLoading;
-        
-        private int _tabId;
 
         private int _selectedTabIndex;
         public int SelectedTabIndex
@@ -42,6 +42,7 @@ namespace NETworkManager.ViewModels
         }
 
         #region Profiles
+
         public ICollectionView Profiles { get; }
 
         private ProfileInfo _selectedProfile = new ProfileInfo();
@@ -88,7 +89,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.HTTPHeaders_ExpandProfileView = value;
+                    SettingsManager.Current.WebConsole_ExpandProfileView = value;
 
                 _expandProfileView = value;
 
@@ -109,7 +110,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
-                    SettingsManager.Current.HTTPHeaders_ProfileWidth = value.Value;
+                    SettingsManager.Current.WebConsole_ProfileWidth = value.Value;
 
                 _profileWidth = value;
 
@@ -129,12 +130,9 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.HTTPHeaders);
+            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.WebConsole);
 
-            TabItems = new ObservableCollection<DragablzTabItem>
-            {
-                new DragablzTabItem(Resources.Localization.Strings.NewTab, new HTTPHeadersView (_tabId), _tabId)
-            };
+            TabItems = new ObservableCollection<DragablzTabItem>();
 
             Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
@@ -146,56 +144,88 @@ namespace NETworkManager.ViewModels
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
-                    return info.HTTPHeaders_Enabled;
+                    return info.WebConsole_Enabled;
 
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                    return !string.IsNullOrEmpty(info.Tags) && info.HTTPHeaders_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                    return !string.IsNullOrEmpty(info.Tags) && info.WebConsole_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
 
-                // Search by: Name, HTTPHeaders_Website
-                return info.HTTPHeaders_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.HTTPHeaders_Website.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                // Search by: Name, WebConsole_Url
+                return info.WebConsole_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.WebConsole_Url.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             // This will select the first entry as selected item...
-            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.HTTPHeaders_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.WebConsole_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
             LoadSettings();
+
+            SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
 
             _isLoading = false;
         }
 
+        private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+        }
+
         private void LoadSettings()
         {
-            ExpandProfileView = SettingsManager.Current.HTTPHeaders_ExpandProfileView;
+            ExpandProfileView = SettingsManager.Current.WebConsole_ExpandProfileView;
 
-            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.HTTPHeaders_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WebConsole_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
-            _tempProfileWidth = SettingsManager.Current.HTTPHeaders_ProfileWidth;
+            _tempProfileWidth = SettingsManager.Current.WebConsole_ProfileWidth;
         }
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddTabCommand => new RelayCommand(p => AddTabAction());
+        public ItemActionCallback CloseItemCommand => CloseItemAction;
 
-        private void AddTabAction()
+        private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            AddTab();
+            ((args.DragablzItem.Content as DragablzTabItem)?.View as WebConsoleControl)?.CloseTab();
         }
 
-        public ICommand CheckProfileCommand => new RelayCommand(p => CheckProfileAction(), CheckProfile_CanExecute);
+        
+        public ICommand WebConsole_ReloadCommand => new RelayCommand(WebConsole_ReloadAction);
 
-        private bool CheckProfile_CanExecute(object obj)
+        private void WebConsole_ReloadAction(object view)
+        {
+            if (view is WebConsoleControl control)
+            {
+                if (control.ReloadCommand.CanExecute(null))
+                    control.ReloadCommand.Execute(null);
+            }
+        }
+        
+        public ICommand ConnectCommand => new RelayCommand(p => ConnectAction());
+        
+        private void ConnectAction()
+        {
+            Connect();
+        }
+        
+
+        public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
+
+        private bool ConnectProfile_CanExecute(object obj)
         {
             return SelectedProfile != null;
         }
 
-        private void CheckProfileAction()
+        private void ConnectProfileAction()
         {
-            AddTab(SelectedProfile.HTTPHeaders_Website);
+            ConnectProfile();
         }
 
+        public ICommand ConnectProfileExternalCommand => new RelayCommand(p => ConnectProfileExternalAction());
+
+        private void ConnectProfileExternalAction()
+        {
+            //ConnectProfileExternal();
+        }
 
         public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
@@ -231,7 +261,7 @@ namespace NETworkManager.ViewModels
         {
             ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
-            
+
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
@@ -239,12 +269,101 @@ namespace NETworkManager.ViewModels
             Search = string.Empty;
         }
 
-        public ItemActionCallback CloseItemCommand => CloseItemAction;
+        public ICommand OpenSettingsCommand => new RelayCommand(p => OpenSettingsAction());
 
-        private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args) => ((args.DragablzItem.Content as DragablzTabItem)?.View as HTTPHeadersView)?.CloseTab();
+        private static void OpenSettingsAction()
+        {
+            EventSystem.RedirectToSettings();
+        }
         #endregion
 
         #region Methods
+        private async void Connect(string host = null)
+        {
+            /*
+            var customDialog = new CustomDialog
+            {
+                Title = Resources.Localization.Strings.Connect
+            };
+            
+            var connectViewModel = new TigerVNCConnectViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                ConfigurationManager.Current.FixAirspace = false;
+
+                // Add host to history
+                AddHostToHistory(instance.Host);
+
+                // Create Profile info
+                var info = new WebConsoleSessionInfo
+                {
+                    //Url = instance.Url,
+                    
+                };
+
+                // Connect
+                Connect(info);
+            }, async instance =>
+             {
+                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                 ConfigurationManager.Current.FixAirspace = false;
+             }, host);
+
+            customDialog.Content = new TigerVNCConnectDialog
+            {
+                DataContext = connectViewModel
+            };
+
+            ConfigurationManager.Current.FixAirspace = true;
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            */
+
+            Connect(new WebConsoleSessionInfo() { Url = "https://fritz.box/" });
+        }
+
+        private void ConnectProfile()
+        {
+            Connect(WebConsole.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+        }
+
+        /*
+        private void ConnectProfileExternal()
+        {
+            var info = new ProcessStartInfo
+            {
+                FileName = SettingsManager.Current.TigerVNC_ApplicationFilePath,
+                Arguments = TigerVNC.BuildCommandLine(TigerVNC.CreateSessionInfo(SelectedProfile))
+            };
+
+            Process.Start(info);
+        }
+        */
+
+        private void Connect(WebConsoleSessionInfo sessionInfo, string header = null)
+        {
+            TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Url, new WebConsoleControl(sessionInfo)));
+
+            SelectedTabIndex = TabItems.Count - 1;
+        }
+
+        public void AddTab(string host)
+        {
+            Connect(host);
+        }
+
+        // Modify history list
+        private static void AddHostToHistory(string host)
+        {
+            // Create the new list
+            var list = ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.WebConsole_UrlHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.WebConsole_UrlHistory.Add(x));
+        }
+
         private void ResizeProfile(bool dueToChangedSize)
         {
             _canProfileWidthChange = false;
@@ -269,18 +388,8 @@ namespace NETworkManager.ViewModels
             _canProfileWidthChange = true;
         }
 
-        public void AddTab(string website = null)
-        {
-            _tabId++;
-
-            TabItems.Add(new DragablzTabItem(website ?? Resources.Localization.Strings.NewTab, new HTTPHeadersView(_tabId, website), _tabId));
-
-            SelectedTabIndex = TabItems.Count - 1;
-        }
-
         public void OnViewVisible()
         {
-            // Refresh profiles
             RefreshProfiles();
         }
 
@@ -293,15 +402,14 @@ namespace NETworkManager.ViewModels
         {
             Profiles.Refresh();
         }
-
         public void OnProfileDialogOpen()
         {
-
+            ConfigurationManager.Current.FixAirspace = true;
         }
 
         public void OnProfileDialogClose()
         {
-
+            ConfigurationManager.Current.FixAirspace = false;
         }
         #endregion
     }

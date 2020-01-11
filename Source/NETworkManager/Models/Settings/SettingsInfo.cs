@@ -2906,6 +2906,53 @@ namespace NETworkManager.Models.Settings
         }
         #endregion
 
+        #region WebConsole
+        private ObservableCollection<string> _webConsole_UrlHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> WebConsole_UrlHistory
+        {
+            get => _webConsole_UrlHistory;
+            set
+            {
+                if (value == _webConsole_UrlHistory)
+                    return;
+
+                _webConsole_UrlHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _webConsole_ExpandProfileView = true;
+        public bool WebConsole_ExpandProfileView
+        {
+            get => _webConsole_ExpandProfileView;
+            set
+            {
+                if (value == _webConsole_ExpandProfileView)
+                    return;
+
+                _webConsole_ExpandProfileView = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private double _webConsole_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+        public double WebConsole_ProfileWidth
+        {
+            get => _webConsole_ProfileWidth;
+            set
+            {
+                if (Math.Abs(value - _webConsole_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+                    return;
+
+                _webConsole_ProfileWidth = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region SNMP
         private WalkMode _snmp_WalkMode = GlobalStaticConfiguration.SNMP_WalkMode;
         public WalkMode SNMP_WalkMode

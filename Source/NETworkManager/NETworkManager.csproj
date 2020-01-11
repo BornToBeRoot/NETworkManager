@@ -136,6 +136,9 @@
     <Compile Include="Controls\PowerShellControl.xaml.cs">
       <DependentUpon>PowerShellControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WebConsoleControl.xaml.cs">
+      <DependentUpon>WebConsoleControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TightVNCControl.xaml.cs">
       <DependentUpon>TightVNCControl.xaml</DependentUpon>
     </Compile>
@@ -221,6 +224,8 @@
     <Compile Include="Models\Profile\ProfileManager.cs" />
     <Compile Include="Models\PowerShell\PowerShell.cs" />
     <Compile Include="Models\PowerShell\PowerShellSessionInfo.cs" />
+    <Compile Include="Models\WebConsole\WebConsole.cs" />
+    <Compile Include="Models\WebConsole\WebConsoleSessionInfo.cs" />
     <Compile Include="Models\TigerVNC\TigerVNC.cs" />
     <Compile Include="Models\TigerVNC\TigerVNCSessionInfo.cs" />
     <Compile Include="Resources\Localization\StaticStrings.Designer.cs">
@@ -289,13 +294,11 @@
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
     <Compile Include="ViewModels\DiscoveryProtocolViewModel.cs" />
-    <Compile Include="ViewModels\WebConsoleSettingsViewModel.cs" />
-    <Compile Include="ViewModels\WebConsoleViewModel.cs" />
-    <Compile Include="ViewModels\WebConsoleHostViewModel.cs" />
     <Compile Include="ViewModels\ProfileFileViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
     <Compile Include="ViewModels\SettingsProfilesViewModel.cs" />
+    <Compile Include="ViewModels\WebConsoleHostViewModel.cs" />
     <Compile Include="ViewModels\WiFiViewModel.cs" />
     <Compile Include="ViewModels\FirstRunViewModel.cs" />
     <Compile Include="Models\Profile\IProfileManager.cs" />
@@ -369,15 +372,6 @@
     <Compile Include="Views\DiscoveryProtocolView.xaml.cs">
       <DependentUpon>DiscoveryProtocolView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\WebConsoleSettingsView.xaml.cs">
-      <DependentUpon>WebConsoleSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WebConsoleView.xaml.cs">
-      <DependentUpon>WebConsoleView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WebConsoleHostView.xaml.cs">
-      <DependentUpon>WebConsoleHostView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ProfileFileDialog.xaml.cs">
       <DependentUpon>ProfileFileDialog.xaml</DependentUpon>
     </Compile>
@@ -389,6 +383,9 @@
     </Compile>
     <Compile Include="Views\SettingsProfilesView.xaml.cs">
       <DependentUpon>SettingsProfilesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WebConsoleHostView.xaml.cs">
+      <DependentUpon>WebConsoleHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WiFiView.xaml.cs">
       <DependentUpon>WiFiView.xaml</DependentUpon>
@@ -570,6 +567,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\WebConsoleControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\TightVNCControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -746,18 +747,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\WebConsoleSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\WebConsoleView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\WebConsoleHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\ProfileFileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -771,6 +760,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SettingsProfilesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WebConsoleHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

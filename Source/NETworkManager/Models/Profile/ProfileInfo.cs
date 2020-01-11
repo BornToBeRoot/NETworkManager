@@ -130,6 +130,9 @@ namespace NETworkManager.Models.Profile
         public bool TigerVNC_OverridePort { get; set; }
         public int TigerVNC_Port { get; set; }
 
+        public bool WebConsole_Enabled { get; set; }
+        public string WebConsole_Url { get; set; }
+
         public bool WakeOnLAN_Enabled { get; set; }
         public string WakeOnLAN_MACAddress { get; set; }
         public string WakeOnLAN_Broadcast { get; set; }
