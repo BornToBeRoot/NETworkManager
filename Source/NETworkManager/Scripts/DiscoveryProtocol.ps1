@@ -182,12 +182,9 @@ function Invoke-DiscoveryProtocolCapture {
 
                 if ($FoundPacket) {
                     $FoundPacket
-                } else {
-                    Write-Warning "No discovery protocol packets captured!"
-                    return
                 }
             } else {
-                Write-Warning "Unable to find network adapter!"
+                Write-Error "Unable to find network adapter!"
                 return
             }
         }

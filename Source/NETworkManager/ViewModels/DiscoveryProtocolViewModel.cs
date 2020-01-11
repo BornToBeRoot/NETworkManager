@@ -41,7 +41,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-
         private bool _isNetworkInteraceLoading;
         public bool IsNetworkInterfaceLoading
         {
@@ -195,8 +194,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        /*
+                
         private bool _displayStatusMessage;
         public bool DisplayStatusMessage
         {
@@ -224,18 +222,31 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        */
 
-        private DiscoveryProtocolInfo _discoveryInfo;
-        public DiscoveryProtocolInfo DiscoveryInfo
+        private bool _discoveryPackageReceived;
+        public bool DiscoveryPackageReceived
         {
-            get => _discoveryInfo;
+            get => _discoveryPackageReceived;
             set
             {
-                if (value == _discoveryInfo)
+                if (value == _discoveryPackageReceived)
                     return;
 
-                _discoveryInfo = value;
+                _discoveryPackageReceived = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DiscoveryProtocolPackageInfo _discoveryPackage;
+        public DiscoveryProtocolPackageInfo DiscoveryPackage
+        {
+            get => _discoveryPackage;
+            set
+            {
+                if (value == _discoveryPackage)
+                    return;
+
+                _discoveryPackage = value;
                 OnPropertyChanged();
             }
         }
@@ -253,6 +264,11 @@ namespace NETworkManager.ViewModels
             // Detect if network address or status changed...
             NetworkChange.NetworkAvailabilityChanged += (sender, args) => ReloadNetworkInterfacesAction();
             NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfacesAction();
+            
+            _discoveryProtocol.PackageReceived += _discoveryProtocol_PackageReceived;
+            _discoveryProtocol.ErrorReceived += _discoveryProtocol_ErrorReceived;
+            _discoveryProtocol.WarningReceived += _discoveryProtocol_WarningReceived;
+            _discoveryProtocol.Complete += _discoveryProtocol_Complete;
 
             _remainingTimer = new System.Timers.Timer
             {
@@ -353,6 +369,11 @@ namespace NETworkManager.ViewModels
             if (FirstRun)
                 FirstRun = false;
 
+            DisplayStatusMessage = false;
+            StatusMessage = string.Empty;
+
+            DiscoveryPackageReceived = false;
+
             IsCapturing = true;
 
             int duration = SelectedDuration + 2; // Capture 2 seconds more than the user chose
@@ -365,16 +386,12 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                DiscoveryInfo = await _discoveryProtocol.GetDiscoveryProtocolAsync(SelectedNetworkInterface.Name, duration, SelectedProtocol);
+                _discoveryProtocol.CaptureDiscoveryProtocolAsync(SelectedNetworkInterface.Name, duration, SelectedProtocol);
             }
             catch (Exception ex)
             {
                 await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-            }
-
-            _remainingTimer.Stop();
-
-            IsCapturing = false;
+            }            
         }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -389,7 +406,7 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        #region Methods
+        #region Methods   
         public void OnViewVisible()
         {
 
@@ -402,6 +419,39 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Events
+        private void _discoveryProtocol_PackageReceived(object sender, DiscoveryProtocolPackageArgs e)
+        {
+            DiscoveryPackage = DiscoveryProtocolPackageInfo.Parse(e);
+
+            DiscoveryPackageReceived = true;
+        }
+
+        private void _discoveryProtocol_WarningReceived(object sender, DiscoveryProtocolWarningArgs e)
+        {
+            if (!string.IsNullOrEmpty(StatusMessage))
+                StatusMessage += Environment.NewLine;
+
+            StatusMessage += e.Message;
+
+            DisplayStatusMessage = true;
+        }
+
+        private void _discoveryProtocol_ErrorReceived(object sender, DiscoveryProtocolErrorArgs e)
+        {            
+            if (!string.IsNullOrEmpty(StatusMessage))
+                StatusMessage += Environment.NewLine;
+
+            StatusMessage += e.Message;
+
+            DisplayStatusMessage = true;
+        }
+
+        private void _discoveryProtocol_Complete(object sender, EventArgs e)
+        {
+            _remainingTimer.Stop();
+            IsCapturing = false;
+        }
+
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
         }
