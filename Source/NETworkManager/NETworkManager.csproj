@@ -289,6 +289,9 @@
     <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
     <Compile Include="ViewModels\DiscoveryProtocolViewModel.cs" />
+    <Compile Include="ViewModels\WebConsoleSettingsViewModel.cs" />
+    <Compile Include="ViewModels\WebConsoleViewModel.cs" />
+    <Compile Include="ViewModels\WebConsoleHostViewModel.cs" />
     <Compile Include="ViewModels\ProfileFileViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
@@ -365,6 +368,15 @@
     </Compile>
     <Compile Include="Views\DiscoveryProtocolView.xaml.cs">
       <DependentUpon>DiscoveryProtocolView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WebConsoleSettingsView.xaml.cs">
+      <DependentUpon>WebConsoleSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WebConsoleView.xaml.cs">
+      <DependentUpon>WebConsoleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WebConsoleHostView.xaml.cs">
+      <DependentUpon>WebConsoleHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProfileFileDialog.xaml.cs">
       <DependentUpon>ProfileFileDialog.xaml</DependentUpon>
@@ -731,6 +743,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DiscoveryProtocolView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WebConsoleSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WebConsoleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WebConsoleHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -7175,6 +7175,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Web Console.
+        /// </summary>
+        public static string WebConsole {
+            get {
+                return ResourceManager.GetString("WebConsole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Website.
         /// </summary>
         public static string Website {
