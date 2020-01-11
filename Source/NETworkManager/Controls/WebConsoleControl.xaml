@@ -5,10 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:edgeBrowser="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
+        xmlns:converters="clr-namespace:NETworkManager.Converters"        
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:chromium="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         mah:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:WebConsoleControl}">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+    </UserControl.Resources>
     <Grid>
-        <edgeBrowser:WebView x:Name="Browser" />            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Command="{Binding WebBrowser.BackCommand, ElementName=Browser}" Grid.Column="0" Style="{StaticResource CleanButton}">
+                <Rectangle Width="24" Height="24" >
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowLeftCircleOutline}" />
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+            </Button>
+            <Button Command="{Binding WebBrowser.ForwardCommand, ElementName=Browser}" Grid.Column="2"  Style="{StaticResource CleanButton}">
+                <Rectangle Width="24" Height="24" >
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowRightCircleOutline}" />
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+            </Button>
+            <TextBox x:Name="txtBoxAddress" Text="{Binding Address, ElementName=Browser}" IsEnabled="False" Grid.Column="4" Style="{StaticResource DefaultTextBox}" />
+        </Grid>
+        <mah:MetroProgressBar Grid.Row="1" IsIndeterminate="True" Visibility="{Binding Path=IsLoading, ElementName=Browser, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10"/>
+        <chromium:ChromiumWebBrowser Grid.Row="2" x:Name="Browser" />
     </Grid>
 </UserControl>

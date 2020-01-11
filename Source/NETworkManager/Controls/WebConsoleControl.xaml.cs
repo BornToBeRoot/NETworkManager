@@ -4,10 +4,15 @@ using System.Windows;
 using System;
 using System.Windows.Threading;
 using NETworkManager.Utilities;
-using NETworkManager.Models.TigerVNC;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.WebConsole;
+using System.Net;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using CefSharp.Wpf;
+using CefSharp.Handler;
+using CefSharp;
 
 namespace NETworkManager.Controls
 {
@@ -40,6 +45,8 @@ namespace NETworkManager.Controls
             _dialogCoordinator = DialogCoordinator.Instance;
 
             _sessionInfo = info;
+
+            Browser.RequestHandler = new SslRequestHandler();
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
@@ -74,14 +81,17 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Methods       
-        private void Connect()
+        private async void Connect()
         {
-            Browser.Navigate(_sessionInfo.Url);
+            while (!Browser.IsBrowserInitialized)
+                await Task.Delay(50);
+
+            Browser.Address = _sessionInfo.Url;
         }
 
         private void Reload()
         {
-            
+
         }
 
         public void CloseTab()
@@ -92,7 +102,39 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Events
-        
+
         #endregion
+    }
+}
+
+public class SslRequestHandler : RequestHandler
+{
+    protected override bool OnCertificateError(IWebBrowser chromiumWebBrowser, IBrowser browser, CefErrorCode errorCode, string requestUrl, ISslInfo sslInfo, IRequestCallback callback)
+    {        
+        Task.Run(() =>
+        {
+            //NOTE: When executing the callback in an async fashion need to check to see if it's disposed
+            if (!callback.IsDisposed)
+            {
+                using (callback)
+                {
+                    callback.Continue(true);
+                    
+                    /*
+                    //We'll allow the expired certificate from badssl.com
+                    if (requestUrl.ToLower().Contains("https://expired.badssl.com/"))
+                    {
+                        callback.Continue(true);
+                    }
+                    else
+                    {
+                        callback.Continue(false);
+                    }
+                    */
+                }
+            }
+        });        
+
+        return true;
     }
 }

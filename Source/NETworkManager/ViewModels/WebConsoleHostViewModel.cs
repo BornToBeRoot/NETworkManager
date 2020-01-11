@@ -158,7 +158,7 @@ namespace NETworkManager.ViewModels
 
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.WebConsole_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
-
+                       
             LoadSettings();
 
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
@@ -318,7 +318,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
             */
 
-            Connect(new WebConsoleSessionInfo() { Url = "http://fritz.box/" });
+            Connect(new WebConsoleSessionInfo() { Url = "https://fritz.box/" });
         }
 
         private void ConnectProfile()
