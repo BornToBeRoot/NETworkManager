@@ -318,7 +318,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
             */
 
-            Connect(new WebConsoleSessionInfo() { Url = "https://fritz.box/" });
+            Connect(new WebConsoleSessionInfo() { Url = "http://fritz.box/" });
         }
 
         private void ConnectProfile()

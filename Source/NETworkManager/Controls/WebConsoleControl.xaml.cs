@@ -76,7 +76,7 @@ namespace NETworkManager.Controls
         #region Methods       
         private void Connect()
         {
-            
+            Browser.Navigate(_sessionInfo.Url);
         }
 
         private void Reload()
