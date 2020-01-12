@@ -7,6 +7,7 @@ using NETworkManager.Utilities;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.WebConsole;
+using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
 
 namespace NETworkManager.Controls
 {
@@ -43,6 +44,20 @@ namespace NETworkManager.Controls
             }
         }
 
+        private bool _firstLoad = true;
+        public bool FirstLoad
+        {
+            get => _firstLoad;
+            set
+            {
+                if (value == _firstLoad)
+                    return;
+
+                _firstLoad = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _url;
         public string Url
         {
@@ -53,6 +68,20 @@ namespace NETworkManager.Controls
                     return;
 
                 _url = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isCertificateInvalid;
+        public bool IsCertificateInvalid
+        {
+            get => _isCertificateInvalid;
+            set
+            {
+                if (value == _isCertificateInvalid)
+                    return;
+
+                _isCertificateInvalid = value;
                 OnPropertyChanged();
             }
         }
@@ -73,7 +102,7 @@ namespace NETworkManager.Controls
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
-              
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             // Connect after the control is drawn and only on the first init
@@ -139,13 +168,8 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Methods       
-        private async void Connect()
+        private void Connect()
         {
-            //  while (!Browser.IsBrowserInitialized)
-            //      await Task.Delay(250);
-
-            //  Browser.Address = _sessionInfo.Url;
-
             Browser2.Navigate(_sessionInfo.Url);
         }
 
@@ -156,18 +180,34 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Events
-        private void Browser2_NavigationCompleted(object sender, Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlNavigationCompletedEventArgs e)
+        private void Browser2_NavigationCompleted(object sender, WebViewControlNavigationCompletedEventArgs e)
         {
             Url = e.Uri.ToString();
+
+            switch (e.WebErrorStatus)
+            {
+                case WebErrorStatus.CertificateCommonNameIsIncorrect:
+                case WebErrorStatus.CertificateContainsErrors:
+                case WebErrorStatus.CertificateExpired:
+                case WebErrorStatus.CertificateIsInvalid:
+                case WebErrorStatus.CertificateRevoked:
+                    IsCertificateInvalid = true;
+                    break;
+            }
+
+            if (FirstLoad)
+                FirstLoad = false;
 
             IsLoading = false;
         }
 
-        private void Browser2_NavigationStarting(object sender, Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlNavigationStartingEventArgs e)
-        {            
+        private void Browser2_NavigationStarting(object sender, WebViewControlNavigationStartingEventArgs e)
+        {
             IsLoading = true;
 
             Url = e.Uri.ToString();
+
+            IsCertificateInvalid = false;
         }
         #endregion
     }

@@ -7220,6 +7220,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The WebView control (Microsoft Edge) cannot connect to websites with an invalid certificate!.
+        /// </summary>
+        public static string WebViewControlCertificateIsInvalidMessage {
+            get {
+                return ResourceManager.GetString("WebViewControlCertificateIsInvalidMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome.
         /// </summary>
         public static string Welcome {

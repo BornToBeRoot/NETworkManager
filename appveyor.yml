@@ -4,6 +4,6 @@ branches:
   only:
    - master
 configuration: Release
-platform: x64
+platform: Any CPU
 before_build:
    - MSBuild -t:restore .\Source\NETworkManager\NETworkManager.csproj

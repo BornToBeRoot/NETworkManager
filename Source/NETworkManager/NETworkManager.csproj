@@ -136,7 +136,6 @@
     <Compile Include="Controls\PowerShellControl.xaml.cs">
       <DependentUpon>PowerShellControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\SslRequestHandler.cs" />
     <Compile Include="Controls\WebConsoleControl.xaml.cs">
       <DependentUpon>WebConsoleControl.xaml</DependentUpon>
     </Compile>

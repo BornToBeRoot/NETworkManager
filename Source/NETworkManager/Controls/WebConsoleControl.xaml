@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:localization ="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:converters="clr-namespace:NETworkManager.Converters"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:edge="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
         mah:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:WebConsoleControl}">
     <UserControl.Resources>
-        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />        
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -83,6 +85,20 @@
             <TextBox x:Name="txtBoxAddress" Text="{Binding Url}" IsEnabled="False" Grid.Column="6" Style="{StaticResource DefaultTextBox}" />
         </Grid>
         <mah:MetroProgressBar Grid.Row="1" IsIndeterminate="True" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10"/>
-        <edge:WebView  Grid.Row="2" x:Name="Browser2" />
+        <edge:WebView Grid.Row="2" x:Name="Browser2">
+            <edge:WebView.Style>
+                <Style TargetType="{x:Type edge:WebView}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsCertificateInvalid}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FirstLoad}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </edge:WebView.Style>
+        </edge:WebView>
+        <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.WebViewControlCertificateIsInvalidMessage}" Style="{StaticResource MessageTextBlock}" Visibility="{Binding IsCertificateInvalid, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10" />
     </Grid>
 </UserControl>
