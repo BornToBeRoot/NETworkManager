@@ -122,6 +122,9 @@
                                                     <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.TigerVNC}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.TigerVNC_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.WebConsole}">
+                                                        <Setter Property="IsChecked" Value="{Binding DataContext.WebConsole_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                    </DataTrigger>
                                                     <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.WakeOnLAN}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.WakeOnLAN_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
@@ -1256,6 +1259,39 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <TabItem Header="{x:Static localization:Strings.WebConsole}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                        <StackPanel IsEnabled="{Binding WebConsole_Enabled}" Margin="0,0,0,20">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.URL}" />
+                                <TextBox x:Name="TextBoxWebConsoleUrl" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleWebsiteUri}">
+                                    <TextBox.Text>
+                                        <Binding Path="WebConsole_Url" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:HttpAndHttpsUriValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
                 <TabItem Header="{x:Static localization:Strings.WakeOnLAN}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel IsEnabled="{Binding WakeOnLAN_Enabled}" Margin="0,0,0,20">
@@ -1644,6 +1680,16 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding TigerVNC_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding ElementName=TextBoxTigerVNCPort, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- WebConsole -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding WebConsole_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxWebConsoleUrl, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

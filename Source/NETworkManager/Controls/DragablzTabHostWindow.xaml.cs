@@ -109,6 +109,9 @@ namespace NETworkManager.Controls
                 case ApplicationViewManager.Name.TigerVNC:
                     ((TigerVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
+                case ApplicationViewManager.Name.WebConsole:
+                    ((WebConsoleControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                    break;
                 case ApplicationViewManager.Name.SNMP:
                     ((SNMPView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;

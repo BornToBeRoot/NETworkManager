@@ -1765,6 +1765,36 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
+        #region Web Console
+        private bool _webConsole_Enabled;
+        public bool WebConsole_Enabled
+        {
+            get => _webConsole_Enabled;
+            set
+            {
+                if (value == _webConsole_Enabled)
+                    return;
+
+                _webConsole_Enabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _webConsole_Url;
+        public string WebConsole_Url
+        {
+            get => _webConsole_Url;
+            set
+            {
+                if (value == _webConsole_Url)
+                    return;
+
+                _webConsole_Url = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         #region Wake on LAN
         private bool _wakeOnLAN_Enabled;
         public bool WakeOnLAN_Enabled
@@ -2084,6 +2114,10 @@ namespace NETworkManager.ViewModels
             TigerVNC_Host = profileInfo.TigerVNC_Host;
             TigerVNC_OverridePort = profileInfo.TigerVNC_OverridePort;
             TigerVNC_Port = profileInfo.TigerVNC_OverridePort ? profileInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port;
+
+            // Web Console
+            WebConsole_Enabled = profileInfo.WebConsole_Enabled;
+            WebConsole_Url = profileInfo.WebConsole_Url;
 
             // Wake on LAN
             WakeOnLAN_Enabled = profileInfo.WakeOnLAN_Enabled;

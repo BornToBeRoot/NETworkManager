@@ -49,7 +49,9 @@ namespace NETworkManager
                 case Name.PuTTY:
                     return Resources.Localization.Strings.PuTTY;
                 case Name.TigerVNC:
-                    return Resources.Localization.Strings.TigerVNC;                    
+                    return Resources.Localization.Strings.TigerVNC;
+                case Name.WebConsole:
+                    return Resources.Localization.Strings.WebConsole;
                 case Name.SNMP:
                     return Resources.Localization.Strings.SNMP;
                 case Name.DiscoveryProtocol:
@@ -120,6 +122,9 @@ namespace NETworkManager
                 case Name.TigerVNC:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.EyeOutline });
                     break;
+                case Name.WebConsole:
+                    canvas.Children.Add(new PackIconPicolIcons { Kind = PackIconPicolIconsKind.Website });
+                    break;
                 case Name.SNMP:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Switch });
                     break;
@@ -174,6 +179,7 @@ namespace NETworkManager
             PowerShell,
             PuTTY,
             TigerVNC,
+            WebConsole,
             SNMP,
             DiscoveryProtocol,
             WakeOnLAN,

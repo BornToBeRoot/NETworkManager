@@ -533,6 +533,7 @@ namespace NETworkManager
         private PowerShellHostView _powerShellHostView;
         private PuTTYHostView _puttyHostView;
         private TigerVNCHostView _tigerVNCHostView;
+        private WebConsoleHostView _webConsoleHostView;
         private SNMPHostView _snmpHostView;
         private DiscoveryProtocolView _discoveryProtocolView;
         private WakeOnLANView _wakeOnLanView;
@@ -677,6 +678,14 @@ namespace NETworkManager
                         _tigerVNCHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _tigerVNCHostView;
+                    break;
+                case ApplicationViewManager.Name.WebConsole:
+                    if (_webConsoleHostView == null)
+                        _webConsoleHostView = new WebConsoleHostView();
+                    else
+                        _webConsoleHostView.OnViewVisible();
+
+                    ContentControlApplication.Content = _webConsoleHostView;
                     break;
                 case ApplicationViewManager.Name.SNMP:
                     if (_snmpHostView == null)

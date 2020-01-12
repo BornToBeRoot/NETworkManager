@@ -2575,4 +2575,19 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="Value" xml:space="preserve">
     <value>Value</value>
   </data>
+  <data name="WebConsole" xml:space="preserve">
+    <value>Web Console</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="IgnoreCertificateErrors" xml:space="preserve">
+    <value>Ignore certificate errors</value>
+  </data>
+  <data name="Browser" xml:space="preserve">
+    <value>Browser</value>
+  </data>
+  <data name="WebViewControlCertificateIsInvalidMessage" xml:space="preserve">
+    <value>The WebView control (Microsoft Edge) cannot connect to websites with an invalid certificate!</value>
+  </data>
 </root>

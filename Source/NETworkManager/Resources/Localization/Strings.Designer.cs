@@ -691,6 +691,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browser.
+        /// </summary>
+        public static string Browser {
+            get {
+                return ResourceManager.GetString("Browser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Buffer.
         /// </summary>
         public static string Buffer {
@@ -3011,6 +3020,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignore certificate errors.
+        /// </summary>
+        public static string IgnoreCertificateErrors {
+            get {
+                return ResourceManager.GetString("IgnoreCertificateErrors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
         public static string Import {
@@ -4748,6 +4766,15 @@ namespace NETworkManager.Resources.Localization {
         public static string ReleaseRenew {
             get {
                 return ResourceManager.GetString("ReleaseRenew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload.
+        /// </summary>
+        public static string Reload {
+            get {
+                return ResourceManager.GetString("Reload", resourceCulture);
             }
         }
         
@@ -7175,11 +7202,29 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Web Console.
+        /// </summary>
+        public static string WebConsole {
+            get {
+                return ResourceManager.GetString("WebConsole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Website.
         /// </summary>
         public static string Website {
             get {
                 return ResourceManager.GetString("Website", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The WebView control (Microsoft Edge) cannot connect to websites with an invalid certificate!.
+        /// </summary>
+        public static string WebViewControlCertificateIsInvalidMessage {
+            get {
+                return ResourceManager.GetString("WebViewControlCertificateIsInvalidMessage", resourceCulture);
             }
         }
         
