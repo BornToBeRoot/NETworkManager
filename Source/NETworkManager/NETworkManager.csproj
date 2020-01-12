@@ -299,6 +299,7 @@
     <Compile Include="ViewModels\PingMonitorViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
     <Compile Include="ViewModels\SettingsProfilesViewModel.cs" />
+    <Compile Include="ViewModels\WebConsoleSettingsViewModel.cs" />
     <Compile Include="ViewModels\WebConsoleConnectViewModel.cs" />
     <Compile Include="ViewModels\WebConsoleHostViewModel.cs" />
     <Compile Include="ViewModels\WiFiViewModel.cs" />
@@ -385,6 +386,9 @@
     </Compile>
     <Compile Include="Views\SettingsProfilesView.xaml.cs">
       <DependentUpon>SettingsProfilesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WebConsoleSettingsView.xaml.cs">
+      <DependentUpon>WebConsoleSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WebConsoleConnectDialog.xaml.cs">
       <DependentUpon>WebConsoleConnectDialog.xaml</DependentUpon>
@@ -765,6 +769,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SettingsProfilesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WebConsoleSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

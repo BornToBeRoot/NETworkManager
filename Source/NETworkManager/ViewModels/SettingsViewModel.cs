@@ -100,6 +100,7 @@ namespace NETworkManager.ViewModels
         private PowerShellSettingsView _powerShellSettingsView;
         private PuTTYSettingsView _puTTYSettingsView;
         private TigerVNCSettingsView _tigerVNCSettingsView;
+        private WebConsoleSettingsView _webConsoleSettingsView;
         private SNMPSettingsView _snmpSettingsView;
         private WakeOnLANSettingsView _wakeOnLANSettingsView;
         private HTTPHeadersSettingsView _httpHeadersSettingsView;
@@ -289,6 +290,12 @@ namespace NETworkManager.ViewModels
                         _tigerVNCSettingsView = new TigerVNCSettingsView();
 
                     SettingsContent = _tigerVNCSettingsView;
+                    break;
+                case SettingsViewManager.Name.WebConsole:
+                    if (_webConsoleSettingsView == null)
+                        _webConsoleSettingsView = new WebConsoleSettingsView();
+
+                    SettingsContent = _webConsoleSettingsView;
                     break;
                 case SettingsViewManager.Name.SNMP:
                     if (_snmpSettingsView == null)

@@ -44,7 +44,7 @@
                 </ComboBox.Text>
             </ComboBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IgnoreCertificateErrors}" />
-            <CheckBox  Grid.Column="2" Grid.Row="2" IsChecked="{Binding IgnoreCertificateErrors}" />
+            <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OffLabel="" OnLabel="" IsChecked="{Binding IgnoreCertificateErrors}" />
         </Grid>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
