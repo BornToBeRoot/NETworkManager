@@ -31,7 +31,6 @@ namespace NETworkManager
             new SettingsViewInfo(Name.PowerShell, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PowerShell), Group.Applications),
             new SettingsViewInfo(Name.PuTTY, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PuTTY), Group.Applications),
             new SettingsViewInfo(Name.TigerVNC, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.TigerVNC), Group.Applications),
-            new SettingsViewInfo(Name.WebConsole, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.WebConsole), Group.Applications),
             new SettingsViewInfo(Name.SNMP, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.SNMP), Group.Applications),
             new SettingsViewInfo(Name.WakeOnLAN, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.WakeOnLAN), Group.Applications),
             new SettingsViewInfo(Name.HTTPHeaders, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.HTTPHeaders), Group.Applications),
@@ -82,8 +81,6 @@ namespace NETworkManager
                     return Resources.Localization.Strings.PuTTY;
                 case Name.TigerVNC:
                     return Resources.Localization.Strings.TigerVNC;
-                case Name.WebConsole:
-                    return Resources.Localization.Strings.WebConsole;
                 case Name.SNMP:
                     return Resources.Localization.Strings.SNMP;
                 case Name.WakeOnLAN:
@@ -132,7 +129,6 @@ namespace NETworkManager
             PowerShell,
             PuTTY,
             TigerVNC,
-            WebConsole,
             SNMP,
             WakeOnLAN,
             HTTPHeaders,

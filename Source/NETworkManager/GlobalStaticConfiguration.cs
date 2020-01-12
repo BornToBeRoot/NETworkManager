@@ -129,9 +129,6 @@ namespace NETworkManager
         // Application: TigerVNC
         public static int TigerVNC_DefaultVNCPort => 5900;
 
-        // Application: Web Console
-        public static bool WebConsole_IgnoreCertificateErrors => false;
-
         // Application: SNMP
         public static WalkMode SNMP_WalkMode => WalkMode.WithinSubtree;
         public static int SNMP_Timeout => 60000;

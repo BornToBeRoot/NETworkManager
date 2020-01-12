@@ -9,8 +9,7 @@ namespace NETworkManager.Models.WebConsole
         {
             var info = new WebConsoleSessionInfo
             {
-                Url = profileInfo.WebConsole_Url,
-                IgnoreCertificateErrors = profileInfo.WebConsole_OverrideIgnoreCertificateErrors ? profileInfo.WebConsole_IgnoreCertificateErrors : SettingsManager.Current.WebConsole_IgnoreCertificateErrors
+                Url = profileInfo.WebConsole_Url
             };
 
             return info;

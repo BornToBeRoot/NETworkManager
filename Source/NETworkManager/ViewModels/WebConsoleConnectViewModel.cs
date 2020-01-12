@@ -28,20 +28,6 @@ namespace NETworkManager.ViewModels
         
         public ICollectionView UrlHistoryView { get; }
 
-        private bool _ignoreCertificateErrors;
-        public bool IgnoreCertificateErrors
-        {
-            get => _ignoreCertificateErrors;
-            set
-            {
-                if (value == _ignoreCertificateErrors)
-                    return;
-
-                _ignoreCertificateErrors = value;
-                OnPropertyChanged();
-            }
-        }
-
         public WebConsoleConnectViewModel(Action<WebConsoleConnectViewModel> connectCommand, Action<WebConsoleConnectViewModel> cancelHandler)
         {
             ConnectCommand = new RelayCommand(p => connectCommand(this));
@@ -54,7 +40,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            IgnoreCertificateErrors = SettingsManager.Current.WebConsole_IgnoreCertificateErrors;
+
         }
     }
 }

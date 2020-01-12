@@ -289,8 +289,7 @@ namespace NETworkManager.ViewModels
                 // Create Profile info
                 var info = new WebConsoleSessionInfo
                 {
-                    Url = instance.Url,
-                    IgnoreCertificateErrors = instance.IgnoreCertificateErrors
+                    Url = instance.Url
                 };
 
                 // Connect

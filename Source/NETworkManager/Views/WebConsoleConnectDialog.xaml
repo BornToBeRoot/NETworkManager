@@ -29,8 +29,6 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.URL}" />
             <ComboBox x:Name="ComboBoxUrl" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding UrlHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleWebsiteUri}" Style="{StaticResource EditableComboBox}">
@@ -43,8 +41,6 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IgnoreCertificateErrors}" />
-            <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OffLabel="" OnLabel="" IsChecked="{Binding IgnoreCertificateErrors}" />
         </Grid>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />

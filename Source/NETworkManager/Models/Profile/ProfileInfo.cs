@@ -132,8 +132,6 @@ namespace NETworkManager.Models.Profile
 
         public bool WebConsole_Enabled { get; set; }
         public string WebConsole_Url { get; set; }
-        public bool WebConsole_OverrideIgnoreCertificateErrors { get; set; }
-        public bool WebConsole_IgnoreCertificateErrors { get; set; }
 
         public bool WakeOnLAN_Enabled { get; set; }
         public string WakeOnLAN_MACAddress { get; set; }

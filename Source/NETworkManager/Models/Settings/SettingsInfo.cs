@@ -2951,21 +2951,6 @@ namespace NETworkManager.Models.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _webConsole_IgnoreCertificateErrors = GlobalStaticConfiguration.WebConsole_IgnoreCertificateErrors;
-        public bool WebConsole_IgnoreCertificateErrors
-        {
-            get => _webConsole_IgnoreCertificateErrors;
-            set
-            {
-                if (value == _webConsole_IgnoreCertificateErrors)
-                    return;
-
-                _webConsole_IgnoreCertificateErrors = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
         #endregion
 
         #region SNMP

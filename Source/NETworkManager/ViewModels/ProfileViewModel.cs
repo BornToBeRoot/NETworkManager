@@ -1793,34 +1793,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private bool _webConsole_OverrideIgnoreCertificateErrors;
-        public bool WebConsole_OverrideIgnoreCertificateErrors
-        {
-            get => _webConsole_OverrideIgnoreCertificateErrors;
-            set
-            {
-                if (value == _webConsole_OverrideIgnoreCertificateErrors)
-                    return;
-
-                _webConsole_OverrideIgnoreCertificateErrors = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _webConsole_IgnoreCertificateErrors;
-        public bool WebConsole_IgnoreCertificateErrors
-        {
-            get => _webConsole_IgnoreCertificateErrors;
-            set
-            {
-                if (value == _webConsole_IgnoreCertificateErrors)
-                    return;
-
-                _webConsole_IgnoreCertificateErrors = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #region Wake on LAN
@@ -2146,8 +2118,6 @@ namespace NETworkManager.ViewModels
             // Web Console
             WebConsole_Enabled = profileInfo.WebConsole_Enabled;
             WebConsole_Url = profileInfo.WebConsole_Url;
-            WebConsole_OverrideIgnoreCertificateErrors = profileInfo.WebConsole_OverrideIgnoreCertificateErrors;
-            WebConsole_IgnoreCertificateErrors = profileInfo.WebConsole_IgnoreCertificateErrors;
 
             // Wake on LAN
             WakeOnLAN_Enabled = profileInfo.WakeOnLAN_Enabled;

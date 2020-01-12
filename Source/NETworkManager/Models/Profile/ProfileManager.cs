@@ -497,8 +497,6 @@ namespace NETworkManager.Models.Profile
 
                 WebConsole_Enabled = instance.WebConsole_Enabled,
                 WebConsole_Url = instance.WebConsole_Url,
-                WebConsole_OverrideIgnoreCertificateErrors = instance.WebConsole_OverrideIgnoreCertificateErrors,
-                WebConsole_IgnoreCertificateErrors = instance.WebConsole_IgnoreCertificateErrors,
 
                 WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
                 WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),
