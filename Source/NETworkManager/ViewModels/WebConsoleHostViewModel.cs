@@ -189,14 +189,14 @@ namespace NETworkManager.ViewModels
         }
 
 
-        public ICommand WebConsole_ReloadCommand => new RelayCommand(WebConsole_ReloadAction);
+        public ICommand WebConsole_RefreshCommand => new RelayCommand(WebConsole_ReloadAction);
 
         private void WebConsole_ReloadAction(object view)
         {
             if (view is WebConsoleControl control)
             {
-                if (control.ReloadCommand.CanExecute(null))
-                    control.ReloadCommand.Execute(null);
+                if (control.RefreshCommand.CanExecute(null))
+                    control.RefreshCommand.Execute(null);
             }
         }
 

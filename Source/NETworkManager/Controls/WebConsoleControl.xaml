@@ -7,7 +7,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:converters="clr-namespace:NETworkManager.Converters"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:chromium="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        xmlns:edge="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
         mah:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:WebConsoleControl}">
     <UserControl.Resources>
@@ -25,9 +25,11 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Command="{Binding WebBrowser.BackCommand, ElementName=Browser}" Grid.Column="0" Style="{StaticResource CleanButton}">
+            <Button Command="{Binding GoBackCommand}" Grid.Column="0" Style="{StaticResource CleanButton}">
                 <Rectangle Width="24" Height="24" >
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowLeftCircleOutline}" />
@@ -44,7 +46,7 @@
                     </Rectangle.Style>
                 </Rectangle>
             </Button>
-            <Button Command="{Binding WebBrowser.ForwardCommand, ElementName=Browser}" Grid.Column="2"  Style="{StaticResource CleanButton}">
+            <Button Command="{Binding GoForwardCommand}" Grid.Column="2"  Style="{StaticResource CleanButton}">
                 <Rectangle Width="24" Height="24" >
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowRightCircleOutline}" />
@@ -61,9 +63,26 @@
                     </Rectangle.Style>
                 </Rectangle>
             </Button>
-            <TextBox x:Name="txtBoxAddress" Text="{Binding Address, ElementName=Browser}" IsEnabled="False" Grid.Column="4" Style="{StaticResource DefaultTextBox}" />
+            <Button Command="{Binding RefreshCommand}" Grid.Column="4"  Style="{StaticResource CleanButton}">
+                <Rectangle Width="24" Height="24" >
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+            </Button>
+            <TextBox x:Name="txtBoxAddress" Text="{Binding Url}" IsEnabled="False" Grid.Column="6" Style="{StaticResource DefaultTextBox}" />
         </Grid>
-        <mah:MetroProgressBar Grid.Row="1" IsIndeterminate="True" Visibility="{Binding Path=IsLoading, ElementName=Browser, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10"/>
-        <chromium:ChromiumWebBrowser Grid.Row="2" x:Name="Browser" />
+        <mah:MetroProgressBar Grid.Row="1" IsIndeterminate="True" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10"/>
+        <edge:WebView  Grid.Row="2" x:Name="Browser2" />
     </Grid>
 </UserControl>

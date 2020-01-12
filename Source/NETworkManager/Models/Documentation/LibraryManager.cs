@@ -27,9 +27,7 @@ namespace NETworkManager.Models.Documentation
             new LibraryInfo("LiveCharts", "https://github.com/Live-Charts/Live-Charts", "Simple, flexible, interactive & powerful charts, maps and gauges for .Net", "MIT License","https://github.com/Live-Charts/Live-Charts/blob/master/LICENSE.TXT"),
             new LibraryInfo("LiveCharts.Wpf", "https://github.com/Live-Charts/Live-Charts", "Simple, flexible, interactive & powerful charts, maps and gauges for .Net", "MIT License","https://github.com/Live-Charts/Live-Charts/blob/master/LICENSE.TXT"),
             new LibraryInfo("LoadingIndicators.WPF", "https://github.com/zeluisping/LoadingIndicators.WPF", "A collection of loading indicators for WPF", "Unlicense", "https://github.com/zeluisping/LoadingIndicators.WPF/blob/master/LICENSE"),
-            new LibraryInfo("DnsClient.NET", "https://github.com/MichaCo/DnsClient.NET","DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups" , "Apache Licene 2.0", "https://github.com/MichaCo/DnsClient.NET/blob/dev/LICENSE" ),
-            new LibraryInfo("CefSharp", "https://github.com/cefsharp/CefSharp",".NET (WPF and Windows Forms) bindings for the Chromium Embedded Framework ", "BSD-3-Clause", "https://github.com/cefsharp/CefSharp/blob/master/LICENSE" )
-
+            new LibraryInfo("DnsClient.NET", "https://github.com/MichaCo/DnsClient.NET","DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups" , "Apache Licene 2.0", "https://github.com/MichaCo/DnsClient.NET/blob/dev/LICENSE" )
         };
     }
 }
