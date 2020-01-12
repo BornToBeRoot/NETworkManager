@@ -495,6 +495,11 @@ namespace NETworkManager.Models.Profile
                 TigerVNC_OverridePort = instance.TigerVNC_OverridePort,
                 TigerVNC_Port = instance.TigerVNC_Port,
 
+                WebConsole_Enabled = instance.WebConsole_Enabled,
+                WebConsole_Url = instance.WebConsole_Url,
+                WebConsole_OverrideIgnoreCertificateErrors = instance.WebConsole_OverrideIgnoreCertificateErrors,
+                WebConsole_IgnoreCertificateErrors = instance.WebConsole_IgnoreCertificateErrors,
+
                 WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
                 WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),
                 WakeOnLAN_Broadcast = instance.WakeOnLAN_Broadcast?.Trim(),
