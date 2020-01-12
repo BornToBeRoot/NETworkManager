@@ -158,7 +158,7 @@ namespace NETworkManager.ViewModels
 
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.WebConsole_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
-                       
+
             LoadSettings();
 
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
@@ -188,7 +188,7 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem)?.View as WebConsoleControl)?.CloseTab();
         }
 
-        
+
         public ICommand WebConsole_ReloadCommand => new RelayCommand(WebConsole_ReloadAction);
 
         private void WebConsole_ReloadAction(object view)
@@ -199,14 +199,14 @@ namespace NETworkManager.ViewModels
                     control.ReloadCommand.Execute(null);
             }
         }
-        
+
         public ICommand ConnectCommand => new RelayCommand(p => ConnectAction());
-        
+
         private void ConnectAction()
         {
             Connect();
         }
-        
+
 
         public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
 
@@ -218,13 +218,6 @@ namespace NETworkManager.ViewModels
         private void ConnectProfileAction()
         {
             ConnectProfile();
-        }
-
-        public ICommand ConnectProfileExternalCommand => new RelayCommand(p => ConnectProfileExternalAction());
-
-        private void ConnectProfileExternalAction()
-        {
-            //ConnectProfileExternal();
         }
 
         public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
@@ -278,27 +271,26 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void Connect(string host = null)
+        private async void Connect()
         {
-            /*
             var customDialog = new CustomDialog
             {
                 Title = Resources.Localization.Strings.Connect
             };
-            
-            var connectViewModel = new TigerVNCConnectViewModel(async instance =>
+
+            var connectViewModel = new WebConsoleConnectViewModel(async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
                 // Add host to history
-                AddHostToHistory(instance.Host);
+                AddUrlToHistory(instance.Url);
 
                 // Create Profile info
                 var info = new WebConsoleSessionInfo
                 {
-                    //Url = instance.Url,
-                    
+                    Url = instance.Url,
+                    IgnoreCertificateErrors = instance.IgnoreCertificateErrors
                 };
 
                 // Connect
@@ -307,37 +299,21 @@ namespace NETworkManager.ViewModels
              {
                  await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                  ConfigurationManager.Current.FixAirspace = false;
-             }, host);
+             });
 
-            customDialog.Content = new TigerVNCConnectDialog
+            customDialog.Content = new WebConsoleConnectDialog
             {
                 DataContext = connectViewModel
             };
 
             ConfigurationManager.Current.FixAirspace = true;
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-            */
-
-            Connect(new WebConsoleSessionInfo() { Url = "https://fritz.box/" });
         }
 
         private void ConnectProfile()
         {
             Connect(WebConsole.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
-
-        /*
-        private void ConnectProfileExternal()
-        {
-            var info = new ProcessStartInfo
-            {
-                FileName = SettingsManager.Current.TigerVNC_ApplicationFilePath,
-                Arguments = TigerVNC.BuildCommandLine(TigerVNC.CreateSessionInfo(SelectedProfile))
-            };
-
-            Process.Start(info);
-        }
-        */
 
         private void Connect(WebConsoleSessionInfo sessionInfo, string header = null)
         {
@@ -346,16 +322,11 @@ namespace NETworkManager.ViewModels
             SelectedTabIndex = TabItems.Count - 1;
         }
 
-        public void AddTab(string host)
-        {
-            Connect(host);
-        }
-
         // Modify history list
-        private static void AddHostToHistory(string host)
+        private static void AddUrlToHistory(string url)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), url, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.WebConsole_UrlHistory.Clear();

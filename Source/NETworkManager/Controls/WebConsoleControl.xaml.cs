@@ -7,12 +7,7 @@ using NETworkManager.Utilities;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.WebConsole;
-using System.Net;
 using System.Threading.Tasks;
-using System.Diagnostics;
-using CefSharp.Wpf;
-using CefSharp.Handler;
-using CefSharp;
 
 namespace NETworkManager.Controls
 {
@@ -46,7 +41,8 @@ namespace NETworkManager.Controls
 
             _sessionInfo = info;
 
-            Browser.RequestHandler = new SslRequestHandler();
+            if (_sessionInfo.IgnoreCertificateErrors)
+                Browser.RequestHandler = new SslRequestHandler();
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
@@ -84,7 +80,7 @@ namespace NETworkManager.Controls
         private async void Connect()
         {
             while (!Browser.IsBrowserInitialized)
-                await Task.Delay(50);
+                await Task.Delay(250);
 
             Browser.Address = _sessionInfo.Url;
         }
@@ -97,44 +93,11 @@ namespace NETworkManager.Controls
         public void CloseTab()
         {
             _closing = true;
-
         }
         #endregion
 
         #region Events
 
         #endregion
-    }
-}
-
-public class SslRequestHandler : RequestHandler
-{
-    protected override bool OnCertificateError(IWebBrowser chromiumWebBrowser, IBrowser browser, CefErrorCode errorCode, string requestUrl, ISslInfo sslInfo, IRequestCallback callback)
-    {        
-        Task.Run(() =>
-        {
-            //NOTE: When executing the callback in an async fashion need to check to see if it's disposed
-            if (!callback.IsDisposed)
-            {
-                using (callback)
-                {
-                    callback.Continue(true);
-                    
-                    /*
-                    //We'll allow the expired certificate from badssl.com
-                    if (requestUrl.ToLower().Contains("https://expired.badssl.com/"))
-                    {
-                        callback.Continue(true);
-                    }
-                    else
-                    {
-                        callback.Continue(false);
-                    }
-                    */
-                }
-            }
-        });        
-
-        return true;
     }
 }

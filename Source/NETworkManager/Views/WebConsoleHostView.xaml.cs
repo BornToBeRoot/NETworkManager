@@ -37,17 +37,7 @@ namespace NETworkManager.Views
             if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
                 _viewModel.ConnectProfileCommand.Execute(null);
         }
-
-        public async void AddTab(string host)
-        {
-            // Wait for the interface to load, before displaying the dialog to connect a new profile... 
-            // MahApps will throw an exception... 
-            while (!_loaded)
-                await Task.Delay(100);
-
-            _viewModel.AddTab(host);
-        }
-
+      
         public void OnViewHide()
         {
             _viewModel.OnViewHide();

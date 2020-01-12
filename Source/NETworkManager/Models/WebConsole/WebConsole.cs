@@ -1,4 +1,5 @@
 ﻿using NETworkManager.Models.Profile;
+using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Models.WebConsole
 {
@@ -9,6 +10,7 @@ namespace NETworkManager.Models.WebConsole
             var info = new WebConsoleSessionInfo
             {
                 Url = profileInfo.WebConsole_Url,
+                IgnoreCertificateErrors = profileInfo.WebConsole_OverrideIgnoreCertificateErrors ? profileInfo.WebConsole_IgnoreCertificateErrors : SettingsManager.Current.WebConsole_IgnoreCertificateErrors
             };
 
             return info;

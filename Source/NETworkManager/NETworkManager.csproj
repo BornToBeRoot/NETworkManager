@@ -136,6 +136,7 @@
     <Compile Include="Controls\PowerShellControl.xaml.cs">
       <DependentUpon>PowerShellControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\SslRequestHandler.cs" />
     <Compile Include="Controls\WebConsoleControl.xaml.cs">
       <DependentUpon>WebConsoleControl.xaml</DependentUpon>
     </Compile>
@@ -298,6 +299,7 @@
     <Compile Include="ViewModels\PingMonitorViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
     <Compile Include="ViewModels\SettingsProfilesViewModel.cs" />
+    <Compile Include="ViewModels\WebConsoleConnectViewModel.cs" />
     <Compile Include="ViewModels\WebConsoleHostViewModel.cs" />
     <Compile Include="ViewModels\WiFiViewModel.cs" />
     <Compile Include="ViewModels\FirstRunViewModel.cs" />
@@ -383,6 +385,9 @@
     </Compile>
     <Compile Include="Views\SettingsProfilesView.xaml.cs">
       <DependentUpon>SettingsProfilesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WebConsoleConnectDialog.xaml.cs">
+      <DependentUpon>WebConsoleConnectDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WebConsoleHostView.xaml.cs">
       <DependentUpon>WebConsoleHostView.xaml</DependentUpon>
@@ -760,6 +765,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SettingsProfilesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WebConsoleConnectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

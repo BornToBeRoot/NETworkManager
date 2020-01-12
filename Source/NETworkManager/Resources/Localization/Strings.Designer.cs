@@ -3011,6 +3011,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignore certificate errors.
+        /// </summary>
+        public static string IgnoreCertificateErrors {
+            get {
+                return ResourceManager.GetString("IgnoreCertificateErrors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
         public static string Import {
