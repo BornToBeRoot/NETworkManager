@@ -21,6 +21,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
+using System.Security;
 
 namespace NETworkManager.ViewModels
 {
@@ -125,8 +126,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _community;
-        public string Community
+        private SecureString _community;
+        public SecureString Community
         {
             get => _community;
             set
@@ -172,8 +173,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _auth;
-        public string Auth
+        private SecureString _auth;
+        public SecureString Auth
         {
             get => _auth;
             set
@@ -205,8 +206,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _priv;
-        public string Priv
+        private SecureString _priv;
+        public SecureString Priv
         {
             get => _priv;
             set
@@ -569,21 +570,21 @@ namespace NETworkManager.ViewModels
             {
                 case SNMPMode.Get:
                     if (Version != SNMPVersion.V3)
-                        snmp.GetV1V2CAsync(Version, ipAddress, Community, OID);
+                        snmp.GetV1V2CAsync(Version, ipAddress, SecureStringHelper.ConvertToString(Community), OID);
                     else
-                        snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv);
+                        snmp.Getv3Async(ipAddress, OID, Security, Username, AuthenticationProvider, SecureStringHelper.ConvertToString(Auth), PrivacyProvider, SecureStringHelper.ConvertToString(Priv));
                     break;
                 case SNMPMode.Walk:
                     if (Version != SNMPVersion.V3)
-                        snmp.WalkV1V2CAsync(Version, ipAddress, Community, OID, SettingsManager.Current.SNMP_WalkMode);
+                        snmp.WalkV1V2CAsync(Version, ipAddress, SecureStringHelper.ConvertToString(Community), OID, SettingsManager.Current.SNMP_WalkMode);
                     else
-                        snmp.WalkV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, SettingsManager.Current.SNMP_WalkMode);
+                        snmp.WalkV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, SecureStringHelper.ConvertToString(Auth), PrivacyProvider, SecureStringHelper.ConvertToString(Priv), SettingsManager.Current.SNMP_WalkMode);
                     break;
                 case SNMPMode.Set:
                     if (Version != SNMPVersion.V3)
-                        snmp.SetV1V2CAsync(Version, ipAddress, Community, OID, Data);
+                        snmp.SetV1V2CAsync(Version, ipAddress, SecureStringHelper.ConvertToString(Community), OID, Data);
                     else
-                        snmp.SetV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, Auth, PrivacyProvider, Priv, Data);
+                        snmp.SetV3Async(ipAddress, OID, Security, Username, AuthenticationProvider, SecureStringHelper.ConvertToString(Auth), PrivacyProvider, SecureStringHelper.ConvertToString(Priv), Data);
                     break;
             }
 
