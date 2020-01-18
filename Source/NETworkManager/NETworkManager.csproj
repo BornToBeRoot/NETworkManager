@@ -1379,7 +1379,7 @@
       <Version>0.0.3.203</Version>
     </PackageReference>
     <PackageReference Include="IPNetwork2">
-      <Version>2.4.0.169</Version>
+      <Version>2.4.0.173</Version>
     </PackageReference>
     <PackageReference Include="Lextm.SharpSnmpLib">
       <Version>11.3.0</Version>

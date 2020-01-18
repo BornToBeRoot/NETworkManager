@@ -116,7 +116,7 @@ function Invoke-DiscoveryProtocolCapture {
             $MACAddress = [PhysicalAddress]::Parse($Adapter.MacAddress).ToString()
 
             if ($Adapter) {
-                $SessionName = 'Capture-{0}' -f (Get-Date).ToString('s')
+                $SessionName = 'NETworkManager_DiscoveryProtocol_Capture'
                 New-NetEventSession -Name $SessionName -LocalFilePath $($ETLFile.FullName) -CaptureMode SaveToFile | Out-Null
 
                 $LinkLayerAddress = switch ($Type) {
