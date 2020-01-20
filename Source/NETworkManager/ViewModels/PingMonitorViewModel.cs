@@ -316,8 +316,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-
-        private async void AddHost(string host)
+        public async void AddHost(string host)
         {
             IsWorking = true;
             DisplayStatusMessage = false;
@@ -336,7 +335,7 @@ namespace NETworkManager.ViewModels
                 hostname = host;
                 ipAddress = await DnsLookupHelper.ResolveIPAddress(host);
             }
-                       
+
             if (ipAddress != null)
             {
                 Hosts.Add(new PingMonitorHostView(_hostId, RemoveHost, new PingMonitorOptions(hostname, ipAddress)));

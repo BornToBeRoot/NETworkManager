@@ -27,6 +27,11 @@ namespace NETworkManager.Views
                 _viewModel.AddHostProfileCommand.Execute(null);
         }
 
+        public void AddHost(string host)
+        {
+            _viewModel.AddHost(host);
+        }
+
         public void OnViewHide()
         {
             _viewModel.OnViewHide();

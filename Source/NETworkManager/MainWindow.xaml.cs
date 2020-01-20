@@ -309,7 +309,7 @@ namespace NETworkManager
 
             // Register event system...
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-            EventSystem.RedirectProfileToApplicationEvent += EventSystem_RedirectProfileToApplicationEvent;
+            //EventSystem.RedirectProfileToApplicationEvent += EventSystem_RedirectProfileToApplicationEvent;
             EventSystem.RedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
             EventSystem.RedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
 
@@ -790,6 +790,7 @@ namespace NETworkManager
         }
 
         // This works, but is currently not used :) 
+        /*
         private void EventSystem_RedirectProfileToApplicationEvent(object sender, EventArgs e)
         {
             if (!(e is EventSystemRedirectProfileApplicationArgs profile))
@@ -855,6 +856,7 @@ namespace NETworkManager
                     throw new ArgumentOutOfRangeException();
             }
         }
+        */
 
         private void EventSystem_RedirectDataToApplicationEvent(object sender, EventArgs e)
         {
@@ -875,6 +877,9 @@ namespace NETworkManager
                     break;
                 case ApplicationViewManager.Name.Ping:
                     _pingHostView.AddTab(data.Args);
+                    break;
+                case ApplicationViewManager.Name.PingMonitor:
+                    _pingMonitorView.AddHost(data.Args);
                     break;
                 case ApplicationViewManager.Name.Traceroute:
                     _tracerouteHostView.AddTab(data.Args);
