@@ -528,7 +528,7 @@ namespace NETworkManager.ViewModels
             if (!string.IsNullOrEmpty(StatusMessage))
                 StatusMessage += Environment.NewLine;
             
-            StatusMessage += e.ErrorCode;
+            StatusMessage += $"{e.DNSServer.Address}: {e.ErrorCode}";
 
             DisplayStatusMessage = true;
 
