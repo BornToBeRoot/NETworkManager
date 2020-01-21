@@ -1,6 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,20 +9,12 @@ namespace NETworkManager.Views
     {
         private readonly WebConsoleHostViewModel _viewModel = new WebConsoleHostViewModel(DialogCoordinator.Instance);
 
-        private bool _loaded;
-
-
         public WebConsoleHostView()
         {
             InitializeComponent();
             DataContext = _viewModel;
 
             InterTabController.Partition = ApplicationViewManager.Name.WebConsole.ToString();
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            _loaded = true;
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)

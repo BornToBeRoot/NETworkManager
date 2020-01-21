@@ -14,9 +14,6 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private readonly bool _isLoading;
-
-        public bool IsPortable => ConfigurationManager.Current.IsPortable;
         public Action CloseAction { get; set; }
 
         private string _location;
@@ -149,13 +146,9 @@ namespace NETworkManager.ViewModels
         #region Constructor, LoadSettings
         public SettingsSettingsViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true;
-
             _dialogCoordinator = instance;
 
             LoadSettings();
-
-            _isLoading = false;
         }
 
         private void LoadSettings()

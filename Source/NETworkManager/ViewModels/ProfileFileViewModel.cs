@@ -7,8 +7,6 @@ namespace NETworkManager.ViewModels
 {
     public class ProfileFileViewModel : ViewModelBase
     {
-        private readonly bool _isLoading;
-
         public ICommand AcceptCommand { get; }
 
         public ICommand CancelCommand { get; }
@@ -43,8 +41,6 @@ namespace NETworkManager.ViewModels
 
         public ProfileFileViewModel(Action<ProfileFileViewModel> addCommand, Action<ProfileFileViewModel> cancelHandler, ProfileFileInfo info = null)
         {
-            _isLoading = true;
-
             AcceptCommand = new RelayCommand(p => addCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
@@ -54,8 +50,6 @@ namespace NETworkManager.ViewModels
                 
                 IsEdit = true;
             }
-
-            _isLoading = false;
         }
     }
 }

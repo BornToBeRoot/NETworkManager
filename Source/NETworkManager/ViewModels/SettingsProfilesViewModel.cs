@@ -19,8 +19,6 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private readonly bool _isLoading;
-
         public bool IsPortable => ConfigurationManager.Current.IsPortable;
 
         private string _location;
@@ -83,16 +81,12 @@ namespace NETworkManager.ViewModels
         #region Constructor, LoadSettings
         public SettingsProfilesViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true;
-
             _dialogCoordinator = instance;
 
             ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
             ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
 
             LoadSettings();
-
-            _isLoading = false;
         }
 
         private void LoadSettings()

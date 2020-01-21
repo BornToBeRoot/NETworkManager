@@ -29,7 +29,7 @@ namespace NETworkManager.Views
 
         public void Refresh()
         {
-            _viewModel.Refresh();
+            _viewModel.RefreshProfiles();
         }
 
 

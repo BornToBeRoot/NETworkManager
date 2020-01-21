@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Settings;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.ComponentModel;
 using System.Windows.Data;
 using MahApps.Metro.Controls.Dialogs;
@@ -262,7 +261,7 @@ namespace NETworkManager.ViewModels
 
                 ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
-                Refresh();
+                RefreshProfiles();
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -303,11 +302,10 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public void Refresh()
+        public void RefreshProfiles()
         {
-            // Refresh profiles
             Profiles.Refresh();
-        }
+        }        
         #endregion
 
         #region Event
@@ -315,7 +313,7 @@ namespace NETworkManager.ViewModels
         {
             _searchDispatcherTimer.Stop();
 
-            Profiles.Refresh();
+            RefreshProfiles();
         }
         #endregion
     }

@@ -16,7 +16,7 @@ using static NETworkManager.Models.Network.DiscoveryProtocol;
 
 namespace NETworkManager
 {
-    public class GlobalStaticConfiguration
+    public static class GlobalStaticConfiguration
     {
         // Type to search (average type speed --> 187 chars/min)
         public static TimeSpan SearchDispatcherTimerTimeSpan => new TimeSpan(0, 0, 0, 0, 750);

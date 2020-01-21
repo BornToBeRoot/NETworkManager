@@ -14,7 +14,6 @@
         xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
         xmlns:networkManager="clr-namespace:NETworkManager"
         dialogs:DialogParticipation.Register="{Binding}"
-        Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WebConsoleHostViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />

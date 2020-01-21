@@ -24,9 +24,6 @@ namespace NETworkManager.Controls
 
         #region Variables
         private bool _initialized;
-        private bool _closing;      // When the tab is closed --> OnClose()
-
-        private readonly IDialogCoordinator _dialogCoordinator;
 
         private readonly WebConsoleSessionInfo _sessionInfo;
 
@@ -92,8 +89,6 @@ namespace NETworkManager.Controls
         {
             InitializeComponent();
             DataContext = this;
-
-            _dialogCoordinator = DialogCoordinator.Instance;
 
             _sessionInfo = info;
 
@@ -175,7 +170,7 @@ namespace NETworkManager.Controls
 
         public void CloseTab()
         {
-            _closing = true;
+
         }
         #endregion
 
