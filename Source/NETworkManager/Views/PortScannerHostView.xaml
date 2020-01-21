@@ -10,9 +10,11 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerHostViewModel}">
     <UserControl.Resources>
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
     </UserControl.Resources>
@@ -114,7 +116,7 @@
                         <KeyBinding Command="{Binding ScanProfileCommand}" Key="Enter" />
                     </TextBox.InputBindings>
                 </TextBox>
-                <ListBox Grid.Column="0" Grid.Row="2" x:Name="ListBoxProfiles" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
+                <ListBox Grid.Column="0" Grid.Row="2" x:Name="ListBoxProfiles" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                     <ListBox.Resources>
                         <ContextMenu x:Key="ProfileContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.Scan}" Command="{Binding ScanProfileCommand}">
@@ -210,22 +212,28 @@
                         </Style>
                     </ListBox.ItemContainerStyle>
                 </ListBox>
+                <mah:ProgressRing Grid.Row="2" Height="50" Width="50" IsActive="{Binding IsSearching}"/>
                 <Grid Grid.Row="2" VerticalAlignment="Center">
                     <Grid.Style>
                         <Style TargetType="{x:Type Grid}">
                             <Setter Property="Visibility" Value="Collapsed" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Profiles.Count}" Value="0">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Profiles.Count}" Value="0" />
+                                        <Condition Binding="{Binding IsSearching}" Value="False" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.Setters>
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </MultiDataTrigger.Setters>
+                                </MultiDataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>
                     <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
-                                <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-                                
+                                <Setter Property="Command" Value="{Binding AddProfileCommand}" />                                
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                         <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
