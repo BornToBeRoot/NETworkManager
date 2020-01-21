@@ -12,7 +12,6 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
 using System.Linq;
 using NETworkManager.Models.Profile;
-using System.Diagnostics;
 using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels
