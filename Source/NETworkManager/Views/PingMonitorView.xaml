@@ -150,7 +150,7 @@
                                 <KeyBinding Command="{Binding AddHostProfileCommand}" Key="Enter" />
                             </TextBox.InputBindings>
                         </TextBox>
-                        <ListBox Grid.Column="0" Grid.Row="2" x:Name="ListBoxProfiles" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
+                        <ListBox Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                             <ListBox.Resources>
                                 <ContextMenu x:Key="ProfileContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                     <MenuItem Header="{x:Static localization:Strings.Ping}" Command="{Binding AddHostProfileCommand}">

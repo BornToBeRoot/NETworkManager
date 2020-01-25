@@ -855,7 +855,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
-                            <ListBox Grid.Column="0" Grid.Row="2" x:Name="ListBoxProfiles" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
+                            <ListBox Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                                 <ListBox.Resources>
                                     <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                         <MenuItem Header="{x:Static localization:Strings.Apply}" Command="{Binding ApplyProfileConfigCommand}">
