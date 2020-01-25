@@ -5544,7 +5544,7 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restart as Admininistrator.
+        ///   Looks up a localized string similar to Restart as Administrator.
         /// </summary>
         public static string RestartAsAdmin {
             get {
