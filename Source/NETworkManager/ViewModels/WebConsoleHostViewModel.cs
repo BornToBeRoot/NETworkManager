@@ -207,9 +207,9 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem)?.View as WebConsoleControl)?.CloseTab();
         }
         
-        public ICommand WebConsole_RefreshCommand => new RelayCommand(WebConsole_ReloadAction);
+        public ICommand WebConsole_RefreshCommand => new RelayCommand(WebConsole_RefreshAction);
 
-        private void WebConsole_ReloadAction(object view)
+        private void WebConsole_RefreshAction(object view)
         {
             if (view is WebConsoleControl control)
             {

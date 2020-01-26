@@ -266,6 +266,19 @@ namespace NETworkManager.Controls
             }
         }
         #endregion
+
+        #region WebConsole Commands
+        public ICommand WebConsole_RefreshCommand => new RelayCommand(WebConsole_RefreshAction);
+
+        private void WebConsole_RefreshAction(object view)
+        {
+            if (view is WebConsoleControl control)
+            {
+                if (control.RefreshCommand.CanExecute(null))
+                    control.RefreshCommand.Execute(null);
+            }
+        }
+        #endregion
         #endregion
 
         #region Events
