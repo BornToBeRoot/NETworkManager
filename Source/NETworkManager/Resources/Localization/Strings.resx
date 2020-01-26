@@ -2581,9 +2581,6 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="Reload" xml:space="preserve">
     <value>Reload</value>
   </data>
-  <data name="IgnoreCertificateErrors" xml:space="preserve">
-    <value>Ignore certificate errors</value>
-  </data>
   <data name="Browser" xml:space="preserve">
     <value>Browser</value>
   </data>
