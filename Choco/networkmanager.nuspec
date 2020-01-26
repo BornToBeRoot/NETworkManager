@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>NETworkManager</id>
-    <version>2019.12.0</version>
+    <version>2020.1.0</version>
     <owners>BornToBeRoot</owners>
     <title>NETworkManager</title>
     <authors>BornToBeRoot</authors>
@@ -14,7 +14,7 @@
     <projectSourceUrl>https://github.com/BornToBeRoot/NETworkManager</projectSourceUrl>
     <docsUrl>https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</docsUrl>
     <bugTrackerUrl>https://github.com/BornToBeRoot/NETworkManager/issues</bugTrackerUrl>
-    <tags>networkinterface ipscanner portscanner traceroute ping dnslookup whois subnetcalculator snmp remotedesktop rdp powershell ssh putty tigervnc vnc</tags>
+    <tags>networkinterface ipscanner portscanner traceroute ping dns whois subnet snmp remotedesktop powershell ssh vnc lldp cdp</tags>
     <summary>A powerful tool for managing networks and troubleshoot network problems!</summary>
     <description>A powerful tool for managing networks and troubleshoot network problems!</description>
     <dependencies>
