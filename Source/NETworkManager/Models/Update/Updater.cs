@@ -46,9 +46,9 @@ namespace NETworkManager.Models.Update
                 {
                     var client = new GitHubClient(new ProductHeaderValue(Properties.Resources.NETworkManager_ProjectName));
 
-                    var latestVersion = new Version(client.Repository.Release.GetLatest(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo).Result.TagName.TrimStart('v'));
+                    var latestVersion = new Version(client.Repository.Release.GetLatest(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo).Result.TagName);
 
-                    // Compare versions (tag=v2019.12.0, version=2019.12.0)
+                    // Compare versions (tag=2019.12.0, version=2019.12.0)
                     if (latestVersion > AssemblyManager.Current.Version)
                         OnUpdateAvailable(new UpdateAvailableArgs(latestVersion));
                     else
