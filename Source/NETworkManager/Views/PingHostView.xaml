@@ -116,7 +116,7 @@
                         <KeyBinding Command="{Binding PingProfileCommand}" Key="Enter" />
                     </TextBox.InputBindings>
                 </TextBox>
-                <ListBox Grid.Row="2" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"  DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
+                <ListBox Grid.Row="2" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                     <ListBox.Resources>
                         <ContextMenu x:Key="ProfileContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.Ping}" Command="{Binding PingProfileCommand}">

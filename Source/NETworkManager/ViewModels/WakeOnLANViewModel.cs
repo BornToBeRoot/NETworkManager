@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using MahApps.Metro.Controls;
 using NETworkManager.Models.Profile;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels
 {
@@ -19,6 +20,7 @@ namespace NETworkManager.ViewModels
     {
         #region  Variables 
         private readonly IDialogCoordinator _dialogCoordinator;
+        private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
 
         private readonly bool _isLoading;
 
@@ -183,8 +185,22 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                RefreshProfiles();
+                StartDelayedSearch();                
 
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isSearching;
+        public bool IsSearching
+        {
+            get => _isSearching;
+            set
+            {
+                if (value == _isSearching)
+                    return;
+
+                _isSearching = value;
                 OnPropertyChanged();
             }
         }
@@ -268,6 +284,8 @@ namespace NETworkManager.ViewModels
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.WakeOnLAN_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
+            _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+            _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
             LoadSettings();
 
@@ -378,6 +396,30 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private void StartDelayedSearch()
+        {
+            if (!IsSearching)
+            {
+                IsSearching = true;
+
+                _searchDispatcherTimer.Start();
+            }
+            else
+            {
+                _searchDispatcherTimer.Stop();
+                _searchDispatcherTimer.Start();
+            }
+        }
+
+        private void StopDelayedSearch()
+        {
+            _searchDispatcherTimer.Stop();
+
+            RefreshProfiles();
+
+            IsSearching = false;
+        }
+
         private void ResizeClient(bool dueToChangedSize)
         {
             _canProfileWidthChange = false;
@@ -425,6 +467,13 @@ namespace NETworkManager.ViewModels
         public void OnProfileDialogClose()
         {
 
+        }
+        #endregion
+
+        #region Event
+        private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            StopDelayedSearch();
         }
         #endregion
     }
