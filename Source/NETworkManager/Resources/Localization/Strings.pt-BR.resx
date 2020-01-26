@@ -160,10 +160,10 @@
     <value>Confirm</value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>Connect</value>
+    <value>Conectar</value>
   </data>
   <data name="ConnectAs" xml:space="preserve">
-    <value>Connect as</value>
+    <value>Conecte-se como</value>
   </data>
   <data name="CopyProfile" xml:space="preserve">
     <value>Copiar perfil</value>
@@ -301,16 +301,16 @@
     <value>Ping</value>
   </data>
   <data name="Port" xml:space="preserve">
-    <value>Port</value>
+    <value>Porta</value>
   </data>
   <data name="Portable" xml:space="preserve">
-    <value>Portable</value>
+    <value>Portátil</value>
   </data>
   <data name="PortScanner" xml:space="preserve">
     <value>Port Scanner</value>
   </data>
   <data name="Profiles" xml:space="preserve">
-    <value>Profiles</value>
+    <value>Perfis</value>
   </data>
   <data name="PuTTY" xml:space="preserve">
     <value>PuTTY</value>
@@ -319,7 +319,7 @@
     <value>Query</value>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
+    <value>Área de trabalho remota</value>
   </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
@@ -380,9 +380,6 @@
   </data>
   <data name="Traceroute" xml:space="preserve">
     <value>Traceroute</value>
-  </data>
-  <data name="Transparency" xml:space="preserve">
-    <value>Transparency</value>
   </data>
   <data name="Tray" xml:space="preserve">
     <value>Tray</value>
@@ -448,10 +445,10 @@
     <value>Delete...</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>Descrição</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
-    <value>DHCP enabled</value>
+    <value>DHCP ativado</value>
   </data>
   <data name="DHCPLeaseExpires" xml:space="preserve">
     <value>DHCP lease expires</value>
@@ -484,7 +481,7 @@
     <value>Hostname</value>
   </data>
   <data name="IPAddress" xml:space="preserve">
-    <value>IP address</value>
+    <value>Endereço IP</value>
   </data>
   <data name="IPAddresses" xml:space="preserve">
     <value>Endereços IP</value>
@@ -502,7 +499,7 @@
     <value>IPv6</value>
   </data>
   <data name="IPv6Address" xml:space="preserve">
-    <value>IPv6 address</value>
+    <value>Endereço IPV6</value>
   </data>
   <data name="IPv6AddressLinkLocal" xml:space="preserve">
     <value>Link-local IPv6 address</value>
@@ -526,7 +523,7 @@
     <value>Minimum</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Nome</value>
   </data>
   <data name="NetworkAddress" xml:space="preserve">
     <value>Endereço de rede</value>
@@ -550,10 +547,10 @@
     <value>Packets transmitted</value>
   </data>
   <data name="PhysicalAddress" xml:space="preserve">
-    <value>PhysicalAddress</value>
+    <value>Endereço Físico</value>
   </data>
   <data name="PreferredProtocolWhenResolvingHostname" xml:space="preserve">
-    <value>Preferred protocol when resolving hostname:</value>
+    <value>Protocolo preferido ao resolver o nome do host:</value>
   </data>
   <data name="PrimaryDNSServer" xml:space="preserve">
     <value>Primary DNS server</value>
@@ -712,7 +709,7 @@
     <value>Automatically update every</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>back</value>
+    <value>voltar</value>
   </data>
   <data name="Backup" xml:space="preserve">
     <value>Backup</value>
@@ -819,12 +816,6 @@
   <data name="DeleteProfileMessage" xml:space="preserve">
     <value>Os perfis selecionados serão excluídos permanentemente.</value>
   </data>
-  <data name="DisableTransparencyInTheSettingsToUsePuTTY" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PuTTY.</value>
-  </data>
-  <data name="DisableTransparencyInTheSettingsToUseRemoteDesktop" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use Remote Desktop.</value>
-  </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>DNS autconfiguration</value>
   </data>
@@ -841,7 +832,7 @@
     <value>Domain</value>
   </data>
   <data name="Duration" xml:space="preserve">
-    <value>Duration</value>
+    <value>Duração</value>
   </data>
   <data name="EditDots" xml:space="preserve">
     <value>Edit...</value>
@@ -851,9 +842,6 @@
   </data>
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
     <value>Enable Credential Security Support Provider</value>
-  </data>
-  <data name="EnableTransparency" xml:space="preserve">
-    <value>Ativar transparência</value>
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>End time</value>
@@ -1095,9 +1083,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Responses" xml:space="preserve">
     <value>Responses</value>
   </data>
-  <data name="RestartTheApplicationSoThatAllChangesAreApplied" xml:space="preserve">
-    <value>Restart the application so that all settings are applied!</value>
-  </data>
   <data name="Rlogin" xml:space="preserve">
     <value>Rlogin</value>
   </data>
@@ -1144,7 +1129,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Service</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset (profiles are not affected!)</value>
+    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset!
+(Profile files are not affected!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Settings successfully exported!</value>
@@ -1431,9 +1417,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Validate" xml:space="preserve">
     <value>Validate</value>
   </data>
-  <data name="SettingsAppearanceTransparencyWarning" xml:space="preserve">
-    <value>Some features can not be used when transparency is enabled. If you change this setting, the application must be restarted.</value>
-  </data>
   <data name="Connections" xml:space="preserve">
     <value>Connections</value>
   </data>
@@ -1471,7 +1454,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Amber</value>
   </data>
   <data name="Appearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>Aparência</value>
   </data>
   <data name="Applications" xml:space="preserve">
     <value>Applications</value>
@@ -1869,9 +1852,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
     <value>Configure the path to TigerVNC in the settings...</value>
   </data>
-  <data name="DisableTransparencyInTheSettingsToUseTigerVNC" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use TigerVNC.</value>
-  </data>
   <data name="TigerVNCLocationDots" xml:space="preserve">
     <value>TigerVNC location...</value>
   </data>
@@ -1950,9 +1930,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
     <value>Configure the path to PowerShell in the settings...</value>
   </data>
-  <data name="DisableTransparencyInTheSettingsToUsePowerShell" xml:space="preserve">
-    <value>Disable the transparency in the settings (General/Appearance) and restart the application afterwards to use PowerShell.</value>
-  </data>
   <data name="PowerShellProcessHasEnded" xml:space="preserve">
     <value>PowerShell process has ended!</value>
   </data>
@@ -1981,16 +1958,16 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Hide</value>
   </data>
   <data name="TotalBytesReceived" xml:space="preserve">
-    <value>Total bytes received</value>
+    <value>Total de bytes recebidos</value>
   </data>
   <data name="TotalBytesSent" xml:space="preserve">
-    <value>Total bytes sent</value>
+    <value>Total de bytes enviados</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
   </data>
   <data name="Bandwidth" xml:space="preserve">
-    <value>Bandwidth</value>
+    <value>Largura de Banda</value>
   </data>
   <data name="Upload" xml:space="preserve">
     <value>Upload</value>
@@ -2069,7 +2046,7 @@ URL: https://twitter.com/BornToBeRoot_DE</value>
     <value>Connection</value>
   </data>
   <data name="Computer" xml:space="preserve">
-    <value>Computer</value>
+    <value>Computador</value>
   </data>
   <data name="GatewayRouter" xml:space="preserve">
     <value>Gateway / Router</value>
@@ -2346,10 +2323,10 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>WiFi</value>
   </data>
   <data name="Networks" xml:space="preserve">
-    <value>Networks</value>
+    <value>Redes</value>
   </data>
   <data name="SearchingForNetworksDots" xml:space="preserve">
-    <value>Searching for networks...</value>
+    <value>Procurando redes...</value>
   </data>
   <data name="NoWiFiAdaptersFound" xml:space="preserve">
     <value>No WiFi adapters found!</value>
@@ -2358,7 +2335,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Searching for WiFi adapters...</value>
   </data>
   <data name="NoWiFiNetworksFound" xml:space="preserve">
-    <value>No WiFi networks found!</value>
+    <value>Nenhuma rede WiFi encontrada!</value>
   </data>
   <data name="Channels" xml:space="preserve">
     <value>Channels</value>
@@ -2375,11 +2352,11 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="SignalStrength" xml:space="preserve">
     <value>Signal strength</value>
   </data>
-  <data name="CurrentDownload" xml:space="preserve">
-    <value>Current download</value>
+  <data name="CurrentDownloadSpeed" xml:space="preserve">
+    <value>Velocidade atual de download</value>
   </data>
-  <data name="CurrentUpload" xml:space="preserve">
-    <value>Current upload</value>
+  <data name="CurrentUploadSpeed" xml:space="preserve">
+    <value>Velocidade atual de upload</value>
   </data>
   <data name="MeasuredTime" xml:space="preserve">
     <value>Measured time</value>
@@ -2528,5 +2505,86 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   </data>
   <data name="Patch" xml:space="preserve">
     <value>Patch</value>
+  </data>
+  <data name="RestartTheApplicationToChangeTheLanguage" xml:space="preserve">
+    <value>Restart the application to change the language!</value>
+  </data>
+  <data name="CurrentlyDownloaded" xml:space="preserve">
+    <value>Currently downloaded</value>
+  </data>
+  <data name="CurrentlyUploaded" xml:space="preserve">
+    <value>Currently uploaded</value>
+  </data>
+  <data name="LldpCdp" xml:space="preserve">
+    <value>LLDP / CDP</value>
+  </data>
+  <data name="RestartAsAdmin" xml:space="preserve">
+    <value>Restart as Administrator</value>
+  </data>
+  <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
+    <value>To analyze network packets, the application must be started with elevated rights!</value>
+  </data>
+  <data name="Capture" xml:space="preserve">
+    <value>Capture</value>
+  </data>
+  <data name="Device" xml:space="preserve">
+    <value>Device</value>
+  </data>
+  <data name="DurationS" xml:space="preserve">
+    <value>Duration (s)</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="VLAN" xml:space="preserve">
+    <value>VLAN</value>
+  </data>
+  <data name="CaptureNetworkPacketsToViewLLDPorCDPInformation" xml:space="preserve">
+    <value>Capture network packets to view LLDP or CDP information!</value>
+  </data>
+  <data name="NoDiscoveryProtocolPackagesReceived" xml:space="preserve">
+    <value>No discovery protocol packages received!</value>
+  </data>
+  <data name="CapturingNetworkPackagesDots" xml:space="preserve">
+    <value>Capturing network packages...</value>
+  </data>
+  <data name="DiscoveryProtocol" xml:space="preserve">
+    <value>Discovery Protocol</value>
+  </data>
+  <data name="DiscoveryProtocolIdentifier_CDP" xml:space="preserve">
+    <value>CDP</value>
+  </data>
+  <data name="DiscoveryProtocolIdentifier_LLDP" xml:space="preserve">
+    <value>LLDP</value>
+  </data>
+  <data name="DiscoveryProtocolIdentifier_LLDP_CDP" xml:space="preserve">
+    <value>LLDP / CDP</value>
+  </data>
+  <data name="XXSecondsRemainingDots" xml:space="preserve">
+    <value>{0} seconds remaining...</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="HelpMessage_ParameterApplication" xml:space="preserve">
+    <value>Application to display.</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Parameter</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="WebConsole" xml:space="preserve">
+    <value>Web Console</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="Browser" xml:space="preserve">
+    <value>Browser</value>
+  </data>
+  <data name="WebViewControlCertificateIsInvalidMessage" xml:space="preserve">
+    <value>The WebView control (Microsoft Edge) cannot connect to websites with an invalid certificate!</value>
   </data>
 </root>

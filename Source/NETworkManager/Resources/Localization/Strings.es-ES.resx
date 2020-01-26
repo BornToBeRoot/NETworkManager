@@ -381,9 +381,6 @@
   <data name="Traceroute" xml:space="preserve">
     <value>Traceroute</value>
   </data>
-  <data name="Transparency" xml:space="preserve">
-    <value>Transparencia</value>
-  </data>
   <data name="Tray" xml:space="preserve">
     <value>Fijar</value>
   </data>
@@ -819,12 +816,6 @@
   <data name="DeleteProfileMessage" xml:space="preserve">
     <value>Los perfiles seleccionados se eliminarán permanentemente.</value>
   </data>
-  <data name="DisableTransparencyInTheSettingsToUsePuTTY" xml:space="preserve">
-    <value>Desactive la transparencia en la configuración (General &gt; Apariencia) y luego reinicie la aplicación para usar PuTTY.</value>
-  </data>
-  <data name="DisableTransparencyInTheSettingsToUseRemoteDesktop" xml:space="preserve">
-    <value>Desactive la transparencia en la configuración (General &gt; Apariencia) y luego reinicie la aplicación para usar el escritorio remoto.</value>
-  </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Configuración automática de DNS</value>
   </data>
@@ -851,9 +842,6 @@
   </data>
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
     <value>Habilitar proveedor de soporte de seguridad de credenciales</value>
-  </data>
-  <data name="EnableTransparency" xml:space="preserve">
-    <value>Habilitar transparencia</value>
   </data>
   <data name="EndTime" xml:space="preserve">
     <value>Fecha/hora de finalización</value>
@@ -1095,9 +1083,6 @@ Crear uno...</value>
   <data name="Responses" xml:space="preserve">
     <value>Respuestas</value>
   </data>
-  <data name="RestartTheApplicationSoThatAllChangesAreApplied" xml:space="preserve">
-    <value>¡Reiniciar la aplicación para que se apliquen todas las configuraciones!</value>
-  </data>
   <data name="Rlogin" xml:space="preserve">
     <value>Rlogin</value>
   </data>
@@ -1144,7 +1129,8 @@ Crear uno...</value>
     <value>Servicio</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>El archivo de configuración encontrado está dañado o no es compatible con esta versión. Se ha restablecido toda la configuración (¡los perfiles no estarán afectados!)</value>
+    <value>El archivo de configuración encontrado está dañado o no es compatible con esta versión. ¡Se ha restablecido toda la configuración!
+(¡Los archivos de perfil no están afectados!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>¡Configuración exportada con éxito!</value>
@@ -1430,9 +1416,6 @@ Crear uno...</value>
   </data>
   <data name="Validate" xml:space="preserve">
     <value>Validar</value>
-  </data>
-  <data name="SettingsAppearanceTransparencyWarning" xml:space="preserve">
-    <value>Algunas características no se pueden usar cuando la transparencia está habilitada. Si cambia esta configuración, la aplicación debe reiniciarse.</value>
   </data>
   <data name="Connections" xml:space="preserve">
     <value>Conexiones</value>
@@ -1869,9 +1852,6 @@ Crear uno...</value>
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
     <value>Configure la ruta de TigerVNC en la configuración...</value>
   </data>
-  <data name="DisableTransparencyInTheSettingsToUseTigerVNC" xml:space="preserve">
-    <value>Desactive la transparencia en la configuración (General &gt; Apariencia) y luego reinicie la aplicación para usar TigerVNC.</value>
-  </data>
   <data name="TigerVNCLocationDots" xml:space="preserve">
     <value>Ubicación de TigerVNC...</value>
   </data>
@@ -1949,9 +1929,6 @@ Crear uno...</value>
   </data>
   <data name="ConfigureThePathToPowerShellInTheSettingsDots" xml:space="preserve">
     <value>Configure la ruta de PowerShell en la configuración...</value>
-  </data>
-  <data name="DisableTransparencyInTheSettingsToUsePowerShell" xml:space="preserve">
-    <value>Desactive la transparencia en la configuración (General &gt; Apariencia) y luego reinicie la aplicación para usar PowerShell.</value>
   </data>
   <data name="PowerShellProcessHasEnded" xml:space="preserve">
     <value>¡El proceso de PowerShell ha finalizado!</value>
@@ -2375,11 +2352,11 @@ $$hostname$$	--&gt;	Nombre del host</value>
   <data name="SignalStrength" xml:space="preserve">
     <value>Intensidad de señal</value>
   </data>
-  <data name="CurrentDownload" xml:space="preserve">
-    <value>Descarga actual</value>
+  <data name="CurrentDownloadSpeed" xml:space="preserve">
+    <value>Velocidad de descarga actual</value>
   </data>
-  <data name="CurrentUpload" xml:space="preserve">
-    <value>Subida actual</value>
+  <data name="CurrentUploadSpeed" xml:space="preserve">
+    <value>Velocidad de subida actual</value>
   </data>
   <data name="MeasuredTime" xml:space="preserve">
     <value>Tiempo cronometrado</value>
@@ -2528,5 +2505,86 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   </data>
   <data name="Patch" xml:space="preserve">
     <value>Parche</value>
+  </data>
+  <data name="RestartTheApplicationToChangeTheLanguage" xml:space="preserve">
+    <value>¡Reinicie la aplicación para cambiar el idioma!</value>
+  </data>
+  <data name="CurrentlyDownloaded" xml:space="preserve">
+    <value>Descargado actualmente</value>
+  </data>
+  <data name="CurrentlyUploaded" xml:space="preserve">
+    <value>Subido actualmente</value>
+  </data>
+  <data name="LldpCdp" xml:space="preserve">
+    <value>LLDP / CDP</value>
+  </data>
+  <data name="RestartAsAdmin" xml:space="preserve">
+    <value>Restart as Administrator</value>
+  </data>
+  <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
+    <value>¡Para analizar los paquetes de red, la aplicación debe iniciarse con derechos elevados!</value>
+  </data>
+  <data name="Capture" xml:space="preserve">
+    <value>Capturar</value>
+  </data>
+  <data name="Device" xml:space="preserve">
+    <value>Dispositivo</value>
+  </data>
+  <data name="DurationS" xml:space="preserve">
+    <value>Duración (s)</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Modelo</value>
+  </data>
+  <data name="VLAN" xml:space="preserve">
+    <value>VLAN</value>
+  </data>
+  <data name="CaptureNetworkPacketsToViewLLDPorCDPInformation" xml:space="preserve">
+    <value>¡Capturar paquetes de red para ver la información LLDP o CDP!</value>
+  </data>
+  <data name="NoDiscoveryProtocolPackagesReceived" xml:space="preserve">
+    <value>¡No se han recibido paquetes del protocolo de descubrimiento!</value>
+  </data>
+  <data name="CapturingNetworkPackagesDots" xml:space="preserve">
+    <value>Capturando paquetes de red...</value>
+  </data>
+  <data name="DiscoveryProtocol" xml:space="preserve">
+    <value>Protocolo de descubrimiento</value>
+  </data>
+  <data name="DiscoveryProtocolIdentifier_CDP" xml:space="preserve">
+    <value>CDP</value>
+  </data>
+  <data name="DiscoveryProtocolIdentifier_LLDP" xml:space="preserve">
+    <value>LLDP</value>
+  </data>
+  <data name="DiscoveryProtocolIdentifier_LLDP_CDP" xml:space="preserve">
+    <value>LLDP / CDP</value>
+  </data>
+  <data name="XXSecondsRemainingDots" xml:space="preserve">
+    <value>{0} segundos restantes...</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Ayuda</value>
+  </data>
+  <data name="HelpMessage_ParameterApplication" xml:space="preserve">
+    <value>Aplicación a mostrar.</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Parámetro</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="WebConsole" xml:space="preserve">
+    <value>Consola web</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>Recargar</value>
+  </data>
+  <data name="Browser" xml:space="preserve">
+    <value>Navegador</value>
+  </data>
+  <data name="WebViewControlCertificateIsInvalidMessage" xml:space="preserve">
+    <value>¡El control WebView (Microsoft Edge) no puede conectarse a sitios web con un certificado no válido!</value>
   </data>
 </root>
