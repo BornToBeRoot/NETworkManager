@@ -16,6 +16,7 @@ using System.Windows;
 using NETworkManager.Models.TigerVNC;
 using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Profile;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels
 {
@@ -23,6 +24,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
+        private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
 
         public IInterTabClient InterTabClient { get; }
         public ObservableCollection<DragablzTabItem> TabItems { get; }
@@ -86,8 +88,22 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                RefreshProfiles();
+                StartDelayedSearch();
 
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isSearching;
+        public bool IsSearching
+        {
+            get => _isSearching;
+            set
+            {
+                if (value == _isSearching)
+                    return;
+
+                _isSearching = value;
                 OnPropertyChanged();
             }
         }
@@ -177,6 +193,9 @@ namespace NETworkManager.ViewModels
 
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.TigerVNC_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+
+            _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+            _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
             LoadSettings();
 
@@ -399,6 +418,30 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.TigerVNC_PortHistory.Add(x));
         }
 
+        private void StartDelayedSearch()
+        {
+            if (!IsSearching)
+            {
+                IsSearching = true;
+
+                _searchDispatcherTimer.Start();
+            }
+            else
+            {
+                _searchDispatcherTimer.Stop();
+                _searchDispatcherTimer.Start();
+            }
+        }
+
+        private void StopDelayedSearch()
+        {
+            _searchDispatcherTimer.Stop();
+
+            RefreshProfiles();
+
+            IsSearching = false;
+        }
+
         private void ResizeProfile(bool dueToChangedSize)
         {
             _canProfileWidthChange = false;
@@ -445,6 +488,13 @@ namespace NETworkManager.ViewModels
         public void OnProfileDialogClose()
         {
             ConfigurationManager.Current.FixAirspace = false;
+        }
+        #endregion
+
+        #region Event
+        private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            StopDelayedSearch();
         }
         #endregion
     }

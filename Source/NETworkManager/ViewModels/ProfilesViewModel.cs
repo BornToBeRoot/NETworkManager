@@ -61,8 +61,22 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                _searchDispatcherTimer.Start();
+                StartDelayedSearch();
 
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isSearching;
+        public bool IsSearching
+        {
+            get => _isSearching;
+            set
+            {
+                if (value == _isSearching)
+                    return;
+
+                _isSearching = value;
                 OnPropertyChanged();
             }
         }
@@ -302,6 +316,30 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
+        private void StartDelayedSearch()
+        {
+            if (!IsSearching)
+            {
+                IsSearching = true;
+
+                _searchDispatcherTimer.Start();
+            }
+            else
+            {
+                _searchDispatcherTimer.Stop();
+                _searchDispatcherTimer.Start();
+            }
+        }
+
+        private void StopDelayedSearch()
+        {
+            _searchDispatcherTimer.Stop();
+
+            RefreshProfiles();
+
+            IsSearching = false;
+        }
+
         public void RefreshProfiles()
         {
             Profiles.Refresh();
@@ -311,9 +349,7 @@ namespace NETworkManager.ViewModels
         #region Event
         private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
         {
-            _searchDispatcherTimer.Stop();
-
-            RefreshProfiles();
+            StopDelayedSearch();
         }
         #endregion
     }
