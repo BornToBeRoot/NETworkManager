@@ -3560,6 +3560,15 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Microsoft.Windows.SDK.Contracts is required for this feature but not available on this system (e.g. on Windows Server)..
+        /// </summary>
+        public static string MicrosoftWindowsSDKContractsIsNotAvailable {
+            get {
+                return ResourceManager.GetString("MicrosoftWindowsSDKContractsIsNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimize main window instead of terminating the application.
         /// </summary>
         public static string MinimizeInsteadOfTerminating {

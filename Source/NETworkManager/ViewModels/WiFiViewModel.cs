@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -22,6 +23,20 @@ namespace NETworkManager.ViewModels
         private readonly bool _isLoading;
         private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
         private bool _isTimerPaused;
+
+        private bool _sdkContractsFailedToLoad;
+        public bool SDKContractsFailedToLoad
+        {
+            get => _sdkContractsFailedToLoad;
+            set
+            {
+                if (value == _sdkContractsFailedToLoad)
+                    return;
+
+                _sdkContractsFailedToLoad = value;
+                OnPropertyChanged();
+            }
+        }
 
         private bool _isAdaptersLoading;
         public bool IsAdaptersLoading
@@ -174,7 +189,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-
         private bool _show5GHzNetworks;
         public bool Show5GHzNetworks
         {
@@ -306,14 +320,21 @@ namespace NETworkManager.ViewModels
         {
             IsAdaptersLoading = true;
 
-            Adapters = await WiFi.GetAdapterAsync();
-
-            // Get the last selected interface, if it is still available on this machine...
-            if (Adapters.Count > 0)
+            try
             {
-                var info = Adapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == SettingsManager.Current.WiFi_InterfaceId);
+                Adapters = await WiFi.GetAdapterAsync();
 
-                SelectedAdapter = info ?? Adapters[0];
+                // Get the last selected interface, if it is still available on this machine...
+                if (Adapters.Count > 0)
+                {
+                    var info = Adapters.FirstOrDefault(s => s.NetworkInterfaceInfo.Id.ToString() == SettingsManager.Current.WiFi_InterfaceId);
+
+                    SelectedAdapter = info ?? Adapters[0];
+                }
+            }
+            catch (FileNotFoundException) // This exception is thrown, when the Microsoft.Windows.SDK.Contracts is not available...
+            {
+                SDKContractsFailedToLoad = true;
             }
 
             IsAdaptersLoading = false;
@@ -330,10 +351,17 @@ namespace NETworkManager.ViewModels
             if (SelectedAdapter != null)
                 id = SelectedAdapter.NetworkInterfaceInfo.Id;
 
-            Adapters = await WiFi.GetAdapterAsync();
+            try
+            {
+                Adapters = await WiFi.GetAdapterAsync();
 
-            if (Adapters.Count > 0)
-                SelectedAdapter = string.IsNullOrEmpty(id) ? Adapters.FirstOrDefault() : Adapters.FirstOrDefault(x => x.NetworkInterfaceInfo.Id == id);
+                if (Adapters.Count > 0)
+                    SelectedAdapter = string.IsNullOrEmpty(id) ? Adapters.FirstOrDefault() : Adapters.FirstOrDefault(x => x.NetworkInterfaceInfo.Id == id);
+            }
+            catch (FileNotFoundException) // This exception is thrown, when the Microsoft.Windows.SDK.Contracts is not available...
+            {
+                SDKContractsFailedToLoad = true;
+            }
 
             IsAdaptersLoading = false;
         }
