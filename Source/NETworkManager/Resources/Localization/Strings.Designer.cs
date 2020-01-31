@@ -6526,15 +6526,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This feature is only available in Windows 10 / Server 2016 or later!.
-        /// </summary>
-        public static string ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater {
-            get {
-                return ResourceManager.GetString("ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to This will reset all settings!.
         /// </summary>
         public static string ThisWillResetAllSettings {

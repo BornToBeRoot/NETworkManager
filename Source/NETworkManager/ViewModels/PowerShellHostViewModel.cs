@@ -58,8 +58,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public bool IsNewPowerShellWindowAvailable => ConfigurationManager.Current.OSVersion.Major >= 10;
         #region Profiles
 
         public ICollectionView Profiles { get; }

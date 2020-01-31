@@ -1936,9 +1936,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="FilePath" xml:space="preserve">
     <value>File path</value>
   </data>
-  <data name="ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater" xml:space="preserve">
-    <value>This feature is only available in Windows 10 / Server 2016 or later!</value>
-  </data>
   <data name="OverrideDefaultSettings" xml:space="preserve">
     <value>Override default settings</value>
   </data>
