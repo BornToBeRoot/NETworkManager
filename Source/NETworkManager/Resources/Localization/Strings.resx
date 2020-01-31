@@ -897,9 +897,6 @@
   <data name="InheritHostFromDefault" xml:space="preserve">
     <value>Inherit host from default</value>
   </data>
-  <data name="InstallRDP8dot1Message" xml:space="preserve">
-    <value>You must install the Remote Desktop Protocol (RDP) version 8.1 on your system to use the Remote Desktop functionality!</value>
-  </data>
   <data name="IPRange" xml:space="preserve">
     <value>IP range</value>
   </data>
@@ -1302,12 +1299,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   </data>
   <data name="DeleteTable" xml:space="preserve">
     <value>Delete table</value>
-  </data>
-  <data name="DocumentationTitle_00001" xml:space="preserve">
-    <value>How to install RDP 8.1 on Windows 7/Server 2008 R2</value>
-  </data>
-  <data name="DocumentationTitle_00002" xml:space="preserve">
-    <value>How to create a custom theme and accent?</value>
   </data>
   <data name="EnterLocationDots" xml:space="preserve">
     <value>Enter location...</value>

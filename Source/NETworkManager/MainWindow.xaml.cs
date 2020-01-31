@@ -1208,8 +1208,7 @@ namespace NETworkManager
 
         private void OpenDocumentationAction()
         {
-            // ToDo: if(settingsView) --> Show help for settings ?!
-            DocumentationManager.OpenDocumentation(DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
+            DocumentationManager.OpenDocumentation(ShowSettingsView ? DocumentationIdentifier.Default : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
         }
 
         public ICommand OpenApplicationListCommand

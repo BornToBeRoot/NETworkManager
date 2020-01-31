@@ -1942,24 +1942,6 @@ namespace NETworkManager.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to How to install RDP 8.1 on Windows 7/Server 2008 R2.
-        /// </summary>
-        public static string DocumentationTitle_00001 {
-            get {
-                return ResourceManager.GetString("DocumentationTitle_00001", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to How to create a custom theme and accent?.
-        /// </summary>
-        public static string DocumentationTitle_00002 {
-            get {
-                return ResourceManager.GetString("DocumentationTitle_00002", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Domain.
         /// </summary>
         public static string Domain {
@@ -3070,15 +3052,6 @@ namespace NETworkManager.Resources.Localization {
         public static string InheritHostFromDefault {
             get {
                 return ResourceManager.GetString("InheritHostFromDefault", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must install the Remote Desktop Protocol (RDP) version 8.1 on your system to use the Remote Desktop functionality!.
-        /// </summary>
-        public static string InstallRDP8dot1Message {
-            get {
-                return ResourceManager.GetString("InstallRDP8dot1Message", resourceCulture);
             }
         }
         

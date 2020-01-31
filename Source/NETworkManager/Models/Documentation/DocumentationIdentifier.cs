@@ -1,21 +1,23 @@
 ﻿namespace NETworkManager.Models.Documentation
-{
-    public enum DocumentationIdentifier
+{    public enum DocumentationIdentifier
     {
         Default,
         ApplicationDashboard,
         ApplicationNetworkInterface,
         ApplicationWiFi,
-        ApplicationIpScanner,
+        ApplicationIPScanner,
         ApplicationPortScanner,
         ApplicationPing,
+        ApplicationPingMonitor,
         ApplicationTraceroute,
         ApplicationDnsLookup,
         ApplicationRemoteDesktop,
         ApplicationPowerShell,
         ApplicationPutty,
         ApplicationTigerVNC,
+        ApplicationWebConsole,
         ApplicationSnmp,
+        ApplicationDiscoveryProtocol,
         ApplicationWakeOnLan,
         ApplicationHttpHeaders,
         ApplicationWhois,
@@ -23,8 +25,6 @@
         ApplicationLookup,
         ApplicationConnections,
         ApplicationListeners,
-        ApplicationArpTable,
-        HowToInstallRdp8Dot1OnWindows6Dot1,
-        HowToCreateCustomThemeAndAccent,
+        ApplicationArpTable
     }
 }

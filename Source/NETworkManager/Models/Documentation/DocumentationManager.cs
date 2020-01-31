@@ -18,16 +18,19 @@ namespace NETworkManager.Models.Documentation
             new DocumentationInfo(DocumentationIdentifier.ApplicationDashboard, @"/Application/Dashboard.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"/Application/NetworkInterface.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationWiFi, @"/Application/WiFi.md", GetLocalizationInfoList("en-US", "de-DE")),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationIpScanner, @"/Application/IPScanner.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationIPScanner, @"/Application/IPScanner.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPortScanner, @"/Application/PortScanner.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPing, @"/Application/Ping.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationPingMonitor, @"/Application/PingMonitor.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationTraceroute, @"/Application/Traceroute.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationDnsLookup, @"/Application/DNSLookup.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationRemoteDesktop, @"/Application/RemoteDesktop.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPowerShell, @"/Application/PowerShell.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPutty, @"/Application/PuTTY.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationTigerVNC, @"/Application/TigerVNC.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationWebConsole, @"/Application/WebConsole.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationSnmp, @"/Application/SNMP.md", GetLocalizationInfoList("en-US", "de-DE")),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationDiscoveryProtocol, @"/Application/DiscoveryProtocol.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationWakeOnLan, @"/Application/WakeOnLAN.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationHttpHeaders, @"/Application/HTTPHeaders.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationWhois, @"/Application/Whois.md", GetLocalizationInfoList("en-US", "de-DE")),
@@ -36,8 +39,6 @@ namespace NETworkManager.Models.Documentation
             new DocumentationInfo(DocumentationIdentifier.ApplicationConnections, @"/Application/Connections.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationListeners, @"/Application/Listeners.md", GetLocalizationInfoList("en-US", "de-DE")),
             new DocumentationInfo(DocumentationIdentifier.ApplicationArpTable, @"/Application/ARPTable.md", GetLocalizationInfoList("en-US", "de-DE")),
-            new DocumentationInfo(DocumentationIdentifier.HowToInstallRdp8Dot1OnWindows6Dot1, @"/HowTo/Install_RDP_8dot1_on_Windows6dot1.md", GetLocalizationInfoList("en-US", "de-DE")),
-            new DocumentationInfo(DocumentationIdentifier.HowToCreateCustomThemeAndAccent, @"/HowTo/Create_custom_theme_and_accent.md", GetLocalizationInfoList("en-US", "de-DE"))
         };
                
         // Get localized documentation url (if available), else return the english page
@@ -84,7 +85,7 @@ namespace NETworkManager.Models.Documentation
                 case ApplicationViewManager.Name.WiFi:
                     return DocumentationIdentifier.ApplicationWiFi;                    
                 case ApplicationViewManager.Name.IPScanner:
-                    return DocumentationIdentifier.ApplicationIpScanner;                    
+                    return DocumentationIdentifier.ApplicationIPScanner;                    
                 case ApplicationViewManager.Name.PortScanner:
                     return DocumentationIdentifier.ApplicationPortScanner;                    
                 case ApplicationViewManager.Name.Ping:

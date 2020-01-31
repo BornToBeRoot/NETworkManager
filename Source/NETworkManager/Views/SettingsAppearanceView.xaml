@@ -5,8 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:documentation="clr-namespace:NETworkManager.Models.Documentation"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsAppearanceViewModel}">
@@ -64,39 +62,7 @@
                 <ListView.SelectedItem>
                     <Binding Path="AccentSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
                 </ListView.SelectedItem>
-            </ListView>
-            <StackPanel Orientation="Horizontal">
-                <StackPanel.InputBindings>
-                    <MouseBinding Gesture="LeftClick" Command="{x:Static documentation:DocumentationManager.OpenDocumentationCommand}" CommandParameter="{x:Static documentation:DocumentationIdentifier.HowToCreateCustomThemeAndAccent}" />
-                </StackPanel.InputBindings>
-                <StackPanel.Style>
-                    <Style TargetType="{x:Type StackPanel}">
-                        <Setter Property="TextBlock.Foreground" Value="{DynamicResource AccentColorBrush}" />
-                        <Setter Property="Cursor" Value="Hand" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="TextBlock.Foreground" Value="{DynamicResource BlackColorBrush}" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
-                <Rectangle Width="16" Height="20">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}"/>
-                    </Rectangle.OpacityMask>
-                    <Rectangle.Style>
-                        <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Rectangle.Style>
-                </Rectangle>
-                <TextBlock Text="{x:Static localization:Strings.DocumentationTitle_00002}" FontSize="14" Margin="10,0,0,0" />
-            </StackPanel>
+            </ListView>           
         </StackPanel>        
     </StackPanel>
 </UserControl>

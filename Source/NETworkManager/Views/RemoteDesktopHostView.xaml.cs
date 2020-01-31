@@ -43,8 +43,7 @@ namespace NETworkManager.Views
             while (!_loaded)
                 await Task.Delay(100);
 
-            if (_viewModel.IsRDP8Dot1Available)
-                _viewModel.AddTab(host);
+            _viewModel.AddTab(host);
         }
 
         public void OnViewHide()
