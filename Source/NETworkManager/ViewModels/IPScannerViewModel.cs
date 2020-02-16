@@ -635,29 +635,33 @@ namespace NETworkManager.ViewModels
             var localIP = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse("1.1.1.1"));
 
             // Could not detect local ip address
-            if (localIP == null)
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.CouldNotDetectLocalIPAddressMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-
-            var subnetmaskDetected = false;
-
-            // Get subnetmask, based on ip address
-            foreach (var networkInterface in await NetworkInterface.GetNetworkInterfacesAsync())
+            if (localIP != null)
             {
-                if (networkInterface.IPv4Address.Contains(localIP))
+                var subnetmaskDetected = false;
+
+                // Get subnetmask, based on ip address
+                foreach (var networkInterface in await NetworkInterface.GetNetworkInterfacesAsync())
                 {
-                    subnetmaskDetected = true;
+                    if (networkInterface.IPv4Address.Contains(localIP))
+                    {
+                        subnetmaskDetected = true;
 
-                    Host = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.Subnetmask.First())}";
+                        Host = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.Subnetmask.First())}";
 
-                    // Fix: If the user clears the textbox and then clicks again on the button, the textbox remains empty...
-                    OnPropertyChanged(nameof(Host));
+                        // Fix: If the user clears the textbox and then clicks again on the button, the textbox remains empty...
+                        OnPropertyChanged(nameof(Host));
 
-                    break;
+                        break;
+                    }
                 }
-            }
 
-            if (!subnetmaskDetected)
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.CouldNotDetectSubnetmask, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                if (!subnetmaskDetected)
+                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.CouldNotDetectSubnetmask, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            }
+            else
+            {
+                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.CouldNotDetectLocalIPAddressMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            }
 
             IsIPRangeDetectionRunning = false;
         }
@@ -677,6 +681,7 @@ namespace NETworkManager.ViewModels
 
                 info.FilePath = Regex.Replace(info.FilePath, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
                 info.FilePath = Regex.Replace(info.FilePath, "\\$\\$ipaddress\\$\\$", ipAddress, RegexOptions.IgnoreCase);
+
                 if (!string.IsNullOrEmpty(info.Arguments))
                 {
                     info.Arguments = Regex.Replace(info.Arguments, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);

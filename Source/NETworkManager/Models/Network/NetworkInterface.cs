@@ -167,11 +167,16 @@ namespace NETworkManager.Models.Network
         {
             using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
             {
-                socket.Bind(new IPEndPoint(IPAddress.Any, 0));
-                socket.Connect(new IPEndPoint(remoteIPAddress, 0));
+                // return null on error...
+                try
+                {
+                    socket.Bind(new IPEndPoint(IPAddress.Any, 0));
+                    socket.Connect(new IPEndPoint(remoteIPAddress, 0));
 
-                if (socket.LocalEndPoint is IPEndPoint ipAddress)
-                    return ipAddress.Address;
+                    if (socket.LocalEndPoint is IPEndPoint ipAddress)
+                        return ipAddress.Address;
+                }
+                catch (SocketException) { }
             }
 
             return null;
@@ -199,7 +204,7 @@ namespace NETworkManager.Models.Network
 
             return null;
         }
-               
+
         public Task ConfigureNetworkInterfaceAsync(NetworkInterfaceConfig config)
         {
             return Task.Run(() => ConfigureNetworkInterface(config));
