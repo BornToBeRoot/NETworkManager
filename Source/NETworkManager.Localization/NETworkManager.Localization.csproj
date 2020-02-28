@@ -52,7 +52,7 @@
     <Compile Include="Translators\RemoteDesktopNetworkConnectionTypeTranslator.cs" />
     <Compile Include="Translators\TcpStateTranslator.cs" />
     <Compile Include="Translators\PortStatusTranslator.cs" />
-    <Compile Include="Translators\ITranslator.cs" />
+    <Compile Include="ILocalizationStringTranslator.cs" />
     <Compile Include="Translators\IPStatusTranslator.cs" />
     <Compile Include="LocalizationInfo.cs" />
     <Compile Include="LocalizationManager.cs" />

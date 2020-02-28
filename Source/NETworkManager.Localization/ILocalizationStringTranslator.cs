@@ -1,9 +1,9 @@
-﻿namespace NETworkManager.Localization.Translators
+﻿namespace NETworkManager.Localization
 {
     /// <summary>
     /// Interface to translate strings.
     /// </summary>
-    interface ITranslator
+    interface ILocalizationStringTranslator
     {
         /// <summary>
         /// Method to translate strings.
