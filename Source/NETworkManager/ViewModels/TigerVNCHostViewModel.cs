@@ -327,7 +327,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Connect
+                Title = Localization.LanguageFiles.Strings.Connect
             };
 
             var connectViewModel = new TigerVNCConnectViewModel(async instance =>

@@ -3,6 +3,8 @@ using System.Net;
 using System.Net.NetworkInformation;
 using NETworkManager.Models.Settings;
 using static NETworkManager.Models.Network.Connection;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Translators;
 
 namespace NETworkManager.Models.Network
 {
@@ -17,7 +19,7 @@ namespace NETworkManager.Models.Network
 
         public int LocalIPAddressInt32 => LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(LocalIPAddress) : 0;
         public int RemoteIPAddressInt32 => LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(RemoteIPAddress) : 0;
-        public string TcpStateTranslated => LocalizationManager.TranslateTcpState(TcpState);
+        public string TcpStateTranslated => TcpStateTranslator.GetInstance().Translate(TcpState.ToString());
 
         public ConnectionInfo()
         {

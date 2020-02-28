@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using NETworkManager.Resources.Localization;
+using NETworkManager.Localization.LanguageFiles;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators

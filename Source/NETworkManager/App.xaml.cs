@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Threading;
 using NETworkManager.Properties;
 using NETworkManager.Models.Profile;
+using NETworkManager.Localization;
 
 namespace NETworkManager
 {
@@ -69,7 +70,8 @@ namespace NETworkManager
                 ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
             }
 
-            NETworkManager.Resources.Localization.Strings.Culture = LocalizationManager.Culture;
+            // Init the location with the culture code...
+            Localization.LanguageFiles.Strings.Culture = LocalizationManager.GetInstance(SettingsManager.Current.Localization_CultureCode).Culture;
 
             if (CommandLineManager.Current.Help)
             {

@@ -9,7 +9,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return ProfileManager.ProfileFiles.Any(x => x.Name == value as string) ? new ValidationResult(false, Resources.Localization.Strings.ProfileNameAlreadyExists) : ValidationResult.ValidResult;
+            return ProfileManager.ProfileFiles.Any(x => x.Name == value as string) ? new ValidationResult(false, Localization.LanguageFiles.Strings.ProfileNameAlreadyExists) : ValidationResult.ValidResult;
         }
     }
 }

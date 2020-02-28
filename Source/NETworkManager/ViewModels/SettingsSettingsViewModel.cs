@@ -194,12 +194,12 @@ namespace NETworkManager.ViewModels
             {
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Resources.Localization.Strings.Overwrite;
-                settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
-                settings.FirstAuxiliaryButtonText = Resources.Localization.Strings.UseOther;
+                settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.Overwrite;
+                settings.NegativeButtonText = Localization.LanguageFiles.Strings.Cancel;
+                settings.FirstAuxiliaryButtonText = Localization.LanguageFiles.Strings.UseOther;
                 settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
 
-                var result = await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Overwrite, Resources.Localization.Strings.OverwriteSettingsInTheDestinationFolder, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
+                var result = await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Overwrite, Localization.LanguageFiles.Strings.OverwriteSettingsInTheDestinationFolder, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
 
                 switch (result)
                 {
@@ -240,9 +240,9 @@ namespace NETworkManager.ViewModels
             {
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             Location = string.Empty;
@@ -278,12 +278,12 @@ namespace NETworkManager.ViewModels
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Resources.Localization.Strings.Continue;
-            settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
+            settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.Continue;
+            settings.NegativeButtonText = Localization.LanguageFiles.Strings.Cancel;
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
                         
-            if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, Resources.Localization.Strings.SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.AreYouSure, Localization.LanguageFiles.Strings.SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
             try
@@ -296,7 +296,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                ImportStatusMessage = string.Format(Resources.Localization.Strings.ClouldNotImportFileSeeErrorMessageXX, ex.Message);
+                ImportStatusMessage = string.Format(Localization.LanguageFiles.Strings.ClouldNotImportFileSeeErrorMessageXX, ex.Message);
                 DisplayImportStatusMessage = true;
             }
         }
@@ -310,7 +310,7 @@ namespace NETworkManager.ViewModels
             using (var saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
                 Filter = GlobalStaticConfiguration.ZipFileExtensionFilter,
-                FileName = $"{AssemblyManager.Current.Name}_{Resources.Localization.Strings.Settings}_{Resources.Localization.Strings.Backup}#{TimestampHelper.GetTimestamp()}.zip"
+                FileName = $"{AssemblyManager.Current.Name}_{Localization.LanguageFiles.Strings.Settings}_{Localization.LanguageFiles.Strings.Backup}#{TimestampHelper.GetTimestamp()}.zip"
             })
             {
                 if (saveFileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
@@ -320,12 +320,12 @@ namespace NETworkManager.ViewModels
                 {
                     SettingsManager.Export(saveFileDialog.FileName);
 
-                    ExportStatusMessage = string.Format(Resources.Localization.Strings.FileExportedToXX, saveFileDialog.FileName);
+                    ExportStatusMessage = string.Format(Localization.LanguageFiles.Strings.FileExportedToXX, saveFileDialog.FileName);
                     DisplayExportStatusMessage = true;
                 }
                 catch (Exception ex)
                 {
-                    ExportStatusMessage = string.Format(Resources.Localization.Strings.ClouldNotExportFileSeeErrorMessageXX, ex.Message);
+                    ExportStatusMessage = string.Format(Localization.LanguageFiles.Strings.ClouldNotExportFileSeeErrorMessageXX, ex.Message);
                     DisplayExportStatusMessage = true;
                 }
             }
@@ -337,25 +337,25 @@ namespace NETworkManager.ViewModels
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Resources.Localization.Strings.Continue;
-            settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
+            settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.Continue;
+            settings.NegativeButtonText = Localization.LanguageFiles.Strings.Cancel;
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            var message = Resources.Localization.Strings.SelectedSettingsAreReset;
+            var message = Localization.LanguageFiles.Strings.SelectedSettingsAreReset;
 
-            message += Environment.NewLine + Environment.NewLine + $"* {Resources.Localization.Strings.TheSettingsLocationIsNotAffected}";
-            message += Environment.NewLine + $"* {Resources.Localization.Strings.ApplicationIsRestartedAfterwards}";
+            message += Environment.NewLine + Environment.NewLine + $"* {Localization.LanguageFiles.Strings.TheSettingsLocationIsNotAffected}";
+            message += Environment.NewLine + $"* {Localization.LanguageFiles.Strings.ApplicationIsRestartedAfterwards}";
 
-            if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.AreYouSure, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
             SettingsManager.Reset();
 
-            message = Resources.Localization.Strings.SettingsSuccessfullyReset;
-            message += Environment.NewLine + Environment.NewLine + Resources.Localization.Strings.TheApplicationWillBeRestarted;
+            message = Localization.LanguageFiles.Strings.SettingsSuccessfullyReset;
+            message += Environment.NewLine + Environment.NewLine + Localization.LanguageFiles.Strings.TheApplicationWillBeRestarted;
 
-            await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, message, MessageDialogStyle.Affirmative, settings);
+            await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Success, message, MessageDialogStyle.Affirmative, settings);
 
             // Restart the application
             ConfigurationManager.Current.ForceRestart = true;

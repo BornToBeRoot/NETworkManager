@@ -196,11 +196,11 @@ namespace NETworkManager.Controls
                 if (!_closing)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = NETworkManager.Localization.LanguageFiles.Strings.OK;
 
                     ConfigurationManager.Current.FixAirspace = true;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error,
+                    await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Localization.LanguageFiles.Strings.Error,
                         ex.Message, MessageDialogStyle.Affirmative, settings);
 
                     ConfigurationManager.Current.FixAirspace = false;

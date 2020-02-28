@@ -15,6 +15,8 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using System.Threading.Tasks;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Translators;
 
 namespace NETworkManager.ViewModels
 {
@@ -195,9 +197,9 @@ namespace NETworkManager.ViewModels
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
-
+                
                 // Search by local/remote IP Address, local/remote Port, Protocol and State
-                return o is ConnectionInfo info && (info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || LocalizationManager.TranslateTcpState(info.TcpState).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1);
+                return o is ConnectionInfo info && (info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.TcpStateTranslated.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
@@ -280,7 +282,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStateAction()
         {
-            CommonMethods.SetClipboard(LocalizationManager.TranslateTcpState(SelectedConnectionInfo.TcpState));
+            CommonMethods.SetClipboard(TcpStateTranslator.GetInstance().Translate(SelectedConnectionInfo.TcpState.ToString()));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -289,7 +291,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.LanguageFiles.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -303,9 +305,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, Localization.LanguageFiles.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.Connections_ExportFileType = instance.FileType;

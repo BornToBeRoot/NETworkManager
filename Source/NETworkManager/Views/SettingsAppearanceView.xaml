@@ -6,7 +6,7 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsAppearanceViewModel}">
     <UserControl.Resources>
         <!-- Converters -->

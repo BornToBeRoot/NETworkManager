@@ -24,6 +24,8 @@ using NETworkManager.Models.EventSystem;
 using NETworkManager.Enum;
 using System.Text.RegularExpressions;
 using NETworkManager.Models.Profile;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Translators;
 
 namespace NETworkManager.ViewModels
 {
@@ -410,7 +412,7 @@ namespace NETworkManager.ViewModels
 
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.AddProfile
+                Title = Localization.LanguageFiles.Strings.AddProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -483,8 +485,8 @@ namespace NETworkManager.ViewModels
         public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
-        {
-            CommonMethods.SetClipboard(LocalizationManager.TranslateIPStatus(SelectedHostResult.PingInfo.Status));
+        {            
+            CommonMethods.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedHostResult.PingInfo.Status.ToString()));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -656,11 +658,11 @@ namespace NETworkManager.ViewModels
                 }
 
                 if (!subnetmaskDetected)
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.CouldNotDetectSubnetmask, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, Localization.LanguageFiles.Strings.CouldNotDetectSubnetmask, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
             else
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.CouldNotDetectLocalIPAddressMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, Localization.LanguageFiles.Strings.CouldNotDetectLocalIPAddressMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             IsIPRangeDetectionRunning = false;
@@ -694,7 +696,7 @@ namespace NETworkManager.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.ResourceManager.GetString("Error", LocalizationManager.Culture), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.ResourceManager.GetString("Error", LocalizationManager.GetInstance().Culture), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                 }
             }
         }
@@ -716,7 +718,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.LanguageFiles.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -730,9 +732,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, Localization.LanguageFiles.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
@@ -782,7 +784,7 @@ namespace NETworkManager.ViewModels
 
         private void DnsResolveFailed(AggregateException e)
         {
-            StatusMessage = $"{Resources.Localization.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
+            StatusMessage = $"{Localization.LanguageFiles.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
             DisplayStatusMessage = true;
 
             ScanFinished();
@@ -790,7 +792,7 @@ namespace NETworkManager.ViewModels
 
         private void UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.LanguageFiles.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
 
             ScanFinished();

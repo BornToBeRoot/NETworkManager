@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NETworkManager.Resources.Localization {
+namespace NETworkManager.Localization.LanguageFiles {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace NETworkManager.Resources.Localization {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NETworkManager.Resources.Localization.StaticStrings", typeof(StaticStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NETworkManager.Localization.LanguageFiles.StaticStrings", typeof(StaticStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

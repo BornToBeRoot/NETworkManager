@@ -228,19 +228,9 @@
     <Compile Include="Models\WebConsole\WebConsoleSessionInfo.cs" />
     <Compile Include="Models\TigerVNC\TigerVNC.cs" />
     <Compile Include="Models\TigerVNC\TigerVNCSessionInfo.cs" />
-    <Compile Include="Resources\Localization\StaticStrings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StaticStrings.resx</DependentUpon>
-    </Compile>
     <Compile Include="GlobalStaticConfiguration.cs" />
     <Compile Include="ProfileViewInfo.cs" />
     <Compile Include="ProfileViewManager.cs" />
-    <Compile Include="Resources\Localization\Strings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.resx</DependentUpon>
-    </Compile>
     <Compile Include="StatusWindow.xaml.cs">
       <DependentUpon>StatusWindow.xaml</DependentUpon>
     </Compile>
@@ -708,19 +698,10 @@
     <Content Include="Licenses\SharpSnmpLib.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Localization\Flags\de-DE.png" />
-    <Resource Include="Resources\Localization\Flags\en-US.png" />
-    <Resource Include="Resources\Localization\Flags\ru-RU.png" />
-    <Resource Include="Resources\Localization\Flags\es-ES.png" />
     <SplashScreen Include="Resources\Images\SplashScreen.png" />
-    <Resource Include="Resources\Localization\Flags\fr-FR.png" />
-    <Resource Include="Resources\Localization\Flags\nl-NL.png" />
-    <Resource Include="Resources\Localization\Flags\it-IT.png" />
-    <Resource Include="Resources\Localization\Flags\zh-CN.png" />
     <Content Include="Licenses\DnsClient.NET.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Resources\Localization\Flags\pt-BR.png" />
     <Content Include="Resources\WhoisServers.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1148,8 +1129,6 @@
     <Compile Include="Models\Settings\CommandLineManager.cs" />
     <Compile Include="Models\Settings\ConfigurationInfo.cs" />
     <Compile Include="Models\Settings\ConfigurationManager.cs" />
-    <Compile Include="Models\Settings\LocalizationInfo.cs" />
-    <Compile Include="Models\Settings\LocalizationManager.cs" />
     <Compile Include="Models\Settings\SettingsInfo.cs" />
     <Compile Include="Models\Settings\SettingsManager.cs" />
     <Compile Include="SettingsViewInfo.cs" />
@@ -1334,23 +1313,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Localization\StaticStrings.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>StaticStrings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Localization\Strings.es-ES.resx" />
-    <EmbeddedResource Include="Resources\Localization\Strings.fr-FR.resx" />
-    <EmbeddedResource Include="Resources\Localization\Strings.it-IT.resx" />
-    <EmbeddedResource Include="Resources\Localization\Strings.nl-NL.resx" />
-    <EmbeddedResource Include="Resources\Localization\Strings.pt-BR.resx" />
-    <EmbeddedResource Include="Resources\Localization\Strings.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Localization\Strings.de-DE.resx" />
-    <EmbeddedResource Include="Resources\Localization\Strings.ru-RU.resx" />
-    <EmbeddedResource Include="Resources\Localization\Strings.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Ports.xml">
@@ -1414,6 +1376,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Notification\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj">
+      <Project>{ff225c2e-aa67-4b10-939a-6c046cef8697}</Project>
+      <Name>NETworkManager.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
+      <Project>{5C3D1749-D260-4566-B448-B94B3AD9EEFF}</Project>
+      <Name>NETworkManager.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

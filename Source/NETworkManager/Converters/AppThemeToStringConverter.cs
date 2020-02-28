@@ -2,7 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Models.Settings;
+using NETworkManager.Localization;
 
 namespace NETworkManager.Converters
 {
@@ -14,7 +14,7 @@ namespace NETworkManager.Converters
             if (!(value is AppTheme theme))
                 return "No valid theme passed!";
 
-            var name = Resources.Localization.Strings.ResourceManager.GetString(theme.Name, LocalizationManager.Culture);
+            var name = Localization.LanguageFiles.Strings.ResourceManager.GetString(theme.Name, LocalizationManager.GetInstance().Culture);
 
             if (string.IsNullOrEmpty(name))
                 name = theme.Name;

@@ -10,7 +10,7 @@ namespace NETworkManager.Validators
             var isValid = true;
 
             if (value == null)
-                return new ValidationResult(false, Resources.Localization.Strings.EnterValidPortOrPortRange);
+                return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidPortOrPortRange);
 
             foreach (var portOrRange in ((string)value).Replace(" ", "").Split(';'))
             {
@@ -42,7 +42,7 @@ namespace NETworkManager.Validators
                 }
             }
 
-            return isValid ? ValidationResult.ValidResult : new ValidationResult(false, Resources.Localization.Strings.EnterValidPortOrPortRange);
+            return isValid ? ValidationResult.ValidResult : new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidPortOrPortRange);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace NETworkManager.Validators
             if (value != null && (Regex.IsMatch((string)value, RegexHelper.IPv4AddressRegex) || Regex.IsMatch((string)value, RegexHelper.IPv6AddressRegex)))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Resources.Localization.Strings.EnterValidIPAddress);
+            return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidIPAddress);
         }
     }
 }

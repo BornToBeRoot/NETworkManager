@@ -1,5 +1,5 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using NETworkManager.Localization;
+using NETworkManager.Utilities;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace NETworkManager.Models.Documentation
     {
         public const string DocumentationBaseUrl = @"https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation/";
 
-        public static string DocumentationUrl => $"{DocumentationBaseUrl}{Settings.LocalizationManager.Current.Code}/README.md";
+        public static string DocumentationUrl => $"{DocumentationBaseUrl}{LocalizationManager.GetInstance().Current.Code}/README.md";
 
         public static List<DocumentationInfo> List => new List<DocumentationInfo>
         {
@@ -51,13 +51,13 @@ namespace NETworkManager.Models.Documentation
                 return DocumentationBaseUrl;
 
             // Try get localized help, fallback is english
-            return info.Localizations.FirstOrDefault(x => x.Code == Settings.LocalizationManager.Current.Code) != null ? $"{DocumentationBaseUrl}{Settings.LocalizationManager.Current.Code}{info.Path}" : $"{DocumentationBaseUrl}en-US{info.Path}";
+            return info.Localizations.FirstOrDefault(x => x.Code == LocalizationManager.GetInstance().Current.Code) != null ? $"{DocumentationBaseUrl}{LocalizationManager.GetInstance().Current.Code}{info.Path}" : $"{DocumentationBaseUrl}en-US{info.Path}";
         }
 
         // Generate a list with culture codes
-        private static List<Settings.LocalizationInfo> GetLocalizationInfoList(params string[] codes)
+        private static List<LocalizationInfo> GetLocalizationInfoList(params string[] codes)
         {
-            return codes.Select(code => new Settings.LocalizationInfo(code)).ToList();
+            return codes.Select(code => new LocalizationInfo(code)).ToList();
         }
 
         public static void OpenDocumentation(DocumentationIdentifier documentationIdentifier)

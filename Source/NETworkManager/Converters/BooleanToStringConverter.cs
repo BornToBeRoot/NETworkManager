@@ -9,9 +9,9 @@ namespace NETworkManager.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null && (bool) value)
-                return Resources.Localization.Strings.Yes;
+                return Localization.LanguageFiles.Strings.Yes;
 
-            return Resources.Localization.Strings.No;
+            return Localization.LanguageFiles.Strings.No;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

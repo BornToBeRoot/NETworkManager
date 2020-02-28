@@ -344,7 +344,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -358,7 +358,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -380,7 +380,7 @@ namespace NETworkManager.ViewModels
 
             _secondsRemaining = duration + 1; // Init powershell etc. takes some time... 
 
-            TimeRemainingMessage = string.Format(Resources.Localization.Strings.XXSecondsRemainingDots, _secondsRemaining);
+            TimeRemainingMessage = string.Format(Localization.LanguageFiles.Strings.XXSecondsRemainingDots, _secondsRemaining);
 
             _remainingTimer.Start();
 
@@ -390,7 +390,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }            
         }
 
@@ -398,7 +398,7 @@ namespace NETworkManager.ViewModels
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                TimeRemainingMessage = string.Format(Resources.Localization.Strings.XXSecondsRemainingDots, _secondsRemaining);
+                TimeRemainingMessage = string.Format(Localization.LanguageFiles.Strings.XXSecondsRemainingDots, _secondsRemaining);
 
                 if (_secondsRemaining > 0)
                     _secondsRemaining--;

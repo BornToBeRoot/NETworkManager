@@ -268,7 +268,7 @@ namespace NETworkManager.ViewModels
                 {
                     ConfigurationManager.Current.FixAirspace = true;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", Resources.Localization.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", Localization.LanguageFiles.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
 
                     ConfigurationManager.Current.FixAirspace = false;
                 }
@@ -357,7 +357,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Connect
+                Title = Localization.LanguageFiles.Strings.Connect
             };
 
             var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
@@ -419,7 +419,7 @@ namespace NETworkManager.ViewModels
 
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.ConnectAs
+                Title = Localization.LanguageFiles.Strings.ConnectAs
             };
 
             var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>

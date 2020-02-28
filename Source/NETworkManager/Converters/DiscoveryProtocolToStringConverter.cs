@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Models.Settings;
+using NETworkManager.Localization.Translators;
+using static NETworkManager.Models.Network.DiscoveryProtocol;
 
 namespace NETworkManager.Converters
 {
@@ -10,7 +11,10 @@ namespace NETworkManager.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return LocalizationManager.TranslateDiscoveryProtocol(value);
+            if (!(value is Protocol s))
+                return "-/-";
+
+            return DiscoveryProtocolTranslator.GetInstance().Translate(s.ToString());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

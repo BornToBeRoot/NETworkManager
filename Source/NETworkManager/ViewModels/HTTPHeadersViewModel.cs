@@ -14,7 +14,7 @@ using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
-using NETworkManager.Resources.Localization;
+using NETworkManager.Localization.LanguageFiles;
 using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels

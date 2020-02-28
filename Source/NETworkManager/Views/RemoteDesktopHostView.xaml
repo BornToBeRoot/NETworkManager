@@ -10,7 +10,7 @@
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:asf="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"             

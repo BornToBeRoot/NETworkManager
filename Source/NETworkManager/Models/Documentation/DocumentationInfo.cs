@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Localization;
+using NETworkManager.Models.Settings;
 using System.Collections.Generic;
 
 namespace NETworkManager.Models.Documentation

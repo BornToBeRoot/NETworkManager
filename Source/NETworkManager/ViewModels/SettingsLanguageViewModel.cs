@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System;
 using System.Windows.Input;
 using System.Diagnostics;
+using NETworkManager.Localization;
 
 namespace NETworkManager.ViewModels
 {
@@ -29,7 +30,7 @@ namespace NETworkManager.ViewModels
 
                 if (!_isLoading && value != null) // Don't change if the value is null (can happen when a user searchs for a language....)
                 {
-                    LocalizationManager.Change(value);
+                    LocalizationManager.GetInstance().Change(value);
 
                     SettingsManager.Current.Localization_CultureCode = value.Code;
 
@@ -97,7 +98,7 @@ namespace NETworkManager.ViewModels
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.NativeName.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
-            SelectedLangauge = Languages.Cast<LocalizationInfo>().FirstOrDefault(x => x.Code == LocalizationManager.Current.Code);
+            SelectedLangauge = Languages.Cast<LocalizationInfo>().FirstOrDefault(x => x.Code == LocalizationManager.GetInstance().Current.Code);
 
             LoadSettings();
 

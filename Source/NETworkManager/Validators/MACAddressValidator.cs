@@ -9,7 +9,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return value != null && Regex.IsMatch((string) value, RegexHelper.MACAddressRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Resources.Localization.Strings.EnterValidMACAddress);
+            return value != null && Regex.IsMatch((string) value, RegexHelper.MACAddressRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidMACAddress);
         }
     }
 }

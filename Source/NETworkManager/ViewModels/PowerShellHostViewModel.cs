@@ -326,7 +326,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Connect
+                Title = Localization.LanguageFiles.Strings.Connect
             };
 
             var connectViewModel = new PowerShellConnectViewModel(async instance =>
@@ -383,7 +383,7 @@ namespace NETworkManager.ViewModels
         {
             sessionInfo.ApplicationFilePath = SettingsManager.Current.PowerShell_ApplicationFilePath;
 
-            TabItems.Add(new DragablzTabItem(header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Resources.Localization.Strings.PowerShell), new PowerShellControl(sessionInfo)));
+            TabItems.Add(new DragablzTabItem(header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Localization.LanguageFiles.Strings.PowerShell), new PowerShellControl(sessionInfo)));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

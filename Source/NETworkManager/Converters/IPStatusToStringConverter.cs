@@ -1,7 +1,8 @@
-﻿using System;
+﻿using NETworkManager.Localization.Translators;
+using System;
 using System.Globalization;
+using System.Net.NetworkInformation;
 using System.Windows.Data;
-using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Converters
 {
@@ -9,7 +10,10 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-           return LocalizationManager.TranslateIPStatus(value);
+            if (!(value is IPStatus s))
+                return "-/-";
+                        
+            return IPStatusTranslator.GetInstance().Translate(s.ToString());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

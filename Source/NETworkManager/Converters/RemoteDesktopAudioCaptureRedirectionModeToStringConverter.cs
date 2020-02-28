@@ -1,7 +1,8 @@
-﻿using System;
+﻿using NETworkManager.Localization.Translators;
+using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Models.Settings;
+using static NETworkManager.Models.RemoteDesktop.RemoteDesktop;
 
 namespace NETworkManager.Converters
 {
@@ -9,7 +10,10 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return LocalizationManager.TranslateRemoteDesktopAudioCaptureRedirectionMode(value);
+            if (!(value is AudioCaptureRedirectionMode s))
+                return "-/-";
+
+            return RemoteDesktopAudioCaptureRedirectionModeTranslator.GetInstance().Translate(s.ToString());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

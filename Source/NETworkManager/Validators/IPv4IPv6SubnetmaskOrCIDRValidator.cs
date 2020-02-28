@@ -11,7 +11,7 @@ namespace NETworkManager.Validators
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             if (value == null)
-                return new ValidationResult(false, Resources.Localization.Strings.EnterValidSubnetmaskOrCIDR);
+                return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidSubnetmaskOrCIDR);
 
             var subnetmaskOrCidr = value as string;
 
@@ -19,15 +19,15 @@ namespace NETworkManager.Validators
                 return ValidationResult.ValidResult;
 
             if (subnetmaskOrCidr == null || !subnetmaskOrCidr.StartsWith("/"))
-                return new ValidationResult(false, Resources.Localization.Strings.EnterValidSubnetmaskOrCIDR);
+                return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidSubnetmaskOrCIDR);
 
             if (!int.TryParse(subnetmaskOrCidr.TrimStart('/'), out var cidr))
-                return new ValidationResult(false, Resources.Localization.Strings.EnterValidSubnetmaskOrCIDR);
+                return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidSubnetmaskOrCIDR);
 
             if (cidr >= 0 && cidr < 129)
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Resources.Localization.Strings.EnterValidSubnetmaskOrCIDR);
+            return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidSubnetmaskOrCIDR);
         }
     }
 }

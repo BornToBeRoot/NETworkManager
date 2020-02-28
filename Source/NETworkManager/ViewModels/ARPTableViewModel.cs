@@ -199,7 +199,7 @@ namespace NETworkManager.ViewModels
                     return true;
 
                 // Search by IPAddress and MACAddress
-                return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+                return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Localization.LanguageFiles.Strings.Yes : Localization.LanguageFiles.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
             AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
@@ -306,7 +306,7 @@ namespace NETworkManager.ViewModels
 
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.AddEntry
+                Title = Localization.LanguageFiles.Strings.AddEntry
             };
 
             var arpTableAddEntryViewModel = new ArpTableAddEntryViewModel(async instance =>
@@ -359,7 +359,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMulticastAction()
         {
-            CommonMethods.SetClipboard(SelectedARPInfo.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No);
+            CommonMethods.SetClipboard(SelectedARPInfo.IsMulticast ? Localization.LanguageFiles.Strings.Yes : Localization.LanguageFiles.Strings.No);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -368,7 +368,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.LanguageFiles.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -382,9 +382,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, Localization.LanguageFiles.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.ARPTable_ExportFileType = instance.FileType;
@@ -463,7 +463,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void ArpTable_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.LanguageFiles.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
         }
 

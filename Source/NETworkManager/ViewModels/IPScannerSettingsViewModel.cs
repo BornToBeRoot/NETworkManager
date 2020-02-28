@@ -390,7 +390,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.AddCustomCommand
+                Title = Localization.LanguageFiles.Strings.AddCustomCommand
             };
 
             var customCommandViewModel = new CustomCommandViewModel(instance =>
@@ -415,7 +415,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.EditCustomCommand
+                Title = Localization.LanguageFiles.Strings.EditCustomCommand
             };
 
             var customCommandViewModel = new CustomCommandViewModel(instance =>
@@ -441,7 +441,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.DeleteCustomCommand
+                Title = Localization.LanguageFiles.Strings.DeleteCustomCommand
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -452,7 +452,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Resources.Localization.Strings.DeleteCustomCommandMessage);
+            }, Localization.LanguageFiles.Strings.DeleteCustomCommandMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {

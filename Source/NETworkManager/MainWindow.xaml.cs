@@ -24,6 +24,7 @@ using NETworkManager.ViewModels;
 using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using NETworkManager.Models.Profile;
+using NETworkManager.Localization;
 
 namespace NETworkManager
 {
@@ -295,7 +296,7 @@ namespace NETworkManager
             DataContext = this;
 
             // Language Meta
-            LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
+            LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.GetInstance().Culture.IetfLanguageTag)));
 
             // Load / Change appearance
             AppearanceManager.Load();
@@ -324,11 +325,11 @@ namespace NETworkManager
             if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
+                settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
 
                 ConfigurationManager.Current.FixAirspace = true;
 
-                await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.SettingsHaveBeenReset, NETworkManager.Resources.Localization.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, MessageDialogStyle.Affirmative, settings);
+                await this.ShowMessageAsync(Localization.LanguageFiles.Strings.SettingsHaveBeenReset, Localization.LanguageFiles.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
             }
@@ -338,7 +339,7 @@ namespace NETworkManager
                 // Show first run dialog...
                 var customDialog = new CustomDialog
                 {
-                    Title = NETworkManager.Resources.Localization.Strings.Welcome
+                    Title = Localization.LanguageFiles.Strings.Welcome
                 };
 
                 var arpTableAddEntryViewModel = new FirstRunViewModel(async instance =>
@@ -490,14 +491,14 @@ namespace NETworkManager
 
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.Close;
-                settings.NegativeButtonText = NETworkManager.Resources.Localization.Strings.Cancel;
+                settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.Close;
+                settings.NegativeButtonText = Localization.LanguageFiles.Strings.Cancel;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 // Fix airspace issues
                 ConfigurationManager.Current.FixAirspace = true;
 
-                var result = await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.Confirm, NETworkManager.Resources.Localization.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
+                var result = await this.ShowMessageAsync(Localization.LanguageFiles.Strings.Confirm, Localization.LanguageFiles.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
 
@@ -982,13 +983,13 @@ namespace NETworkManager
 
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.RestartNow;
-                settings.NegativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
+                settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.RestartNow;
+                settings.NegativeButtonText = Localization.LanguageFiles.Strings.OK;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 ConfigurationManager.Current.FixAirspace = true;
 
-                if (await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.RestartRequired, NETworkManager.Resources.Localization.Strings.RestartRequiredSettingsChangedMessage, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
+                if (await this.ShowMessageAsync(Localization.LanguageFiles.Strings.RestartRequired, Localization.LanguageFiles.Strings.RestartRequiredSettingsChangedMessage, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
                 {
                     RestartApplication();
                     return;
@@ -1061,7 +1062,7 @@ namespace NETworkManager
 
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
-            UpdateText = string.Format(NETworkManager.Resources.Localization.Strings.VersionxxIsAvailable, e.Version);
+            UpdateText = string.Format(Localization.LanguageFiles.Strings.VersionxxIsAvailable, e.Version);
             IsUpdateAvailable = true;
         }
         #endregion
