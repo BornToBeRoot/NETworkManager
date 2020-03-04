@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Model", "NET
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.ViewModel", "NETworkManager.ViewModel\NETworkManager.ViewModel.csproj", "{D9527072-6834-4DA8-8B3A-75DCD42A716E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Update", "NETworkManager.Update\NETworkManager.Update.csproj", "{4306A872-15EB-4109-AAAC-5EC0F8F372C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -216,6 +218,26 @@ Global
 		{D9527072-6834-4DA8-8B3A-75DCD42A716E}.Release|x64.Build.0 = Release|Any CPU
 		{D9527072-6834-4DA8-8B3A-75DCD42A716E}.Release|x86.ActiveCfg = Release|Any CPU
 		{D9527072-6834-4DA8-8B3A-75DCD42A716E}.Release|x86.Build.0 = Release|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Debug|ARM.Build.0 = Debug|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Debug|x64.Build.0 = Debug|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Debug|x86.Build.0 = Debug|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Release|ARM.ActiveCfg = Release|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Release|ARM.Build.0 = Release|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Release|ARM64.Build.0 = Release|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Release|x64.ActiveCfg = Release|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Release|x64.Build.0 = Release|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Release|x86.ActiveCfg = Release|Any CPU
+		{4306A872-15EB-4109-AAAC-5EC0F8F372C5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
