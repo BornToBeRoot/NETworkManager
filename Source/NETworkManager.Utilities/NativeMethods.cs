@@ -3,12 +3,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace NETworkManager.Utilities
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    internal class NativeMethods
+    public class NativeMethods
     {
         #region Win32 Constants
         public const int GWL_STYLE = -16;

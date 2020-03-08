@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Utilities
 {
-    class DnsLookupHelper
+    public class DnsLookupHelper
     {
         private static LookupClient DnsLookupClient = new LookupClient();
 

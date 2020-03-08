@@ -234,27 +234,12 @@
     <Compile Include="StatusWindow.xaml.cs">
       <DependentUpon>StatusWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\CustomCommand.cs" />
-    <Compile Include="Utilities\CustomCommandInfo.cs" />
-    <Compile Include="Utilities\CommonMethods.cs" />
-    <Compile Include="Utilities\ArrayHelper.cs" />
-    <Compile Include="Utilities\AutoRefreshTime.cs" />
-    <Compile Include="Utilities\AutoRefreshTimeInfo.cs" />
     <Compile Include="Enum\ProfileEditMode.cs" />
     <Compile Include="Enum\ConnectionState.cs" />
-    <Compile Include="Enum\TimeUnit.cs" />
     <Compile Include="Models\EventSystem\EventSystemRedirectProfileApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystemRedirectDataApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystem.cs" />
-    <Compile Include="Utilities\DnsLookupHelper.cs" />
     <Compile Include="Models\Cryptographie\FileCryptoManager.cs" />
-    <Compile Include="Utilities\FileSizeConverter.cs" />
-    <Compile Include="Utilities\JsonIPAddressConverter.cs" />
-    <Compile Include="Utilities\NativeMethods.cs" />
-    <Compile Include="Utilities\PowerShellHelper.cs" />
-    <Compile Include="Utilities\SecureStringHelper.cs" />
-    <Compile Include="Utilities\SingleInstance.cs" />
-    <Compile Include="Utilities\VisualTreeHelper.cs" />
     <Compile Include="Models\Documentation\LibraryManager.cs" />
     <Compile Include="Models\Documentation\LibraryInfo.cs" />
     <Compile Include="Models\Documentation\DocumentationInfo.cs" />
@@ -661,47 +646,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Content Include="Licenses\AirspaceFixer.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\ControlsEx.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\Dragablz.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\IPNetwork.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\LiveCharts.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\LiveCharts.Wpf.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Resource Include="Licenses\LoadingIndicators.WPF.txt" />
-    <Content Include="Licenses\MahApps.Metro.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\MahApps.Metro.IconPack.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\NETworkManager.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\Newtonsoft.Json.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\Octokit.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\SharpSnmpLib.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <SplashScreen Include="Resources\Images\SplashScreen.png" />
-    <Content Include="Licenses\DnsClient.NET.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\WhoisServers.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1071,15 +1016,8 @@
     <Compile Include="Converters\ValidateSettingsImportConverter.cs" />
     <Compile Include="Converters\ValidateSettingsResetConverter.cs" />
     <Compile Include="Converters\ValidateSettingsExportConverter.cs" />
-    <Compile Include="Utilities\ListHelper.cs" />
-    <Compile Include="Utilities\HotKeys.cs" />
     <Compile Include="Models\Network\ARP.cs" />
-    <Compile Include="Utilities\PortRangeHelper.cs" />
     <Compile Include="Utilities\HostRangeHelper.cs" />
-    <Compile Include="Utilities\IPv4AddressHelper.cs" />
-    <Compile Include="Utilities\MACAddressHelper.cs" />
-    <Compile Include="Utilities\RegexHelper.cs" />
-    <Compile Include="Utilities\TimestampHelper.cs" />
     <Compile Include="Models\Network\PingExceptionArgs.cs" />
     <Compile Include="Models\Network\PortInfo.cs" />
     <Compile Include="Models\Network\PortScannedArgs.cs" />
@@ -1149,7 +1087,6 @@
     <Compile Include="ViewModels\SubnetCalculatorCalculatorViewModel.cs" />
     <Compile Include="ViewModels\TracerouteViewModel.cs" />
     <Compile Include="ViewModels\WakeOnLANViewModel.cs" />
-    <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingsAppearanceViewModel.cs" />
@@ -1341,10 +1278,10 @@
       <Version>0.0.3.203</Version>
     </PackageReference>
     <PackageReference Include="IPNetwork2">
-      <Version>2.4.0.173</Version>
+      <Version>2.4.0.187</Version>
     </PackageReference>
     <PackageReference Include="Lextm.SharpSnmpLib">
-      <Version>11.3.0</Version>
+      <Version>12.0.0</Version>
     </PackageReference>
     <PackageReference Include="LiveCharts.Wpf">
       <Version>0.9.7</Version>
@@ -1356,7 +1293,7 @@
       <Version>1.6.5</Version>
     </PackageReference>
     <PackageReference Include="MahApps.Metro.IconPacks">
-      <Version>3.1.0</Version>
+      <Version>3.3.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies">
       <Version>1.1.0</Version>
@@ -1371,7 +1308,7 @@
       <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="Octokit">
-      <Version>0.36.0</Version>
+      <Version>0.43.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 namespace NETworkManager.Utilities
 {    
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    internal class SingleInstance
+    public class SingleInstance
     {
         public const int HWND_BROADCAST = 0xffff;
         public static readonly int WM_SHOWME = RegisterWindowMessage("WM_SHOWME");
