@@ -1,6 +1,4 @@
-<div align="center">  
-  <img alt="NETworkManager" src="NETworkManager_SplashScreen.png" />  
-  <p>A powerful tool for managing networks and troubleshoot network problems!</p>
+<div align="center">   
   <p>   
 	<a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
       <img alt="All releases" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=flat-square" />
