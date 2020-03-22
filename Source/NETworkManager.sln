@@ -14,6 +14,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Profiles", "NETworkManager.Profiles\NETworkManager.Profiles.csproj", "{66E58B86-C604-467E-BEEF-9D7D0750B173}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Converters", "NETworkManager.Converters\NETworkManager.Converters.csproj", "{BD4DDC21-7B64-41B2-BAC7-8173E0FE84BE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FF225C2E-AA67-4B10-939A-6C046CEF8697} = {FF225C2E-AA67-4B10-939A-6C046CEF8697}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Update", "NETworkManager.Update\NETworkManager.Update.csproj", "{4306A872-15EB-4109-AAAC-5EC0F8F372C5}"
 EndProject

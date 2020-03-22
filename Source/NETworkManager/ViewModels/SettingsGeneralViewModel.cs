@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Models;
+using NETworkManager.Models.Settings;
 using NETworkManager.Utilities;
 using System.ComponentModel;
 using System.Linq;
@@ -15,8 +16,8 @@ namespace NETworkManager.ViewModels
         //public ObservableCollection<ApplicationViewInfo> ApplicationViewCollection { get; set; }
         public ICollectionView Applications { get; private set; }
 
-        private ApplicationViewInfo _defaultApplicationSelectedItem;
-        public ApplicationViewInfo DefaultApplicationSelectedItem
+        private ApplicationInfo _defaultApplicationSelectedItem;
+        public ApplicationInfo DefaultApplicationSelectedItem
         {
             get => _defaultApplicationSelectedItem;
             set
@@ -34,8 +35,8 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView ApplicationsVisible { get; private set; }
 
-        private ApplicationViewInfo _visibleApplicationSelectedItem;
-        public ApplicationViewInfo VisibleApplicationSelectedItem
+        private ApplicationInfo _visibleApplicationSelectedItem;
+        public ApplicationInfo VisibleApplicationSelectedItem
         {
             get => _visibleApplicationSelectedItem;
             set
@@ -67,8 +68,8 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView ApplicationsHidden { get; private set; }
 
-        private ApplicationViewInfo _hiddenApplicationSelectedItem;
-        public ApplicationViewInfo HiddenApplicationSelectedItem
+        private ApplicationInfo _hiddenApplicationSelectedItem;
+        public ApplicationInfo HiddenApplicationSelectedItem
         {
             get => _hiddenApplicationSelectedItem;
             set
@@ -159,7 +160,7 @@ namespace NETworkManager.ViewModels
             ApplicationsVisible = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
             ApplicationsVisible.Filter = o =>
             {
-                if (!(o is ApplicationViewInfo info))
+                if (!(o is ApplicationInfo info))
                     return false;
 
                 return info.IsVisible;
@@ -169,7 +170,7 @@ namespace NETworkManager.ViewModels
 
             ApplicationsHidden.Filter = o =>
             {
-                if (!(o is ApplicationViewInfo info))
+                if (!(o is ApplicationInfo info))
                     return false;
 
                 return !info.IsVisible;
@@ -177,7 +178,7 @@ namespace NETworkManager.ViewModels
 
             ValidateHideVisibleApplications();
 
-            DefaultApplicationSelectedItem = Applications.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
+            DefaultApplicationSelectedItem = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
             BackgroundJobInterval = SettingsManager.Current.General_BackgroundJobInterval;
             HistoryListEntries = SettingsManager.Current.General_HistoryListEntries;
         }
@@ -214,7 +215,7 @@ namespace NETworkManager.ViewModels
             SettingsManager.Current.General_ApplicationList.Insert(index, info);
 
             if (newDefaultApplication)
-                DefaultApplicationSelectedItem = ApplicationsVisible.Cast<ApplicationViewInfo>().FirstOrDefault();
+                DefaultApplicationSelectedItem = ApplicationsVisible.Cast<ApplicationInfo>().FirstOrDefault();
 
             ValidateHideVisibleApplications();
         }
@@ -253,8 +254,8 @@ namespace NETworkManager.ViewModels
 
         private void ValidateHideVisibleApplications()
         {
-            IsVisibleToHideApplicationEnabled = ApplicationsVisible.Cast<ApplicationViewInfo>().Count() > 1 && VisibleApplicationSelectedItem != null;
-            IsHideToVisibleApplicationEnabled = ApplicationsHidden.Cast<ApplicationViewInfo>().Any() && HiddenApplicationSelectedItem != null;
+            IsVisibleToHideApplicationEnabled = ApplicationsVisible.Cast<ApplicationInfo>().Count() > 1 && VisibleApplicationSelectedItem != null;
+            IsHideToVisibleApplicationEnabled = ApplicationsHidden.Cast<ApplicationInfo>().Any() && HiddenApplicationSelectedItem != null;
         }
         #endregion
     }

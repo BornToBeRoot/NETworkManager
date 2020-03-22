@@ -25,6 +25,7 @@ using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using NETworkManager.Models.Profile;
 using NETworkManager.Localization;
+using NETworkManager.Models;
 
 namespace NETworkManager
 {
@@ -137,8 +138,8 @@ namespace NETworkManager
             }
         }
 
-        private ApplicationViewInfo _selectedApplication;
-        public ApplicationViewInfo SelectedApplication
+        private ApplicationInfo _selectedApplication;
+        public ApplicationInfo SelectedApplication
         {
             get => _selectedApplication;
             set
@@ -176,11 +177,11 @@ namespace NETworkManager
 
                 Applications.Refresh();
 
-                var sourceCollection = Applications.SourceCollection.Cast<ApplicationViewInfo>();
-                var filteredCollection = Applications.Cast<ApplicationViewInfo>();
+                var sourceCollection = Applications.SourceCollection.Cast<ApplicationInfo>();
+                var filteredCollection = Applications.Cast<ApplicationInfo>();
 
-                var sourceInfos = sourceCollection as ApplicationViewInfo[] ?? sourceCollection.ToArray();
-                var filteredInfos = filteredCollection as ApplicationViewInfo[] ?? filteredCollection.ToArray();
+                var sourceInfos = sourceCollection as ApplicationInfo[] ?? sourceCollection.ToArray();
+                var filteredInfos = filteredCollection as ApplicationInfo[] ?? filteredCollection.ToArray();
 
                 if (_filterLastCount == null)
                     _filterLastCount = sourceInfos.Length;
@@ -395,15 +396,15 @@ namespace NETworkManager
             // Create a new list if empty
             if (SettingsManager.Current.General_ApplicationList.Count == 0)
             {
-                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationViewInfo>(ApplicationViewManager.GetList());
+                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(Models.Application.GetList());
             }
             else // Check for missing applications and add them
             {
-                foreach (ApplicationViewInfo info in ApplicationViewManager.GetList())
+                foreach (ApplicationInfo info in Models.Application.GetList())
                 {
                     bool isInList = false;
 
-                    foreach (ApplicationViewInfo info2 in SettingsManager.Current.General_ApplicationList)
+                    foreach (ApplicationInfo info2 in SettingsManager.Current.General_ApplicationList)
                     {
                         if (info.Name == info2.Name)
                             isInList = true;
@@ -416,10 +417,10 @@ namespace NETworkManager
 
             Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
 
-            Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationViewInfo.Name), ListSortDirection.Ascending)); // Always have the same order, even if it is translated...
+            Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending)); // Always have the same order, even if it is translated...
             Applications.Filter = o =>
             {
-                if (!(o is ApplicationViewInfo info))
+                if (!(o is ApplicationInfo info))
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
@@ -438,7 +439,7 @@ namespace NETworkManager
             isApplicationListLoading = false;
 
             // Select the application
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != Models.Application.Name.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != Models.Application.Name.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
 
             // Scroll into view
             if (SelectedApplication != null)
@@ -865,7 +866,7 @@ namespace NETworkManager
                 return;
 
             // Change view
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == data.Application);
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == data.Application);
 
             // Crate a new tab / perform action
             switch (data.Application)

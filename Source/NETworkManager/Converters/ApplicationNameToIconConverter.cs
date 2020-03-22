@@ -11,7 +11,7 @@ namespace NETworkManager.Converters
             if (!(value is Models.Application.Name name))
                 return null;
 
-            return ApplicationViewManager.GetIconByName(name);
+            return Models.Application.GetIcon(name);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

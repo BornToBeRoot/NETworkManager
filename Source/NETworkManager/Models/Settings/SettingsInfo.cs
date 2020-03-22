@@ -92,8 +92,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private ObservableSetCollection<ApplicationViewInfo> _general_ApplicationList = new ObservableSetCollection<ApplicationViewInfo>();
-        public ObservableSetCollection<ApplicationViewInfo> General_ApplicationList
+        private ObservableSetCollection<ApplicationInfo> _general_ApplicationList = new ObservableSetCollection<ApplicationInfo>();
+        public ObservableSetCollection<ApplicationInfo> General_ApplicationList
         {
             get => _general_ApplicationList;
             set

@@ -1,25 +1,22 @@
-﻿using System;
-using NETworkManager.Models;
-
-namespace NETworkManager
+﻿namespace NETworkManager.Models
 {
-    public class ApplicationViewInfo : IEquatable<ApplicationViewInfo>
+    public class ApplicationInfo
     {
         public Application.Name Name { get; set; }
         public bool IsVisible { get; set; }
 
-        public ApplicationViewInfo()
+        public ApplicationInfo()
         {
 
         }
 
-        public ApplicationViewInfo(Application.Name name)
+        public ApplicationInfo(Application.Name name)
         {
             Name = name;
             IsVisible = true;
         }
 
-        public bool Equals(ApplicationViewInfo info)
+        public bool Equals(ApplicationInfo info)
         {
             if (info == null)
                 return false;
@@ -29,7 +26,7 @@ namespace NETworkManager
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
+            if (obj is null)
                 return false;
 
             if (ReferenceEquals(this, obj))
@@ -38,7 +35,7 @@ namespace NETworkManager
             if (obj.GetType() != GetType())
                 return false;
 
-            return Equals(obj as ApplicationViewInfo);
+            return Equals(obj as ApplicationInfo);
         }
 
         public override int GetHashCode()

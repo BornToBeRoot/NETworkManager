@@ -43,6 +43,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DocumentationFile>bin\Debug\NETworkManager.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -145,6 +146,10 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ApplicationNameToIconConverter.cs" />
+    <Compile Include="Converters\ApplicationNameToTranslatedStringConverter.cs" />
+    <Compile Include="Converters\AppThemeToBrushConverter.cs" />
+    <Compile Include="Converters\AppThemeToStringConverter.cs" />
     <Compile Include="Converters\DiscoveryProtocolToStringConverter.cs" />
     <Compile Include="Converters\BandwidthBytesWithSizeConverter.cs" />
     <Compile Include="Converters\Bytes1000ToSizeConverter.cs" />
@@ -164,13 +169,11 @@
     <Compile Include="Converters\ConnectionStateToRectangleStyleConverter.cs" />
     <Compile Include="Converters\BandwidthBytesToSpeedConverter.cs" />
     <Compile Include="Converters\DNSServerInfoToString.cs" />
-    <Compile Include="Converters\ApplicationNameToIconConverter.cs" />
     <Compile Include="Converters\AutoRefreshTimeToStringConverter.cs" />
     <Compile Include="Converters\BigIntegerToStringConverter.cs" />
     <Compile Include="Converters\OperationalStatusToStringConverter.cs" />
     <Compile Include="Converters\ListToStringConverter.cs" />
     <Compile Include="Converters\BooleanReverseToVisibilityHiddenConverter.cs" />
-    <Compile Include="Converters\ApplicationNameToTranslatedStringConverter.cs" />
     <Compile Include="Converters\PingStatusToBooleanConverter.cs" />
     <Compile Include="Converters\RemoteDesktopAudioCaptureRedirectionModeToStringConverter.cs" />
     <Compile Include="Converters\RemoteDesktopAudioRedirectionModeToStringConverter.cs" />
@@ -1078,7 +1081,6 @@
       <DependentUpon>LookupHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ApplicationViewManager.cs" />
-    <Compile Include="ApplicationViewInfo.cs" />
     <Compile Include="Models\Network\ProgressChangedArgs.cs" />
     <Compile Include="Models\Network\TracerouteHopInfo.cs" />
     <Compile Include="Models\Network\TracerouteHopReceivedArgs.cs" />
@@ -1193,8 +1195,6 @@
     <Compile Include="Converters\Bytes1000ToSpeedConverter.cs" />
     <Compile Include="Converters\IsSettingsLocationToBooleanConverter.cs" />
     <Compile Include="Converters\IsDefaultSettingsLocationToBooleanConverter.cs" />
-    <Compile Include="Converters\AccentToBrushConverter.cs" />
-    <Compile Include="Converters\AppThemeToBrushConverter.cs" />
     <Compile Include="Views\PortScannerView.xaml.cs">
       <DependentUpon>PortScannerView.xaml</DependentUpon>
     </Compile>
@@ -1202,8 +1202,6 @@
       <DependentUpon>NetworkInterfaceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanToStringConverter.cs" />
-    <Compile Include="Converters\AccentToStringConverter.cs" />
-    <Compile Include="Converters\AppThemeToStringConverter.cs" />
     <Compile Include="Views\IPScannerView.xaml.cs">
       <DependentUpon>IPScannerView.xaml</DependentUpon>
     </Compile>
