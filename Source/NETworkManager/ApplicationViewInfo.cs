@@ -1,10 +1,11 @@
 ﻿using System;
+using NETworkManager.Models;
 
 namespace NETworkManager
 {
     public class ApplicationViewInfo : IEquatable<ApplicationViewInfo>
     {
-        public ApplicationViewManager.Name Name { get; set; }
+        public Application.Name Name { get; set; }
         public bool IsVisible { get; set; }
 
         public ApplicationViewInfo()
@@ -12,7 +13,7 @@ namespace NETworkManager
 
         }
 
-        public ApplicationViewInfo(ApplicationViewManager.Name name)
+        public ApplicationViewInfo(Application.Name name)
         {
             Name = name;
             IsVisible = true;

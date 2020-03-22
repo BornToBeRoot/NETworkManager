@@ -7,7 +7,7 @@
         public bool ResetSettings { get; set; }
         public int RestartPid { get; set; } = -1;
 
-        public ApplicationViewManager.Name Application { get; set; } = ApplicationViewManager.Name.None;
+        public Models.Application.Name Application { get; set; } = Models.Application.Name.None;
         public string WrongParameter { get; set; }
 
         public CommandLineInfo()

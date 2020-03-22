@@ -8,7 +8,7 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is ApplicationViewManager.Name name))
+            if (!(value is Models.Application.Name name))
                 return "-/-";
 
             return ApplicationViewManager.GetTranslatedNameByName(name);

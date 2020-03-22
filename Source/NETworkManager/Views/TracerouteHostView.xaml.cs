@@ -16,7 +16,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = ApplicationViewManager.Name.Traceroute.ToString();
+            InterTabController.Partition = Models.Application.Name.Traceroute.ToString();
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)

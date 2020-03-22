@@ -59,7 +59,7 @@ namespace NETworkManager.Models.Settings
 
             // If user has renamed / removed a custom theme --> fallback default
             if (theme != null)
-                ThemeManager.ChangeAppTheme(Application.Current, name);
+                ThemeManager.ChangeAppTheme(System.Windows.Application.Current, name);
         }
 
         /// <summary>
@@ -68,12 +68,12 @@ namespace NETworkManager.Models.Settings
         /// <param name="name">Name of the Accent</param>
         public static void ChangeAccent(string name)
         {
-            var appStyle = ThemeManager.DetectAppStyle(Application.Current);
+            var appStyle = ThemeManager.DetectAppStyle(System.Windows.Application.Current);
             var accent = ThemeManager.GetAccent(name);
 
             // If user has renamed / removed a custom theme --> fallback default
             if (accent != null)
-                ThemeManager.ChangeAppStyle(Application.Current, accent, appStyle.Item1);
+                ThemeManager.ChangeAppStyle(System.Windows.Application.Current, accent, appStyle.Item1);
         }
     }
 }

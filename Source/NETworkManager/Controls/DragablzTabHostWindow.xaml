@@ -8,7 +8,7 @@
         xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
         xmlns:controls="clr-namespace:NETworkManager.Controls"
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
-        xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:networkManagerModels="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         mc:Ignorable="d"
@@ -38,7 +38,7 @@
                     </Setter>
                     <Style.Triggers>
                         <!-- Add ContextMenu for RemoteDesktop -->
-                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static networkManager:ApplicationViewManager+Name.RemoteDesktop}">
+                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static networkManagerModels:Application+Name.RemoteDesktop}">
                             <DataTrigger.Setters>
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
@@ -145,7 +145,7 @@
                             </DataTrigger.Setters>
                         </DataTrigger>
                         <!-- Add ContextMenu for PowerShell -->
-                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static networkManager:ApplicationViewManager+Name.PowerShell}">
+                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static networkManagerModels:Application+Name.PowerShell}">
                             <DataTrigger.Setters>
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
@@ -213,7 +213,7 @@
                             </DataTrigger.Setters>
                         </DataTrigger>
                         <!-- Add ContextMenu for PuTTY -->
-                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static networkManager:ApplicationViewManager+Name.PuTTY}">
+                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static networkManagerModels:Application+Name.PuTTY}">
                             <DataTrigger.Setters>
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
@@ -291,7 +291,7 @@
                             </DataTrigger.Setters>
                         </DataTrigger>
                         <!-- Add ContextMenu for TigerVNC -->
-                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static networkManager:ApplicationViewManager+Name.TigerVNC}">
+                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static networkManagerModels:Application+Name.TigerVNC}">
                             <DataTrigger.Setters>
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
@@ -359,7 +359,7 @@
                             </DataTrigger.Setters>
                         </DataTrigger>
                         <!-- Add ContextMenu for WebConsole -->
-                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static networkManager:ApplicationViewManager+Name.WebConsole}">
+                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static networkManagerModels:Application+Name.WebConsole}">
                             <DataTrigger.Setters>
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>

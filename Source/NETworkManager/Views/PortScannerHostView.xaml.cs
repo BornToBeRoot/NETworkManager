@@ -16,7 +16,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = ApplicationViewManager.Name.PortScanner.ToString();
+            InterTabController.Partition = Models.Application.Name.PortScanner.ToString();
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)

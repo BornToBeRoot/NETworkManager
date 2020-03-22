@@ -106,7 +106,7 @@ namespace NETworkManager.ViewModels
             ParameterHelp = CommandLineManager.ParameterHelp;
             ParameterResetSettings = CommandLineManager.ParameterResetSettings;
             ParameterApplication = CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication);
-            ParameterApplicationValues = string.Join(" ,", System.Enum.GetValues(typeof(ApplicationViewManager.Name)).Cast<ApplicationViewManager.Name>().ToList());
+            ParameterApplicationValues = string.Join(" ,", System.Enum.GetValues(typeof(Models.Application.Name)).Cast<Models.Application.Name>().ToList());
         }
         #endregion
     }

@@ -365,7 +365,7 @@ namespace NETworkManager.Models.Profile
         public static void AddProfile(ProfileInfo profile)
         {
             // Possible fix for appcrash --> when icollection view is refreshed...
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 lock (Profiles)
                     Profiles.Add(profile);
@@ -515,7 +515,7 @@ namespace NETworkManager.Models.Profile
         public static void RemoveProfile(ProfileInfo profile)
         {
             // Possible fix for appcrash --> when icollection view is refreshed...
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 lock (Profiles)
                     Profiles.Remove(profile);

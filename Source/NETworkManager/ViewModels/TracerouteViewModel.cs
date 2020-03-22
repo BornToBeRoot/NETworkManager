@@ -295,7 +295,7 @@ namespace NETworkManager.ViewModels
             if (!(name is string appName))
                 return;
 
-            if (!System.Enum.TryParse(appName, out ApplicationViewManager.Name app))
+            if (!System.Enum.TryParse(appName, out Models.Application.Name app))
                 return;
 
             var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname) ? SelectedTraceResult.Hostname : SelectedTraceResult.IPAddress.ToString();
@@ -307,14 +307,14 @@ namespace NETworkManager.ViewModels
 
         private void PerformDNSLookupIPAddressAction()
         {
-            EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.IPAddress.ToString());
+            EventSystem.RedirectDataToApplication(Models.Application.Name.DNSLookup, SelectedTraceResult.IPAddress.ToString());
         }
 
         public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
 
         private void PerformDNSLookupHostnameAction()
         {
-            EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.Hostname);
+            EventSystem.RedirectDataToApplication(Models.Application.Name.DNSLookup, SelectedTraceResult.Hostname);
         }
 
         public ICommand CopySelectedHopCommand => new RelayCommand(p => CopySelectedHopAction());

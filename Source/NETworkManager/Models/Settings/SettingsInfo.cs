@@ -47,8 +47,8 @@ namespace NETworkManager.Models.Settings
 
         #region General 
         // General        
-        private ApplicationViewManager.Name _general_DefaultApplicationViewName = GlobalStaticConfiguration.General_DefaultApplicationViewName;
-        public ApplicationViewManager.Name General_DefaultApplicationViewName
+        private Models.Application.Name _general_DefaultApplicationViewName = GlobalStaticConfiguration.General_DefaultApplicationViewName;
+        public Models.Application.Name General_DefaultApplicationViewName
         {
             get => _general_DefaultApplicationViewName;
             set

@@ -74,53 +74,53 @@ namespace NETworkManager.Models.Documentation
                 OpenDocumentation((DocumentationIdentifier) documentationIdentifier);
         }
 
-        public static DocumentationIdentifier GetIdentifierByAppliactionName(ApplicationViewManager.Name name)
+        public static DocumentationIdentifier GetIdentifierByAppliactionName(Models.Application.Name name)
         {
             switch (name)
             {
-                case ApplicationViewManager.Name.Dashboard:
+                case Application.Name.Dashboard:
                     return DocumentationIdentifier.ApplicationDashboard;                    
-                case ApplicationViewManager.Name.NetworkInterface:
+                case Models.Application.Name.NetworkInterface:
                     return DocumentationIdentifier.ApplicationNetworkInterface;                    
-                case ApplicationViewManager.Name.WiFi:
+                case Models.Application.Name.WiFi:
                     return DocumentationIdentifier.ApplicationWiFi;                    
-                case ApplicationViewManager.Name.IPScanner:
+                case Models.Application.Name.IPScanner:
                     return DocumentationIdentifier.ApplicationIPScanner;                    
-                case ApplicationViewManager.Name.PortScanner:
+                case Models.Application.Name.PortScanner:
                     return DocumentationIdentifier.ApplicationPortScanner;                    
-                case ApplicationViewManager.Name.Ping:
+                case Models.Application.Name.Ping:
                     return DocumentationIdentifier.ApplicationPing;                    
-                case ApplicationViewManager.Name.Traceroute:
+                case Models.Application.Name.Traceroute:
                     return DocumentationIdentifier.ApplicationTraceroute;                    
-                case ApplicationViewManager.Name.DNSLookup:
+                case Models.Application.Name.DNSLookup:
                     return DocumentationIdentifier.ApplicationDnsLookup;                    
-                case ApplicationViewManager.Name.RemoteDesktop:
+                case Models.Application.Name.RemoteDesktop:
                     return DocumentationIdentifier.ApplicationRemoteDesktop;                    
-                case ApplicationViewManager.Name.PowerShell:
+                case Models.Application.Name.PowerShell:
                     return DocumentationIdentifier.ApplicationPowerShell;                    
-                case ApplicationViewManager.Name.PuTTY:
+                case Models.Application.Name.PuTTY:
                     return DocumentationIdentifier.ApplicationPutty;                    
-                case ApplicationViewManager.Name.TigerVNC:
+                case Models.Application.Name.TigerVNC:
                     return DocumentationIdentifier.ApplicationTigerVNC;                    
-                case ApplicationViewManager.Name.SNMP:
+                case Models.Application.Name.SNMP:
                     return DocumentationIdentifier.ApplicationSnmp;                    
-                case ApplicationViewManager.Name.WakeOnLAN:
+                case Models.Application.Name.WakeOnLAN:
                     return DocumentationIdentifier.ApplicationWakeOnLan;                    
-                case ApplicationViewManager.Name.HTTPHeaders:
+                case Models.Application.Name.HTTPHeaders:
                     return DocumentationIdentifier.ApplicationHttpHeaders;                    
-                case ApplicationViewManager.Name.Whois:
+                case Models.Application.Name.Whois:
                     return DocumentationIdentifier.ApplicationWhois;                    
-                case ApplicationViewManager.Name.SubnetCalculator:
+                case Models.Application.Name.SubnetCalculator:
                     return DocumentationIdentifier.ApplicationSubnetCalculator;                    
-                case ApplicationViewManager.Name.Lookup:
+                case Models.Application.Name.Lookup:
                     return DocumentationIdentifier.ApplicationLookup;                    
-                case ApplicationViewManager.Name.Connections:
+                case Models.Application.Name.Connections:
                     return DocumentationIdentifier.ApplicationConnections;                    
-                case ApplicationViewManager.Name.Listeners:
+                case Models.Application.Name.Listeners:
                     return DocumentationIdentifier.ApplicationListeners;                    
-                case ApplicationViewManager.Name.ARPTable:
+                case Models.Application.Name.ARPTable:
                     return DocumentationIdentifier.ApplicationArpTable;                    
-                case ApplicationViewManager.Name.None:
+                case Models.Application.Name.None:
                     return DocumentationIdentifier.Default;                    
                 default:
                     return DocumentationIdentifier.Default;                    

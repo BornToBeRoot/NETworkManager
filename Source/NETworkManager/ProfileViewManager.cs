@@ -12,21 +12,21 @@ namespace NETworkManager
             new ProfileViewInfo(Name.General, new PackIconModern{ Kind = PackIconModernKind.Box }),
 
             // Applications
-            new ProfileViewInfo(Name.NetworkInterface, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.NetworkInterface)),
-            new ProfileViewInfo(Name.IPScanner, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.IPScanner)),
-            new ProfileViewInfo(Name.PortScanner,ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PortScanner)),
-            new ProfileViewInfo(Name.Ping, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Ping)),
-            new ProfileViewInfo(Name.PingMonitor, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PingMonitor)),
-            new ProfileViewInfo(Name.Traceroute, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Traceroute)),
-            new ProfileViewInfo(Name.DNSLookup, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.DNSLookup)),
-            new ProfileViewInfo(Name.RemoteDesktop, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.RemoteDesktop)),
-            new ProfileViewInfo(Name.PowerShell, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PowerShell)),
-            new ProfileViewInfo(Name.PuTTY, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.PuTTY)),
-            new ProfileViewInfo(Name.TigerVNC, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.TigerVNC)),
-            new ProfileViewInfo(Name.WebConsole, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.WebConsole)),
-            new ProfileViewInfo(Name.WakeOnLAN, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.WakeOnLAN)),
-            new ProfileViewInfo(Name.HTTPHeaders, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.HTTPHeaders)),
-            new ProfileViewInfo(Name.Whois, ApplicationViewManager.GetIconByName(ApplicationViewManager.Name.Whois))
+            new ProfileViewInfo(Name.NetworkInterface, ApplicationViewManager.GetIconByName(Models.Application.Name.NetworkInterface)),
+            new ProfileViewInfo(Name.IPScanner, ApplicationViewManager.GetIconByName(Models.Application.Name.IPScanner)),
+            new ProfileViewInfo(Name.PortScanner,ApplicationViewManager.GetIconByName(Models.Application.Name.PortScanner)),
+            new ProfileViewInfo(Name.Ping, ApplicationViewManager.GetIconByName(Models.Application.Name.Ping)),
+            new ProfileViewInfo(Name.PingMonitor, ApplicationViewManager.GetIconByName(Models.Application.Name.PingMonitor)),
+            new ProfileViewInfo(Name.Traceroute, ApplicationViewManager.GetIconByName(Models.Application.Name.Traceroute)),
+            new ProfileViewInfo(Name.DNSLookup, ApplicationViewManager.GetIconByName(Models.Application.Name.DNSLookup)),
+            new ProfileViewInfo(Name.RemoteDesktop, ApplicationViewManager.GetIconByName(Models.Application.Name.RemoteDesktop)),
+            new ProfileViewInfo(Name.PowerShell, ApplicationViewManager.GetIconByName(Models.Application.Name.PowerShell)),
+            new ProfileViewInfo(Name.PuTTY, ApplicationViewManager.GetIconByName(Models.Application.Name.PuTTY)),
+            new ProfileViewInfo(Name.TigerVNC, ApplicationViewManager.GetIconByName(Models.Application.Name.TigerVNC)),
+            new ProfileViewInfo(Name.WebConsole, ApplicationViewManager.GetIconByName(Models.Application.Name.WebConsole)),
+            new ProfileViewInfo(Name.WakeOnLAN, ApplicationViewManager.GetIconByName(Models.Application.Name.WakeOnLAN)),
+            new ProfileViewInfo(Name.HTTPHeaders, ApplicationViewManager.GetIconByName(Models.Application.Name.HTTPHeaders)),
+            new ProfileViewInfo(Name.Whois, ApplicationViewManager.GetIconByName(Models.Application.Name.Whois))
         };
 
         public static string TranslateName(Name name)

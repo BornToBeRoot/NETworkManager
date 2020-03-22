@@ -1350,12 +1350,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Notification\" />
-    <Folder Include="WpfHelper\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj">
       <Project>{ff225c2e-aa67-4b10-939a-6c046cef8697}</Project>
       <Name>NETworkManager.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
+      <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
+      <Name>NETworkManager.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\NETworkManager.Utilities.WPF\NETworkManager.Utilities.WPF.csproj">
       <Project>{93733008-7269-460d-8390-ab281c75db91}</Project>
