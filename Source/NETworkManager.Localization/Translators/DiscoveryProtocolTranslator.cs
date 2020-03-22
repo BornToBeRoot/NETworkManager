@@ -5,7 +5,7 @@ namespace NETworkManager.Localization.Translators
     public class DiscoveryProtocolTranslator : SingletonBase<DiscoveryProtocolTranslator>, ILocalizationStringTranslator
     {
         /// <summary>
-        /// Constant to identify the strings in the language files
+        /// Constant to identify the strings in the language files.
         /// </summary>
         private const string _identifier = "DiscoveryProtocolIdentifier_";
 
