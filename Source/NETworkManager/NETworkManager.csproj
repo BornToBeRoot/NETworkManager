@@ -148,8 +148,6 @@
     </Compile>
     <Compile Include="Converters\ApplicationNameToIconConverter.cs" />
     <Compile Include="Converters\ApplicationNameToTranslatedStringConverter.cs" />
-    <Compile Include="Converters\AppThemeToBrushConverter.cs" />
-    <Compile Include="Converters\AppThemeToStringConverter.cs" />
     <Compile Include="Converters\DiscoveryProtocolToStringConverter.cs" />
     <Compile Include="Converters\BandwidthBytesWithSizeConverter.cs" />
     <Compile Include="Converters\Bytes1000ToSizeConverter.cs" />
@@ -1350,6 +1348,10 @@
     <Folder Include="Models\Notification\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NETworkManager.Converters\NETworkManager.Converters.csproj">
+      <Project>{bd4ddc21-7b64-41b2-bac7-8173e0fe84be}</Project>
+      <Name>NETworkManager.Converters</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj">
       <Project>{ff225c2e-aa67-4b10-939a-6c046cef8697}</Project>
       <Name>NETworkManager.Localization</Name>

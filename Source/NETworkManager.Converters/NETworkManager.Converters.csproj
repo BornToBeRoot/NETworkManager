@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="AccentToBrushConverter.cs" />
     <Compile Include="AccentToStringConverter.cs" />
+    <Compile Include="AppThemeToBrushConverter.cs" />
+    <Compile Include="AppThemeToStringConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
