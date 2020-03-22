@@ -1,19 +1,22 @@
 ﻿namespace NETworkManager.Models
 {
+    /// <summary>
+    /// Class to store informations about an application.
+    /// </summary>
     public class ApplicationInfo
     {
         /// <summary>
-        /// 
+        /// Name of the application.
         /// </summary>
         public Application.Name Name { get; set; }
 
         /// <summary>
-        /// 
+        /// Indicates that the application is visible to the user.
         /// </summary>
         public bool IsVisible { get; set; }
 
         /// <summary>
-        /// 
+        /// Create an <see cref="ApplicationInfo"/>.
         /// </summary>
         public ApplicationInfo()
         {
@@ -21,9 +24,9 @@
         }
 
         /// <summary>
-        /// 
+        /// Create an <see cref="ApplicationInfo"/> based on <see cref="Application.Name"/>.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name"><see cref="Application.Name"/></param>
         public ApplicationInfo(Application.Name name)
         {
             Name = name;
@@ -44,10 +47,10 @@
         }
 
         /// <summary>
-        /// 
+        /// Method to check if an object is equal to this object.
         /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
+        /// <param name="obj">Object from type <see cref="ApplicationInfo" />.</param>
+        /// <returns>Equality as <see cref="bool"/>.</returns>
         public override bool Equals(object obj)
         {
             if (obj is null)
@@ -63,9 +66,9 @@
         }
 
         /// <summary>
-        /// 
+        /// Method to return the hash code of this object.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Hashcode as <see cref="int"/>.</returns>
         public override int GetHashCode()
         {
             return Name.GetHashCode();

@@ -3,12 +3,12 @@
 namespace NETworkManager.Utilities
 {
     /// <summary>
-    /// This class contains a collection of useful methods to interact with an array
+    /// This class contains a collection of useful methods to interact with an array.
     /// </summary>
     public static class ArrayHelper
     {
         /// <summary>
-        /// This method creates an sub array from an array
+        /// This method creates an sub array from an array.
         /// </summary>
         /// <typeparam name="T">Object array.</typeparam>
         /// <param name="data">Any array.</param>
