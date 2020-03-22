@@ -13,7 +13,7 @@
         xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
         xmlns:controls="clr-namespace:NETworkManager.Controls"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
+        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerViewModel}">
@@ -187,7 +187,7 @@
         <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding PortScanResultsView}" SelectedItem="{Binding SelectedPortScanResult}" SelectedItemsList="{Binding SelectedPortScanResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
-                <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.CopyDots}">
                         <MenuItem.Icon>

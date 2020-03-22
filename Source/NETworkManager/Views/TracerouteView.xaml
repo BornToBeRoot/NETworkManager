@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
-        xmlns:wpfHelpers="clr-namespace:NETworkManager.WpfHelper"
+        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             

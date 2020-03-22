@@ -10,7 +10,7 @@
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
+        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         mc:Ignorable="d"
         Title="NETworkManager" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" TitleAlignment="Left"
         d:DataContext="{d:DesignInstance networkManagerControls:DragablzTabHostWindow}">
@@ -20,7 +20,7 @@
     <Grid>
         <dragablz:TabablzControl Focusable="False" Name="TabsContainer" ClosingItemCallback="{Binding CloseItemCommand}">
             <dragablz:TabablzControl.Resources>
-                <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
             </dragablz:TabablzControl.Resources>
             <dragablz:TabablzControl.InterTabController>
                 <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" x:Name="InterTabController" />

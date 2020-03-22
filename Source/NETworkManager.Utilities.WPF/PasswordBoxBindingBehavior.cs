@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Interactivity;
 
-namespace NETworkManager.WpfHelper
+namespace NETworkManager.Utilities.WPF
 {
     public class PasswordBoxBindingBehavior : Behavior<PasswordBox>
     {

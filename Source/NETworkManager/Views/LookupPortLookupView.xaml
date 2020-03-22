@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
-        xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
+        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -43,7 +43,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.PortOrService}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="TextBoxPortOrService" ItemsSource="{Binding PortsOrServicesHistoryView}" wpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding PortOrServiceHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortPortRangeOrService}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" x:Name="TextBoxPortOrService" ItemsSource="{Binding PortsOrServicesHistoryView}" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding PortOrServiceHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortPortRangeOrService}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.InputBindings>
                         <KeyBinding Command="{Binding PortLookupCommand}" Key="Return" />
                     </ComboBox.InputBindings>

@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace NETworkManager.WpfHelper
+namespace NETworkManager.Utilities.WPF
 {
     public class ProtocolSettingsLayout
     {
@@ -20,7 +20,7 @@ namespace NETworkManager.WpfHelper
             dependencyObject.SetValue(MVVMHasErrorProperty, value);
         }
 
-        private static object CoerceMVVMHasError(DependencyObject dependencyObject, Object baseValue)
+        private static object CoerceMVVMHasError(DependencyObject dependencyObject, object baseValue)
         {
             bool hasError = (bool)baseValue;
 

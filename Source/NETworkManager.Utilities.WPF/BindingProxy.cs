@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace NETworkManager.WpfHelper
+namespace NETworkManager.Utilities.WPF
 {
     public class BindingProxy : Freezable
     {
