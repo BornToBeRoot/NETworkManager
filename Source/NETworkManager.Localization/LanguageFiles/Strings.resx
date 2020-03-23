@@ -1450,10 +1450,10 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Applications" xml:space="preserve">
     <value>Applications</value>
   </data>
-  <data name="BaseDark" xml:space="preserve">
+  <data name="AppTheme_BaseDark" xml:space="preserve">
     <value>Dark</value>
   </data>
-  <data name="BaseLight" xml:space="preserve">
+  <data name="AppTheme_BaseLight" xml:space="preserve">
     <value>Light</value>
   </data>
   <data name="Black" xml:space="preserve">
@@ -2649,5 +2649,80 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   </data>
   <data name="ApplicationName_WiFi" xml:space="preserve">
     <value>WiFi</value>
+  </data>
+  <data name="Accent_Amber" xml:space="preserve">
+    <value>Amber</value>
+  </data>
+  <data name="Accent_Black" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="Accent_Blue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="Accent_Brown" xml:space="preserve">
+    <value>Brown</value>
+  </data>
+  <data name="Accent_Cobalt" xml:space="preserve">
+    <value>Cobalt</value>
+  </data>
+  <data name="Accent_Crimson" xml:space="preserve">
+    <value>Crimson</value>
+  </data>
+  <data name="Accent_Cyan" xml:space="preserve">
+    <value>Cyan</value>
+  </data>
+  <data name="Accent_Emerald" xml:space="preserve">
+    <value>Emerald</value>
+  </data>
+  <data name="Accent_Green" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="Accent_Indigo" xml:space="preserve">
+    <value>Indigo</value>
+  </data>
+  <data name="Accent_Lime" xml:space="preserve">
+    <value>Lime</value>
+  </data>
+  <data name="Accent_Magenta" xml:space="preserve">
+    <value>Magenta</value>
+  </data>
+  <data name="Accent_Mauve" xml:space="preserve">
+    <value>Mauve</value>
+  </data>
+  <data name="Accent_Olive" xml:space="preserve">
+    <value>Olive</value>
+  </data>
+  <data name="Accent_Orange" xml:space="preserve">
+    <value>Orange</value>
+  </data>
+  <data name="Accent_Purple" xml:space="preserve">
+    <value>Purple</value>
+  </data>
+  <data name="Accent_Red" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="Accent_Sienna" xml:space="preserve">
+    <value>Sienna</value>
+  </data>
+  <data name="Accent_Taupe" xml:space="preserve">
+    <value>Taupe</value>
+  </data>
+  <data name="Accent_Teal" xml:space="preserve">
+    <value>Teal</value>
+  </data>
+  <data name="Accent_Violet" xml:space="preserve">
+    <value>Pink</value>
+  </data>
+  <data name="Accent_Yellow" xml:space="preserve">
+    <value>Yellow</value>
+  </data>
+  <data name="Accen_Steel" xml:space="preserve">
+    <value>Steel</value>
+  </data>
+  <data name="AppTheme_Black" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="AppTheme_White" xml:space="preserve">
+    <value>White</value>
   </data>
 </root>

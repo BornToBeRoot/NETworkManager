@@ -7,7 +7,7 @@ using System;
 using System.Text;
 
 namespace NETworkManager.Models.Network
-{
+{   
     public class DiscoveryProtocol
     {
         private string DiscoveryScript = string.Empty;
@@ -104,9 +104,9 @@ namespace NETworkManager.Models.Network
         }
         #endregion
 
-        #region Enum
+        #region Enum     
         public enum Protocol
-        {
+        {          
             LLDP_CDP,
             LLDP,
             CDP

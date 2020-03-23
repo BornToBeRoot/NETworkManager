@@ -60,6 +60,7 @@
     <Compile Include="ApplicationNameToTranslatedStringConverter.cs" />
     <Compile Include="AppThemeToBrushConverter.cs" />
     <Compile Include="AppThemeToStringConverter.cs" />
+    <Compile Include="AutoRefreshTimeToStringConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

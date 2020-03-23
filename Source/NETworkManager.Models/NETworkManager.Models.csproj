@@ -105,6 +105,9 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.PowerShell.5.ReferenceAssemblies.1.1.0\lib\net4\System.Management.Automation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net462\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -119,10 +122,18 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="ApplicationInfo.cs" />
+    <Compile Include="Network\DiscoveryProtocol.cs" />
+    <Compile Include="Network\DiscoveryProtocolErrorArgs.cs" />
+    <Compile Include="Network\DiscoveryProtocolPackageArgs.cs" />
+    <Compile Include="Network\DiscoveryProtocolPackageInfo.cs" />
+    <Compile Include="Network\DiscoveryProtocolWarningArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RemoteDesktop\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

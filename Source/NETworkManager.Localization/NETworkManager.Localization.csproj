@@ -54,6 +54,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Translators\TimeUnitTranslator.cs" />
     <Compile Include="Translators\ConnectionStateTranslator.cs" />
     <Compile Include="Translators\RemoteDesktopAudioCaptureRedirectionModeTranslator.cs" />
     <Compile Include="Translators\RemoteDesktopAudioRedirectionModeTranslator.cs" />

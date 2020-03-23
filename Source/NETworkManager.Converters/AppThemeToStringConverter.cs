@@ -2,7 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Localization;
+using NETworkManager.Localization.Translators;
 
 namespace NETworkManager.Converters
 {
@@ -21,15 +21,10 @@ namespace NETworkManager.Converters
         /// <returns>Translated <see cref="AppTheme"/>.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is AppTheme theme))
-                return "No valid theme passed!";
+            if (!(value is AppTheme appTheme))
+                return "-/-";
 
-            var name = Localization.LanguageFiles.Strings.ResourceManager.GetString(theme.Name, LocalizationManager.GetInstance().Culture);
-
-            if (string.IsNullOrEmpty(name))
-                name = theme.Name;
-
-            return name;
+            return AppThemeTranslator.GetInstance().Translate(appTheme);
         }
 
         /// <summary>

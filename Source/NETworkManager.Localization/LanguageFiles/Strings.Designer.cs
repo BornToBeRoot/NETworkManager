@@ -70,11 +70,218 @@ namespace NETworkManager.Localization.LanguageFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Steel.
+        /// </summary>
+        public static string Accen_Steel {
+            get {
+                return ResourceManager.GetString("Accen_Steel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accent.
         /// </summary>
         public static string Accent {
             get {
                 return ResourceManager.GetString("Accent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amber.
+        /// </summary>
+        public static string Accent_Amber {
+            get {
+                return ResourceManager.GetString("Accent_Amber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Black.
+        /// </summary>
+        public static string Accent_Black {
+            get {
+                return ResourceManager.GetString("Accent_Black", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blue.
+        /// </summary>
+        public static string Accent_Blue {
+            get {
+                return ResourceManager.GetString("Accent_Blue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brown.
+        /// </summary>
+        public static string Accent_Brown {
+            get {
+                return ResourceManager.GetString("Accent_Brown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cobalt.
+        /// </summary>
+        public static string Accent_Cobalt {
+            get {
+                return ResourceManager.GetString("Accent_Cobalt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crimson.
+        /// </summary>
+        public static string Accent_Crimson {
+            get {
+                return ResourceManager.GetString("Accent_Crimson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cyan.
+        /// </summary>
+        public static string Accent_Cyan {
+            get {
+                return ResourceManager.GetString("Accent_Cyan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emerald.
+        /// </summary>
+        public static string Accent_Emerald {
+            get {
+                return ResourceManager.GetString("Accent_Emerald", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green.
+        /// </summary>
+        public static string Accent_Green {
+            get {
+                return ResourceManager.GetString("Accent_Green", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indigo.
+        /// </summary>
+        public static string Accent_Indigo {
+            get {
+                return ResourceManager.GetString("Accent_Indigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lime.
+        /// </summary>
+        public static string Accent_Lime {
+            get {
+                return ResourceManager.GetString("Accent_Lime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Magenta.
+        /// </summary>
+        public static string Accent_Magenta {
+            get {
+                return ResourceManager.GetString("Accent_Magenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mauve.
+        /// </summary>
+        public static string Accent_Mauve {
+            get {
+                return ResourceManager.GetString("Accent_Mauve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Olive.
+        /// </summary>
+        public static string Accent_Olive {
+            get {
+                return ResourceManager.GetString("Accent_Olive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Orange.
+        /// </summary>
+        public static string Accent_Orange {
+            get {
+                return ResourceManager.GetString("Accent_Orange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purple.
+        /// </summary>
+        public static string Accent_Purple {
+            get {
+                return ResourceManager.GetString("Accent_Purple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red.
+        /// </summary>
+        public static string Accent_Red {
+            get {
+                return ResourceManager.GetString("Accent_Red", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sienna.
+        /// </summary>
+        public static string Accent_Sienna {
+            get {
+                return ResourceManager.GetString("Accent_Sienna", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taupe.
+        /// </summary>
+        public static string Accent_Taupe {
+            get {
+                return ResourceManager.GetString("Accent_Taupe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teal.
+        /// </summary>
+        public static string Accent_Teal {
+            get {
+                return ResourceManager.GetString("Accent_Teal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pink.
+        /// </summary>
+        public static string Accent_Violet {
+            get {
+                return ResourceManager.GetString("Accent_Violet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yellow.
+        /// </summary>
+        public static string Accent_Yellow {
+            get {
+                return ResourceManager.GetString("Accent_Yellow", resourceCulture);
             }
         }
         
@@ -664,6 +871,42 @@ namespace NETworkManager.Localization.LanguageFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string AppTheme_BaseDark {
+            get {
+                return ResourceManager.GetString("AppTheme_BaseDark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string AppTheme_BaseLight {
+            get {
+                return ResourceManager.GetString("AppTheme_BaseLight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Black.
+        /// </summary>
+        public static string AppTheme_Black {
+            get {
+                return ResourceManager.GetString("AppTheme_Black", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White.
+        /// </summary>
+        public static string AppTheme_White {
+            get {
+                return ResourceManager.GetString("AppTheme_White", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure?.
         /// </summary>
         public static string AreYouSure {
@@ -822,24 +1065,6 @@ namespace NETworkManager.Localization.LanguageFiles {
         public static string Bandwidth {
             get {
                 return ResourceManager.GetString("Bandwidth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dark.
-        /// </summary>
-        public static string BaseDark {
-            get {
-                return ResourceManager.GetString("BaseDark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Light.
-        /// </summary>
-        public static string BaseLight {
-            get {
-                return ResourceManager.GetString("BaseLight", resourceCulture);
             }
         }
         

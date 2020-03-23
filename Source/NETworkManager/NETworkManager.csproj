@@ -165,7 +165,6 @@
     <Compile Include="Converters\ConnectionStateToRectangleStyleConverter.cs" />
     <Compile Include="Converters\BandwidthBytesToSpeedConverter.cs" />
     <Compile Include="Converters\DNSServerInfoToString.cs" />
-    <Compile Include="Converters\AutoRefreshTimeToStringConverter.cs" />
     <Compile Include="Converters\BigIntegerToStringConverter.cs" />
     <Compile Include="Converters\OperationalStatusToStringConverter.cs" />
     <Compile Include="Converters\ListToStringConverter.cs" />
@@ -1342,7 +1341,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Enum\" />
     <Folder Include="Models\Notification\" />
   </ItemGroup>
   <ItemGroup>
