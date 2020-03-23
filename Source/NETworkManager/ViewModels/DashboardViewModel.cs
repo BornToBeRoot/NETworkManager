@@ -8,10 +8,11 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using NETworkManager.Enum;
+using NETworkManager.Models.Network;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Translators;
+using Ping = System.Net.NetworkInformation.Ping;
 
 namespace NETworkManager.ViewModels
 {

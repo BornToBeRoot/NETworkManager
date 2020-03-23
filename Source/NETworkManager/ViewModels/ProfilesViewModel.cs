@@ -9,7 +9,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Threading;
-using NETworkManager.Enum;
+using NETworkManager.Models.Network;
 using NETworkManager.Models.Profile;
 
 namespace NETworkManager.ViewModels

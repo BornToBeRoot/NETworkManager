@@ -21,7 +21,7 @@ using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using NETworkManager.Models.EventSystem;
-using NETworkManager.Enum;
+using NETworkManager.Models.Network;
 using System.Text.RegularExpressions;
 using NETworkManager.Models.Profile;
 using NETworkManager.Localization;

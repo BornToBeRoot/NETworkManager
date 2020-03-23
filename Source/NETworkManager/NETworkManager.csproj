@@ -233,8 +233,8 @@
     <Compile Include="StatusWindow.xaml.cs">
       <DependentUpon>StatusWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Enum\ProfileEditMode.cs" />
-    <Compile Include="Enum\ConnectionState.cs" />
+    <Compile Include="Models\Profile\ProfileEditMode.cs" />
+    <Compile Include="Models\Network\ConnectionState.cs" />
     <Compile Include="Models\EventSystem\EventSystemRedirectProfileApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystemRedirectDataApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystem.cs" />
@@ -1342,6 +1342,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Enum\" />
     <Folder Include="Models\Notification\" />
   </ItemGroup>
   <ItemGroup>

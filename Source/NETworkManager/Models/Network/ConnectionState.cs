@@ -1,5 +1,5 @@
-﻿namespace NETworkManager.Enum
-{
+﻿namespace NETworkManager.Models.Network
+{ 
     public enum ConnectionState
     {
         None,

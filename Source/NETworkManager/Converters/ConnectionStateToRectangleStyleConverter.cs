@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using NETworkManager.Enum;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Converters
 {

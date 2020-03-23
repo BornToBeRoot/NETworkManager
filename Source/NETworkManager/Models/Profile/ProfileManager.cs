@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Threading;
 using System.Xml.Serialization;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Enum;
+using NETworkManager.Models.Network;
 using NETworkManager.Models.Settings;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
