@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Utilities
 {
     /// <summary>
-    /// Class provides static helper methods to convert file size.
+    /// Class provides static methods to convert file size.
     /// </summary>
     public static class FileSizeConverter
     {

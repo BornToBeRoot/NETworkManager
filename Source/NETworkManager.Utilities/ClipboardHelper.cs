@@ -3,7 +3,7 @@
 namespace NETworkManager.Utilities
 {
     /// <summary>
-    /// Class for static common methods.
+    /// Class provides static methods to interact with the clipboard.
     /// </summary>
     public static class ClipboardHelper
     {

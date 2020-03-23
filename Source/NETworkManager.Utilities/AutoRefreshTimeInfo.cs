@@ -1,20 +1,18 @@
-﻿using static NETworkManager.Utilities.AutoRefreshTime;
-
-namespace NETworkManager.Utilities
+﻿namespace NETworkManager.Utilities
 {
     /// <summary>
-    /// Class to store auto refresh time informations.
+    /// Class stores auto refresh time informations.
     /// </summary>
     public class AutoRefreshTimeInfo
     {
         /// <summary>
-        /// Value is combined with <see cref="AutoRefreshTime.TimeUnit"/>.
+        /// Value is combined with <see cref="TimeUnit"/>.
         /// Example: 5 Mintues, 2 Hours.
         /// </summary>
         public int Value { get; set; }
 
         /// <summary>
-        /// <see cref="AutoRefreshTime.TimeUnit"/> is combined with <see cref="Value"/>.
+        /// <see cref="TimeUnit"/> is combined with <see cref="Value"/>.
         /// </summary>
         public TimeUnit TimeUnit { get; set; }
 

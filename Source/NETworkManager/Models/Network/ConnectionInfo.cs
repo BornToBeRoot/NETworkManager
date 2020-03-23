@@ -17,8 +17,8 @@ namespace NETworkManager.Models.Network
         public int RemotePort { get; set; }
         public TcpState TcpState { get; set; }
 
-        public int LocalIPAddressInt32 => LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(LocalIPAddress) : 0;
-        public int RemoteIPAddressInt32 => LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(RemoteIPAddress) : 0;
+        public int LocalIPAddressInt32 => LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressConverter.ToInt32(LocalIPAddress) : 0;
+        public int RemoteIPAddressInt32 => LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressConverter.ToInt32(RemoteIPAddress) : 0;
         public string TcpStateTranslated => TcpStateTranslator.GetInstance().Translate(TcpState.ToString());
 
         public ConnectionInfo()

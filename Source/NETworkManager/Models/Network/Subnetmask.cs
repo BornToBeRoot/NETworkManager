@@ -34,12 +34,12 @@ namespace NETworkManager.Models.Network
             for (var i = 0; i < cidr; i++)
                 bits += "1";
 
-            return IPv4AddressHelper.BinaryStringToHumanString(bits.PadRight(32, '0'));
+            return IPv4AddressConverter.ToHumanString(bits.PadRight(32, '0'));
         }
 
         public static int ConvertSubnetmaskToCidr(IPAddress subnetmask)
         {
-            return string.Join("", IPv4AddressHelper.HumanStringToBinaryString(subnetmask.ToString()).Replace(".", "").TrimEnd('0')).Length;
+            return string.Join("", IPv4AddressConverter.ToBinaryString(subnetmask.ToString()).Replace(".", "").TrimEnd('0')).Length;
         }
     }
 }

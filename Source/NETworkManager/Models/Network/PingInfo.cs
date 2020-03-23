@@ -15,7 +15,7 @@ namespace NETworkManager.Models.Network
         public int TTL { get; set; }
         public IPStatus Status { get; set; }
 
-        public int IPAddressInt32 => IPAddress != null && IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressHelper.ConvertToInt32(IPAddress) : 0;
+        public int IPAddressInt32 => IPAddress != null && IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressConverter.ToInt32(IPAddress) : 0;
 
         public PingInfo()
         {

@@ -3,7 +3,7 @@
 namespace NETworkManager.Utilities
 {
     /// <summary>
-    /// Class to store custom command informations.
+    /// Class stores custom command informations.
     /// </summary>
     public class CustomCommandInfo : ICloneable
     {

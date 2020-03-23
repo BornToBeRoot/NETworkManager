@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace NETworkManager.Utilities
 {
     /// <summary>
-    /// Class provides methods to manage custom commands.
+    /// Class provides static methods to manage custom commands.
     /// </summary>
     public static class CustomCommand
     {

@@ -34,8 +34,8 @@ namespace NETworkManager.Validators
                 {
                     var range = ipHostOrRange.Split('-');
 
-                    if (IPv4AddressHelper.ConvertToInt32(IPAddress.Parse(range[0])) >=
-                        IPv4AddressHelper.ConvertToInt32(IPAddress.Parse(range[1])))
+                    if (IPv4AddressConverter.ToInt32(IPAddress.Parse(range[0])) >=
+                        IPv4AddressConverter.ToInt32(IPAddress.Parse(range[1])))
                         isValid = false;
 
                     continue;

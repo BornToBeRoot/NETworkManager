@@ -41,9 +41,9 @@ namespace NETworkManager.Utilities
                 {
                     var network = IPNetwork.Parse(ipOrRange);
 
-                    Parallel.For(IPv4AddressHelper.ConvertToInt32(network.Network), IPv4AddressHelper.ConvertToInt32(network.Broadcast) + 1, parallelOptions, i =>
+                    Parallel.For(IPv4AddressConverter.ToInt32(network.Network), IPv4AddressConverter.ToInt32(network.Broadcast) + 1, parallelOptions, i =>
                     {
-                        bag.Add(IPv4AddressHelper.ConvertFromInt32(i));
+                        bag.Add(IPv4AddressConverter.FromInt32(i));
 
                         parallelOptions.CancellationToken.ThrowIfCancellationRequested();
                     });
@@ -56,9 +56,9 @@ namespace NETworkManager.Utilities
                 {
                     var range = ipOrRange.Split('-');
 
-                    Parallel.For(IPv4AddressHelper.ConvertToInt32(IPAddress.Parse(range[0])), IPv4AddressHelper.ConvertToInt32(IPAddress.Parse(range[1])) + 1, parallelOptions, i =>
+                    Parallel.For(IPv4AddressConverter.ToInt32(IPAddress.Parse(range[0])), IPv4AddressConverter.ToInt32(IPAddress.Parse(range[1])) + 1, parallelOptions, i =>
                     {
-                        bag.Add(IPv4AddressHelper.ConvertFromInt32(i));
+                        bag.Add(IPv4AddressConverter.FromInt32(i));
 
                         parallelOptions.CancellationToken.ThrowIfCancellationRequested();
                     });

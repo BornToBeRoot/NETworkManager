@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace NETworkManager.Utilities
 {
     /// <summary>
-    /// Class provides methods to manage auto refresh time.
+    /// Class provides static methods to manage auto refresh time.
     /// </summary>
     public static class AutoRefreshTime
     {

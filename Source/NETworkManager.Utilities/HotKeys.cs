@@ -3,7 +3,7 @@
 namespace NETworkManager.Utilities
 {
     /// <summary>
-    /// Class to provide static methods for hotkeys.
+    /// Class provides static methods for hotkeys.
     /// </summary>
     public static class HotKeys
     {
