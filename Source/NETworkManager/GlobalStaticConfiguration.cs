@@ -7,10 +7,10 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Utilities;
-using NETworkManager.Enum;
 using NETworkManager.Models.RemoteDesktop;
 using DnsClient;
 using static NETworkManager.Models.Network.DiscoveryProtocol;
+using static NETworkManager.Utilities.AutoRefreshTime;
 
 // ReSharper disable InconsistentNaming
 

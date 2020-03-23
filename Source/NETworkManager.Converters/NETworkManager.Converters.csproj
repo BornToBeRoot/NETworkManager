@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="AccentToBrushConverter.cs" />
     <Compile Include="AccentToStringConverter.cs" />
+    <Compile Include="ApplicationNameToIconConverter.cs" />
+    <Compile Include="ApplicationNameToTranslatedStringConverter.cs" />
     <Compile Include="AppThemeToBrushConverter.cs" />
     <Compile Include="AppThemeToStringConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,6 +69,14 @@
     <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj">
       <Project>{FF225C2E-AA67-4B10-939A-6C046CEF8697}</Project>
       <Name>NETworkManager.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
+      <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
+      <Name>NETworkManager.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
+      <Project>{5c3d1749-d260-4566-b448-b94b3ad9eeff}</Project>
+      <Name>NETworkManager.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

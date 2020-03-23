@@ -146,8 +146,6 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\ApplicationNameToIconConverter.cs" />
-    <Compile Include="Converters\ApplicationNameToTranslatedStringConverter.cs" />
     <Compile Include="Converters\DiscoveryProtocolToStringConverter.cs" />
     <Compile Include="Converters\BandwidthBytesWithSizeConverter.cs" />
     <Compile Include="Converters\Bytes1000ToSizeConverter.cs" />
@@ -1078,7 +1076,6 @@
     <Compile Include="Views\LookupHostView.xaml.cs">
       <DependentUpon>LookupHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationViewManager.cs" />
     <Compile Include="Models\Network\ProgressChangedArgs.cs" />
     <Compile Include="Models\Network\TracerouteHopInfo.cs" />
     <Compile Include="Models\Network\TracerouteHopReceivedArgs.cs" />

@@ -412,6 +412,222 @@ namespace NETworkManager.Localization.LanguageFiles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ARPTable.
+        /// </summary>
+        public static string ApplicationName_ARPTable {
+            get {
+                return ResourceManager.GetString("ApplicationName_ARPTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connections.
+        /// </summary>
+        public static string ApplicationName_Connections {
+            get {
+                return ResourceManager.GetString("ApplicationName_Connections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string ApplicationName_Dashboard {
+            get {
+                return ResourceManager.GetString("ApplicationName_Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discovery Protocol.
+        /// </summary>
+        public static string ApplicationName_DiscoveryProtocol {
+            get {
+                return ResourceManager.GetString("ApplicationName_DiscoveryProtocol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DNS Lookup.
+        /// </summary>
+        public static string ApplicationName_DNSLookup {
+            get {
+                return ResourceManager.GetString("ApplicationName_DNSLookup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTTP Headers.
+        /// </summary>
+        public static string ApplicationName_HTTPHeaders {
+            get {
+                return ResourceManager.GetString("ApplicationName_HTTPHeaders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP Scanner.
+        /// </summary>
+        public static string ApplicationName_IPScanner {
+            get {
+                return ResourceManager.GetString("ApplicationName_IPScanner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Listeners.
+        /// </summary>
+        public static string ApplicationName_Listeners {
+            get {
+                return ResourceManager.GetString("ApplicationName_Listeners", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lookup.
+        /// </summary>
+        public static string ApplicationName_Lookup {
+            get {
+                return ResourceManager.GetString("ApplicationName_Lookup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network Interface.
+        /// </summary>
+        public static string ApplicationName_NetworkInterface {
+            get {
+                return ResourceManager.GetString("ApplicationName_NetworkInterface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping.
+        /// </summary>
+        public static string ApplicationName_Ping {
+            get {
+                return ResourceManager.GetString("ApplicationName_Ping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping Monitor.
+        /// </summary>
+        public static string ApplicationName_PingMonitor {
+            get {
+                return ResourceManager.GetString("ApplicationName_PingMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port Scanner.
+        /// </summary>
+        public static string ApplicationName_PortScanner {
+            get {
+                return ResourceManager.GetString("ApplicationName_PortScanner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PowerShell.
+        /// </summary>
+        public static string ApplicationName_PowerShell {
+            get {
+                return ResourceManager.GetString("ApplicationName_PowerShell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PuTTY.
+        /// </summary>
+        public static string ApplicationName_PuTTY {
+            get {
+                return ResourceManager.GetString("ApplicationName_PuTTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote Desktop.
+        /// </summary>
+        public static string ApplicationName_RemoteDesktop {
+            get {
+                return ResourceManager.GetString("ApplicationName_RemoteDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SNMP.
+        /// </summary>
+        public static string ApplicationName_SNMP {
+            get {
+                return ResourceManager.GetString("ApplicationName_SNMP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subnet Calculator.
+        /// </summary>
+        public static string ApplicationName_SubnetCalculator {
+            get {
+                return ResourceManager.GetString("ApplicationName_SubnetCalculator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TigerVNC.
+        /// </summary>
+        public static string ApplicationName_TigerVNC {
+            get {
+                return ResourceManager.GetString("ApplicationName_TigerVNC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Traceroute.
+        /// </summary>
+        public static string ApplicationName_Traceroute {
+            get {
+                return ResourceManager.GetString("ApplicationName_Traceroute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wake on LAN.
+        /// </summary>
+        public static string ApplicationName_WakeOnLAN {
+            get {
+                return ResourceManager.GetString("ApplicationName_WakeOnLAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Web Console.
+        /// </summary>
+        public static string ApplicationName_WebConsole {
+            get {
+                return ResourceManager.GetString("ApplicationName_WebConsole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whois.
+        /// </summary>
+        public static string ApplicationName_Whois {
+            get {
+                return ResourceManager.GetString("ApplicationName_Whois", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WiFi.
+        /// </summary>
+        public static string ApplicationName_WiFi {
+            get {
+                return ResourceManager.GetString("ApplicationName_WiFi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Applications.
         /// </summary>
         public static string Applications {

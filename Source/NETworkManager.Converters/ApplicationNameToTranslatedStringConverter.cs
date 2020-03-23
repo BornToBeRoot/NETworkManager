@@ -1,37 +1,32 @@
-﻿using MahApps.Metro;
+﻿using NETworkManager.Localization.Translators;
+using NETworkManager.Models;
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Localization;
 
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Converter to convert <see cref="AppTheme"/> to translated <see cref="string"/> or wise versa.
+    /// Converter to convert <see cref="Application.Name"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
-    public sealed class AppThemeToStringConverter : IValueConverter
+    public sealed class ApplicationNameToTranslatedStringConverter : IValueConverter
     {
         /// <summary>
-        /// Method to convert <see cref="AppTheme"/> to translated <see cref="string"/>. 
+        /// Method to convert <see cref="Application.Name"/> to translated <see cref="string"/>. 
         /// </summary>
-        /// <param name="value">Object from type <see cref="AppTheme"/>.</param>
+        /// <param name="value">Object from type <see cref="Application.Name"/>.</param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
-        /// <returns>Translated <see cref="AppTheme"/>.</returns>
+        /// <returns>Translated <see cref="Application.Name"/>.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is AppTheme theme))
-                return "No valid theme passed!";
+            if (!(value is Models.Application.Name name))
+                return "-/-";
 
-            var name = Localization.LanguageFiles.Strings.ResourceManager.GetString(theme.Name, LocalizationManager.GetInstance().Culture);
-
-            if (string.IsNullOrEmpty(name))
-                name = theme.Name;
-
-            return name;
+            return ApplicationNameTranslator.GetInstance().Translate(name);
         }
-
+        
         /// <summary>
         /// !!! Method not implemented !!!
         /// </summary>

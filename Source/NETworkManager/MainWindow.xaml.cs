@@ -26,6 +26,7 @@ using ContextMenu = System.Windows.Controls.ContextMenu;
 using NETworkManager.Models.Profile;
 using NETworkManager.Localization;
 using NETworkManager.Models;
+using NETworkManager.Localization.Translators;
 
 namespace NETworkManager
 {
@@ -429,9 +430,9 @@ namespace NETworkManager
                 var regex = new Regex(@" |-");
 
                 var search = regex.Replace(Search, "");
-
+                                
                 // Search by TranslatedName and Name
-                return info.IsVisible && (regex.Replace(ApplicationViewManager.GetTranslatedNameByName(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
+                return info.IsVisible && (regex.Replace(ApplicationNameTranslator.GetInstance().Translate(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
             };
 
             SettingsManager.Current.General_ApplicationList.CollectionChanged += (sender, args) => Applications.Refresh();

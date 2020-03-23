@@ -2578,4 +2578,76 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="MicrosoftWindowsSDKContractsIsNotAvailable" xml:space="preserve">
     <value>Microsoft.Windows.SDK.Contracts is required for this feature but not available on this system (e.g. on Windows Server).</value>
   </data>
+  <data name="ApplicationName_ARPTable" xml:space="preserve">
+    <value>ARPTable</value>
+  </data>
+  <data name="ApplicationName_Connections" xml:space="preserve">
+    <value>Connections</value>
+  </data>
+  <data name="ApplicationName_Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="ApplicationName_DiscoveryProtocol" xml:space="preserve">
+    <value>Discovery Protocol</value>
+  </data>
+  <data name="ApplicationName_DNSLookup" xml:space="preserve">
+    <value>DNS Lookup</value>
+  </data>
+  <data name="ApplicationName_HTTPHeaders" xml:space="preserve">
+    <value>HTTP Headers</value>
+  </data>
+  <data name="ApplicationName_IPScanner" xml:space="preserve">
+    <value>IP Scanner</value>
+  </data>
+  <data name="ApplicationName_Listeners" xml:space="preserve">
+    <value>Listeners</value>
+  </data>
+  <data name="ApplicationName_Lookup" xml:space="preserve">
+    <value>Lookup</value>
+  </data>
+  <data name="ApplicationName_NetworkInterface" xml:space="preserve">
+    <value>Network Interface</value>
+  </data>
+  <data name="ApplicationName_Ping" xml:space="preserve">
+    <value>Ping</value>
+  </data>
+  <data name="ApplicationName_PingMonitor" xml:space="preserve">
+    <value>Ping Monitor</value>
+  </data>
+  <data name="ApplicationName_PortScanner" xml:space="preserve">
+    <value>Port Scanner</value>
+  </data>
+  <data name="ApplicationName_PowerShell" xml:space="preserve">
+    <value>PowerShell</value>
+  </data>
+  <data name="ApplicationName_PuTTY" xml:space="preserve">
+    <value>PuTTY</value>
+  </data>
+  <data name="ApplicationName_RemoteDesktop" xml:space="preserve">
+    <value>Remote Desktop</value>
+  </data>
+  <data name="ApplicationName_SNMP" xml:space="preserve">
+    <value>SNMP</value>
+  </data>
+  <data name="ApplicationName_SubnetCalculator" xml:space="preserve">
+    <value>Subnet Calculator</value>
+  </data>
+  <data name="ApplicationName_TigerVNC" xml:space="preserve">
+    <value>TigerVNC</value>
+  </data>
+  <data name="ApplicationName_Traceroute" xml:space="preserve">
+    <value>Traceroute</value>
+  </data>
+  <data name="ApplicationName_WakeOnLAN" xml:space="preserve">
+    <value>Wake on LAN</value>
+  </data>
+  <data name="ApplicationName_WebConsole" xml:space="preserve">
+    <value>Web Console</value>
+  </data>
+  <data name="ApplicationName_Whois" xml:space="preserve">
+    <value>Whois</value>
+  </data>
+  <data name="ApplicationName_WiFi" xml:space="preserve">
+    <value>WiFi</value>
+  </data>
 </root>

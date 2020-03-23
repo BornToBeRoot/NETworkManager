@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Utilities;
 using NETworkManager.Localization;
+using static NETworkManager.Utilities.AutoRefreshTime;
 
 namespace NETworkManager.Converters
 {

@@ -7,24 +7,26 @@ using System.Windows.Media;
 
 namespace NETworkManager.Converters
 {
+    /// <summary>
+    /// Converter to convert <see cref="Accent"/> to <see cref="Brush"/> or wise versa.
+    /// </summary>
     public sealed class AccentToBrushConverter : IValueConverter
-    {
-        /* Convert an MahApps.Metro.Accent (from wpf/xaml-binding) to a Brush to fill rectangle with color in a ComboBox */
+    {        
         /// <summary>
-        /// 
+        /// Method to convert <see cref="Accent"/> to <see cref="Brush"/>. 
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">Object from type <see cref="Accent"/>.</param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
-        /// <returns></returns>
+        /// <returns>Converted <see cref="Brush"/>.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return ThemeManager.Accents.First(x => x.Name == ((Accent)System.Convert.ChangeType(value, typeof(Accent))).Name).Resources["AccentColorBrush"] as Brush;
         }
 
         /// <summary>
-        /// Method to convert back is not implemented!
+        /// !!! Method not implemented !!!
         /// </summary>
         /// <param name="value"></param>
         /// <param name="targetType"></param>

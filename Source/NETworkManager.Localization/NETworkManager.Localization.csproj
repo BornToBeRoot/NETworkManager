@@ -60,6 +60,7 @@
     <Compile Include="Translators\DiscoveryProtocolTranslator.cs" />
     <Compile Include="Translators\RemoteDesktopKeyboardHookModeTranslator.cs" />
     <Compile Include="Translators\RemoteDesktopNetworkConnectionTypeTranslator.cs" />
+    <Compile Include="Translators\ApplicationNameTranslator.cs" />
     <Compile Include="Translators\TcpStateTranslator.cs" />
     <Compile Include="Translators\PortStatusTranslator.cs" />
     <Compile Include="ILocalizationStringTranslator.cs" />
@@ -125,6 +126,10 @@
     <EmbeddedResource Include="LanguageFiles\Strings.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
+      <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
+      <Name>NETworkManager.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
       <Project>{5c3d1749-d260-4566-b448-b94b3ad9eeff}</Project>
       <Name>NETworkManager.Utilities</Name>

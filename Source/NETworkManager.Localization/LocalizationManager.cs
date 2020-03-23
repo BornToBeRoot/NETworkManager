@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace NETworkManager.Localization
 {
+    /// <summary>
+    /// Class provides variables/methods to manage localization.
+    /// </summary>
     public class LocalizationManager
     {
         /// <summary>

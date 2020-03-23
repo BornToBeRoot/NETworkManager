@@ -8,6 +8,7 @@ using System.Windows.Input;
 using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Translators;
 
 namespace NETworkManager.Controls
 {
@@ -66,7 +67,7 @@ namespace NETworkManager.Controls
 
             InterTabController.Partition = applicationName.ToString();
 
-            ApplicationTitle = ApplicationViewManager.GetTranslatedNameByName(applicationName);
+            ApplicationTitle = ApplicationNameTranslator.GetInstance().Translate(applicationName);
 
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
         }

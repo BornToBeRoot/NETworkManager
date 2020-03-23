@@ -1,37 +1,32 @@
-﻿using MahApps.Metro;
-using System;
+﻿using System;
 using System.Globalization;
+using System.Windows.Controls;
 using System.Windows.Data;
-using NETworkManager.Localization;
+using NETworkManager.Models;
 
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Converter to convert <see cref="AppTheme"/> to translated <see cref="string"/> or wise versa.
+    /// Converter to convert/resolve <see cref="Application.Name"/> to icon (<see cref="Canvas"/>) or wise versa.
     /// </summary>
-    public sealed class AppThemeToStringConverter : IValueConverter
+    public sealed class ApplicationNameToIconConverter : IValueConverter
     {
         /// <summary>
-        /// Method to convert <see cref="AppTheme"/> to translated <see cref="string"/>. 
+        /// Method to convert/resolve <see cref="Application.Name"/> to icon (<see cref="Canvas"/>).
         /// </summary>
-        /// <param name="value">Object from type <see cref="AppTheme"/>.</param>
+        /// <param name="value">Object from type <see cref="Application.Name"/>.</param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
-        /// <returns>Translated <see cref="AppTheme"/>.</returns>
+        /// <returns>Icon (cref="Canvas"/>).</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is AppTheme theme))
-                return "No valid theme passed!";
+            if (!(value is Models.Application.Name name))
+                return null;
 
-            var name = Localization.LanguageFiles.Strings.ResourceManager.GetString(theme.Name, LocalizationManager.GetInstance().Culture);
-
-            if (string.IsNullOrEmpty(name))
-                name = theme.Name;
-
-            return name;
+            return Application.GetIcon(name);
         }
-
+        
         /// <summary>
         /// !!! Method not implemented !!!
         /// </summary>
