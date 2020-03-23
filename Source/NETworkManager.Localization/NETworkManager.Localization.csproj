@@ -45,6 +45,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Translators\AccentTranslator.cs" />
+    <Compile Include="Translators\AppThemeTranslator.cs" />
     <Compile Include="Translators\TimeUnitTranslator.cs" />
     <Compile Include="Translators\ConnectionStateTranslator.cs" />
     <Compile Include="Translators\RemoteDesktopAudioCaptureRedirectionModeTranslator.cs" />
@@ -54,7 +56,7 @@
     <Compile Include="Translators\RemoteDesktopNetworkConnectionTypeTranslator.cs" />
     <Compile Include="Translators\ApplicationNameTranslator.cs" />
     <Compile Include="Translators\TcpStateTranslator.cs" />
-    <Compile Include="Translators\PortStatusTranslator.cs" />
+    <Compile Include="Translators\PortStateTranslator.cs" />
     <Compile Include="ILocalizationStringTranslator.cs" />
     <Compile Include="Translators\IPStatusTranslator.cs" />
     <Compile Include="LocalizationInfo.cs" />
@@ -129,6 +131,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro">
+      <Version>1.6.5</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

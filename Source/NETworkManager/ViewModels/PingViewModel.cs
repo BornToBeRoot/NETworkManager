@@ -399,7 +399,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {            
-            ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedPingResult.Status.ToString()));
+            ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedPingResult.Status));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

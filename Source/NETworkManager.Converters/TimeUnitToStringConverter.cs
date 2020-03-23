@@ -1,15 +1,16 @@
-﻿using System;
-using System.Globalization;
-using System.Windows.Data;
+﻿using MahApps.Metro;
 using NETworkManager.Localization.Translators;
 using NETworkManager.Utilities;
+using System;
+using System.Globalization;
+using System.Windows.Data;
 
 namespace NETworkManager.Converters
 {
     /// <summary>
     /// Converter to convert <see cref="TimeUnit"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
-    public sealed class AutoRefreshTimeToStringConverter : IValueConverter
+    public sealed class TimeUnitToStringConverter : IValueConverter
     {
         /// <summary>
         /// Method to convert <see cref="TimeUnit"/> to translated <see cref="string"/>. 
@@ -22,8 +23,8 @@ namespace NETworkManager.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is TimeUnit timeUnit))
-                return "-/-";
-            
+                return "-/-" ;
+
             return TimeUnitTranslator.GetInstance().Translate(timeUnit);
         }
 

@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccentToBrushConverter.cs" />
+    <Compile Include="TimeUnitToStringConverter.cs" />
     <Compile Include="AccentToStringConverter.cs" />
     <Compile Include="ApplicationNameToIconConverter.cs" />
     <Compile Include="ApplicationNameToTranslatedStringConverter.cs" />
@@ -54,6 +55,8 @@
     <Compile Include="ConnectionStateToStringConverter.cs" />
     <Compile Include="AutoRefreshTimeToStringConverter.cs" />
     <Compile Include="DiscoveryProtocolToStringConverter.cs" />
+    <Compile Include="IPStatusToStringConverter.cs" />
+    <Compile Include="PortStateToStringConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

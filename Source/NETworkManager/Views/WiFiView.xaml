@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:converters="clr-namespace:NETworkManager.Converters"
+             xmlns:convertersOld="clr-namespace:NETworkManager.Converters"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
              xmlns:network="clr-namespace:NETworkManager.Models.Network"             
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,17 +19,17 @@
     </UserControl.InputBindings>
     <UserControl.Resources>
         <converters:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />
-        <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
-        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <converters:NetworkAuthenticationTypeToHumanReadableStringConverter x:Key="NetworkAuthenticationTypeToHumanReadableStringConverter" />
-        <converters:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
-        <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
-        <converters:WiFiChannelAndDBMConverter x:Key="WiFiChannelAndDBMConverter" />
-        <converters:WiFiPhyKindConverter x:Key="WiFiPhyKindConverter" />
+        <convertersOld:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <convertersOld:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <convertersOld:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <convertersOld:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />
+        <convertersOld:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
+        <convertersOld:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
+        <convertersOld:NetworkAuthenticationTypeToHumanReadableStringConverter x:Key="NetworkAuthenticationTypeToHumanReadableStringConverter" />
+        <convertersOld:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
+        <convertersOld:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
+        <convertersOld:WiFiChannelAndDBMConverter x:Key="WiFiChannelAndDBMConverter" />
+        <convertersOld:WiFiPhyKindConverter x:Key="WiFiPhyKindConverter" />
     </UserControl.Resources>
     <Grid>
         <TabControl Visibility="{Binding SDKContractsFailedToLoad, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource DefaultTabControl}">

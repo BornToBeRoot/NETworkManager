@@ -50,5 +50,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtocolSettingsLayout.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro">
+      <Version>1.6.5</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

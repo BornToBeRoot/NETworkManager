@@ -111,7 +111,7 @@ namespace NETworkManager.Models.Network
                                         OnPortScanned(new PortScannedArgs(ipAddress, hostname, port,
                                             PortLookup.Lookup(port)
                                                 .FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp),
-                                            PortInfo.PortStatus.Open));
+                                            PortState.Open));
                                     }
                                     catch
                                     {
@@ -119,7 +119,7 @@ namespace NETworkManager.Models.Network
                                             OnPortScanned(new PortScannedArgs(ipAddress, hostname, port,
                                                 PortLookup.Lookup(port).FirstOrDefault(x =>
                                                     x.Protocol == PortLookup.Protocol.Tcp),
-                                                PortInfo.PortStatus.Closed));
+                                                PortState.Closed));
                                     }
                                 }
                                 else
@@ -128,7 +128,7 @@ namespace NETworkManager.Models.Network
                                         OnPortScanned(new PortScannedArgs(ipAddress, hostname, port,
                                             PortLookup.Lookup(port)
                                                 .FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp),
-                                            PortInfo.PortStatus.Closed));
+                                            PortState.Closed));
                                 }
                             }
 

@@ -486,7 +486,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {            
-            ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedHostResult.PingInfo.Status.ToString()));
+            ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedHostResult.PingInfo.Status));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

@@ -91,8 +91,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private List<Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol> _protocols = new List<Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol>();
-        public List<Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol> Protocols
+        private List<DiscoveryProtocol> _protocols = new List<DiscoveryProtocol>();
+        public List<DiscoveryProtocol> Protocols
         {
             get => _protocols;
             set
@@ -105,8 +105,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol _selectedProtocol;
-        public Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol SelectedProtocol
+        private DiscoveryProtocol _selectedProtocol;
+        public DiscoveryProtocol SelectedProtocol
         {
             get => _selectedProtocol;
             set

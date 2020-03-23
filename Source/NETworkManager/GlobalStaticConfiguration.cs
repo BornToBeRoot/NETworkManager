@@ -140,7 +140,7 @@ namespace NETworkManager
         public static ExportManager.ExportFileType SNMP_ExportFileType => ExportManager.ExportFileType.CSV;
 
         // Application: Discovery Protocol
-        public static Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol DiscoveryProtocol_Protocol => Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol.LLDP_CDP;
+        public static DiscoveryProtocol DiscoveryProtocol_Protocol => DiscoveryProtocol.LLDP_CDP;
         public static int DiscoveryProtocol_Duration => 60;
 
         // Application: Wake on LAN

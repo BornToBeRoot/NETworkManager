@@ -259,10 +259,10 @@ namespace NETworkManager.Models.Export
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine($"{nameof(PortInfo.IPAddress)},{nameof(PortInfo.Hostname)},{nameof(PortInfo.Port)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)},{nameof(PortInfo.Status)}");
+            stringBuilder.AppendLine($"{nameof(PortInfo.IPAddress)},{nameof(PortInfo.Hostname)},{nameof(PortInfo.Port)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)},{nameof(PortInfo.State)}");
 
             foreach (var info in collection)
-                stringBuilder.AppendLine($"{info.IPAddress},{info.Hostname},{info.Port},{info.LookupInfo.Protocol},{info.LookupInfo.Service},{info.LookupInfo.Description},{info.Status}");
+                stringBuilder.AppendLine($"{info.IPAddress},{info.Hostname},{info.Port},{info.LookupInfo.Protocol},{info.LookupInfo.Service},{info.LookupInfo.Description},{info.State}");
 
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
@@ -427,7 +427,7 @@ namespace NETworkManager.Models.Export
                                 new XElement(nameof(PortLookupInfo.Protocol), info.LookupInfo.Protocol),
                                 new XElement(nameof(PortLookupInfo.Service), info.LookupInfo.Service),
                                 new XElement(nameof(PortLookupInfo.Description), info.LookupInfo.Description),
-                                new XElement(nameof(PortInfo.Status), info.Status)))));
+                                new XElement(nameof(PortInfo.State), info.State)))));
 
             document.Save(filePath);
         }
@@ -662,7 +662,7 @@ namespace NETworkManager.Models.Export
                     Protocol = collection[i].LookupInfo.Protocol.ToString(),
                     collection[i].LookupInfo.Service,
                     collection[i].LookupInfo.Description,
-                    Status = collection[i].Status.ToString()
+                    Status = collection[i].State.ToString()
                 };
             }
 

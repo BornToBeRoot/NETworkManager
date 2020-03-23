@@ -385,7 +385,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStatusAction()
         {
-            ClipboardHelper.SetClipboard(PortStatusTranslator.GetInstance().Translate(SelectedPortScanResult.Status.ToString()));
+            ClipboardHelper.SetClipboard(PortStateTranslator.GetInstance().Translate(SelectedPortScanResult.State));
         }
 
         public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
@@ -649,7 +649,7 @@ namespace NETworkManager.ViewModels
                     PortScanResult.Add(portInfo);
             }));
 
-            if (portInfo.Status == PortInfo.PortStatus.Open)
+            if (portInfo.State == PortState.Open)
                 PortsOpen++;
         }
 
