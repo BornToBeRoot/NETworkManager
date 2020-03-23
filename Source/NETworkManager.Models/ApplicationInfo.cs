@@ -16,7 +16,7 @@
         public bool IsVisible { get; set; }
 
         /// <summary>
-        /// Create an <see cref="ApplicationInfo"/>.
+        /// Create an empty <see cref="ApplicationInfo"/>.
         /// </summary>
         public ApplicationInfo()
         {

@@ -223,28 +223,28 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedPortAction()
         {
-            CommonMethods.SetClipboard(SelectedPortLookupResult.Number.ToString());
+            ClipboardHelper.SetClipboard(SelectedPortLookupResult.Number.ToString());
         }
 
         public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
 
         private void CopySelectedProtocolAction()
         {
-            CommonMethods.SetClipboard(SelectedPortLookupResult.Protocol.ToString());
+            ClipboardHelper.SetClipboard(SelectedPortLookupResult.Protocol.ToString());
         }
 
         public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
 
         private void CopySelectedServiceAction()
         {
-            CommonMethods.SetClipboard(SelectedPortLookupResult.Service);
+            ClipboardHelper.SetClipboard(SelectedPortLookupResult.Service);
         }
 
         public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
 
         private void CopySelectedDescriptionAction()
         {
-            CommonMethods.SetClipboard(SelectedPortLookupResult.Description);
+            ClipboardHelper.SetClipboard(SelectedPortLookupResult.Description);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

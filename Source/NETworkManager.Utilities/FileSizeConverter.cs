@@ -1,10 +1,16 @@
 ﻿namespace NETworkManager.Utilities
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class FileSizeConverter
     {
         // Source: https://stackoverflow.com/questions/281640/how-do-i-get-a-human-readable-file-size-in-bytes-abbreviation-using-net
         // Returns the human-readable file size for an arbitrary, 64-bit file size 
         // The default format is "0.### XB", e.g. "4.2 KB" or "1.434 GB"
+        /// <summary>
+        /// 
+        /// </summary>
         public static string GetBytesReadable(long i)
         {
             // Get absolute value
@@ -56,6 +62,9 @@
             return readable.ToString("0.## ") + suffix;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static string GetBytesSpeedReadable(long i, string suffix)
         {
             return GetBytesReadable(i) + suffix;

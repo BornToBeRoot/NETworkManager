@@ -205,7 +205,7 @@ namespace NETworkManager.ViewModels
                 return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Port.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
-            AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
+            AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
             SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.Listeners_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Listeners_AutoRefreshTime.TimeUnit));
 
             _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -248,21 +248,21 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedProtocolAction()
         {
-            CommonMethods.SetClipboard(SelectedListenerInfo.Protocol.ToString());
+            ClipboardHelper.SetClipboard(SelectedListenerInfo.Protocol.ToString());
         }
 
         public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedListenerInfo.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedListenerInfo.IPAddress.ToString());
         }
 
         public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
 
         private void CopySelectedPortAction()
         {
-            CommonMethods.SetClipboard(SelectedListenerInfo.Port.ToString());
+            ClipboardHelper.SetClipboard(SelectedListenerInfo.Port.ToString());
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

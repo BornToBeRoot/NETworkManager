@@ -2,8 +2,14 @@
 
 namespace NETworkManager.Utilities
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class HotKeys
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public static int GetModifierKeysSum(ModifierKeys modifierKeys)
         {
             var sum = 0x0000;
@@ -23,21 +29,39 @@ namespace NETworkManager.Utilities
             return sum;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static System.Windows.Forms.Keys WpfKeyToFormsKeys(Key key)
         {
             return (System.Windows.Forms.Keys)KeyInterop.VirtualKeyFromKey(key);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
         public static Key FormsKeysToWpfKey(System.Windows.Forms.Keys keys)
         {
             return KeyInterop.KeyFromVirtualKey((int)keys);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
         public static Key FormsKeysToWpfKey(int keys)
         {
             return KeyInterop.KeyFromVirtualKey(keys);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modifierKeys"></param>
+        /// <returns></returns>
         public static ModifierKeys GetModifierKeysFromInt(int modifierKeys)
         {
             var modKeys = ModifierKeys.None;

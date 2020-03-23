@@ -57,7 +57,7 @@ namespace NETworkManager
         // Application: WiFi
         public static bool WiFi_Show2dot4GHzNetworks => true;
         public static bool WiFi_Show5GHzNetworks => true;
-        public static AutoRefreshTimeInfo WiFi_AutoRefreshTime => AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+        public static AutoRefreshTimeInfo WiFi_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
         // Application: IP Scanner
         public static int IPScanner_Threads => 256;
@@ -162,15 +162,15 @@ namespace NETworkManager
 
         // Application: Connections
         public static ExportManager.ExportFileType Connections_ExportFileType => ExportManager.ExportFileType.CSV;
-        public static AutoRefreshTimeInfo Connections_AutoRefreshTime => AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+        public static AutoRefreshTimeInfo Connections_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
         // Application: Listeners
         public static ExportManager.ExportFileType Listeners_ExportFileType => ExportManager.ExportFileType.CSV;
-        public static AutoRefreshTimeInfo Listeners_AutoRefreshTime => AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+        public static AutoRefreshTimeInfo Listeners_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
         // Application: ARP Table
         public static ExportManager.ExportFileType ARPTable_ExportFileType => ExportManager.ExportFileType.CSV;
-        public static AutoRefreshTimeInfo ARPTable_AutoRefreshTime => AutoRefreshTime.Defaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+        public static AutoRefreshTimeInfo ARPTable_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
     }
 }

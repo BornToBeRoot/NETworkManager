@@ -9,8 +9,15 @@ namespace NETworkManager.Utilities
 {
     public class DnsLookupHelper
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
         private static LookupClient DnsLookupClient = new LookupClient();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public async static Task<string> ResolveHostname(IPAddress ipAddress)
         {
             string hostname = string.Empty;
@@ -27,6 +34,9 @@ namespace NETworkManager.Utilities
             return hostname;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public async static Task<IPAddress> ResolveIPAddress(string hostname, bool preferIPv4 = true)
         {
             // Append dns suffix to hostname

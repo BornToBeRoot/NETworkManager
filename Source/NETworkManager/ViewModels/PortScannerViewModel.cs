@@ -364,49 +364,49 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedPortScanResult.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedPortScanResult.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
-            CommonMethods.SetClipboard(SelectedPortScanResult.Hostname);
+            ClipboardHelper.SetClipboard(SelectedPortScanResult.Hostname);
         }
 
         public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
 
         private void CopySelectedPortAction()
         {
-            CommonMethods.SetClipboard(SelectedPortScanResult.Port.ToString());
+            ClipboardHelper.SetClipboard(SelectedPortScanResult.Port.ToString());
         }
 
         public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
         {
-            CommonMethods.SetClipboard(PortStatusTranslator.GetInstance().Translate(SelectedPortScanResult.Status.ToString()));
+            ClipboardHelper.SetClipboard(PortStatusTranslator.GetInstance().Translate(SelectedPortScanResult.Status.ToString()));
         }
 
         public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
 
         private void CopySelectedProtocolAction()
         {
-            CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Protocol.ToString());
+            ClipboardHelper.SetClipboard(SelectedPortScanResult.LookupInfo.Protocol.ToString());
         }
 
         public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
 
         private void CopySelectedServiceAction()
         {
-            CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Service);
+            ClipboardHelper.SetClipboard(SelectedPortScanResult.LookupInfo.Service);
         }
 
         public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
 
         private void CopySelectedDescriptionAction()
         {
-            CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Description);
+            ClipboardHelper.SetClipboard(SelectedPortScanResult.LookupInfo.Description);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

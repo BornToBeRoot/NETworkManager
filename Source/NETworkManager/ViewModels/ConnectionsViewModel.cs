@@ -202,7 +202,7 @@ namespace NETworkManager.ViewModels
                 return o is ConnectionInfo info && (info.LocalIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.LocalPort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemoteIPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.RemotePort.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.TcpStateTranslated.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
-            AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
+            AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
             SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.Connections_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Connections_AutoRefreshTime.TimeUnit));
 
             _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -247,42 +247,42 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedLocalIpAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedConnectionInfo.LocalIPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedConnectionInfo.LocalIPAddress.ToString());
         }
 
         public ICommand CopySelectedLocalPortCommand => new RelayCommand(p => CopySelectedLocalPortAction());
 
         private void CopySelectedLocalPortAction()
         {
-            CommonMethods.SetClipboard(SelectedConnectionInfo.LocalPort.ToString());
+            ClipboardHelper.SetClipboard(SelectedConnectionInfo.LocalPort.ToString());
         }
 
         public ICommand CopySelectedRemoteIpAddressCommand => new RelayCommand(p => CopySelectedRemoteIpAddressAction());
 
         private void CopySelectedRemoteIpAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedConnectionInfo.RemoteIPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedConnectionInfo.RemoteIPAddress.ToString());
         }
 
         public ICommand CopySelectedRemotePortCommand => new RelayCommand(p => CopySelectedRemotePortAction());
 
         private void CopySelectedRemotePortAction()
         {
-            CommonMethods.SetClipboard(SelectedConnectionInfo.RemotePort.ToString());
+            ClipboardHelper.SetClipboard(SelectedConnectionInfo.RemotePort.ToString());
         }
 
         public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
 
         private void CopySelectedProtocolAction()
         {
-            CommonMethods.SetClipboard(SelectedConnectionInfo.Protocol.ToString());
+            ClipboardHelper.SetClipboard(SelectedConnectionInfo.Protocol.ToString());
         }
 
         public ICommand CopySelectedStateCommand => new RelayCommand(p => CopySelectedStateAction());
 
         private void CopySelectedStateAction()
         {
-            CommonMethods.SetClipboard(TcpStateTranslator.GetInstance().Translate(SelectedConnectionInfo.TcpState.ToString()));
+            ClipboardHelper.SetClipboard(TcpStateTranslator.GetInstance().Translate(SelectedConnectionInfo.TcpState.ToString()));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

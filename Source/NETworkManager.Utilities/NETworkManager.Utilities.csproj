@@ -67,7 +67,7 @@
     <Compile Include="ArrayHelper.cs" />
     <Compile Include="AutoRefreshTime.cs" />
     <Compile Include="AutoRefreshTimeInfo.cs" />
-    <Compile Include="CommonMethods.cs" />
+    <Compile Include="ClipboardHelper.cs" />
     <Compile Include="CustomCommand.cs" />
     <Compile Include="CustomCommandInfo.cs" />
     <Compile Include="DnsLookupHelper.cs" />
@@ -87,7 +87,6 @@
     <Compile Include="SingletonBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimestampHelper.cs" />
-    <Compile Include="AutoRefreshTimeUnit.cs" />
     <Compile Include="VisualTreeHelper.cs" />
   </ItemGroup>
   <ItemGroup>

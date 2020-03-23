@@ -328,35 +328,35 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedDomainNameAction()
         {
-            CommonMethods.SetClipboard(SelectedLookupResult.DomainName);
+            ClipboardHelper.SetClipboard(SelectedLookupResult.DomainName);
         }
 
         public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
 
         private void CopySelectedTTLAction()
         {
-            CommonMethods.SetClipboard(SelectedLookupResult.TTL.ToString());
+            ClipboardHelper.SetClipboard(SelectedLookupResult.TTL.ToString());
         }
 
         public ICommand CopySelectedClassCommand => new RelayCommand(p => CopySelectedClassAction());
 
         private void CopySelectedClassAction()
         {
-            CommonMethods.SetClipboard(SelectedLookupResult.Class);
+            ClipboardHelper.SetClipboard(SelectedLookupResult.Class);
         }
 
         public ICommand CopySelectedTypeCommand => new RelayCommand(p => CopySelectedTypeAction());
 
         private void CopySelectedTypeAction()
         {
-            CommonMethods.SetClipboard(SelectedLookupResult.Type);
+            ClipboardHelper.SetClipboard(SelectedLookupResult.Type);
         }
 
         public ICommand CopySelectedResultCommand => new RelayCommand(p => CopySelectedResultAction());
 
         private void CopySelectedResultAction()
         {
-            CommonMethods.SetClipboard(SelectedLookupResult.Result);
+            ClipboardHelper.SetClipboard(SelectedLookupResult.Result);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

@@ -357,49 +357,49 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTimestampAction()
         {
-            CommonMethods.SetClipboard(SelectedPingResult.Timestamp.ToString(CultureInfo.CurrentCulture));
+            ClipboardHelper.SetClipboard(SelectedPingResult.Timestamp.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedPingResult.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedPingResult.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
-            CommonMethods.SetClipboard(SelectedPingResult.Hostname);
+            ClipboardHelper.SetClipboard(SelectedPingResult.Hostname);
         }
 
         public ICommand CopySelectedBytesCommand => new RelayCommand(p => CopySelectedBytesAction());
 
         private void CopySelectedBytesAction()
         {
-            CommonMethods.SetClipboard(SelectedPingResult.Bytes.ToString());
+            ClipboardHelper.SetClipboard(SelectedPingResult.Bytes.ToString());
         }
 
         public ICommand CopySelectedTimeCommand => new RelayCommand(p => CopySelectedTimeAction());
 
         private void CopySelectedTimeAction()
         {
-            CommonMethods.SetClipboard(SelectedPingResult.Time.ToString());
+            ClipboardHelper.SetClipboard(SelectedPingResult.Time.ToString());
         }
 
         public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
 
         private void CopySelectedTTLAction()
         {
-            CommonMethods.SetClipboard(SelectedPingResult.TTL.ToString());
+            ClipboardHelper.SetClipboard(SelectedPingResult.TTL.ToString());
         }
 
         public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
         {            
-            CommonMethods.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedPingResult.Status.ToString()));
+            ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedPingResult.Status.ToString()));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

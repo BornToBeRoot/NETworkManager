@@ -321,42 +321,42 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedHopAction()
         {
-            CommonMethods.SetClipboard(SelectedTraceResult.Hop.ToString());
+            ClipboardHelper.SetClipboard(SelectedTraceResult.Hop.ToString());
         }
 
         public ICommand CopySelectedTime1Command => new RelayCommand(p => CopySelectedTime1Action());
 
         private void CopySelectedTime1Action()
         {
-            CommonMethods.SetClipboard(SelectedTraceResult.Time1.ToString(CultureInfo.CurrentCulture));
+            ClipboardHelper.SetClipboard(SelectedTraceResult.Time1.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedTime2Command => new RelayCommand(p => CopySelectedTime2Action());
 
         private void CopySelectedTime2Action()
         {
-            CommonMethods.SetClipboard(SelectedTraceResult.Time2.ToString(CultureInfo.CurrentCulture));
+            ClipboardHelper.SetClipboard(SelectedTraceResult.Time2.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedTime3Command => new RelayCommand(p => CopySelectedTime3Action());
 
         private void CopySelectedTime3Action()
         {
-            CommonMethods.SetClipboard(SelectedTraceResult.Time3.ToString(CultureInfo.CurrentCulture));
+            ClipboardHelper.SetClipboard(SelectedTraceResult.Time3.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedTraceResult.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedTraceResult.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
-            CommonMethods.SetClipboard(SelectedTraceResult.Hostname);
+            ClipboardHelper.SetClipboard(SelectedTraceResult.Hostname);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

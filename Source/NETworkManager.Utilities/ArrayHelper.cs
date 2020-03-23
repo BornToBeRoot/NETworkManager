@@ -3,7 +3,7 @@
 namespace NETworkManager.Utilities
 {
     /// <summary>
-    /// This class contains a collection of useful methods to interact with an array.
+    /// Class contains a collection of useful methods to interact with an array.
     /// </summary>
     public static class ArrayHelper
     {

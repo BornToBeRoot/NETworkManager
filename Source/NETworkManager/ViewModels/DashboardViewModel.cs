@@ -391,21 +391,21 @@ namespace NETworkManager.ViewModels
         private void CopyHostIPAddressAction()
         {
             if (HostIPAddress != null)
-                CommonMethods.SetClipboard(HostIPAddress.ToString());
+                ClipboardHelper.SetClipboard(HostIPAddress.ToString());
         }
 
         public ICommand CopyHostHostnameCommand => new RelayCommand(p => CopyHostHostnameAction());
 
         private void CopyHostHostnameAction()
         {
-            CommonMethods.SetClipboard(HostHostname);
+            ClipboardHelper.SetClipboard(HostHostname);
         }
 
         public ICommand CopyHostStatusCommand => new RelayCommand(p => CopyHostStatusAction());
 
         private void CopyHostStatusAction()
         {
-            CommonMethods.SetClipboard(HostStatus);
+            ClipboardHelper.SetClipboard(HostStatus);
         }
 
         public ICommand CopyGatewayIPAddressCommand => new RelayCommand(p => CopyGatewayIPAddressAction());
@@ -413,21 +413,21 @@ namespace NETworkManager.ViewModels
         private void CopyGatewayIPAddressAction()
         {
             if (GatewayIPAddress != null)
-                CommonMethods.SetClipboard(GatewayIPAddress.ToString());
+                ClipboardHelper.SetClipboard(GatewayIPAddress.ToString());
         }
 
         public ICommand CopyGatewayHostnameCommand => new RelayCommand(p => CopyGatewayHostnameAction());
 
         private void CopyGatewayHostnameAction()
         {
-            CommonMethods.SetClipboard(GatewayHostname);
+            ClipboardHelper.SetClipboard(GatewayHostname);
         }
 
         public ICommand CopyGatewayStatusCommand => new RelayCommand(p => CopyGatewayStatusAction());
 
         private void CopyGatewayStatusAction()
         {
-            CommonMethods.SetClipboard(GatewayStatus);
+            ClipboardHelper.SetClipboard(GatewayStatus);
         }
 
         public ICommand CopyPublicIPAddressCommand => new RelayCommand(p => CopyPublicIPAddressAction());
@@ -435,21 +435,21 @@ namespace NETworkManager.ViewModels
         private void CopyPublicIPAddressAction()
         {
             if (PublicIPAddress != null)
-                CommonMethods.SetClipboard(PublicIPAddress.ToString());
+                ClipboardHelper.SetClipboard(PublicIPAddress.ToString());
         }
 
         public ICommand CopyPublicHostnameCommand => new RelayCommand(p => CopyPublicHostnameAction());
 
         private void CopyPublicHostnameAction()
         {
-            CommonMethods.SetClipboard(PublicHostname);
+            ClipboardHelper.SetClipboard(PublicHostname);
         }
 
         public ICommand CopyInternetStatusCommand => new RelayCommand(p => CopyInternetStatusAction());
 
         private void CopyInternetStatusAction()
         {
-            CommonMethods.SetClipboard(InternetStatus);
+            ClipboardHelper.SetClipboard(InternetStatus);
         }
         #endregion
 

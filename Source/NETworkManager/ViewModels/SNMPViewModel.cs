@@ -460,14 +460,14 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedOIDAction()
         {
-            CommonMethods.SetClipboard(SelectedQueryResult.OID);
+            ClipboardHelper.SetClipboard(SelectedQueryResult.OID);
         }
 
         public ICommand CopySelectedDataCommand => new RelayCommand(p => CopySelectedDataAction());
 
         private void CopySelectedDataAction()
         {
-            CommonMethods.SetClipboard(SelectedQueryResult.Data);
+            ClipboardHelper.SetClipboard(SelectedQueryResult.Data);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

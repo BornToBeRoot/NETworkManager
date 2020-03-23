@@ -188,14 +188,14 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMACAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedOUILookupResult.MACAddress);
+            ClipboardHelper.SetClipboard(SelectedOUILookupResult.MACAddress);
         }
 
         public ICommand CopySelectedVendorCommand => new RelayCommand(p => CopySelectedVendorAction());
 
         private void CopySelectedVendorAction()
         {
-            CommonMethods.SetClipboard(SelectedOUILookupResult.Vendor);
+            ClipboardHelper.SetClipboard(SelectedOUILookupResult.Vendor);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

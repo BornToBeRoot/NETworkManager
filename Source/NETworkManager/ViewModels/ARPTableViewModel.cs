@@ -202,7 +202,7 @@ namespace NETworkManager.ViewModels
                 return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Localization.LanguageFiles.Strings.Yes : Localization.LanguageFiles.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
-            AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
+            AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
             SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.ARPTable_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.ARPTable_AutoRefreshTime.TimeUnit));
 
             _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -345,21 +345,21 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedARPInfo.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedARPInfo.IPAddress.ToString());
         }
 
         public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
 
         private void CopySelectedMACAddressAction()
         {
-            CommonMethods.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedARPInfo.MACAddress.ToString()));
+            ClipboardHelper.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedARPInfo.MACAddress.ToString()));
         }
 
         public ICommand CopySelectedMulticastCommand => new RelayCommand(p => CopySelectedMulticastAction());
 
         private void CopySelectedMulticastAction()
         {
-            CommonMethods.SetClipboard(SelectedARPInfo.IsMulticast ? Localization.LanguageFiles.Strings.Yes : Localization.LanguageFiles.Strings.No);
+            ClipboardHelper.SetClipboard(SelectedARPInfo.IsMulticast ? Localization.LanguageFiles.Strings.Yes : Localization.LanguageFiles.Strings.No);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

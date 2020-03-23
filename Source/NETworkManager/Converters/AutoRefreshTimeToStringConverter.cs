@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using NETworkManager.Enum;
+using NETworkManager.Utilities;
 using NETworkManager.Localization;
 
 namespace NETworkManager.Converters

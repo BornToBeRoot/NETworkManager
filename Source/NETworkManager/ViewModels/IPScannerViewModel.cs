@@ -317,7 +317,7 @@ namespace NETworkManager.ViewModels
 
             // Add default custom commands...
             if (SettingsManager.Current.IPScanner_CustomCommands.Count == 0)
-                SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(Utilities.CustomCommand.DefaultList());
+                SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(Utilities.CustomCommand.GetDefaults());
 
             LoadSettings();
 
@@ -437,56 +437,56 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedHostResult.PingInfo.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedHostResult.PingInfo.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
-            CommonMethods.SetClipboard(SelectedHostResult.Hostname);
+            ClipboardHelper.SetClipboard(SelectedHostResult.Hostname);
         }
 
         public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
 
         private void CopySelectedMACAddressAction()
         {
-            CommonMethods.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedHostResult.MACAddress.ToString()));
+            ClipboardHelper.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedHostResult.MACAddress.ToString()));
         }
 
         public ICommand CopySelectedVendorCommand => new RelayCommand(p => CopySelectedVendorAction());
 
         private void CopySelectedVendorAction()
         {
-            CommonMethods.SetClipboard(SelectedHostResult.Vendor);
+            ClipboardHelper.SetClipboard(SelectedHostResult.Vendor);
         }
 
         public ICommand CopySelectedBytesCommand => new RelayCommand(p => CopySelectedBytesAction());
 
         private void CopySelectedBytesAction()
         {
-            CommonMethods.SetClipboard(SelectedHostResult.PingInfo.Bytes.ToString());
+            ClipboardHelper.SetClipboard(SelectedHostResult.PingInfo.Bytes.ToString());
         }
 
         public ICommand CopySelectedTimeCommand => new RelayCommand(p => CopySelectedTimeAction());
 
         private void CopySelectedTimeAction()
         {
-            CommonMethods.SetClipboard(SelectedHostResult.PingInfo.Time.ToString());
+            ClipboardHelper.SetClipboard(SelectedHostResult.PingInfo.Time.ToString());
         }
 
         public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
 
         private void CopySelectedTTLAction()
         {
-            CommonMethods.SetClipboard(SelectedHostResult.PingInfo.TTL.ToString());
+            ClipboardHelper.SetClipboard(SelectedHostResult.PingInfo.TTL.ToString());
         }
 
         public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
         {            
-            CommonMethods.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedHostResult.PingInfo.Status.ToString()));
+            ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedHostResult.PingInfo.Status.ToString()));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

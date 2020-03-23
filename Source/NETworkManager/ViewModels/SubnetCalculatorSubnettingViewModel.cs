@@ -188,56 +188,56 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedNetworkAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.Network.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.Network.ToString());
         }
 
         public ICommand CopySelectedBroadcastCommand => new RelayCommand(p => CopySelectedBroadcastAction());
 
         private void CopySelectedBroadcastAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.Broadcast.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.Broadcast.ToString());
         }
 
         public ICommand CopySelectedIPAddressesCommand => new RelayCommand(p => CopySelectedIPAddressesAction());
 
         private void CopySelectedIPAddressesAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.Total.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.Total.ToString());
         }
 
         public ICommand CopySelectedSubnetmaskCommand => new RelayCommand(p => CopySelectedSubnetmaskAction());
 
         private void CopySelectedSubnetmaskAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.Netmask.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.Netmask.ToString());
         }
 
         public ICommand CopySelectedCIDRCommand => new RelayCommand(p => CopySelectedCIDRAction());
 
         private void CopySelectedCIDRAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.Cidr.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.Cidr.ToString());
         }
 
         public ICommand CopySelectedFirstIPAddressCommand => new RelayCommand(p => CopySelectedFirstIPAddressAction());
 
         private void CopySelectedFirstIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.FirstUsable.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.FirstUsable.ToString());
         }
 
         public ICommand CopySelectedLastIPAddressCommand => new RelayCommand(p => CopySelectedLastIPAddressAction());
 
         private void CopySelectedLastIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.LastUsable.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.LastUsable.ToString());
         }
 
         public ICommand CopySelectedHostCommand => new RelayCommand(p => CopySelectedHostAction());
 
         private void CopySelectedHostAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.Usable.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.Usable.ToString());
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
