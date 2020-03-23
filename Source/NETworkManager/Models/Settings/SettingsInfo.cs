@@ -11,7 +11,7 @@ using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
-using static NETworkManager.Models.Network.DiscoveryProtocol;
+using static NETworkManager.Models.Network.DiscoveryProtocolCapturer;
 using static NETworkManager.Models.Network.SNMP;
 
 namespace NETworkManager.Models.Settings
@@ -3196,8 +3196,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private Protocol _discoveryProtocol_Protocol = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
-        public Protocol DiscoveryProtocol_Protocol
+        private Network.DiscoveryProtocolCapturer.DiscoveryProtocol _discoveryProtocol_Protocol = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
+        public Network.DiscoveryProtocolCapturer.DiscoveryProtocol DiscoveryProtocol_Protocol
         {
             get => _discoveryProtocol_Protocol;
             set

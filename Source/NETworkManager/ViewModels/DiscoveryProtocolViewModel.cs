@@ -12,7 +12,7 @@ using System.Diagnostics;
 using NETworkManager.Utilities;
 using System.Windows;
 using MahApps.Metro.Controls;
-using static NETworkManager.Models.Network.DiscoveryProtocol;
+using static NETworkManager.Models.Network.DiscoveryProtocolCapturer;
 using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels
@@ -22,7 +22,7 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private DiscoveryProtocol _discoveryProtocol = new DiscoveryProtocol();
+        private Models.Network.DiscoveryProtocolCapturer _discoveryProtocol = new Models.Network.DiscoveryProtocolCapturer();
         private readonly bool _isLoading;
         System.Timers.Timer _remainingTimer;
         private int _secondsRemaining;
@@ -91,8 +91,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private List<Protocol> _protocols = new List<Protocol>();
-        public List<Protocol> Protocols
+        private List<Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol> _protocols = new List<Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol>();
+        public List<Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol> Protocols
         {
             get => _protocols;
             set
@@ -105,8 +105,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private Protocol _selectedProtocol;
-        public Protocol SelectedProtocol
+        private Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol _selectedProtocol;
+        public Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol SelectedProtocol
         {
             get => _selectedProtocol;
             set
@@ -303,7 +303,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            Protocols = System.Enum.GetValues(typeof(Protocol)).Cast<Protocol>().OrderBy(x => x.ToString()).ToList();
+            Protocols = System.Enum.GetValues(typeof(DiscoveryProtocol)).Cast<DiscoveryProtocol>().OrderBy(x => x.ToString()).ToList();
             SelectedProtocol = Protocols.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Protocol);
             Durations = new List<int>() { 15, 30, 60, 90, 120 };
             SelectedDuration = Durations.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Duration);
@@ -386,7 +386,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                _discoveryProtocol.CaptureDiscoveryProtocolAsync(SelectedNetworkInterface.Name, duration, SelectedProtocol);
+                _discoveryProtocol.CaptureAsync(SelectedNetworkInterface.Name, duration, SelectedProtocol);
             }
             catch (Exception ex)
             {

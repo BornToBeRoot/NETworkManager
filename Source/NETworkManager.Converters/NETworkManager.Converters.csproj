@@ -53,6 +53,7 @@
     <Compile Include="AppThemeToStringConverter.cs" />
     <Compile Include="ConnectionStateToStringConverter.cs" />
     <Compile Include="AutoRefreshTimeToStringConverter.cs" />
+    <Compile Include="DiscoveryProtocolToStringConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +69,11 @@
       <Project>{5c3d1749-d260-4566-b448-b94b3ad9eeff}</Project>
       <Name>NETworkManager.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro">
+      <Version>1.6.5</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

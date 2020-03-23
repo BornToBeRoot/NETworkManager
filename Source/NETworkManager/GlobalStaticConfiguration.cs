@@ -9,7 +9,7 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
 using DnsClient;
-using static NETworkManager.Models.Network.DiscoveryProtocol;
+using static NETworkManager.Models.Network.DiscoveryProtocolCapturer;
 using static NETworkManager.Utilities.AutoRefreshTime;
 
 // ReSharper disable InconsistentNaming
@@ -140,7 +140,7 @@ namespace NETworkManager
         public static ExportManager.ExportFileType SNMP_ExportFileType => ExportManager.ExportFileType.CSV;
 
         // Application: Discovery Protocol
-        public static Protocol DiscoveryProtocol_Protocol => Protocol.LLDP_CDP;
+        public static Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol DiscoveryProtocol_Protocol => Models.Network.DiscoveryProtocolCapturer.DiscoveryProtocol.LLDP_CDP;
         public static int DiscoveryProtocol_Duration => 60;
 
         // Application: Wake on LAN
