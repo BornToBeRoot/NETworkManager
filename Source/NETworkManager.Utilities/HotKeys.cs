@@ -3,13 +3,15 @@
 namespace NETworkManager.Utilities
 {
     /// <summary>
-    /// 
+    /// Class to provide static methods for hotkeys.
     /// </summary>
     public static class HotKeys
     {
         /// <summary>
-        /// 
+        /// Method to calculate the sum of the modifier keys.
         /// </summary>
+        /// <param name="modifierKeys"><see cref="ModifierKeys"/>.</param>
+        /// <returns>Sum of the calculated modifier keys.</returns>
         public static int GetModifierKeysSum(ModifierKeys modifierKeys)
         {
             var sum = 0x0000;
@@ -30,38 +32,41 @@ namespace NETworkManager.Utilities
         }
 
         /// <summary>
-        /// 
+        /// Method to convert WPF key to WinForms key.
         /// </summary>
+        /// <param name="key">WPF key.</param>
+        /// <returns>WinForms key.</returns>
         public static System.Windows.Forms.Keys WpfKeyToFormsKeys(Key key)
         {
             return (System.Windows.Forms.Keys)KeyInterop.VirtualKeyFromKey(key);
         }
 
         /// <summary>
-        /// 
+        /// Method to convert WinForms key to WPF key.
         /// </summary>
-        /// <param name="keys"></param>
-        /// <returns></returns>
+        /// <param name="keys">WinForms key.</param>
+        /// <returns>WPF key.</returns>
         public static Key FormsKeysToWpfKey(System.Windows.Forms.Keys keys)
         {
-            return KeyInterop.KeyFromVirtualKey((int)keys);
+            return FormsKeysToWpfKey((int)keys);
         }
 
         /// <summary>
-        /// 
+        /// Method to convert WinForms key to WPF key.
         /// </summary>
-        /// <param name="keys"></param>
-        /// <returns></returns>
+        /// <param name="keys">WinForms key as  <see cref="int"/>.</param>
+        /// <returns>WPF key.</returns>
+
         public static Key FormsKeysToWpfKey(int keys)
         {
             return KeyInterop.KeyFromVirtualKey(keys);
         }
 
         /// <summary>
-        /// 
+        /// Method to get modifier keys from an <see cref="int"/> value.
         /// </summary>
-        /// <param name="modifierKeys"></param>
-        /// <returns></returns>
+        /// <param name="modifierKeys">Modifier key as <see cref="int"/>.</param>
+        /// <returns>Return <see cref="ModifierKeys"/>.</returns>
         public static ModifierKeys GetModifierKeysFromInt(int modifierKeys)
         {
             var modKeys = ModifierKeys.None;

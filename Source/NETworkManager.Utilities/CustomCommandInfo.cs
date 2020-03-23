@@ -37,8 +37,11 @@ namespace NETworkManager.Utilities
         }
 
         /// <summary>
-        /// Create an <see cref="CustomCommandInfo"/> with an <see cref="ID"/>, <see cref="Name"/> and <see cref="FilePath"/>.
+        /// Create an <see cref="CustomCommandInfo"/>.
         /// </summary>
+        /// <param name="id"><see cref="ID"/>.</param>
+        /// <param name="name"><see cref="Name"/>.</param>
+        /// <param name="filePath"><see cref="FilePath"/>.</param>
         public CustomCommandInfo(Guid id, string name, string filePath)
         {
             ID = id;
@@ -47,8 +50,12 @@ namespace NETworkManager.Utilities
         }
 
         /// <summary>
-        /// Create an <see cref="CustomCommandInfo"/> with an <see cref="ID"/>, <see cref="Name"/>, <see cref="FilePath"/> and <see cref="Arguments"/>.
+        /// Create an <see cref="CustomCommandInfo"/>.
         /// </summary>
+        /// <param name="id"><see cref="ID"/>.</param>
+        /// <param name="name"><see cref="Name"/>.</param>
+        /// <param name="filePath"><see cref="FilePath"/>.</param>
+        /// <param name="arguments"><see cref="Arguments"/>.</param>
         public CustomCommandInfo(Guid id, string name, string filePath, string arguments) : this(id, name, filePath)
         {
             Arguments = arguments;

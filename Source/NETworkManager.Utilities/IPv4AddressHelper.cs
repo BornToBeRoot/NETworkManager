@@ -16,7 +16,7 @@ namespace NETworkManager.Utilities
         /// <summary>
         /// Convert a binary IPv4-Address into a human readable string.
         /// </summary>
-        /// <param name="s">11111111.11111111.11111111.00000000 or 11111111111111111111111100000000</param>
+        /// <param name="s">11111111.11111111.11111111.00000000 or 11111111111111111111111100000000.</param>
         /// <returns>255.255.255.0</returns>
         public static string BinaryStringToHumanString(string s)
         {

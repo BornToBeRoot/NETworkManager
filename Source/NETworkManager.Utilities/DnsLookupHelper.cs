@@ -7,17 +7,22 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Utilities
 {
-    public class DnsLookupHelper
+    /// <summary>
+    /// Class provides static helper methods for dns lookup.
+    /// </summary>
+    public static class DnsLookupHelper
     {
 
         /// <summary>
-        /// 
+        /// Variable holds a dns lookup client, which is initialized with the class.
         /// </summary>
-        private static LookupClient DnsLookupClient = new LookupClient();
+        private static readonly LookupClient DnsLookupClient = new LookupClient();
 
         /// <summary>
-        /// 
+        /// Task to asynchronously resolve an hostname from <see cref="IPAddress"/>.
         /// </summary>
+        /// <param name="ipAddress"><see cref="IPAddress"/> to resolve.</param>
+        /// <returns>Resolved hostname.</returns>
         public async static Task<string> ResolveHostname(IPAddress ipAddress)
         {
             string hostname = string.Empty;
@@ -29,14 +34,20 @@ namespace NETworkManager.Utilities
                 if (!string.IsNullOrEmpty(answer))
                     hostname = answer;
             }
+
+#pragma warning disable CA1031 // Empty string will be returned on error.
             catch { }
+#pragma warning restore CA1031 
 
             return hostname;
         }
 
         /// <summary>
-        /// 
+        /// Task to asynchronously resolve an ip address from hostname.
         /// </summary>
+        /// <param name="hostname">Hostname to resolve.</param>
+        /// <param name="preferIPv4">Prefer IPv4 address.</param>
+        /// <returns>Resovled <see cref="IPAddress"/>.</returns>
         public async static Task<IPAddress> ResolveIPAddress(string hostname, bool preferIPv4 = true)
         {
             // Append dns suffix to hostname
@@ -71,7 +82,9 @@ namespace NETworkManager.Utilities
                     }
                 }
             }
+#pragma warning disable CA1031 // Null will be returned on error.
             catch { }
+#pragma warning restore CA1031
 
             return null;
         }
