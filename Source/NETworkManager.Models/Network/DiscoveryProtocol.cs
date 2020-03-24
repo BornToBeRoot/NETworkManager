@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models.Network
 {
     /// <summary>
-    /// Enum indicates all discovery protocols.
+    /// Enum includes all discovery protocols.
     /// </summary>
     public enum DiscoveryProtocol
     {
