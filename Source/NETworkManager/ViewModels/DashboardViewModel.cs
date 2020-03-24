@@ -519,8 +519,8 @@ namespace NETworkManager.ViewModels
 
             if (!IsHostReachable)
             {
-                HostConnectionState = ConnectionState.Error;
-                AddToHostDetails(ConnectionState.Error,
+                HostConnectionState = ConnectionState.Critical;
+                AddToHostDetails(ConnectionState.Critical,
                     string.Format(Localization.LanguageFiles.Strings.TCPIPStackIsNotAvailableMessage, hostIPAddress));
 
                 IsHostCheckRunning = false;
@@ -548,8 +548,8 @@ namespace NETworkManager.ViewModels
 
             if (HostIPAddress == null)
             {
-                HostConnectionState = ConnectionState.Error;
-                AddToHostDetails(ConnectionState.Error,
+                HostConnectionState = ConnectionState.Critical;
+                AddToHostDetails(ConnectionState.Critical,
                     Localization.LanguageFiles.Strings.CouldNotDetectLocalIPAddressMessage + " " + Localization.LanguageFiles.Strings.CheckNetworkAdapterConfigurationAndNetworkConnectionMessage);
 
                 IsHostCheckRunning = false;
@@ -598,7 +598,7 @@ namespace NETworkManager.ViewModels
 
             if (GatewayIPAddress == null)
             {
-                AddToGatewayDetails(ConnectionState.Error,
+                AddToGatewayDetails(ConnectionState.Critical,
                     Localization.LanguageFiles.Strings.CouldNotDetectGatewayIPAddressMessage + " " + Localization.LanguageFiles.Strings.CheckNetworkAdapterConfigurationAndNetworkConnectionMessage);
 
                 IsGatewayCheckRunning = false;
@@ -635,7 +635,7 @@ namespace NETworkManager.ViewModels
 
             if (!IsGatewayReachable)
             {
-                AddToGatewayDetails(ConnectionState.Error,
+                AddToGatewayDetails(ConnectionState.Critical,
                     string.Format(Localization.LanguageFiles.Strings.XXXIsNotReachableViaICMPMessage, GatewayIPAddress));
 
                 IsGatewayCheckRunning = false;
@@ -699,7 +699,7 @@ namespace NETworkManager.ViewModels
 
             if (!IsInternetReachable)
             {
-                AddToInternetDetails(ConnectionState.Error,
+                AddToInternetDetails(ConnectionState.Critical,
                     string.Format(Localization.LanguageFiles.Strings.XXXIsNotReachableViaICMPMessage,
                         publicICMPTestIPAddress));
 
