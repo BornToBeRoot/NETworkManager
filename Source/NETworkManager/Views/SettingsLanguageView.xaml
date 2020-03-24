@@ -6,8 +6,8 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters"        
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:settings="clr-namespace:NETworkManager.Models.Settings"        
+        xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"                  
+             xmlns:test="clr-namespace:NETworkManager.Localization;assembly=NETworkManager.Localization"
         xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsLanguageViewModel}">
     <UserControl.Resources>
@@ -48,7 +48,11 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="80" />
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Width="Auto" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding (settings:LocalizationInfo.Flag)}" />
+                        <Image Grid.Column="0" Width="Auto" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding FlagUri}"/>
+                            </Image.Source>
+                        </Image>
                         <Grid Grid.Column="1" Margin="10,5,0,5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -61,12 +65,12 @@
                                     <ColumnDefinition Width="5" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding (settings:LocalizationInfo.Name)}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
-                                <TextBlock Grid.Column="2" Text="{Binding (settings:LocalizationInfo.NativeName), StringFormat={}({0})}" Style="{StaticResource DefaultTextBlock}" />
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
+                                <TextBlock Grid.Column="2" Text="{Binding NativeName, StringFormat={}({0})}" Style="{StaticResource DefaultTextBlock}" />
                             </Grid>
-                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding (settings:LocalizationInfo.Translator)}" Style="{StaticResource DefaultTextBlock}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Translator}" Style="{StaticResource DefaultTextBlock}" />
                         </Grid>
-                        <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="#badc58" Padding="10,5" VerticalAlignment="Center" HorizontalAlignment="Right" Visibility="{Binding (settings:LocalizationInfo.IsOfficial), Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+                        <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="#badc58" Padding="10,5" VerticalAlignment="Center" HorizontalAlignment="Right" Visibility="{Binding IsOfficial, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
                            <StackPanel Orientation="Horizontal">
                                <Rectangle Width="20" Height="20">
                                    <Rectangle.Resources>
@@ -82,7 +86,7 @@
                                 <TextBlock Text="{x:Static localization:Strings.Official}" VerticalAlignment="Center" Foreground="#badc58" Style="{StaticResource DefaultTextBlock}" Margin="10,0,0,0" />
                             </StackPanel>
                         </Border>
-                        <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="{DynamicResource GrayBrush3}" Padding="10,5" VerticalAlignment="Center" Visibility="{Binding (settings:LocalizationInfo.IsOfficial), Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}">
+                        <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="{DynamicResource GrayBrush3}" Padding="10,5" VerticalAlignment="Center" Visibility="{Binding IsOfficial, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}">
                             <StackPanel Orientation="Horizontal">
                                 <Rectangle Width="20" Height="20">
                                     <Rectangle.Resources>
@@ -98,19 +102,10 @@
                                 <TextBlock Text="{x:Static localization:Strings.Community}" VerticalAlignment="Center" Foreground="{DynamicResource GrayBrush3}" Style="{StaticResource DefaultTextBlock}" Margin="10,0,0,0"/>
                             </StackPanel>
                         </Border>
-                        <TextBlock Grid.Column="5" Grid.Row="0" Text="{Binding (settings:LocalizationInfo.PercentTranslated), StringFormat={}{0} %}" HorizontalAlignment="Right" Style="{StaticResource CenterTextBlock}" />
+                        <TextBlock Grid.Column="5" Grid.Row="0" Text="{Binding PercentTranslated, StringFormat={}{0} %}" HorizontalAlignment="Right" Style="{StaticResource CenterTextBlock}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MetroListViewItem}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding (settings:LocalizationInfo.IsVisible)}" Value="False">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.ItemContainerStyle>         
         </ListView>
         <Grid Grid.Row="2" VerticalAlignment="Center">
             <Grid.Style>

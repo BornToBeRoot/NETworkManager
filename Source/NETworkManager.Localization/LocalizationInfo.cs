@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Media.Imaging;
 
 namespace NETworkManager.Localization
 {
@@ -19,9 +18,9 @@ namespace NETworkManager.Localization
         public string NativeName { get; set; }
 
         /// <summary>
-        /// Image of the country flag.
+        /// Uri of the country flag.
         /// </summary>
-        public BitmapImage Flag { get; set; }
+        public Uri FlagUri { get; set; }
 
         /// <summary>
         /// Translator(s), who have contributed to the translation. Multiple names are separated with ",".
@@ -63,37 +62,22 @@ namespace NETworkManager.Localization
         /// <summary>
         /// Create an instance with all parameters.
         /// </summary>
-        /// <param name="name"><see cref="Name"/></param>
-        /// <param name="nativeName"><see cref="NativeName"/></param>
-        /// <param name="flag"><see cref="Flag"/></param>
-        /// <param name="translator"><see cref="Translator"/></param>
-        /// <param name="code"><see cref="Code"/></param>
-        /// <param name="percentTranslated"><see cref="PercentTranslated"/></param>
-        /// <param name="isOfficial"><see cref="IsOfficial"/></param>
-        public LocalizationInfo(string name, string nativeName, BitmapImage flag, string translator, string code, double percentTranslated, bool isOfficial)
+        /// <param name="name"><see cref="Name"/>.</param>
+        /// <param name="nativeName"><see cref="NativeName"/>.</param>
+        /// <param name="flagUri"><see cref="FlagUri"/>.</param>
+        /// <param name="translator"><see cref="Translator"/>.</param>
+        /// <param name="code"><see cref="Code"/>.</param>
+        /// <param name="percentTranslated"><see cref="PercentTranslated"/>.</param>
+        /// <param name="isOfficial"><see cref="IsOfficial"/>.</param>
+        public LocalizationInfo(string name, string nativeName, Uri flagUri, string translator, string code, double percentTranslated, bool isOfficial)
         {
             Name = name;
             NativeName = nativeName;
-            Flag = flag;
+            FlagUri = flagUri;
             Translator = translator;
             Code = code;
             PercentTranslated = percentTranslated;
             IsOfficial = isOfficial;
-        }
-
-        /// <summary>
-        /// Create an instance with all parameters.
-        /// </summary>
-        /// <param name="name"><see cref="Name"/></param>
-        /// <param name="nativeName"><see cref="NativeName"/></param>
-        /// <param name="flagPath">Path to the image. <see cref="Flag"/></param>
-        /// <param name="translator"><see cref="Translator"/></param>
-        /// <param name="code"><see cref="Code"/></param>
-        /// <param name="percentTranslated"><see cref="PercentTranslated"/></param>
-        /// <param name="isOfficial"><see cref="IsOfficial"/></param>
-        public LocalizationInfo(string name, string nativeName, Uri flagPath, string translator, string code, double percentTranslated, bool isOfficial) : this(name, nativeName, new BitmapImage(flagPath), translator, code, percentTranslated, isOfficial)
-        {
-
         }
     }
 }
