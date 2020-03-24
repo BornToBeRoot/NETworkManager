@@ -9,7 +9,7 @@ namespace NETworkManager.Localization.Translators
     public class ConnectionStateTranslator : SingletonBase<ConnectionStateTranslator>, ILocalizationStringTranslator
     {    
         /// <summary>
-        /// Constant to identify the strings in the language files
+        /// Constant to identify the strings in the language files.
         /// </summary>
         private const string _identifier = "ConnectionState_";
 

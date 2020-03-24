@@ -169,11 +169,7 @@
     <Compile Include="Converters\ListToStringConverter.cs" />
     <Compile Include="Converters\BooleanReverseToVisibilityHiddenConverter.cs" />
     <Compile Include="Converters\PingStatusToBooleanConverter.cs" />
-    <Compile Include="Converters\RemoteDesktopAudioCaptureRedirectionModeToStringConverter.cs" />
-    <Compile Include="Converters\RemoteDesktopAudioRedirectionModeToStringConverter.cs" />
-    <Compile Include="Converters\RemoteDesktopKeyboardHookModeToStringConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter.cs" />
-    <Compile Include="Converters\RemoteDesktopNetworkConnectionTypeToStringConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyToBooleanConverter.cs" />
     <Compile Include="Converters\StringIsNotNullOrEmptyToVisibilityCollapsedConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToBoolConverter.cs" />

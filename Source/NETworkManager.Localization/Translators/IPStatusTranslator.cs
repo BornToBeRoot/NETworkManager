@@ -9,7 +9,7 @@ namespace NETworkManager.Localization.Translators
     public class IPStatusTranslator : SingletonBase<IPStatusTranslator>, ILocalizationStringTranslator
     {
         /// <summary>
-        /// Constant to identify the strings in the language files
+        /// Constant to identify the strings in the language files.
         /// </summary>
         private const string _identifier = "IPStatus_";
 

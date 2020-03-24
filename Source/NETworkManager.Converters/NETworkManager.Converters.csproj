@@ -46,6 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccentToBrushConverter.cs" />
+    <Compile Include="RemoteDesktopAudioCaptureRedirectionModeToStringConverter.cs" />
+    <Compile Include="RemoteDesktopAudioRedirectionModeToStringConverter.cs" />
+    <Compile Include="RemoteDesktopKeyboardHookModeToStringConverter.cs" />
+    <Compile Include="RemoteDesktopNetworkConnectionTypeToStringConverter.cs" />
     <Compile Include="TcpStateToStringConverter.cs" />
     <Compile Include="TimeUnitToStringConverter.cs" />
     <Compile Include="AccentToStringConverter.cs" />
