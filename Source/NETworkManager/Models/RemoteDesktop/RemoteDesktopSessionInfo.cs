@@ -16,9 +16,9 @@ namespace NETworkManager.Models.RemoteDesktop
         public int ColorDepth { get; set; }
         public bool EnableCredSspSupport { get; set; }
         public uint AuthenticationLevel { get; set; }
-        public RemoteDesktop.AudioRedirectionMode AudioRedirectionMode { get; set; }
-        public RemoteDesktop.AudioCaptureRedirectionMode AudioCaptureRedirectionMode { get; set; }
-        public RemoteDesktop.KeyboardHookMode KeyboardHookMode { get; set; }
+        public AudioRedirectionMode AudioRedirectionMode { get; set; }
+        public AudioCaptureRedirectionMode AudioCaptureRedirectionMode { get; set; }
+        public KeyboardHookMode KeyboardHookMode { get; set; }
         public bool RedirectClipboard { get; set; }
         public bool RedirectDevices { get; set; }
         public bool RedirectDrives { get; set; }
@@ -27,7 +27,7 @@ namespace NETworkManager.Models.RemoteDesktop
         public bool RedirectPrinters { get; set; }
         public bool PersistentBitmapCaching { get; set; }
         public bool ReconnectIfTheConnectionIsDropped { get; set; }
-        public RemoteDesktop.NetworkConnectionType NetworkConnectionType { get; set; }
+        public NetworkConnectionType NetworkConnectionType { get; set; }
         public bool DesktopBackground { get; set; }
         public bool FontSmoothing { get; set; }
         public bool DesktopComposition { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using NETworkManager.Models.RemoteDesktop;
+using System.Diagnostics.CodeAnalysis;
 using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.Models.Profile
@@ -66,11 +67,11 @@ namespace NETworkManager.Models.Profile
         public bool RemoteDesktop_OverrideAuthenticationLevel { get; set; }
         public uint RemoteDesktop_AuthenticationLevel { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
         public bool RemoteDesktop_OverrideAudioRedirectionMode { get; set; }
-        public RemoteDesktop.RemoteDesktop.AudioRedirectionMode RemoteDesktop_AudioRedirectionMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
+        public AudioRedirectionMode RemoteDesktop_AudioRedirectionMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
         public bool RemoteDesktop_OverrideAudioCaptureRedirectionMode { get; set; }
-        public RemoteDesktop.RemoteDesktop.AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AudioCaptureRedirectionMode;
+        public AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_AudioCaptureRedirectionMode;
         public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations { get; set; }
-        public RemoteDesktop.RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
+        public KeyboardHookMode RemoteDesktop_KeyboardHookMode { get; set; } = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
         public bool RemoteDesktop_OverrideRedirectClipboard { get; set; }
         public bool RemoteDesktop_RedirectClipboard { get; set; } = true;
         public bool RemoteDesktop_OverrideRedirectDevices { get; set; }
@@ -88,7 +89,7 @@ namespace NETworkManager.Models.Profile
         public bool RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped { get; set; }
         public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped { get; set; }
         public bool RemoteDesktop_OverrideNetworkConnectionType { get; set; }
-        public RemoteDesktop.RemoteDesktop.NetworkConnectionType RemoteDesktop_NetworkConnectionType { get; set; }
+        public NetworkConnectionType RemoteDesktop_NetworkConnectionType { get; set; }
         public bool RemoteDesktop_OverrideDesktopBackground { get; set; }
         public bool RemoteDesktop_DesktopBackground { get; set; }
         public bool RemoteDesktop_OverrideFontSmoothing { get; set; }

@@ -10,8 +10,8 @@ using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
+using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
-using static NETworkManager.Models.Network.DiscoveryProtocolCapturer;
 using static NETworkManager.Models.Network.SNMP;
 
 namespace NETworkManager.Models.Settings
@@ -2134,8 +2134,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private RemoteDesktop.RemoteDesktop.AudioRedirectionMode _remoteDesktop_AudioRedirectionMode = GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
-        public RemoteDesktop.RemoteDesktop.AudioRedirectionMode RemoteDesktop_AudioRedirectionMode
+        private AudioRedirectionMode _remoteDesktop_AudioRedirectionMode = GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
+        public AudioRedirectionMode RemoteDesktop_AudioRedirectionMode
         {
             get => _remoteDesktop_AudioRedirectionMode;
             set
@@ -2149,8 +2149,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private RemoteDesktop.RemoteDesktop.AudioCaptureRedirectionMode _remoteDesktop_AudioCaptureRedirectionMode = GlobalStaticConfiguration.RemoteDesktop_AudioCaptureRedirectionMode;
-        public RemoteDesktop.RemoteDesktop.AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode
+        private AudioCaptureRedirectionMode _remoteDesktop_AudioCaptureRedirectionMode = GlobalStaticConfiguration.RemoteDesktop_AudioCaptureRedirectionMode;
+        public AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode
         {
             get => _remoteDesktop_AudioCaptureRedirectionMode;
             set
@@ -2164,8 +2164,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private RemoteDesktop.RemoteDesktop.KeyboardHookMode _remoteDesktop_KeyboardHookMode = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
-        public RemoteDesktop.RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode
+        private KeyboardHookMode _remoteDesktop_KeyboardHookMode = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
+        public KeyboardHookMode RemoteDesktop_KeyboardHookMode
         {
             get => _remoteDesktop_KeyboardHookMode;
             set
@@ -2299,8 +2299,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private RemoteDesktop.RemoteDesktop.NetworkConnectionType _remoteDesktop_NetworkConnectionType = GlobalStaticConfiguration.RemoteDesktop_NetworkConnectionType;
-        public RemoteDesktop.RemoteDesktop.NetworkConnectionType RemoteDesktop_NetworkConnectionType
+        private NetworkConnectionType _remoteDesktop_NetworkConnectionType = GlobalStaticConfiguration.RemoteDesktop_NetworkConnectionType;
+        public NetworkConnectionType RemoteDesktop_NetworkConnectionType
         {
             get => _remoteDesktop_NetworkConnectionType;
             set

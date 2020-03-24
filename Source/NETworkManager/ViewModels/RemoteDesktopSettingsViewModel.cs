@@ -207,10 +207,10 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public IEnumerable<RemoteDesktop.AudioRedirectionMode> AudioRedirectionModes => System.Enum.GetValues(typeof(RemoteDesktop.AudioRedirectionMode)).Cast<RemoteDesktop.AudioRedirectionMode>();
+        public IEnumerable<AudioRedirectionMode> AudioRedirectionModes => System.Enum.GetValues(typeof(AudioRedirectionMode)).Cast<AudioRedirectionMode>();
 
-        private RemoteDesktop.AudioRedirectionMode _audioRedirectionMode;
-        public RemoteDesktop.AudioRedirectionMode AudioRedirectionMode
+        private AudioRedirectionMode _audioRedirectionMode;
+        public AudioRedirectionMode AudioRedirectionMode
         {
             get => _audioRedirectionMode;
             set
@@ -226,10 +226,10 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public IEnumerable<RemoteDesktop.AudioCaptureRedirectionMode> AudioCaptureRedirectionModes => System.Enum.GetValues(typeof(RemoteDesktop.AudioCaptureRedirectionMode)).Cast<RemoteDesktop.AudioCaptureRedirectionMode>();
+        public IEnumerable<AudioCaptureRedirectionMode> AudioCaptureRedirectionModes => System.Enum.GetValues(typeof(AudioCaptureRedirectionMode)).Cast<AudioCaptureRedirectionMode>();
 
-        private RemoteDesktop.AudioCaptureRedirectionMode _audioCaptureRedirectionMode;
-        public RemoteDesktop.AudioCaptureRedirectionMode AudioCaptureRedirectionMode
+        private AudioCaptureRedirectionMode _audioCaptureRedirectionMode;
+        public AudioCaptureRedirectionMode AudioCaptureRedirectionMode
         {
             get => _audioCaptureRedirectionMode;
             set
@@ -245,10 +245,10 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public IEnumerable<RemoteDesktop.KeyboardHookMode> KeyboardHookModes => System.Enum.GetValues(typeof(RemoteDesktop.KeyboardHookMode)).Cast<RemoteDesktop.KeyboardHookMode>();
+        public IEnumerable<KeyboardHookMode> KeyboardHookModes => System.Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
 
-        private RemoteDesktop.KeyboardHookMode _keyboardHookMode;
-        public RemoteDesktop.KeyboardHookMode KeyboardHookMode
+        private KeyboardHookMode _keyboardHookMode;
+        public KeyboardHookMode KeyboardHookMode
         {
             get => _keyboardHookMode;
             set
@@ -399,10 +399,10 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        public IEnumerable<RemoteDesktop.NetworkConnectionType> NetworkConnectionTypes => System.Enum.GetValues(typeof(RemoteDesktop.NetworkConnectionType)).Cast<RemoteDesktop.NetworkConnectionType>();
+        public IEnumerable<NetworkConnectionType> NetworkConnectionTypes => System.Enum.GetValues(typeof(NetworkConnectionType)).Cast<NetworkConnectionType>();
 
-        private RemoteDesktop.NetworkConnectionType _networkConnectionType;
-        public RemoteDesktop.NetworkConnectionType NetworkConnectionType
+        private NetworkConnectionType _networkConnectionType;
+        public NetworkConnectionType NetworkConnectionType
         {
             get => _networkConnectionType;
             set
@@ -569,11 +569,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void ChangeNetworkConnectionTypeSettings(RemoteDesktop.NetworkConnectionType networkConnectionType)
+        private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType networkConnectionType)
         {
             switch (networkConnectionType)
             {
-                case RemoteDesktop.NetworkConnectionType.Modem:
+                case NetworkConnectionType.Modem:
                     DesktopBackground = false;
                     FontSmoothing = false;
                     DesktopComposition = false;
@@ -581,7 +581,7 @@ namespace NETworkManager.ViewModels
                     MenuAndWindowAnimation = false;
                     VisualStyles = false;
                     break;
-                case RemoteDesktop.NetworkConnectionType.BroadbandLow:
+                case NetworkConnectionType.BroadbandLow:
                     DesktopBackground = false;
                     FontSmoothing = false;
                     DesktopComposition = false;
@@ -589,8 +589,8 @@ namespace NETworkManager.ViewModels
                     MenuAndWindowAnimation = false;
                     VisualStyles = true;
                     break;
-                case RemoteDesktop.NetworkConnectionType.Satellite:
-                case RemoteDesktop.NetworkConnectionType.BroadbandHigh:
+                case NetworkConnectionType.Satellite:
+                case NetworkConnectionType.BroadbandHigh:
                     DesktopBackground = false;
                     FontSmoothing = false;
                     DesktopComposition = true;
@@ -598,8 +598,8 @@ namespace NETworkManager.ViewModels
                     MenuAndWindowAnimation = false;
                     VisualStyles = true;
                     break;
-                case RemoteDesktop.NetworkConnectionType.WAN:
-                case RemoteDesktop.NetworkConnectionType.LAN:
+                case NetworkConnectionType.WAN:
+                case NetworkConnectionType.LAN:
                     DesktopBackground = true;
                     FontSmoothing = true;
                     DesktopComposition = true;

@@ -294,7 +294,7 @@ namespace NETworkManager.Controls
             RdpClientHeight = RdpClient.DesktopHeight;
         }
 
-        public void SendKey(RemoteDesktop.Keystroke keystroke)
+        public void SendKey(Keystroke keystroke)
         {
             if (!IsConnected)
                 return;

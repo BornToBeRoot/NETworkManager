@@ -5,7 +5,7 @@ namespace NETworkManager.Utilities
     /// <summary>
     /// Class provides static methods for testing IPv4 addresses.
     /// </summary>
-    class IPv4AddressHelper
+    public class IPv4AddressHelper
     {
         /// <summary>
         /// First possible IPv4 multicast address.

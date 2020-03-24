@@ -190,7 +190,7 @@ namespace NETworkManager.Controls
             {
                 try
                 {
-                    control.SendKey(RemoteDesktop.Keystroke.CtrlAltDel);
+                    control.SendKey(Keystroke.CtrlAltDel);
                 }
                 catch (Exception ex)
                 {

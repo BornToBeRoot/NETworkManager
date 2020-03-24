@@ -9,8 +9,6 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
 using DnsClient;
-using static NETworkManager.Models.Network.DiscoveryProtocolCapturer;
-using static NETworkManager.Utilities.AutoRefreshTime;
 
 // ReSharper disable InconsistentNaming
 
@@ -106,12 +104,12 @@ namespace NETworkManager
 
         public static int RemoteDesktop_ColorDepth = 32;
         public static int RemoteDesktop_Port => 3389;
-        public static RemoteDesktop.AudioRedirectionMode RemoteDesktop_AudioRedirectionMode => RemoteDesktop.AudioRedirectionMode.PlayOnThisComputer;
-        public static RemoteDesktop.AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode => RemoteDesktop.AudioCaptureRedirectionMode.DoNotRecord;
-        public static RemoteDesktop.KeyboardHookMode RemoteDesktop_KeyboardHookMode => RemoteDesktop.KeyboardHookMode.OnTheRemoteComputer;
+        public static AudioRedirectionMode RemoteDesktop_AudioRedirectionMode => AudioRedirectionMode.PlayOnThisComputer;
+        public static AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode => AudioCaptureRedirectionMode.DoNotRecord;
+        public static KeyboardHookMode RemoteDesktop_KeyboardHookMode => KeyboardHookMode.OnTheRemoteComputer;
         public static uint RemoteDesktop_AuthenticationLevel => 2;
 
-        public static RemoteDesktop.NetworkConnectionType RemoteDesktop_NetworkConnectionType => RemoteDesktop.NetworkConnectionType.DetectAutomatically;
+        public static NetworkConnectionType RemoteDesktop_NetworkConnectionType => NetworkConnectionType.DetectAutomatically;
 
         // Application: PowerShell
         public static string PowerShell_ApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");

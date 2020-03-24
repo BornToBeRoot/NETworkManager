@@ -20,7 +20,7 @@
     </UserControl.InputBindings>
     <UserControl.Resources>
         <convertersOld:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <convertersOld:TcpStateToStringConverter x:Key="TcpStateToStringConverter" />
+        <converters:TcpStateToStringConverter x:Key="TcpStateToStringConverter" />
         <converters:TimeUnitToStringConverter x:Key="TimeUnitToStringConverter" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
