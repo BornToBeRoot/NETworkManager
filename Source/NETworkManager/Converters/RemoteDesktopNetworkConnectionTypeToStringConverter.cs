@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using NETworkManager.Localization.Translators;
-using static NETworkManager.Models.RemoteDesktop.RemoteDesktop;
+using NETworkManager.Models.RemoteDesktop;
 
 namespace NETworkManager.Converters
 {

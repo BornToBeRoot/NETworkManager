@@ -1,30 +1,31 @@
-﻿using NETworkManager.Localization.Translators;
-using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Globalization;
+using System.Net.NetworkInformation;
 using System.Windows.Data;
+using NETworkManager.Localization.Translators;
 
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Converter to convert <see cref="TimeUnit"/> to translated <see cref="string"/> or wise versa.
+    /// Converter to convert <see cref="TcpState"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
-    public sealed class TimeUnitToStringConverter : IValueConverter
+    public sealed class TcpStateToStringConverter : IValueConverter
     {
+
         /// <summary>
-        /// Method to convert <see cref="TimeUnit"/> to translated <see cref="string"/>. 
+        /// Method to convert <see cref="TcpState"/> to translated <see cref="string"/>. 
         /// </summary>
-        /// <param name="value">Object from type <see cref="TimeUnit"/>.</param>
+        /// <param name="value">Object from type <see cref="TcpState"/>.</param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
-        /// <returns>Translated <see cref="TimeUnit"/>.</returns>
+        /// <returns>Translated <see cref="TcpState"/>.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is TimeUnit timeUnit))
-                return "-/-" ;
+            if (!(value is TcpState tcpState))
+                return "-/-";
 
-            return TimeUnitTranslator.GetInstance().Translate(timeUnit);
+            return TcpStateTranslator.GetInstance().Translate(tcpState);
         }
 
         /// <summary>

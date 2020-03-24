@@ -19,7 +19,7 @@ namespace NETworkManager.Models.Network
 
         public int LocalIPAddressInt32 => LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressConverter.ToInt32(LocalIPAddress) : 0;
         public int RemoteIPAddressInt32 => LocalIPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressConverter.ToInt32(RemoteIPAddress) : 0;
-        public string TcpStateTranslated => TcpStateTranslator.GetInstance().Translate(TcpState.ToString());
+        public string TcpStateTranslated => TcpStateTranslator.GetInstance().Translate(TcpState);
 
         public ConnectionInfo()
         {

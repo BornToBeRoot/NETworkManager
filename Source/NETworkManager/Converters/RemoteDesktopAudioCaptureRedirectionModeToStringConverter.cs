@@ -1,8 +1,8 @@
 ﻿using NETworkManager.Localization.Translators;
+using NETworkManager.Models.RemoteDesktop;
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using static NETworkManager.Models.RemoteDesktop.RemoteDesktop;
 
 namespace NETworkManager.Converters
 {

@@ -282,7 +282,7 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedStateAction()
         {
-            ClipboardHelper.SetClipboard(TcpStateTranslator.GetInstance().Translate(SelectedConnectionInfo.TcpState.ToString()));
+            ClipboardHelper.SetClipboard(TcpStateTranslator.GetInstance().Translate(SelectedConnectionInfo.TcpState));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());

@@ -56,10 +56,13 @@
     <Compile Include="Network\DiscoveryProtocolWarningArgs.cs" />
     <Compile Include="Network\PortState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoteDesktop\AudioCaptureRedirectionMode.cs" />
+    <Compile Include="RemoteDesktop\AudioRedirectionMode.cs" />
+    <Compile Include="RemoteDesktop\KeyboardHookMode.cs" />
+    <Compile Include="RemoteDesktop\Keystroke.cs" />
+    <Compile Include="RemoteDesktop\NetworkConnectionType.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="RemoteDesktop\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <PackageReference Include="ControlzEx">
       <Version>3.0.2.4</Version>

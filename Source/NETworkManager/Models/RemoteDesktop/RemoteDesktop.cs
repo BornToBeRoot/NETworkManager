@@ -95,44 +95,6 @@ namespace NETworkManager.Models.RemoteDesktop
             }
 
             return info;
-        }
-
-        public enum KeyboardHookMode
-        {
-            OnThisComputer,
-            OnTheRemoteComputer,
-            //OnlyWhenUsingTheFullScreen
-        }
-
-        // https://docs.microsoft.com/en-us/windows/desktop/termserv/imsrdpclientadvancedsettings7-networkconnectiontype
-        // Convert to uint
-        public enum NetworkConnectionType
-        {
-            DetectAutomatically,
-            Modem,
-            BroadbandLow,
-            Satellite,
-            BroadbandHigh,
-            WAN,
-            LAN
-        }
-
-        public enum AudioRedirectionMode
-        {
-            PlayOnThisComputer,
-            PlayOnRemoteComputer,
-            DoNotPlay
-        }
-
-        public enum AudioCaptureRedirectionMode
-        {
-            RecordFromThisComputer,
-            DoNotRecord
-        }
-
-        public enum Keystroke
-        {
-            CtrlAltDel
-        }
+        }                      
     }
 }

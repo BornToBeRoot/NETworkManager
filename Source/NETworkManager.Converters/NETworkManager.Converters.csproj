@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccentToBrushConverter.cs" />
+    <Compile Include="TcpStateToStringConverter.cs" />
     <Compile Include="TimeUnitToStringConverter.cs" />
     <Compile Include="AccentToStringConverter.cs" />
     <Compile Include="ApplicationNameToIconConverter.cs" />
