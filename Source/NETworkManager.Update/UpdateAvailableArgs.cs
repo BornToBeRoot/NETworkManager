@@ -3,19 +3,19 @@
 namespace NETworkManager.Update
 {
     /// <summary>
-    /// Event arguments when an update is available.
+    /// Contains informations about a program update.
     /// </summary>
     public class UpdateAvailableArgs : EventArgs
     {
         /// <summary>
-        /// Version of the newest release.
+        /// Version of the program update.
         /// </summary>
         public Version Version { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateAvailableArgs"/> class
+        /// Initializes a new instance of the <see cref="UpdateAvailableArgs"/> class and passes the <see cref="Version"/> as paramter.
         /// </summary>
-        /// <param name="version"><see cref="Version"/> of the latest release.</param>
+        /// <param name="version">Version of the program update.</param>
         public UpdateAvailableArgs(Version version)
         {
             Version = version;

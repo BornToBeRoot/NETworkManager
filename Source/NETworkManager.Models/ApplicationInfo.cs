@@ -16,7 +16,7 @@
         public bool IsVisible { get; set; }
 
         /// <summary>
-        /// Create an empty <see cref="ApplicationInfo"/>.
+        /// Initializes a new instance of the <see cref="ApplicationInfo"/> class.
         /// </summary>
         public ApplicationInfo()
         {
@@ -24,7 +24,7 @@
         }
 
         /// <summary>
-        /// Create an <see cref="ApplicationInfo"/> based on <see cref="Application.Name"/>.
+        /// Initializes a new instance of the <see cref="ApplicationInfo"/> class and passes the <see cref="Application.Name"/> as paramteter.
         /// </summary>
         /// <param name="name"><see cref="Application.Name"/></param>
         public ApplicationInfo(Application.Name name)
@@ -34,10 +34,10 @@
         }
 
         /// <summary>
-        /// 
+        /// Method to check if an object is equal to this object.
         /// </summary>
-        /// <param name="info"></param>
-        /// <returns></returns>
+        /// <param name="info">Object to check.</param>
+        /// <returns>Equality as <see cref="bool"/>.</returns>
         public bool Equals(ApplicationInfo info)
         {
             if (info == null)
@@ -49,7 +49,7 @@
         /// <summary>
         /// Method to check if an object is equal to this object.
         /// </summary>
-        /// <param name="obj">Object from type <see cref="ApplicationInfo" />.</param>
+        /// <param name="obj">Object from type <see cref="ApplicationInfo" /> to check.</param>
         /// <returns>Equality as <see cref="bool"/>.</returns>
         public override bool Equals(object obj)
         {

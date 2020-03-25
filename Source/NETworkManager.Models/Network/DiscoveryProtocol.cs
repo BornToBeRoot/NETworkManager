@@ -8,38 +8,75 @@ using System.Text;
 
 namespace NETworkManager.Models.Network
 {
+    /// <summary>
+    /// Class to capture network discovery protocol packages.
+    /// </summary>
     public partial class DiscoveryProtocol
     {
+        /// <summary>
+        /// Holds the PowerShell script which is loaded when the class is initialized.
+        /// </summary>
         private readonly string DiscoveryScript = string.Empty;
 
+        /// <summary>
+        /// Is triggerd when a network package with a discovery protocol is received.
+        /// </summary>
         public event EventHandler<DiscoveryProtocolPackageArgs> PackageReceived;
 
+        /// <summary>
+        /// Triggers the <see cref="PackageReceived"/> event.
+        /// </summary>
+        /// <param name="e">Passes <see cref="DiscoveryProtocolPackageArgs"/> to the event.</param>
         protected virtual void OnPackageReceived(DiscoveryProtocolPackageArgs e)
         {
             PackageReceived?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Is triggered when an error occurs during the capturing.
+        /// </summary>
         public event EventHandler<DiscoveryProtocolErrorArgs> ErrorReceived;
 
+
+        /// <summary>
+        /// Triggers the <see cref="ErrorReceived"/> event.
+        /// </summary>
+        /// <param name="e">Passes <see cref="DiscoveryProtocolErrorArgs"/> to the event.</param>
         protected virtual void OnErrorReceived(DiscoveryProtocolErrorArgs e)
         {
             ErrorReceived?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Is triggered when a warning occurs during the capturing.
+        /// </summary>
         public event EventHandler<DiscoveryProtocolWarningArgs> WarningReceived;
 
+        /// <summary>
+        /// Triggers the <see cref="WarningReceived"/> event.
+        /// </summary>
+        /// <param name="e">Passes <see cref="DiscoveryProtocolWarningArgs"/> to the event.</param>
         protected virtual void OnWarningReceived(DiscoveryProtocolWarningArgs e)
         {
             WarningReceived?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Is triggered when the capturing is completed.
+        /// </summary>
         public event EventHandler Complete;
 
+        /// <summary>
+        /// Triggers the <see cref="Complete"/> event.
+        /// </summary>
         protected virtual void OnComplete()
         {
             Complete?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DiscoveryProtocol"/> class.
+        /// </summary>
         public DiscoveryProtocol()
         {
             using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("NETworkManager.Models.Resources.DiscoveryProtocol.ps1"))
@@ -52,11 +89,17 @@ namespace NETworkManager.Models.Network
         }
 
         #region Methods
+        /// <summary>
+        /// Captures the network packets on the passed network adapter asynchronously for a certain period of time and filters the packets according to the protocol.
+        /// </summary>
+        /// <param name="netAdapter">Network adapter as <see cref="string"/> like "Ethernet" or "WLAN".</param>
+        /// <param name="duration">Duration in seconds.</param>
+        /// <param name="protocol"><see cref="Protocol"/> to filter on.</param>
         public void CaptureAsync(string netAdapter, int duration, Protocol protocol)
         {
             Task.Run(() =>
             {
-                using (System.Management.Automation.PowerShell powerShell = System.Management.Automation.PowerShell.Create())
+                using (PowerShell powerShell = PowerShell.Create())
                 {
                     powerShell.AddScript(DiscoveryScript);
                     powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -NetAdapter \"{netAdapter}\" -Duration {duration}" + (protocol != Protocol.LLDP_CDP ? $" -Type {protocol.ToString()}" : "") + "| Get-DiscoveryProtocolData");
@@ -104,5 +147,4 @@ namespace NETworkManager.Models.Network
         }
         #endregion
     }
-
 }

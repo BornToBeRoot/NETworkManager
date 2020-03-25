@@ -30,7 +30,7 @@ namespace NETworkManager.Localization.Translators
         /// </summary>
         /// <param name="discoveryProtocol"><see cref="Protocol"/>.</param>
         /// <returns>Translated <see cref="Protocol"/>.</returns>
-        public string Translate(Protocol discoveryProtocol)
+        public string Translate(DiscoveryProtocol.Protocol discoveryProtocol)
         {
             return Translate(discoveryProtocol.ToString());
         }

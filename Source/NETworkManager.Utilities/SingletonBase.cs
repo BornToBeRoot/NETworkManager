@@ -7,12 +7,12 @@
     public abstract class SingletonBase<T> where T : class, new()
     {
         /// <summary>
-        /// Variable for the instance of the class. 
+        /// Holds the instance of the class. 
         /// </summary>
         private static T _instance;
 
         /// <summary>
-        /// Method to return the current instance of the class.
+        /// Returns the current instance of the class.
         /// </summary>
         /// <returns>Instance of the class.</returns>
         public static T GetInstance()

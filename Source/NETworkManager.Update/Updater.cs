@@ -11,26 +11,26 @@ namespace NETworkManager.Update
     {
         #region Events
         /// <summary>
-        /// 
+        /// Is triggered when update check is complete and an update is available.
         /// </summary>
         public event EventHandler<UpdateAvailableArgs> UpdateAvailable;
 
         /// <summary>
-        /// 
+        /// Triggers the <see cref="UpdateAvailable"/> event.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Passes <see cref="UpdateAvailableArgs"/> to the event.</param>
         protected virtual void OnUpdateAvailable(UpdateAvailableArgs e)
         {
             UpdateAvailable?.Invoke(this, e);
         }
 
         /// <summary>
-        /// 
+        /// Is triggered when update check is complete and no update is available.
         /// </summary>
         public event EventHandler NoUpdateAvailable;
 
         /// <summary>
-        /// 
+        /// Triggers the <see cref="NoUpdateAvailable"/> event.
         /// </summary>
         protected virtual void OnNoUpdateAvailable()
         {
@@ -38,12 +38,12 @@ namespace NETworkManager.Update
         }
 
         /// <summary>
-        /// 
+        /// Is triggered when an error occurs during the update check.
         /// </summary>
         public event EventHandler Error;
 
         /// <summary>
-        /// 
+        /// Triggers the <see cref="Error"/> event.
         /// </summary>
         protected virtual void OnError()
         {            
@@ -53,11 +53,11 @@ namespace NETworkManager.Update
 
         #region Methods
         /// <summary>
-        /// 
+        /// Checks on GitHub whether a new version of the program is available
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="projectName"></param>
-        /// <param name="currentVersion"></param>
+        /// <param name="userName">GitHub username like "BornToBeRoot".</param>
+        /// <param name="projectName">GitHub repository like "NETworkManager".</param>
+        /// <param name="currentVersion">Version like 1.2.0.0.</param>
         public void CheckOnGitHub(string userName, string projectName, Version currentVersion)
         {
             Task.Run(() =>
