@@ -7,12 +7,12 @@ using NETworkManager.Models.RemoteDesktop;
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Converter to convert <see cref="NetworkConnectionType"/> to translated <see cref="string"/> or wise versa.
+    /// Convert <see cref="NetworkConnectionType"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
     public sealed class RemoteDesktopNetworkConnectionTypeToStringConverter : IValueConverter
     {
         /// <summary>
-        /// Method to convert <see cref="NetworkConnectionType"/> to translated <see cref="string"/>. 
+        /// Convert <see cref="NetworkConnectionType"/> to translated <see cref="string"/>. 
         /// </summary>
         /// <param name="value">Object from type <see cref="NetworkConnectionType"/>.</param>
         /// <param name="targetType"></param>

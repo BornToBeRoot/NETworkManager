@@ -7,12 +7,12 @@ using NETworkManager.Models;
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Converter to convert/resolve <see cref="Application.Name"/> to icon (<see cref="Canvas"/>) or wise versa.
+    /// Convert <see cref="Application.Name"/> to icon (<see cref="Canvas"/>) or wise versa.
     /// </summary>
     public sealed class ApplicationNameToIconConverter : IValueConverter
     {
         /// <summary>
-        /// Method to convert/resolve <see cref="Application.Name"/> to icon (<see cref="Canvas"/>).
+        /// Convert <see cref="Application.Name"/> to icon (<see cref="Canvas"/>).
         /// </summary>
         /// <param name="value">Object from type <see cref="Application.Name"/>.</param>
         /// <param name="targetType"></param>

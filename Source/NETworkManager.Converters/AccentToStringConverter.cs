@@ -7,12 +7,12 @@ using System.Windows.Data;
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Converter to convert <see cref="Accent"/> to translated <see cref="string"/> or wise versa.
+    /// Convert <see cref="Accent"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
     public sealed class AccentToStringConverter : IValueConverter
     {
         /// <summary>
-        /// Method to convert <see cref="Accent"/> to translated <see cref="string"/>. 
+        /// Convert <see cref="Accent"/> to translated <see cref="string"/>. 
         /// </summary>
         /// <param name="value">Object from type <see cref="Accent"/>.</param>
         /// <param name="targetType"></param>

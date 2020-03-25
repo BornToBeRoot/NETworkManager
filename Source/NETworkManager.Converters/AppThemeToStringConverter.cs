@@ -7,12 +7,12 @@ using NETworkManager.Localization.Translators;
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Converter to convert <see cref="AppTheme"/> to translated <see cref="string"/> or wise versa.
+    /// Convert <see cref="AppTheme"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
     public sealed class AppThemeToStringConverter : IValueConverter
     {
         /// <summary>
-        /// Method to convert <see cref="AppTheme"/> to translated <see cref="string"/>. 
+        /// Convert <see cref="AppTheme"/> to translated <see cref="string"/>. 
         /// </summary>
         /// <param name="value">Object from type <see cref="AppTheme"/>.</param>
         /// <param name="targetType"></param>

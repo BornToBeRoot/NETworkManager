@@ -7,12 +7,12 @@ using NETworkManager.Utilities;
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Converter to convert <see cref="TimeUnit"/> to translated <see cref="string"/> or wise versa.
+    /// Convert <see cref="TimeUnit"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
     public sealed class AutoRefreshTimeToStringConverter : IValueConverter
     {
         /// <summary>
-        /// Method to convert <see cref="TimeUnit"/> to translated <see cref="string"/>. 
+        /// Convert <see cref="TimeUnit"/> to translated <see cref="string"/>. 
         /// </summary>
         /// <param name="value">Object from type <see cref="TimeUnit"/>.</param>
         /// <param name="targetType"></param>

@@ -26,7 +26,7 @@ namespace NETworkManager.Localization
         private static LocalizationManager _instance = null;
 
         /// <summary>
-        /// Method to return the current instance of the class.
+        /// Returns the current instance of the class.
         /// The language can be set on creation (first call), by passing a culture code (like "en-US") as parameter.
         /// Use <see cref="Change(LocalizationInfo)" /> to change it later.
         /// </summary>

@@ -7,13 +7,13 @@ using NETworkManager.Localization.Translators;
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Converter to convert <see cref="TcpState"/> to translated <see cref="string"/> or wise versa.
+    /// Convert <see cref="TcpState"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
     public sealed class TcpStateToStringConverter : IValueConverter
     {
 
         /// <summary>
-        /// Method to convert <see cref="TcpState"/> to translated <see cref="string"/>. 
+        /// Convert <see cref="TcpState"/> to translated <see cref="string"/>. 
         /// </summary>
         /// <param name="value">Object from type <see cref="TcpState"/>.</param>
         /// <param name="targetType"></param>

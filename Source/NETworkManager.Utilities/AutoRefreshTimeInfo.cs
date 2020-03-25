@@ -17,7 +17,7 @@
         public TimeUnit TimeUnit { get; set; }
 
         /// <summary>
-        /// Create an empty <see cref="AutoRefreshTimeInfo"/>.
+        /// Initializes a new instance of the <see cref="AutoRefreshTimeInfo"/> class.
         /// </summary>
         public AutoRefreshTimeInfo()
         {
@@ -25,7 +25,7 @@
         }
 
         /// <summary>
-        /// Create an <see cref="AutoRefreshTimeInfo"/> with values.
+        /// Initializes a new instance of the <see cref="AutoRefreshTimeInfo"/> class with parameters.
         /// </summary>
         /// <param name="value"><see cref="Value"/>.</param>
         /// <param name="timenUnit"><see cref="TimeUnit"/>.</param>

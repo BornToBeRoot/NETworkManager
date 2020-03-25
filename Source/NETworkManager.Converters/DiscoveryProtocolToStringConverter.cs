@@ -7,12 +7,12 @@ using NETworkManager.Models.Network;
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Converter to convert <see cref="DiscoveryProtocol.Protocol"/> to translated <see cref="string"/> or wise versa.
+    /// Convert <see cref="DiscoveryProtocol.Protocol"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
     public sealed class DiscoveryProtocolToStringConverter : IValueConverter
     {
         /// <summary>
-        /// Method to convert <see cref="DiscoveryProtocol.Protocol"/> to translated <see cref="string"/>. 
+        /// Convert <see cref="DiscoveryProtocol.Protocol"/> to translated <see cref="string"/>. 
         /// </summary>
         /// <param name="value">Object from type <see cref="DiscoveryProtocol.Protocol"/>.</param>
         /// <param name="targetType"></param>

@@ -7,12 +7,12 @@ using NETworkManager.Models.RemoteDesktop;
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Converter to convert <see cref="AudioRedirectionMode"/> to translated <see cref="string"/> or wise versa.
+    /// Convert <see cref="AudioRedirectionMode"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
     public sealed class RemoteDesktopAudioRedirectionModeToStringConverter : IValueConverter
     {
         /// <summary>
-        /// Method to convert <see cref="AudioRedirectionMode"/> to translated <see cref="string"/>. 
+        /// Convert <see cref="AudioRedirectionMode"/> to translated <see cref="string"/>. 
         /// </summary>
         /// <param name="value">Object from type <see cref="AudioRedirectionMode"/>.</param>
         /// <param name="targetType"></param>
