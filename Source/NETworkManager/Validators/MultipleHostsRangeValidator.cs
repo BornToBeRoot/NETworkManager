@@ -13,7 +13,7 @@ namespace NETworkManager.Validators
             var isValid = true;
 
             if (value == null)
-                return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidIPScanRange);
+                return new ValidationResult(false, Localization.Resources.Strings.EnterValidIPScanRange);
 
             foreach (var ipHostOrRange in ((string) value).Replace(" ", "").Split(';'))
             {
@@ -83,7 +83,7 @@ namespace NETworkManager.Validators
                 isValid = false;
             }
 
-            return isValid ? ValidationResult.ValidResult : new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidIPScanRange);
+            return isValid ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPScanRange);
         }
     }
 }

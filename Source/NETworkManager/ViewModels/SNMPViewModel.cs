@@ -476,7 +476,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -490,9 +490,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, Localization.LanguageFiles.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.SNMP_ExportFileType = instance.FileType;
@@ -546,7 +546,7 @@ namespace NETworkManager.ViewModels
             {                
                 Finished();
 
-                StatusMessage = string.Format(Localization.LanguageFiles.Strings.CouldNotResolveIPAddressFor, Host);
+                StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host);
                 DisplayStatusMessage = true;
 
                 return;
@@ -654,7 +654,7 @@ namespace NETworkManager.ViewModels
 
         private void Snmp_TimeoutReached(object sender, EventArgs e)
         {
-            StatusMessage = Localization.LanguageFiles.Strings.TimeoutOnSNMPQuery;
+            StatusMessage = Localization.Resources.Strings.TimeoutOnSNMPQuery;
             DisplayStatusMessage = true;
 
             Finished();
@@ -662,7 +662,7 @@ namespace NETworkManager.ViewModels
 
         private void Snmp_Error(object sender, EventArgs e)
         {
-            StatusMessage = Mode == SNMPMode.Set ? Localization.LanguageFiles.Strings.ErrorInResponseCheckIfYouHaveWritePermissions : Localization.LanguageFiles.Strings.ErrorInResponse;
+            StatusMessage = Mode == SNMPMode.Set ? Localization.Resources.Strings.ErrorInResponseCheckIfYouHaveWritePermissions : Localization.Resources.Strings.ErrorInResponse;
 
             DisplayStatusMessage = true;
 
@@ -671,7 +671,7 @@ namespace NETworkManager.ViewModels
 
         private void Snmp_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Localization.LanguageFiles.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
 
             Finished();
@@ -681,7 +681,7 @@ namespace NETworkManager.ViewModels
         {
             if (Mode == SNMPMode.Set)
             {
-                StatusMessage = Localization.LanguageFiles.Strings.DataHasBeenUpdated;
+                StatusMessage = Localization.Resources.Strings.DataHasBeenUpdated;
                 DisplayStatusMessage = true;
             }
 

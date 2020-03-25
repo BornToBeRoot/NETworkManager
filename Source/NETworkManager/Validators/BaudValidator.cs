@@ -11,9 +11,9 @@ namespace NETworkManager.Validators
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             if (!int.TryParse(value as string, out var baud))
-                return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidBaud);
+                return new ValidationResult(false, Localization.Resources.Strings.EnterValidBaud);
 
-            return _bauds.Contains(baud) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidBaud);
+            return _bauds.Contains(baud) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidBaud);
         }
     }
 }

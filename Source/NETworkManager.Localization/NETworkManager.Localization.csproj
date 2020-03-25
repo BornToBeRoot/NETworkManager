@@ -62,62 +62,62 @@
     <Compile Include="LocalizationInfo.cs" />
     <Compile Include="LocalizationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LanguageFiles\StaticStrings.Designer.cs">
+    <Compile Include="Resources\StaticStrings.Designer.cs">
       <DependentUpon>StaticStrings.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="LanguageFiles\Strings.Designer.cs">
+    <Compile Include="Resources\Strings.Designer.cs">
       <DependentUpon>Strings.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\de-DE.png" />
+    <Resource Include="Resources\Flags\de-DE.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\en-US.png" />
+    <Resource Include="Resources\Flags\en-US.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\es-ES.png" />
+    <Resource Include="Resources\Flags\es-ES.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\fr-FR.png" />
+    <Resource Include="Resources\Flags\fr-FR.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\it-IT.png" />
+    <Resource Include="Resources\Flags\it-IT.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\nl-NL.png" />
+    <Resource Include="Resources\Flags\nl-NL.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\pt-BR.png" />
+    <Resource Include="Resources\Flags\pt-BR.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ru-RU.png" />
+    <Resource Include="Resources\Flags\ru-RU.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\zh-CN.png" />
+    <Resource Include="Resources\Flags\zh-CN.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="LanguageFiles\StaticStrings.resx">
+    <EmbeddedResource Include="Resources\StaticStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StaticStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="LanguageFiles\Strings.de-DE.resx" />
-    <EmbeddedResource Include="LanguageFiles\Strings.es-ES.resx" />
-    <EmbeddedResource Include="LanguageFiles\Strings.fr-FR.resx" />
-    <EmbeddedResource Include="LanguageFiles\Strings.it-IT.resx" />
-    <EmbeddedResource Include="LanguageFiles\Strings.nl-NL.resx" />
-    <EmbeddedResource Include="LanguageFiles\Strings.pt-BR.resx" />
-    <EmbeddedResource Include="LanguageFiles\Strings.resx">
+    <EmbeddedResource Include="Resources\Strings.de-DE.resx" />
+    <EmbeddedResource Include="Resources\Strings.es-ES.resx" />
+    <EmbeddedResource Include="Resources\Strings.fr-FR.resx" />
+    <EmbeddedResource Include="Resources\Strings.it-IT.resx" />
+    <EmbeddedResource Include="Resources\Strings.nl-NL.resx" />
+    <EmbeddedResource Include="Resources\Strings.pt-BR.resx" />
+    <EmbeddedResource Include="Resources\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="LanguageFiles\Strings.ru-RU.resx" />
-    <EmbeddedResource Include="LanguageFiles\Strings.zh-CN.resx" />
+    <EmbeddedResource Include="Resources\Strings.ru-RU.resx" />
+    <EmbeddedResource Include="Resources\Strings.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">

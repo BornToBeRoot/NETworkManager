@@ -1237,7 +1237,6 @@
     </Compile>
     <None Include="app.config" />
     <AppDesigner Include="Properties\" />
-    <EmbeddedResource Include="Scripts\DiscoveryProtocol.ps1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />

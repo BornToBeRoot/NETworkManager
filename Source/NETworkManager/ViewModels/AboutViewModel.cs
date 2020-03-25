@@ -6,7 +6,7 @@ using System;
 using System.ComponentModel;
 using NETworkManager.Models.Documentation;
 using System.Windows.Data;
-using NETworkManager.Localization.LanguageFiles;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels

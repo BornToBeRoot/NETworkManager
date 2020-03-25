@@ -100,7 +100,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             ConfiguringAutostart = false;

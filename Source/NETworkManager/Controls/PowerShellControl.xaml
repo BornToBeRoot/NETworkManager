@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
         xmlns:windowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mah:DialogParticipation.Register="{Binding}"

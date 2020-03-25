@@ -6,7 +6,7 @@
         xmlns:mstsc ="clr-namespace:AxMSTSCLib;assembly=AxMSTSCLib"
         xmlns:converters="clr-namespace:NETworkManager.Converters"        
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:RemoteDesktopControl}">
     <UserControl.Resources>

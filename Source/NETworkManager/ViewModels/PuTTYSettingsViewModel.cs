@@ -351,9 +351,9 @@ namespace NETworkManager.ViewModels
             {
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
             }
         }
 

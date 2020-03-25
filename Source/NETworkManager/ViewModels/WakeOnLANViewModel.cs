@@ -382,7 +382,7 @@ namespace NETworkManager.ViewModels
 
                 await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the send command)
 
-                StatusMessage = Localization.LanguageFiles.Strings.MagicPacketSentMessage;
+                StatusMessage = Localization.Resources.Strings.MagicPacketSentMessage;
                 DisplayStatusMessage = true;
             }
             catch (Exception ex)

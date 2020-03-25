@@ -16,15 +16,15 @@ namespace NETworkManager.Validators
                 return ValidationResult.ValidResult;
 
             if (subnetmaskOrCidr == null || !subnetmaskOrCidr.StartsWith("/"))
-                return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidSubnetmaskOrCIDR);
+                return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmaskOrCIDR);
 
             if (!int.TryParse(subnetmaskOrCidr.TrimStart('/'), out var cidr))
-                return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidSubnetmaskOrCIDR);
+                return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmaskOrCIDR);
 
             if (cidr >= 0 && cidr < 33)
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidSubnetmaskOrCIDR);
+            return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmaskOrCIDR);
         }
     }
 }

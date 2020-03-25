@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mahAppsControls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
+             xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:FirstRunViewModel}">
     <Grid Margin="0,20">
         <Grid.RowDefinitions>

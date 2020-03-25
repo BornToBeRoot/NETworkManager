@@ -161,7 +161,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.AddProfile
+                Title = Localization.Resources.Strings.AddProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -186,7 +186,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.EditProfile
+                Title = Localization.Resources.Strings.EditProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -213,7 +213,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.CopyProfile
+                Title = Localization.Resources.Strings.CopyProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -238,7 +238,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.DeleteProfile
+                Title = Localization.Resources.Strings.DeleteProfile
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -252,7 +252,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Localization.LanguageFiles.Strings.DeleteProfileMessage);
+            }, Localization.Resources.Strings.DeleteProfileMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -266,7 +266,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.EditGroup
+                Title = Localization.Resources.Strings.EditGroup
             };
 
             var editGroupViewModel = new GroupViewModel(instance =>
@@ -295,7 +295,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.Confirm
+                Title = Localization.Resources.Strings.Confirm
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(async instance =>
@@ -306,7 +306,7 @@ namespace NETworkManager.ViewModels
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Localization.LanguageFiles.Strings.ResetProfilesMessage);
+            }, Localization.Resources.Strings.ResetProfilesMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {

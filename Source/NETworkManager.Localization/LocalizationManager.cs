@@ -18,7 +18,7 @@ namespace NETworkManager.Localization
         /// <summary>
         /// Constant with the path to the flag images.
         /// </summary>
-        private const string _baseFlagImageUri = @"pack://application:,,,/NETworkManager.Localization;component/Images/";
+        private const string _baseFlagImageUri = @"pack://application:,,,/NETworkManager.Localization;component/Resources/Flags/";
 
         /// <summary>
         /// Variable for the instance of the class.

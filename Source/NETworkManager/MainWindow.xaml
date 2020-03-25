@@ -9,7 +9,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:networkManager="clr-namespace:NETworkManager"        
         xmlns:settings="clr-namespace:NETworkManager.Models.Settings"     
         xmlns:resources="clr-namespace:NETworkManager.Properties"

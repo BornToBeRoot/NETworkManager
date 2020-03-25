@@ -1961,10 +1961,10 @@ namespace NETworkManager.ViewModels
             Name = profileInfo.Name;
 
             if (editMode == ProfileEditMode.Copy)
-                Name += " - " + Localization.LanguageFiles.Strings.CopyNoun;
+                Name += " - " + Localization.Resources.Strings.CopyNoun;
 
             Host = profileInfo.Host;
-            Group = string.IsNullOrEmpty(profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Localization.LanguageFiles.Strings.Default) : profileInfo.Group;
+            Group = string.IsNullOrEmpty(profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Localization.Resources.Strings.Default) : profileInfo.Group;
             Tags = profileInfo.Tags;
 
             Groups = CollectionViewSource.GetDefaultView(groups);

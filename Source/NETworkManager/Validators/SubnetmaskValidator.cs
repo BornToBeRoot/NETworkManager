@@ -9,7 +9,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return value != null && Regex.IsMatch((string) value, RegexHelper.SubnetmaskRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidSubnetmask);
+            return value != null && Regex.IsMatch((string) value, RegexHelper.SubnetmaskRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmask);
         }
     }
 }

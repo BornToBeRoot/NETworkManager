@@ -18,7 +18,7 @@ namespace NETworkManager.Validators
             if (subnet != null && Regex.IsMatch(subnet, RegexHelper.IPv4AddressSubnetmaskRegex))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidSubnet);
+            return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnet);
         }
     }
 }

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"             
+             xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"             
              xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"        
              xmlns:converter="clr-namespace:NETworkManager.Converters"
              mc:Ignorable="d">

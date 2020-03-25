@@ -413,7 +413,7 @@ namespace NETworkManager.ViewModels
             {                
                 TracerouteFinished();
 
-                StatusMessage = string.Format(Localization.LanguageFiles.Strings.CouldNotResolveIPAddressFor, Host);
+                StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host);
                 DisplayStatusMessage = true;
 
                 return;
@@ -474,7 +474,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -488,9 +488,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, Localization.LanguageFiles.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
@@ -543,7 +543,7 @@ namespace NETworkManager.ViewModels
         {
             TracerouteFinished();
 
-            StatusMessage = string.Format(Localization.LanguageFiles.Strings.MaximumNumberOfHopsReached, e.Hops);
+            StatusMessage = string.Format(Localization.Resources.Strings.MaximumNumberOfHopsReached, e.Hops);
             DisplayStatusMessage = true;
         }
 
@@ -551,7 +551,7 @@ namespace NETworkManager.ViewModels
         {
             UserHasCanceled();
 
-            StatusMessage = Localization.LanguageFiles.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
         }
 

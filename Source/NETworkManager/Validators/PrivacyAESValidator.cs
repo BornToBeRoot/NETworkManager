@@ -7,7 +7,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return value != null && ((string) value).Length < 8 ? new ValidationResult(false, Localization.LanguageFiles.Strings.KeyMustHave8CharactersOrMore) : ValidationResult.ValidResult;
+            return value != null && ((string) value).Length < 8 ? new ValidationResult(false, Localization.Resources.Strings.KeyMustHave8CharactersOrMore) : ValidationResult.ValidResult;
         }
     }
 }

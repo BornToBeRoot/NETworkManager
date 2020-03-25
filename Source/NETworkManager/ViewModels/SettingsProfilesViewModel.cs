@@ -135,12 +135,12 @@ namespace NETworkManager.ViewModels
             {
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.Overwrite;
-                settings.NegativeButtonText = Localization.LanguageFiles.Strings.Cancel;
-                settings.FirstAuxiliaryButtonText = Localization.LanguageFiles.Strings.UseOther;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.Overwrite;
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+                settings.FirstAuxiliaryButtonText = Localization.Resources.Strings.UseOther;
                 settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
 
-                var result = await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Overwrite, Localization.LanguageFiles.Strings.OverwriteSettingsInTheDestinationFolder, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
+                var result = await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Overwrite, Localization.Resources.Strings.OverwriteSettingsInTheDestinationFolder, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
 
                 switch (result)
                 {
@@ -166,9 +166,9 @@ namespace NETworkManager.ViewModels
                 {
                     var settings = AppearanceManager.MetroDialog;
 
-                    settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
             }
 
@@ -193,7 +193,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.AddProfileFile
+                Title = Localization.Resources.Strings.AddProfileFile
             };
 
             var profileFileViewModel = new ProfileFileViewModel(async instance =>
@@ -220,7 +220,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.EditProfileFile
+                Title = Localization.Resources.Strings.EditProfileFile
             };
 
             var profileFileViewModel = new ProfileFileViewModel(async instance =>
@@ -252,7 +252,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.Confirm
+                Title = Localization.Resources.Strings.Confirm
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(async instance =>
@@ -263,7 +263,7 @@ namespace NETworkManager.ViewModels
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Localization.LanguageFiles.Strings.DeleteProfileFile);
+            }, Localization.Resources.Strings.DeleteProfileFile);
 
             customDialog.Content = new ConfirmRemoveDialog
             {

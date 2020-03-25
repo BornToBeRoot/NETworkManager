@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:converters="clr-namespace:NETworkManager.Converters"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         mc:Ignorable="d"

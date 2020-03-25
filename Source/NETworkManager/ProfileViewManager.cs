@@ -34,37 +34,37 @@ namespace NETworkManager
             switch (name)
             {
                 case Name.General:
-                    return Localization.LanguageFiles.Strings.General;
+                    return Localization.Resources.Strings.General;
                 case Name.NetworkInterface:
-                    return Localization.LanguageFiles.Strings.NetworkInterface;
+                    return Localization.Resources.Strings.NetworkInterface;
                 case Name.IPScanner:
-                    return Localization.LanguageFiles.Strings.IPScanner;
+                    return Localization.Resources.Strings.IPScanner;
                 case Name.PortScanner:
-                    return Localization.LanguageFiles.Strings.PortScanner;
+                    return Localization.Resources.Strings.PortScanner;
                 case Name.Ping:
-                    return Localization.LanguageFiles.Strings.Ping;
+                    return Localization.Resources.Strings.Ping;
                 case Name.PingMonitor:
-                    return Localization.LanguageFiles.Strings.PingMonitor;
+                    return Localization.Resources.Strings.PingMonitor;
                 case Name.Traceroute:
-                    return Localization.LanguageFiles.Strings.Traceroute;
+                    return Localization.Resources.Strings.Traceroute;
                 case Name.DNSLookup:
-                    return Localization.LanguageFiles.Strings.DNSLookup;
+                    return Localization.Resources.Strings.DNSLookup;
                 case Name.RemoteDesktop:
-                    return Localization.LanguageFiles.Strings.RemoteDesktop;
+                    return Localization.Resources.Strings.RemoteDesktop;
                 case Name.PowerShell:
-                    return Localization.LanguageFiles.Strings.PowerShell;
+                    return Localization.Resources.Strings.PowerShell;
                 case Name.PuTTY:
-                    return Localization.LanguageFiles.Strings.PuTTY;
+                    return Localization.Resources.Strings.PuTTY;
                 case Name.TigerVNC:
-                    return Localization.LanguageFiles.Strings.TigerVNC;
+                    return Localization.Resources.Strings.TigerVNC;
                 case Name.WebConsole:
-                    return Localization.LanguageFiles.Strings.WebConsole;
+                    return Localization.Resources.Strings.WebConsole;
                 case Name.WakeOnLAN:
-                    return Localization.LanguageFiles.Strings.WakeOnLAN;
+                    return Localization.Resources.Strings.WakeOnLAN;
                 case Name.HTTPHeaders:
-                    return Localization.LanguageFiles.Strings.HTTPHeaders;
+                    return Localization.Resources.Strings.HTTPHeaders;
                 case Name.Whois:
-                    return Localization.LanguageFiles.Strings.Whois;
+                    return Localization.Resources.Strings.Whois;
                 default:
                     return "Translation of name not found";
             }

@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Windows.Input;
 using NETworkManager.Models.Export;
-using NETworkManager.Localization.LanguageFiles;
+using NETworkManager.Localization.Resources;
 
 namespace NETworkManager.ViewModels
 {

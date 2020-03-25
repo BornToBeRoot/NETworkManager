@@ -196,7 +196,7 @@ namespace NETworkManager.Controls
                 {
                     ConfigurationManager.Current.FixAirspace = true;
                    
-                    await this.ShowMessageAsync(NETworkManager.Localization.LanguageFiles.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", NETworkManager.Localization.LanguageFiles.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
+                    await this.ShowMessageAsync(NETworkManager.Localization.Resources.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", NETworkManager.Localization.Resources.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
 
                     ConfigurationManager.Current.FixAirspace = false;
                 }

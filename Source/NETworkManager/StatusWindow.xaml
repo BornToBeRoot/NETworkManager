@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"                             
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"                             
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:resources="clr-namespace:NETworkManager.Properties"

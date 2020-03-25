@@ -11,7 +11,7 @@ namespace NETworkManager.Validators
             if (string.IsNullOrEmpty(value as string) || !((string) value).Any(char.IsWhiteSpace))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Localization.LanguageFiles.Strings.SpacesAreNotAllowed);
+            return new ValidationResult(false, Localization.Resources.Strings.SpacesAreNotAllowed);
         }
     }
 }

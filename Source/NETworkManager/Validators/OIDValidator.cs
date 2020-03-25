@@ -16,7 +16,7 @@ namespace NETworkManager.Validators
             }
             catch (System.ArgumentException)
             {
-                return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidOID);
+                return new ValidationResult(false, Localization.Resources.Strings.EnterValidOID);
             }
 
             return ValidationResult.ValidResult;

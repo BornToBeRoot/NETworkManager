@@ -11,7 +11,7 @@
         xmlns:mahappsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:controls="clr-namespace:NETworkManager.Controls"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"

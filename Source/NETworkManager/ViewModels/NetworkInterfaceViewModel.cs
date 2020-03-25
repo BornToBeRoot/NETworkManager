@@ -644,7 +644,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -767,7 +767,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.AddIPv4Address
+                Title = Localization.Resources.Strings.AddIPv4Address
             };
 
             var networkInterfaceAddIPAddressViewModel = new NetworkInterfaceAddIPAddressViewModel(async instance =>
@@ -1140,7 +1140,7 @@ namespace NETworkManager.ViewModels
 
         private void NetworkInterface_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Localization.LanguageFiles.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
         }
 

@@ -10,7 +10,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return value != null && Regex.IsMatch((string) value, RegexHelper.IPv4AddressRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.LanguageFiles.Strings.EnterValidIPv4Address);
+            return value != null && Regex.IsMatch((string) value, RegexHelper.IPv4AddressRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPv4Address);
         }
     }
 }

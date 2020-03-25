@@ -537,7 +537,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -551,9 +551,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, Localization.LanguageFiles.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.PortScanner_ExportFileType = instance.FileType;
@@ -615,7 +615,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Localization.LanguageFiles.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
 
             ScanFinished();
@@ -628,7 +628,7 @@ namespace NETworkManager.ViewModels
 
         private void DnsResolveFailed(AggregateException e)
         {
-            StatusMessage = $"{Localization.LanguageFiles.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
+            StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
             DisplayStatusMessage = true;
 
             ScanFinished();

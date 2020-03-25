@@ -360,7 +360,7 @@ namespace NETworkManager.ViewModels
             }
             else
             {
-                StatusMessage = string.Format(Localization.LanguageFiles.Strings.CouldNotResolveIPAddressFor, host);
+                StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, host);
                 DisplayStatusMessage = true;
             }
 

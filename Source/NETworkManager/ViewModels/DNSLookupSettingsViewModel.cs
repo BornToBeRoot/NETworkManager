@@ -293,7 +293,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.AddDNSServer
+                Title = Localization.Resources.Strings.AddDNSServer
             };
 
             var dnsServerViewModel = new DNSServerViewModel(instance =>
@@ -318,7 +318,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.EditDNSServer
+                Title = Localization.Resources.Strings.EditDNSServer
             };
 
             var dnsServerViewModel = new DNSServerViewModel(instance =>
@@ -344,7 +344,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {                
-                Title = Localization.LanguageFiles.Strings.DeleteDNSServer
+                Title = Localization.Resources.Strings.DeleteDNSServer
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -355,7 +355,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Localization.LanguageFiles.Strings.DeleteDNSServerMessage);
+            }, Localization.Resources.Strings.DeleteDNSServerMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {

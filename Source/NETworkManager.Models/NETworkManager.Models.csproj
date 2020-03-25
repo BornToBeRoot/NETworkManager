@@ -62,7 +62,9 @@
     <Compile Include="RemoteDesktop\Keystroke.cs" />
     <Compile Include="RemoteDesktop\NetworkConnectionType.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DiscoveryProtocol.ps1" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ControlzEx">
       <Version>3.0.2.4</Version>

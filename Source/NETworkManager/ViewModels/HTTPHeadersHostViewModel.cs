@@ -149,7 +149,7 @@ namespace NETworkManager.ViewModels
 
             TabItems = new ObservableCollection<DragablzTabItem>
             {
-                new DragablzTabItem(Localization.LanguageFiles.Strings.NewTab, new HTTPHeadersView (_tabId), _tabId)
+                new DragablzTabItem(Localization.Resources.Strings.NewTab, new HTTPHeadersView (_tabId), _tabId)
             };
 
             Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
@@ -316,7 +316,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(website ?? Localization.LanguageFiles.Strings.NewTab, new HTTPHeadersView(_tabId, website), _tabId));
+            TabItems.Add(new DragablzTabItem(website ?? Localization.Resources.Strings.NewTab, new HTTPHeadersView(_tabId, website), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

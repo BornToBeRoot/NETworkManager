@@ -71,7 +71,7 @@ namespace NETworkManager
             }
 
             // Init the location with the culture code...
-            Localization.LanguageFiles.Strings.Culture = LocalizationManager.GetInstance(SettingsManager.Current.Localization_CultureCode).Culture;
+            Localization.Resources.Strings.Culture = LocalizationManager.GetInstance(SettingsManager.Current.Localization_CultureCode).Culture;
 
             if (CommandLineManager.Current.Help)
             {

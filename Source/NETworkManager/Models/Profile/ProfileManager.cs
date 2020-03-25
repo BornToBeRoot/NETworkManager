@@ -544,7 +544,7 @@ namespace NETworkManager.Models.Profile
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.AddProfile
+                Title = Localization.Resources.Strings.AddProfile
             };
 
             var profileViewModel = new ProfileViewModel(async instance =>
@@ -572,7 +572,7 @@ namespace NETworkManager.Models.Profile
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.EditProfile
+                Title = Localization.Resources.Strings.EditProfile
             };
 
             var profileViewModel = new ProfileViewModel(async instance =>
@@ -602,7 +602,7 @@ namespace NETworkManager.Models.Profile
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.CopyProfile
+                Title = Localization.Resources.Strings.CopyProfile
             };
 
             var profileViewModel = new ProfileViewModel(async instance =>
@@ -630,7 +630,7 @@ namespace NETworkManager.Models.Profile
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.DeleteProfile
+                Title = Localization.Resources.Strings.DeleteProfile
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(async instance =>
@@ -643,7 +643,7 @@ namespace NETworkManager.Models.Profile
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, Localization.LanguageFiles.Strings.DeleteProfileMessage);
+            }, Localization.Resources.Strings.DeleteProfileMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -658,7 +658,7 @@ namespace NETworkManager.Models.Profile
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.EditGroup
+                Title = Localization.Resources.Strings.EditGroup
             };
 
             var editGroupViewModel = new GroupViewModel(async instance =>

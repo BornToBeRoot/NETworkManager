@@ -327,11 +327,11 @@ namespace NETworkManager
             if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
                 ConfigurationManager.Current.FixAirspace = true;
 
-                await this.ShowMessageAsync(Localization.LanguageFiles.Strings.SettingsHaveBeenReset, Localization.LanguageFiles.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, MessageDialogStyle.Affirmative, settings);
+                await this.ShowMessageAsync(Localization.Resources.Strings.SettingsHaveBeenReset, Localization.Resources.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
             }
@@ -341,7 +341,7 @@ namespace NETworkManager
                 // Show first run dialog...
                 var customDialog = new CustomDialog
                 {
-                    Title = Localization.LanguageFiles.Strings.Welcome
+                    Title = Localization.Resources.Strings.Welcome
                 };
 
                 var arpTableAddEntryViewModel = new FirstRunViewModel(async instance =>
@@ -493,14 +493,14 @@ namespace NETworkManager
 
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.Close;
-                settings.NegativeButtonText = Localization.LanguageFiles.Strings.Cancel;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.Close;
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 // Fix airspace issues
                 ConfigurationManager.Current.FixAirspace = true;
 
-                var result = await this.ShowMessageAsync(Localization.LanguageFiles.Strings.Confirm, Localization.LanguageFiles.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
+                var result = await this.ShowMessageAsync(Localization.Resources.Strings.Confirm, Localization.Resources.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
 
@@ -985,13 +985,13 @@ namespace NETworkManager
 
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.RestartNow;
-                settings.NegativeButtonText = Localization.LanguageFiles.Strings.OK;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.RestartNow;
+                settings.NegativeButtonText = Localization.Resources.Strings.OK;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 ConfigurationManager.Current.FixAirspace = true;
 
-                if (await this.ShowMessageAsync(Localization.LanguageFiles.Strings.RestartRequired, Localization.LanguageFiles.Strings.RestartRequiredSettingsChangedMessage, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
+                if (await this.ShowMessageAsync(Localization.Resources.Strings.RestartRequired, Localization.Resources.Strings.RestartRequiredSettingsChangedMessage, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
                 {
                     RestartApplication();
                     return;
@@ -1064,7 +1064,7 @@ namespace NETworkManager
 
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
-            UpdateText = string.Format(Localization.LanguageFiles.Strings.VersionxxIsAvailable, e.Version);
+            UpdateText = string.Format(Localization.Resources.Strings.VersionxxIsAvailable, e.Version);
             IsUpdateAvailable = true;
         }
         #endregion

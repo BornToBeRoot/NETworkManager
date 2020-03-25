@@ -10,7 +10,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return SettingsManager.Current.DNSLookup_DNSServers.Any(x => string.Equals(x.Name, value as string, StringComparison.OrdinalIgnoreCase)) ? new ValidationResult(false, Localization.LanguageFiles.Strings.DNSServerWithThisNameAlreadyExists) : ValidationResult.ValidResult;
+            return SettingsManager.Current.DNSLookup_DNSServers.Any(x => string.Equals(x.Name, value as string, StringComparison.OrdinalIgnoreCase)) ? new ValidationResult(false, Localization.Resources.Strings.DNSServerWithThisNameAlreadyExists) : ValidationResult.ValidResult;
         }
     }
 }

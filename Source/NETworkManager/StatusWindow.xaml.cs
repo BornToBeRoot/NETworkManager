@@ -220,7 +220,7 @@ namespace NETworkManager
         {
             // Reset text
             CountdownValue = SettingsManager.Current.Status_WindowCloseTime;
-            string.Format(NETworkManager.Localization.LanguageFiles.Strings.ClosingInXSecondsDots, CountdownValue);
+            string.Format(NETworkManager.Localization.Resources.Strings.ClosingInXSecondsDots, CountdownValue);
 
             IsCountdownRunning = true;
 
@@ -272,7 +272,7 @@ namespace NETworkManager
         {
             CountdownValue--;
 
-            CountdownText = string.Format(NETworkManager.Localization.LanguageFiles.Strings.ClosingInXSecondsDots, CountdownValue);
+            CountdownText = string.Format(NETworkManager.Localization.Resources.Strings.ClosingInXSecondsDots, CountdownValue);
 
             if (CountdownValue > 0)
                 return;

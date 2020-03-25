@@ -246,7 +246,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -260,9 +260,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, Localization.LanguageFiles.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType = instance.FileType;
@@ -296,12 +296,12 @@ namespace NETworkManager.ViewModels
             {
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.Continue;
-                settings.NegativeButtonText = Localization.LanguageFiles.Strings.Cancel;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.Continue;
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
 
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                if (await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.AreYouSure, Localization.LanguageFiles.Strings.TheProcessCanTakeUpSomeTimeAndResources, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+                if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure, Localization.Resources.Strings.TheProcessCanTakeUpSomeTimeAndResources, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 {
                     IsCalculationRunning = false;
 

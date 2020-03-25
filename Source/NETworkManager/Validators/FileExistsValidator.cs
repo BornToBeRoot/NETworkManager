@@ -8,7 +8,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return File.Exists((string)value) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.LanguageFiles.Strings.FileDoesNotExist);
+            return File.Exists((string)value) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.FileDoesNotExist);
         }
     }
 }

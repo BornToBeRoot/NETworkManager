@@ -17,7 +17,7 @@ namespace NETworkManager.Validators
                 var ipAddress = ((string)value).Split(';')[index];
 
                 if (!Regex.IsMatch(ipAddress.Trim(), RegexHelper.IPv4AddressRegex) && !Regex.IsMatch(ipAddress.Trim(), RegexHelper.IPv6AddressRegex))
-                    return new ValidationResult(false, Localization.LanguageFiles.Strings.EnterOneOrMoreValidIPAddresses);
+                    return new ValidationResult(false, Localization.Resources.Strings.EnterOneOrMoreValidIPAddresses);
             }
 
             return ValidationResult.ValidResult;

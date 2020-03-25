@@ -19,7 +19,7 @@ namespace NETworkManager.Localization.Translators
         /// <returns>Translated <see cref="TimeUnit"/>.</returns>
         public string Translate(string value)
         {
-            var translation = LanguageFiles.Strings.ResourceManager.GetString(_identifier + value, LocalizationManager.GetInstance().Culture);
+            var translation = Resources.Strings.ResourceManager.GetString(_identifier + value, LocalizationManager.GetInstance().Culture);
 
             return string.IsNullOrEmpty(translation) ? value : translation;
         }

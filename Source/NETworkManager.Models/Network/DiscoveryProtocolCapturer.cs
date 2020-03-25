@@ -10,7 +10,7 @@ namespace NETworkManager.Models.Network
 {
     public partial class DiscoveryProtocolCapturer
     {
-        private string DiscoveryScript = string.Empty;
+        private readonly string DiscoveryScript = string.Empty;
 
         public event EventHandler<DiscoveryProtocolPackageArgs> PackageReceived;
 

@@ -8,7 +8,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"                  
              xmlns:test="clr-namespace:NETworkManager.Localization;assembly=NETworkManager.Localization"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsLanguageViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityHiddenConverter x:Key="BooleanReverseToVisibilityHiddenConverter" />

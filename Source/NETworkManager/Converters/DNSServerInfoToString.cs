@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using NETworkManager.Models.Network;
-using NETworkManager.Localization.LanguageFiles;
+using NETworkManager.Localization.Resources;
 
 namespace NETworkManager.Converters
 {

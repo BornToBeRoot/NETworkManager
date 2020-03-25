@@ -6,7 +6,7 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:validators="clr-namespace:NETworkManager.Validators"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization"
+             xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:GroupViewModel}">
     <Grid Margin="0,20">
         <Grid.RowDefinitions>

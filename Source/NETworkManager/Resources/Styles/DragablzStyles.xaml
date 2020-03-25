@@ -3,7 +3,7 @@
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
                     xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
-                    xmlns:localization="clr-namespace:NETworkManager.Localization.LanguageFiles;assembly=NETworkManager.Localization">
+                    xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization">
     <Style TargetType="{x:Type Thumb}" x:Key="InvisibleThumbStyle">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">

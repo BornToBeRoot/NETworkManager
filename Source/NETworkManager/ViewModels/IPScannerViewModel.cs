@@ -412,7 +412,7 @@ namespace NETworkManager.ViewModels
 
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.AddProfile
+                Title = Localization.Resources.Strings.AddProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -658,11 +658,11 @@ namespace NETworkManager.ViewModels
                 }
 
                 if (!subnetmaskDetected)
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, Localization.LanguageFiles.Strings.CouldNotDetectSubnetmask, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.CouldNotDetectSubnetmask, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
             else
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, Localization.LanguageFiles.Strings.CouldNotDetectLocalIPAddressMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.CouldNotDetectLocalIPAddressMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             IsIPRangeDetectionRunning = false;
@@ -696,7 +696,7 @@ namespace NETworkManager.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.ResourceManager.GetString("Error", LocalizationManager.GetInstance().Culture), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.ResourceManager.GetString("Error", LocalizationManager.GetInstance().Culture), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                 }
             }
         }
@@ -718,7 +718,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.LanguageFiles.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -732,9 +732,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.LanguageFiles.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.LanguageFiles.Strings.Error, Localization.LanguageFiles.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
@@ -784,7 +784,7 @@ namespace NETworkManager.ViewModels
 
         private void DnsResolveFailed(AggregateException e)
         {
-            StatusMessage = $"{Localization.LanguageFiles.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
+            StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
             DisplayStatusMessage = true;
 
             ScanFinished();
@@ -792,7 +792,7 @@ namespace NETworkManager.ViewModels
 
         private void UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Localization.LanguageFiles.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
 
             ScanFinished();
