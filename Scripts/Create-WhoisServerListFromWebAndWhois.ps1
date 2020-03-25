@@ -1,5 +1,5 @@
 # Filepath in the resources
-[string]$OutFilePath = Join-Path -Path (Split-Path $PSScriptRoot -Parent) -ChildPath "Source\NETworkManager\Resources\WhoisServers.xml"
+[string]$OutFilePath = Join-Path -Path (Split-Path $PSScriptRoot -Parent) -ChildPath "Source\NETworkManager.Models\Resources\WhoisServers.xml"
 
 $IANA_TLDs = (Invoke-WebRequest -Uri "https://data.iana.org/TLD/tlds-alpha-by-domain.txt").Content -split "[`r|`n]"
 
