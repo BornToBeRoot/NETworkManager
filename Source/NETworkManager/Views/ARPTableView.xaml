@@ -12,7 +12,7 @@
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:utilities="clr-namespace:NETworkManager.Utilities"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:controls="clr-namespace:NETworkManager.Controls"
+        xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
         dialogs:DialogParticipation.Register="{Binding}" d:DataContext="{d:DesignInstance viewModels:ARPTableViewModel}"
         mc:Ignorable="d">
     <UserControl.InputBindings>

@@ -12,7 +12,7 @@
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        xmlns:controls="clr-namespace:NETworkManager.Controls"
+        xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DNSLookupViewModel}">

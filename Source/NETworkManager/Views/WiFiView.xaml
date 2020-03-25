@@ -263,10 +263,10 @@
                                                         <RowDefinition Height="5" />
                                                         <RowDefinition Height="Auto" />
                                                     </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=SSID}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
-                                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Path=AuthenticationType, Converter={StaticResource NetworkAuthenticationTypeToHumanReadableStringConverter}}" Style="{StaticResource DefaultTextBlock}" />
+                                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=(network:WiFiNetworkInfo.SSID)}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
+                                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Path=(network:WiFiNetworkInfo.AuthenticationType), Converter={StaticResource NetworkAuthenticationTypeToHumanReadableStringConverter}}" Style="{StaticResource DefaultTextBlock}" />
                                                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding Path=., Converter={StaticResource WiFiChannelAndDBMConverter}}" Style="{StaticResource DefaultTextBlock}" />
-                                                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding Path=BSSID}" Style="{StaticResource DefaultTextBlock}" />
+                                                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding Path=(network:WiFiNetworkInfo.BSSID)}" Style="{StaticResource DefaultTextBlock}" />
                                                 </Grid>
                                                 <ToggleButton Grid.Column="4" Grid.Row="0" IsChecked="{Binding Path=(network:WiFiNetworkInfo.ExpandDetails)}" Style="{StaticResource CleanToggleButton}">
                                                     <Rectangle Width="16" Height="16">

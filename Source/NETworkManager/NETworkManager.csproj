@@ -133,7 +133,6 @@
     <Compile Include="Controls\LvlChartsWiFiChannelTooltip.xaml.cs">
       <DependentUpon>LvlChartsWiFiChannelTooltip.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ObservableSetCollection.cs" />
     <Compile Include="Controls\PowerShellControl.xaml.cs">
       <DependentUpon>PowerShellControl.xaml</DependentUpon>
     </Compile>
@@ -995,8 +994,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\MultiSelectDataGrid.cs" />
-    <Compile Include="Controls\MultiSelectScrollingDataGrid.cs" />
     <Compile Include="Models\Network\ARP.cs" />
     <Compile Include="Utilities\HostRangeHelper.cs" />
     <Compile Include="Models\Network\PortInfo.cs" />
@@ -1260,6 +1257,10 @@
     <Folder Include="Models\Update\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj">
+      <Project>{95ea884c-e498-4a47-a316-dc890bf7f0d2}</Project>
+      <Name>NETworkManager.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NETworkManager.Converters\NETworkManager.Converters.csproj">
       <Project>{bd4ddc21-7b64-41b2-bac7-8173e0fe84be}</Project>
       <Name>NETworkManager.Converters</Name>
