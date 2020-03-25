@@ -53,6 +53,7 @@
     <Compile Include="CustomCommand.cs" />
     <Compile Include="CustomCommandInfo.cs" />
     <Compile Include="DnsLookupHelper.cs" />
+    <Compile Include="FileCryptoManager.cs" />
     <Compile Include="FileSizeConverter.cs" />
     <Compile Include="HotKeys.cs" />
     <Compile Include="IPv4AddressConverter.cs" />

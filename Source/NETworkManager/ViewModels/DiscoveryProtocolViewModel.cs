@@ -12,7 +12,7 @@ using System.Diagnostics;
 using NETworkManager.Utilities;
 using System.Windows;
 using MahApps.Metro.Controls;
-using static NETworkManager.Models.Network.DiscoveryProtocolCapturer;
+using static NETworkManager.Models.Network.DiscoveryProtocol;
 using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels
@@ -22,7 +22,7 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private Models.Network.DiscoveryProtocolCapturer _discoveryProtocol = new Models.Network.DiscoveryProtocolCapturer();
+        private Models.Network.DiscoveryProtocol _discoveryProtocol = new Models.Network.DiscoveryProtocol();
         private readonly bool _isLoading;
         System.Timers.Timer _remainingTimer;
         private int _secondsRemaining;
@@ -91,8 +91,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private List<DiscoveryProtocol> _protocols = new List<DiscoveryProtocol>();
-        public List<DiscoveryProtocol> Protocols
+        private List<Protocol> _protocols = new List<Protocol>();
+        public List<Protocol> Protocols
         {
             get => _protocols;
             set
@@ -105,8 +105,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private DiscoveryProtocol _selectedProtocol;
-        public DiscoveryProtocol SelectedProtocol
+        private Protocol _selectedProtocol;
+        public Protocol SelectedProtocol
         {
             get => _selectedProtocol;
             set
@@ -303,7 +303,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            Protocols = System.Enum.GetValues(typeof(DiscoveryProtocol)).Cast<DiscoveryProtocol>().OrderBy(x => x.ToString()).ToList();
+            Protocols = System.Enum.GetValues(typeof(Protocol)).Cast<Protocol>().OrderBy(x => x.ToString()).ToList();
             SelectedProtocol = Protocols.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Protocol);
             Durations = new List<int>() { 15, 30, 60, 90, 120 };
             SelectedDuration = Durations.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Duration);

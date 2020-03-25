@@ -2,14 +2,14 @@
 {
     public class DiscoveryProtocolPackageInfo
     {
-        public string Device { get; set; }
-        public string Port { get; set; }
-        public string Description { get; set; }
-        public string Model { get; set; }
-        public string VLAN { get; set; }
-        public string IPAddress { get; set; }
-        public string Protocol { get; set; }
-        public string Time { get; set; }
+        public string Device { get; private set; }
+        public string Port { get; private set; }
+        public string Description { get; private set; }
+        public string Model { get; private set; }
+        public string VLAN { get; private set; }
+        public string IPAddress { get; private set; }
+        public string Protocol { get; private set; }
+        public string Time { get; private set; }
 
         public DiscoveryProtocolPackageInfo()
         {

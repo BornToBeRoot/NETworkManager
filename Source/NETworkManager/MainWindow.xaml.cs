@@ -18,7 +18,6 @@ using NETworkManager.Utilities;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Controls;
-using NETworkManager.Models.Update;
 using NETworkManager.Models.Documentation;
 using NETworkManager.ViewModels;
 using NETworkManager.Models.EventSystem;
@@ -27,6 +26,7 @@ using NETworkManager.Models.Profile;
 using NETworkManager.Localization;
 using NETworkManager.Models;
 using NETworkManager.Localization.Translators;
+using NETworkManager.Update;
 
 namespace NETworkManager
 {
@@ -1054,7 +1054,7 @@ namespace NETworkManager
 
             updater.UpdateAvailable += Updater_UpdateAvailable;
             updater.Error += Updater_Error;
-            updater.Check();
+            updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version);
         }
 
         private static void Updater_Error(object sender, EventArgs e)

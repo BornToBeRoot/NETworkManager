@@ -1,8 +1,7 @@
 ﻿namespace NETworkManager.Models.Network
 {
-
     /// <summary>
-    /// Enum indicates the state of a port.
+    /// Represents the state of a port.
     /// </summary>
     public enum PortState
     {

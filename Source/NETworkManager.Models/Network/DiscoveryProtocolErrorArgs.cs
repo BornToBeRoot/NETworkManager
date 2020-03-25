@@ -2,7 +2,7 @@
 {
     public class DiscoveryProtocolErrorArgs : System.EventArgs
     {
-        public string Message { get; set; }
+        public string Message { get; private set; }
         
 
         public DiscoveryProtocolErrorArgs()

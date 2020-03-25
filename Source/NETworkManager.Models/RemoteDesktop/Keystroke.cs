@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models.RemoteDesktop
 {
     /// <summary>
-    /// Enum represents all possible keystrokes which can be send into the remote session.
+    /// Represents keystrokes which can be send into the remote session.
     /// </summary>
     public enum Keystroke
     {

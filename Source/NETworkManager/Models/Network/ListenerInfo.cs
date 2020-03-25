@@ -6,7 +6,7 @@ namespace NETworkManager.Models.Network
 {
     public class ListenerInfo
     {
-        public Protocol Protocol { get; set; }
+        public Listener.Protocol Protocol { get; set; }
         public IPAddress IPAddress { get; set; }
         public int Port { get; set; }
 
@@ -17,7 +17,7 @@ namespace NETworkManager.Models.Network
 
         }
 
-        public ListenerInfo(Protocol protocol, IPAddress ipddress, int port)
+        public ListenerInfo(Listener.Protocol protocol, IPAddress ipddress, int port)
         {
             Protocol = protocol;
             IPAddress = ipddress;

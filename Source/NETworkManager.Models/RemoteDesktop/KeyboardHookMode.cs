@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models.RemoteDesktop
 {
     /// <summary>
-    /// Enum indicates the keyboard redirection settings, which specify how and when to apply Windows keyboard shortcut (for example, ALT+TAB).
+    /// Represents the keyboard redirection settings, which specify how and when to apply Windows keyboard shortcut (for example, ALT+TAB).
     /// See also: https://docs.microsoft.com/en-us/windows/win32/termserv/imsrdpclientsecuredsettings-keyboardhookmode
     /// </summary>
     public enum KeyboardHookMode

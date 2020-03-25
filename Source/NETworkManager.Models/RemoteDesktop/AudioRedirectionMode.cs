@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models.RemoteDesktop
 {
     /// <summary>
-    /// Enum indicates the audio redirection mode and different audio redirection options.
+    /// Represents the audio redirection mode and different audio redirection options.
     /// See also: https://docs.microsoft.com/en-us/windows/win32/termserv/imsrdpclientadvancedsettings5-audioredirectionmode
     /// </summary>
     public enum AudioRedirectionMode

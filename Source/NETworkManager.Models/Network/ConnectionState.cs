@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models.Network
-{ 
+{
     /// <summary>
-    /// Enum indicates the state of a connection.
+    /// Represents the state of a connection.
     /// </summary>
     public enum ConnectionState
     {

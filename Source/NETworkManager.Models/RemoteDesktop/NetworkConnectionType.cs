@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models.RemoteDesktop
 {
     /// <summary>
-    /// Enum indicates the network connection used between the client and server. 
+    /// Represents the network connection used between the client and server. 
     /// The network connection type information passed on to the server helps the server tune several parameters based on the network connection type.
     /// See also: https://docs.microsoft.com/en-us/windows/desktop/termserv/imsrdpclientadvancedsettings7-networkconnectiontype 
     /// </summary>

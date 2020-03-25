@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models.RemoteDesktop
 {
     /// <summary>
-    /// Enum indicates whether the default audio input is redirected from the client to the remote session.
+    /// Represents whether the default audio input is redirected from the client to the remote session.
     /// See also: https://docs.microsoft.com/en-us/windows/win32/termserv/imsrdpclientadvancedsettings7-audiocaptureredirectionmode
     /// </summary>
     public enum AudioCaptureRedirectionMode

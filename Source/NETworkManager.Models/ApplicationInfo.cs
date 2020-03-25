@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models
 {
     /// <summary>
-    /// Class to store informations about an application.
+    /// Stores informations about an application.
     /// </summary>
     public class ApplicationInfo
     {

@@ -225,7 +225,6 @@
     <Compile Include="Models\EventSystem\EventSystemRedirectProfileApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystemRedirectDataApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystem.cs" />
-    <Compile Include="Models\Cryptographie\FileCryptoManager.cs" />
     <Compile Include="Models\Documentation\LibraryManager.cs" />
     <Compile Include="Models\Documentation\LibraryInfo.cs" />
     <Compile Include="Models\Documentation\DocumentationInfo.cs" />
@@ -238,8 +237,6 @@
     <Compile Include="Models\Network\SNMP.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktop.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
-    <Compile Include="Models\Update\UpdateAvailableArgs.cs" />
-    <Compile Include="Models\Update\Updater.cs" />
     <Compile Include="Validators\ProfileFileUniqueValidator.cs" />
     <Compile Include="Validators\FilePathValidator.cs" />
     <Compile Include="Validators\DomainValidator.cs" />
@@ -1321,12 +1318,10 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
-    <PackageReference Include="Octokit">
-      <Version>0.45.0</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Notification\" />
+    <Folder Include="Models\Update\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NETworkManager.Converters\NETworkManager.Converters.csproj">
@@ -1340,6 +1335,10 @@
     <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
       <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
       <Name>NETworkManager.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Update\NETworkManager.Update.csproj">
+      <Project>{008467af-d83f-4b1e-8733-b65136f595f2}</Project>
+      <Name>NETworkManager.Update</Name>
     </ProjectReference>
     <ProjectReference Include="..\NETworkManager.Utilities.WPF\NETworkManager.Utilities.WPF.csproj">
       <Project>{93733008-7269-460d-8390-ab281c75db91}</Project>

@@ -1,55 +1,75 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Octokit;
-using NETworkManager.Models.Settings;
 
-namespace NETworkManager.Models.Update
+namespace NETworkManager.Update
 {
+    /// <summary>
+    /// Updater to check if a new program version is available.
+    /// </summary>
     public class Updater
     {
         #region Events
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler<UpdateAvailableArgs> UpdateAvailable;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnUpdateAvailable(UpdateAvailableArgs e)
         {
             UpdateAvailable?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler NoUpdateAvailable;
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected virtual void OnNoUpdateAvailable()
         {
             NoUpdateAvailable?.Invoke(this, EventArgs.Empty);
         }
 
-        public event EventHandler ClientIncompatibleWithNewVersion;
-
-        protected virtual void OnClientIncompatibleWithNewVersion()
-        {
-            ClientIncompatibleWithNewVersion?.Invoke(this, EventArgs.Empty);
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler Error;
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected virtual void OnError()
-        {
+        {            
             Error?.Invoke(this, EventArgs.Empty);
         }
         #endregion
 
         #region Methods
-        public void Check()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="projectName"></param>
+        /// <param name="currentVersion"></param>
+        public void CheckOnGitHub(string userName, string projectName, Version currentVersion)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    var client = new GitHubClient(new ProductHeaderValue(Properties.Resources.NETworkManager_ProjectName));
+                    var client = new GitHubClient(new ProductHeaderValue(userName + "_" + projectName));
 
-                    var latestVersion = new Version(client.Repository.Release.GetLatest(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo).Result.TagName);
+                    var latestVersion = new Version(client.Repository.Release.GetLatest(userName, projectName).Result.TagName);
 
                     // Compare versions (tag=2019.12.0, version=2019.12.0)
-                    if (latestVersion > AssemblyManager.Current.Version)
+                    if (latestVersion > currentVersion)
                         OnUpdateAvailable(new UpdateAvailableArgs(latestVersion));
                     else
                         OnNoUpdateAvailable();

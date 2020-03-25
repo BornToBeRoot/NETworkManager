@@ -3196,8 +3196,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private DiscoveryProtocol _discoveryProtocol_Protocol = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
-        public DiscoveryProtocol DiscoveryProtocol_Protocol
+        private Protocol _discoveryProtocol_Protocol = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
+        public Protocol DiscoveryProtocol_Protocol
         {
             get => _discoveryProtocol_Protocol;
             set
