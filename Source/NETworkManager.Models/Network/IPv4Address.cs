@@ -3,13 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace NETworkManager.Utilities
+namespace NETworkManager.Models.Network
 {
     /// <summary>
     /// Class provides static methods to convert an IPv4 address.
     /// </summary>
-    public static class IPv4AddressConverter
+    public static class IPv4Address
     {
+        /// <summary>
+        /// First possible IPv4 multicast address.
+        /// </summary>
+        private const int IPv4MulticastStart = -536870912;
+
+        /// <summary>
+        /// Last possible IPv4 multicast address.
+        /// </summary>
+        private const int IPv4MulticastEnd = -268435457;
+
         /// <summary>
         /// Method to convert a IPv4 address binary string ("11000000.10101000.00000001.00000001") to human readable string ("192.168.1.1").
         /// </summary>
@@ -66,6 +76,18 @@ namespace NETworkManager.Utilities
                 Array.Reverse(bytes);
 
             return new IPAddress(bytes);
-        }      
+        }
+                
+        /// <summary>
+        /// Method to check if an IPv4 address is a multicast address.
+        /// </summary>
+        /// <param name="ipAddress">IPv4 address as <see cref="IPAddress"/>.</param>
+        /// <returns>True if it is a multicast address. False if not.</returns>
+        public static bool IsMulticast(IPAddress ipAddress)
+        {
+            var ip = ToInt32(ipAddress);
+
+            return (ip >= IPv4MulticastStart && ip <= IPv4MulticastEnd);
+        }
     }
 }

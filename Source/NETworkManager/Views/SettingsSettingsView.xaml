@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:convertersOld="clr-namespace:NETworkManager.Converters"
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"      
@@ -17,9 +18,8 @@
         <!-- Converter -->
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:IsDefaultSettingsLocationToBooleanConverter x:Key="IsDefaultSettingsLocationToBooleanConverter" />
-        <converters:IsSettingsLocationToBooleanConverter x:Key="IsSettingsLocationToBoolConverter" />
-        <converters:ValidateSettingsResetConverter x:Key="ValidateSettingsResetConverter" />
+        <convertersOld:IsDefaultSettingsLocationToBooleanConverter x:Key="IsDefaultSettingsLocationToBooleanConverter" />
+        <convertersOld:IsSettingsLocationToBooleanConverter x:Key="IsSettingsLocationToBoolConverter" />        
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Location}" />

@@ -1,11 +1,10 @@
 ﻿<UserControl x:Class="NETworkManager.Views.WiFiView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:convertersOld="clr-namespace:NETworkManager.Converters"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             xmlns:network="clr-namespace:NETworkManager.Models.Network"             
+             xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"             
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"             
@@ -19,17 +18,17 @@
     </UserControl.InputBindings>
     <UserControl.Resources>
         <converters:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
-        <convertersOld:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <convertersOld:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <convertersOld:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <convertersOld:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />
-        <convertersOld:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
-        <convertersOld:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <convertersOld:NetworkAuthenticationTypeToHumanReadableStringConverter x:Key="NetworkAuthenticationTypeToHumanReadableStringConverter" />
-        <convertersOld:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
-        <convertersOld:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
-        <convertersOld:WiFiChannelAndDBMConverter x:Key="WiFiChannelAndDBMConverter" />
-        <convertersOld:WiFiPhyKindConverter x:Key="WiFiPhyKindConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />
+        <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
+        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
+        <converters:NetworkAuthenticationTypeToHumanReadableStringConverter x:Key="NetworkAuthenticationTypeToHumanReadableStringConverter" />
+        <converters:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
+        <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
+        <converters:WiFiChannelAndDBMConverter x:Key="WiFiChannelAndDBMConverter" />
+        <converters:WiFiPhyKindConverter x:Key="WiFiPhyKindConverter" />
     </UserControl.Resources>
     <Grid>
         <TabControl Visibility="{Binding SDKContractsFailedToLoad, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource DefaultTabControl}">
@@ -190,13 +189,13 @@
                                                         <Style TargetType="{x:Type Rectangle}">
                                                             <Setter Property="OpacityMask" Value="{StaticResource VisualBars0Lock}" />
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.SignalBars)}" Value="1">
+                                                                <DataTrigger Binding="{Binding Path=SignalBars}" Value="1">
                                                                     <Setter Property="OpacityMask" Value="{StaticResource VisualBars1Lock}" />
                                                                 </DataTrigger>
-                                                                <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.SignalBars)}" Value="2">
+                                                                <DataTrigger Binding="{Binding Path=SignalBars}" Value="2">
                                                                     <Setter Property="OpacityMask" Value="{StaticResource VisualBars2Lock}" />
                                                                 </DataTrigger>
-                                                                <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.SignalBars)}" Value="3">
+                                                                <DataTrigger Binding="{Binding Path=SignalBars}" Value="3">
                                                                     <Setter Property="OpacityMask" Value="{StaticResource VisualBars3Lock}" />
                                                                 </DataTrigger>
                                                                 <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.SignalBars)}" Value="4">
@@ -264,10 +263,10 @@
                                                         <RowDefinition Height="5" />
                                                         <RowDefinition Height="Auto" />
                                                     </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=(network:WiFiNetworkInfo.SSID)}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
-                                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Path=(network:WiFiNetworkInfo.AuthenticationType), Converter={StaticResource NetworkAuthenticationTypeToHumanReadableStringConverter}}" Style="{StaticResource DefaultTextBlock}" />
+                                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=SSID}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
+                                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Path=AuthenticationType, Converter={StaticResource NetworkAuthenticationTypeToHumanReadableStringConverter}}" Style="{StaticResource DefaultTextBlock}" />
                                                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding Path=., Converter={StaticResource WiFiChannelAndDBMConverter}}" Style="{StaticResource DefaultTextBlock}" />
-                                                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding Path=(network:WiFiNetworkInfo.BSSID)}" Style="{StaticResource DefaultTextBlock}" />
+                                                    <TextBlock Grid.Column="0" Grid.Row="6" Text="{Binding Path=BSSID}" Style="{StaticResource DefaultTextBlock}" />
                                                 </Grid>
                                                 <ToggleButton Grid.Column="4" Grid.Row="0" IsChecked="{Binding Path=(network:WiFiNetworkInfo.ExpandDetails)}" Style="{StaticResource CleanToggleButton}">
                                                     <Rectangle Width="16" Height="16">
@@ -315,19 +314,19 @@
                                                 </Grid.RowDefinitions>
                                                 <TextBlock Grid.Column="1" Grid.Row="0" Text="{x:Static localization:Strings.Infrastructure}" Style="{StaticResource HeaderTextBlock}" />
                                                 <TextBlock Grid.Column="1" Grid.Row="1" Text="{x:Static localization:Strings.PhyKindColon}" Style="{StaticResource DefaultTextBlock}" />
-                                                <TextBlock Grid.Column="3" Grid.Row="1" Text="{Binding Path=(network:WiFiNetworkInfo.PhyKind), Converter={StaticResource WiFiPhyKindConverter}}" Style="{StaticResource DefaultTextBlock}" />
+                                                <TextBlock Grid.Column="3" Grid.Row="1" Text="{Binding Path=PhyKind, Converter={StaticResource WiFiPhyKindConverter}}" Style="{StaticResource DefaultTextBlock}" />
                                                 <TextBlock Grid.Column="1" Grid.Row="3" Text="{x:Static localization:Strings.NetworkKindColon}" Style="{StaticResource DefaultTextBlock}" />
-                                                <TextBlock Grid.Column="3" Grid.Row="3" Text="{Binding Path=(network:WiFiNetworkInfo.NetworkKind)}" Style="{StaticResource DefaultTextBlock}" />
+                                                <TextBlock Grid.Column="3" Grid.Row="3" Text="{Binding Path=NetworkKind}" Style="{StaticResource DefaultTextBlock}" />
                                                 <TextBlock Grid.Column="5" Grid.Row="0" Text="{x:Static localization:Strings.Encryption}" Style="{StaticResource HeaderTextBlock}" />
                                                 <TextBlock Grid.Column="5" Grid.Row="1" Text="{x:Static localization:Strings.AuthenticationColon}" Style="{StaticResource DefaultTextBlock}" />
-                                                <TextBlock Grid.Column="7" Grid.Row="1" Text="{Binding Path=(network:WiFiNetworkInfo.AuthenticationType)}" Style="{StaticResource DefaultTextBlock}" />
+                                                <TextBlock Grid.Column="7" Grid.Row="1" Text="{Binding Path=AuthenticationType}" Style="{StaticResource DefaultTextBlock}" />
                                                 <TextBlock Grid.Column="5" Grid.Row="3" Text="{x:Static localization:Strings.EncryptionColon}" Style="{StaticResource DefaultTextBlock}" />
-                                                <TextBlock Grid.Column="7" Grid.Row="3" Text="{Binding Path=(network:WiFiNetworkInfo.EncryptionType)}" Style="{StaticResource DefaultTextBlock}" />
+                                                <TextBlock Grid.Column="7" Grid.Row="3" Text="{Binding Path=EncryptionType}" Style="{StaticResource DefaultTextBlock}" />
                                                 <TextBlock Grid.Column="9" Grid.Row="0" Text="{x:Static localization:Strings.Time}" Style="{StaticResource HeaderTextBlock}" />
                                                 <TextBlock Grid.Column="9" Grid.Row="1" Text="{x:Static localization:Strings.BeaconIntervalColon}" Style="{StaticResource DefaultTextBlock}" />
-                                                <TextBlock Grid.Column="11" Grid.Row="1" Text="{Binding Path=(network:WiFiNetworkInfo.BeaconInterval), Converter={StaticResource TimeSpanToMillisecondConverter}}" Style="{StaticResource DefaultTextBlock}" />
+                                                <TextBlock Grid.Column="11" Grid.Row="1" Text="{Binding Path=BeaconInterval, Converter={StaticResource TimeSpanToMillisecondConverter}}" Style="{StaticResource DefaultTextBlock}" />
                                                 <TextBlock Grid.Column="9" Grid.Row="3" Text="{x:Static localization:Strings.UptimeColon}" Style="{StaticResource DefaultTextBlock}" />
-                                                <TextBlock Grid.Column="11" Grid.Row="3" Text="{Binding Path=(network:WiFiNetworkInfo.Uptime), Converter={StaticResource TimeSpanToStringConverter}}" Style="{StaticResource DefaultTextBlock}" />
+                                                <TextBlock Grid.Column="11" Grid.Row="3" Text="{Binding Path=Uptime, Converter={StaticResource TimeSpanToStringConverter}}" Style="{StaticResource DefaultTextBlock}" />
                                             </Grid>
                                         </Grid>
                                     </DataTemplate>

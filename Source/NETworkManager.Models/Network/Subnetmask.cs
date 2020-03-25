@@ -1,5 +1,4 @@
-﻿using NETworkManager.Utilities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 
 namespace NETworkManager.Models.Network
@@ -34,12 +33,12 @@ namespace NETworkManager.Models.Network
             for (var i = 0; i < cidr; i++)
                 bits += "1";
 
-            return IPv4AddressConverter.ToHumanString(bits.PadRight(32, '0'));
+            return IPv4Address.ToHumanString(bits.PadRight(32, '0'));
         }
 
         public static int ConvertSubnetmaskToCidr(IPAddress subnetmask)
         {
-            return string.Join("", IPv4AddressConverter.ToBinaryString(subnetmask.ToString()).Replace(".", "").TrimEnd('0')).Length;
+            return string.Join("", IPv4Address.ToBinaryString(subnetmask.ToString()).Replace(".", "").TrimEnd('0')).Length;
         }
     }
 }

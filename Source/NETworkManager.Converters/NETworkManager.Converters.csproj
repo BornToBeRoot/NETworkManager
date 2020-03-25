@@ -36,6 +36,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,11 +47,51 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccentToBrushConverter.cs" />
+    <Compile Include="BandwidthBytesToSpeedConverter.cs" />
+    <Compile Include="BandwidthBytesWithSizeConverter.cs" />
+    <Compile Include="BigIntegerToStringConverter.cs" />
+    <Compile Include="BooleanReverseConverter.cs" />
+    <Compile Include="BooleanReverseToVisibilityCollapsedConverter.cs" />
+    <Compile Include="BooleanReverseToVisibilityHiddenConverter.cs" />
+    <Compile Include="BooleansOrConverter.cs" />
+    <Compile Include="BooleanToStringConverter.cs" />
+    <Compile Include="BooleanToVisibilityCollapsedConverter.cs" />
+    <Compile Include="BooleanToVisibilityHiddenConverter.cs" />
+    <Compile Include="Bytes1000ToSizeConverter.cs" />
+    <Compile Include="Bytes1000ToSpeedConverter.cs" />
+    <Compile Include="ConnectionStateToRectangleStyleConverter.cs" />
+    <Compile Include="DNSServerInfoToString.cs" />
+    <Compile Include="IntGreater1ToBooleanConverter.cs" />
+    <Compile Include="IntToStringConverter.cs" />
+    <Compile Include="IntZeroReverseToVisibilityCollapsedConverter.cs" />
+    <Compile Include="IntZeroToVisibilityCollapsedConverter.cs" />
+    <Compile Include="IPAddressArrayToStringConverter.cs" />
+    <Compile Include="IPAddressToStringConverter.cs" />
+    <Compile Include="ListToStringConverter.cs" />
+    <Compile Include="LvlChartsBandwidthValueConverter.cs" />
+    <Compile Include="LvlChartsHeaderConverter.cs" />
+    <Compile Include="NetworkAuthenticationTypeToHumanReadableStringConverter.cs" />
+    <Compile Include="NullableDateTimeToStringConverter.cs" />
+    <Compile Include="NullOrEmptyToBoolConverter.cs" />
+    <Compile Include="NullOrEmptyToStringConverter.cs" />
+    <Compile Include="NullToFalseConverter.cs" />
+    <Compile Include="OperationalStatusToStringConverter.cs" />
+    <Compile Include="PercentConverter.cs" />
+    <Compile Include="PhysicalAddressToStringConverter.cs" />
+    <Compile Include="PingStatusToBooleanConverter.cs" />
+    <Compile Include="PingTimeToStringConverter.cs" />
     <Compile Include="RemoteDesktopAudioCaptureRedirectionModeToStringConverter.cs" />
     <Compile Include="RemoteDesktopAudioRedirectionModeToStringConverter.cs" />
     <Compile Include="RemoteDesktopKeyboardHookModeToStringConverter.cs" />
     <Compile Include="RemoteDesktopNetworkConnectionTypeToStringConverter.cs" />
+    <Compile Include="SelectedItemsToBooleanConverter.cs" />
+    <Compile Include="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter.cs" />
+    <Compile Include="StringIsNotNullOrEmptyToBooleanConverter.cs" />
+    <Compile Include="StringIsNotNullOrEmptyToVisibilityCollapsedConverter.cs" />
     <Compile Include="TcpStateToStringConverter.cs" />
+    <Compile Include="TimeSpanToMillisecondConverter.cs" />
+    <Compile Include="TimeSpanToStringConverter.cs" />
+    <Compile Include="TimestampToStringConverter.cs" />
     <Compile Include="TimeUnitToStringConverter.cs" />
     <Compile Include="AccentToStringConverter.cs" />
     <Compile Include="ApplicationNameToIconConverter.cs" />
@@ -63,6 +104,11 @@
     <Compile Include="IPStatusToStringConverter.cs" />
     <Compile Include="PortStateToStringConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidateNetworkInterfaceConfigConverter.cs" />
+    <Compile Include="ValidateSubnetCalculatorSubnettingConverter.cs" />
+    <Compile Include="ValidateSubnetCalculatorSupernettingConverter.cs" />
+    <Compile Include="WiFiChannelAndDBMConverter.cs" />
+    <Compile Include="WiFiPhyKindConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj">
@@ -79,6 +125,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="LiveCharts.Wpf">
+      <Version>0.9.7</Version>
+    </PackageReference>
     <PackageReference Include="MahApps.Metro">
       <Version>1.6.5</Version>
     </PackageReference>

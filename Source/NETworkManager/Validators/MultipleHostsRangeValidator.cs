@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using NETworkManager.Utilities;
 using System.Net;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Validators
 {
@@ -34,8 +35,8 @@ namespace NETworkManager.Validators
                 {
                     var range = ipHostOrRange.Split('-');
 
-                    if (IPv4AddressConverter.ToInt32(IPAddress.Parse(range[0])) >=
-                        IPv4AddressConverter.ToInt32(IPAddress.Parse(range[1])))
+                    if (IPv4Address.ToInt32(IPAddress.Parse(range[0])) >=
+                        IPv4Address.ToInt32(IPAddress.Parse(range[1])))
                         isValid = false;
 
                     continue;

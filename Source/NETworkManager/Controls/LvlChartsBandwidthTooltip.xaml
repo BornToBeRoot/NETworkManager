@@ -5,11 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"             
              xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"        
-             xmlns:converter="clr-namespace:NETworkManager.Converters"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <converter:LvlChartsHeaderConverter x:Key="LvlChartsHeaderConverter" />
-        <converter:LvlChartsBandwidthValueConverter x:Key="LvlChartsBandwidthValueConverter" />
+        <converters:LvlChartsHeaderConverter x:Key="LvlChartsHeaderConverter" />
+        <converters:LvlChartsBandwidthValueConverter x:Key="LvlChartsBandwidthValueConverter" />
     </UserControl.Resources>
     <Grid Background="{DynamicResource WhiteColorBrush}"  >
         <StackPanel Margin="10">

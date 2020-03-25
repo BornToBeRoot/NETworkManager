@@ -12,7 +12,7 @@ namespace NETworkManager.Models.Network
         public PortLookupInfo LookupInfo { get; set; }
         public PortState State { get; set; }
 
-        public int IPAddressInt32 => IPAddress != null && IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressConverter.ToInt32(IPAddress) : 0;
+        public int IPAddressInt32 => IPAddress != null && IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4Address.ToInt32(IPAddress) : 0;
 
         public PortInfo()
         {

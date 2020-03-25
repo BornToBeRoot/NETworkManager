@@ -10,7 +10,7 @@ namespace NETworkManager.Models.Network
         public IPAddress IPAddress { get; set; }
         public int Port { get; set; }
 
-        public int IPAddressInt32 => IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4AddressConverter.ToInt32(IPAddress) : 0;
+        public int IPAddressInt32 => IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4Address.ToInt32(IPAddress) : 0;
 
         public ListenerInfo()
         {

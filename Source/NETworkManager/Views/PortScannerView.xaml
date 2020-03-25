@@ -6,7 +6,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:validators="clr-namespace:NETworkManager.Validators"
-        xmlns:convertersOld="clr-namespace:NETworkManager.Converters"
+        
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         xmlns:mahappsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
@@ -19,10 +19,10 @@
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerViewModel}">
     <UserControl.Resources>
-        <convertersOld:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <convertersOld:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <convertersOld:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
-        <convertersOld:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
+        <converters:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
         <converters:PortStateToStringConverter x:Key="PortStateToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">

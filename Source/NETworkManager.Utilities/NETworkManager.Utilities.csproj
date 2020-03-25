@@ -56,8 +56,6 @@
     <Compile Include="FileCryptoManager.cs" />
     <Compile Include="FileSizeConverter.cs" />
     <Compile Include="HotKeys.cs" />
-    <Compile Include="IPv4AddressConverter.cs" />
-    <Compile Include="IPv4AddressHelper.cs" />
     <Compile Include="ListHelper.cs" />
     <Compile Include="MACAddressHelper.cs" />
     <Compile Include="NativeMethods.cs" />

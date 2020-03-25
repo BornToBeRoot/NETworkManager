@@ -151,7 +151,7 @@ namespace NETworkManager.Models.Network
 
                     // Filter 0.0.0.0.0.0, 255.255.255.255.255.255
                     if (!macAddress.Equals(virtualMAC) && !macAddress.Equals(broadcastMAC))
-                        list.Add(new ARPInfo(ipAddress, macAddress, ipAddress.IsIPv6Multicast || IPv4AddressHelper.IsMulticast(ipAddress)));
+                        list.Add(new ARPInfo(ipAddress, macAddress, ipAddress.IsIPv6Multicast || IPv4Address.IsMulticast(ipAddress)));
                 }
 
                 return list;

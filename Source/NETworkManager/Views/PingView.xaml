@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:NETworkManager.Controls"
         xmlns:validators="clr-namespace:NETworkManager.Validators"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:convertersOld="clr-namespace:NETworkManager.Converters"
+        
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -18,14 +18,14 @@
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingViewModel}">
     <UserControl.Resources>
-        <convertersOld:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <convertersOld:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <convertersOld:IntToStringConverter x:Key="IntToStringConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:IntToStringConverter x:Key="IntToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
-        <convertersOld:PingStatusToBooleanConverter x:Key="PingStatusToBoolConverter" />
-        <convertersOld:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
-        <convertersOld:PercentConverter x:Key="PercentConverter" />
-        <convertersOld:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
+        <converters:PingStatusToBooleanConverter x:Key="PingStatusToBoolConverter" />
+        <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
+        <converters:PercentConverter x:Key="PercentConverter" />
+        <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>

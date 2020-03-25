@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:network="clr-namespace:NETworkManager.Models.Network"
-             xmlns:convertersOld="clr-namespace:NETworkManager.Converters"
+             xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"             
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:validators="clr-namespace:NETworkManager.Validators"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
@@ -14,14 +13,14 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:ProfileViewModel}">
     <UserControl.Resources>
-        <convertersOld:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <convertersOld:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <convertersOld:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:RemoteDesktopAudioCaptureRedirectionModeToStringConverter x:Key="RemoteDesktopAudioCaptureRedirectionModeToStringConverter" />
         <converters:RemoteDesktopAudioRedirectionModeToStringConverter x:Key="RemoteDesktopAudioRedirectionModeToStringConverter" />
         <converters:RemoteDesktopKeyboardHookModeToStringConverter x:Key="RemoteDesktopKeyboardHookModeToStringConverter" />
         <converters:RemoteDesktopNetworkConnectionTypeToStringConverter x:Key="RemoteDesktopNetworkConnectionTypeToStringConverter" />
-        <convertersOld:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
+        <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">
         <Grid.RowDefinitions>

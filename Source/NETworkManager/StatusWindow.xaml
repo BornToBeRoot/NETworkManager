@@ -9,7 +9,7 @@
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:resources="clr-namespace:NETworkManager.Properties"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
         Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Height="300" Width="250" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" Style="{StaticResource DefaultWindow}" ShowMinButton="False" ShowMaxRestoreButton="False" Closing="StatusWindow_Closing">
     <mahAppsControls:MetroWindow.Resources>

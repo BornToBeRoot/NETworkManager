@@ -6,7 +6,7 @@
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"        
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:edge="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
         mah:DialogParticipation.Register="{Binding}"
