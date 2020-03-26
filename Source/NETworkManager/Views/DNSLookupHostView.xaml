@@ -9,7 +9,7 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"             
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DNSLookupHostViewModel}">
@@ -25,7 +25,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
+            <ColumnDefinition MinWidth="{x:Static settings:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
         </Grid.ColumnDefinitions>
         <dragablz:TabablzControl Grid.Column="0" ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}">
             <dragablz:TabablzControl.InterTabController>

@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using NETworkManager.Settings;
 
 namespace NETworkManager.Models.Settings
 {
@@ -28,7 +29,7 @@ namespace NETworkManager.Models.Settings
 
         public static string GetCustomSettingsLocation()
         {
-            return Properties.Settings.Default.Settings_CustomSettingsLocation;
+            return LocalSettingsManager.Settings_CustomSettingsLocation;
         }
 
         public static string GetPortableSettingsLocation()

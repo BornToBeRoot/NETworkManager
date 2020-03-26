@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Input;
 using NETworkManager.Models.PuTTY;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {

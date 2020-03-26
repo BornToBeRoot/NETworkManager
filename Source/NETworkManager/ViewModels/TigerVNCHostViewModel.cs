@@ -17,6 +17,7 @@ using NETworkManager.Models.TigerVNC;
 using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Profile;
 using System.Windows.Threading;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {

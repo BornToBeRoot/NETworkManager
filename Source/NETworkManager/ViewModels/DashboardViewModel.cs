@@ -13,6 +13,7 @@ using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Translators;
 using Ping = System.Net.NetworkInformation.Ping;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {

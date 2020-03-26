@@ -1,4 +1,5 @@
 ﻿using NETworkManager.Models.RemoteDesktop;
+using NETworkManager.Settings;
 using System.Diagnostics.CodeAnalysis;
 using static NETworkManager.Models.PuTTY.PuTTY;
 

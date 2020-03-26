@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using NETworkManager.Models.PowerShell;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {

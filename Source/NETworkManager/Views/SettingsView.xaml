@@ -6,8 +6,9 @@
         xmlns:views ="clr-namespace:NETworkManager.Views"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-        xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+        xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
     <UserControl.Resources>

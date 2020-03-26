@@ -13,7 +13,7 @@ using NETworkManager.Models.Application;
 
 // ReSharper disable InconsistentNaming
 
-namespace NETworkManager
+namespace NETworkManager.Settings
 {
     public static class GlobalStaticConfiguration
     {

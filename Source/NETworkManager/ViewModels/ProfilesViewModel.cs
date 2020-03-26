@@ -11,6 +11,7 @@ using System.Collections;
 using System.Windows.Threading;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.Profile;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {

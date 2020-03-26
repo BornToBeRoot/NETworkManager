@@ -12,7 +12,7 @@
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         xmlns:controls="clr-namespace:NETworkManager.Controls"
         xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         dialog:DialogParticipation.Register="{Binding}"
@@ -532,7 +532,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
+                        <ColumnDefinition MinWidth="{x:Static settings:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0" Margin="10">
                         <Grid.RowDefinitions>

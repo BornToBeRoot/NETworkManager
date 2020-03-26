@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Diagnostics;
@@ -186,7 +187,7 @@ namespace NETworkManager.ViewModels
         private async void ChangeLocationAction()
         {
             MovingFiles = true;
-            
+
             var useFileInOtherLocation = false;
 
             // Check if settings file exists in new location
@@ -215,7 +216,7 @@ namespace NETworkManager.ViewModels
             // Use other location
             if (useFileInOtherLocation)
             {
-                Properties.Settings.Default.Settings_CustomSettingsLocation = Location;
+                LocalSettingsManager.Settings_CustomSettingsLocation = Location;
 
                 MovingFiles = false;
 
@@ -231,7 +232,7 @@ namespace NETworkManager.ViewModels
             {
                 await SettingsManager.MoveSettingsAsync(Location);
 
-                Properties.Settings.Default.Settings_CustomSettingsLocation = Location;
+                LocalSettingsManager.Settings_CustomSettingsLocation = Location;
 
                 // Show the user some awesome animation to indicate we are working on it :)
                 await Task.Delay(2000);
@@ -246,7 +247,7 @@ namespace NETworkManager.ViewModels
             }
 
             Location = string.Empty;
-            Location = Properties.Settings.Default.Settings_CustomSettingsLocation;
+            Location = LocalSettingsManager.Settings_CustomSettingsLocation;
 
             MovingFiles = false;
         }
@@ -282,7 +283,7 @@ namespace NETworkManager.ViewModels
             settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
-                        
+
             if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure, Localization.Resources.Strings.SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 

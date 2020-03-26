@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-using NETworkManager.Properties;
 using NETworkManager.Models.Profile;
 using NETworkManager.Localization;
+using NETworkManager.Settings;
 
 namespace NETworkManager
 {
@@ -52,10 +52,10 @@ namespace NETworkManager
             }
 
             // Update integrated settings %LocalAppData%\NETworkManager\NETworkManager_GUID (custom settings path)
-            if (Settings.Default.UpgradeRequired)
+            if (LocalSettingsManager.UpgradeRequired)
             {
-                Settings.Default.Upgrade();
-                Settings.Default.UpgradeRequired = false;
+                LocalSettingsManager.Upgrade();
+                LocalSettingsManager.UpgradeRequired = false;
             }
 
             // Load settings
@@ -141,7 +141,7 @@ namespace NETworkManager
         private void Save()
         {
             // Save local settings (custom settings path in AppData/Local)
-            Settings.Default.Save();
+            LocalSettingsManager.Save();
 
             if (SettingsManager.Current.SettingsChanged) // This will also create the "Settings" folder, if it does not exist
                 SettingsManager.Save();
