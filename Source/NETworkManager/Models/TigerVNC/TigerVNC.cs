@@ -5,12 +5,7 @@ using NETworkManager.Models.TigerVNC;
 namespace NETworkManager.Models.TigerVNCTMP
 {
     public class TigerVNC
-    {
-        public static string BuildCommandLine(TigerVNCSessionInfo sessionInfo)
-        {
-            return $"{sessionInfo.Host}::{sessionInfo.Port}";
-        }
-
+    {       
         public static TigerVNCSessionInfo CreateSessionInfo(ProfileInfo profileInfo)
         {
             var info = new TigerVNCSessionInfo

@@ -324,7 +324,7 @@ namespace NETworkManager.ViewModels
 
         private void WakeUpProfileAction()
         {
-            WakeUp(WakeOnLAN.CreateWakeOnLANInfo(SelectedProfile));
+            WakeUp(Models.NetworkTMP.WakeOnLAN.CreateWakeOnLANInfo(SelectedProfile));
         }
 
         public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());

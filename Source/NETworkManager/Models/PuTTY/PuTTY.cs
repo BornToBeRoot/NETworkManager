@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Models.Profile;
+using NETworkManager.Models.Settings;
 using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.Models.PuTTYTMP
@@ -77,6 +78,20 @@ namespace NETworkManager.Models.PuTTYTMP
 
             return portOrBaud;
         }
-        
+
+        public static PuTTYSessionInfo CreateSessionInfoFromProfile(ProfileInfo profileInfo)
+        {
+            var info = new PuTTYSessionInfo
+            {
+                Mode = profileInfo.PuTTY_ConnectionMode,
+                HostOrSerialLine = profileInfo.PuTTY_HostOrSerialLine,
+                // TODO:  PortOrBaud = profileInfo.PuTTY_OverridePortOrBaud ? profileInfo.PuTTY_PortOrBaud : GetPortOrBaudByConnectionMode(profileInfo.PuTTY_ConnectionMode),
+                Username = profileInfo.PuTTY_OverrideUsername ? profileInfo.PuTTY_Username : SettingsManager.Current.PuTTY_Username,
+                Profile = profileInfo.PuTTY_OverrideProfile ? profileInfo.PuTTY_Profile : SettingsManager.Current.PuTTY_Profile,
+                AdditionalCommandLine = profileInfo.PuTTY_OverrideAdditionalCommandLine ? profileInfo.PuTTY_AdditionalCommandLine : SettingsManager.Current.PuTTY_AdditionalCommandLine
+            };
+
+            return info;
+        }
     }
 }

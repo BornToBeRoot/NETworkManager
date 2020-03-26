@@ -125,7 +125,7 @@ namespace NETworkManager.Controls
             var info = new ProcessStartInfo
             {
                 FileName = _sessionInfo.ApplicationFilePath,
-                Arguments = Models.PowerShellTmp.PowerShell.BuildCommandLine(_sessionInfo)
+                Arguments = Models.PowerShell.PowerShell.BuildCommandLine(_sessionInfo)
             };
 
             try

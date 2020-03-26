@@ -1,20 +1,11 @@
-﻿using NETworkManager.Models.Profile;
+﻿using NETworkManager.Models.PowerShell;
+using NETworkManager.Models.Profile;
 using NETworkManager.Models.Settings;
 
 namespace NETworkManager.Models.PowerShellTmp
 {
-    public partial class PowerShell
-    {
-        public static string BuildCommandLine(PowerShellSessionInfo sessionInfo)
-        {
-            var command = $"-ExecutionPolicy {sessionInfo.ExecutionPolicy} {sessionInfo.AdditionalCommandLine}";
-
-            if (sessionInfo.EnableRemoteConsole)
-                command += $" -NoExit -Command \"Enter-PSSession -ComputerName {sessionInfo.Host}\"";
-
-            return command;
-        }
-
+    public class PowerShell
+    {        
         public static PowerShellSessionInfo CreateSessionInfo(ProfileInfo profileInfo)
         {
             var info = new PowerShellSessionInfo

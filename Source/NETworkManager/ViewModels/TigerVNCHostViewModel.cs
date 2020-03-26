@@ -373,7 +373,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.TigerVNC_ApplicationFilePath,
-                Arguments = Models.TigerVNCTMP.TigerVNC.BuildCommandLine(Models.TigerVNCTMP.TigerVNC.CreateSessionInfo(SelectedProfile))
+                Arguments = TigerVNC.BuildCommandLine(Models.TigerVNCTMP.TigerVNC.CreateSessionInfo(SelectedProfile))
             };
 
             Process.Start(info);

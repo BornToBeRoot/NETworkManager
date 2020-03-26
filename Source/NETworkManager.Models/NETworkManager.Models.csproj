@@ -111,12 +111,16 @@
     <Compile Include="Network\Traceroute.cs" />
     <Compile Include="Network\TracerouteHopInfo.cs" />
     <Compile Include="Network\TracerouteHopReceivedArgs.cs" />
+    <Compile Include="Network\WakeOnLAN.cs" />
     <Compile Include="Network\WakeOnLanInfo.cs" />
+    <Compile Include="Network\Whois.cs" />
     <Compile Include="Network\WhoisServerInfo.cs" />
     <Compile Include="Network\WiFi.cs" />
     <Compile Include="Network\WiFiAdapterInfo.cs" />
     <Compile Include="Network\WiFiNetworkInfo.cs" />
+    <Compile Include="PowerShell\PowerShell.cs" />
     <Compile Include="PowerShell\PowerShell.ExecutionPolicy.cs" />
+    <Compile Include="PowerShell\PowerShellSessionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PuTTY\PuTTY.ConnectionMode.cs" />
     <Compile Include="RemoteDesktop\AudioCaptureRedirectionMode.cs" />
@@ -128,6 +132,7 @@
     <Compile Include="RemoteDesktop\RemoteDesktopKeystrokeInfo.cs" />
     <Compile Include="RemoteDesktop\RemoteDesktopPerformanceConstants.cs" />
     <Compile Include="RemoteDesktop\RemoteDesktopSessionInfo.cs" />
+    <Compile Include="TigerVNC\TigerVNC.cs" />
     <Compile Include="TigerVNC\TigerVNCSessionInfo.cs" />
     <Compile Include="WebConsole\WebConsoleSessionInfo.cs" />
   </ItemGroup>

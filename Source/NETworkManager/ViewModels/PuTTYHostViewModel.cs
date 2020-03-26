@@ -402,7 +402,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfile()
         {
-            Connect(PuTTYSessionInfo.Parse(SelectedProfile), SelectedProfile.Name);
+            Connect(Models.PuTTYTMP.PuTTY.CreateSessionInfoFromProfile(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
@@ -410,7 +410,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
-                Arguments = Models.PuTTYTMP.PuTTY.BuildCommandLine(PuTTYSessionInfo.Parse(SelectedProfile))
+                Arguments = Models.PuTTYTMP.PuTTY.BuildCommandLine(Models.PuTTYTMP.PuTTY.CreateSessionInfoFromProfile(SelectedProfile))
             };
 
             Process.Start(info);

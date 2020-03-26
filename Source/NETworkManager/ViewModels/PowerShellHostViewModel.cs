@@ -374,7 +374,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
-                Arguments = Models.PowerShellTmp.PowerShell.BuildCommandLine(Models.PowerShellTmp.PowerShell.CreateSessionInfo(SelectedProfile))
+                Arguments = Models.PowerShell.PowerShell.BuildCommandLine(Models.PowerShellTmp.PowerShell.CreateSessionInfo(SelectedProfile))
             };
 
             Process.Start(info);
