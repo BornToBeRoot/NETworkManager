@@ -4,10 +4,10 @@ using System.Diagnostics;
 using NETworkManager.Update;
 using System;
 using System.ComponentModel;
-using NETworkManager.Models.Documentation;
 using System.Windows.Data;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Utilities;
+using NETworkManager.Documentation;
 
 namespace NETworkManager.ViewModels
 {

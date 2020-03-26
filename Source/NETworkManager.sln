@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Controls", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Validators", "NETworkManager.Validators\NETworkManager.Validators.csproj", "{29172E71-52AF-4E64-9683-30C5F4D0C746}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Documentation", "NETworkManager.Documentation\NETworkManager.Documentation.csproj", "{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -219,6 +221,26 @@ Global
 		{29172E71-52AF-4E64-9683-30C5F4D0C746}.Release|x64.Build.0 = Release|Any CPU
 		{29172E71-52AF-4E64-9683-30C5F4D0C746}.Release|x86.ActiveCfg = Release|Any CPU
 		{29172E71-52AF-4E64-9683-30C5F4D0C746}.Release|x86.Build.0 = Release|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Debug|ARM.Build.0 = Debug|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Debug|x64.Build.0 = Debug|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Debug|x86.Build.0 = Debug|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Release|ARM.ActiveCfg = Release|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Release|ARM.Build.0 = Release|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Release|ARM64.Build.0 = Release|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Release|x64.ActiveCfg = Release|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Release|x64.Build.0 = Release|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Release|x86.ActiveCfg = Release|Any CPU
+		{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

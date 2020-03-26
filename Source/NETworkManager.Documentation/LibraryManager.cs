@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace NETworkManager.Models.Documentation
+namespace NETworkManager.Documentation
 {
     public static class LibraryManager
     {

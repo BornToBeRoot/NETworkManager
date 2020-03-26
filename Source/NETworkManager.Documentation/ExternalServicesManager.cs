@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NETworkManager.Models.Documentation
+namespace NETworkManager.Documentation
 {
     public static class ExternalServicesManager
     {

@@ -1,7 +1,7 @@
 ﻿using NETworkManager.Localization;
 using System.Collections.Generic;
 
-namespace NETworkManager.Models.Documentation
+namespace NETworkManager.Documentation
 {
     public class DocumentationInfo
     {

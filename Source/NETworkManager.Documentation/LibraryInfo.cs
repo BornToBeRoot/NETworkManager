@@ -1,4 +1,4 @@
-﻿namespace NETworkManager.Models.Documentation
+﻿namespace NETworkManager.Documentation
 {
     public class LibraryInfo : BaseInfo
     {

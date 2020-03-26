@@ -1,11 +1,12 @@
 ﻿using NETworkManager.Localization;
+using NETworkManager.Models;
 using NETworkManager.Utilities;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 
-namespace NETworkManager.Models.Documentation
+namespace NETworkManager.Documentation
 {
     public static class DocumentationManager
     {
@@ -74,53 +75,53 @@ namespace NETworkManager.Models.Documentation
                 OpenDocumentation((DocumentationIdentifier) documentationIdentifier);
         }
 
-        public static DocumentationIdentifier GetIdentifierByAppliactionName(Models.Application.Name name)
+        public static DocumentationIdentifier GetIdentifierByAppliactionName(Application.Name name)
         {
             switch (name)
             {
                 case Application.Name.Dashboard:
                     return DocumentationIdentifier.ApplicationDashboard;                    
-                case Models.Application.Name.NetworkInterface:
+                case Application.Name.NetworkInterface:
                     return DocumentationIdentifier.ApplicationNetworkInterface;                    
-                case Models.Application.Name.WiFi:
+                case Application.Name.WiFi:
                     return DocumentationIdentifier.ApplicationWiFi;                    
-                case Models.Application.Name.IPScanner:
+                case Application.Name.IPScanner:
                     return DocumentationIdentifier.ApplicationIPScanner;                    
-                case Models.Application.Name.PortScanner:
+                case Application.Name.PortScanner:
                     return DocumentationIdentifier.ApplicationPortScanner;                    
-                case Models.Application.Name.Ping:
+                case Application.Name.Ping:
                     return DocumentationIdentifier.ApplicationPing;                    
-                case Models.Application.Name.Traceroute:
+                case Application.Name.Traceroute:
                     return DocumentationIdentifier.ApplicationTraceroute;                    
-                case Models.Application.Name.DNSLookup:
+                case Application.Name.DNSLookup:
                     return DocumentationIdentifier.ApplicationDnsLookup;                    
-                case Models.Application.Name.RemoteDesktop:
+                case Application.Name.RemoteDesktop:
                     return DocumentationIdentifier.ApplicationRemoteDesktop;                    
-                case Models.Application.Name.PowerShell:
+                case Application.Name.PowerShell:
                     return DocumentationIdentifier.ApplicationPowerShell;                    
-                case Models.Application.Name.PuTTY:
+                case Application.Name.PuTTY:
                     return DocumentationIdentifier.ApplicationPutty;                    
-                case Models.Application.Name.TigerVNC:
+                case Application.Name.TigerVNC:
                     return DocumentationIdentifier.ApplicationTigerVNC;                    
-                case Models.Application.Name.SNMP:
+                case Application.Name.SNMP:
                     return DocumentationIdentifier.ApplicationSnmp;                    
-                case Models.Application.Name.WakeOnLAN:
+                case Application.Name.WakeOnLAN:
                     return DocumentationIdentifier.ApplicationWakeOnLan;                    
-                case Models.Application.Name.HTTPHeaders:
+                case Application.Name.HTTPHeaders:
                     return DocumentationIdentifier.ApplicationHttpHeaders;                    
-                case Models.Application.Name.Whois:
+                case Application.Name.Whois:
                     return DocumentationIdentifier.ApplicationWhois;                    
-                case Models.Application.Name.SubnetCalculator:
+                case Application.Name.SubnetCalculator:
                     return DocumentationIdentifier.ApplicationSubnetCalculator;                    
-                case Models.Application.Name.Lookup:
+                case Application.Name.Lookup:
                     return DocumentationIdentifier.ApplicationLookup;                    
-                case Models.Application.Name.Connections:
+                case Application.Name.Connections:
                     return DocumentationIdentifier.ApplicationConnections;                    
-                case Models.Application.Name.Listeners:
+                case Application.Name.Listeners:
                     return DocumentationIdentifier.ApplicationListeners;                    
-                case Models.Application.Name.ARPTable:
+                case Application.Name.ARPTable:
                     return DocumentationIdentifier.ApplicationArpTable;                    
-                case Models.Application.Name.None:
+                case Application.Name.None:
                     return DocumentationIdentifier.Default;                    
                 default:
                     return DocumentationIdentifier.Default;                    
