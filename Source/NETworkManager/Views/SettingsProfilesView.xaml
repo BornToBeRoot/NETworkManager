@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:convertersOld="clr-namespace:NETworkManager.Converters"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        xmlns:validatorsOld="clr-namespace:NETworkManager.Validators"
+        xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"      
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -32,7 +33,7 @@
                 <Binding Path="Location" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <validators:SettingsFolderExistsValidator ValidatesOnTargetUpdated="True" />
+                        <validatorsOld:SettingsFolderExistsValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

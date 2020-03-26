@@ -202,18 +202,7 @@
     <Compile Include="Models\RemoteDesktop\RemoteDesktop.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktopSessionInfo.cs" />
     <Compile Include="Validators\ProfileFileUniqueValidator.cs" />
-    <Compile Include="Validators\FilePathValidator.cs" />
-    <Compile Include="Validators\DomainValidator.cs" />
-    <Compile Include="Validators\IPv4IPv6SubnetmaskOrCIDRValidator.cs" />
     <Compile Include="Validators\IsDNSLookupDNSServersNameUnique.cs" />
-    <Compile Include="Validators\NoSpacesValidator.cs" />
-    <Compile Include="Validators\BaudValidator.cs" />
-    <Compile Include="Validators\PrivacyAESValidator.cs" />
-    <Compile Include="Validators\OIDValidator.cs" />
-    <Compile Include="Validators\Int32Validator.cs" />
-    <Compile Include="Validators\MultipleIPAddressesValidator.cs" />
-    <Compile Include="Validators\HttpAndHttpsUriValidator.cs" />
-    <Compile Include="Validators\IPv4IPv6SubnetValidator.cs" />
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
     <Compile Include="ViewModels\DiscoveryProtocolViewModel.cs" />
     <Compile Include="ViewModels\ProfileFileViewModel.cs" />
@@ -270,10 +259,6 @@
     <Compile Include="Models\Network\DNSLookupErrorArgs.cs" />
     <Compile Include="Models\Network\DNSLookupRecordInfo.cs" />
     <Compile Include="Models\Network\DNSLookupRecordArgs.cs" />
-    <Compile Include="Validators\IPAddressValidator.cs" />
-    <Compile Include="Validators\EmptyOrIPv4AddressValidator.cs" />
-    <Compile Include="Validators\IPv4SubnetValidator.cs" />
-    <Compile Include="Validators\OpacityTextboxValidator.cs" />
     <Compile Include="ViewModels\DNSLookupViewModel.cs" />
     <Compile Include="ViewModels\SubnetCalculatorSubnettingViewModel.cs" />
     <Compile Include="ViewModels\LookupOUILookupViewModel.cs" />
@@ -1001,8 +986,6 @@
     <Compile Include="Models\Lookup\OUILookup.cs" />
     <Compile Include="Models\Network\PortScanner.cs" />
     <Compile Include="Models\Settings\SettingsFileInfo.cs" />
-    <Compile Include="Validators\FileExistsValidator.cs" />
-    <Compile Include="Validators\PortRangeValidator.cs" />
     <Compile Include="ViewModels\PortScannerViewModel.cs" />
     <Compile Include="ViewModels\LookupPortViewModel.cs" />
     <Compile Include="ViewModels\PortScannerSettingsViewModel.cs" />
@@ -1112,17 +1095,10 @@
     <Compile Include="Views\IPScannerView.xaml.cs">
       <DependentUpon>IPScannerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Validators\MultipleHostsRangeValidator.cs" />
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Validators\SettingsFolderExistsValidator.cs" />
-    <Compile Include="Validators\SubnetmaskValidator.cs" />
-    <Compile Include="Validators\IPv4SubnetmaskOrCIDRValidator.cs" />
-    <Compile Include="Validators\IPv4AddressValidator.cs" />
-    <Compile Include="Validators\EmptyValidator.cs" />
-    <Compile Include="Validators\PortValidator.cs" />
-    <Compile Include="Validators\MACAddressValidator.cs" />
     <Compile Include="Views\WakeOnLANView.xaml.cs">
       <DependentUpon>WakeOnLANView.xaml</DependentUpon>
     </Compile>
@@ -1271,6 +1247,10 @@
     <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
       <Project>{5C3D1749-D260-4566-B448-B94B3AD9EEFF}</Project>
       <Name>NETworkManager.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Validators\NETworkManager.Validators.csproj">
+      <Project>{29172e71-52af-4e64-9683-30c5f4d0c746}</Project>
+      <Name>NETworkManager.Validators</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
