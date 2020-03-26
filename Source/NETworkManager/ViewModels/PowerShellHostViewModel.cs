@@ -17,6 +17,7 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Profile;
 using System.Windows.Threading;
+using NETworkManager.Models.PowerShellTmp;
 
 namespace NETworkManager.ViewModels
 {
@@ -365,7 +366,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfile()
         {
-            Connect(PowerShell.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+            Connect(Models.PowerShellTmp.PowerShell.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
@@ -373,7 +374,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
-                Arguments = PowerShell.BuildCommandLine(PowerShell.CreateSessionInfo(SelectedProfile))
+                Arguments = Models.PowerShellTmp.PowerShell.BuildCommandLine(Models.PowerShellTmp.PowerShell.CreateSessionInfo(SelectedProfile))
             };
 
             Process.Start(info);

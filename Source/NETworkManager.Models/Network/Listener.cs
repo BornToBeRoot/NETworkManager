@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network
 {
-    public class Listener
+    public partial class Listener
     {
         #region Methods
         public static Task<List<ListenerInfo>> GetAllActiveListenersAsync()
@@ -52,14 +52,6 @@ namespace NETworkManager.Models.Network
                 list.Add(new ListenerInfo(Protocol.UDP, ipEndPoint.Address, ipEndPoint.Port));
 
             return list;
-        }
-        #endregion
-
-        #region Enum
-        public enum Protocol
-        {
-            TCP,
-            UDP
         }
 
         #endregion

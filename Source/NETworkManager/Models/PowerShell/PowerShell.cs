@@ -1,9 +1,9 @@
 ﻿using NETworkManager.Models.Profile;
 using NETworkManager.Models.Settings;
 
-namespace NETworkManager.Models.PowerShell
+namespace NETworkManager.Models.PowerShellTmp
 {
-    public class PowerShell
+    public partial class PowerShell
     {
         public static string BuildCommandLine(PowerShellSessionInfo sessionInfo)
         {
@@ -26,15 +26,6 @@ namespace NETworkManager.Models.PowerShell
             };
 
             return info;
-        }
-
-        public enum ExecutionPolicy
-        {
-            Restricted,
-            AllSigned,
-            RemoteSigned,
-            Unrestricted,
-            Bypass
         }
     }
 }

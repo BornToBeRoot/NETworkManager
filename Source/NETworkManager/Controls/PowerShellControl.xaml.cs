@@ -12,6 +12,7 @@ using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Settings;
 using NETworkManager.Models.PowerShell;
+using NETworkManager.Models.PowerShellTmp;
 
 namespace NETworkManager.Controls
 {
@@ -124,7 +125,7 @@ namespace NETworkManager.Controls
             var info = new ProcessStartInfo
             {
                 FileName = _sessionInfo.ApplicationFilePath,
-                Arguments = PowerShell.BuildCommandLine(_sessionInfo)
+                Arguments = Models.PowerShellTmp.PowerShell.BuildCommandLine(_sessionInfo)
             };
 
             try

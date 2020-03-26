@@ -1,8 +1,9 @@
 ﻿using NETworkManager.Models.Settings;
+using static NETworkManager.Models.PuTTY.PuTTY;
 
-namespace NETworkManager.Models.PuTTY
+namespace NETworkManager.Models.PuTTYTMP
 {
-    public class PuTTY
+    public partial class PuTTY
     {
         public static string BuildCommandLine(PuTTYSessionInfo profileInfo)
         {
@@ -76,16 +77,6 @@ namespace NETworkManager.Models.PuTTY
 
             return portOrBaud;
         }
-
-        #region enum
-        public enum ConnectionMode
-        {
-            SSH,
-            Telnet,
-            Serial,
-            Rlogin,
-            RAW
-        }
-        #endregion
+        
     }
 }

@@ -11,7 +11,7 @@ using NETworkManager.Models.Network;
 
 namespace NETworkManager.Models.Export
 {
-    public static class ExportManager
+    public static partial class ExportManager
     {
         #region Variables
         private static readonly XDeclaration DefaultXDeclaration = new XDeclaration("1.0", "utf-8", "yes");
@@ -885,14 +885,7 @@ namespace NETworkManager.Models.Export
                     return string.Empty;
             }
         }
-        #endregion
 
-        public enum ExportFileType
-        {
-            CSV,
-            XML,
-            JSON,
-            TXT
-        }
+#endregion
     }
 }

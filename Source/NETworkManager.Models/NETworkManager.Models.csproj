@@ -36,6 +36,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,7 +49,21 @@
     <Compile Include="Application.cs" />
     <Compile Include="Application.Name.cs" />
     <Compile Include="ApplicationInfo.cs" />
+    <Compile Include="Export\ExportManager.cs" />
+    <Compile Include="Export\ExportManager.ExportFileType.cs" />
+    <Compile Include="Lookup\OUIInfo.cs" />
+    <Compile Include="Lookup\OUILookup.cs" />
+    <Compile Include="Lookup\PortLookup.cs" />
+    <Compile Include="Lookup\PortLookup.Protocol.cs" />
+    <Compile Include="Lookup\PortLookupInfo.cs" />
+    <Compile Include="Network\ARP.cs" />
+    <Compile Include="Network\ARPInfo.cs" />
     <Compile Include="Network\BandwidthInfo.cs" />
+    <Compile Include="Network\BandwidthMeter.cs" />
+    <Compile Include="Network\BandwidthMeterSpeedArgs.cs" />
+    <Compile Include="Network\Connection.cs" />
+    <Compile Include="Network\Connection.Protocol.cs" />
+    <Compile Include="Network\ConnectionInfo.cs" />
     <Compile Include="Network\ConnectionState.cs" />
     <Compile Include="Network\DiscoveryProtocol.cs" />
     <Compile Include="Network\DiscoveryProtocol.Protocol.cs" />
@@ -56,8 +71,24 @@
     <Compile Include="Network\DiscoveryProtocolPackageArgs.cs" />
     <Compile Include="Network\DiscoveryProtocolPackageInfo.cs" />
     <Compile Include="Network\DiscoveryProtocolWarningArgs.cs" />
+    <Compile Include="Network\DNSLookup.cs" />
+    <Compile Include="Network\DNSLookupCompleteArgs.cs" />
+    <Compile Include="Network\DNSLookupErrorArgs.cs" />
+    <Compile Include="Network\DNSLookupRecordArgs.cs" />
+    <Compile Include="Network\DNSLookupRecordInfo.cs" />
+    <Compile Include="Network\DNSServer.cs" />
     <Compile Include="Network\DNSServerInfo.cs" />
+    <Compile Include="Network\HostFoundArgs.cs" />
+    <Compile Include="Network\HostInfo.cs" />
+    <Compile Include="Network\HostNotFoundException.cs" />
+    <Compile Include="Network\HTTPHeaders.cs" />
+    <Compile Include="Network\HTTPHeadersOptions.cs" />
+    <Compile Include="Network\IPNetworkInfo.cs" />
+    <Compile Include="Network\IPScanner.cs" />
     <Compile Include="Network\IPv4Address.cs" />
+    <Compile Include="Network\Listener.cs" />
+    <Compile Include="Network\Listener.Protocol.cs" />
+    <Compile Include="Network\ListenerInfo.cs" />
     <Compile Include="Network\MaximumHopsReachedArgs.cs" />
     <Compile Include="Network\NetworkInterface.cs" />
     <Compile Include="Network\NetworkInterfaceConfig.cs" />
@@ -67,13 +98,27 @@
     <Compile Include="Network\PingInfo.cs" />
     <Compile Include="Network\PingMonitorOptions.cs" />
     <Compile Include="Network\PingReceivedArgs.cs" />
+    <Compile Include="Network\PortInfo.cs" />
+    <Compile Include="Network\PortScannedArgs.cs" />
+    <Compile Include="Network\PortScanner.cs" />
     <Compile Include="Network\PortState.cs" />
+    <Compile Include="Network\ProgressChangedArgs.cs" />
+    <Compile Include="Network\SNMP.cs" />
+    <Compile Include="Network\SNMPReceivedArgs.cs" />
+    <Compile Include="Network\SNMPReceivedInfo.cs" />
     <Compile Include="Network\Subnetmask.cs" />
     <Compile Include="Network\SubnetmaskInfo.cs" />
+    <Compile Include="Network\Traceroute.cs" />
+    <Compile Include="Network\TracerouteHopInfo.cs" />
+    <Compile Include="Network\TracerouteHopReceivedArgs.cs" />
+    <Compile Include="Network\WakeOnLanInfo.cs" />
+    <Compile Include="Network\WhoisServerInfo.cs" />
     <Compile Include="Network\WiFi.cs" />
     <Compile Include="Network\WiFiAdapterInfo.cs" />
     <Compile Include="Network\WiFiNetworkInfo.cs" />
+    <Compile Include="PowerShell\PowerShell.ExecutionPolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PuTTY\PuTTY.ConnectionMode.cs" />
     <Compile Include="RemoteDesktop\AudioCaptureRedirectionMode.cs" />
     <Compile Include="RemoteDesktop\AudioRedirectionMode.cs" />
     <Compile Include="RemoteDesktop\KeyboardHookMode.cs" />
@@ -86,6 +131,12 @@
   <ItemGroup>
     <PackageReference Include="ControlzEx">
       <Version>3.0.2.4</Version>
+    </PackageReference>
+    <PackageReference Include="IPNetwork2">
+      <Version>2.5.189</Version>
+    </PackageReference>
+    <PackageReference Include="Lextm.SharpSnmpLib">
+      <Version>12.0.0</Version>
     </PackageReference>
     <PackageReference Include="MahApps.Metro.IconPacks">
       <Version>3.5.0</Version>
@@ -114,5 +165,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

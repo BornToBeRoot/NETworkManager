@@ -17,6 +17,7 @@ using System.Windows;
 using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Profile;
 using System.Windows.Threading;
+using NETworkManager.Models.PuTTYTMP;
 
 namespace NETworkManager.ViewModels
 {
@@ -374,9 +375,9 @@ namespace NETworkManager.ViewModels
                 // Create Profile info
                 var info = new PuTTYSessionInfo
                 {
-                    HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
+                    HostOrSerialLine = instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
-                    PortOrBaud = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
+                    PortOrBaud = instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
                     Username = instance.Username,
                     Profile = instance.Profile,
                     AdditionalCommandLine = instance.AdditionalCommandLine
@@ -409,7 +410,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
-                Arguments = PuTTY.BuildCommandLine(PuTTYSessionInfo.Parse(SelectedProfile))
+                Arguments = Models.PuTTYTMP.PuTTY.BuildCommandLine(PuTTYSessionInfo.Parse(SelectedProfile))
             };
 
             Process.Start(info);

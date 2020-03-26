@@ -99,7 +99,7 @@ namespace NETworkManager.Models.Network
         {
             Task.Run(() =>
             {
-                using (PowerShell powerShell = PowerShell.Create())
+                using (System.Management.Automation.PowerShell powerShell = System.Management.Automation.PowerShell.Create())
                 {
                     powerShell.AddScript(DiscoveryScript);
                     powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -NetAdapter \"{netAdapter}\" -Duration {duration}" + (protocol != Protocol.LLDP_CDP ? $" -Type {protocol.ToString()}" : "") + "| Get-DiscoveryProtocolData");

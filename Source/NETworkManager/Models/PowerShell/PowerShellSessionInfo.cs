@@ -1,6 +1,6 @@
 ﻿using static NETworkManager.Models.PowerShell.PowerShell;
 
-namespace NETworkManager.Models.PowerShell
+namespace NETworkManager.Models.PowerShellTmp
 {
     public class PowerShellSessionInfo
     {

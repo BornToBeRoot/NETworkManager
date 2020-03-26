@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.IO;
-using NETworkManager.Models.Settings;
+//using NETworkManager.Models.Settings;
 using System;
 using System.Xml;
 
 namespace NETworkManager.Models.Lookup
 {
-    public static class PortLookup
+    public static partial class PortLookup
     {
         #region Variables
-        private static readonly string PortsFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Ports.xml");
+        private static readonly string PortsFilePath = ""; // ToDo //Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Ports.xml");
 
         private static readonly List<PortLookupInfo> PortList;
         private static readonly Lookup<int, PortLookupInfo> Ports;
@@ -32,7 +31,7 @@ namespace NETworkManager.Models.Lookup
                     continue;
 
                 int.TryParse(node.SelectSingleNode("Number")?.InnerText, out var port);
-                System.Enum.TryParse<Protocol>(node.SelectSingleNode("Protocol")?.InnerText, true, out var protocol);
+                Enum.TryParse<Protocol>(node.SelectSingleNode("Protocol")?.InnerText, true, out var protocol);
 
                 PortList.Add(new PortLookupInfo(port, protocol, node.SelectSingleNode("Name")?.InnerText, node.SelectSingleNode("Description")?.InnerText));
             }
@@ -73,16 +72,7 @@ namespace NETworkManager.Models.Lookup
             return list;
 
         }
-        #endregion
 
-        public enum Protocol
-        {
-            Tcp,
-            Udp,
-            // ReSharper disable once UnusedMember.Global
-            Sctp,
-            // ReSharper disable once UnusedMember.Global
-            Dccp
-        }
+#endregion
     }
 }

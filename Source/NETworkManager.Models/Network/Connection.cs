@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network
 {
-    public class Connection
+    public partial class Connection
     {
         #region Methods
         public static Task<List<ConnectionInfo>> GetActiveTcpConnectionsAsync()
@@ -17,14 +17,6 @@ namespace NETworkManager.Models.Network
         {
             return IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpConnections().Select(tcpInfo => new ConnectionInfo(Protocol.TCP, tcpInfo.LocalEndPoint.Address, tcpInfo.LocalEndPoint.Port, tcpInfo.RemoteEndPoint.Address, tcpInfo.RemoteEndPoint.Port, tcpInfo.State)).ToList();
         }
-        #endregion
-
-        #region Enum
-        public enum Protocol
-        {
-            TCP
-        }
-
         #endregion
     }
 }

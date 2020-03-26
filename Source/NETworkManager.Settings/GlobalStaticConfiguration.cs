@@ -9,8 +9,6 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
 using DnsClient;
-using static NETworkManager.Models.PowerShell.PowerShell;
-using static NETworkManager.Models.PuTTY.PuTTY;
 
 // ReSharper disable InconsistentNaming
 
@@ -115,10 +113,10 @@ namespace NETworkManager
 
         // Application: PowerShell
         public static string PowerShell_ApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");
-        public static ExecutionPolicy PowerShell_ExecutionPolicy => ExecutionPolicy.RemoteSigned;
+        public static PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy => PowerShell.ExecutionPolicy.RemoteSigned;
 
         // Application: PuTTY
-        public static ConnectionMode PuTTY_DefaultConnectionMode => ConnectionMode.SSH;
+        public static PuTTY.ConnectionMode PuTTY_DefaultConnectionMode => PuTTY.ConnectionMode.SSH;
         public static int PuTTY_SSHPort => 22;
         public static string PuTTY_SerialLine => "COM1";
         public static int PuTTY_TelnetPort => 23;
