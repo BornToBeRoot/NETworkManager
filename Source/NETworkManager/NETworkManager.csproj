@@ -156,7 +156,6 @@
     <Compile Include="Models\PowerShell\PowerShell.cs" />
     <Compile Include="Models\WebConsole\WebConsole.cs" />
     <Compile Include="Models\TigerVNC\TigerVNC.cs" />
-    <Compile Include="GlobalStaticConfiguration.cs" />
     <Compile Include="ProfileViewInfo.cs" />
     <Compile Include="ProfileViewManager.cs" />
     <Compile Include="StatusWindow.xaml.cs">
@@ -1139,6 +1138,10 @@
     <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
       <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
       <Name>NETworkManager.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj">
+      <Project>{954e8703-3e6e-42bf-bd28-f0b19be10e0c}</Project>
+      <Name>NETworkManager.Settings</Name>
     </ProjectReference>
     <ProjectReference Include="..\NETworkManager.Update\NETworkManager.Update.csproj">
       <Project>{008467af-d83f-4b1e-8733-b65136f595f2}</Project>

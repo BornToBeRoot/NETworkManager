@@ -9,6 +9,7 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
 using DnsClient;
+using NETworkManager.Models.Application;
 
 // ReSharper disable InconsistentNaming
 
@@ -26,7 +27,7 @@ namespace NETworkManager
         public static string XmlFileExtensionFilter => "XML-File (*.xml)|*.xml";
 
         // Settings
-        public static Name General_DefaultApplicationViewName => Name.Dashboard;
+        public static ApplicationName General_DefaultApplicationViewName => ApplicationName.Dashboard;
         public static int General_BackgroundJobInterval => 15;
         public static int General_HistoryListEntries => 5;
         public static double Appearance_Opacity => 0.85;
