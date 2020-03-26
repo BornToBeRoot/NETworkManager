@@ -8,21 +8,21 @@ using System.Windows.Data;
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Convert <see cref="Name"/> to translated <see cref="string"/> or wise versa.
+    /// Convert <see cref="ApplicationName"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
     public sealed class ApplicationNameToTranslatedStringConverter : IValueConverter
     {
         /// <summary>
-        /// Convert <see cref="Name"/> to translated <see cref="string"/>. 
+        /// Convert <see cref="ApplicationName"/> to translated <see cref="string"/>. 
         /// </summary>
-        /// <param name="value">Object from type <see cref="Name"/>.</param>
+        /// <param name="value">Object from type <see cref="ApplicationName"/>.</param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
-        /// <returns>Translated <see cref="Name"/>.</returns>
+        /// <returns>Translated <see cref="ApplicationName"/>.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is Name name))
+            if (!(value is ApplicationName name))
                 return "-/-";
 
             return ApplicationNameTranslator.GetInstance().Translate(name);

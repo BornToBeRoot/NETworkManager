@@ -145,7 +145,7 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            InterTabClient = new DragablzInterTabClient(Models.Application.Name.RemoteDesktop);
+            InterTabClient = new DragablzInterTabClient(Models.Application.ApplicationName.RemoteDesktop);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 

@@ -12,21 +12,21 @@ namespace NETworkManager
             new ProfileViewInfo(Name.General, new PackIconModern{ Kind = PackIconModernKind.Box }),
 
             // Applications
-            new ProfileViewInfo(Name.NetworkInterface, Models.Application.Application.GetIcon(Models.Application.Name.NetworkInterface)),
-            new ProfileViewInfo(Name.IPScanner, Models.Application.Application.GetIcon(Models.Application.Name.IPScanner)),
-            new ProfileViewInfo(Name.PortScanner, Models.Application.Application.GetIcon(Models.Application.Name.PortScanner)),
-            new ProfileViewInfo(Name.Ping, Models.Application.Application.GetIcon(Models.Application.Name.Ping)),
-            new ProfileViewInfo(Name.PingMonitor, Models.Application.Application.GetIcon(Models.Application.Name.PingMonitor)),
-            new ProfileViewInfo(Name.Traceroute, Models.Application.Application.GetIcon(Models.Application.Name.Traceroute)),
-            new ProfileViewInfo(Name.DNSLookup, Models.Application.Application.GetIcon(Models.Application.Name.DNSLookup)),
-            new ProfileViewInfo(Name.RemoteDesktop, Models.Application.Application.GetIcon(Models.Application.Name.RemoteDesktop)),
-            new ProfileViewInfo(Name.PowerShell, Models.Application.Application.GetIcon(Models.Application.Name.PowerShell)),
-            new ProfileViewInfo(Name.PuTTY, Models.Application.Application.GetIcon(Models.Application.Name.PuTTY)),
-            new ProfileViewInfo(Name.TigerVNC, Models.Application.Application.GetIcon(Models.Application.Name.TigerVNC)),
-            new ProfileViewInfo(Name.WebConsole, Models.Application.Application.GetIcon(Models.Application.Name.WebConsole)),
-            new ProfileViewInfo(Name.WakeOnLAN, Models.Application.Application.GetIcon(Models.Application.Name.WakeOnLAN)),
-            new ProfileViewInfo(Name.HTTPHeaders, Models.Application.Application.GetIcon(Models.Application.Name.HTTPHeaders)),
-            new ProfileViewInfo(Name.Whois, Models.Application.Application.GetIcon(Models.Application.Name.Whois))
+            new ProfileViewInfo(Name.NetworkInterface, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.NetworkInterface)),
+            new ProfileViewInfo(Name.IPScanner, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.IPScanner)),
+            new ProfileViewInfo(Name.PortScanner, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.PortScanner)),
+            new ProfileViewInfo(Name.Ping, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.Ping)),
+            new ProfileViewInfo(Name.PingMonitor, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.PingMonitor)),
+            new ProfileViewInfo(Name.Traceroute, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.Traceroute)),
+            new ProfileViewInfo(Name.DNSLookup, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.DNSLookup)),
+            new ProfileViewInfo(Name.RemoteDesktop, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.RemoteDesktop)),
+            new ProfileViewInfo(Name.PowerShell, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.PowerShell)),
+            new ProfileViewInfo(Name.PuTTY, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.PuTTY)),
+            new ProfileViewInfo(Name.TigerVNC, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.TigerVNC)),
+            new ProfileViewInfo(Name.WebConsole, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.WebConsole)),
+            new ProfileViewInfo(Name.WakeOnLAN, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.WakeOnLAN)),
+            new ProfileViewInfo(Name.HTTPHeaders, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.HTTPHeaders)),
+            new ProfileViewInfo(Name.Whois, Models.Application.ApplicationManager.GetIcon(Models.Application.ApplicationName.Whois))
         };
 
         public static string TranslateName(Name name)

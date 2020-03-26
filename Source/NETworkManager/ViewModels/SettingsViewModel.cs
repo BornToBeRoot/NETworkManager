@@ -108,7 +108,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public SettingsViewModel(Name applicationName)
+        public SettingsViewModel(ApplicationName applicationName)
         {
             LoadSettings();
 
@@ -148,13 +148,13 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        public void ChangeSettingsView(Name applicationName)
+        public void ChangeSettingsView(ApplicationName applicationName)
         {
             // Don't change the view, if the user has filtered the settings...
             if (!string.IsNullOrEmpty(Search))
                 return;
 
-            if (System.Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName.ToString()) && Name.None.ToString() != applicationName.ToString())
+            if (System.Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName.ToString()) && ApplicationName.None.ToString() != applicationName.ToString())
                 SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName.ToString());
             else
                 SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == SettingsViewManager.Name.General);

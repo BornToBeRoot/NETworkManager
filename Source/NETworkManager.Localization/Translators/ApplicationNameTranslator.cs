@@ -4,7 +4,7 @@ using NETworkManager.Utilities;
 namespace NETworkManager.Localization.Translators
 {
     /// <summary>
-    /// Class to translate <see cref="Name"/>.
+    /// Class to translate <see cref="ApplicationName"/>.
     /// </summary>
     public class ApplicationNameTranslator : SingletonBase<ApplicationNameTranslator>, ILocalizationStringTranslator
     {
@@ -14,10 +14,10 @@ namespace NETworkManager.Localization.Translators
         private const string _identifier = "ApplicationName_";
 
         /// <summary>
-        /// Method to translate <see cref="Name"/>.
+        /// Method to translate <see cref="ApplicationName"/>.
         /// </summary>
-        /// <param name="value"><see cref="Name"/> as <see cref="string"/>.</param>
-        /// <returns>Translated <see cref="Name"/>.</returns>
+        /// <param name="value"><see cref="ApplicationName"/> as <see cref="string"/>.</param>
+        /// <returns>Translated <see cref="ApplicationName"/>.</returns>
         public string Translate(string value)
         {
             var translation = Resources.Strings.ResourceManager.GetString(_identifier + value, LocalizationManager.GetInstance().Culture);
@@ -26,11 +26,11 @@ namespace NETworkManager.Localization.Translators
         }
 
         /// <summary>
-        /// Method to translate <see cref="Name"/>.
+        /// Method to translate <see cref="ApplicationName"/>.
         /// </summary>
-        /// <param name="name"><see cref="Name"/>.</param>
-        /// <returns>Translated <see cref="Name"/>.</returns>
-        public string Translate(Name name)
+        /// <param name="name"><see cref="ApplicationName"/>.</param>
+        /// <returns>Translated <see cref="ApplicationName"/>.</returns>
+        public string Translate(ApplicationName name)
         {
             return Translate(name.ToString());
         }

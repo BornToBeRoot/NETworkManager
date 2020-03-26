@@ -26,9 +26,9 @@ namespace NETworkManager.Controls
 
         #region Variables
         public IInterTabClient InterTabClient { get; }
-        private Name _applicationName;
+        private ApplicationName _applicationName;
 
-        public Name ApplicationName
+        public ApplicationName ApplicationName
         {
             get => _applicationName;
             set
@@ -57,7 +57,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor
-        public DragablzTabHostWindow(Name applicationName)
+        public DragablzTabHostWindow(ApplicationName applicationName)
         {
             InitializeComponent();
             DataContext = this;
@@ -82,45 +82,45 @@ namespace NETworkManager.Controls
             // Switch between application identifiert...
             switch (_applicationName)
             {
-                case Models.Application.Name.None:
+                case Models.Application.ApplicationName.None:
                     break;
-                case Models.Application.Name.IPScanner:
+                case Models.Application.ApplicationName.IPScanner:
                     ((IPScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.Name.PortScanner:
+                case Models.Application.ApplicationName.PortScanner:
                     ((PortScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.Name.Ping:
+                case Models.Application.ApplicationName.Ping:
                     ((PingView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.Name.Traceroute:
+                case Models.Application.ApplicationName.Traceroute:
                     ((TracerouteView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.Name.DNSLookup:
+                case Models.Application.ApplicationName.DNSLookup:
                     ((DNSLookupView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.Name.RemoteDesktop:
+                case Models.Application.ApplicationName.RemoteDesktop:
                     ((RemoteDesktopControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.Name.PowerShell:
+                case Models.Application.ApplicationName.PowerShell:
                     ((PowerShellControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.Name.PuTTY:
+                case Models.Application.ApplicationName.PuTTY:
                     ((PuTTYControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.Name.TigerVNC:
+                case Models.Application.ApplicationName.TigerVNC:
                     ((TigerVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.Name.WebConsole:
+                case Models.Application.ApplicationName.WebConsole:
                     ((WebConsoleControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.Name.SNMP:
+                case Models.Application.ApplicationName.SNMP:
                     ((SNMPView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.Name.HTTPHeaders:
+                case Models.Application.ApplicationName.HTTPHeaders:
                     ((HTTPHeadersView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.Name.Whois:
+                case Models.Application.ApplicationName.Whois:
                     ((WhoisView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 default:

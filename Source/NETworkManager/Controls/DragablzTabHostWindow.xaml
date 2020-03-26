@@ -38,7 +38,7 @@
                     </Setter>
                     <Style.Triggers>
                         <!-- Add ContextMenu for RemoteDesktop -->
-                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static application:Name.RemoteDesktop}">
+                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static application:ApplicationName.RemoteDesktop}">
                             <DataTrigger.Setters>
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
@@ -145,7 +145,7 @@
                             </DataTrigger.Setters>
                         </DataTrigger>
                         <!-- Add ContextMenu for PowerShell -->
-                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static application:Name.PowerShell}">
+                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static application:ApplicationName.PowerShell}">
                             <DataTrigger.Setters>
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
@@ -213,7 +213,7 @@
                             </DataTrigger.Setters>
                         </DataTrigger>
                         <!-- Add ContextMenu for PuTTY -->
-                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static application:Name.PuTTY}">
+                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static application:ApplicationName.PuTTY}">
                             <DataTrigger.Setters>
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
@@ -291,7 +291,7 @@
                             </DataTrigger.Setters>
                         </DataTrigger>
                         <!-- Add ContextMenu for TigerVNC -->
-                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static application:Name.TigerVNC}">
+                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static application:ApplicationName.TigerVNC}">
                             <DataTrigger.Setters>
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
@@ -359,7 +359,7 @@
                             </DataTrigger.Setters>
                         </DataTrigger>
                         <!-- Add ContextMenu for WebConsole -->
-                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static application:Name.WebConsole}">
+                        <DataTrigger Binding="{Binding ApplicationName}" Value="{x:Static application:ApplicationName.WebConsole}">
                             <DataTrigger.Setters>
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>

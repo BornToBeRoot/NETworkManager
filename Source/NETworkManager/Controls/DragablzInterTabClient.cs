@@ -6,9 +6,9 @@ namespace NETworkManager.Controls
 {
     public class DragablzInterTabClient : IInterTabClient
     {
-        private readonly Name _applicationName;
+        private readonly ApplicationName _applicationName;
 
-        public DragablzInterTabClient(Name applicationName)
+        public DragablzInterTabClient(ApplicationName applicationName)
         {
             _applicationName = applicationName;
         }

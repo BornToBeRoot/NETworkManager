@@ -372,7 +372,7 @@ namespace NETworkManager.ViewModels
             if (!(name is string appName))
                 return;
 
-            if (!System.Enum.TryParse(appName, out Models.Application.Name applicationName))
+            if (!System.Enum.TryParse(appName, out Models.Application.ApplicationName applicationName))
                 return;
 
             var host = !string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.Hostname : SelectedHostResult.PingInfo.IPAddress.ToString();
@@ -384,14 +384,14 @@ namespace NETworkManager.ViewModels
 
         private void PerformDNSLookupIPAddressAction()
         {
-            EventSystem.RedirectDataToApplication(Models.Application.Name.DNSLookup, SelectedHostResult.PingInfo.IPAddress.ToString());
+            EventSystem.RedirectDataToApplication(Models.Application.ApplicationName.DNSLookup, SelectedHostResult.PingInfo.IPAddress.ToString());
         }
 
         public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
 
         private void PerformDNSLookupHostnameAction()
         {
-            EventSystem.RedirectDataToApplication(Models.Application.Name.DNSLookup, SelectedHostResult.Hostname);
+            EventSystem.RedirectDataToApplication(Models.Application.ApplicationName.DNSLookup, SelectedHostResult.Hostname);
         }
 
         public ICommand CustomCommandCommand => new RelayCommand(CustomCommandAction);

@@ -7,24 +7,24 @@ using NETworkManager.Models.Application;
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Convert <see cref="Name"/> to icon (<see cref="Canvas"/>) or wise versa.
+    /// Convert <see cref="ApplicationName"/> to icon (<see cref="Canvas"/>) or wise versa.
     /// </summary>
     public sealed class ApplicationNameToIconConverter : IValueConverter
     {
         /// <summary>
-        /// Convert <see cref="Name"/> to icon (<see cref="Canvas"/>).
+        /// Convert <see cref="ApplicationName"/> to icon (<see cref="Canvas"/>).
         /// </summary>
-        /// <param name="value">Object from type <see cref="Name"/>.</param>
+        /// <param name="value">Object from type <see cref="ApplicationName"/>.</param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
         /// <returns>Icon (cref="Canvas"/>).</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is Name name))
+            if (!(value is ApplicationName name))
                 return null;
 
-            return Application.GetIcon(name);
+            return ApplicationManager.GetIcon(name);
         }
         
         /// <summary>

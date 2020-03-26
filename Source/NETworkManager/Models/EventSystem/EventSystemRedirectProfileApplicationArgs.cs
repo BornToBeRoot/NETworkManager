@@ -6,10 +6,10 @@ namespace NETworkManager.Models.EventSystem
 {
     public class EventSystemRedirectProfileApplicationArgs : EventArgs
     {
-        public Name Application { get; set; }
+        public ApplicationName Application { get; set; }
         public ProfileInfo Profile { get; set; }
         
-        public EventSystemRedirectProfileApplicationArgs(Name application, ProfileInfo profile)
+        public EventSystemRedirectProfileApplicationArgs(ApplicationName application, ProfileInfo profile)
         {
             Application = application;
             Profile = profile;

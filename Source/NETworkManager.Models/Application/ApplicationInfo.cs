@@ -8,7 +8,7 @@
         /// <summary>
         /// Name of the application.
         /// </summary>
-        public Name Name { get; set; }
+        public ApplicationName Name { get; set; }
 
         /// <summary>
         /// Indicates that the application is visible to the user.
@@ -27,7 +27,7 @@
         /// Initializes a new instance of the <see cref="ApplicationInfo"/> class and passes the <see cref="Name"/> as paramteter.
         /// </summary>
         /// <param name="name"><see cref="Name"/></param>
-        public ApplicationInfo(Name name)
+        public ApplicationInfo(ApplicationName name)
         {
             Name = name;
             IsVisible = true;

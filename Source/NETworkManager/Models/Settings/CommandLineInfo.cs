@@ -9,7 +9,7 @@ namespace NETworkManager.Models.Settings
         public bool ResetSettings { get; set; }
         public int RestartPid { get; set; } = -1;
 
-        public Name Application { get; set; } = Name.None;
+        public ApplicationName Application { get; set; } = ApplicationName.None;
         public string WrongParameter { get; set; }
 
         public CommandLineInfo()

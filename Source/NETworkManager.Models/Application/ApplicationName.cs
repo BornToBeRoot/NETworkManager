@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents all available applications.
     /// </summary>
-    public enum Name
+    public enum ApplicationName
     {
         /// <summary>
         /// No application.

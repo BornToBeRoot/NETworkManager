@@ -393,7 +393,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(Name.IPScanner.ToString(),
+                new XElement(ApplicationName.IPScanner.ToString(),
                     new XElement(nameof(HostInfo) + "s",
 
                     from info in collection
@@ -415,7 +415,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(Name.PortScanner.ToString(),
+                new XElement(ApplicationName.PortScanner.ToString(),
                     new XElement(nameof(PortInfo) + "s",
 
                         from info in collection
@@ -436,7 +436,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(Name.Ping.ToString(),
+                new XElement(ApplicationName.Ping.ToString(),
                     new XElement(nameof(PingInfo) + "s",
 
                         from info in collection
@@ -457,7 +457,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(Name.Traceroute.ToString(),
+                new XElement(ApplicationName.Traceroute.ToString(),
                     new XElement(nameof(TracerouteHopInfo) + "s",
 
                         from info in collection
@@ -480,7 +480,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(Name.DNSLookup.ToString(),
+                new XElement(ApplicationName.DNSLookup.ToString(),
                     new XElement(nameof(DNSLookupRecordInfo) + "s",
 
                         from info in collection
@@ -501,7 +501,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(Name.SNMP.ToString(),
+                new XElement(ApplicationName.SNMP.ToString(),
                     new XElement(nameof(SNMPReceivedInfo) + "s",
 
                         from info in collection
@@ -517,7 +517,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(Name.SNMP.ToString(),
+                new XElement(ApplicationName.SNMP.ToString(),
                     new XElement(nameof(IPNetworkInfo) + "s",
 
                         from info in collection
@@ -539,7 +539,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(Name.Lookup.ToString(),
+                new XElement(ApplicationName.Lookup.ToString(),
                     new XElement(nameof(OUIInfo) + "s",
 
                         from info in collection
@@ -555,7 +555,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(Name.Lookup.ToString(),
+                new XElement(ApplicationName.Lookup.ToString(),
                     new XElement(nameof(PortLookupInfo) + "s",
 
                         from info in collection
@@ -573,7 +573,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(Name.Connections.ToString(),
+                new XElement(ApplicationName.Connections.ToString(),
                     new XElement(nameof(ConnectionInfo) + "s",
 
                         from info in collection
@@ -593,7 +593,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(Name.Listeners.ToString(),
+                new XElement(ApplicationName.Listeners.ToString(),
                     new XElement(nameof(ListenerInfo) + "s",
 
                         from info in collection
@@ -610,7 +610,7 @@ namespace NETworkManager.Models.Export
         {
             var document = new XDocument(DefaultXDeclaration,
 
-                new XElement(Name.ARPTable.ToString(),
+                new XElement(ApplicationName.ARPTable.ToString(),
                     new XElement(nameof(ARPInfo) + "s",
 
                         from info in collection

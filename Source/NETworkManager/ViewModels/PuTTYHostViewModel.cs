@@ -166,7 +166,7 @@ namespace NETworkManager.ViewModels
             // Check if putty is available...
             CheckIfConfigured();
 
-            InterTabClient = new DragablzInterTabClient(Models.Application.Name.PuTTY);
+            InterTabClient = new DragablzInterTabClient(Models.Application.ApplicationName.PuTTY);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 

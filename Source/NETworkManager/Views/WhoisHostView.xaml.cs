@@ -14,7 +14,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = Models.Application.Name.Whois.ToString();
+            InterTabController.Partition = Models.Application.ApplicationName.Whois.ToString();
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)

@@ -7,7 +7,7 @@ namespace NETworkManager.Views
     {
         private readonly SettingsViewModel _viewModel;
 
-        public SettingsView(Name applicationName)
+        public SettingsView(ApplicationName applicationName)
         {
             InitializeComponent();
             _viewModel = new SettingsViewModel(applicationName);
@@ -20,7 +20,7 @@ namespace NETworkManager.Views
             e.Handled = true;
         }
 
-        public void ChangeSettingsView(Name name)
+        public void ChangeSettingsView(ApplicationName name)
         {
             _viewModel.ChangeSettingsView(name);
 

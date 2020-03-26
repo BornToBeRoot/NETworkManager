@@ -11,7 +11,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = Models.Application.Name.PuTTY.ToString();
+            InterTabController.Partition = Models.Application.ApplicationName.PuTTY.ToString();
         }
 
         public void AddTab(string host)

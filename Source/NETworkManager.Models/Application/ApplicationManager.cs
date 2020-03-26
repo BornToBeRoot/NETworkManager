@@ -9,13 +9,13 @@ namespace NETworkManager.Models.Application
     /// <summary>
     /// Provides methods to manage networkmanger applications.
     /// </summary>
-    public static class Application
+    public static class ApplicationManager
     {
         /// <summary>
         /// Method to return all available applications in.
         /// </summary>
         /// <returns>All names as array.</returns>
-        public static Name[] GetNames() => (Name[])Enum.GetValues(typeof(Name));
+        public static ApplicationName[] GetNames() => (ApplicationName[])Enum.GetValues(typeof(ApplicationName));
 
         /// <summary>
         /// Method returns a list with all <see cref="ApplicationInfo"/>.
@@ -25,96 +25,96 @@ namespace NETworkManager.Models.Application
         {
             var list = new List<ApplicationInfo>();
 
-            foreach (var name in GetNames().Where(x => x != Name.None))
+            foreach (var name in GetNames().Where(x => x != ApplicationName.None))
                 list.Add(new ApplicationInfo(name));
             
             return list;
         }
 
         /// <summary>
-        /// Method will return the icon based on <see cref="Name"/>.
+        /// Method will return the icon based on <see cref="ApplicationName"/>.
         /// </summary>
-        /// <param name="name"><see cref="Name"/></param>
+        /// <param name="name"><see cref="ApplicationName"/></param>
         /// <returns>Application icon as <see cref="Canvas"/>.</returns>
-        public static Canvas GetIcon(Name name)
+        public static Canvas GetIcon(ApplicationName name)
         {
             var canvas = new Canvas();
 
             switch (name)
             {
-                case Name.Dashboard:
+                case ApplicationName.Dashboard:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.ViewDashboardVariant });
                     break;
-                case Name.NetworkInterface:
+                case ApplicationName.NetworkInterface:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Network });
                     break;
-                case Name.WiFi:
+                case ApplicationName.WiFi:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.AccessPointNetwork });
                     break;
-                case Name.IPScanner:
+                case ApplicationName.IPScanner:
                     canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.NetworkWiredSolid });
                     break;
-                case Name.PortScanner:
+                case ApplicationName.PortScanner:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.NetworkPort });
                     break;
-                case Name.Ping:
+                case ApplicationName.Ping:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.LanConnect });
                     break;
-                case Name.PingMonitor:
+                case ApplicationName.PingMonitor:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.RadarScreen });
                     break;
-                case Name.Traceroute:
+                case ApplicationName.Traceroute:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.TransitConnection });
                     break;
-                case Name.DNSLookup:
+                case ApplicationName.DNSLookup:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.SearchWeb });
                     break;
-                case Name.RemoteDesktop:
+                case ApplicationName.RemoteDesktop:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.RemoteDesktop });
                     break;
-                case Name.PowerShell:
+                case ApplicationName.PowerShell:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Powershell });
                     break;
-                case Name.PuTTY:
+                case ApplicationName.PuTTY:
                     canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.TerminalSolid });
                     break;
-                case Name.TigerVNC:
+                case ApplicationName.TigerVNC:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.EyeOutline });
                     break;
-                case Name.WebConsole:
+                case ApplicationName.WebConsole:
                     canvas.Children.Add(new PackIconPicolIcons { Kind = PackIconPicolIconsKind.Website });
                     break;
-                case Name.SNMP:
+                case ApplicationName.SNMP:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Switch });
                     break;
-                case Name.DiscoveryProtocol:
+                case ApplicationName.DiscoveryProtocol:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.SwapHorizontal });
                     break;
-                case Name.WakeOnLAN:
+                case ApplicationName.WakeOnLAN:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Power });
                     break;
-                case Name.HTTPHeaders:
+                case ApplicationName.HTTPHeaders:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Web });
                     break;
-                case Name.Whois:
+                case ApplicationName.Whois:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.CloudSearchOutline });
                     break;
-                case Name.SubnetCalculator:
+                case ApplicationName.SubnetCalculator:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Calculator });
                     break;
-                case Name.Lookup:
+                case ApplicationName.Lookup:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.DatabaseSearch });
                     break;
-                case Name.Connections:
+                case ApplicationName.Connections:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Connect });
                     break;
-                case Name.Listeners:
+                case ApplicationName.Listeners:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Wan });
                     break;
-                case Name.ARPTable:
+                case ApplicationName.ARPTable:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.TableOfContents });
                     break;
-                case Name.None:
+                case ApplicationName.None:
                 default:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.SmileyFrown });
                     break;                    

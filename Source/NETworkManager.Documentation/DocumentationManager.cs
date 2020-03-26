@@ -75,53 +75,53 @@ namespace NETworkManager.Documentation
                 OpenDocumentation((DocumentationIdentifier) documentationIdentifier);
         }
 
-        public static DocumentationIdentifier GetIdentifierByAppliactionName(Name name)
+        public static DocumentationIdentifier GetIdentifierByAppliactionName(ApplicationName name)
         {
             switch (name)
             {
-                case Name.Dashboard:
+                case ApplicationName.Dashboard:
                     return DocumentationIdentifier.ApplicationDashboard;                    
-                case Name.NetworkInterface:
+                case ApplicationName.NetworkInterface:
                     return DocumentationIdentifier.ApplicationNetworkInterface;                    
-                case Name.WiFi:
+                case ApplicationName.WiFi:
                     return DocumentationIdentifier.ApplicationWiFi;                    
-                case Name.IPScanner:
+                case ApplicationName.IPScanner:
                     return DocumentationIdentifier.ApplicationIPScanner;                    
-                case Name.PortScanner:
+                case ApplicationName.PortScanner:
                     return DocumentationIdentifier.ApplicationPortScanner;                    
-                case Name.Ping:
+                case ApplicationName.Ping:
                     return DocumentationIdentifier.ApplicationPing;                    
-                case Name.Traceroute:
+                case ApplicationName.Traceroute:
                     return DocumentationIdentifier.ApplicationTraceroute;                    
-                case Name.DNSLookup:
+                case ApplicationName.DNSLookup:
                     return DocumentationIdentifier.ApplicationDnsLookup;                    
-                case Name.RemoteDesktop:
+                case ApplicationName.RemoteDesktop:
                     return DocumentationIdentifier.ApplicationRemoteDesktop;                    
-                case Name.PowerShell:
+                case ApplicationName.PowerShell:
                     return DocumentationIdentifier.ApplicationPowerShell;                    
-                case Name.PuTTY:
+                case ApplicationName.PuTTY:
                     return DocumentationIdentifier.ApplicationPutty;                    
-                case Name.TigerVNC:
+                case ApplicationName.TigerVNC:
                     return DocumentationIdentifier.ApplicationTigerVNC;                    
-                case Name.SNMP:
+                case ApplicationName.SNMP:
                     return DocumentationIdentifier.ApplicationSnmp;                    
-                case Name.WakeOnLAN:
+                case ApplicationName.WakeOnLAN:
                     return DocumentationIdentifier.ApplicationWakeOnLan;                    
-                case Name.HTTPHeaders:
+                case ApplicationName.HTTPHeaders:
                     return DocumentationIdentifier.ApplicationHttpHeaders;                    
-                case Name.Whois:
+                case ApplicationName.Whois:
                     return DocumentationIdentifier.ApplicationWhois;                    
-                case Name.SubnetCalculator:
+                case ApplicationName.SubnetCalculator:
                     return DocumentationIdentifier.ApplicationSubnetCalculator;                    
-                case Name.Lookup:
+                case ApplicationName.Lookup:
                     return DocumentationIdentifier.ApplicationLookup;                    
-                case Name.Connections:
+                case ApplicationName.Connections:
                     return DocumentationIdentifier.ApplicationConnections;                    
-                case Name.Listeners:
+                case ApplicationName.Listeners:
                     return DocumentationIdentifier.ApplicationListeners;                    
-                case Name.ARPTable:
+                case ApplicationName.ARPTable:
                     return DocumentationIdentifier.ApplicationArpTable;                    
-                case Name.None:
+                case ApplicationName.None:
                     return DocumentationIdentifier.Default;                    
                 default:
                     return DocumentationIdentifier.Default;                    

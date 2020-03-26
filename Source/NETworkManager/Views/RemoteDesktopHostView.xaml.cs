@@ -17,7 +17,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = Models.Application.Name.RemoteDesktop.ToString();
+            InterTabController.Partition = Models.Application.ApplicationName.RemoteDesktop.ToString();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

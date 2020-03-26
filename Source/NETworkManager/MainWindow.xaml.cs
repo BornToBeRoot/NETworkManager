@@ -159,7 +159,7 @@ namespace NETworkManager
             }
         }
 
-        private Name _filterLastViewName;
+        private ApplicationName _filterLastViewName;
         private int? _filterLastCount;
 
         private string _search = string.Empty;
@@ -397,11 +397,11 @@ namespace NETworkManager
             // Create a new list if empty
             if (SettingsManager.Current.General_ApplicationList.Count == 0)
             {
-                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(Models.Application.Application.GetList());
+                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(Models.Application.ApplicationManager.GetList());
             }
             else // Check for missing applications and add them
             {
-                foreach (ApplicationInfo info in Models.Application.Application.GetList())
+                foreach (ApplicationInfo info in Models.Application.ApplicationManager.GetList())
                 {
                     bool isInList = false;
 
@@ -440,7 +440,7 @@ namespace NETworkManager
             isApplicationListLoading = false;
 
             // Select the application
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != Models.Application.Name.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != Models.Application.ApplicationName.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
 
             // Scroll into view
             if (SelectedApplication != null)
@@ -548,9 +548,9 @@ namespace NETworkManager
         private ListenersView _listenersView;
         private ARPTableView _arpTableView;
 
-        private Name _currentApplicationViewName = Models.Application.Name.None;
+        private ApplicationName _currentApplicationViewName = Models.Application.ApplicationName.None;
 
-        private void ChangeApplicationView(Name name, bool refresh = false)
+        private void ChangeApplicationView(ApplicationName name, bool refresh = false)
         {
             if (!refresh && _currentApplicationViewName == name)
                 return;
@@ -558,19 +558,19 @@ namespace NETworkManager
             // Stop some functions on the old view
             switch (_currentApplicationViewName)
             {
-                case Models.Application.Name.NetworkInterface:
+                case Models.Application.ApplicationName.NetworkInterface:
                     _networkInterfaceView?.OnViewHide();
                     break;
-                case Models.Application.Name.WiFi:
+                case Models.Application.ApplicationName.WiFi:
                     _wiFiView?.OnViewHide();
                     break;
-                case Models.Application.Name.Connections:
+                case Models.Application.ApplicationName.Connections:
                     _connectionsView?.OnViewHide();
                     break;
-                case Models.Application.Name.Listeners:
+                case Models.Application.ApplicationName.Listeners:
                     _listenersView?.OnViewHide();
                     break;
-                case Models.Application.Name.ARPTable:
+                case Models.Application.ApplicationName.ARPTable:
                     _arpTableView?.OnViewHide();
                     break;
             }
@@ -578,7 +578,7 @@ namespace NETworkManager
             // Create new view / start some functions
             switch (name)
             {
-                case Models.Application.Name.Dashboard:
+                case Models.Application.ApplicationName.Dashboard:
                     if (_overviewView == null)
                         _overviewView = new DashboardView();
                     else
@@ -586,7 +586,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _overviewView;
                     break;
-                case Models.Application.Name.NetworkInterface:
+                case Models.Application.ApplicationName.NetworkInterface:
                     if (_networkInterfaceView == null)
                         _networkInterfaceView = new NetworkInterfaceView();
                     else
@@ -594,7 +594,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _networkInterfaceView;
                     break;
-                case Models.Application.Name.WiFi:
+                case Models.Application.ApplicationName.WiFi:
                     if (_wiFiView == null)
                         _wiFiView = new WiFiView();
                     else
@@ -602,7 +602,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _wiFiView;
                     break;
-                case Models.Application.Name.IPScanner:
+                case Models.Application.ApplicationName.IPScanner:
                     if (_ipScannerHostView == null)
                         _ipScannerHostView = new IPScannerHostView();
                     else
@@ -610,7 +610,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _ipScannerHostView;
                     break;
-                case Models.Application.Name.PortScanner:
+                case Models.Application.ApplicationName.PortScanner:
                     if (_portScannerHostView == null)
                         _portScannerHostView = new PortScannerHostView();
                     else
@@ -618,7 +618,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _portScannerHostView;
                     break;
-                case Models.Application.Name.Ping:
+                case Models.Application.ApplicationName.Ping:
                     if (_pingHostView == null)
                         _pingHostView = new PingHostView();
                     else
@@ -626,7 +626,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _pingHostView;
                     break;
-                case Models.Application.Name.PingMonitor:
+                case Models.Application.ApplicationName.PingMonitor:
                     if (_pingMonitorView == null)
                         _pingMonitorView = new PingMonitorView();
                     else
@@ -634,7 +634,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _pingMonitorView;
                     break;
-                case Models.Application.Name.Traceroute:
+                case Models.Application.ApplicationName.Traceroute:
                     if (_tracerouteHostView == null)
                         _tracerouteHostView = new TracerouteHostView();
                     else
@@ -642,7 +642,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _tracerouteHostView;
                     break;
-                case Models.Application.Name.DNSLookup:
+                case Models.Application.ApplicationName.DNSLookup:
                     if (_dnsLookupHostView == null)
                         _dnsLookupHostView = new DNSLookupHostView();
                     else
@@ -650,7 +650,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _dnsLookupHostView;
                     break;
-                case Models.Application.Name.RemoteDesktop:
+                case Models.Application.ApplicationName.RemoteDesktop:
                     if (_remoteDesktopHostView == null)
                         _remoteDesktopHostView = new RemoteDesktopHostView();
                     else
@@ -658,7 +658,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _remoteDesktopHostView;
                     break;
-                case Models.Application.Name.PowerShell:
+                case Models.Application.ApplicationName.PowerShell:
                     if (_powerShellHostView == null)
                         _powerShellHostView = new PowerShellHostView();
                     else
@@ -666,7 +666,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _powerShellHostView;
                     break;
-                case Models.Application.Name.PuTTY:
+                case Models.Application.ApplicationName.PuTTY:
                     if (_puttyHostView == null)
                         _puttyHostView = new PuTTYHostView();
                     else
@@ -674,7 +674,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _puttyHostView;
                     break;
-                case Models.Application.Name.TigerVNC:
+                case Models.Application.ApplicationName.TigerVNC:
                     if (_tigerVNCHostView == null)
                         _tigerVNCHostView = new TigerVNCHostView();
                     else
@@ -682,7 +682,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _tigerVNCHostView;
                     break;
-                case Models.Application.Name.WebConsole:
+                case Models.Application.ApplicationName.WebConsole:
                     if (_webConsoleHostView == null)
                         _webConsoleHostView = new WebConsoleHostView();
                     else
@@ -690,7 +690,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _webConsoleHostView;
                     break;
-                case Models.Application.Name.SNMP:
+                case Models.Application.ApplicationName.SNMP:
                     if (_snmpHostView == null)
                         _snmpHostView = new SNMPHostView();
                     else
@@ -698,7 +698,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _snmpHostView;
                     break;
-                case Models.Application.Name.DiscoveryProtocol:
+                case Models.Application.ApplicationName.DiscoveryProtocol:
                     if (_discoveryProtocolView == null)
                         _discoveryProtocolView = new DiscoveryProtocolView();
                     else
@@ -706,7 +706,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _discoveryProtocolView;
                     break;
-                case Models.Application.Name.WakeOnLAN:
+                case Models.Application.ApplicationName.WakeOnLAN:
                     if (_wakeOnLanView == null)
                         _wakeOnLanView = new WakeOnLANView();
                     else
@@ -714,7 +714,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _wakeOnLanView;
                     break;
-                case Models.Application.Name.HTTPHeaders:
+                case Models.Application.ApplicationName.HTTPHeaders:
                     if (_httpHeadersHostView == null)
                         _httpHeadersHostView = new HTTPHeadersHostView();
                     else
@@ -722,7 +722,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _httpHeadersHostView;
                     break;
-                case Models.Application.Name.Whois:
+                case Models.Application.ApplicationName.Whois:
                     if (_whoisHostView == null)
                         _whoisHostView = new WhoisHostView();
                     else
@@ -730,19 +730,19 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _whoisHostView;
                     break;
-                case Models.Application.Name.SubnetCalculator:
+                case Models.Application.ApplicationName.SubnetCalculator:
                     if (_subnetCalculatorHostView == null)
                         _subnetCalculatorHostView = new SubnetCalculatorHostView();
 
                     ContentControlApplication.Content = _subnetCalculatorHostView;
                     break;
-                case Models.Application.Name.Lookup:
+                case Models.Application.ApplicationName.Lookup:
                     if (_lookupHostView == null)
                         _lookupHostView = new LookupHostView();
 
                     ContentControlApplication.Content = _lookupHostView;
                     break;
-                case Models.Application.Name.Connections:
+                case Models.Application.ApplicationName.Connections:
                     if (_connectionsView == null)
                         _connectionsView = new ConnectionsView();
                     else
@@ -750,7 +750,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _connectionsView;
                     break;
-                case Models.Application.Name.Listeners:
+                case Models.Application.ApplicationName.Listeners:
                     if (_listenersView == null)
                         _listenersView = new ListenersView();
                     else
@@ -758,7 +758,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _listenersView;
                     break;
-                case  Models.Application.Name.ARPTable:
+                case  Models.Application.ApplicationName.ARPTable:
                     if (_arpTableView == null)
                         _arpTableView = new ARPTableView();
                     else
@@ -766,7 +766,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _arpTableView;
                     break;
-                case Models.Application.Name.None:
+                case Models.Application.ApplicationName.None:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(name), name, null);
@@ -872,58 +872,58 @@ namespace NETworkManager
             // Crate a new tab / perform action
             switch (data.Application)
             {
-                case Models.Application.Name.IPScanner:
+                case Models.Application.ApplicationName.IPScanner:
                     _ipScannerHostView.AddTab(data.Args);
                     break;
-                case Models.Application.Name.PortScanner:
+                case Models.Application.ApplicationName.PortScanner:
                     _portScannerHostView.AddTab(data.Args);
                     break;
-                case Models.Application.Name.Ping:
+                case Models.Application.ApplicationName.Ping:
                     _pingHostView.AddTab(data.Args);
                     break;
-                case Models.Application.Name.PingMonitor:
+                case Models.Application.ApplicationName.PingMonitor:
                     _pingMonitorView.AddHost(data.Args);
                     break;
-                case Models.Application.Name.Traceroute:
+                case Models.Application.ApplicationName.Traceroute:
                     _tracerouteHostView.AddTab(data.Args);
                     break;
-                case Models.Application.Name.DNSLookup:
+                case Models.Application.ApplicationName.DNSLookup:
                     _dnsLookupHostView.AddTab(data.Args);
                     break;
-                case Models.Application.Name.RemoteDesktop:
+                case Models.Application.ApplicationName.RemoteDesktop:
                     _remoteDesktopHostView.AddTab(data.Args);
                     break;
-                case Models.Application.Name.PowerShell:
+                case Models.Application.ApplicationName.PowerShell:
                     _powerShellHostView.AddTab(data.Args);
                     break;
-                case Models.Application.Name.PuTTY:
+                case Models.Application.ApplicationName.PuTTY:
                     _puttyHostView.AddTab(data.Args);
                     break;
-                case Models.Application.Name.TigerVNC:
+                case Models.Application.ApplicationName.TigerVNC:
                     _tigerVNCHostView.AddTab(data.Args);
                     break;
-                case Models.Application.Name.SNMP:
+                case Models.Application.ApplicationName.SNMP:
                     _snmpHostView.AddTab(data.Args);
                     break;
-                case Models.Application.Name.NetworkInterface:
+                case Models.Application.ApplicationName.NetworkInterface:
                     break;
-                case Models.Application.Name.WakeOnLAN:
+                case Models.Application.ApplicationName.WakeOnLAN:
                     break;
-                case Models.Application.Name.HTTPHeaders:
+                case Models.Application.ApplicationName.HTTPHeaders:
                     break;
-                case Models.Application.Name.Whois:
+                case Models.Application.ApplicationName.Whois:
                     break;
-                case Models.Application.Name.SubnetCalculator:
+                case Models.Application.ApplicationName.SubnetCalculator:
                     break;
-                case Models.Application.Name.Lookup:
+                case Models.Application.ApplicationName.Lookup:
                     break;
-                case Models.Application.Name.Connections:
+                case Models.Application.ApplicationName.Connections:
                     break;
-                case Models.Application.Name.Listeners:
+                case Models.Application.ApplicationName.Listeners:
                     break;
-                case Models.Application.Name.ARPTable:
+                case Models.Application.ApplicationName.ARPTable:
                     break;
-                case Models.Application.Name.None:
+                case Models.Application.ApplicationName.None:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
