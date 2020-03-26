@@ -1,7 +1,8 @@
 ﻿using NETworkManager.Models.Profile;
 using NETworkManager.Models.Settings;
+using NETworkManager.Models.TigerVNC;
 
-namespace NETworkManager.Models.TigerVNC
+namespace NETworkManager.Models.TigerVNCTMP
 {
     public class TigerVNC
     {

@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Models.Profile;
+using NETworkManager.Models.WebConsole;
 
-namespace NETworkManager.Models.WebConsole
+namespace NETworkManager.Models.WebConsoleTMP
 {
     public class WebConsole
     {        

@@ -125,7 +125,7 @@ namespace NETworkManager.Controls
             var info = new ProcessStartInfo
             {
                 FileName = _sessionInfo.ApplicationFilePath,
-                Arguments = TigerVNC.BuildCommandLine(_sessionInfo)
+                Arguments = Models.TigerVNCTMP.TigerVNC.BuildCommandLine(_sessionInfo)
             };
 
             try

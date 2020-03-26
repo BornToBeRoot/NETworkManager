@@ -22,6 +22,7 @@ using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using NETworkManager.Models.EventSystem;
+using NETworkManager.Models.Application;
 
 namespace NETworkManager.ViewModels
 {
@@ -278,7 +279,7 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand TraceCommand => new RelayCommand(p => TraceAction(), Trace_CanExecute);
 
-        private bool Trace_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+        private bool Trace_CanExecute(object paramter) => System.Windows.Application.Current.MainWindow != null && !((MetroWindow)System.Windows.Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void TraceAction()
         {
@@ -295,7 +296,7 @@ namespace NETworkManager.ViewModels
             if (!(name is string appName))
                 return;
 
-            if (!System.Enum.TryParse(appName, out Models.Application.Name app))
+            if (!System.Enum.TryParse(appName, out Name app))
                 return;
 
             var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname) ? SelectedTraceResult.Hostname : SelectedTraceResult.IPAddress.ToString();
@@ -307,14 +308,14 @@ namespace NETworkManager.ViewModels
 
         private void PerformDNSLookupIPAddressAction()
         {
-            EventSystem.RedirectDataToApplication(Models.Application.Name.DNSLookup, SelectedTraceResult.IPAddress.ToString());
+            EventSystem.RedirectDataToApplication(Name.DNSLookup, SelectedTraceResult.IPAddress.ToString());
         }
 
         public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
 
         private void PerformDNSLookupHostnameAction()
         {
-            EventSystem.RedirectDataToApplication(Models.Application.Name.DNSLookup, SelectedTraceResult.Hostname);
+            EventSystem.RedirectDataToApplication(Name.DNSLookup, SelectedTraceResult.Hostname);
         }
 
         public ICommand CopySelectedHopCommand => new RelayCommand(p => CopySelectedHopAction());
@@ -391,7 +392,7 @@ namespace NETworkManager.ViewModels
             Hops = 0;
 
             // Change the tab title (not nice, but it works)
-            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var window = System.Windows.Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
             if (window != null)
             {
@@ -530,7 +531,7 @@ namespace NETworkManager.ViewModels
         {
             var tracerouteInfo = TracerouteHopInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 lock (TraceResults)
                     TraceResults.Add(tracerouteInfo);

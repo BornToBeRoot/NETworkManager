@@ -21,20 +21,20 @@ namespace NETworkManager
             new SettingsViewInfo(Name.Profiles, new PackIconMaterial { Kind = PackIconMaterialKind.FormatListBulletedType }, Group.General),
 
             // Applications
-            new SettingsViewInfo(Name.Dashboard, Models.Application.GetIcon(Models.Application.Name.Dashboard), Group.Applications),
-            new SettingsViewInfo(Name.IPScanner, Models.Application.GetIcon(Models.Application.Name.IPScanner), Group.Applications),
-            new SettingsViewInfo(Name.PortScanner,Models.Application.GetIcon(Models.Application.Name.PortScanner), Group.Applications),
-            new SettingsViewInfo(Name.Ping, Models.Application.GetIcon(Models.Application.Name.Ping), Group.Applications),
-            new SettingsViewInfo(Name.Traceroute, Models.Application.GetIcon(Models.Application.Name.Traceroute), Group.Applications),
-            new SettingsViewInfo(Name.DNSLookup, Models.Application.GetIcon(Models.Application.Name.DNSLookup), Group.Applications ),
-            new SettingsViewInfo(Name.RemoteDesktop, Models.Application.GetIcon(Models.Application.Name.RemoteDesktop), Group.Applications),
-            new SettingsViewInfo(Name.PowerShell, Models.Application.GetIcon(Models.Application.Name.PowerShell), Group.Applications),
-            new SettingsViewInfo(Name.PuTTY, Models.Application.GetIcon(Models.Application.Name.PuTTY), Group.Applications),
-            new SettingsViewInfo(Name.TigerVNC, Models.Application.GetIcon(Models.Application.Name.TigerVNC), Group.Applications),
-            new SettingsViewInfo(Name.SNMP, Models.Application.GetIcon(Models.Application.Name.SNMP), Group.Applications),
-            new SettingsViewInfo(Name.WakeOnLAN, Models.Application.GetIcon(Models.Application.Name.WakeOnLAN), Group.Applications),
-            new SettingsViewInfo(Name.HTTPHeaders, Models.Application.GetIcon(Models.Application.Name.HTTPHeaders), Group.Applications),
-            new SettingsViewInfo(Name.Whois, Models.Application.GetIcon(Models.Application.Name.Whois), Group.Applications)
+            new SettingsViewInfo(Name.Dashboard, Models.Application.Application.GetIcon(Models.Application.Name.Dashboard), Group.Applications),
+            new SettingsViewInfo(Name.IPScanner, Models.Application.Application.GetIcon(Models.Application.Name.IPScanner), Group.Applications),
+            new SettingsViewInfo(Name.PortScanner,Models.Application.Application.GetIcon(Models.Application.Name.PortScanner), Group.Applications),
+            new SettingsViewInfo(Name.Ping, Models.Application.Application.GetIcon(Models.Application.Name.Ping), Group.Applications),
+            new SettingsViewInfo(Name.Traceroute, Models.Application.Application.GetIcon(Models.Application.Name.Traceroute), Group.Applications),
+            new SettingsViewInfo(Name.DNSLookup, Models.Application.Application.GetIcon(Models.Application.Name.DNSLookup), Group.Applications ),
+            new SettingsViewInfo(Name.RemoteDesktop, Models.Application.Application.GetIcon(Models.Application.Name.RemoteDesktop), Group.Applications),
+            new SettingsViewInfo(Name.PowerShell, Models.Application.Application.GetIcon(Models.Application.Name.PowerShell), Group.Applications),
+            new SettingsViewInfo(Name.PuTTY, Models.Application.Application.GetIcon(Models.Application.Name.PuTTY), Group.Applications),
+            new SettingsViewInfo(Name.TigerVNC, Models.Application.Application.GetIcon(Models.Application.Name.TigerVNC), Group.Applications),
+            new SettingsViewInfo(Name.SNMP, Models.Application.Application.GetIcon(Models.Application.Name.SNMP), Group.Applications),
+            new SettingsViewInfo(Name.WakeOnLAN, Models.Application.Application.GetIcon(Models.Application.Name.WakeOnLAN), Group.Applications),
+            new SettingsViewInfo(Name.HTTPHeaders, Models.Application.Application.GetIcon(Models.Application.Name.HTTPHeaders), Group.Applications),
+            new SettingsViewInfo(Name.Whois, Models.Application.Application.GetIcon(Models.Application.Name.Whois), Group.Applications)
         };
 
         public static string TranslateName(Name name)

@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using NETworkManager.Models.Application;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 
@@ -107,7 +108,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public SettingsViewModel(Models.Application.Name applicationName)
+        public SettingsViewModel(Name applicationName)
         {
             LoadSettings();
 
@@ -147,13 +148,13 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        public void ChangeSettingsView(Models.Application.Name applicationName)
+        public void ChangeSettingsView(Name applicationName)
         {
             // Don't change the view, if the user has filtered the settings...
             if (!string.IsNullOrEmpty(Search))
                 return;
 
-            if (System.Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName.ToString()) && Models.Application.Name.None.ToString() != applicationName.ToString())
+            if (System.Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName.ToString()) && Name.None.ToString() != applicationName.ToString())
                 SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName.ToString());
             else
                 SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == SettingsViewManager.Name.General);

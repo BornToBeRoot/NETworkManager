@@ -365,7 +365,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfile()
         {
-            Connect(TigerVNC.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+            Connect(Models.TigerVNCTMP.TigerVNC.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
@@ -373,7 +373,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.TigerVNC_ApplicationFilePath,
-                Arguments = TigerVNC.BuildCommandLine(TigerVNC.CreateSessionInfo(SelectedProfile))
+                Arguments = Models.TigerVNCTMP.TigerVNC.BuildCommandLine(Models.TigerVNCTMP.TigerVNC.CreateSessionInfo(SelectedProfile))
             };
 
             Process.Start(info);

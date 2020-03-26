@@ -1,4 +1,6 @@
-﻿namespace NETworkManager.Models.Settings
+﻿using NETworkManager.Models.Application;
+
+namespace NETworkManager.Models.Settings
 {
     public class CommandLineInfo
     {
@@ -7,7 +9,7 @@
         public bool ResetSettings { get; set; }
         public int RestartPid { get; set; } = -1;
 
-        public Models.Application.Name Application { get; set; } = Models.Application.Name.None;
+        public Name Application { get; set; } = Name.None;
         public string WrongParameter { get; set; }
 
         public CommandLineInfo()

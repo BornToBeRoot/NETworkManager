@@ -1,4 +1,5 @@
 ﻿using System;
+using NETworkManager.Models.Application;
 using NETworkManager.Models.Profile;
 
 namespace NETworkManager.Models.EventSystem
@@ -8,7 +9,7 @@ namespace NETworkManager.Models.EventSystem
         // This will notify the mail window, to change the view to another application and redirect a profile
         public static event EventHandler RedirectProfileToApplicationEvent;
 
-        public static void RedirectProfileToApplication(Models.Application.Name application, ProfileInfo profile)
+        public static void RedirectProfileToApplication(Name application, ProfileInfo profile)
         {
             RedirectProfileToApplicationEvent?.Invoke(null, new EventSystemRedirectProfileApplicationArgs(application, profile));
         }
@@ -16,7 +17,7 @@ namespace NETworkManager.Models.EventSystem
         // This will notify the mail window, to change the view to another application and redirect some data (hostname, ip)
         public static event EventHandler RedirectDataToApplicationEvent;
 
-        public static void RedirectDataToApplication(Models.Application.Name application, string data)
+        public static void RedirectDataToApplication(Name application, string data)
         {
             RedirectDataToApplicationEvent?.Invoke(null, new EventSystemRedirectDataApplicationArgs(application, data));
         }

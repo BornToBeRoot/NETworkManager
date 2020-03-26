@@ -1,4 +1,5 @@
-﻿using NETworkManager.ViewModels;
+﻿using NETworkManager.Models.Application;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
 {
@@ -6,7 +7,7 @@ namespace NETworkManager.Views
     {
         private readonly SettingsViewModel _viewModel;
 
-        public SettingsView(Models.Application.Name applicationName)
+        public SettingsView(Name applicationName)
         {
             InitializeComponent();
             _viewModel = new SettingsViewModel(applicationName);
@@ -19,7 +20,7 @@ namespace NETworkManager.Views
             e.Handled = true;
         }
 
-        public void ChangeSettingsView(Models.Application.Name name)
+        public void ChangeSettingsView(Name name)
         {
             _viewModel.ChangeSettingsView(name);
 

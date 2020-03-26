@@ -46,9 +46,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application.cs" />
-    <Compile Include="Application.Name.cs" />
-    <Compile Include="ApplicationInfo.cs" />
+    <Compile Include="Application\Application.cs" />
+    <Compile Include="Application\Name.cs" />
+    <Compile Include="Application\ApplicationInfo.cs" />
     <Compile Include="Export\ExportManager.cs" />
     <Compile Include="Export\ExportManager.ExportFileType.cs" />
     <Compile Include="Lookup\OUIInfo.cs" />
@@ -124,6 +124,12 @@
     <Compile Include="RemoteDesktop\KeyboardHookMode.cs" />
     <Compile Include="RemoteDesktop\Keystroke.cs" />
     <Compile Include="RemoteDesktop\NetworkConnectionType.cs" />
+    <Compile Include="RemoteDesktop\RemoteDesktop.cs" />
+    <Compile Include="RemoteDesktop\RemoteDesktopKeystrokeInfo.cs" />
+    <Compile Include="RemoteDesktop\RemoteDesktopPerformanceConstants.cs" />
+    <Compile Include="RemoteDesktop\RemoteDesktopSessionInfo.cs" />
+    <Compile Include="TigerVNC\TigerVNCSessionInfo.cs" />
+    <Compile Include="WebConsole\WebConsoleSessionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\DiscoveryProtocol.ps1" />

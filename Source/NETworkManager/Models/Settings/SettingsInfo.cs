@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
+using NETworkManager.Models.Application;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.RemoteDesktop;
@@ -47,8 +48,8 @@ namespace NETworkManager.Models.Settings
 
         #region General 
         // General        
-        private Models.Application.Name _general_DefaultApplicationViewName = GlobalStaticConfiguration.General_DefaultApplicationViewName;
-        public Models.Application.Name General_DefaultApplicationViewName
+        private Name _general_DefaultApplicationViewName = GlobalStaticConfiguration.General_DefaultApplicationViewName;
+        public Name General_DefaultApplicationViewName
         {
             get => _general_DefaultApplicationViewName;
             set

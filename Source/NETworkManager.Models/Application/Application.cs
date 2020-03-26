@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 
-namespace NETworkManager.Models
+namespace NETworkManager.Models.Application
 {
     /// <summary>
     /// Provides methods to manage networkmanger applications.
     /// </summary>
-    public static partial class Application
+    public static class Application
     {
         /// <summary>
         /// Method to return all available applications in.

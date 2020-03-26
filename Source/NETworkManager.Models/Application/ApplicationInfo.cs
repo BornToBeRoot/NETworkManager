@@ -1,4 +1,4 @@
-﻿namespace NETworkManager.Models
+﻿namespace NETworkManager.Models.Application
 {
     /// <summary>
     /// Stores informations about an application.
@@ -8,7 +8,7 @@
         /// <summary>
         /// Name of the application.
         /// </summary>
-        public Application.Name Name { get; set; }
+        public Name Name { get; set; }
 
         /// <summary>
         /// Indicates that the application is visible to the user.
@@ -24,10 +24,10 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ApplicationInfo"/> class and passes the <see cref="Application.Name"/> as paramteter.
+        /// Initializes a new instance of the <see cref="ApplicationInfo"/> class and passes the <see cref="Name"/> as paramteter.
         /// </summary>
-        /// <param name="name"><see cref="Application.Name"/></param>
-        public ApplicationInfo(Application.Name name)
+        /// <param name="name"><see cref="Name"/></param>
+        public ApplicationInfo(Name name)
         {
             Name = name;
             IsVisible = true;

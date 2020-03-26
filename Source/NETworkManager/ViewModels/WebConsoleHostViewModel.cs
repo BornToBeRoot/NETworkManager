@@ -328,7 +328,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfile()
         {
-            Connect(WebConsole.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+            Connect(Models.WebConsoleTMP.WebConsole.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
 
         private void Connect(WebConsoleSessionInfo sessionInfo, string header = null)

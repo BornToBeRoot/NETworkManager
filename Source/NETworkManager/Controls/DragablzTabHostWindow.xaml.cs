@@ -9,6 +9,7 @@ using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Translators;
+using NETworkManager.Models.Application;
 
 namespace NETworkManager.Controls
 {
@@ -25,9 +26,9 @@ namespace NETworkManager.Controls
 
         #region Variables
         public IInterTabClient InterTabClient { get; }
-        private Models.Application.Name _applicationName;
+        private Name _applicationName;
 
-        public Models.Application.Name ApplicationName
+        public Name ApplicationName
         {
             get => _applicationName;
             set
@@ -56,7 +57,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor
-        public DragablzTabHostWindow(Models.Application.Name applicationName)
+        public DragablzTabHostWindow(Name applicationName)
         {
             InitializeComponent();
             DataContext = this;

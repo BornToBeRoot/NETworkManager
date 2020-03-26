@@ -24,9 +24,9 @@ using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using NETworkManager.Models.Profile;
 using NETworkManager.Localization;
-using NETworkManager.Models;
 using NETworkManager.Localization.Translators;
 using NETworkManager.Update;
+using NETworkManager.Models.Application;
 
 namespace NETworkManager
 {
@@ -159,7 +159,7 @@ namespace NETworkManager
             }
         }
 
-        private Models.Application.Name _filterLastViewName;
+        private Name _filterLastViewName;
         private int? _filterLastCount;
 
         private string _search = string.Empty;
@@ -397,11 +397,11 @@ namespace NETworkManager
             // Create a new list if empty
             if (SettingsManager.Current.General_ApplicationList.Count == 0)
             {
-                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(Models.Application.GetList());
+                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(Models.Application.Application.GetList());
             }
             else // Check for missing applications and add them
             {
-                foreach (ApplicationInfo info in Models.Application.GetList())
+                foreach (ApplicationInfo info in Models.Application.Application.GetList())
                 {
                     bool isInList = false;
 
@@ -548,9 +548,9 @@ namespace NETworkManager
         private ListenersView _listenersView;
         private ARPTableView _arpTableView;
 
-        private Models.Application.Name _currentApplicationViewName = Models.Application.Name.None;
+        private Name _currentApplicationViewName = Models.Application.Name.None;
 
-        private void ChangeApplicationView(Models.Application.Name name, bool refresh = false)
+        private void ChangeApplicationView(Name name, bool refresh = false)
         {
             if (!refresh && _currentApplicationViewName == name)
                 return;
@@ -758,7 +758,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _listenersView;
                     break;
-                case Models.Application.Name.ARPTable:
+                case  Models.Application.Name.ARPTable:
                     if (_arpTableView == null)
                         _arpTableView = new ARPTableView();
                     else
