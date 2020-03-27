@@ -1,4 +1,4 @@
-﻿namespace NETworkManager.Models.Application
+﻿namespace NETworkManager.Models
 {
     /// <summary>
     /// Represents all available applications.

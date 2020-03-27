@@ -9,7 +9,7 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
 using DnsClient;
-using NETworkManager.Models.Application;
+using NETworkManager.Models;
 
 // ReSharper disable InconsistentNaming
 

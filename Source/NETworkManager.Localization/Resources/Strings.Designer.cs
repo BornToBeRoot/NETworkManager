@@ -4904,6 +4904,150 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DNS Lookup.
+        /// </summary>
+        public static string ProfileViewName_DNSLookup {
+            get {
+                return ResourceManager.GetString("ProfileViewName_DNSLookup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string ProfileViewName_General {
+            get {
+                return ResourceManager.GetString("ProfileViewName_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTTP Headers.
+        /// </summary>
+        public static string ProfileViewName_HTTPHeaders {
+            get {
+                return ResourceManager.GetString("ProfileViewName_HTTPHeaders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP Scanner.
+        /// </summary>
+        public static string ProfileViewName_IP_Scanner {
+            get {
+                return ResourceManager.GetString("ProfileViewName_IP Scanner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network Interface.
+        /// </summary>
+        public static string ProfileViewName_NetworkInterface {
+            get {
+                return ResourceManager.GetString("ProfileViewName_NetworkInterface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping.
+        /// </summary>
+        public static string ProfileViewName_Ping {
+            get {
+                return ResourceManager.GetString("ProfileViewName_Ping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PingMonitor.
+        /// </summary>
+        public static string ProfileViewName_PingMonitor {
+            get {
+                return ResourceManager.GetString("ProfileViewName_PingMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PortScanner.
+        /// </summary>
+        public static string ProfileViewName_PortScanner {
+            get {
+                return ResourceManager.GetString("ProfileViewName_PortScanner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PowerShell.
+        /// </summary>
+        public static string ProfileViewName_PowerShell {
+            get {
+                return ResourceManager.GetString("ProfileViewName_PowerShell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PuTTY.
+        /// </summary>
+        public static string ProfileViewName_PuTTY {
+            get {
+                return ResourceManager.GetString("ProfileViewName_PuTTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote Desktop.
+        /// </summary>
+        public static string ProfileViewName_RemoteDesktop {
+            get {
+                return ResourceManager.GetString("ProfileViewName_RemoteDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TigerVNC.
+        /// </summary>
+        public static string ProfileViewName_TigerVNC {
+            get {
+                return ResourceManager.GetString("ProfileViewName_TigerVNC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Traceroute.
+        /// </summary>
+        public static string ProfileViewName_Traceroute {
+            get {
+                return ResourceManager.GetString("ProfileViewName_Traceroute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wake on LAN.
+        /// </summary>
+        public static string ProfileViewName_WakeOnLAN {
+            get {
+                return ResourceManager.GetString("ProfileViewName_WakeOnLAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WebConsole.
+        /// </summary>
+        public static string ProfileViewName_WebConsole {
+            get {
+                return ResourceManager.GetString("ProfileViewName_WebConsole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whois.
+        /// </summary>
+        public static string ProfileViewName_Whois {
+            get {
+                return ResourceManager.GetString("ProfileViewName_Whois", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A profile with this name already exists!.
         /// </summary>
         public static string ProfileWithThisNameAlreadyExists {
@@ -6369,6 +6513,240 @@ namespace NETworkManager.Localization.Resources {
         public static string SettingsSuccessfullyReset {
             get {
                 return ResourceManager.GetString("SettingsSuccessfullyReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applications.
+        /// </summary>
+        public static string SettingsViewGroup_Applications {
+            get {
+                return ResourceManager.GetString("SettingsViewGroup_Applications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string SettingsViewGroup_General {
+            get {
+                return ResourceManager.GetString("SettingsViewGroup_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string SettingsViewName_Appearance {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Appearance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Autostart.
+        /// </summary>
+        public static string SettingsViewName_Autostart {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Autostart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string SettingsViewName_Dashboard {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DNS Lookup.
+        /// </summary>
+        public static string SettingsViewName_DNSLookup {
+            get {
+                return ResourceManager.GetString("SettingsViewName_DNSLookup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string SettingsViewName_General {
+            get {
+                return ResourceManager.GetString("SettingsViewName_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HotKeys.
+        /// </summary>
+        public static string SettingsViewName_HotKeys {
+            get {
+                return ResourceManager.GetString("SettingsViewName_HotKeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTTPHeaders.
+        /// </summary>
+        public static string SettingsViewName_HTTPHeaders {
+            get {
+                return ResourceManager.GetString("SettingsViewName_HTTPHeaders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP Scanner.
+        /// </summary>
+        public static string SettingsViewName_IPScanner {
+            get {
+                return ResourceManager.GetString("SettingsViewName_IPScanner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string SettingsViewName_Language {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping.
+        /// </summary>
+        public static string SettingsViewName_Ping {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Ping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port Scanner.
+        /// </summary>
+        public static string SettingsViewName_PortScanner {
+            get {
+                return ResourceManager.GetString("SettingsViewName_PortScanner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PowerShell.
+        /// </summary>
+        public static string SettingsViewName_PowerShell {
+            get {
+                return ResourceManager.GetString("SettingsViewName_PowerShell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profiles.
+        /// </summary>
+        public static string SettingsViewName_Profiles {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Profiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PuTTY.
+        /// </summary>
+        public static string SettingsViewName_PuTTY {
+            get {
+                return ResourceManager.GetString("SettingsViewName_PuTTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote Desktop.
+        /// </summary>
+        public static string SettingsViewName_RemoteDesktop {
+            get {
+                return ResourceManager.GetString("SettingsViewName_RemoteDesktop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SettingsViewName_Settings {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SNMP.
+        /// </summary>
+        public static string SettingsViewName_SNMP {
+            get {
+                return ResourceManager.GetString("SettingsViewName_SNMP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string SettingsViewName_Status {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TigerVNC.
+        /// </summary>
+        public static string SettingsViewName_TigerVNC {
+            get {
+                return ResourceManager.GetString("SettingsViewName_TigerVNC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Traceroute.
+        /// </summary>
+        public static string SettingsViewName_Traceroute {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Traceroute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string SettingsViewName_Update {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WakeOnLAN.
+        /// </summary>
+        public static string SettingsViewName_WakeOnLAN {
+            get {
+                return ResourceManager.GetString("SettingsViewName_WakeOnLAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whois.
+        /// </summary>
+        public static string SettingsViewName_Whois {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Whois", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Window.
+        /// </summary>
+        public static string SettingsViewName_Window {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Window", resourceCulture);
             }
         }
         

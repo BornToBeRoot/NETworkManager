@@ -8,7 +8,7 @@
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:controls="clr-namespace:NETworkManager.Controls"
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
-        xmlns:application="clr-namespace:NETworkManager.Models.Application;assembly=NETworkManager.Models"
+        xmlns:application="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         mc:Ignorable="d"

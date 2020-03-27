@@ -16,6 +16,7 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Models.Profile;
 using System.Windows.Threading;
 using NETworkManager.Settings;
+using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
 {
@@ -146,7 +147,7 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            InterTabClient = new DragablzInterTabClient(Models.Application.ApplicationName.RemoteDesktop);
+            InterTabClient = new DragablzInterTabClient(ApplicationName.RemoteDesktop);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 

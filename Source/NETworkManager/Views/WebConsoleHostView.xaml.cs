@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models;
 using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,7 +15,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = Models.Application.ApplicationName.WebConsole.ToString();
+            InterTabController.Partition = ApplicationName.WebConsole.ToString();
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)

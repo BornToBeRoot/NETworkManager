@@ -9,7 +9,7 @@ using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Translators;
-using NETworkManager.Models.Application;
+using NETworkManager.Models;
 
 namespace NETworkManager.Controls
 {
@@ -82,45 +82,45 @@ namespace NETworkManager.Controls
             // Switch between application identifiert...
             switch (_applicationName)
             {
-                case Models.Application.ApplicationName.None:
+                case ApplicationName.None:
                     break;
-                case Models.Application.ApplicationName.IPScanner:
+                case ApplicationName.IPScanner:
                     ((IPScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.ApplicationName.PortScanner:
+                case ApplicationName.PortScanner:
                     ((PortScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.ApplicationName.Ping:
+                case ApplicationName.Ping:
                     ((PingView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.ApplicationName.Traceroute:
+                case ApplicationName.Traceroute:
                     ((TracerouteView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.ApplicationName.DNSLookup:
+                case ApplicationName.DNSLookup:
                     ((DNSLookupView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.ApplicationName.RemoteDesktop:
+                case ApplicationName.RemoteDesktop:
                     ((RemoteDesktopControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.ApplicationName.PowerShell:
+                case ApplicationName.PowerShell:
                     ((PowerShellControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.ApplicationName.PuTTY:
+                case ApplicationName.PuTTY:
                     ((PuTTYControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.ApplicationName.TigerVNC:
+                case ApplicationName.TigerVNC:
                     ((TigerVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.ApplicationName.WebConsole:
+                case ApplicationName.WebConsole:
                     ((WebConsoleControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.ApplicationName.SNMP:
+                case ApplicationName.SNMP:
                     ((SNMPView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.ApplicationName.HTTPHeaders:
+                case ApplicationName.HTTPHeaders:
                     ((HTTPHeadersView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case Models.Application.ApplicationName.Whois:
+                case ApplicationName.Whois:
                     ((WhoisView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 default:

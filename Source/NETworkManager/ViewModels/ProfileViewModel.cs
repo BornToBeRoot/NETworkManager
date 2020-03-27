@@ -13,6 +13,7 @@ using NETworkManager.Models.Network;
 using static NETworkManager.Models.PuTTY.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 // ReSharper disable InconsistentNaming
 
 namespace NETworkManager.ViewModels

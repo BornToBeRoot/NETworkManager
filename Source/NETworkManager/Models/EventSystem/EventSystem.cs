@@ -1,5 +1,5 @@
 ﻿using System;
-using NETworkManager.Models.Application;
+using NETworkManager.Models;
 
 namespace NETworkManager.Models.EventSystem
 {

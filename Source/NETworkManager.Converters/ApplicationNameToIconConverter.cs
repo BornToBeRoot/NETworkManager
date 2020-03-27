@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
-using NETworkManager.Models.Application;
+using NETworkManager.Models;
 
 namespace NETworkManager.Converters
 {

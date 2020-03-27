@@ -19,6 +19,7 @@ using NETworkManager.Models.Profile;
 using System.Windows.Threading;
 using NETworkManager.Models.PuTTYTMP;
 using NETworkManager.Settings;
+using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
 {
@@ -167,7 +168,7 @@ namespace NETworkManager.ViewModels
             // Check if putty is available...
             CheckIfConfigured();
 
-            InterTabClient = new DragablzInterTabClient(Models.Application.ApplicationName.PuTTY);
+            InterTabClient = new DragablzInterTabClient(ApplicationName.PuTTY);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 

@@ -46,9 +46,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\ApplicationManager.cs" />
-    <Compile Include="Application\ApplicationName.cs" />
-    <Compile Include="Application\ApplicationInfo.cs" />
+    <Compile Include="ApplicationManager.cs" />
+    <Compile Include="ApplicationName.cs" />
+    <Compile Include="ApplicationInfo.cs" />
     <Compile Include="Export\ExportManager.cs" />
     <Compile Include="Export\ExportManager.ExportFileType.cs" />
     <Compile Include="Lookup\OUIInfo.cs" />

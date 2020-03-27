@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Application;
+﻿using NETworkManager.Models;
 using System;
 
 namespace NETworkManager.Models.EventSystem

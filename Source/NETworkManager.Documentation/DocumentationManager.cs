@@ -1,5 +1,5 @@
 ﻿using NETworkManager.Localization;
-using NETworkManager.Models.Application;
+using NETworkManager.Models;
 using NETworkManager.Utilities;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models;
 using NETworkManager.ViewModels;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,7 +18,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = Models.Application.ApplicationName.RemoteDesktop.ToString();
+            InterTabController.Partition = ApplicationName.RemoteDesktop.ToString();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

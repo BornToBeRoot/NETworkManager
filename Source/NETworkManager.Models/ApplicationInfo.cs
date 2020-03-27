@@ -1,4 +1,4 @@
-﻿namespace NETworkManager.Models.Application
+﻿namespace NETworkManager.Models
 {
     /// <summary>
     /// Stores informations about an application.

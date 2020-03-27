@@ -1,5 +1,5 @@
 ﻿using Dragablz;
-using NETworkManager.Models.Application;
+using NETworkManager.Models;
 using System.Windows;
 
 namespace NETworkManager.Controls

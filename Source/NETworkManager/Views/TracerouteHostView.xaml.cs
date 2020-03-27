@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using NETworkManager.Settings;
 using NETworkManager.Models.Profile;
+using NETworkManager.Models;
 
 namespace NETworkManager.Views
 {
@@ -16,7 +17,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = Models.Application.ApplicationName.Traceroute.ToString();
+            InterTabController.Partition = ApplicationName.Traceroute.ToString();
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)

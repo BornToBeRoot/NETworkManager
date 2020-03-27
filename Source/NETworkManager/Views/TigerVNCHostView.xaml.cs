@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models;
 using NETworkManager.ViewModels;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,7 +19,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = Models.Application.ApplicationName.TigerVNC.ToString();
+            InterTabController.Partition = ApplicationName.TigerVNC.ToString();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

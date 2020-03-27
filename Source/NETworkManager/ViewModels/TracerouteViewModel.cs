@@ -22,7 +22,7 @@ using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.Application;
+using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
 {

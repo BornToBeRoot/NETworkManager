@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Application;
+﻿using NETworkManager.Models;
 
 namespace NETworkManager.Settings
 {

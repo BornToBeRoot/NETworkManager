@@ -18,6 +18,7 @@ using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Profile;
 using System.Windows.Threading;
 using NETworkManager.Settings;
+using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
 {
@@ -166,7 +167,7 @@ namespace NETworkManager.ViewModels
             // Check if putty is available...
             CheckIfConfigured();
 
-            InterTabClient = new DragablzInterTabClient(Models.Application.ApplicationName.TigerVNC);
+            InterTabClient = new DragablzInterTabClient(ApplicationName.TigerVNC);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 

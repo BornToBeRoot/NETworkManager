@@ -1,4 +1,5 @@
-﻿using NETworkManager.ViewModels;
+﻿using NETworkManager.Models;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
 {
@@ -11,7 +12,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = Models.Application.ApplicationName.PuTTY.ToString();
+            InterTabController.Partition = ApplicationName.PuTTY.ToString();
         }
 
         public void AddTab(string host)

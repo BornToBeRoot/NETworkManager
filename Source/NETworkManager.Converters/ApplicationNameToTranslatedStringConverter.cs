@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Localization.Translators;
 using NETworkManager.Models;
-using NETworkManager.Models.Application;
 using System;
 using System.Globalization;
 using System.Windows.Data;

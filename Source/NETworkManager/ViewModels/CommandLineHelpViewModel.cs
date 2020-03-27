@@ -1,6 +1,5 @@
-﻿using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using System;
+﻿using NETworkManager.Models;
+using NETworkManager.Settings;
 using System.Linq;
 
 namespace NETworkManager.ViewModels
@@ -106,7 +105,7 @@ namespace NETworkManager.ViewModels
             ParameterHelp = CommandLineManager.ParameterHelp;
             ParameterResetSettings = CommandLineManager.ParameterResetSettings;
             ParameterApplication = CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication);
-            ParameterApplicationValues = string.Join(" ,", System.Enum.GetValues(typeof(Models.Application.ApplicationName)).Cast<Models.Application.ApplicationName>().ToList());
+            ParameterApplicationValues = string.Join(" ,", System.Enum.GetValues(typeof(ApplicationName)).Cast<ApplicationName>().ToList());
         }
         #endregion
     }

@@ -156,8 +156,6 @@
     <Compile Include="Models\PowerShell\PowerShell.cs" />
     <Compile Include="Models\WebConsole\WebConsole.cs" />
     <Compile Include="Models\TigerVNC\TigerVNC.cs" />
-    <Compile Include="ProfileViewInfo.cs" />
-    <Compile Include="ProfileViewManager.cs" />
     <Compile Include="StatusWindow.xaml.cs">
       <DependentUpon>StatusWindow.xaml</DependentUpon>
     </Compile>
@@ -536,21 +534,6 @@
       <SubType>Designer</SubType>
     </Page>
     <SplashScreen Include="Resources\Images\SplashScreen.png" />
-    <Content Include="Themes\Black.Accent.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Themes\Black.Theme.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Themes\White.Theme.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Page Include="StatusWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -907,8 +890,6 @@
       <DependentUpon>LookupHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Network\WakeOnLAN.cs" />
-    <Compile Include="SettingsViewInfo.cs" />
-    <Compile Include="SettingsViewManager.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1120,6 +1101,10 @@
     <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
       <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
       <Name>NETworkManager.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj">
+      <Project>{d3b37f13-e8e6-4218-9e8e-96d52432a9cf}</Project>
+      <Name>NETworkManager.Profiles</Name>
     </ProjectReference>
     <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj">
       <Project>{954e8703-3e6e-42bf-bd28-f0b19be10e0c}</Project>

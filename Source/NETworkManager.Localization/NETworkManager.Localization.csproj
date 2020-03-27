@@ -46,6 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Translators\AccentTranslator.cs" />
+    <Compile Include="Translators\SettingsViewGroupTranslator.cs" />
+    <Compile Include="Translators\SettingsViewNameTranslator.cs" />
+    <Compile Include="Translators\ProfileViewNameTranslator.cs" />
     <Compile Include="Translators\AppThemeTranslator.cs" />
     <Compile Include="Translators\TimeUnitTranslator.cs" />
     <Compile Include="Translators\ConnectionStateTranslator.cs" />
@@ -123,6 +126,14 @@
     <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
       <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
       <Name>NETworkManager.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj">
+      <Project>{d3b37f13-e8e6-4218-9e8e-96d52432a9cf}</Project>
+      <Name>NETworkManager.Profiles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj">
+      <Project>{954e8703-3e6e-42bf-bd28-f0b19be10e0c}</Project>
+      <Name>NETworkManager.Settings</Name>
     </ProjectReference>
     <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
       <Project>{5c3d1749-d260-4566-b448-b94b3ad9eeff}</Project>

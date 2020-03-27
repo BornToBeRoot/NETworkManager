@@ -9,8 +9,8 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:networkManager="clr-namespace:NETworkManager"
+             xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:ProfileViewModel}">
     <UserControl.Resources>
@@ -21,6 +21,7 @@
         <converters:RemoteDesktopAudioRedirectionModeToStringConverter x:Key="RemoteDesktopAudioRedirectionModeToStringConverter" />
         <converters:RemoteDesktopKeyboardHookModeToStringConverter x:Key="RemoteDesktopKeyboardHookModeToStringConverter" />
         <converters:RemoteDesktopNetworkConnectionTypeToStringConverter x:Key="RemoteDesktopNetworkConnectionTypeToStringConverter" />
+        <converters:ProfileViewNameToTranslatedStringConverter x:Key="ProfileViewNameToTranslatedStringConverter" />
         <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
     </UserControl.Resources>
     <Grid Margin="0,20">
@@ -65,7 +66,7 @@
                                             </Style>
                                         </Rectangle.Style>
                                     </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{Binding (networkManager:ProfileViewInfo.TranslatedName)}" >
+                                    <TextBlock Grid.Column="1" Text="{Binding (profiles:ProfileViewInfo.Name), Converter={StaticResource ProfileViewNameToTranslatedStringConverter}}" >
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
@@ -87,52 +88,52 @@
                                         <CheckBox.Style>
                                             <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultCheckBox}">
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.General}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.General}">
                                                         <Setter Property="Visibility" Value="Hidden" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.NetworkInterface}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.NetworkInterface}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.NetworkInterface_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.IPScanner}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.IPScanner}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.IPScanner_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.PortScanner}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PortScanner}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.PortScanner_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.Ping}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.Ping}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.Ping_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.PingMonitor}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PingMonitor}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.PingMonitor_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.Traceroute}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.Traceroute}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.Traceroute_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.DNSLookup}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.DNSLookup}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.DNSLookup_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.RemoteDesktop}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.RemoteDesktop}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.RemoteDesktop_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.PowerShell}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PowerShell}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.PowerShell_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.PuTTY}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PuTTY}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.PuTTY_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.TigerVNC}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.TigerVNC}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.TigerVNC_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.WebConsole}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.WebConsole}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.WebConsole_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.WakeOnLAN}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.WakeOnLAN}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.WakeOnLAN_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.HTTPHeaders}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.HTTPHeaders}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.HTTPHeaders_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (networkManager:ProfileViewInfo.Name)}" Value="{x:Static networkManager:ProfileViewManager+Name.Whois}">
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.Whois}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.Whois_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>

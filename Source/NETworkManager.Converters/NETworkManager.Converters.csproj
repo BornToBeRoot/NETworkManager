@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccentToBrushConverter.cs" />
+    <Compile Include="SettingsViewGroupToTranslatedStringConverter.cs" />
+    <Compile Include="SettingsViewNameToTranslatedStringConverter.cs" />
+    <Compile Include="ProfileViewNameToTranslatedStringConverter.cs" />
     <Compile Include="BandwidthBytesToSpeedConverter.cs" />
     <Compile Include="BandwidthBytesWithSizeConverter.cs" />
     <Compile Include="BigIntegerToStringConverter.cs" />
@@ -118,6 +121,14 @@
     <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
       <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
       <Name>NETworkManager.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj">
+      <Project>{D3B37F13-E8E6-4218-9E8E-96D52432A9CF}</Project>
+      <Name>NETworkManager.Profiles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj">
+      <Project>{954E8703-3E6E-42BF-BD28-F0B19BE10E0C}</Project>
+      <Name>NETworkManager.Settings</Name>
     </ProjectReference>
     <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
       <Project>{5c3d1749-d260-4566-b448-b94b3ad9eeff}</Project>

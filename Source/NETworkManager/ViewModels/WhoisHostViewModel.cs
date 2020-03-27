@@ -14,6 +14,7 @@ using NETworkManager.Utilities;
 using NETworkManager.Models.Profile;
 using System.Windows.Threading;
 using NETworkManager.Settings;
+using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
 {
@@ -146,7 +147,7 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            InterTabClient = new DragablzInterTabClient(Models.Application.ApplicationName.Whois);
+            InterTabClient = new DragablzInterTabClient(ApplicationName.Whois);
 
             TabItems = new ObservableCollection<DragablzTabItem>
             {

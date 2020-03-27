@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
-using NETworkManager.Models.Application;
+using NETworkManager.Models;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.RemoteDesktop;
