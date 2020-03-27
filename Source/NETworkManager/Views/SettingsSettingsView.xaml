@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:convertersOld="clr-namespace:NETworkManager.Converters"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-        xmlns:validatorsOld="clr-namespace:NETworkManager.Validators"
         xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"      
@@ -19,8 +17,8 @@
         <!-- Converter -->
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <convertersOld:IsDefaultSettingsLocationToBooleanConverter x:Key="IsDefaultSettingsLocationToBooleanConverter" />
-        <convertersOld:IsSettingsLocationToBooleanConverter x:Key="IsSettingsLocationToBoolConverter" />        
+        <converters:IsDefaultSettingsLocationToBooleanConverter x:Key="IsDefaultSettingsLocationToBooleanConverter" />
+        <converters:IsSettingsLocationToBooleanConverter x:Key="IsSettingsLocationToBoolConverter" />        
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Location}" />
@@ -29,7 +27,7 @@
                 <Binding Path="Location" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <validatorsOld:SettingsFolderExistsValidator ValidatesOnTargetUpdated="True" />
+                        <validators:SettingsFolderExistsValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

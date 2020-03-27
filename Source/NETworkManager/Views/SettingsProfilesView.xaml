@@ -33,7 +33,7 @@
                 <Binding Path="Location" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <validatorsOld:SettingsFolderExistsValidator ValidatesOnTargetUpdated="True" />
+                        <validators:SettingsFolderExistsValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

@@ -952,8 +952,6 @@
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\IsSettingsLocationToBooleanConverter.cs" />
-    <Compile Include="Converters\IsDefaultSettingsLocationToBooleanConverter.cs" />
     <Compile Include="Views\PortScannerView.xaml.cs">
       <DependentUpon>PortScannerView.xaml</DependentUpon>
     </Compile>
@@ -966,7 +964,6 @@
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Validators\SettingsFolderExistsValidator.cs" />
     <Compile Include="Views\WakeOnLANView.xaml.cs">
       <DependentUpon>WakeOnLANView.xaml</DependentUpon>
     </Compile>
