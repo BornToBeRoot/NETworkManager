@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-//using NETworkManager.Models.Settings;
+//using NETworkManager.Settings;
 using System;
 using System.Xml;
 

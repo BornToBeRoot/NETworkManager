@@ -1,7 +1,7 @@
 ﻿using System.Security.Principal;
 using System.IO;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Settings
 {
     public static class ConfigurationManager
     {

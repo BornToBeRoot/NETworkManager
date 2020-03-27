@@ -4,12 +4,10 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Threading;
 using System.Xml.Serialization;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Network;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
 

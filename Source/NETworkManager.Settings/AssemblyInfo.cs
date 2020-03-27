@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Reflection;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Settings
 {
     public class AssemblyInfo
     {

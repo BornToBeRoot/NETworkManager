@@ -1,6 +1,6 @@
 ﻿using NETworkManager.Models.Application;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Settings
 {
     public class CommandLineInfo
     {

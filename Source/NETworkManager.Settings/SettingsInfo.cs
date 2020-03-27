@@ -12,11 +12,10 @@ using NETworkManager.Models.Application;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using static NETworkManager.Models.Network.SNMP;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Settings
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class SettingsInfo : INotifyPropertyChanged
@@ -2483,8 +2482,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private PowerShell.PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
-        public PowerShell.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
+        private Models.PowerShell.PowerShell.ExecutionPolicy _powerShell_ExecutionPolicy = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
+        public Models.PowerShell.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy
         {
             get => _powerShell_ExecutionPolicy;
             set
@@ -2545,8 +2544,8 @@ namespace NETworkManager.Models.Settings
             }
         }
 
-        private PuTTY.PuTTY.ConnectionMode _puTTY_DefaultConnectionMode = GlobalStaticConfiguration.PuTTY_DefaultConnectionMode;
-        public PuTTY.PuTTY.ConnectionMode PuTTY_DefaultConnectionMode
+        private Models.PuTTY.PuTTY.ConnectionMode _puTTY_DefaultConnectionMode = GlobalStaticConfiguration.PuTTY_DefaultConnectionMode;
+        public Models.PuTTY.PuTTY.ConnectionMode PuTTY_DefaultConnectionMode
         {
             get => _puTTY_DefaultConnectionMode;
             set

@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Net.Sockets;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Models.Network;
 using System.Threading;
 using NETworkManager.Utilities;

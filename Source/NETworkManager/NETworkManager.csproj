@@ -896,7 +896,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utilities\HostRangeHelper.cs" />
-    <Compile Include="Models\Settings\SettingsFileInfo.cs" />
     <Compile Include="ViewModels\PortScannerViewModel.cs" />
     <Compile Include="ViewModels\LookupPortViewModel.cs" />
     <Compile Include="ViewModels\PortScannerSettingsViewModel.cs" />
@@ -908,16 +907,6 @@
       <DependentUpon>LookupHostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Network\WakeOnLAN.cs" />
-    <Compile Include="Models\Settings\AppearanceManager.cs" />
-    <Compile Include="Models\Settings\AssemblyInfo.cs" />
-    <Compile Include="Models\Settings\AssemblyManager.cs" />
-    <Compile Include="Models\Settings\AutostartManager.cs" />
-    <Compile Include="Models\Settings\CommandLineInfo.cs" />
-    <Compile Include="Models\Settings\CommandLineManager.cs" />
-    <Compile Include="Models\Settings\ConfigurationInfo.cs" />
-    <Compile Include="Models\Settings\ConfigurationManager.cs" />
-    <Compile Include="Models\Settings\SettingsInfo.cs" />
-    <Compile Include="Models\Settings\SettingsManager.cs" />
     <Compile Include="SettingsViewInfo.cs" />
     <Compile Include="SettingsViewManager.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -1108,7 +1097,9 @@
       <Version>12.0.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\Settings\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj">
       <Project>{95ea884c-e498-4a47-a316-dc890bf7f0d2}</Project>

@@ -1,7 +1,7 @@
 ﻿using LiveCharts;
 using LiveCharts.Wpf;
 using NETworkManager.Models.Network;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;

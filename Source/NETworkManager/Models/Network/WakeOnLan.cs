@@ -1,6 +1,6 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Models.Profile;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Net;
 
 namespace NETworkManager.Models.NetworkTMP

@@ -3,14 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"        
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:settingsOld="clr-namespace:NETworkManager.Models.Settings"     
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DiscoveryProtocolViewModel}">
     <UserControl.InputBindings>
@@ -28,7 +27,7 @@
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.DiscoveryProtocol}">
             <Grid Margin="10" >
-                <Grid Visibility="{Binding Source={x:Static settingsOld:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -303,7 +302,7 @@
                         </Button>
                     </StackPanel>
                 </Grid>
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Source={x:Static settingsOld:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                     <TextBlock Text="{x:Static localization:Strings.NetworkPacketsCaptureAdminMessage}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
                     <Button Command="{Binding RestartAsAdminCommand}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
                         <Button.Content>

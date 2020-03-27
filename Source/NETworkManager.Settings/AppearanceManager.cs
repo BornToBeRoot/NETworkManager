@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Windows;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Settings
 {
     public static class AppearanceManager
     {

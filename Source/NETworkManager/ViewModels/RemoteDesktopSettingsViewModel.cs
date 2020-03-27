@@ -1,5 +1,5 @@
 ﻿using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System.Collections.Generic;
 using System.Linq;

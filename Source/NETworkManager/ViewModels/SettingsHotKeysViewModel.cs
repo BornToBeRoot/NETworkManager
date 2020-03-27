@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Settings;
 using MahApps.Metro.Controls;
 using NETworkManager.Utilities;
 

@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Windows.Threading;
 using System.Linq;
 using System.Windows;

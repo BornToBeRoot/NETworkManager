@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Windows.Controls;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 
 namespace NETworkManager.Validators
 {

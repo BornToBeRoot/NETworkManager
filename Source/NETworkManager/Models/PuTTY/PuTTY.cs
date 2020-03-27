@@ -1,5 +1,5 @@
 ﻿using NETworkManager.Models.Profile;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.Models.PuTTYTMP

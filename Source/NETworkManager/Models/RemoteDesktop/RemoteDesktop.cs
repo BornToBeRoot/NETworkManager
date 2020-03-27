@@ -1,6 +1,6 @@
 ﻿using NETworkManager.Models.Profile;
 using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 
 namespace NETworkManager.Models.RemoteDesktopTMP
 {

@@ -11,7 +11,7 @@ using NETworkManager.Utilities;
 using NETworkManager.Models.TigerVNC;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 
 namespace NETworkManager.Controls
 {

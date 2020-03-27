@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NETworkManager.Settings;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Settings
 {
     public static class SettingsManager
     {

@@ -3,7 +3,7 @@ using System.Windows;
 using System;
 using System.Collections;
 using System.Collections.ObjectModel;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using System.Threading;

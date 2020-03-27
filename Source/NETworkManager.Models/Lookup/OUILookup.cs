@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
-//using NETworkManager.Models.Settings;
+//using NETworkManager.Settings;
 using System.Text.RegularExpressions;
 using System;
 using System.Xml;

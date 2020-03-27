@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Settings
 {
     public static class CommandLineManager
     {

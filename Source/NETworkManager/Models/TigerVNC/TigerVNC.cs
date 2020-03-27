@@ -1,5 +1,5 @@
 ﻿using NETworkManager.Models.Profile;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Models.TigerVNC;
 
 namespace NETworkManager.Models.TigerVNCTMP

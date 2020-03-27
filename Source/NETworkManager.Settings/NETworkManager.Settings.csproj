@@ -35,6 +35,8 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,6 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppearanceManager.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="AssemblyManager.cs" />
+    <Compile Include="AutostartManager.cs" />
+    <Compile Include="CommandLineInfo.cs" />
+    <Compile Include="CommandLineManager.cs" />
+    <Compile Include="ConfigurationInfo.cs" />
+    <Compile Include="ConfigurationManager.cs" />
     <Compile Include="GlobalStaticConfiguration.cs" />
     <Compile Include="LocalSettingsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,8 +61,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="SettingsFileInfo.cs" />
+    <Compile Include="SettingsInfo.cs" />
+    <Compile Include="SettingsManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj">
+      <Project>{95ea884c-e498-4a47-a316-dc890bf7f0d2}</Project>
+      <Name>NETworkManager.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
       <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
       <Name>NETworkManager.Models</Name>

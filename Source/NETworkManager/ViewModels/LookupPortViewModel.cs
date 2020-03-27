@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Data;

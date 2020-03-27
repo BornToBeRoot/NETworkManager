@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Settings
 {
     public class ConfigurationInfo : INotifyPropertyChanged
     {

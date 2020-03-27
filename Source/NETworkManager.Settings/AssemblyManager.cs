@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Settings
 {
     public static class AssemblyManager
     {
@@ -8,7 +8,7 @@ namespace NETworkManager.Models.Settings
 
         static AssemblyManager()
         {
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetEntryAssembly();
 
             var name = assembly.GetName();
 

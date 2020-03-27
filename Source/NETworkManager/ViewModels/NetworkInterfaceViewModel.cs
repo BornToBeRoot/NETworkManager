@@ -4,7 +4,7 @@ using System.Net.NetworkInformation;
 using System;
 using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Models.Network;
 using System.Threading.Tasks;
 using System.Windows.Data;

@@ -6,7 +6,7 @@
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-        xmlns:settingsOld="clr-namespace:NETworkManager.Models.Settings"
+        
         xmlns:airspaceFixer="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
@@ -31,8 +31,8 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition MinWidth="{x:Static settings:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
             </Grid.ColumnDefinitions>
-            <airspaceFixer:AirspacePanel Grid.Column="0" Grid.Row="0" FixAirspace="{Binding Source={x:Static settingsOld:ConfigurationManager.Current}, Path=FixAirspace}">
-                <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding Source={x:Static settingsOld:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+            <airspaceFixer:AirspacePanel Grid.Column="0" Grid.Row="0" FixAirspace="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=FixAirspace}">
+                <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                     <dragablz:TabablzControl.Resources>
                         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                     </dragablz:TabablzControl.Resources>

@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using NETworkManager.Models.Network;
 using System;
 using System.Windows.Input;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.ComponentModel;

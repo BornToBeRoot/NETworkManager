@@ -4,7 +4,7 @@ using Dragablz;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Input;
 using NETworkManager.Views;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.ComponentModel;
 using System.Windows.Data;
 using System;

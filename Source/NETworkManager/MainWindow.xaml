@@ -10,7 +10,7 @@
         xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"        
-        xmlns:settingsOld="clr-namespace:NETworkManager.Models.Settings"     
+             
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:networkManager="clr-namespace:NETworkManager"
         mc:Ignorable="d"
@@ -67,7 +67,7 @@
     <mahAppsControls:MetroWindow.LeftWindowCommands>
         <mahAppsControls:WindowCommands>
             <StackPanel Orientation="Horizontal">
-                <Grid Background="{DynamicResource GrayBrush8}" Visibility="{Binding Source={x:Static settingsOld:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                <Grid Background="{DynamicResource GrayBrush8}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <TextBlock Text="Administrator" Foreground="{DynamicResource GrayBrush3}" Style="{StaticResource CenterTextBlock}" Margin="10,0"/>
                 </Grid>
             </StackPanel>

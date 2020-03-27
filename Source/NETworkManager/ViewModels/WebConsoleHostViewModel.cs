@@ -3,7 +3,7 @@ using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Linq;
 using NETworkManager.Views;
 using System.ComponentModel;

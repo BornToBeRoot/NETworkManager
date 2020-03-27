@@ -1,6 +1,6 @@
 ﻿using NETworkManager.Utilities;
 using NETworkManager.Models.Network;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;

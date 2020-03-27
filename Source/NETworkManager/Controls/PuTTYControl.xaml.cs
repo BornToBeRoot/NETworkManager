@@ -11,7 +11,7 @@ using NETworkManager.Utilities;
 using NETworkManager.Models.PuTTY;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Models.PuTTYTMP;
 using PuTTY = NETworkManager.Models.PuTTYTMP.PuTTY;
 

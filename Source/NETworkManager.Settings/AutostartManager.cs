@@ -1,12 +1,12 @@
 ﻿using Microsoft.Win32;
 using System.Threading.Tasks;
 
-namespace NETworkManager.Models.Settings
+namespace NETworkManager.Settings
 {
     public class AutostartManager
     {
         // Key where the autorun entries for the current user are stored
-        private const string RunKeyCurrentUser = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
+        private const string RunKeyCurrentUser = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
 
         public static bool IsEnabled
         {

@@ -1,5 +1,5 @@
 ﻿using MahApps.Metro;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {

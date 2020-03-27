@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Windows.Data;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System.ComponentModel;
 using System;

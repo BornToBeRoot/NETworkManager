@@ -1,6 +1,6 @@
 ﻿using System;
 using Dragablz;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Views;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;

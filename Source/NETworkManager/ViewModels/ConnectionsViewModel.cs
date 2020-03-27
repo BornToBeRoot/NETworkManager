@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using NETworkManager.Utilities;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Windows.Threading;
 using System.Linq;
 using System.Windows;
