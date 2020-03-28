@@ -13,7 +13,6 @@ using NETworkManager.Views;
 using NETworkManager.Utilities;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
-using NETworkManager.Settings;
 using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels

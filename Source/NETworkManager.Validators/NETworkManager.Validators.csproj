@@ -70,6 +70,7 @@
     <Compile Include="PortRangeValidator.cs" />
     <Compile Include="PortValidator.cs" />
     <Compile Include="PrivacyAESValidator.cs" />
+    <Compile Include="ProfileFileUniqueValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsFolderExistsValidator.cs" />
     <Compile Include="SubnetmaskValidator.cs" />

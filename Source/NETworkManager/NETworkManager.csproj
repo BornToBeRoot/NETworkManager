@@ -145,8 +145,6 @@
     <Compile Include="Controls\PuTTYControl.xaml.cs">
       <DependentUpon>PuTTYControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\IsDefaultProfilesLocationToBooleanConverter.cs" />
-    <Compile Include="Converters\IsProfilesLocationToBooleanConverter.cs" />
     <Compile Include="Models\PuTTY\PuTTY.cs" />
     <Compile Include="Models\PowerShell\PowerShell.cs" />
     <Compile Include="Models\WebConsole\WebConsole.cs" />
@@ -158,7 +156,6 @@
     <Compile Include="Models\EventSystem\EventSystemRedirectDataApplicationArgs.cs" />
     <Compile Include="Models\EventSystem\EventSystem.cs" />
     <Compile Include="Models\RemoteDesktop\RemoteDesktop.cs" />
-    <Compile Include="Validators\ProfileFileUniqueValidator.cs" />
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
     <Compile Include="ViewModels\DiscoveryProtocolViewModel.cs" />
     <Compile Include="ViewModels\ProfileFileViewModel.cs" />
@@ -1068,9 +1065,7 @@
       <Version>12.0.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Settings\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj">
       <Project>{95ea884c-e498-4a47-a316-dc890bf7f0d2}</Project>

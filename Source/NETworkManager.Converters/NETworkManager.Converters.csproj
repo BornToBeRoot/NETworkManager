@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccentToBrushConverter.cs" />
+    <Compile Include="IsDefaultProfilesLocationToBooleanConverter.cs" />
     <Compile Include="IsDefaultSettingsLocationToBooleanConverter.cs" />
+    <Compile Include="IsProfilesLocationToBooleanConverter.cs" />
     <Compile Include="IsSettingsLocationToBooleanConverter.cs" />
     <Compile Include="SettingsViewGroupToTranslatedStringConverter.cs" />
     <Compile Include="SettingsViewNameToTranslatedStringConverter.cs" />
