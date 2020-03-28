@@ -9,8 +9,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Threading;
-using NETworkManager.Models.Network;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
@@ -169,7 +168,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileManager.AddProfile(instance);
+                ProfileDialogManager.AddProfile(instance);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -196,7 +195,7 @@ namespace NETworkManager.ViewModels
 
                 ProfileManager.RemoveProfile(SelectedProfile);
 
-                ProfileManager.AddProfile(instance);
+                ProfileDialogManager.AddProfile(instance);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -221,7 +220,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileManager.AddProfile(instance);
+                ProfileDialogManager.AddProfile(instance);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

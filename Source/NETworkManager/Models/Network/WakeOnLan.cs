@@ -1,5 +1,5 @@
 ﻿using NETworkManager.Models.Network;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using System.Net;
 

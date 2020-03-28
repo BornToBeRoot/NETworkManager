@@ -1,8 +1,6 @@
-﻿using NETworkManager.Models.Profile;
-using NETworkManager.Settings;
-using static NETworkManager.Models.PuTTY.PuTTY;
+﻿using static NETworkManager.Models.PuTTY.PuTTY;
 
-namespace NETworkManager.Models.PuTTYTMP
+namespace NETworkManager.Models.PuTTY
 {
     public class PuTTYSessionInfo
     {

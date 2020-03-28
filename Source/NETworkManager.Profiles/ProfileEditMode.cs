@@ -1,4 +1,4 @@
-﻿namespace NETworkManager.Models.Profile
+﻿namespace NETworkManager.Profiles
 {
     public enum ProfileEditMode
     {

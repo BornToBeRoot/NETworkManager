@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Profile;
+﻿using NETworkManager.Profiles;
 using NETworkManager.Models.WebConsole;
 
 namespace NETworkManager.Models.WebConsoleTMP

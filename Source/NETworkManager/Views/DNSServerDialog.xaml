@@ -2,8 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:validatorsOld="clr-namespace:NETworkManager.Validators"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"            
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
@@ -54,7 +53,7 @@
                                         <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validatorsOld:IsDNSLookupDNSServersNameUnique ValidatesOnTargetUpdated="True" />
+                                                <validators:IsDNSLookupDNSServersNameUnique ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </Setter.Value>

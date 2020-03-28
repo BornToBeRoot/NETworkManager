@@ -14,7 +14,7 @@
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:profile="clr-namespace:NETworkManager.Models.Profile"
+        xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsProfilesViewModel}">
     <UserControl.Resources>
@@ -170,7 +170,7 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profile:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profiles:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
                 <DataGridTemplateColumn Header="{x:Static localization:Strings.IsEncrypted}" Width="Auto" Visibility="Collapsed">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -183,7 +183,7 @@
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualLockOpen}" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=(profile:ProfileFileInfo.IsEncryptionEnabled)}" Value="True">
+                                            <DataTrigger Binding="{Binding Path=(profiles:ProfileFileInfo.IsEncryptionEnabled)}" Value="True">
                                                 <Setter Property="OpacityMask" Value="{StaticResource VisualLockClosed}" />
                                             </DataTrigger>
                                         </Style.Triggers>

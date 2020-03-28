@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
 
-namespace NETworkManager.Models.Profile
+namespace NETworkManager.Profiles
 {
     public interface IProfileManager
     {

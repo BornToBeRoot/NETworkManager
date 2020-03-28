@@ -2,8 +2,7 @@
 using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using NETworkManager.Settings;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using NETworkManager.Models;
 
 namespace NETworkManager.Views

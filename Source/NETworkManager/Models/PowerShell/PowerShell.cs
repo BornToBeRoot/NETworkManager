@@ -1,5 +1,5 @@
 ﻿using NETworkManager.Models.PowerShell;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using NETworkManager.Settings;
 
 namespace NETworkManager.Models.PowerShellTmp

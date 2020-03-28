@@ -15,7 +15,7 @@ using System.Diagnostics;
 using NETworkManager.Models.PuTTY;
 using System.Windows;
 using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using System.Windows.Threading;
 using NETworkManager.Models.PuTTYTMP;
 using NETworkManager.Settings;
@@ -302,35 +302,35 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileManager.ShowAddProfileDialog(this, _dialogCoordinator);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private void EditProfileAction()
         {
-            ProfileManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
-            ProfileManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private void DeleteProfileAction()
         {
-            ProfileManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private void EditGroupAction(object group)
         {
-            ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -412,7 +412,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
-                Arguments = Models.PuTTYTMP.PuTTY.BuildCommandLine(Models.PuTTYTMP.PuTTY.CreateSessionInfoFromProfile(SelectedProfile))
+                Arguments = Models.PuTTY.PuTTY.BuildCommandLine(Models.PuTTYTMP.PuTTY.CreateSessionInfoFromProfile(SelectedProfile))
             };
 
             Process.Start(info);

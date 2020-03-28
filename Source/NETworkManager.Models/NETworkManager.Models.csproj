@@ -123,6 +123,8 @@
     <Compile Include="PowerShell\PowerShellSessionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PuTTY\PuTTY.ConnectionMode.cs" />
+    <Compile Include="PuTTY\PuTTY.cs" />
+    <Compile Include="PuTTY\PuTTYSessionInfo.cs" />
     <Compile Include="RemoteDesktop\AudioCaptureRedirectionMode.cs" />
     <Compile Include="RemoteDesktop\AudioRedirectionMode.cs" />
     <Compile Include="RemoteDesktop\KeyboardHookMode.cs" />

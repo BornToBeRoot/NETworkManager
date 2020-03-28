@@ -6,9 +6,8 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using NETworkManager.Localization;
-using NETworkManager.Settings;
 
 namespace NETworkManager
 {

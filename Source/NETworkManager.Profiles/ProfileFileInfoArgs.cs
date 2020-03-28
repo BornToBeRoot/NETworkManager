@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NETworkManager.Models.Profile
+namespace NETworkManager.Profiles
 {
     public class ProfileFileInfoArgs : EventArgs
     {

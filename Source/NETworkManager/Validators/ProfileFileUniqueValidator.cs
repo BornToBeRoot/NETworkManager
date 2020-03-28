@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Profile;
+﻿using NETworkManager.Profiles;
 using System.Globalization;
 using System.Windows.Controls;
 using System.Linq;

@@ -43,5 +43,35 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NETworkManager.Documentation\NETworkManager.Documentation.csproj">
+      <Project>{95ce4ad5-14c0-4486-9c11-5d6a5ec48176}</Project>
+      <Name>NETworkManager.Documentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj">
+      <Project>{ff225c2e-aa67-4b10-939a-6c046cef8697}</Project>
+      <Name>NETworkManager.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
+      <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
+      <Name>NETworkManager.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj">
+      <Project>{d3b37f13-e8e6-4218-9e8e-96d52432a9cf}</Project>
+      <Name>NETworkManager.Profiles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj">
+      <Project>{954e8703-3e6e-42bf-bd28-f0b19be10e0c}</Project>
+      <Name>NETworkManager.Settings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Update\NETworkManager.Update.csproj">
+      <Project>{008467af-d83f-4b1e-8733-b65136f595f2}</Project>
+      <Name>NETworkManager.Update</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
+      <Project>{5c3d1749-d260-4566-b448-b94b3ad9eeff}</Project>
+      <Name>NETworkManager.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

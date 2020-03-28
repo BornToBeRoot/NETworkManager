@@ -22,7 +22,7 @@ using NETworkManager.Documentation;
 using NETworkManager.ViewModels;
 using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Translators;
 using NETworkManager.Update;

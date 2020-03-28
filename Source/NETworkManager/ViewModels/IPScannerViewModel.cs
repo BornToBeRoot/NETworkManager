@@ -23,7 +23,7 @@ using NETworkManager.Views;
 using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Network;
 using System.Text.RegularExpressions;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Translators;
 using NETworkManager.Models;
@@ -420,7 +420,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileManager.AddProfile(instance);
+                ProfileDialogManager.AddProfile(instance);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

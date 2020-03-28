@@ -1,9 +1,10 @@
-﻿using NETworkManager.Models.RemoteDesktop;
+﻿using NETworkManager.Models.PowerShell;
+using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using System.Diagnostics.CodeAnalysis;
 using static NETworkManager.Models.PuTTY.PuTTY;
 
-namespace NETworkManager.Models.Profile
+namespace NETworkManager.Profiles
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class ProfileInfo
@@ -111,7 +112,7 @@ namespace NETworkManager.Models.Profile
         public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
         public string PowerShell_AdditionalCommandLine { get; set; }
         public bool PowerShell_OverrideExecutionPolicy { get; set; }
-        public PowerShell.PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; }
+        public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; }
 
         public bool PuTTY_Enabled { get; set; }
         public ConnectionMode PuTTY_ConnectionMode { get; set; }

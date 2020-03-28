@@ -60,6 +60,7 @@
     <Compile Include="IPv4IPv6SubnetValidator.cs" />
     <Compile Include="IPv4SubnetmaskOrCIDRValidator.cs" />
     <Compile Include="IPv4SubnetValidator.cs" />
+    <Compile Include="IsDNSLookupDNSServersNameUnique.cs" />
     <Compile Include="MACAddressValidator.cs" />
     <Compile Include="MultipleHostsRangeValidator.cs" />
     <Compile Include="MultipleIPAddressesValidator.cs" />
