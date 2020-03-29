@@ -1,6 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Settings;
-using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Diagnostics;
@@ -16,6 +15,8 @@ namespace NETworkManager.ViewModels
         private readonly IDialogCoordinator _dialogCoordinator;
 
         public Action CloseAction { get; set; }
+
+        public bool IsPortable => ConfigurationManager.Current.IsPortable;
 
         private string _location;
         public string Location
