@@ -1,6 +1,6 @@
 ## Welcome
 
-<img alt="NETworkManager" src="NETworkManager_Preview.gif" />
+Add some text here...
 
 ## Download
 
@@ -11,7 +11,11 @@
 |[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip)| `497C6DEFAD22B074B0E8D0E439485451` `28503512434C096D221D2978B1344F91` | Binaries can be deployed anywhere (network share, etc.). Settings are saved in %AppData%. |
 |[Chocolatey](https://chocolatey.org/packages/NETworkManager)| -/- | Package Manager for Windows. Installs the setup via Chocolatey. |
 
-<h2>Features</h2>
+## Preview
+
+<img alt="NETworkManager" src="NETworkManager_Preview.gif" />
+
+## Features
 
 - Dashboard 
 - Network Interface - Information, Bandwidth, Configure
