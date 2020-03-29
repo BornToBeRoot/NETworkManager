@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"                             
-        xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"                             
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:resources="clr-namespace:NETworkManager.Properties"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
         Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Height="300" Width="250" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" Style="{StaticResource DefaultWindow}" ShowMinButton="False" ShowMaxRestoreButton="False" Closing="StatusWindow_Closing">
     <mahAppsControls:MetroWindow.Resources>

@@ -1,10 +1,9 @@
 ﻿using NETworkManager.Models.Network;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System;
 using System.Collections;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -21,6 +20,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
+using NETworkManager.Localization.Translators;
 
 namespace NETworkManager.ViewModels
 {
@@ -357,49 +357,49 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedTimestampAction()
         {
-            CommonMethods.SetClipboard(SelectedPingResult.Timestamp.ToString(CultureInfo.CurrentCulture));
+            ClipboardHelper.SetClipboard(SelectedPingResult.Timestamp.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedPingResult.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedPingResult.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
-            CommonMethods.SetClipboard(SelectedPingResult.Hostname);
+            ClipboardHelper.SetClipboard(SelectedPingResult.Hostname);
         }
 
         public ICommand CopySelectedBytesCommand => new RelayCommand(p => CopySelectedBytesAction());
 
         private void CopySelectedBytesAction()
         {
-            CommonMethods.SetClipboard(SelectedPingResult.Bytes.ToString());
+            ClipboardHelper.SetClipboard(SelectedPingResult.Bytes.ToString());
         }
 
         public ICommand CopySelectedTimeCommand => new RelayCommand(p => CopySelectedTimeAction());
 
         private void CopySelectedTimeAction()
         {
-            CommonMethods.SetClipboard(SelectedPingResult.Time.ToString());
+            ClipboardHelper.SetClipboard(SelectedPingResult.Time.ToString());
         }
 
         public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
 
         private void CopySelectedTTLAction()
         {
-            CommonMethods.SetClipboard(SelectedPingResult.TTL.ToString());
+            ClipboardHelper.SetClipboard(SelectedPingResult.TTL.ToString());
         }
 
         public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
-        {
-            CommonMethods.SetClipboard(LocalizationManager.TranslateIPStatus(SelectedPingResult.Status));
+        {            
+            ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedPingResult.Status));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -469,7 +469,7 @@ namespace NETworkManager.ViewModels
             {
                 PingFinished();
 
-                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveIPAddressFor, Host);
+                StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host);
                 DisplayStatusMessage = true;
                 
                 return;
@@ -531,7 +531,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -545,9 +545,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.Ping_ExportFileType = instance.FileType;
@@ -643,7 +643,7 @@ namespace NETworkManager.ViewModels
                 switch (w32Ex.NativeErrorCode)
                 {
                     case 1231:
-                        errorMessage = Resources.Localization.Strings.NetworkLocationCannotBeReachedMessage;
+                        errorMessage = Localization.Resources.Strings.NetworkLocationCannotBeReachedMessage;
                         break;
                     default:
                         errorMessage = e.InnerException.Message;

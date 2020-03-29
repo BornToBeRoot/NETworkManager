@@ -5,6 +5,9 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using NETworkManager.Localization.Translators;
+using NETworkManager.Models;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 
@@ -107,7 +110,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public SettingsViewModel(ApplicationViewManager.Name applicationName)
+        public SettingsViewModel(ApplicationName applicationName)
         {
             LoadSettings();
 
@@ -117,7 +120,7 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             SettingsViews = new CollectionViewSource { Source = SettingsViewManager.List }.View;
-            SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SettingsViewInfo.TranslatedGroup)));
+            SettingsViews.GroupDescriptions.Add(new PropertyGroupDescription(nameof(SettingsViewInfo.Group)));
             SettingsViews.SortDescriptions.Add(new SortDescription(nameof(SettingsViewInfo.Name), ListSortDirection.Ascending));
             SettingsViews.Filter = o =>
             {
@@ -132,7 +135,7 @@ namespace NETworkManager.ViewModels
                 var search = regex.Replace(Search, "");
 
                 // Search by TranslatedName and Name
-                return regex.Replace(info.TranslatedName, "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                return regex.Replace(SettingsViewNameTranslator.GetInstance().Translate(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || (regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
         }
         #endregion
@@ -147,71 +150,71 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        public void ChangeSettingsView(ApplicationViewManager.Name applicationName)
+        public void ChangeSettingsView(ApplicationName applicationName)
         {
             // Don't change the view, if the user has filtered the settings...
             if (!string.IsNullOrEmpty(Search))
                 return;
 
-            if (System.Enum.GetNames(typeof(SettingsViewManager.Name)).Contains(applicationName.ToString()) && ApplicationViewManager.Name.None.ToString() != applicationName.ToString())
+            if (System.Enum.GetNames(typeof(SettingsViewName)).Contains(applicationName.ToString()) && ApplicationName.None.ToString() != applicationName.ToString())
                 SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name.ToString() == applicationName.ToString());
             else
-                SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == SettingsViewManager.Name.General);
+                SelectedSettingsView = SettingsViews.SourceCollection.Cast<SettingsViewInfo>().FirstOrDefault(x => x.Name == SettingsViewName.General);
         }
 
         private void ChangeSettingsContent(SettingsViewInfo settingsViewInfo)
         {
             switch (settingsViewInfo.Name)
             {
-                case SettingsViewManager.Name.General:
+                case SettingsViewName.General:
                     if (_settingsGerneralView == null)
                         _settingsGerneralView = new SettingsGeneralView();
 
                     SettingsContent = _settingsGerneralView;
                     break;
-                case SettingsViewManager.Name.Window:
+                case SettingsViewName.Window:
                     if (_settingsWindowView == null)
                         _settingsWindowView = new SettingsWindowView();
 
                     SettingsContent = _settingsWindowView;
                     break;
-                case SettingsViewManager.Name.Appearance:
+                case SettingsViewName.Appearance:
                     if (_settingsApperanceView == null)
                         _settingsApperanceView = new SettingsAppearanceView();
 
                     SettingsContent = _settingsApperanceView;
                     break;
-                case SettingsViewManager.Name.Language:
+                case SettingsViewName.Language:
                     if (_settingsLanguageView == null)
                         _settingsLanguageView = new SettingsLanguageView();
 
                     SettingsContent = _settingsLanguageView;
                     break;
-                case SettingsViewManager.Name.Status:
+                case SettingsViewName.Status:
                     if (_settingsStatusView == null)
                         _settingsStatusView = new SettingsStatusView();
 
                     SettingsContent = _settingsStatusView;
                     break;
-                case SettingsViewManager.Name.HotKeys:
+                case SettingsViewName.HotKeys:
                     if (_settingsHotKeysView == null)
                         _settingsHotKeysView = new SettingsHotKeysView();
 
                     SettingsContent = _settingsHotKeysView;
                     break;
-                case SettingsViewManager.Name.Autostart:
+                case SettingsViewName.Autostart:
                     if (_settingsAutostartView == null)
                         _settingsAutostartView = new SettingsAutostartView();
 
                     SettingsContent = _settingsAutostartView;
                     break;              
-                case SettingsViewManager.Name.Update:
+                case SettingsViewName.Update:
                     if (_settingsUpdateView == null)
                         _settingsUpdateView = new SettingsUpdateView();
 
                     SettingsContent = _settingsUpdateView;
                     break;
-                case SettingsViewManager.Name.Settings:
+                case SettingsViewName.Settings:
                     if (_settingsSettingsView == null)
                         _settingsSettingsView = new SettingsSettingsView();
 
@@ -220,7 +223,7 @@ namespace NETworkManager.ViewModels
 
                     SettingsContent = _settingsSettingsView;
                     break;
-                case SettingsViewManager.Name.Profiles:
+                case SettingsViewName.Profiles:
                     if (_settingsProfilesView == null)
                         _settingsProfilesView = new SettingsProfilesView();
 
@@ -229,86 +232,86 @@ namespace NETworkManager.ViewModels
 
                     SettingsContent = _settingsProfilesView;
                     break;
-                case SettingsViewManager.Name.Dashboard:
+                case SettingsViewName.Dashboard:
                     if (_dashboardSettingsView == null)
                         _dashboardSettingsView = new DashboardSettingsView();
 
                     SettingsContent = _dashboardSettingsView;
                     break;
-                case SettingsViewManager.Name.IPScanner:
+                case SettingsViewName.IPScanner:
                     if (_ipScannerSettingsView == null)
                         _ipScannerSettingsView = new IPScannerSettingsView();
 
                     SettingsContent = _ipScannerSettingsView;
                     break;
-                case SettingsViewManager.Name.PortScanner:
+                case SettingsViewName.PortScanner:
                     if (_portScannerSettingsView == null)
                         _portScannerSettingsView = new PortScannerSettingsView();
 
                     SettingsContent = _portScannerSettingsView;
                     break;
 
-                case SettingsViewManager.Name.Ping:
+                case SettingsViewName.Ping:
                     if (_pingSettingsViewModel == null)
                         _pingSettingsViewModel = new PingSettingsView();
 
                     SettingsContent = _pingSettingsViewModel;
                     break;
-                case SettingsViewManager.Name.Traceroute:
+                case SettingsViewName.Traceroute:
                     if (_tracerouteSettingsView == null)
                         _tracerouteSettingsView = new TracerouteSettingsView();
 
                     SettingsContent = _tracerouteSettingsView;
                     break;
-                case SettingsViewManager.Name.DNSLookup:
+                case SettingsViewName.DNSLookup:
                     if (_dnsLookupSettingsViewModel == null)
                         _dnsLookupSettingsViewModel = new DNSLookupSettingsView();
 
                     SettingsContent = _dnsLookupSettingsViewModel;
                     break;
-                case SettingsViewManager.Name.RemoteDesktop:
+                case SettingsViewName.RemoteDesktop:
                     if (_remoteDesktopSettingsView == null)
                         _remoteDesktopSettingsView = new RemoteDesktopSettingsView();
 
                     SettingsContent = _remoteDesktopSettingsView;
                     break;
-                case SettingsViewManager.Name.PowerShell:
+                case SettingsViewName.PowerShell:
                     if (_powerShellSettingsView == null)
                         _powerShellSettingsView = new PowerShellSettingsView();
 
                     SettingsContent = _powerShellSettingsView;
                     break;
-                case SettingsViewManager.Name.PuTTY:
+                case SettingsViewName.PuTTY:
                     if (_puTTYSettingsView == null)
                         _puTTYSettingsView = new PuTTYSettingsView();
 
                     SettingsContent = _puTTYSettingsView;
                     break;
-                case SettingsViewManager.Name.TigerVNC:
+                case SettingsViewName.TigerVNC:
                     if (_tigerVNCSettingsView == null)
                         _tigerVNCSettingsView = new TigerVNCSettingsView();
 
                     SettingsContent = _tigerVNCSettingsView;
                     break;
-                case SettingsViewManager.Name.SNMP:
+                case SettingsViewName.SNMP:
                     if (_snmpSettingsView == null)
                         _snmpSettingsView = new SNMPSettingsView();
 
                     SettingsContent = _snmpSettingsView;
                     break;
-                case SettingsViewManager.Name.WakeOnLAN:
+                case SettingsViewName.WakeOnLAN:
                     if (_wakeOnLANSettingsView == null)
                         _wakeOnLANSettingsView = new WakeOnLANSettingsView();
 
                     SettingsContent = _wakeOnLANSettingsView;
                     break;
-                case SettingsViewManager.Name.HTTPHeaders:
+                case SettingsViewName.HTTPHeaders:
                     if (_httpHeadersSettingsView == null)
                         _httpHeadersSettingsView = new HTTPHeadersSettingsView();
 
                     SettingsContent = _httpHeadersSettingsView;
                     break;
-                case SettingsViewManager.Name.Whois:
+                case SettingsViewName.Whois:
                     if (_whoisSettingsView == null)
                         _whoisSettingsView = new WhoisSettingsView();
 

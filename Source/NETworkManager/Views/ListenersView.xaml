@@ -2,16 +2,16 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:utilities="clr-namespace:NETworkManager.Utilities"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-        xmlns:controls="clr-namespace:NETworkManager.Controls"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+        xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListenersViewModel}">
     <UserControl.InputBindings>
@@ -19,7 +19,7 @@
     </UserControl.InputBindings>
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
+        <converters:TimeUnitToStringConverter x:Key="TimeUnitToStringConverter" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.Listeners}">
@@ -139,7 +139,7 @@
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} {1}">
                                                 <Binding Path="Value" />
-                                                <Binding Path="TimeUnit" Converter="{StaticResource AutoRefreshTimeToStringConverter}" />
+                                                <Binding Path="TimeUnit" Converter="{StaticResource TimeUnitToStringConverter}" />
                                             </MultiBinding>
                                         </TextBlock.Text>
                                     </TextBlock>

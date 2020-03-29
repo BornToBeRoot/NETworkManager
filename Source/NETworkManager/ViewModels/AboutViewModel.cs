@@ -1,13 +1,13 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Settings;
 using System.Windows.Input;
 using System.Diagnostics;
-using NETworkManager.Models.Update;
+using NETworkManager.Update;
 using System;
 using System.ComponentModel;
-using NETworkManager.Models.Documentation;
 using System.Windows.Data;
-using NETworkManager.Resources.Localization;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Utilities;
+using NETworkManager.Documentation;
 
 namespace NETworkManager.ViewModels
 {
@@ -196,10 +196,9 @@ namespace NETworkManager.ViewModels
 
             updater.UpdateAvailable += Updater_UpdateAvailable;
             updater.NoUpdateAvailable += Updater_NoUpdateAvailable;
-            updater.ClientIncompatibleWithNewVersion += Updater_ClientIncompatibleWithNewVersion; ;
             updater.Error += Updater_Error;
 
-            updater.Check();
+            updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version);
         }
 
         public void OpenLicenseFolder() => Process.Start(LibraryManager.GetLicenseLocation());
@@ -221,15 +220,7 @@ namespace NETworkManager.ViewModels
             IsUpdateCheckRunning = false;
             ShowUpdaterMessage = true;
         }
-
-        private void Updater_ClientIncompatibleWithNewVersion(object sender, EventArgs e)
-        {
-            UpdaterMessage = Strings.YourSystemOSIsIncompatibleWithTheLatestRelease;
-
-            IsUpdateCheckRunning = false;
-            ShowUpdaterMessage = true;
-        }
-
+               
         private void Updater_Error(object sender, EventArgs e)
         {
             UpdaterMessage = Strings.ErrorCheckingApiGithubComVerifyYourNetworkConnection;

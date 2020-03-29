@@ -5,13 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views ="clr-namespace:NETworkManager.Views"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
-        xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:SettingsViewNameToTranslatedStringConverter x:Key="SettingsViewNameToTranslatedStringConverter" />
+        <converters:SettingsViewGroupToTranslatedStringConverter x:Key="SettingsViewGroupToTranslatedStringConverter" />
     </UserControl.Resources>
     <Grid>
         <TabControl Style="{StaticResource DefaultTabControl}">
@@ -76,7 +79,7 @@
                                                         </Style>
                                                     </Rectangle.Style>
                                                 </Rectangle>
-                                                <TextBlock Grid.Column="1" Text="{Binding (networkManager:SettingsViewInfo.TranslatedName)}" >
+                                                <TextBlock Grid.Column="1" Text="{Binding (settings:SettingsViewInfo.Name), Converter={StaticResource SettingsViewNameToTranslatedStringConverter}}" >
                                                     <TextBlock.Style>
                                                         <Style TargetType="{x:Type TextBlock}">
                                                             <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
@@ -160,7 +163,7 @@
                             <Style TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource DefaultScrollViewer}">
                                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding SelectedSettingsView.Name}" Value="{x:Static networkManager:SettingsViewManager+Name.Language}">
+                                    <DataTrigger Binding="{Binding SelectedSettingsView.Name}" Value="{x:Static settings:SettingsViewName.Language}">
                                         <Setter Property="VerticalScrollBarVisibility" Value="Disabled" />
                                     </DataTrigger>
                                 </Style.Triggers>

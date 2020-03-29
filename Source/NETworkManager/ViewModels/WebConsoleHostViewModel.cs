@@ -3,7 +3,7 @@ using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Linq;
 using NETworkManager.Views;
 using System.ComponentModel;
@@ -11,10 +11,11 @@ using System.Windows.Data;
 using System;
 using NETworkManager.Utilities;
 using System.Windows;
-using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using NETworkManager.Models.WebConsole;
 using System.Windows.Threading;
+using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {
@@ -146,7 +147,7 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.WebConsole);
+            InterTabClient = new DragablzInterTabClient(ApplicationName.WebConsole);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 
@@ -241,35 +242,35 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileManager.ShowAddProfileDialog(this, _dialogCoordinator);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private void EditProfileAction()
         {
-            ProfileManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
-            ProfileManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private void DeleteProfileAction()
         {
-            ProfileManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private void EditGroupAction(object group)
         {
-            ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -292,7 +293,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Connect
+                Title = Localization.Resources.Strings.Connect
             };
 
             var connectViewModel = new WebConsoleConnectViewModel(async instance =>
@@ -328,7 +329,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfile()
         {
-            Connect(WebConsole.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+            Connect(Models.WebConsoleTMP.WebConsole.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
 
         private void Connect(WebConsoleSessionInfo sessionInfo, string header = null)

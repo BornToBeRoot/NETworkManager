@@ -11,7 +11,7 @@ using NETworkManager.Utilities;
 using NETworkManager.Models.TigerVNC;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 
 namespace NETworkManager.Controls
 {
@@ -200,10 +200,10 @@ namespace NETworkManager.Controls
                 if (!_closing)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = NETworkManager.Localization.Resources.Strings.OK;
                     ConfigurationManager.Current.FixAirspace = true;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error,
+                    await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Localization.Resources.Strings.Error,
                         ex.Message, MessageDialogStyle.Affirmative, settings);
 
                     ConfigurationManager.Current.FixAirspace = false;

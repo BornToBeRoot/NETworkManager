@@ -4,7 +4,7 @@ using System.Net.NetworkInformation;
 using System;
 using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Models.Network;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -17,8 +17,9 @@ using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
 using MahApps.Metro.Controls;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using System.Windows.Threading;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {
@@ -644,7 +645,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -668,35 +669,35 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileManager.ShowAddProfileDialog(this, _dialogCoordinator);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private void EditProfileAction()
         {
-            ProfileManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
-            ProfileManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private void DeleteProfileAction()
         {
-            ProfileManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private void EditGroupAction(object group)
         {
-            ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
 
         public ICommand FlushDNSCommand => new RelayCommand(p => FlushDNSAction(), FlushDNS_CanExecute);
@@ -767,7 +768,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.AddIPv4Address
+                Title = Localization.Resources.Strings.AddIPv4Address
             };
 
             var networkInterfaceAddIPAddressViewModel = new NetworkInterfaceAddIPAddressViewModel(async instance =>
@@ -1140,7 +1141,7 @@ namespace NETworkManager.ViewModels
 
         private void NetworkInterface_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
         }
 

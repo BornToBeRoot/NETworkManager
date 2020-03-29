@@ -2,16 +2,16 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:network="clr-namespace:NETworkManager.Models.Network"
         xmlns:utilities="clr-namespace:NETworkManager.Utilities"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-        xmlns:controls="clr-namespace:NETworkManager.Controls"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+        xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ConnectionsViewModel}">
     <UserControl.InputBindings>
@@ -20,7 +20,7 @@
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:TcpStateToStringConverter x:Key="TcpStateToStringConverter" />
-        <converters:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
+        <converters:TimeUnitToStringConverter x:Key="TimeUnitToStringConverter" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.Connections}">
@@ -140,7 +140,7 @@
                         <DataGridTextColumn Header="{x:Static localization:Strings.LocalPort}" Binding="{Binding (network:ConnectionInfo.LocalPort)}" SortMemberPath="LocalPort" MinWidth="100" />
                         <DataGridTextColumn Header="{x:Static localization:Strings.RemoteIPAddress}" Binding="{Binding (network:ConnectionInfo.RemoteIPAddress)}" SortMemberPath="RemoteIPAddressInt32" MinWidth="150"/>
                         <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}" Binding="{Binding (network:ConnectionInfo.RemotePort)}" SortMemberPath="RemotePort" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.State}" Binding="{Binding (network:ConnectionInfo.TcpState), Converter={StaticResource TcpStateToStringConverter}}" SortMemberPath="TcpStateTranslated" MinWidth="150" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.State}" Binding="{Binding (network:ConnectionInfo.TcpState), Converter={StaticResource TcpStateToStringConverter}}" SortMemberPath="TcpState" MinWidth="150" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
                 <TextBlock Grid.Row="3" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
@@ -170,7 +170,7 @@
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} {1}">
                                                 <Binding Path="Value" />
-                                                <Binding Path="TimeUnit" Converter="{StaticResource AutoRefreshTimeToStringConverter}" />
+                                                <Binding Path="TimeUnit" Converter="{StaticResource TimeUnitToStringConverter}" />
                                             </MultiBinding>
                                         </TextBlock.Text>
                                     </TextBlock>

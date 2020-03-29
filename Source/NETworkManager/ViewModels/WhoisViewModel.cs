@@ -1,7 +1,7 @@
 ﻿using NETworkManager.Models.Network;
 using System;
 using System.Windows.Input;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
-using NETworkManager.Resources.Localization;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Views;
 
 namespace NETworkManager.ViewModels

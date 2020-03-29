@@ -4,8 +4,7 @@ using System.Windows;
 using System;
 using System.Collections;
 using System.Collections.ObjectModel;
-using System.Net.Sockets;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Models.Network;
 using System.Threading;
 using NETworkManager.Utilities;
@@ -21,6 +20,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
+using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
@@ -278,7 +278,7 @@ namespace NETworkManager.ViewModels
         #region ICommands & Actions
         public ICommand TraceCommand => new RelayCommand(p => TraceAction(), Trace_CanExecute);
 
-        private bool Trace_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+        private bool Trace_CanExecute(object paramter) => System.Windows.Application.Current.MainWindow != null && !((MetroWindow)System.Windows.Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void TraceAction()
         {
@@ -295,68 +295,68 @@ namespace NETworkManager.ViewModels
             if (!(name is string appName))
                 return;
 
-            if (!System.Enum.TryParse(appName, out ApplicationViewManager.Name app))
+            if (!System.Enum.TryParse(appName, out ApplicationName app))
                 return;
 
             var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname) ? SelectedTraceResult.Hostname : SelectedTraceResult.IPAddress.ToString();
 
-            EventSystem.RedirectDataToApplication(app, host);
+            EventSystem.RedirectToApplication(app, host);
         }
 
         public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(p => PerformDNSLookupIPAddressAction());
 
         private void PerformDNSLookupIPAddressAction()
         {
-            EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.IPAddress.ToString());
+            EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedTraceResult.IPAddress.ToString());
         }
 
         public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
 
         private void PerformDNSLookupHostnameAction()
         {
-            EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedTraceResult.Hostname);
+            EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedTraceResult.Hostname);
         }
 
         public ICommand CopySelectedHopCommand => new RelayCommand(p => CopySelectedHopAction());
 
         private void CopySelectedHopAction()
         {
-            CommonMethods.SetClipboard(SelectedTraceResult.Hop.ToString());
+            ClipboardHelper.SetClipboard(SelectedTraceResult.Hop.ToString());
         }
 
         public ICommand CopySelectedTime1Command => new RelayCommand(p => CopySelectedTime1Action());
 
         private void CopySelectedTime1Action()
         {
-            CommonMethods.SetClipboard(SelectedTraceResult.Time1.ToString(CultureInfo.CurrentCulture));
+            ClipboardHelper.SetClipboard(SelectedTraceResult.Time1.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedTime2Command => new RelayCommand(p => CopySelectedTime2Action());
 
         private void CopySelectedTime2Action()
         {
-            CommonMethods.SetClipboard(SelectedTraceResult.Time2.ToString(CultureInfo.CurrentCulture));
+            ClipboardHelper.SetClipboard(SelectedTraceResult.Time2.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedTime3Command => new RelayCommand(p => CopySelectedTime3Action());
 
         private void CopySelectedTime3Action()
         {
-            CommonMethods.SetClipboard(SelectedTraceResult.Time3.ToString(CultureInfo.CurrentCulture));
+            ClipboardHelper.SetClipboard(SelectedTraceResult.Time3.ToString(CultureInfo.CurrentCulture));
         }
 
         public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedTraceResult.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedTraceResult.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
-            CommonMethods.SetClipboard(SelectedTraceResult.Hostname);
+            ClipboardHelper.SetClipboard(SelectedTraceResult.Hostname);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -391,7 +391,7 @@ namespace NETworkManager.ViewModels
             Hops = 0;
 
             // Change the tab title (not nice, but it works)
-            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var window = System.Windows.Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
             if (window != null)
             {
@@ -413,7 +413,7 @@ namespace NETworkManager.ViewModels
             {                
                 TracerouteFinished();
 
-                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveIPAddressFor, Host);
+                StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host);
                 DisplayStatusMessage = true;
 
                 return;
@@ -474,7 +474,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -488,9 +488,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
@@ -530,7 +530,7 @@ namespace NETworkManager.ViewModels
         {
             var tracerouteInfo = TracerouteHopInfo.Parse(e);
 
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 lock (TraceResults)
                     TraceResults.Add(tracerouteInfo);
@@ -543,7 +543,7 @@ namespace NETworkManager.ViewModels
         {
             TracerouteFinished();
 
-            StatusMessage = string.Format(Resources.Localization.Strings.MaximumNumberOfHopsReached, e.Hops);
+            StatusMessage = string.Format(Localization.Resources.Strings.MaximumNumberOfHopsReached, e.Hops);
             DisplayStatusMessage = true;
         }
 
@@ -551,7 +551,7 @@ namespace NETworkManager.ViewModels
         {
             UserHasCanceled();
 
-            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
         }
 

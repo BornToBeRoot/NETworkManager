@@ -1,6 +1,6 @@
 ﻿using System;
 using Dragablz;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Views;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -8,6 +8,8 @@ using System.Windows.Input;
 using NETworkManager.Utilities;
 using NETworkManager.Models.RemoteDesktop;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Localization.Translators;
+using NETworkManager.Models;
 
 namespace NETworkManager.Controls
 {
@@ -24,9 +26,9 @@ namespace NETworkManager.Controls
 
         #region Variables
         public IInterTabClient InterTabClient { get; }
-        private ApplicationViewManager.Name _applicationName;
+        private ApplicationName _applicationName;
 
-        public ApplicationViewManager.Name ApplicationName
+        public ApplicationName ApplicationName
         {
             get => _applicationName;
             set
@@ -55,7 +57,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Constructor
-        public DragablzTabHostWindow(ApplicationViewManager.Name applicationName)
+        public DragablzTabHostWindow(ApplicationName applicationName)
         {
             InitializeComponent();
             DataContext = this;
@@ -66,7 +68,7 @@ namespace NETworkManager.Controls
 
             InterTabController.Partition = applicationName.ToString();
 
-            ApplicationTitle = ApplicationViewManager.GetTranslatedNameByName(applicationName);
+            ApplicationTitle = ApplicationNameTranslator.GetInstance().Translate(applicationName);
 
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
         }
@@ -80,45 +82,45 @@ namespace NETworkManager.Controls
             // Switch between application identifiert...
             switch (_applicationName)
             {
-                case ApplicationViewManager.Name.None:
+                case ApplicationName.None:
                     break;
-                case ApplicationViewManager.Name.IPScanner:
+                case ApplicationName.IPScanner:
                     ((IPScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.PortScanner:
+                case ApplicationName.PortScanner:
                     ((PortScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.Ping:
+                case ApplicationName.Ping:
                     ((PingView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.Traceroute:
+                case ApplicationName.Traceroute:
                     ((TracerouteView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.DNSLookup:
+                case ApplicationName.DNSLookup:
                     ((DNSLookupView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.RemoteDesktop:
+                case ApplicationName.RemoteDesktop:
                     ((RemoteDesktopControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.PowerShell:
+                case ApplicationName.PowerShell:
                     ((PowerShellControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.PuTTY:
+                case ApplicationName.PuTTY:
                     ((PuTTYControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.TigerVNC:
+                case ApplicationName.TigerVNC:
                     ((TigerVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.WebConsole:
+                case ApplicationName.WebConsole:
                     ((WebConsoleControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.SNMP:
+                case ApplicationName.SNMP:
                     ((SNMPView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.HTTPHeaders:
+                case ApplicationName.HTTPHeaders:
                     ((HTTPHeadersView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationViewManager.Name.Whois:
+                case ApplicationName.Whois:
                     ((WhoisView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 default:
@@ -189,13 +191,13 @@ namespace NETworkManager.Controls
             {
                 try
                 {
-                    control.SendKey(RemoteDesktop.Keystroke.CtrlAltDel);
+                    control.SendKey(Keystroke.CtrlAltDel);
                 }
                 catch (Exception ex)
                 {
                     ConfigurationManager.Current.FixAirspace = true;
                    
-                    await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", NETworkManager.Resources.Localization.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
+                    await this.ShowMessageAsync(NETworkManager.Localization.Resources.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", NETworkManager.Localization.Resources.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
 
                     ConfigurationManager.Current.FixAirspace = false;
                 }

@@ -1,0 +1,30 @@
+﻿namespace NETworkManager.Settings
+{
+    public enum SettingsViewName
+    {
+        General,
+        Window,
+        Appearance,
+        Language,
+        Status,
+        HotKeys,
+        Autostart,
+        Update,
+        Settings,
+        Profiles,
+        Dashboard,
+        IPScanner,
+        PortScanner,
+        Ping,
+        Traceroute,
+        DNSLookup,
+        RemoteDesktop,
+        PowerShell,
+        PuTTY,
+        TigerVNC,
+        SNMP,
+        WakeOnLAN,
+        HTTPHeaders,
+        Whois
+    }
+}

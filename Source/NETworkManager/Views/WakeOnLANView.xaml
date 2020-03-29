@@ -6,13 +6,13 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:validators="clr-namespace:NETworkManager.Validators"
-             xmlns:converters="clr-namespace:NETworkManager.Converters"
-             xmlns:wpfHelpers="clr-namespace:NETworkManager.WpfHelper"
+             xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-             xmlns:networkManager="clr-namespace:NETworkManager"             
+             xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"             
              dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WakeOnLANViewModel}">
     <UserControl.Resources>
@@ -26,7 +26,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
+                    <ColumnDefinition MinWidth="{x:Static settings:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Row="0" Margin="10">
                     <Grid.RowDefinitions>

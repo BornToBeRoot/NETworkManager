@@ -1,5 +1,5 @@
 ﻿using NETworkManager.Models.Network;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -328,35 +328,35 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedDomainNameAction()
         {
-            CommonMethods.SetClipboard(SelectedLookupResult.DomainName);
+            ClipboardHelper.SetClipboard(SelectedLookupResult.DomainName);
         }
 
         public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
 
         private void CopySelectedTTLAction()
         {
-            CommonMethods.SetClipboard(SelectedLookupResult.TTL.ToString());
+            ClipboardHelper.SetClipboard(SelectedLookupResult.TTL.ToString());
         }
 
         public ICommand CopySelectedClassCommand => new RelayCommand(p => CopySelectedClassAction());
 
         private void CopySelectedClassAction()
         {
-            CommonMethods.SetClipboard(SelectedLookupResult.Class);
+            ClipboardHelper.SetClipboard(SelectedLookupResult.Class);
         }
 
         public ICommand CopySelectedTypeCommand => new RelayCommand(p => CopySelectedTypeAction());
 
         private void CopySelectedTypeAction()
         {
-            CommonMethods.SetClipboard(SelectedLookupResult.Type);
+            ClipboardHelper.SetClipboard(SelectedLookupResult.Type);
         }
 
         public ICommand CopySelectedResultCommand => new RelayCommand(p => CopySelectedResultAction());
 
         private void CopySelectedResultAction()
         {
-            CommonMethods.SetClipboard(SelectedLookupResult.Result);
+            ClipboardHelper.SetClipboard(SelectedLookupResult.Result);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -365,7 +365,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -379,9 +379,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;

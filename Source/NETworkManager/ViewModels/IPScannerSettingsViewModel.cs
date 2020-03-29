@@ -1,5 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System.ComponentModel;
@@ -390,7 +390,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.AddCustomCommand
+                Title = Localization.Resources.Strings.AddCustomCommand
             };
 
             var customCommandViewModel = new CustomCommandViewModel(instance =>
@@ -415,7 +415,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.EditCustomCommand
+                Title = Localization.Resources.Strings.EditCustomCommand
             };
 
             var customCommandViewModel = new CustomCommandViewModel(instance =>
@@ -441,7 +441,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.DeleteCustomCommand
+                Title = Localization.Resources.Strings.DeleteCustomCommand
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -452,7 +452,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Resources.Localization.Strings.DeleteCustomCommandMessage);
+            }, Localization.Resources.Strings.DeleteCustomCommandMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {

@@ -4,15 +4,17 @@ using Dragablz;
 using System.Windows.Input;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.ComponentModel;
 using System;
 using System.Windows.Data;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
 using System.Linq;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using System.Windows.Threading;
+using NETworkManager.Settings;
+using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
 {
@@ -145,11 +147,11 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.PortScanner);
+            InterTabClient = new DragablzInterTabClient(ApplicationName.PortScanner);
 
             TabItems = new ObservableCollection<DragablzTabItem>()
             {
-                new DragablzTabItem(Resources.Localization.Strings.NewTab, new PortScannerView(_tabId), _tabId)
+                new DragablzTabItem(Localization.Resources.Strings.NewTab, new PortScannerView(_tabId), _tabId)
             };
 
             Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
@@ -219,35 +221,35 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileManager.ShowAddProfileDialog(this, _dialogCoordinator);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private void EditProfileAction()
         {
-            ProfileManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
-            ProfileManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private void DeleteProfileAction()
         {
-            ProfileManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private void EditGroupAction(object group)
         {
-            ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -318,7 +320,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(string.IsNullOrEmpty(host) ? Resources.Localization.Strings.NewTab : host, new PortScannerView(_tabId, host, ports), _tabId));
+            TabItems.Add(new DragablzTabItem(string.IsNullOrEmpty(host) ? Localization.Resources.Strings.NewTab : host, new PortScannerView(_tabId, host, ports), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

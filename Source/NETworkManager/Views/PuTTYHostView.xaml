@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
-        xmlns:settings="clr-namespace:NETworkManager.Models.Settings"
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+        
         xmlns:airspaceFixer="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:controls="clr-namespace:NETworkManager.Controls"
-        xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
-        xmlns:networkManager="clr-namespace:NETworkManager"
+        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"             
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
@@ -40,12 +40,12 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition MinWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static networkManager:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
+                <ColumnDefinition MinWidth="{x:Static settings:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
             </Grid.ColumnDefinitions>
             <airspaceFixer:AirspacePanel Grid.Column="0" Grid.Row="0" FixAirspace="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=FixAirspace}">
                 <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                     <dragablz:TabablzControl.Resources>
-                        <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                     </dragablz:TabablzControl.Resources>
                     <dragablz:TabablzControl.InterTabController>
                         <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />

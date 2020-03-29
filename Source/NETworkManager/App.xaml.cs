@@ -1,13 +1,13 @@
 ﻿using NETworkManager.Utilities;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-using NETworkManager.Properties;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
+using NETworkManager.Localization;
 
 namespace NETworkManager
 {
@@ -51,10 +51,10 @@ namespace NETworkManager
             }
 
             // Update integrated settings %LocalAppData%\NETworkManager\NETworkManager_GUID (custom settings path)
-            if (Settings.Default.UpgradeRequired)
+            if (LocalSettingsManager.UpgradeRequired)
             {
-                Settings.Default.Upgrade();
-                Settings.Default.UpgradeRequired = false;
+                LocalSettingsManager.Upgrade();
+                LocalSettingsManager.UpgradeRequired = false;
             }
 
             // Load settings
@@ -69,7 +69,8 @@ namespace NETworkManager
                 ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
             }
 
-            NETworkManager.Resources.Localization.Strings.Culture = LocalizationManager.Culture;
+            // Init the location with the culture code...
+            Localization.Resources.Strings.Culture = LocalizationManager.GetInstance(SettingsManager.Current.Localization_CultureCode).Culture;
 
             if (CommandLineManager.Current.Help)
             {
@@ -139,7 +140,7 @@ namespace NETworkManager
         private void Save()
         {
             // Save local settings (custom settings path in AppData/Local)
-            Settings.Default.Save();
+            LocalSettingsManager.Save();
 
             if (SettingsManager.Current.SettingsChanged) // This will also create the "Settings" folder, if it does not exist
                 SettingsManager.Save();

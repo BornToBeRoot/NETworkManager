@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:documentation="clr-namespace:NETworkManager.Models.Documentation"
+        xmlns:documentation="clr-namespace:NETworkManager.Documentation;assembly=NETworkManager.Documentation"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"             
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"             
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />

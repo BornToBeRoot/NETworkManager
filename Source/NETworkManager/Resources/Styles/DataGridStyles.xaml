@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                    xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls">
+                    xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls">
     <Style x:Key="DefaultDataGrid" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource MetroDataGrid}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderThickness" Value="0" />
@@ -12,7 +12,7 @@
     </Style>
 
     <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource DefaultDataGrid}" />
-    <Style TargetType="{x:Type networkManagerControls:MultiSelectScrollingDataGrid}" BasedOn="{StaticResource DefaultDataGrid}" />
+    <Style TargetType="{x:Type controls:MultiSelectScrollingDataGrid}" BasedOn="{StaticResource DefaultDataGrid}" />
 
     <Style x:Key="DefaultDataGridColumnHeader" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MetroDataGridColumnHeader}" >
         <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing" Value="Normal" />

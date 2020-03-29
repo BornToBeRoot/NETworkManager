@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Windows.Threading;
 using System.Linq;
 using System.Windows;
@@ -199,10 +199,10 @@ namespace NETworkManager.ViewModels
                     return true;
 
                 // Search by IPAddress and MACAddress
-                return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+                return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.MACAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || (info.IsMulticast ? Localization.Resources.Strings.Yes : Localization.Resources.Strings.No).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
-            AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
+            AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
             SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.ARPTable_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.ARPTable_AutoRefreshTime.TimeUnit));
 
             _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -306,7 +306,7 @@ namespace NETworkManager.ViewModels
 
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.AddEntry
+                Title = Localization.Resources.Strings.AddEntry
             };
 
             var arpTableAddEntryViewModel = new ArpTableAddEntryViewModel(async instance =>
@@ -345,21 +345,21 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedARPInfo.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedARPInfo.IPAddress.ToString());
         }
 
         public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
 
         private void CopySelectedMACAddressAction()
         {
-            CommonMethods.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedARPInfo.MACAddress.ToString()));
+            ClipboardHelper.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedARPInfo.MACAddress.ToString()));
         }
 
         public ICommand CopySelectedMulticastCommand => new RelayCommand(p => CopySelectedMulticastAction());
 
         private void CopySelectedMulticastAction()
         {
-            CommonMethods.SetClipboard(SelectedARPInfo.IsMulticast ? Resources.Localization.Strings.Yes : Resources.Localization.Strings.No);
+            ClipboardHelper.SetClipboard(SelectedARPInfo.IsMulticast ? Localization.Resources.Strings.Yes : Localization.Resources.Strings.No);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -368,7 +368,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -382,9 +382,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.ARPTable_ExportFileType = instance.FileType;
@@ -463,7 +463,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void ArpTable_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
         }
 

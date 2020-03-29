@@ -9,8 +9,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Threading;
-using NETworkManager.Enum;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {
@@ -161,14 +161,14 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.AddProfile
+                Title = Localization.Resources.Strings.AddProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileManager.AddProfile(instance);
+                ProfileDialogManager.AddProfile(instance);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -186,7 +186,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.EditProfile
+                Title = Localization.Resources.Strings.EditProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
@@ -195,7 +195,7 @@ namespace NETworkManager.ViewModels
 
                 ProfileManager.RemoveProfile(SelectedProfile);
 
-                ProfileManager.AddProfile(instance);
+                ProfileDialogManager.AddProfile(instance);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -213,14 +213,14 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.CopyProfile
+                Title = Localization.Resources.Strings.CopyProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileManager.AddProfile(instance);
+                ProfileDialogManager.AddProfile(instance);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -238,7 +238,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.DeleteProfile
+                Title = Localization.Resources.Strings.DeleteProfile
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
@@ -252,7 +252,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Resources.Localization.Strings.DeleteProfileMessage);
+            }, Localization.Resources.Strings.DeleteProfileMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {
@@ -266,7 +266,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.EditGroup
+                Title = Localization.Resources.Strings.EditGroup
             };
 
             var editGroupViewModel = new GroupViewModel(instance =>
@@ -295,7 +295,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Confirm
+                Title = Localization.Resources.Strings.Confirm
             };
 
             var confirmRemoveViewModel = new ConfirmRemoveViewModel(async instance =>
@@ -306,7 +306,7 @@ namespace NETworkManager.ViewModels
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Resources.Localization.Strings.ResetProfilesMessage);
+            }, Localization.Resources.Strings.ResetProfilesMessage);
 
             customDialog.Content = new ConfirmRemoveDialog
             {

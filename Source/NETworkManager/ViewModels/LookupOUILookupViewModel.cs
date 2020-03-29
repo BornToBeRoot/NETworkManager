@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
@@ -188,14 +188,14 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedMACAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedOUILookupResult.MACAddress);
+            ClipboardHelper.SetClipboard(SelectedOUILookupResult.MACAddress);
         }
 
         public ICommand CopySelectedVendorCommand => new RelayCommand(p => CopySelectedVendorAction());
 
         private void CopySelectedVendorAction()
         {
-            CommonMethods.SetClipboard(SelectedOUILookupResult.Vendor);
+            ClipboardHelper.SetClipboard(SelectedOUILookupResult.Vendor);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -204,7 +204,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -218,9 +218,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.Lookup_OUI_ExportFileType = instance.FileType;

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -223,28 +223,28 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedPortAction()
         {
-            CommonMethods.SetClipboard(SelectedPortLookupResult.Number.ToString());
+            ClipboardHelper.SetClipboard(SelectedPortLookupResult.Number.ToString());
         }
 
         public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
 
         private void CopySelectedProtocolAction()
         {
-            CommonMethods.SetClipboard(SelectedPortLookupResult.Protocol.ToString());
+            ClipboardHelper.SetClipboard(SelectedPortLookupResult.Protocol.ToString());
         }
 
         public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
 
         private void CopySelectedServiceAction()
         {
-            CommonMethods.SetClipboard(SelectedPortLookupResult.Service);
+            ClipboardHelper.SetClipboard(SelectedPortLookupResult.Service);
         }
 
         public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
 
         private void CopySelectedDescriptionAction()
         {
-            CommonMethods.SetClipboard(SelectedPortLookupResult.Description);
+            ClipboardHelper.SetClipboard(SelectedPortLookupResult.Description);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -253,7 +253,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -267,9 +267,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.Lookup_Port_ExportFileType = instance.FileType;

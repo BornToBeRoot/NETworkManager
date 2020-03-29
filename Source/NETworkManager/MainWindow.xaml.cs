@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Collections.Generic;
@@ -18,12 +18,15 @@ using NETworkManager.Utilities;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using NETworkManager.Controls;
-using NETworkManager.Models.Update;
-using NETworkManager.Models.Documentation;
+using NETworkManager.Documentation;
 using NETworkManager.ViewModels;
-using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Translators;
+using NETworkManager.Update;
+using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager
 {
@@ -136,8 +139,8 @@ namespace NETworkManager
             }
         }
 
-        private ApplicationViewInfo _selectedApplication;
-        public ApplicationViewInfo SelectedApplication
+        private ApplicationInfo _selectedApplication;
+        public ApplicationInfo SelectedApplication
         {
             get => _selectedApplication;
             set
@@ -156,7 +159,7 @@ namespace NETworkManager
             }
         }
 
-        private ApplicationViewManager.Name _filterLastViewName;
+        private ApplicationName _filterLastViewName;
         private int? _filterLastCount;
 
         private string _search = string.Empty;
@@ -175,11 +178,11 @@ namespace NETworkManager
 
                 Applications.Refresh();
 
-                var sourceCollection = Applications.SourceCollection.Cast<ApplicationViewInfo>();
-                var filteredCollection = Applications.Cast<ApplicationViewInfo>();
+                var sourceCollection = Applications.SourceCollection.Cast<ApplicationInfo>();
+                var filteredCollection = Applications.Cast<ApplicationInfo>();
 
-                var sourceInfos = sourceCollection as ApplicationViewInfo[] ?? sourceCollection.ToArray();
-                var filteredInfos = filteredCollection as ApplicationViewInfo[] ?? filteredCollection.ToArray();
+                var sourceInfos = sourceCollection as ApplicationInfo[] ?? sourceCollection.ToArray();
+                var filteredInfos = filteredCollection as ApplicationInfo[] ?? filteredCollection.ToArray();
 
                 if (_filterLastCount == null)
                     _filterLastCount = sourceInfos.Length;
@@ -295,7 +298,7 @@ namespace NETworkManager
             DataContext = this;
 
             // Language Meta
-            LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.Culture.IetfLanguageTag)));
+            LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.GetInstance().Culture.IetfLanguageTag)));
 
             // Load / Change appearance
             AppearanceManager.Load();
@@ -324,11 +327,11 @@ namespace NETworkManager
             if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
                 ConfigurationManager.Current.FixAirspace = true;
 
-                await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.SettingsHaveBeenReset, NETworkManager.Resources.Localization.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, MessageDialogStyle.Affirmative, settings);
+                await this.ShowMessageAsync(Localization.Resources.Strings.SettingsHaveBeenReset, Localization.Resources.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
             }
@@ -338,7 +341,7 @@ namespace NETworkManager
                 // Show first run dialog...
                 var customDialog = new CustomDialog
                 {
-                    Title = NETworkManager.Resources.Localization.Strings.Welcome
+                    Title = Localization.Resources.Strings.Welcome
                 };
 
                 var arpTableAddEntryViewModel = new FirstRunViewModel(async instance =>
@@ -394,15 +397,15 @@ namespace NETworkManager
             // Create a new list if empty
             if (SettingsManager.Current.General_ApplicationList.Count == 0)
             {
-                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationViewInfo>(ApplicationViewManager.GetList());
+                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetList());
             }
             else // Check for missing applications and add them
             {
-                foreach (ApplicationViewInfo info in ApplicationViewManager.GetList())
+                foreach (ApplicationInfo info in ApplicationManager.GetList())
                 {
                     bool isInList = false;
 
-                    foreach (ApplicationViewInfo info2 in SettingsManager.Current.General_ApplicationList)
+                    foreach (ApplicationInfo info2 in SettingsManager.Current.General_ApplicationList)
                     {
                         if (info.Name == info2.Name)
                             isInList = true;
@@ -415,10 +418,10 @@ namespace NETworkManager
 
             Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
 
-            Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationViewInfo.Name), ListSortDirection.Ascending)); // Always have the same order, even if it is translated...
+            Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending)); // Always have the same order, even if it is translated...
             Applications.Filter = o =>
             {
-                if (!(o is ApplicationViewInfo info))
+                if (!(o is ApplicationInfo info))
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
@@ -427,9 +430,9 @@ namespace NETworkManager
                 var regex = new Regex(@" |-");
 
                 var search = regex.Replace(Search, "");
-
+                                
                 // Search by TranslatedName and Name
-                return info.IsVisible && (regex.Replace(ApplicationViewManager.GetTranslatedNameByName(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
+                return info.IsVisible && (regex.Replace(ApplicationNameTranslator.GetInstance().Translate(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
             };
 
             SettingsManager.Current.General_ApplicationList.CollectionChanged += (sender, args) => Applications.Refresh();
@@ -437,7 +440,7 @@ namespace NETworkManager
             isApplicationListLoading = false;
 
             // Select the application
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != ApplicationViewManager.Name.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != ApplicationName.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
 
             // Scroll into view
             if (SelectedApplication != null)
@@ -490,14 +493,14 @@ namespace NETworkManager
 
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.Close;
-                settings.NegativeButtonText = NETworkManager.Resources.Localization.Strings.Cancel;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.Close;
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 // Fix airspace issues
                 ConfigurationManager.Current.FixAirspace = true;
 
-                var result = await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.Confirm, NETworkManager.Resources.Localization.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
+                var result = await this.ShowMessageAsync(Localization.Resources.Strings.Confirm, Localization.Resources.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
 
@@ -545,9 +548,9 @@ namespace NETworkManager
         private ListenersView _listenersView;
         private ARPTableView _arpTableView;
 
-        private ApplicationViewManager.Name _currentApplicationViewName = ApplicationViewManager.Name.None;
+        private ApplicationName _currentApplicationViewName = ApplicationName.None;
 
-        private void ChangeApplicationView(ApplicationViewManager.Name name, bool refresh = false)
+        private void ChangeApplicationView(ApplicationName name, bool refresh = false)
         {
             if (!refresh && _currentApplicationViewName == name)
                 return;
@@ -555,19 +558,19 @@ namespace NETworkManager
             // Stop some functions on the old view
             switch (_currentApplicationViewName)
             {
-                case ApplicationViewManager.Name.NetworkInterface:
+                case ApplicationName.NetworkInterface:
                     _networkInterfaceView?.OnViewHide();
                     break;
-                case ApplicationViewManager.Name.WiFi:
+                case ApplicationName.WiFi:
                     _wiFiView?.OnViewHide();
                     break;
-                case ApplicationViewManager.Name.Connections:
+                case ApplicationName.Connections:
                     _connectionsView?.OnViewHide();
                     break;
-                case ApplicationViewManager.Name.Listeners:
+                case ApplicationName.Listeners:
                     _listenersView?.OnViewHide();
                     break;
-                case ApplicationViewManager.Name.ARPTable:
+                case ApplicationName.ARPTable:
                     _arpTableView?.OnViewHide();
                     break;
             }
@@ -575,7 +578,7 @@ namespace NETworkManager
             // Create new view / start some functions
             switch (name)
             {
-                case ApplicationViewManager.Name.Dashboard:
+                case ApplicationName.Dashboard:
                     if (_overviewView == null)
                         _overviewView = new DashboardView();
                     else
@@ -583,7 +586,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _overviewView;
                     break;
-                case ApplicationViewManager.Name.NetworkInterface:
+                case ApplicationName.NetworkInterface:
                     if (_networkInterfaceView == null)
                         _networkInterfaceView = new NetworkInterfaceView();
                     else
@@ -591,7 +594,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _networkInterfaceView;
                     break;
-                case ApplicationViewManager.Name.WiFi:
+                case ApplicationName.WiFi:
                     if (_wiFiView == null)
                         _wiFiView = new WiFiView();
                     else
@@ -599,7 +602,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _wiFiView;
                     break;
-                case ApplicationViewManager.Name.IPScanner:
+                case ApplicationName.IPScanner:
                     if (_ipScannerHostView == null)
                         _ipScannerHostView = new IPScannerHostView();
                     else
@@ -607,7 +610,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _ipScannerHostView;
                     break;
-                case ApplicationViewManager.Name.PortScanner:
+                case ApplicationName.PortScanner:
                     if (_portScannerHostView == null)
                         _portScannerHostView = new PortScannerHostView();
                     else
@@ -615,7 +618,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _portScannerHostView;
                     break;
-                case ApplicationViewManager.Name.Ping:
+                case ApplicationName.Ping:
                     if (_pingHostView == null)
                         _pingHostView = new PingHostView();
                     else
@@ -623,7 +626,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _pingHostView;
                     break;
-                case ApplicationViewManager.Name.PingMonitor:
+                case ApplicationName.PingMonitor:
                     if (_pingMonitorView == null)
                         _pingMonitorView = new PingMonitorView();
                     else
@@ -631,7 +634,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _pingMonitorView;
                     break;
-                case ApplicationViewManager.Name.Traceroute:
+                case ApplicationName.Traceroute:
                     if (_tracerouteHostView == null)
                         _tracerouteHostView = new TracerouteHostView();
                     else
@@ -639,7 +642,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _tracerouteHostView;
                     break;
-                case ApplicationViewManager.Name.DNSLookup:
+                case ApplicationName.DNSLookup:
                     if (_dnsLookupHostView == null)
                         _dnsLookupHostView = new DNSLookupHostView();
                     else
@@ -647,7 +650,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _dnsLookupHostView;
                     break;
-                case ApplicationViewManager.Name.RemoteDesktop:
+                case ApplicationName.RemoteDesktop:
                     if (_remoteDesktopHostView == null)
                         _remoteDesktopHostView = new RemoteDesktopHostView();
                     else
@@ -655,7 +658,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _remoteDesktopHostView;
                     break;
-                case ApplicationViewManager.Name.PowerShell:
+                case ApplicationName.PowerShell:
                     if (_powerShellHostView == null)
                         _powerShellHostView = new PowerShellHostView();
                     else
@@ -663,7 +666,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _powerShellHostView;
                     break;
-                case ApplicationViewManager.Name.PuTTY:
+                case ApplicationName.PuTTY:
                     if (_puttyHostView == null)
                         _puttyHostView = new PuTTYHostView();
                     else
@@ -671,7 +674,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _puttyHostView;
                     break;
-                case ApplicationViewManager.Name.TigerVNC:
+                case ApplicationName.TigerVNC:
                     if (_tigerVNCHostView == null)
                         _tigerVNCHostView = new TigerVNCHostView();
                     else
@@ -679,7 +682,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _tigerVNCHostView;
                     break;
-                case ApplicationViewManager.Name.WebConsole:
+                case ApplicationName.WebConsole:
                     if (_webConsoleHostView == null)
                         _webConsoleHostView = new WebConsoleHostView();
                     else
@@ -687,7 +690,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _webConsoleHostView;
                     break;
-                case ApplicationViewManager.Name.SNMP:
+                case ApplicationName.SNMP:
                     if (_snmpHostView == null)
                         _snmpHostView = new SNMPHostView();
                     else
@@ -695,7 +698,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _snmpHostView;
                     break;
-                case ApplicationViewManager.Name.DiscoveryProtocol:
+                case ApplicationName.DiscoveryProtocol:
                     if (_discoveryProtocolView == null)
                         _discoveryProtocolView = new DiscoveryProtocolView();
                     else
@@ -703,7 +706,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _discoveryProtocolView;
                     break;
-                case ApplicationViewManager.Name.WakeOnLAN:
+                case ApplicationName.WakeOnLAN:
                     if (_wakeOnLanView == null)
                         _wakeOnLanView = new WakeOnLANView();
                     else
@@ -711,7 +714,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _wakeOnLanView;
                     break;
-                case ApplicationViewManager.Name.HTTPHeaders:
+                case ApplicationName.HTTPHeaders:
                     if (_httpHeadersHostView == null)
                         _httpHeadersHostView = new HTTPHeadersHostView();
                     else
@@ -719,7 +722,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _httpHeadersHostView;
                     break;
-                case ApplicationViewManager.Name.Whois:
+                case ApplicationName.Whois:
                     if (_whoisHostView == null)
                         _whoisHostView = new WhoisHostView();
                     else
@@ -727,19 +730,19 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _whoisHostView;
                     break;
-                case ApplicationViewManager.Name.SubnetCalculator:
+                case ApplicationName.SubnetCalculator:
                     if (_subnetCalculatorHostView == null)
                         _subnetCalculatorHostView = new SubnetCalculatorHostView();
 
                     ContentControlApplication.Content = _subnetCalculatorHostView;
                     break;
-                case ApplicationViewManager.Name.Lookup:
+                case ApplicationName.Lookup:
                     if (_lookupHostView == null)
                         _lookupHostView = new LookupHostView();
 
                     ContentControlApplication.Content = _lookupHostView;
                     break;
-                case ApplicationViewManager.Name.Connections:
+                case ApplicationName.Connections:
                     if (_connectionsView == null)
                         _connectionsView = new ConnectionsView();
                     else
@@ -747,7 +750,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _connectionsView;
                     break;
-                case ApplicationViewManager.Name.Listeners:
+                case ApplicationName.Listeners:
                     if (_listenersView == null)
                         _listenersView = new ListenersView();
                     else
@@ -755,7 +758,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _listenersView;
                     break;
-                case ApplicationViewManager.Name.ARPTable:
+                case  ApplicationName.ARPTable:
                     if (_arpTableView == null)
                         _arpTableView = new ARPTableView();
                     else
@@ -763,7 +766,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _arpTableView;
                     break;
-                case ApplicationViewManager.Name.None:
+                case ApplicationName.None:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(name), name, null);
@@ -789,138 +792,69 @@ namespace NETworkManager
             ListViewApplication.ScrollIntoView(SelectedApplication);
         }
 
-        // This works, but is currently not used :) 
-        /*
-        private void EventSystem_RedirectProfileToApplicationEvent(object sender, EventArgs e)
-        {
-            if (!(e is EventSystemRedirectProfileApplicationArgs profile))
-                return;
-
-            // Change view
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == profile.Application);
-
-            // Crate a new tab / perform action
-            switch (profile.Application)
-            {
-                case ApplicationViewManager.Name.None:
-                    break;
-                case ApplicationViewManager.Name.Dashboard:
-                    break;
-                case ApplicationViewManager.Name.NetworkInterface:
-                    break;
-                case ApplicationViewManager.Name.WiFi:
-                    break;
-                case ApplicationViewManager.Name.IPScanner:
-                    _ipScannerHostView.AddTab(profile.Profile);
-                    break;
-                case ApplicationViewManager.Name.PortScanner:
-                    _portScannerHostView.AddTab(profile.Profile);
-                    break;
-                case ApplicationViewManager.Name.Ping:
-                    _pingHostView.AddTab(profile.Profile);
-                    break;
-                case ApplicationViewManager.Name.PingMonitor:
-                    break;
-                case ApplicationViewManager.Name.Traceroute:
-                    _tracerouteHostView.AddTab(profile.Profile);
-                    break;
-                case ApplicationViewManager.Name.DNSLookup:
-                    break;
-                case ApplicationViewManager.Name.RemoteDesktop:
-                    break;
-                case ApplicationViewManager.Name.PowerShell:
-                    break;
-                case ApplicationViewManager.Name.PuTTY:
-                    break;
-                case ApplicationViewManager.Name.TigerVNC:
-                    break;
-                case ApplicationViewManager.Name.SNMP:
-                    break;
-                case ApplicationViewManager.Name.WakeOnLAN:
-                    break;
-                case ApplicationViewManager.Name.HTTPHeaders:
-                    break;
-                case ApplicationViewManager.Name.Whois:
-                    break;
-                case ApplicationViewManager.Name.SubnetCalculator:
-                    break;
-                case ApplicationViewManager.Name.Lookup:
-                    break;
-                case ApplicationViewManager.Name.Connections:
-                    break;
-                case ApplicationViewManager.Name.Listeners:
-                    break;
-                case ApplicationViewManager.Name.ARPTable:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-        */
-
         private void EventSystem_RedirectDataToApplicationEvent(object sender, EventArgs e)
         {
-            if (!(e is EventSystemRedirectDataApplicationArgs data))
+            if (!(e is EventSystemRedirectArgs data))
                 return;
 
             // Change view
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == data.Application);
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == data.Application);
 
             // Crate a new tab / perform action
             switch (data.Application)
             {
-                case ApplicationViewManager.Name.IPScanner:
+                case ApplicationName.IPScanner:
                     _ipScannerHostView.AddTab(data.Args);
                     break;
-                case ApplicationViewManager.Name.PortScanner:
+                case ApplicationName.PortScanner:
                     _portScannerHostView.AddTab(data.Args);
                     break;
-                case ApplicationViewManager.Name.Ping:
+                case ApplicationName.Ping:
                     _pingHostView.AddTab(data.Args);
                     break;
-                case ApplicationViewManager.Name.PingMonitor:
+                case ApplicationName.PingMonitor:
                     _pingMonitorView.AddHost(data.Args);
                     break;
-                case ApplicationViewManager.Name.Traceroute:
+                case ApplicationName.Traceroute:
                     _tracerouteHostView.AddTab(data.Args);
                     break;
-                case ApplicationViewManager.Name.DNSLookup:
+                case ApplicationName.DNSLookup:
                     _dnsLookupHostView.AddTab(data.Args);
                     break;
-                case ApplicationViewManager.Name.RemoteDesktop:
+                case ApplicationName.RemoteDesktop:
                     _remoteDesktopHostView.AddTab(data.Args);
                     break;
-                case ApplicationViewManager.Name.PowerShell:
+                case ApplicationName.PowerShell:
                     _powerShellHostView.AddTab(data.Args);
                     break;
-                case ApplicationViewManager.Name.PuTTY:
+                case ApplicationName.PuTTY:
                     _puttyHostView.AddTab(data.Args);
                     break;
-                case ApplicationViewManager.Name.TigerVNC:
+                case ApplicationName.TigerVNC:
                     _tigerVNCHostView.AddTab(data.Args);
                     break;
-                case ApplicationViewManager.Name.SNMP:
+                case ApplicationName.SNMP:
                     _snmpHostView.AddTab(data.Args);
                     break;
-                case ApplicationViewManager.Name.NetworkInterface:
+                case ApplicationName.NetworkInterface:
                     break;
-                case ApplicationViewManager.Name.WakeOnLAN:
+                case ApplicationName.WakeOnLAN:
                     break;
-                case ApplicationViewManager.Name.HTTPHeaders:
+                case ApplicationName.HTTPHeaders:
                     break;
-                case ApplicationViewManager.Name.Whois:
+                case ApplicationName.Whois:
                     break;
-                case ApplicationViewManager.Name.SubnetCalculator:
+                case ApplicationName.SubnetCalculator:
                     break;
-                case ApplicationViewManager.Name.Lookup:
+                case ApplicationName.Lookup:
                     break;
-                case ApplicationViewManager.Name.Connections:
+                case ApplicationName.Connections:
                     break;
-                case ApplicationViewManager.Name.Listeners:
+                case ApplicationName.Listeners:
                     break;
-                case ApplicationViewManager.Name.ARPTable:
+                case ApplicationName.ARPTable:
                     break;
-                case ApplicationViewManager.Name.None:
+                case ApplicationName.None:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -982,13 +916,13 @@ namespace NETworkManager
 
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.RestartNow;
-                settings.NegativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.RestartNow;
+                settings.NegativeButtonText = Localization.Resources.Strings.OK;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 ConfigurationManager.Current.FixAirspace = true;
 
-                if (await this.ShowMessageAsync(NETworkManager.Resources.Localization.Strings.RestartRequired, NETworkManager.Resources.Localization.Strings.RestartRequiredSettingsChangedMessage, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
+                if (await this.ShowMessageAsync(Localization.Resources.Strings.RestartRequired, Localization.Resources.Strings.RestartRequiredSettingsChangedMessage, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
                 {
                     RestartApplication();
                     return;
@@ -1051,7 +985,7 @@ namespace NETworkManager
 
             updater.UpdateAvailable += Updater_UpdateAvailable;
             updater.Error += Updater_Error;
-            updater.Check();
+            updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version);
         }
 
         private static void Updater_Error(object sender, EventArgs e)
@@ -1061,7 +995,7 @@ namespace NETworkManager
 
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
-            UpdateText = string.Format(NETworkManager.Resources.Localization.Strings.VersionxxIsAvailable, e.Version);
+            UpdateText = string.Format(Localization.Resources.Strings.VersionxxIsAvailable, e.Version);
             IsUpdateAvailable = true;
         }
         #endregion

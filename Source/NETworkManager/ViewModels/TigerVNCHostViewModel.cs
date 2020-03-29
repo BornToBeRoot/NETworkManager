@@ -3,7 +3,7 @@ using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Linq;
 using NETworkManager.Views;
 using System.ComponentModel;
@@ -14,9 +14,11 @@ using System.IO;
 using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Models.TigerVNC;
-using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using System.Windows.Threading;
+using NETworkManager.Settings;
+using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {
@@ -165,7 +167,7 @@ namespace NETworkManager.ViewModels
             // Check if putty is available...
             CheckIfConfigured();
 
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.TigerVNC);
+            InterTabClient = new DragablzInterTabClient(ApplicationName.TigerVNC);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 
@@ -271,35 +273,35 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileManager.ShowAddProfileDialog(this, _dialogCoordinator);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private void EditProfileAction()
         {
-            ProfileManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
-            ProfileManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private void DeleteProfileAction()
         {
-            ProfileManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private void EditGroupAction(object group)
         {
-            ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -327,7 +329,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Connect
+                Title = Localization.Resources.Strings.Connect
             };
 
             var connectViewModel = new TigerVNCConnectViewModel(async instance =>
@@ -365,7 +367,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfile()
         {
-            Connect(TigerVNC.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+            Connect(NETworkManager.Profiles.Application.TigerVNC.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
@@ -373,7 +375,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.TigerVNC_ApplicationFilePath,
-                Arguments = TigerVNC.BuildCommandLine(TigerVNC.CreateSessionInfo(SelectedProfile))
+                Arguments = TigerVNC.BuildCommandLine(NETworkManager.Profiles.Application.TigerVNC.CreateSessionInfo(SelectedProfile))
             };
 
             Process.Start(info);

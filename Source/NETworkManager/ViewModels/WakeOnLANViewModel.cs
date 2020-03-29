@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Settings;
 using System.Net;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
@@ -11,7 +11,7 @@ using NETworkManager.Utilities;
 using System.Threading.Tasks;
 using System.Linq;
 using MahApps.Metro.Controls;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels
@@ -324,42 +324,42 @@ namespace NETworkManager.ViewModels
 
         private void WakeUpProfileAction()
         {
-            WakeUp(WakeOnLAN.CreateWakeOnLANInfo(SelectedProfile));
+            WakeUp(Models.NetworkTMP.WakeOnLAN.CreateInfo(SelectedProfile));
         }
 
         public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
 
         private void AddProfileAction()
         {
-            ProfileManager.ShowAddProfileDialog(this, _dialogCoordinator);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private void EditProfileAction()
         {
-            ProfileManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
-            ProfileManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private void DeleteProfileAction()
         {
-            ProfileManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private void EditGroupAction(object group)
         {
-            ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -382,7 +382,7 @@ namespace NETworkManager.ViewModels
 
                 await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the send command)
 
-                StatusMessage = Resources.Localization.Strings.MagicPacketSentMessage;
+                StatusMessage = Localization.Resources.Strings.MagicPacketSentMessage;
                 DisplayStatusMessage = true;
             }
             catch (Exception ex)

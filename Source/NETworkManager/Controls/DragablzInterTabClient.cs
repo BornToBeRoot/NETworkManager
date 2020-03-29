@@ -1,13 +1,14 @@
 ﻿using Dragablz;
+using NETworkManager.Models;
 using System.Windows;
 
 namespace NETworkManager.Controls
 {
     public class DragablzInterTabClient : IInterTabClient
     {
-        private readonly ApplicationViewManager.Name _applicationName;
+        private readonly ApplicationName _applicationName;
 
-        public DragablzInterTabClient(ApplicationViewManager.Name applicationName)
+        public DragablzInterTabClient(ApplicationName applicationName)
         {
             _applicationName = applicationName;
         }

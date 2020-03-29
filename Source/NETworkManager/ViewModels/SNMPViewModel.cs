@@ -1,6 +1,6 @@
 ﻿using NETworkManager.Utilities;
 using NETworkManager.Models.Network;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -460,14 +460,14 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedOIDAction()
         {
-            CommonMethods.SetClipboard(SelectedQueryResult.OID);
+            ClipboardHelper.SetClipboard(SelectedQueryResult.OID);
         }
 
         public ICommand CopySelectedDataCommand => new RelayCommand(p => CopySelectedDataAction());
 
         private void CopySelectedDataAction()
         {
-            CommonMethods.SetClipboard(SelectedQueryResult.Data);
+            ClipboardHelper.SetClipboard(SelectedQueryResult.Data);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -476,7 +476,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -490,9 +490,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.SNMP_ExportFileType = instance.FileType;
@@ -546,7 +546,7 @@ namespace NETworkManager.ViewModels
             {                
                 Finished();
 
-                StatusMessage = string.Format(Resources.Localization.Strings.CouldNotResolveIPAddressFor, Host);
+                StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host);
                 DisplayStatusMessage = true;
 
                 return;
@@ -654,7 +654,7 @@ namespace NETworkManager.ViewModels
 
         private void Snmp_TimeoutReached(object sender, EventArgs e)
         {
-            StatusMessage = Resources.Localization.Strings.TimeoutOnSNMPQuery;
+            StatusMessage = Localization.Resources.Strings.TimeoutOnSNMPQuery;
             DisplayStatusMessage = true;
 
             Finished();
@@ -662,7 +662,7 @@ namespace NETworkManager.ViewModels
 
         private void Snmp_Error(object sender, EventArgs e)
         {
-            StatusMessage = Mode == SNMPMode.Set ? Resources.Localization.Strings.ErrorInResponseCheckIfYouHaveWritePermissions : Resources.Localization.Strings.ErrorInResponse;
+            StatusMessage = Mode == SNMPMode.Set ? Localization.Resources.Strings.ErrorInResponseCheckIfYouHaveWritePermissions : Localization.Resources.Strings.ErrorInResponse;
 
             DisplayStatusMessage = true;
 
@@ -671,7 +671,7 @@ namespace NETworkManager.ViewModels
 
         private void Snmp_UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
 
             Finished();
@@ -681,7 +681,7 @@ namespace NETworkManager.ViewModels
         {
             if (Mode == SNMPMode.Set)
             {
-                StatusMessage = Resources.Localization.Strings.DataHasBeenUpdated;
+                StatusMessage = Localization.Resources.Strings.DataHasBeenUpdated;
                 DisplayStatusMessage = true;
             }
 

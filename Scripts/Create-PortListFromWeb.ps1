@@ -1,5 +1,5 @@
 # Filepath in the resources
-[string]$OutFilePath = Join-Path -Path (Split-Path $PSScriptRoot -Parent) -ChildPath "Source\NETworkManager\Resources\Ports.xml"
+[string]$OutFilePath = Join-Path -Path (Split-Path $PSScriptRoot -Parent) -ChildPath "Source\NETworkManager.Models\Resources\Ports.xml"
 
 # Download from IANA...
 [xml]$ServiceNamePortNumbers = (Invoke-WebRequest -Uri "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml").Content

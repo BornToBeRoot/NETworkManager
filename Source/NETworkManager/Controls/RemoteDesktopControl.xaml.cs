@@ -294,7 +294,7 @@ namespace NETworkManager.Controls
             RdpClientHeight = RdpClient.DesktopHeight;
         }
 
-        public void SendKey(RemoteDesktop.Keystroke keystroke)
+        public void SendKey(Keystroke keystroke)
         {
             if (!IsConnected)
                 return;
@@ -326,99 +326,99 @@ namespace NETworkManager.Controls
             switch (reason)
             {
                 case 0:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_NoInfo;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_NoInfo;
                 case 1:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_LocalNotError;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_LocalNotError;
                 case 2:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_RemoteByUser;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_RemoteByUser;
                 case 3:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_ByServer;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_ByServer;
                 case 260:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed;
                 case 262:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_OutOfMemory;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_OutOfMemory;
                 case 264:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_ConnectionTimedOut;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_ConnectionTimedOut;
                 case 516:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SocketConnectFailed;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SocketConnectFailed;
                 case 518:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_OutOfMemory2;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_OutOfMemory2;
                 case 520:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_HostNotFound;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_HostNotFound;
                 case 772:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_WinsockSendFailed;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_WinsockSendFailed;
                 case 774:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_OutOfMemory3;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_OutOfMemory3;
                 case 776:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidIPAddr;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidIPAddr;
                 case 1028:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SocketRecvFailed;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SocketRecvFailed;
                 case 1030:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidSecurityData;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidSecurityData;
                 case 1032:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InternalError;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InternalError;
                 case 1286:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidEncryption;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidEncryption;
                 case 1288:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed2;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed2;
                 case 1540:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_GetHostByNameFailed;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_GetHostByNameFailed;
                 case 1542:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidServerSecurityInfo;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidServerSecurityInfo;
                 case 1544:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_TimerError;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_TimerError;
                 case 1796:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_TimeoutOccurred;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_TimeoutOccurred;
                 case 1798:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_ServerCertificateUnpackErr;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_ServerCertificateUnpackErr;
                 case 2052:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InvalidIP;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InvalidIP;
                 case 2055:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrLogonFailure;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrLogonFailure;
                 case 2056:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_LicensingFailed;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_LicensingFailed;
                 case 2308:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE;
                 case 2310:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InternalSecurityError;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InternalSecurityError;
                 case 2312:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_LicensingTimeout;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_LicensingTimeout;
                 case 2566:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_InternalSecurityError2;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_InternalSecurityError2;
                 case 2567:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrNoSuchUser;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrNoSuchUser;
                 case 2822:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_EncryptionError;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_EncryptionError;
                 case 2823:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrAccountDisabled;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountDisabled;
                 case 3078:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_DecryptionError;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_DecryptionError;
                 case 3079:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrAccountRestriction;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountRestriction;
                 case 3080:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_ClientDecompressionError;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_ClientDecompressionError;
                 case 3335:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrAccountLockedOut;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountLockedOut;
                 case 3591:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrAccountExpired;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountExpired;
                 case 3847:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrPasswordExpired;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrPasswordExpired;
                 case 4615:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrPasswordMustChange;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrPasswordMustChange;
                 case 5639:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrDelegationPolicy;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrDelegationPolicy;
                 case 5895:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly;
                 case 6151:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority;
                 case 6919:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrCertExpired;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrCertExpired;
                 case 7175:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN;
                 case 8455:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer;
                 case 8711:
-                    return NETworkManager.Resources.Localization.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked;
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked;
                 default:
                     return string.Empty;
             }

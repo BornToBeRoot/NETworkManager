@@ -2,8 +2,9 @@
 using NETworkManager.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
-using NETworkManager.Models.Settings;
-using NETworkManager.Models.Profile;
+using NETworkManager.Settings;
+using NETworkManager.Profiles;
+using NETworkManager.Models;
 
 namespace NETworkManager.Views
 {
@@ -16,7 +17,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = ApplicationViewManager.Name.IPScanner.ToString();
+            InterTabController.Partition = ApplicationName.IPScanner.ToString();
         }
 
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)

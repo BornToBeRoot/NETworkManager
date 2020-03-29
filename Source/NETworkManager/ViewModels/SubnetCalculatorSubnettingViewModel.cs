@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Settings;
 using System.Windows.Input;
 using NETworkManager.Utilities;
 using System.Collections.ObjectModel;
@@ -188,56 +188,56 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedNetworkAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.Network.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.Network.ToString());
         }
 
         public ICommand CopySelectedBroadcastCommand => new RelayCommand(p => CopySelectedBroadcastAction());
 
         private void CopySelectedBroadcastAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.Broadcast.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.Broadcast.ToString());
         }
 
         public ICommand CopySelectedIPAddressesCommand => new RelayCommand(p => CopySelectedIPAddressesAction());
 
         private void CopySelectedIPAddressesAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.Total.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.Total.ToString());
         }
 
         public ICommand CopySelectedSubnetmaskCommand => new RelayCommand(p => CopySelectedSubnetmaskAction());
 
         private void CopySelectedSubnetmaskAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.Netmask.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.Netmask.ToString());
         }
 
         public ICommand CopySelectedCIDRCommand => new RelayCommand(p => CopySelectedCIDRAction());
 
         private void CopySelectedCIDRAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.Cidr.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.Cidr.ToString());
         }
 
         public ICommand CopySelectedFirstIPAddressCommand => new RelayCommand(p => CopySelectedFirstIPAddressAction());
 
         private void CopySelectedFirstIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.FirstUsable.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.FirstUsable.ToString());
         }
 
         public ICommand CopySelectedLastIPAddressCommand => new RelayCommand(p => CopySelectedLastIPAddressAction());
 
         private void CopySelectedLastIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.LastUsable.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.LastUsable.ToString());
         }
 
         public ICommand CopySelectedHostCommand => new RelayCommand(p => CopySelectedHostAction());
 
         private void CopySelectedHostAction()
         {
-            CommonMethods.SetClipboard(SelectedSubnetResult.Usable.ToString());
+            ClipboardHelper.SetClipboard(SelectedSubnetResult.Usable.ToString());
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -246,7 +246,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -260,9 +260,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType = instance.FileType;
@@ -296,12 +296,12 @@ namespace NETworkManager.ViewModels
             {
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Resources.Localization.Strings.Continue;
-                settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.Continue;
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
 
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, Resources.Localization.Strings.TheProcessCanTakeUpSomeTimeAndResources, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+                if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure, Localization.Resources.Strings.TheProcessCanTakeUpSomeTimeAndResources, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 {
                     IsCalculationRunning = false;
 

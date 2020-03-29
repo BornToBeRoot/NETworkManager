@@ -1,11 +1,12 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Input;
 using NETworkManager.Models.PuTTY;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {
@@ -351,9 +352,9 @@ namespace NETworkManager.ViewModels
             {
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
             }
         }
 

@@ -4,7 +4,7 @@ using Dragablz;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Input;
 using NETworkManager.Views;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.ComponentModel;
 using System.Windows.Data;
 using System;
@@ -13,8 +13,10 @@ using System.Diagnostics;
 using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Models.RemoteDesktop;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using System.Windows.Threading;
+using NETworkManager.Settings;
+using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
 {
@@ -145,7 +147,7 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.RemoteDesktop);
+            InterTabClient = new DragablzInterTabClient(ApplicationName.RemoteDesktop);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 
@@ -262,13 +264,13 @@ namespace NETworkManager.ViewModels
             {
                 try
                 {
-                    control.SendKey(RemoteDesktop.Keystroke.CtrlAltDel);
+                    control.SendKey(Keystroke.CtrlAltDel);
                 }
                 catch (Exception ex)
                 {
                     ConfigurationManager.Current.FixAirspace = true;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", Resources.Localization.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", Localization.Resources.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
 
                     ConfigurationManager.Current.FixAirspace = false;
                 }
@@ -305,35 +307,35 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileManager.ShowAddProfileDialog(this, _dialogCoordinator);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private void EditProfileAction()
         {
-            ProfileManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
-            ProfileManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private void DeleteProfileAction()
         {
-            ProfileManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private void EditGroupAction(object group)
         {
-            ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -357,7 +359,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Connect
+                Title = Localization.Resources.Strings.Connect
             };
 
             var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
@@ -369,7 +371,7 @@ namespace NETworkManager.ViewModels
                 AddHostToHistory(instance.Host);
 
                 // Create new session info with default settings
-                var sessionInfo = RemoteDesktop.CreateSessionInfo();
+                var sessionInfo = Models.RemoteDesktopTMP.RemoteDesktop.CreateSessionInfo();
 
                 sessionInfo.Hostname = instance.Host;
 
@@ -405,7 +407,7 @@ namespace NETworkManager.ViewModels
         {
             var profileInfo = SelectedProfile;
 
-            var sessionInfo = RemoteDesktop.CreateSessionInfo(profileInfo);
+            var sessionInfo = Models.RemoteDesktopTMP.RemoteDesktop.CreateSessionInfo(profileInfo);
 
             Connect(sessionInfo, profileInfo.Name);
         }
@@ -415,11 +417,11 @@ namespace NETworkManager.ViewModels
         {
             var profileInfo = SelectedProfile;
 
-            var sessionInfo = RemoteDesktop.CreateSessionInfo(profileInfo);
+            var sessionInfo = Models.RemoteDesktopTMP.RemoteDesktop.CreateSessionInfo(profileInfo);
 
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.ConnectAs
+                Title = Localization.Resources.Strings.ConnectAs
             };
 
             var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>

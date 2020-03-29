@@ -3,7 +3,7 @@ using NETworkManager.Controls;
 using Dragablz;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Linq;
 using NETworkManager.Views;
 using System.ComponentModel;
@@ -14,9 +14,10 @@ using NETworkManager.Utilities;
 using System.Diagnostics;
 using NETworkManager.Models.PuTTY;
 using System.Windows;
-using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
 using System.Windows.Threading;
+using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {
@@ -165,7 +166,7 @@ namespace NETworkManager.ViewModels
             // Check if putty is available...
             CheckIfConfigured();
 
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.PuTTY);
+            InterTabClient = new DragablzInterTabClient(ApplicationName.PuTTY);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 
@@ -299,35 +300,35 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileManager.ShowAddProfileDialog(this, _dialogCoordinator);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
 
         private void EditProfileAction()
         {
-            ProfileManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
-            ProfileManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private void DeleteProfileAction()
         {
-            ProfileManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private void EditGroupAction(object group)
         {
-            ProfileManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -355,7 +356,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Connect
+                Title = Localization.Resources.Strings.Connect
             };
 
             var connectViewModel = new PuTTYConnectViewModel(async instance =>
@@ -374,9 +375,9 @@ namespace NETworkManager.ViewModels
                 // Create Profile info
                 var info = new PuTTYSessionInfo
                 {
-                    HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
+                    HostOrSerialLine = instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
-                    PortOrBaud = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
+                    PortOrBaud = instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
                     Username = instance.Username,
                     Profile = instance.Profile,
                     AdditionalCommandLine = instance.AdditionalCommandLine
@@ -401,7 +402,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfile()
         {
-            Connect(PuTTYSessionInfo.Parse(SelectedProfile), SelectedProfile.Name);
+            Connect(NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
@@ -409,7 +410,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
-                Arguments = PuTTY.BuildCommandLine(PuTTYSessionInfo.Parse(SelectedProfile))
+                Arguments = PuTTY.BuildCommandLine(NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile))
             };
 
             Process.Start(info);

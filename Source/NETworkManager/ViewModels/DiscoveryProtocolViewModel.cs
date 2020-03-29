@@ -4,7 +4,7 @@ using System.Net.NetworkInformation;
 using System;
 using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Models.Network;
 using System.Threading.Tasks;
 using System.ComponentModel;
@@ -22,7 +22,7 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private DiscoveryProtocol _discoveryProtocol = new DiscoveryProtocol();
+        private Models.Network.DiscoveryProtocol _discoveryProtocol = new Models.Network.DiscoveryProtocol();
         private readonly bool _isLoading;
         System.Timers.Timer _remainingTimer;
         private int _secondsRemaining;
@@ -344,7 +344,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -358,7 +358,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
 
@@ -380,17 +380,17 @@ namespace NETworkManager.ViewModels
 
             _secondsRemaining = duration + 1; // Init powershell etc. takes some time... 
 
-            TimeRemainingMessage = string.Format(Resources.Localization.Strings.XXSecondsRemainingDots, _secondsRemaining);
+            TimeRemainingMessage = string.Format(Localization.Resources.Strings.XXSecondsRemainingDots, _secondsRemaining);
 
             _remainingTimer.Start();
 
             try
             {
-                _discoveryProtocol.CaptureDiscoveryProtocolAsync(SelectedNetworkInterface.Name, duration, SelectedProtocol);
+                _discoveryProtocol.CaptureAsync(SelectedNetworkInterface.Name, duration, SelectedProtocol);
             }
             catch (Exception ex)
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }            
         }
 
@@ -398,7 +398,7 @@ namespace NETworkManager.ViewModels
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                TimeRemainingMessage = string.Format(Resources.Localization.Strings.XXSecondsRemainingDots, _secondsRemaining);
+                TimeRemainingMessage = string.Format(Localization.Resources.Strings.XXSecondsRemainingDots, _secondsRemaining);
 
                 if (_secondsRemaining > 0)
                     _secondsRemaining--;

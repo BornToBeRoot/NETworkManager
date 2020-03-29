@@ -3,17 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:validators="clr-namespace:NETworkManager.Validators"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
-        xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
+        xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:lookup="clr-namespace:NETworkManager.Models.Lookup"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:lookup="clr-namespace:NETworkManager.Models.Lookup;assembly=NETworkManager.Models"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        xmlns:controls="clr-namespace:NETworkManager.Controls"
+        xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:LookupOUILookupViewModel}">
     <UserControl.Resources>
@@ -44,7 +44,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.MACAddressOrVendor}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="TextBoxMACAddressOrVendor" ItemsSource="{Binding MACAddressOrVendorHistoryView}" wpfHelper:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressOrVendorHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddressesOrVendor}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" x:Name="TextBoxMACAddressOrVendor" ItemsSource="{Binding MACAddressOrVendorHistoryView}" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressOrVendorHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddressesOrVendor}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.InputBindings>
                         <KeyBinding Command="{Binding OUILookupCommand}" Key="Return" />
                     </ComboBox.InputBindings>

@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Diagnostics;
@@ -186,7 +187,7 @@ namespace NETworkManager.ViewModels
         private async void ChangeLocationAction()
         {
             MovingFiles = true;
-            
+
             var useFileInOtherLocation = false;
 
             // Check if settings file exists in new location
@@ -194,12 +195,12 @@ namespace NETworkManager.ViewModels
             {
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Resources.Localization.Strings.Overwrite;
-                settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
-                settings.FirstAuxiliaryButtonText = Resources.Localization.Strings.UseOther;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.Overwrite;
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+                settings.FirstAuxiliaryButtonText = Localization.Resources.Strings.UseOther;
                 settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
 
-                var result = await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Overwrite, Resources.Localization.Strings.OverwriteSettingsInTheDestinationFolder, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
+                var result = await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Overwrite, Localization.Resources.Strings.OverwriteSettingsInTheDestinationFolder, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
 
                 switch (result)
                 {
@@ -215,7 +216,7 @@ namespace NETworkManager.ViewModels
             // Use other location
             if (useFileInOtherLocation)
             {
-                Properties.Settings.Default.Settings_CustomSettingsLocation = Location;
+                LocalSettingsManager.Settings_CustomSettingsLocation = Location;
 
                 MovingFiles = false;
 
@@ -231,7 +232,7 @@ namespace NETworkManager.ViewModels
             {
                 await SettingsManager.MoveSettingsAsync(Location);
 
-                Properties.Settings.Default.Settings_CustomSettingsLocation = Location;
+                LocalSettingsManager.Settings_CustomSettingsLocation = Location;
 
                 // Show the user some awesome animation to indicate we are working on it :)
                 await Task.Delay(2000);
@@ -240,13 +241,13 @@ namespace NETworkManager.ViewModels
             {
                 var settings = AppearanceManager.MetroDialog;
 
-                settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
             }
 
             Location = string.Empty;
-            Location = Properties.Settings.Default.Settings_CustomSettingsLocation;
+            Location = LocalSettingsManager.Settings_CustomSettingsLocation;
 
             MovingFiles = false;
         }
@@ -278,12 +279,12 @@ namespace NETworkManager.ViewModels
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Resources.Localization.Strings.Continue;
-            settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
+            settings.AffirmativeButtonText = Localization.Resources.Strings.Continue;
+            settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
-                        
-            if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, Resources.Localization.Strings.SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+
+            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure, Localization.Resources.Strings.SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
             try
@@ -296,7 +297,7 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex)
             {
-                ImportStatusMessage = string.Format(Resources.Localization.Strings.ClouldNotImportFileSeeErrorMessageXX, ex.Message);
+                ImportStatusMessage = string.Format(Localization.Resources.Strings.ClouldNotImportFileSeeErrorMessageXX, ex.Message);
                 DisplayImportStatusMessage = true;
             }
         }
@@ -310,7 +311,7 @@ namespace NETworkManager.ViewModels
             using (var saveFileDialog = new System.Windows.Forms.SaveFileDialog()
             {
                 Filter = GlobalStaticConfiguration.ZipFileExtensionFilter,
-                FileName = $"{AssemblyManager.Current.Name}_{Resources.Localization.Strings.Settings}_{Resources.Localization.Strings.Backup}#{TimestampHelper.GetTimestamp()}.zip"
+                FileName = $"{AssemblyManager.Current.Name}_{Localization.Resources.Strings.Settings}_{Localization.Resources.Strings.Backup}#{TimestampHelper.GetTimestamp()}.zip"
             })
             {
                 if (saveFileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
@@ -320,12 +321,12 @@ namespace NETworkManager.ViewModels
                 {
                     SettingsManager.Export(saveFileDialog.FileName);
 
-                    ExportStatusMessage = string.Format(Resources.Localization.Strings.FileExportedToXX, saveFileDialog.FileName);
+                    ExportStatusMessage = string.Format(Localization.Resources.Strings.FileExportedToXX, saveFileDialog.FileName);
                     DisplayExportStatusMessage = true;
                 }
                 catch (Exception ex)
                 {
-                    ExportStatusMessage = string.Format(Resources.Localization.Strings.ClouldNotExportFileSeeErrorMessageXX, ex.Message);
+                    ExportStatusMessage = string.Format(Localization.Resources.Strings.ClouldNotExportFileSeeErrorMessageXX, ex.Message);
                     DisplayExportStatusMessage = true;
                 }
             }
@@ -337,25 +338,25 @@ namespace NETworkManager.ViewModels
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Resources.Localization.Strings.Continue;
-            settings.NegativeButtonText = Resources.Localization.Strings.Cancel;
+            settings.AffirmativeButtonText = Localization.Resources.Strings.Continue;
+            settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            var message = Resources.Localization.Strings.SelectedSettingsAreReset;
+            var message = Localization.Resources.Strings.SelectedSettingsAreReset;
 
-            message += Environment.NewLine + Environment.NewLine + $"* {Resources.Localization.Strings.TheSettingsLocationIsNotAffected}";
-            message += Environment.NewLine + $"* {Resources.Localization.Strings.ApplicationIsRestartedAfterwards}";
+            message += Environment.NewLine + Environment.NewLine + $"* {Localization.Resources.Strings.TheSettingsLocationIsNotAffected}";
+            message += Environment.NewLine + $"* {Localization.Resources.Strings.ApplicationIsRestartedAfterwards}";
 
-            if (await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.AreYouSure, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
             SettingsManager.Reset();
 
-            message = Resources.Localization.Strings.SettingsSuccessfullyReset;
-            message += Environment.NewLine + Environment.NewLine + Resources.Localization.Strings.TheApplicationWillBeRestarted;
+            message = Localization.Resources.Strings.SettingsSuccessfullyReset;
+            message += Environment.NewLine + Environment.NewLine + Localization.Resources.Strings.TheApplicationWillBeRestarted;
 
-            await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Success, message, MessageDialogStyle.Affirmative, settings);
+            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Success, message, MessageDialogStyle.Affirmative, settings);
 
             // Restart the application
             ConfigurationManager.Current.ForceRestart = true;

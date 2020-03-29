@@ -4,13 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
-        xmlns:controls="clr-namespace:NETworkManager.Controls"
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+        xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:profile="clr-namespace:NETworkManager.Models.Profile"
+        xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ProfilesViewModel}">
     <UserControl.Resources>
@@ -142,22 +142,22 @@
                 </GroupStyle>
             </DataGrid.GroupStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profile:ProfileInfo.Name)}" SortMemberPath="Name" MinWidth="250" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.NetworkInterface}" Binding="{Binding (profile:ProfileInfo.NetworkInterface_Enabled)}" SortMemberPath="NetworkInterface_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.IPScanner}" Binding="{Binding (profile:ProfileInfo.IPScanner_Enabled)}" SortMemberPath="IPScanner_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.PortScanner}" Binding="{Binding (profile:ProfileInfo.PortScanner_Enabled)}" SortMemberPath="PortScanner_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.Ping}" Binding="{Binding (profile:ProfileInfo.Ping_Enabled)}" SortMemberPath="Ping_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.PingMonitor}" Binding="{Binding (profile:ProfileInfo.PingMonitor_Enabled)}" SortMemberPath="PingMonitor_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.Traceroute}" Binding="{Binding (profile:ProfileInfo.Traceroute_Enabled)}" SortMemberPath="Traceroute_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.DNSLookup}" Binding="{Binding (profile:ProfileInfo.DNSLookup_Enabled)}" SortMemberPath="DNSLookup_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.RemoteDesktop}" Binding="{Binding (profile:ProfileInfo.RemoteDesktop_Enabled)}" SortMemberPath="RemoteDesktop_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.PowerShell}" Binding="{Binding (profile:ProfileInfo.PowerShell_Enabled)}" SortMemberPath="PowerShell_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.PuTTY}" Binding="{Binding (profile:ProfileInfo.PuTTY_Enabled)}" SortMemberPath="PuTTY_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.TigerVNC}" Binding="{Binding (profile:ProfileInfo.TigerVNC_Enabled)}" SortMemberPath="TigerVNC_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.WebConsole}" Binding="{Binding (profile:ProfileInfo.WebConsole_Enabled)}" SortMemberPath="WebConsole_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.WakeOnLAN}" Binding="{Binding (profile:ProfileInfo.WakeOnLAN_Enabled)}" SortMemberPath="WakeOnLAN_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.HTTPHeaders}" Binding="{Binding (profile:ProfileInfo.HTTPHeaders_Enabled)}" SortMemberPath="HTTPHeaders_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.Whois}" Binding="{Binding (profile:ProfileInfo.Whois_Enabled)}" SortMemberPath="Whois_Enabled" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profiles:ProfileInfo.Name)}" SortMemberPath="Name" MinWidth="250" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.NetworkInterface}" Binding="{Binding (profiles:ProfileInfo.NetworkInterface_Enabled)}" SortMemberPath="NetworkInterface_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.IPScanner}" Binding="{Binding (profiles:ProfileInfo.IPScanner_Enabled)}" SortMemberPath="IPScanner_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.PortScanner}" Binding="{Binding (profiles:ProfileInfo.PortScanner_Enabled)}" SortMemberPath="PortScanner_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.Ping}" Binding="{Binding (profiles:ProfileInfo.Ping_Enabled)}" SortMemberPath="Ping_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.PingMonitor}" Binding="{Binding (profiles:ProfileInfo.PingMonitor_Enabled)}" SortMemberPath="PingMonitor_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.Traceroute}" Binding="{Binding (profiles:ProfileInfo.Traceroute_Enabled)}" SortMemberPath="Traceroute_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.DNSLookup}" Binding="{Binding (profiles:ProfileInfo.DNSLookup_Enabled)}" SortMemberPath="DNSLookup_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.RemoteDesktop}" Binding="{Binding (profiles:ProfileInfo.RemoteDesktop_Enabled)}" SortMemberPath="RemoteDesktop_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.PowerShell}" Binding="{Binding (profiles:ProfileInfo.PowerShell_Enabled)}" SortMemberPath="PowerShell_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.PuTTY}" Binding="{Binding (profiles:ProfileInfo.PuTTY_Enabled)}" SortMemberPath="PuTTY_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.TigerVNC}" Binding="{Binding (profiles:ProfileInfo.TigerVNC_Enabled)}" SortMemberPath="TigerVNC_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.WebConsole}" Binding="{Binding (profiles:ProfileInfo.WebConsole_Enabled)}" SortMemberPath="WebConsole_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.WakeOnLAN}" Binding="{Binding (profiles:ProfileInfo.WakeOnLAN_Enabled)}" SortMemberPath="WakeOnLAN_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.HTTPHeaders}" Binding="{Binding (profiles:ProfileInfo.HTTPHeaders_Enabled)}" SortMemberPath="HTTPHeaders_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.Whois}" Binding="{Binding (profiles:ProfileInfo.Whois_Enabled)}" SortMemberPath="Whois_Enabled" />
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <mah:ProgressRing Grid.Row="2" Height="50" Width="50" IsActive="{Binding IsSearching}"/>

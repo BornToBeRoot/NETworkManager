@@ -1,6 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using NETworkManager.Models.Network;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.ComponentModel;
@@ -220,7 +220,7 @@ namespace NETworkManager
         {
             // Reset text
             CountdownValue = SettingsManager.Current.Status_WindowCloseTime;
-            string.Format(NETworkManager.Resources.Localization.Strings.ClosingInXSecondsDots, CountdownValue);
+            string.Format(NETworkManager.Localization.Resources.Strings.ClosingInXSecondsDots, CountdownValue);
 
             IsCountdownRunning = true;
 
@@ -272,7 +272,7 @@ namespace NETworkManager
         {
             CountdownValue--;
 
-            CountdownText = string.Format(NETworkManager.Resources.Localization.Strings.ClosingInXSecondsDots, CountdownValue);
+            CountdownText = string.Format(NETworkManager.Localization.Resources.Strings.ClosingInXSecondsDots, CountdownValue);
 
             if (CountdownValue > 0)
                 return;

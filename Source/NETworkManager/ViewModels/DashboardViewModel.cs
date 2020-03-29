@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Settings;
 using System.Windows.Input;
 using System;
 using System.ComponentModel;
@@ -8,8 +8,12 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using NETworkManager.Enum;
+using NETworkManager.Models.Network;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Translators;
+using Ping = System.Net.NetworkInformation.Ping;
+using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {
@@ -389,21 +393,21 @@ namespace NETworkManager.ViewModels
         private void CopyHostIPAddressAction()
         {
             if (HostIPAddress != null)
-                CommonMethods.SetClipboard(HostIPAddress.ToString());
+                ClipboardHelper.SetClipboard(HostIPAddress.ToString());
         }
 
         public ICommand CopyHostHostnameCommand => new RelayCommand(p => CopyHostHostnameAction());
 
         private void CopyHostHostnameAction()
         {
-            CommonMethods.SetClipboard(HostHostname);
+            ClipboardHelper.SetClipboard(HostHostname);
         }
 
         public ICommand CopyHostStatusCommand => new RelayCommand(p => CopyHostStatusAction());
 
         private void CopyHostStatusAction()
         {
-            CommonMethods.SetClipboard(HostStatus);
+            ClipboardHelper.SetClipboard(HostStatus);
         }
 
         public ICommand CopyGatewayIPAddressCommand => new RelayCommand(p => CopyGatewayIPAddressAction());
@@ -411,21 +415,21 @@ namespace NETworkManager.ViewModels
         private void CopyGatewayIPAddressAction()
         {
             if (GatewayIPAddress != null)
-                CommonMethods.SetClipboard(GatewayIPAddress.ToString());
+                ClipboardHelper.SetClipboard(GatewayIPAddress.ToString());
         }
 
         public ICommand CopyGatewayHostnameCommand => new RelayCommand(p => CopyGatewayHostnameAction());
 
         private void CopyGatewayHostnameAction()
         {
-            CommonMethods.SetClipboard(GatewayHostname);
+            ClipboardHelper.SetClipboard(GatewayHostname);
         }
 
         public ICommand CopyGatewayStatusCommand => new RelayCommand(p => CopyGatewayStatusAction());
 
         private void CopyGatewayStatusAction()
         {
-            CommonMethods.SetClipboard(GatewayStatus);
+            ClipboardHelper.SetClipboard(GatewayStatus);
         }
 
         public ICommand CopyPublicIPAddressCommand => new RelayCommand(p => CopyPublicIPAddressAction());
@@ -433,21 +437,21 @@ namespace NETworkManager.ViewModels
         private void CopyPublicIPAddressAction()
         {
             if (PublicIPAddress != null)
-                CommonMethods.SetClipboard(PublicIPAddress.ToString());
+                ClipboardHelper.SetClipboard(PublicIPAddress.ToString());
         }
 
         public ICommand CopyPublicHostnameCommand => new RelayCommand(p => CopyPublicHostnameAction());
 
         private void CopyPublicHostnameAction()
         {
-            CommonMethods.SetClipboard(PublicHostname);
+            ClipboardHelper.SetClipboard(PublicHostname);
         }
 
         public ICommand CopyInternetStatusCommand => new RelayCommand(p => CopyInternetStatusAction());
 
         private void CopyInternetStatusAction()
         {
-            CommonMethods.SetClipboard(InternetStatus);
+            ClipboardHelper.SetClipboard(InternetStatus);
         }
         #endregion
 
@@ -516,9 +520,9 @@ namespace NETworkManager.ViewModels
 
             if (!IsHostReachable)
             {
-                HostConnectionState = ConnectionState.Error;
-                AddToHostDetails(ConnectionState.Error,
-                    string.Format(Resources.Localization.Strings.TCPIPStackIsNotAvailableMessage, hostIPAddress));
+                HostConnectionState = ConnectionState.Critical;
+                AddToHostDetails(ConnectionState.Critical,
+                    string.Format(Localization.Resources.Strings.TCPIPStackIsNotAvailableMessage, hostIPAddress));
 
                 IsHostCheckRunning = false;
                 IsGatewayCheckRunning = false;
@@ -529,7 +533,7 @@ namespace NETworkManager.ViewModels
 
             HostConnectionState = ConnectionState.OK;
             AddToHostDetails(ConnectionState.OK,
-                string.Format(Resources.Localization.Strings.TCPIPStackIsAvailableMessage, hostIPAddress));
+                string.Format(Localization.Resources.Strings.TCPIPStackIsAvailableMessage, hostIPAddress));
 
             // 2) Detect local ip address
             try
@@ -545,10 +549,9 @@ namespace NETworkManager.ViewModels
 
             if (HostIPAddress == null)
             {
-                HostConnectionState = ConnectionState.Error;
-                AddToHostDetails(ConnectionState.Error,
-                    Resources.Localization.Strings.CouldNotDetectLocalIPAddressMessage + " " + Resources.Localization
-                        .Strings.CheckNetworkAdapterConfigurationAndNetworkConnectionMessage);
+                HostConnectionState = ConnectionState.Critical;
+                AddToHostDetails(ConnectionState.Critical,
+                    Localization.Resources.Strings.CouldNotDetectLocalIPAddressMessage + " " + Localization.Resources.Strings.CheckNetworkAdapterConfigurationAndNetworkConnectionMessage);
 
                 IsHostCheckRunning = false;
                 IsGatewayCheckRunning = false;
@@ -558,7 +561,7 @@ namespace NETworkManager.ViewModels
             }
 
             AddToHostDetails(ConnectionState.OK,
-                string.Format(Resources.Localization.Strings.XXXDetectedAsLocalIPAddressMessage, HostIPAddress));
+                string.Format(Localization.Resources.Strings.XXXDetectedAsLocalIPAddressMessage, HostIPAddress));
 
             // 3) Check dns for local host
             try
@@ -566,16 +569,15 @@ namespace NETworkManager.ViewModels
                 HostHostname = Dns.GetHostEntry(HostIPAddress).HostName;
 
                 AddToHostDetails(ConnectionState.OK,
-                    string.Format(Resources.Localization.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage,
+                    string.Format(Localization.Resources.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage,
                         HostHostname, HostIPAddress));
             }
             catch (SocketException)
             {
                 HostConnectionState = ConnectionState.Warning;
                 AddToHostDetails(ConnectionState.Warning,
-                    string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, HostIPAddress) +
-                    " " + Resources.Localization.Strings
-                        .CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
+                    string.Format(Localization.Resources.Strings.CouldNotResolveHostnameFor, HostIPAddress) +
+                    " " + Localization.Resources.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
             }
 
             IsHostCheckRunning = false;
@@ -597,9 +599,8 @@ namespace NETworkManager.ViewModels
 
             if (GatewayIPAddress == null)
             {
-                AddToGatewayDetails(ConnectionState.Error,
-                    Resources.Localization.Strings.CouldNotDetectGatewayIPAddressMessage + " " + Resources.Localization
-                        .Strings.CheckNetworkAdapterConfigurationAndNetworkConnectionMessage);
+                AddToGatewayDetails(ConnectionState.Critical,
+                    Localization.Resources.Strings.CouldNotDetectGatewayIPAddressMessage + " " + Localization.Resources.Strings.CheckNetworkAdapterConfigurationAndNetworkConnectionMessage);
 
                 IsGatewayCheckRunning = false;
                 IsInternetCheckRunning = false;
@@ -608,7 +609,7 @@ namespace NETworkManager.ViewModels
             }
 
             AddToGatewayDetails(ConnectionState.OK,
-                string.Format(Resources.Localization.Strings.XXXDetectedAsGatewayIPAddress, GatewayIPAddress));
+                string.Format(Localization.Resources.Strings.XXXDetectedAsGatewayIPAddress, GatewayIPAddress));
 
             // 4) Check if gateway is reachable via ICMP
             using (var ping = new Ping())
@@ -635,8 +636,8 @@ namespace NETworkManager.ViewModels
 
             if (!IsGatewayReachable)
             {
-                AddToGatewayDetails(ConnectionState.Error,
-                    string.Format(Resources.Localization.Strings.XXXIsNotReachableViaICMPMessage, GatewayIPAddress));
+                AddToGatewayDetails(ConnectionState.Critical,
+                    string.Format(Localization.Resources.Strings.XXXIsNotReachableViaICMPMessage, GatewayIPAddress));
 
                 IsGatewayCheckRunning = false;
                 IsInternetCheckRunning = false;
@@ -646,7 +647,7 @@ namespace NETworkManager.ViewModels
 
             GatewayConnectionState = ConnectionState.OK;
             AddToGatewayDetails(ConnectionState.OK,
-                string.Format(Resources.Localization.Strings.XXXIsReachableViaICMPMessage, GatewayIPAddress));
+                string.Format(Localization.Resources.Strings.XXXIsReachableViaICMPMessage, GatewayIPAddress));
 
             // 5) Check dns for gateway
             try
@@ -654,16 +655,15 @@ namespace NETworkManager.ViewModels
                 GatewayHostname = Dns.GetHostEntry(GatewayIPAddress).HostName;
 
                 AddToGatewayDetails(ConnectionState.OK,
-                    string.Format(Resources.Localization.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage,
+                    string.Format(Localization.Resources.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage,
                         GatewayHostname, GatewayIPAddress));
             }
             catch (SocketException)
             {
                 GatewayConnectionState = ConnectionState.Warning;
                 AddToGatewayDetails(ConnectionState.Warning,
-                    string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor,
-                        GatewayIPAddress) + " " + Resources.Localization.Strings
-                        .CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
+                    string.Format(Localization.Resources.Strings.CouldNotResolveHostnameFor,
+                        GatewayIPAddress) + " " + Localization.Resources.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
             }
 
             IsGatewayCheckRunning = false;
@@ -700,8 +700,8 @@ namespace NETworkManager.ViewModels
 
             if (!IsInternetReachable)
             {
-                AddToInternetDetails(ConnectionState.Error,
-                    string.Format(Resources.Localization.Strings.XXXIsNotReachableViaICMPMessage,
+                AddToInternetDetails(ConnectionState.Critical,
+                    string.Format(Localization.Resources.Strings.XXXIsNotReachableViaICMPMessage,
                         publicICMPTestIPAddress));
 
                 IsInternetCheckRunning = false;
@@ -711,7 +711,7 @@ namespace NETworkManager.ViewModels
 
             InternetConnectionState = ConnectionState.OK;
             AddToInternetDetails(ConnectionState.OK,
-                string.Format(Resources.Localization.Strings.XXXIsReachableViaICMPMessage, publicICMPTestIPAddress));
+                string.Format(Localization.Resources.Strings.XXXIsReachableViaICMPMessage, publicICMPTestIPAddress));
 
             // 7) Check if dns is working (A)
             var publicDNSTestDomain = SettingsManager.Current.Dashboard_PublicDNSTestDomain;
@@ -733,16 +733,15 @@ namespace NETworkManager.ViewModels
             if (dnsCountForward > 0)
             {
                 AddToInternetDetails(ConnectionState.OK,
-                    string.Format(Resources.Localization.Strings.XADNSRecordsResolvedForXXXMessage, dnsCountForward,
+                    string.Format(Localization.Resources.Strings.XADNSRecordsResolvedForXXXMessage, dnsCountForward,
                         publicDNSTestDomain));
             }
             else
             {
                 InternetConnectionState = ConnectionState.Warning;
                 AddToInternetDetails(ConnectionState.Warning,
-                    string.Format(Resources.Localization.Strings.NoADNSRecordsResolvedForXXXMessage,
-                        publicDNSTestDomain) + " " + Resources.Localization.Strings
-                        .CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
+                    string.Format(Localization.Resources.Strings.NoADNSRecordsResolvedForXXXMessage,
+                        publicDNSTestDomain) + " " + Localization.Resources.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
             }
 
             // 8) Check if dns is working (PTR)
@@ -762,16 +761,15 @@ namespace NETworkManager.ViewModels
             if (gotDnsReverseHostname)
             {
                 AddToInternetDetails(ConnectionState.OK,
-                    string.Format(Resources.Localization.Strings.PTRDNSRecordResolvedForXXXMessage,
+                    string.Format(Localization.Resources.Strings.PTRDNSRecordResolvedForXXXMessage,
                         publicDNSTestIPAddress));
             }
             else
             {
                 InternetConnectionState = ConnectionState.Warning;
                 AddToInternetDetails(ConnectionState.Warning,
-                    string.Format(Resources.Localization.Strings.NoPTRDNSRecordResolvedForXXXMessage,
-                        publicDNSTestDomain) + " " + Resources.Localization.Strings
-                        .CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
+                    string.Format(Localization.Resources.Strings.NoPTRDNSRecordResolvedForXXXMessage,
+                        publicDNSTestDomain) + " " + Localization.Resources.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
             }
 
             // 9) Check public ip address via api.ipify.org
@@ -796,7 +794,7 @@ namespace NETworkManager.ViewModels
                     {
                         InternetConnectionState = ConnectionState.Warning;
                         AddToInternetDetails(ConnectionState.Warning,
-                            string.Format(Resources.Localization.Strings.CouldNotParsePublicIPAddressFromXXXMessage,
+                            string.Format(Localization.Resources.Strings.CouldNotParsePublicIPAddressFromXXXMessage,
                                 publicIPAddressAPI));
 
                         IsInternetCheckRunning = false;
@@ -808,7 +806,7 @@ namespace NETworkManager.ViewModels
                 {
                     InternetConnectionState = ConnectionState.Warning;
                     AddToInternetDetails(ConnectionState.Warning,
-                        string.Format(Resources.Localization.Strings.CouldNotConnectToXXXMessage, publicIPAddressAPI));
+                        string.Format(Localization.Resources.Strings.CouldNotConnectToXXXMessage, publicIPAddressAPI));
 
                     IsInternetCheckRunning = false;
 
@@ -822,7 +820,7 @@ namespace NETworkManager.ViewModels
                 if (string.IsNullOrEmpty(publicIPAddress))
                 {
                     InternetConnectionState = ConnectionState.Warning;
-                    AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.CouldNotGetPublicIPAddressFromXXXMessage, publicIPAddressAPI));
+                    AddToInternetDetails(ConnectionState.Warning, string.Format(Localization.Resources.Strings.CouldNotGetPublicIPAddressFromXXXMessage, publicIPAddressAPI));
 
                     IsInternetCheckRunning = false;
 
@@ -831,7 +829,7 @@ namespace NETworkManager.ViewModels
 
                 PublicIPAddress = IPAddress.Parse(publicIPAddress);
                 AddToInternetDetails(ConnectionState.OK,
-                    string.Format(Resources.Localization.Strings.GotXXXAsPublicIPAddressFromXXXMessage, PublicIPAddress, publicIPAddressAPI));
+                    string.Format(Localization.Resources.Strings.GotXXXAsPublicIPAddressFromXXXMessage, PublicIPAddress, publicIPAddressAPI));
 
                 // 10) Resolve dns for public ip
                 try
@@ -839,13 +837,13 @@ namespace NETworkManager.ViewModels
                     PublicHostname = Dns.GetHostEntry(PublicIPAddress).HostName;
 
                     AddToInternetDetails(ConnectionState.OK,
-                        string.Format(Resources.Localization.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage,
+                        string.Format(Localization.Resources.Strings.ResolvedXXXAsHostnameForIPAddressXXXMessage,
                             PublicHostname, PublicIPAddress));
                 }
                 catch (SocketException)
                 {
                     InternetConnectionState = ConnectionState.Warning;
-                    AddToInternetDetails(ConnectionState.Warning, string.Format(Resources.Localization.Strings.CouldNotResolveHostnameFor, PublicIPAddress) + " " + Resources.Localization.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
+                    AddToInternetDetails(ConnectionState.Warning, string.Format(Localization.Resources.Strings.CouldNotResolveHostnameFor, PublicIPAddress) + " " + Localization.Resources.Strings.CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage);
 
                     IsInternetCheckRunning = false;
 
@@ -854,7 +852,7 @@ namespace NETworkManager.ViewModels
             }
             else
             {
-                var note = Resources.Localization.Strings.PublicIPAddressCheckIsDisabled.Replace("\n", "").Split('\r');
+                var note = Localization.Resources.Strings.PublicIPAddressCheckIsDisabled.Replace("\n", "").Split('\r');
 
                 PublicIPAddressCheckDisabledNote1 = note[0];
                 PublicIPAddressCheckDisabledNote2 = note[1];
@@ -871,7 +869,9 @@ namespace NETworkManager.ViewModels
             if (!string.IsNullOrEmpty(HostStatus))
                 HostStatus += Environment.NewLine;
 
-            HostStatus += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
+            
+
+            HostStatus += $"[{ConnectionStateTranslator.GetInstance().Translate(state.ToString())}] {message}";
         }
 
         private void AddToGatewayDetails(ConnectionState state, string message)
@@ -879,7 +879,7 @@ namespace NETworkManager.ViewModels
             if (!string.IsNullOrEmpty(GatewayStatus))
                 GatewayStatus += Environment.NewLine;
 
-            GatewayStatus += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
+            GatewayStatus += $"[{ConnectionStateTranslator.GetInstance().Translate(state.ToString())}] {message}";
         }
 
         private void AddToInternetDetails(ConnectionState state, string message)
@@ -888,7 +888,7 @@ namespace NETworkManager.ViewModels
                 InternetStatus += Environment.NewLine;
 
             if (state != ConnectionState.None)
-                InternetStatus += $"[{LocalizationManager.TranslateConnectionState(state)}] {message}";
+                InternetStatus += $"[{ConnectionStateTranslator.GetInstance().Translate(state.ToString())}] {message}";
         }
 
         public void OnViewVisible()

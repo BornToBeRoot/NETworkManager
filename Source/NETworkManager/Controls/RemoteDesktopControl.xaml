@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mstsc ="clr-namespace:AxMSTSCLib;assembly=AxMSTSCLib"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"        
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"        
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:localization ="clr-namespace:NETworkManager.Resources.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:RemoteDesktopControl}">
     <UserControl.Resources>

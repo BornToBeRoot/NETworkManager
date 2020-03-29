@@ -3,16 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
-        xmlns:validators="clr-namespace:NETworkManager.Validators"
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+        xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"      
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
+        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-        xmlns:profile="clr-namespace:NETworkManager.Models.Profile"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+        xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsProfilesViewModel}">
     <UserControl.Resources>
@@ -22,8 +22,7 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:IntGreater1ToBooleanConverter x:Key="IntGreater1ToBooleanConverter" />
         <converters:IsDefaultProfilesLocationToBooleanConverter x:Key="IsDefaultProfilesLocationToBoolConverter" />
-        <converters:IsProfilesLocationToBooleanConverter x:Key="IsProfilesLocationToBooleanConverter" />
-        <converters:ValidateSettingsResetConverter x:Key="ValidateSettingsResetConverter" />
+        <converters:IsProfilesLocationToBooleanConverter x:Key="IsProfilesLocationToBooleanConverter" />        
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Location}" />
@@ -110,7 +109,7 @@
         <DataGrid x:Name="DataGridProfileLocations" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding ProfileFiles}" SelectionMode="Single" SelectedItem="{Binding SelectedProfileFile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
-                <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileFileCommand}">
                         <MenuItem.Icon>
@@ -169,7 +168,7 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profile:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profiles:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
                 <DataGridTemplateColumn Header="{x:Static localization:Strings.IsEncrypted}" Width="Auto" Visibility="Collapsed">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -182,7 +181,7 @@
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualLockOpen}" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=(profile:ProfileFileInfo.IsEncryptionEnabled)}" Value="True">
+                                            <DataTrigger Binding="{Binding Path=(profiles:ProfileFileInfo.IsEncryptionEnabled)}" Value="True">
                                                 <Setter Property="OpacityMask" Value="{StaticResource VisualLockClosed}" />
                                             </DataTrigger>
                                         </Style.Triggers>

@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:validators="clr-namespace:NETworkManager.Validators"
-        xmlns:converters="clr-namespace:NETworkManager.Converters"
+        xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"        
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         xmlns:mahappsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:network="clr-namespace:NETworkManager.Models.Network"
-        xmlns:localization="clr-namespace:NETworkManager.Resources.Localization"
-        xmlns:controls="clr-namespace:NETworkManager.Controls"
+        xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+        xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-        xmlns:wpfHelper="clr-namespace:NETworkManager.WpfHelper"
+        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerViewModel}">
@@ -22,7 +22,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <converters:NullOrEmptyToStringConverter x:Key="NullOrEmptyToStringConverter" />
-        <converters:PortStatusToStringConverter x:Key="PortStatusToStringConverter" />
+        <converters:PortStateToStringConverter x:Key="PortStateToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -187,7 +187,7 @@
         <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding PortScanResultsView}" SelectedItem="{Binding SelectedPortScanResult}" SelectedItemsList="{Binding SelectedPortScanResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
-                <wpfHelper:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.CopyDots}">
                         <MenuItem.Icon>
@@ -322,7 +322,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:PortInfo.IPAddress)}" SortMemberPath="IPAddressInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:PortInfo.Hostname), Converter={StaticResource NullOrEmptyToStringConverter}}" SortMemberPath="Hostname" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:PortInfo.Port)}" SortMemberPath="Port" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:PortInfo.Status), Converter={StaticResource PortStatusToStringConverter}}" SortMemberPath="Status" MinWidth="100" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:PortInfo.State), Converter={StaticResource PortStateToStringConverter}}" SortMemberPath="Status" MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}" Binding="{Binding (network:PortInfo.LookupInfo).Protocol}" SortMemberPath="LookupInfo.Protocol" MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Service}" Binding="{Binding (network:PortInfo.LookupInfo).Service}" SortMemberPath="LookupInfo.Service" MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Description}" Binding="{Binding (network:PortInfo.LookupInfo).Description}" SortMemberPath="LookupInfo.Description" MinWidth="200" />

@@ -3,7 +3,7 @@ using System.Windows;
 using System;
 using System.Collections;
 using System.Collections.ObjectModel;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using System.Threading;
@@ -20,6 +20,8 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Translators;
 
 namespace NETworkManager.ViewModels
 {
@@ -362,49 +364,49 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedPortScanResult.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedPortScanResult.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
-            CommonMethods.SetClipboard(SelectedPortScanResult.Hostname);
+            ClipboardHelper.SetClipboard(SelectedPortScanResult.Hostname);
         }
 
         public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
 
         private void CopySelectedPortAction()
         {
-            CommonMethods.SetClipboard(SelectedPortScanResult.Port.ToString());
+            ClipboardHelper.SetClipboard(SelectedPortScanResult.Port.ToString());
         }
 
         public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
         {
-            CommonMethods.SetClipboard(LocalizationManager.TranslatePortStatus(SelectedPortScanResult.Status));
+            ClipboardHelper.SetClipboard(PortStateTranslator.GetInstance().Translate(SelectedPortScanResult.State));
         }
 
         public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
 
         private void CopySelectedProtocolAction()
         {
-            CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Protocol.ToString());
+            ClipboardHelper.SetClipboard(SelectedPortScanResult.LookupInfo.Protocol.ToString());
         }
 
         public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
 
         private void CopySelectedServiceAction()
         {
-            CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Service);
+            ClipboardHelper.SetClipboard(SelectedPortScanResult.LookupInfo.Service);
         }
 
         public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
 
         private void CopySelectedDescriptionAction()
         {
-            CommonMethods.SetClipboard(SelectedPortScanResult.LookupInfo.Description);
+            ClipboardHelper.SetClipboard(SelectedPortScanResult.LookupInfo.Description);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -535,7 +537,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -549,9 +551,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.PortScanner_ExportFileType = instance.FileType;
@@ -613,7 +615,7 @@ namespace NETworkManager.ViewModels
         #region Events
         private void UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
 
             ScanFinished();
@@ -626,7 +628,7 @@ namespace NETworkManager.ViewModels
 
         private void DnsResolveFailed(AggregateException e)
         {
-            StatusMessage = $"{Resources.Localization.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
+            StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
             DisplayStatusMessage = true;
 
             ScanFinished();
@@ -647,7 +649,7 @@ namespace NETworkManager.ViewModels
                     PortScanResult.Add(portInfo);
             }));
 
-            if (portInfo.Status == PortInfo.PortStatus.Open)
+            if (portInfo.State == PortState.Open)
                 PortsOpen++;
         }
 

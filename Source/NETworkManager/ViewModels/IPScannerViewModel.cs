@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Settings;
+﻿using NETworkManager.Settings;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Windows.Input;
@@ -20,10 +20,12 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
-using NETworkManager.Models.EventSystem;
-using NETworkManager.Enum;
 using System.Text.RegularExpressions;
-using NETworkManager.Models.Profile;
+using NETworkManager.Profiles;
+using NETworkManager.Localization;
+using NETworkManager.Localization.Translators;
+using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {
@@ -315,7 +317,7 @@ namespace NETworkManager.ViewModels
 
             // Add default custom commands...
             if (SettingsManager.Current.IPScanner_CustomCommands.Count == 0)
-                SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(Utilities.CustomCommand.DefaultList());
+                SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(Utilities.CustomCommand.GetDefaults());
 
             LoadSettings();
 
@@ -370,26 +372,26 @@ namespace NETworkManager.ViewModels
             if (!(name is string appName))
                 return;
 
-            if (!System.Enum.TryParse(appName, out ApplicationViewManager.Name applicationName))
+            if (!System.Enum.TryParse(appName, out ApplicationName applicationName))
                 return;
 
             var host = !string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.Hostname : SelectedHostResult.PingInfo.IPAddress.ToString();
 
-            EventSystem.RedirectDataToApplication(applicationName, host);
+            EventSystem.RedirectToApplication(applicationName, host);
         }
 
         public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(p => PerformDNSLookupIPAddressAction());
 
         private void PerformDNSLookupIPAddressAction()
         {
-            EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedHostResult.PingInfo.IPAddress.ToString());
+            EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedHostResult.PingInfo.IPAddress.ToString());
         }
 
         public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
 
         private void PerformDNSLookupHostnameAction()
         {
-            EventSystem.RedirectDataToApplication(ApplicationViewManager.Name.DNSLookup, SelectedHostResult.Hostname);
+            EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedHostResult.Hostname);
         }
 
         public ICommand CustomCommandCommand => new RelayCommand(CustomCommandAction);
@@ -400,6 +402,7 @@ namespace NETworkManager.ViewModels
         }
 
         public ICommand AddProfileSelectedHostCommand => new RelayCommand(p => AddProfileSelectedHostAction());
+
         private async void AddProfileSelectedHostAction()
         {
             ProfileInfo profileInfo = new ProfileInfo()
@@ -410,14 +413,14 @@ namespace NETworkManager.ViewModels
 
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.AddProfile
+                Title = Localization.Resources.Strings.AddProfile
             };
 
             var profileViewModel = new ProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileManager.AddProfile(instance);
+                ProfileDialogManager.AddProfile(instance);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -435,56 +438,56 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedHostResult.PingInfo.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedHostResult.PingInfo.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
-            CommonMethods.SetClipboard(SelectedHostResult.Hostname);
+            ClipboardHelper.SetClipboard(SelectedHostResult.Hostname);
         }
 
         public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
 
         private void CopySelectedMACAddressAction()
         {
-            CommonMethods.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedHostResult.MACAddress.ToString()));
+            ClipboardHelper.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedHostResult.MACAddress.ToString()));
         }
 
         public ICommand CopySelectedVendorCommand => new RelayCommand(p => CopySelectedVendorAction());
 
         private void CopySelectedVendorAction()
         {
-            CommonMethods.SetClipboard(SelectedHostResult.Vendor);
+            ClipboardHelper.SetClipboard(SelectedHostResult.Vendor);
         }
 
         public ICommand CopySelectedBytesCommand => new RelayCommand(p => CopySelectedBytesAction());
 
         private void CopySelectedBytesAction()
         {
-            CommonMethods.SetClipboard(SelectedHostResult.PingInfo.Bytes.ToString());
+            ClipboardHelper.SetClipboard(SelectedHostResult.PingInfo.Bytes.ToString());
         }
 
         public ICommand CopySelectedTimeCommand => new RelayCommand(p => CopySelectedTimeAction());
 
         private void CopySelectedTimeAction()
         {
-            CommonMethods.SetClipboard(SelectedHostResult.PingInfo.Time.ToString());
+            ClipboardHelper.SetClipboard(SelectedHostResult.PingInfo.Time.ToString());
         }
 
         public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
 
         private void CopySelectedTTLAction()
         {
-            CommonMethods.SetClipboard(SelectedHostResult.PingInfo.TTL.ToString());
+            ClipboardHelper.SetClipboard(SelectedHostResult.PingInfo.TTL.ToString());
         }
 
         public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
-        {
-            CommonMethods.SetClipboard(LocalizationManager.TranslateIPStatus(SelectedHostResult.PingInfo.Status));
+        {            
+            ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedHostResult.PingInfo.Status));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -656,11 +659,11 @@ namespace NETworkManager.ViewModels
                 }
 
                 if (!subnetmaskDetected)
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.CouldNotDetectSubnetmask, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.CouldNotDetectSubnetmask, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
             else
             {
-                await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.CouldNotDetectLocalIPAddressMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.CouldNotDetectLocalIPAddressMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
             IsIPRangeDetectionRunning = false;
@@ -694,7 +697,7 @@ namespace NETworkManager.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.ResourceManager.GetString("Error", LocalizationManager.Culture), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.ResourceManager.GetString("Error", LocalizationManager.GetInstance().Culture), ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
                 }
             }
         }
@@ -716,7 +719,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -730,9 +733,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
@@ -782,7 +785,7 @@ namespace NETworkManager.ViewModels
 
         private void DnsResolveFailed(AggregateException e)
         {
-            StatusMessage = $"{Resources.Localization.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
+            StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
             DisplayStatusMessage = true;
 
             ScanFinished();
@@ -790,7 +793,7 @@ namespace NETworkManager.ViewModels
 
         private void UserHasCanceled(object sender, EventArgs e)
         {
-            StatusMessage = Resources.Localization.Strings.CanceledByUserMessage;
+            StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             DisplayStatusMessage = true;
 
             ScanFinished();

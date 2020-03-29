@@ -4,6 +4,7 @@ using Dragablz;
 using System.Windows.Input;
 using NETworkManager.Views;
 using NETworkManager.Utilities;
+using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
 {
@@ -33,11 +34,11 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public SNMPHostViewModel()
         {
-            InterTabClient = new DragablzInterTabClient(ApplicationViewManager.Name.SNMP);
+            InterTabClient = new DragablzInterTabClient(ApplicationName.SNMP);
 
             TabItems = new ObservableCollection<DragablzTabItem>
             {
-                new DragablzTabItem(Resources.Localization.Strings.NewTab, new SNMPView (_tabId), _tabId)
+                new DragablzTabItem(Localization.Resources.Strings.NewTab, new SNMPView (_tabId), _tabId)
             };
         }
         #endregion
@@ -63,7 +64,7 @@ namespace NETworkManager.ViewModels
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(host ?? Resources.Localization.Strings.NewTab, new SNMPView(_tabId, host), _tabId));
+            TabItems.Add(new DragablzTabItem(host ?? Localization.Resources.Strings.NewTab, new SNMPView(_tabId, host), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

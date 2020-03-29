@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using NETworkManager.Utilities;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using NETworkManager.Models.PowerShell;
 
 namespace NETworkManager.Controls
@@ -124,7 +124,7 @@ namespace NETworkManager.Controls
             var info = new ProcessStartInfo
             {
                 FileName = _sessionInfo.ApplicationFilePath,
-                Arguments = PowerShell.BuildCommandLine(_sessionInfo)
+                Arguments = Models.PowerShell.PowerShell.BuildCommandLine(_sessionInfo)
             };
 
             try
@@ -188,11 +188,11 @@ namespace NETworkManager.Controls
                 if (!_closing)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = NETworkManager.Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
                     ConfigurationManager.Current.FixAirspace = true;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Resources.Localization.Strings.Error,
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
                         ex.Message, MessageDialogStyle.Affirmative, settings);
 
                     ConfigurationManager.Current.FixAirspace = false;

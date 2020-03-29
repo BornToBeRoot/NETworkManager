@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
 using NETworkManager.Utilities;
-using NETworkManager.Models.Settings;
+using NETworkManager.Settings;
 using System.Windows.Threading;
 using System.Linq;
 using System.Windows;
@@ -205,7 +205,7 @@ namespace NETworkManager.ViewModels
                 return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Port.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.Protocol.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
-            AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.Defaults);
+            AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
             SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x => (x.Value == SettingsManager.Current.Listeners_AutoRefreshTime.Value && x.TimeUnit == SettingsManager.Current.Listeners_AutoRefreshTime.TimeUnit));
 
             _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -248,21 +248,21 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedProtocolAction()
         {
-            CommonMethods.SetClipboard(SelectedListenerInfo.Protocol.ToString());
+            ClipboardHelper.SetClipboard(SelectedListenerInfo.Protocol.ToString());
         }
 
         public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
         private void CopySelectedIPAddressAction()
         {
-            CommonMethods.SetClipboard(SelectedListenerInfo.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedListenerInfo.IPAddress.ToString());
         }
 
         public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
 
         private void CopySelectedPortAction()
         {
-            CommonMethods.SetClipboard(SelectedListenerInfo.Port.ToString());
+            ClipboardHelper.SetClipboard(SelectedListenerInfo.Port.ToString());
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -271,7 +271,7 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Resources.Localization.Strings.Export
+                Title = Localization.Resources.Strings.Export
             };
 
             var exportViewModel = new ExportViewModel(async instance =>
@@ -285,9 +285,9 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Resources.Localization.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Resources.Localization.Strings.Error, Resources.Localization.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
                 SettingsManager.Current.Listeners_ExportFileType = instance.FileType;
