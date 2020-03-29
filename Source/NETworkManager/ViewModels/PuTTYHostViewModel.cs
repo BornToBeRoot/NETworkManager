@@ -371,15 +371,17 @@ namespace NETworkManager.ViewModels
                 AddBaudToHistory(instance.Baud.ToString());
                 AddUsernameToHistory(instance.Username);
                 AddProfileToHistory(instance.Profile);
-
+                               
                 // Create Profile info
                 var info = new PuTTYSessionInfo
                 {
-                    HostOrSerialLine = instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
+                    HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
-                    PortOrBaud = instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
-                    Username = instance.Username,
-                    Profile = instance.Profile,
+                    PortOrBaud = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
+                    Username = instance.Username,                    
+                    Profile = instance.Profile,          
+                    EnableSessionLog = SettingsManager.Current.PuTTY_EnableSessionLog,
+                    SessionLogFullName = Environment.ExpandEnvironmentVariables(Path.Combine(SettingsManager.Current.PuTTY_SessionLogPath, SettingsManager.Current.PuTTY_SessionLogFileName)),
                     AdditionalCommandLine = instance.AdditionalCommandLine
                 };
 
@@ -407,6 +409,9 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfileExternal()
         {
+            // Create log path
+            DirectoryCreator.CreateWithEnvironmentVariables(SettingsManager.Current.PuTTY_SessionLogPath);
+
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
@@ -503,7 +508,7 @@ namespace NETworkManager.ViewModels
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.PuTTY_ProfileHistory.Add(x));
         }
-
+                
         private void StartDelayedSearch()
         {
             if (!IsSearching)

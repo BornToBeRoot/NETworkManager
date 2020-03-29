@@ -1,5 +1,7 @@
 ﻿using NETworkManager.Models.PuTTY;
 using NETworkManager.Settings;
+using System.IO;
+using System;
 
 namespace NETworkManager.Profiles.Application
 {
@@ -14,6 +16,8 @@ namespace NETworkManager.Profiles.Application
                 PortOrBaud = profileInfo.PuTTY_OverridePortOrBaud ? profileInfo.PuTTY_PortOrBaud : Settings.Application.PuTTY.GetPortOrBaudByConnectionMode(profileInfo.PuTTY_ConnectionMode),
                 Username = profileInfo.PuTTY_OverrideUsername ? profileInfo.PuTTY_Username : SettingsManager.Current.PuTTY_Username,
                 Profile = profileInfo.PuTTY_OverrideProfile ? profileInfo.PuTTY_Profile : SettingsManager.Current.PuTTY_Profile,
+                EnableSessionLog = profileInfo.PuTTY_OverrideEnableSessionLog ? profileInfo.PuTTY_EnableSessionLog : SettingsManager.Current.PuTTY_EnableSessionLog,
+                SessionLogFullName = Environment.ExpandEnvironmentVariables(Path.Combine(SettingsManager.Current.PuTTY_SessionLogPath, profileInfo.PuTTY_OverrideSessionLogFileName ? profileInfo.PuTTY_SessionLogFileName : SettingsManager.Current.PuTTY_SessionLogFileName)),
                 AdditionalCommandLine = profileInfo.PuTTY_OverrideAdditionalCommandLine ? profileInfo.PuTTY_AdditionalCommandLine : SettingsManager.Current.PuTTY_AdditionalCommandLine
             };
 

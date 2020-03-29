@@ -156,7 +156,7 @@ namespace NETworkManager
 
         public static void AddProfile(ProfileViewModel instance)
         {
-           ProfileManager.AddProfile(new ProfileInfo
+            ProfileManager.AddProfile(new ProfileInfo
             {
                 Name = instance.Name?.Trim(),
                 Host = instance.Host?.Trim(),
@@ -267,6 +267,10 @@ namespace NETworkManager
                 PuTTY_Username = instance.PuTTY_Username?.Trim(),
                 PuTTY_OverrideProfile = instance.PuTTY_OverrideProfile,
                 PuTTY_Profile = instance.PuTTY_Profile?.Trim(),
+                PuTTY_OverrideEnableSessionLog = instance.PuTTY_OverrideEnableSessionLog,
+                PuTTY_EnableSessionLog = instance.PuTTY_EnableSessionLog,
+                PuTTY_OverrideSessionLogFileName = instance.PuTTY_OverrideSessionLogFileName,
+                PuTTY_SessionLogFileName = instance.PuTTY_SessionLogFileName,
                 PuTTY_OverrideAdditionalCommandLine = instance.PuTTY_OverrideAdditionalCommandLine,
                 PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
 

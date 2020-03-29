@@ -2554,6 +2554,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable session log.
+        /// </summary>
+        public static string EnableSessionLog {
+            get {
+                return ResourceManager.GetString("EnableSessionLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Encryption.
         /// </summary>
         public static string Encryption {
@@ -6440,6 +6449,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Service {
             get {
                 return ResourceManager.GetString("Service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session log file name.
+        /// </summary>
+        public static string SessionLogFileName {
+            get {
+                return ResourceManager.GetString("SessionLogFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session log path.
+        /// </summary>
+        public static string SessionLogPath {
+            get {
+                return ResourceManager.GetString("SessionLogPath", resourceCulture);
             }
         }
         

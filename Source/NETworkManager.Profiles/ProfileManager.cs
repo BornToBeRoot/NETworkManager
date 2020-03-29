@@ -10,9 +10,6 @@ using NETworkManager.Settings;
 
 namespace NETworkManager.Profiles
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public static class ProfileManager
     {
         #region Variables
@@ -36,24 +33,12 @@ namespace NETworkManager.Profiles
         /// </summary>
         public static string ProfilesEncryptionIdentifier => ".encrypted";
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static string TagIdentifier => "tag=";
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static ObservableCollection<ProfileFileInfo> ProfileFiles { get; set; } = new ObservableCollection<ProfileFileInfo>();
 
-        /// <summary>
-        /// 
-        /// </summary>
         private static ProfileFileInfo _profileFileInfo;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static ProfileFileInfo LoadedProfileFile
         {
             get => _profileFileInfo;
@@ -66,25 +51,12 @@ namespace NETworkManager.Profiles
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static ObservableCollection<ProfileInfo> Profiles { get; set; } = new ObservableCollection<ProfileInfo>();
-
-        /// <summary>
-        /// 
-        /// </summary>
+        
         public static bool ProfilesChanged { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static event EventHandler<ProfileFileInfoArgs> OnProfileFileChangedEvent;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="profileFileInfo"></param>
         private static void ProfileFileChanged(ProfileFileInfo profileFileInfo)
         {
             OnProfileFileChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo));
@@ -118,10 +90,6 @@ namespace NETworkManager.Profiles
             return Path.Combine(Path.GetDirectoryName(AssemblyManager.Current.Location) ?? throw new InvalidOperationException(), ProfilesFolderName);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public static string GetProfilesLocation()
         {
             return ConfigurationManager.Current.IsPortable ? GetPortableProfilesLocation() : GetProfilesLocationNotPortable();
