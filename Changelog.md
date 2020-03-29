@@ -8,33 +8,33 @@ Date: **26.01.2020**
 |[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip)| `497C6DEFAD22B074B0E8D0E43948545128503512434C096D221D2978B1344F91` |
 
 ## What's new?
-- Discovery Protocol - Capture LLDP and/or CDP network packages and display informations like Port, Description, VLAN, etc. #196
-- Web Console added #244
+- Discovery Protocol - Capture LLDP and/or CDP network packages and display informations like Port, Description, VLAN, etc. [#196](http://github.com/BornToBeRoot/NETworkManager/issues/196)
+- Web Console added [#244](http://github.com/BornToBeRoot/NETworkManager/issues/244)
 - Settings > Appearance 
-  - Transparency feature removed. Remote Desktop, PowerShell, PuTTY and TigerVNC don't work while transparency is enabled. #220
+  - Transparency feature removed. Remote Desktop, PowerShell, PuTTY and TigerVNC don't work while transparency is enabled. [#220](http://github.com/BornToBeRoot/NETworkManager/issues/220)
 
 ## Improvements
 - Network Interface > Bandwidth
-  - Labels / values improved in the network usage section #235
-  - ToolTip improved #219
+  - Labels / values improved in the network usage section [#235](http://github.com/BornToBeRoot/NETworkManager/issues/235)
+  - ToolTip improved [#219](http://github.com/BornToBeRoot/NETworkManager/issues/219)
 - DNS Lookup
-  - Error message now shows the ip address of the dns server #256 
+  - Error message now shows the ip address of the dns server [#256](http://github.com/BornToBeRoot/NETworkManager/issues/256)
 - Command Line Parameter added
-  - `--application:[Dashboard|IPScanner|etc.]` #237
-- After restarting the application, the last view is displayed again #237
+  - `--application:[Dashboard|IPScanner|etc.]` [#237](http://github.com/BornToBeRoot/NETworkManager/issues/237)
+- After restarting the application, the last view is displayed again [#237](http://github.com/BornToBeRoot/NETworkManager/issues/237)
 - Settings > Language
-  - View improved #231
+  - View improved [#231](http://github.com/BornToBeRoot/NETworkManager/issues/231)
 - Profiles
   - Rows (profiles) should now load faster (tested with ~5k profiles)
-  - Search improved on slow systems with many profiles #227
+  - Search improved on slow systems with many profiles [#227](http://github.com/BornToBeRoot/NETworkManager/issues/227)
 
 ## Bugfixes
 - IP Scanner
-  - Context menu redirect ro Ping Monitor #225 
-  - Context menu icons are now correct #257
+  - Context menu redirect ro Ping Monitor [#225](http://github.com/BornToBeRoot/NETworkManager/issues/225)
+  - Context menu icons are now correct [#257](http://github.com/BornToBeRoot/NETworkManager/issues/257)
 - Traceroute
-  - Context menu redirect ro Ping Monitor #225  
-  - Context menu icons are now correct #257
+  - Context menu redirect ro Ping Monitor [#225](http://github.com/BornToBeRoot/NETworkManager/issues/225)
+  - Context menu icons are now correct [#257](http://github.com/BornToBeRoot/NETworkManager/issues/257)
 - Some bugs in the UI fixed (label, translation, placeholder, etc.) 
 
 ## Libraries
