@@ -1,5 +1,0 @@
-# Kommandozeilenargumente
-
-
-
-[zurück](../README.md)
