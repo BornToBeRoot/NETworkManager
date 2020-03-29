@@ -185,6 +185,23 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private string _sessionLogPath;
+        public string SessionLogPath
+        {
+            get => _sessionLogPath;
+            set
+            {
+                if (value == _sessionLogPath)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PuTTY_SessionLogPath = value;
+
+                _sessionLogPath = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _sessionLogFileName;
         public string SessionLogFileName
         {
@@ -345,6 +362,7 @@ namespace NETworkManager.ViewModels
             Username = SettingsManager.Current.PuTTY_Username;
             Profile = SettingsManager.Current.PuTTY_Profile;
             EnableSessionLog = SettingsManager.Current.PuTTY_EnableSessionLog;
+            SessionLogPath = SettingsManager.Current.PuTTY_SessionLogPath;
             SessionLogFileName = SettingsManager.Current.PuTTY_SessionLogFileName;
             AdditionalCommandLine = SettingsManager.Current.PuTTY_AdditionalCommandLine;
             SerialLine = SettingsManager.Current.PuTTY_SerialLine;

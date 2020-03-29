@@ -13,7 +13,6 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
-using NETworkManager.Settings;
 using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels

@@ -1,18 +1,9 @@
-﻿using System;
-using System.IO;
-using static NETworkManager.Models.PuTTY.PuTTY;
+﻿using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.Settings.Application
 {
     public static class PuTTY
     {
-        public static string LogPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyManager.Current.Name,  "PuTTY_LogFiles");
-
-        public static void CreateLogPath()
-        {
-            Directory.CreateDirectory(LogPath);
-        }
-
         public static int GetPortOrBaudByConnectionMode(ConnectionMode mode)
         {
             var portOrBaud = 0;

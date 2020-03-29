@@ -2604,6 +2604,21 @@ namespace NETworkManager.Settings
             }
         }
 
+        private string _puTTY_SessionLogPath = GlobalStaticConfiguration.PuTTY_SessionLogPath;
+        public string PuTTY_SessionLogPath
+        {
+            get => _puTTY_SessionLogPath;
+            set
+            {
+                if (value == _puTTY_SessionLogPath)
+                    return;
+
+                _puTTY_SessionLogPath = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         private string _puTTY_SessionLogFileName = GlobalStaticConfiguration.PuTTY_SessionLogFileName;
         public string PuTTY_SessionLogFileName
         {

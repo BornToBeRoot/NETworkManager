@@ -6462,6 +6462,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Session log path.
+        /// </summary>
+        public static string SessionLogPath {
+            get {
+                return ResourceManager.GetString("SessionLogPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set Master Password.
         /// </summary>
         public static string SetMasterPassword {

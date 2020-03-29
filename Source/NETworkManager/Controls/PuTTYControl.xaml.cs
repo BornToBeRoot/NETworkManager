@@ -122,6 +122,9 @@ namespace NETworkManager.Controls
         {
             IsConnecting = true;
 
+            // Create log path
+            DirectoryCreator.CreateWithEnvironmentVariables(SettingsManager.Current.PuTTY_SessionLogPath);
+
             var info = new ProcessStartInfo
             {
                 FileName = _sessionInfo.ApplicationFilePath,

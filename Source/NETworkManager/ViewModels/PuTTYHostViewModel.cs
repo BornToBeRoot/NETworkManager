@@ -381,7 +381,7 @@ namespace NETworkManager.ViewModels
                     Username = instance.Username,                    
                     Profile = instance.Profile,          
                     EnableSessionLog = SettingsManager.Current.PuTTY_EnableSessionLog,
-                    SessionLogFullName = Path.Combine(Settings.Application.PuTTY.LogPath, SettingsManager.Current.PuTTY_SessionLogFileName),
+                    SessionLogFullName = Environment.ExpandEnvironmentVariables(Path.Combine(SettingsManager.Current.PuTTY_SessionLogPath, SettingsManager.Current.PuTTY_SessionLogFileName)),
                     AdditionalCommandLine = instance.AdditionalCommandLine
                 };
 
@@ -410,7 +410,7 @@ namespace NETworkManager.ViewModels
         private void ConnectProfileExternal()
         {
             // Create log path
-            Directory.CreateDirectory(Settings.Application.PuTTY.LogPath);
+            DirectoryCreator.CreateWithEnvironmentVariables(SettingsManager.Current.PuTTY_SessionLogPath);
 
             var info = new ProcessStartInfo
             {
@@ -423,9 +423,6 @@ namespace NETworkManager.ViewModels
 
         private void Connect(PuTTYSessionInfo profileInfo, string header = null)
         {
-            // Create log path
-            Settings.Application.PuTTY.CreateLogPath();
-
             // Add PuTTY path here...
             profileInfo.ApplicationFilePath = SettingsManager.Current.PuTTY_ApplicationFilePath;
 
@@ -511,7 +508,7 @@ namespace NETworkManager.ViewModels
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.PuTTY_ProfileHistory.Add(x));
         }
-
+                
         private void StartDelayedSearch()
         {
             if (!IsSearching)
