@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-//using NETworkManager.Settings;
 using System;
 using System.Xml;
+using System.IO;
+using System.Reflection;
 
 namespace NETworkManager.Models.Lookup
 {
     public static partial class PortLookup
     {
         #region Variables
-        private static readonly string PortsFilePath = ""; // ToDo //Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Ports.xml");
+        private static readonly string PortsFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "Ports.xml");
 
         private static readonly List<PortLookupInfo> PortList;
         private static readonly Lookup<int, PortLookupInfo> Ports;

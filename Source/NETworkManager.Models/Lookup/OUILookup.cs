@@ -2,17 +2,17 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
-//using NETworkManager.Settings;
 using System.Text.RegularExpressions;
 using System;
 using System.Xml;
+using System.Reflection;
 
 namespace NETworkManager.Models.Lookup
 {
     public static class OUILookup
     {
         #region Variables
-        private static readonly string OuiFilePath = ""; // ToDo // Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "OUI.xml");
+        private static readonly string OuiFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "OUI.xml");
 
         private static readonly List<OUIInfo> OUIInfoList;
         private static readonly Lookup<string, OUIInfo> OUIInfoLookup;

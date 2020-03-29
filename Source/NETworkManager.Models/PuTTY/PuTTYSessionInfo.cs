@@ -15,8 +15,6 @@ namespace NETworkManager.Models.PuTTY
         public PuTTYSessionInfo()
         {
 
-        }
-
- 
+        } 
     }
 }

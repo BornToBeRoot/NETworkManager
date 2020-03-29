@@ -2100,7 +2100,7 @@ namespace NETworkManager.ViewModels
             PuTTY_InheritHost = profileInfo.PuTTY_InheritHost;
             PuTTY_HostOrSerialLine = profileInfo.PuTTY_HostOrSerialLine;
             PuTTY_OverridePortOrBaud = profileInfo.PuTTY_OverridePortOrBaud;
-          // ToDo //  PuTTY_PortOrBaud = profileInfo.PuTTY_OverridePortOrBaud ? profileInfo.PuTTY_PortOrBaud : GetPortOrBaudByConnectionMode(PuTTY_ConnectionMode);
+            PuTTY_PortOrBaud = profileInfo.PuTTY_OverridePortOrBaud ? profileInfo.PuTTY_PortOrBaud : Settings.Application.PuTTY.GetPortOrBaudByConnectionMode(PuTTY_ConnectionMode);
             PuTTY_OverrideUsername = profileInfo.PuTTY_OverrideUsername;
             PuTTY_Username = profileInfo.PuTTY_Username;
             PuTTY_OverrideProfile = profileInfo.PuTTY_OverrideProfile;
