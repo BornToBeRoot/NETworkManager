@@ -51,6 +51,7 @@
     <Compile Include="IsDefaultSettingsLocationToBooleanConverter.cs" />
     <Compile Include="IsProfilesLocationToBooleanConverter.cs" />
     <Compile Include="IsSettingsLocationToBooleanConverter.cs" />
+    <Compile Include="PuTTYLogModeToStringConverter.cs" />
     <Compile Include="SettingsViewGroupToTranslatedStringConverter.cs" />
     <Compile Include="SettingsViewNameToTranslatedStringConverter.cs" />
     <Compile Include="ProfileViewNameToTranslatedStringConverter.cs" />

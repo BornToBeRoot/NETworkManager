@@ -9,12 +9,9 @@ using System.Net.Sockets;
 using System.Windows.Data;
 using System.Windows.Input;
 using NETworkManager.Models.PowerShell;
-using static NETworkManager.Models.PuTTY.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
-using NETworkManager.Profiles;
 using NETworkManager.Models.PuTTY;
-// ReSharper disable InconsistentNaming
 
 namespace NETworkManager.ViewModels
 {

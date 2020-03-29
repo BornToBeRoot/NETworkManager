@@ -3,7 +3,6 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using System.Diagnostics.CodeAnalysis;
-using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.Profiles
 {
@@ -127,12 +126,13 @@ namespace NETworkManager.Profiles
         public string PuTTY_Profile { get; set; }
         public bool PuTTY_OverrideEnableSessionLog { get; set; }
         public bool PuTTY_EnableSessionLog { get; set; }
+        public bool PuTTY_OverrideSessionLogMode { get; set; }
+        public LogMode PuTTY_SessionLogMode { get; set; } = GlobalStaticConfiguration.PuTTY_SessionLogMode;
         public bool PuTTY_OverrideSessionLogFileName { get; set; }
         public string PuTTY_SessionLogFileName { get; set; } = GlobalStaticConfiguration.PuTTY_SessionLogFileName;
         public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
         public string PuTTY_AdditionalCommandLine { get; set; }
         
-
         public bool TigerVNC_Enabled { get; set; }
         public bool TigerVNC_InheritHost { get; set; } = true;
         public string TigerVNC_Host { get; set; }

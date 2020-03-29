@@ -11,6 +11,7 @@ using NETworkManager.Controls;
 using NETworkManager.Models;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
+using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
 using static NETworkManager.Models.Network.SNMP;
@@ -2544,8 +2545,8 @@ namespace NETworkManager.Settings
             }
         }
 
-        private Models.PuTTY.ConnectionMode _puTTY_DefaultConnectionMode = GlobalStaticConfiguration.PuTTY_DefaultConnectionMode;
-        public Models.PuTTY.ConnectionMode PuTTY_DefaultConnectionMode
+        private ConnectionMode _puTTY_DefaultConnectionMode = GlobalStaticConfiguration.PuTTY_DefaultConnectionMode;
+        public ConnectionMode PuTTY_DefaultConnectionMode
         {
             get => _puTTY_DefaultConnectionMode;
             set
@@ -2599,6 +2600,21 @@ namespace NETworkManager.Settings
                     return;
 
                 _puTTY_EnableSessionLog = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private LogMode _puTTY_SessionLogMode = GlobalStaticConfiguration.PuTTY_SessionLogMode;
+        public LogMode PuTTY_SessionLogMode
+        {
+            get => _puTTY_SessionLogMode;
+            set
+            {
+                if (value == _puTTY_SessionLogMode)
+                    return;
+
+                _puTTY_SessionLogMode = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

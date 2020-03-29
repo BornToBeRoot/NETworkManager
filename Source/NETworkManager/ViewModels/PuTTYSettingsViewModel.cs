@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Input;
 using NETworkManager.Models.PuTTY;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -181,6 +183,25 @@ namespace NETworkManager.ViewModels
                     SettingsManager.Current.PuTTY_EnableSessionLog = value;
 
                 _enableSessionLog = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IEnumerable<LogMode> LogModes => Enum.GetValues(typeof(LogMode)).Cast<LogMode>();
+
+        private LogMode _logMode;
+        public LogMode LogMode
+        {
+            get => _logMode;
+            set
+            {
+                if (Equals(value, _logMode))
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PuTTY_SessionLogMode = value;
+
+                _logMode = value;
                 OnPropertyChanged();
             }
         }
@@ -362,6 +383,7 @@ namespace NETworkManager.ViewModels
             Username = SettingsManager.Current.PuTTY_Username;
             Profile = SettingsManager.Current.PuTTY_Profile;
             EnableSessionLog = SettingsManager.Current.PuTTY_EnableSessionLog;
+            LogMode = LogModes.FirstOrDefault(x => x == SettingsManager.Current.PuTTY_SessionLogMode);
             SessionLogPath = SettingsManager.Current.PuTTY_SessionLogPath;
             SessionLogFileName = SettingsManager.Current.PuTTY_SessionLogFileName;
             AdditionalCommandLine = SettingsManager.Current.PuTTY_AdditionalCommandLine;

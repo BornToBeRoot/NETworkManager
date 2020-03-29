@@ -1,6 +1,4 @@
-﻿using static NETworkManager.Models.PuTTY.PuTTY;
-
-namespace NETworkManager.Models.PuTTY
+﻿namespace NETworkManager.Models.PuTTY
 {
     /// <summary>
     /// Stores informations about a putty session.

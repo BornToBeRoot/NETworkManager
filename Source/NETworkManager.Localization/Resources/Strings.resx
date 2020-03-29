@@ -2860,4 +2860,25 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="SessionLogPath" xml:space="preserve">
     <value>Session log path</value>
   </data>
+  <data name="LogMode" xml:space="preserve">
+    <value>Log mode</value>
+  </data>
+  <data name="SessionLog" xml:space="preserve">
+    <value>Session log</value>
+  </data>
+  <data name="SSHLog" xml:space="preserve">
+    <value>SSH log</value>
+  </data>
+  <data name="SSHRawLog" xml:space="preserve">
+    <value>SSH Raw log</value>
+  </data>
+  <data name="PuTTYLogMode_SessionLog" xml:space="preserve">
+    <value>Session log</value>
+  </data>
+  <data name="PuTTYLogMode_SSHLog" xml:space="preserve">
+    <value>SSH log</value>
+  </data>
+  <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
+    <value>SSH and Raw Log</value>
+  </data>
 </root>

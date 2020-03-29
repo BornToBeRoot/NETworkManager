@@ -3866,6 +3866,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log mode.
+        /// </summary>
+        public static string LogMode {
+            get {
+                return ResourceManager.GetString("LogMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lookup.
         /// </summary>
         public static string Lookup {
@@ -5153,6 +5162,33 @@ namespace NETworkManager.Localization.Resources {
         public static string PuTTYLocationDots {
             get {
                 return ResourceManager.GetString("PuTTYLocationDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Session log.
+        /// </summary>
+        public static string PuTTYLogMode_SessionLog {
+            get {
+                return ResourceManager.GetString("PuTTYLogMode_SessionLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SSH log.
+        /// </summary>
+        public static string PuTTYLogMode_SSHLog {
+            get {
+                return ResourceManager.GetString("PuTTYLogMode_SSHLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SSH and Raw Log.
+        /// </summary>
+        public static string PuTTYLogMode_SSHRawLog {
+            get {
+                return ResourceManager.GetString("PuTTYLogMode_SSHRawLog", resourceCulture);
             }
         }
         
@@ -6453,6 +6489,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Session log.
+        /// </summary>
+        public static string SessionLog {
+            get {
+                return ResourceManager.GetString("SessionLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Session log file name.
         /// </summary>
         public static string SessionLogFileName {
@@ -6949,11 +6994,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SSH log.
+        /// </summary>
+        public static string SSHLog {
+            get {
+                return ResourceManager.GetString("SSHLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SSH port.
         /// </summary>
         public static string SSHPort {
             get {
                 return ResourceManager.GetString("SSHPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SSH Raw log.
+        /// </summary>
+        public static string SSHRawLog {
+            get {
+                return ResourceManager.GetString("SSHRawLog", resourceCulture);
             }
         }
         

@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Translators\AccentTranslator.cs" />
+    <Compile Include="Translators\PuTTYLogModeTranslator.cs" />
     <Compile Include="Translators\SettingsViewGroupTranslator.cs" />
     <Compile Include="Translators\SettingsViewNameTranslator.cs" />
     <Compile Include="Translators\ProfileViewNameTranslator.cs" />
