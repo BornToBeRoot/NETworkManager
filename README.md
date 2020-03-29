@@ -1,6 +1,6 @@
 ## Welcome
 
-NETworkManager is a powerful tool for managing networks and troubleshoot network problems! You can view and configure network interfaces, scan for wlan networks, capture lldp or cdp packets, perform an IP or port scan, ping your hosts, and troubleshoot your connection using traceroute or a DNS lookup.
+NETworkManager is a powerful tool for managing networks and troubleshoot network problems! You can view and configure network interfaces, scan for wlan networks, capture lldp or cdp packages, perform an IP or port scan, ping your hosts, and troubleshoot your connection using traceroute or a DNS lookup.
 
 It contains a remote desktop and PowerShell for managing Windows devices. You can use PuTTY, TigerVNC or the web console to administrate Linux or other devices (e.g. switches). And best of all... everything has tabs and you can create a profile for each of your hosts that can be used in all features.
 
