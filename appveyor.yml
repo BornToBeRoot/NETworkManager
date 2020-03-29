@@ -1,9 +1,0 @@
-version: 2.0.{build}
-image: Visual Studio 2019
-branches:
-  only:
-   - master
-configuration: Release
-platform: Any CPU
-before_build:
-   - MSBuild -t:restore .\Source\NETworkManager\NETworkManager.csproj

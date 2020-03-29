@@ -1,9 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="DefaultCheckBox" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MetroCheckBox}">
-        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
-        <Setter Property="FontSize" Value="14" />
-    </Style>
-
-    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultCheckBox}" />
-</ResourceDictionary>
