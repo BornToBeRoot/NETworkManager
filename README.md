@@ -4,7 +4,7 @@ NETworkManager is a powerful tool for managing networks and troubleshoot network
 
 It contains a remote desktop and PowerShell for managing Windows devices. You can use PuTTY, TigerVNC or the web console to administrate Linux or other devices (e.g. switches). And best of all... everything has tabs and you can create a profile for each of your hosts that can be used in all features.
 
-There are some other features such as a subnet calculator, a Whois lookup or a database in which you can find MAC address vendors or TCP / UDP ports with a description. It's best to take a look at the program yourself.
+There are some more features such as a subnet calculator, a Whois lookup or a database in which you can find MAC address vendors or TCP / UDP ports with a description. It's best to take a look at the program yourself.
 
 <img alt="NETworkManager" src="NETworkManager_Preview.gif" />
 
