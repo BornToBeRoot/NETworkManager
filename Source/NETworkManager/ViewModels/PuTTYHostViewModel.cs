@@ -375,9 +375,9 @@ namespace NETworkManager.ViewModels
                 // Create Profile info
                 var info = new PuTTYSessionInfo
                 {
-                    HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
+                    HostOrSerialLine = instance.ConnectionMode == ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
-                    PortOrBaud = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
+                    PortOrBaud = instance.ConnectionMode == ConnectionMode.Serial ? instance.Baud : instance.Port,
                     Username = instance.Username,                    
                     Profile = instance.Profile,          
                     EnableSessionLog = SettingsManager.Current.PuTTY_EnableSessionLog,

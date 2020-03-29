@@ -117,7 +117,7 @@ namespace NETworkManager.Settings
         public static PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy => PowerShell.ExecutionPolicy.RemoteSigned;
 
         // Application: PuTTY
-        public static PuTTY.ConnectionMode PuTTY_DefaultConnectionMode => PuTTY.ConnectionMode.SSH;
+        public static ConnectionMode PuTTY_DefaultConnectionMode => ConnectionMode.SSH;
         public static string PuTTY_SessionLogPath => Path.Combine("%LocalAppData%", AssemblyManager.Current.Name, "PuTTY_LogFiles");
         public static string PuTTY_SessionLogFileName => "&H_&Y-&M-&D_&T.log";
         public static int PuTTY_SSHPort => 22;

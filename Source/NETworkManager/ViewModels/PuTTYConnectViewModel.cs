@@ -1,4 +1,5 @@
-﻿using NETworkManager.Settings;
+﻿using NETworkManager.Models.PuTTY;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.ComponentModel;

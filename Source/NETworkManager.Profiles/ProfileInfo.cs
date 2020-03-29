@@ -1,4 +1,5 @@
 ﻿using NETworkManager.Models.PowerShell;
+using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using System.Diagnostics.CodeAnalysis;

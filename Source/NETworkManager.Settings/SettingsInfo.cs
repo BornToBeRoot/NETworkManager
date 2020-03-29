@@ -2544,8 +2544,8 @@ namespace NETworkManager.Settings
             }
         }
 
-        private Models.PuTTY.PuTTY.ConnectionMode _puTTY_DefaultConnectionMode = GlobalStaticConfiguration.PuTTY_DefaultConnectionMode;
-        public Models.PuTTY.PuTTY.ConnectionMode PuTTY_DefaultConnectionMode
+        private Models.PuTTY.ConnectionMode _puTTY_DefaultConnectionMode = GlobalStaticConfiguration.PuTTY_DefaultConnectionMode;
+        public Models.PuTTY.ConnectionMode PuTTY_DefaultConnectionMode
         {
             get => _puTTY_DefaultConnectionMode;
             set

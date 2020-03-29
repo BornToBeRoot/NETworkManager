@@ -125,6 +125,7 @@
     <Compile Include="PowerShell\ExecutionPolicy.cs" />
     <Compile Include="PowerShell\PowerShellSessionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PuTTY\LogMode.cs" />
     <Compile Include="PuTTY\ConnectionMode.cs" />
     <Compile Include="PuTTY\PuTTY.cs" />
     <Compile Include="PuTTY\PuTTYSessionInfo.cs" />

@@ -59,7 +59,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (value)
-                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.SSH;
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = ConnectionMode.SSH;
 
                 _useSSH = value;
                 OnPropertyChanged();
@@ -76,7 +76,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (value)
-                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.Telnet;
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = ConnectionMode.Telnet;
 
                 _useTelnet = value;
                 OnPropertyChanged();
@@ -93,7 +93,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (value)
-                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.Serial;
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = ConnectionMode.Serial;
 
                 _useSerial = value;
                 OnPropertyChanged();
@@ -110,7 +110,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (value)
-                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.Rlogin;
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = ConnectionMode.Rlogin;
 
                 _useRlogin = value;
                 OnPropertyChanged();
@@ -127,7 +127,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (value)
-                    SettingsManager.Current.PuTTY_DefaultConnectionMode = PuTTY.ConnectionMode.RAW;
+                    SettingsManager.Current.PuTTY_DefaultConnectionMode = ConnectionMode.RAW;
 
                 _useRAW = value;
                 OnPropertyChanged();
@@ -341,19 +341,19 @@ namespace NETworkManager.ViewModels
 
             switch (SettingsManager.Current.PuTTY_DefaultConnectionMode)
             {
-                case PuTTY.ConnectionMode.SSH:
+                case ConnectionMode.SSH:
                     UseSSH = true;
                     break;
-                case PuTTY.ConnectionMode.Telnet:
+                case ConnectionMode.Telnet:
                     UseTelnet = true;
                     break;
-                case PuTTY.ConnectionMode.Serial:
+                case ConnectionMode.Serial:
                     UseSerial = true;
                     break;
-                case PuTTY.ConnectionMode.Rlogin:
+                case ConnectionMode.Rlogin:
                     UseRlogin = true;
                     break;
-                case PuTTY.ConnectionMode.RAW:
+                case ConnectionMode.RAW:
                     UseRAW = true;
                     break;
             }

@@ -1,4 +1,5 @@
-﻿using static NETworkManager.Models.PuTTY.PuTTY;
+﻿using NETworkManager.Models.PuTTY;
+using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.Settings.Application
 {

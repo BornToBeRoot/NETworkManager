@@ -260,7 +260,7 @@ namespace NETworkManager
                 PuTTY_Enabled = instance.PuTTY_Enabled,
                 PuTTY_ConnectionMode = instance.PuTTY_ConnectionMode,
                 PuTTY_InheritHost = instance.PuTTY_InheritHost,
-                PuTTY_HostOrSerialLine = instance.PuTTY_ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.PuTTY_HostOrSerialLine?.Trim() : (instance.PuTTY_InheritHost ? instance.Host?.Trim() : instance.PuTTY_HostOrSerialLine?.Trim()),
+                PuTTY_HostOrSerialLine = instance.PuTTY_ConnectionMode == Models.PuTTY.ConnectionMode.Serial ? instance.PuTTY_HostOrSerialLine?.Trim() : (instance.PuTTY_InheritHost ? instance.Host?.Trim() : instance.PuTTY_HostOrSerialLine?.Trim()),
                 PuTTY_OverridePortOrBaud = instance.PuTTY_OverridePortOrBaud,
                 PuTTY_PortOrBaud = instance.PuTTY_PortOrBaud,
                 PuTTY_OverrideUsername = instance.PuTTY_OverrideUsername,
