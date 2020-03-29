@@ -14,7 +14,6 @@ using System.IO;
 using NETworkManager.Utilities;
 using System.Windows;
 using NETworkManager.Models.TigerVNC;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
 using NETworkManager.Settings;
@@ -367,7 +366,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfile()
         {
-            Connect(Models.TigerVNCTMP.TigerVNC.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+            Connect(NETworkManager.Profiles.Application.TigerVNC.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
@@ -375,7 +374,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.TigerVNC_ApplicationFilePath,
-                Arguments = TigerVNC.BuildCommandLine(Models.TigerVNCTMP.TigerVNC.CreateSessionInfo(SelectedProfile))
+                Arguments = TigerVNC.BuildCommandLine(NETworkManager.Profiles.Application.TigerVNC.CreateSessionInfo(SelectedProfile))
             };
 
             Process.Start(info);

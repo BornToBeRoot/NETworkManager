@@ -28,49 +28,6 @@ namespace NETworkManager.Profiles
             new ProfileViewInfo(ProfileViewName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN)),
             new ProfileViewInfo(ProfileViewName.HTTPHeaders, ApplicationManager.GetIcon(ApplicationName.HTTPHeaders)),
             new ProfileViewInfo(ProfileViewName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois))
-        };
-
-        /*
-        public static string TranslateName(Name name)
-        {
-            switch (name)
-            {
-                case Name.General:
-                    return Localization.Resources.Strings.General;
-                case Name.NetworkInterface:
-                    return Localization.Resources.Strings.NetworkInterface;
-                case Name.IPScanner:
-                    return Localization.Resources.Strings.IPScanner;
-                case Name.PortScanner:
-                    return Localization.Resources.Strings.PortScanner;
-                case Name.Ping:
-                    return Localization.Resources.Strings.Ping;
-                case Name.PingMonitor:
-                    return Localization.Resources.Strings.PingMonitor;
-                case Name.Traceroute:
-                    return Localization.Resources.Strings.Traceroute;
-                case Name.DNSLookup:
-                    return Localization.Resources.Strings.DNSLookup;
-                case Name.RemoteDesktop:
-                    return Localization.Resources.Strings.RemoteDesktop;
-                case Name.PowerShell:
-                    return Localization.Resources.Strings.PowerShell;
-                case Name.PuTTY:
-                    return Localization.Resources.Strings.PuTTY;
-                case Name.TigerVNC:
-                    return Localization.Resources.Strings.TigerVNC;
-                case Name.WebConsole:
-                    return Localization.Resources.Strings.WebConsole;
-                case Name.WakeOnLAN:
-                    return Localization.Resources.Strings.WakeOnLAN;
-                case Name.HTTPHeaders:
-                    return Localization.Resources.Strings.HTTPHeaders;
-                case Name.Whois:
-                    return Localization.Resources.Strings.Whois;
-                default:
-                    return "Translation of name not found";
-            }
-        }
-        */
+        };              
     }
 }

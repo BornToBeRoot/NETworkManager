@@ -4,7 +4,6 @@ using System.Windows;
 using System;
 using System.Collections;
 using System.Collections.ObjectModel;
-using System.Net.Sockets;
 using NETworkManager.Settings;
 using NETworkManager.Models.Network;
 using System.Threading;
@@ -21,7 +20,6 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels

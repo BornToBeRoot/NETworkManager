@@ -20,8 +20,6 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
-using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.Network;
 using System.Text.RegularExpressions;
 using NETworkManager.Profiles;
 using NETworkManager.Localization;

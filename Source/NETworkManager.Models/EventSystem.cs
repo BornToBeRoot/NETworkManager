@@ -1,7 +1,6 @@
 ﻿using System;
-using NETworkManager.Models;
 
-namespace NETworkManager.Models.EventSystem
+namespace NETworkManager.Models
 {
     public class EventSystem
     {

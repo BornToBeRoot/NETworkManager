@@ -12,7 +12,6 @@ using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Settings;
 using NETworkManager.Models.PowerShell;
-using NETworkManager.Models.PowerShellTmp;
 
 namespace NETworkManager.Controls
 {

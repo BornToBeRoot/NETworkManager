@@ -34,7 +34,7 @@
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <validatorsOld:ProfileFileUniqueValidator ValidatesOnTargetUpdated="True" />
+                            <validators:ProfileFileUniqueValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

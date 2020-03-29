@@ -1,8 +1,7 @@
 ﻿using NETworkManager.Models.PowerShell;
-using NETworkManager.Profiles;
 using NETworkManager.Settings;
 
-namespace NETworkManager.Models.PowerShellTmp
+namespace NETworkManager.Profiles.Application
 {
     public class PowerShell
     {        

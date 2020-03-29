@@ -14,11 +14,8 @@ using NETworkManager.Utilities;
 using System.Diagnostics;
 using NETworkManager.Models.PuTTY;
 using System.Windows;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
-using NETworkManager.Models.PuTTYTMP;
-using NETworkManager.Settings;
 using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
@@ -404,7 +401,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfile()
         {
-            Connect(Models.PuTTYTMP.PuTTY.CreateSessionInfoFromProfile(SelectedProfile), SelectedProfile.Name);
+            Connect(NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
@@ -412,7 +409,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
-                Arguments = Models.PuTTY.PuTTY.BuildCommandLine(Models.PuTTYTMP.PuTTY.CreateSessionInfoFromProfile(SelectedProfile))
+                Arguments = PuTTY.BuildCommandLine(NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile))
             };
 
             Process.Start(info);

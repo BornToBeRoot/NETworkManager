@@ -7,10 +7,7 @@ namespace NETworkManager.Models.NetworkTMP
 {
     public static class WakeOnLAN
     {
-        #region Methods
-      
-
-        public static WakeOnLANInfo CreateWakeOnLANInfo(ProfileInfo profileInfo)
+        public static WakeOnLANInfo CreateInfo(ProfileInfo profileInfo)
         {
             var info = new WakeOnLANInfo
             {
@@ -21,6 +18,5 @@ namespace NETworkManager.Models.NetworkTMP
 
             return info;
         }
-        #endregion
     }
 }

@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppearanceManager.cs" />
+    <Compile Include="Application\PuTTY.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="AssemblyManager.cs" />
     <Compile Include="AutostartManager.cs" />
@@ -125,5 +126,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

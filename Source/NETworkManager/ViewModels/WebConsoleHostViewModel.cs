@@ -11,11 +11,9 @@ using System.Windows.Data;
 using System;
 using NETworkManager.Utilities;
 using System.Windows;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Profiles;
 using NETworkManager.Models.WebConsole;
 using System.Windows.Threading;
-using NETworkManager.Settings;
 using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels

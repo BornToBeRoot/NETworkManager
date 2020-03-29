@@ -1,4 +1,4 @@
-﻿using NETworkManager.Models.Network;
+﻿using NETworkManager.Utilities;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NETworkManager.Utilities
+namespace NETworkManager.Models.Network
 {
     public static class HostRangeHelper
     {

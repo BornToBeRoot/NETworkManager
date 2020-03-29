@@ -20,7 +20,6 @@ using System.Windows.Markup;
 using NETworkManager.Controls;
 using NETworkManager.Documentation;
 using NETworkManager.ViewModels;
-using NETworkManager.Models.EventSystem;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using NETworkManager.Profiles;
 using NETworkManager.Localization;

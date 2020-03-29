@@ -1,11 +1,11 @@
-﻿using NETworkManager.Profiles;
-using NETworkManager.Settings;
+﻿
 using NETworkManager.Models.TigerVNC;
+using NETworkManager.Settings;
 
-namespace NETworkManager.Models.TigerVNCTMP
+namespace NETworkManager.Profiles.Application
 {
-    public class TigerVNC
-    {       
+    public static class TigerVNC
+    {
         public static TigerVNCSessionInfo CreateSessionInfo(ProfileInfo profileInfo)
         {
             var info = new TigerVNCSessionInfo

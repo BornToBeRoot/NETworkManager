@@ -49,6 +49,8 @@
     <Compile Include="ApplicationManager.cs" />
     <Compile Include="ApplicationName.cs" />
     <Compile Include="ApplicationInfo.cs" />
+    <Compile Include="EventSystem.cs" />
+    <Compile Include="EventSystemRedirectDataApplicationArgs.cs" />
     <Compile Include="Export\ExportManager.cs" />
     <Compile Include="Export\ExportManager.ExportFileType.cs" />
     <Compile Include="Lookup\OUIInfo.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Network\HostFoundArgs.cs" />
     <Compile Include="Network\HostInfo.cs" />
     <Compile Include="Network\HostNotFoundException.cs" />
+    <Compile Include="Network\HostRangeHelper.cs" />
     <Compile Include="Network\HTTPHeaders.cs" />
     <Compile Include="Network\HTTPHeadersOptions.cs" />
     <Compile Include="Network\IPNetworkInfo.cs" />
