@@ -3,38 +3,38 @@ Date: **26.01.2020**
 
 | File | Checksum
 |---|---|
-|[:package:&nbsp;Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe)| `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB` |
-|[:package:&nbsp;Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip)| `BEA66D1B8E1DE820B6077FD1F98ABDF5BDD4D7CD0477FC27941EFED326DCCEAD` |
-|[:package:&nbsp;Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip)| `497C6DEFAD22B074B0E8D0E43948545128503512434C096D221D2978B1344F91` |
+|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe)| `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB` |
+|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip)| `BEA66D1B8E1DE820B6077FD1F98ABDF5BDD4D7CD0477FC27941EFED326DCCEAD` |
+|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip)| `497C6DEFAD22B074B0E8D0E43948545128503512434C096D221D2978B1344F91` |
 
 ## What's new?
-- Discovery Protocol - Capture LLDP and/or CDP network packages and display informations like Port, Description, VLAN, etc. [#196](http://github.com/BornToBeRoot/NETworkManager/issues/196)
-- Web Console added [#244](http://github.com/BornToBeRoot/NETworkManager/issues/244)
+- Discovery Protocol - Capture LLDP and/or CDP network packages and display informations like Port, Description, VLAN, etc. [#196](http://github.com/BornToBeRoot/NETworkManager/issues/196){:target="_blank"}
+- Web Console added [#244](http://github.com/BornToBeRoot/NETworkManager/issues/244){:target="_blank"}
 - Settings > Appearance 
-  - Transparency feature removed. Remote Desktop, PowerShell, PuTTY and TigerVNC don't work while transparency is enabled. [#220](http://github.com/BornToBeRoot/NETworkManager/issues/220)
+  - Transparency feature removed. Remote Desktop, PowerShell, PuTTY and TigerVNC don't work while transparency is enabled. [#220](http://github.com/BornToBeRoot/NETworkManager/issues/220){:target="_blank"}
 
 ## Improvements
 - Network Interface > Bandwidth
-  - Labels / values improved in the network usage section [#235](http://github.com/BornToBeRoot/NETworkManager/issues/235)
-  - ToolTip improved [#219](http://github.com/BornToBeRoot/NETworkManager/issues/219)
+  - Labels / values improved in the network usage section [#235](http://github.com/BornToBeRoot/NETworkManager/issues/235){:target="_blank"}
+  - ToolTip improved [#219](http://github.com/BornToBeRoot/NETworkManager/issues/219){:target="_blank"}
 - DNS Lookup
-  - Error message now shows the ip address of the dns server [#256](http://github.com/BornToBeRoot/NETworkManager/issues/256)
+  - Error message now shows the ip address of the dns server [#256](http://github.com/BornToBeRoot/NETworkManager/issues/256){:target="_blank"}
 - Command Line Parameter added
-  - `--application:[Dashboard|IPScanner|etc.]` [#237](http://github.com/BornToBeRoot/NETworkManager/issues/237)
-- After restarting the application, the last view is displayed again [#237](http://github.com/BornToBeRoot/NETworkManager/issues/237)
+  - `--application:[Dashboard|IPScanner|etc.]` [#237](http://github.com/BornToBeRoot/NETworkManager/issues/237){:target="_blank"}
+- After restarting the application, the last view is displayed again [#237](http://github.com/BornToBeRoot/NETworkManager/issues/237){:target="_blank"}
 - Settings > Language
-  - View improved [#231](http://github.com/BornToBeRoot/NETworkManager/issues/231)
+  - View improved [#231](http://github.com/BornToBeRoot/NETworkManager/issues/231){:target="_blank"}
 - Profiles
   - Rows (profiles) should now load faster (tested with ~5k profiles)
-  - Search improved on slow systems with many profiles [#227](http://github.com/BornToBeRoot/NETworkManager/issues/227)
+  - Search improved on slow systems with many profiles [#227](http://github.com/BornToBeRoot/NETworkManager/issues/227){:target="_blank"}
 
 ## Bugfixes
 - IP Scanner
-  - Context menu redirect ro Ping Monitor [#225](http://github.com/BornToBeRoot/NETworkManager/issues/225)
-  - Context menu icons are now correct [#257](http://github.com/BornToBeRoot/NETworkManager/issues/257)
+  - Context menu redirect ro Ping Monitor [#225](http://github.com/BornToBeRoot/NETworkManager/issues/225){:target="_blank"}
+  - Context menu icons are now correct [#257](http://github.com/BornToBeRoot/NETworkManager/issues/257){:target="_blank"}
 - Traceroute
-  - Context menu redirect ro Ping Monitor [#225](http://github.com/BornToBeRoot/NETworkManager/issues/225)
-  - Context menu icons are now correct [#257](http://github.com/BornToBeRoot/NETworkManager/issues/257)
+  - Context menu redirect ro Ping Monitor [#225](http://github.com/BornToBeRoot/NETworkManager/issues/225){:target="_blank"}
+  - Context menu icons are now correct [#257](http://github.com/BornToBeRoot/NETworkManager/issues/257){:target="_blank"}
 - Some bugs in the UI fixed (label, translation, placeholder, etc.) 
 
 ## Libraries
@@ -49,9 +49,9 @@ Date: **25.12.2019**
 
 | File | Checksum
 |---|---|
-|[:package:&nbsp;Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Setup.exe)| `C615367946A818B4E67632FA99937723B4006385D86F62F52842709DC35CBA1F` |
-|[:package:&nbsp;Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Portable.zip)| `1A5A16A863425D827E1C58D711C337873C4C44B914D44F3FC27E327043597078` |
-|[:package:&nbsp;Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Archiv.zip)| `1942EF7B3541782CB83F37ED802E8FF98DD63579F5772D792462EACF82BE7E72` |
+|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Setup.exe)| `C615367946A818B4E67632FA99937723B4006385D86F62F52842709DC35CBA1F` |
+|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Portable.zip)| `1A5A16A863425D827E1C58D711C337873C4C44B914D44F3FC27E327043597078` |
+|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Archiv.zip)| `1942EF7B3541782CB83F37ED802E8FF98DD63579F5772D792462EACF82BE7E72` |
 
 ⚠️  **SYSTEM REQUIREMENTS** ⚠️ 
 - Windows 10 Build 1809 
