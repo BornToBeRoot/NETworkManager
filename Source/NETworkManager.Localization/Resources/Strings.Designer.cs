@@ -2554,11 +2554,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable session log.
+        ///   Looks up a localized string similar to Enable log.
         /// </summary>
-        public static string EnableSessionLog {
+        public static string EnableLog {
             get {
-                return ResourceManager.GetString("EnableSessionLog", resourceCulture);
+                return ResourceManager.GetString("EnableLog", resourceCulture);
             }
         }
         
@@ -3866,11 +3866,38 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Log.
+        /// </summary>
+        public static string Log {
+            get {
+                return ResourceManager.GetString("Log", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log file name.
+        /// </summary>
+        public static string LogFileName {
+            get {
+                return ResourceManager.GetString("LogFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log mode.
         /// </summary>
         public static string LogMode {
             get {
                 return ResourceManager.GetString("LogMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log path.
+        /// </summary>
+        public static string LogPath {
+            get {
+                return ResourceManager.GetString("LogPath", resourceCulture);
             }
         }
         
@@ -6485,33 +6512,6 @@ namespace NETworkManager.Localization.Resources {
         public static string Service {
             get {
                 return ResourceManager.GetString("Service", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Session log.
-        /// </summary>
-        public static string SessionLog {
-            get {
-                return ResourceManager.GetString("SessionLog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Session log file name.
-        /// </summary>
-        public static string SessionLogFileName {
-            get {
-                return ResourceManager.GetString("SessionLogFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Session log path.
-        /// </summary>
-        public static string SessionLogPath {
-            get {
-                return ResourceManager.GetString("SessionLogPath", resourceCulture);
             }
         }
         

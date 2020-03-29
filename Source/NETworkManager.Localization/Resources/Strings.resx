@@ -2851,20 +2851,20 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="SettingsViewName_Window" xml:space="preserve">
     <value>Window</value>
   </data>
-  <data name="EnableSessionLog" xml:space="preserve">
-    <value>Enable session log</value>
+  <data name="EnableLog" xml:space="preserve">
+    <value>Enable log</value>
   </data>
-  <data name="SessionLogFileName" xml:space="preserve">
-    <value>Session log file name</value>
+  <data name="LogFileName" xml:space="preserve">
+    <value>Log file name</value>
   </data>
-  <data name="SessionLogPath" xml:space="preserve">
-    <value>Session log path</value>
+  <data name="LogPath" xml:space="preserve">
+    <value>Log path</value>
   </data>
   <data name="LogMode" xml:space="preserve">
     <value>Log mode</value>
   </data>
-  <data name="SessionLog" xml:space="preserve">
-    <value>Session log</value>
+  <data name="Log" xml:space="preserve">
+    <value>Log</value>
   </data>
   <data name="SSHLog" xml:space="preserve">
     <value>SSH log</value>

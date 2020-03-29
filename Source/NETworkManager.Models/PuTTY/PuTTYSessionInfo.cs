@@ -38,12 +38,22 @@
         /// <summary>
         /// Enables session log.
         /// </summary>
-        public bool EnableSessionLog { get; set; }
+        public bool EnableLog { get; set; }
 
         /// <summary>
-        /// Path and filename of the session log file (e.g. "C:\..\PuTTY.log").
+        /// PuTTY log mode.
         /// </summary>
-        public string SessionLogFullName { get; set; }
+        public LogMode LogMode { get; set; }
+
+        /// <summary>
+        /// Path to the PuTTY log files like "C:\temp".
+        /// </summary>
+        public string LogPath { get; set; }
+
+        /// <summary>
+        /// Filename of the PuTTY log like "PuTTY.log".
+        /// </summary>
+        public string LogFileName { get; set; }
 
         /// <summary>
         /// Additional command line argument. Everything putty can handle.

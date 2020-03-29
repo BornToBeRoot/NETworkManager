@@ -2605,46 +2605,46 @@ namespace NETworkManager.Settings
             }
         }
 
-        private LogMode _puTTY_SessionLogMode = GlobalStaticConfiguration.PuTTY_SessionLogMode;
-        public LogMode PuTTY_SessionLogMode
+        private LogMode _puTTY_LogMode = GlobalStaticConfiguration.PuTTY_LogMode;
+        public LogMode PuTTY_LogMode
         {
-            get => _puTTY_SessionLogMode;
+            get => _puTTY_LogMode;
             set
             {
-                if (value == _puTTY_SessionLogMode)
+                if (value == _puTTY_LogMode)
                     return;
 
-                _puTTY_SessionLogMode = value;
+                _puTTY_LogMode = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private string _puTTY_SessionLogPath = GlobalStaticConfiguration.PuTTY_SessionLogPath;
-        public string PuTTY_SessionLogPath
+        private string _puTTY_LogPath = GlobalStaticConfiguration.PuTTY_LogPath;
+        public string PuTTY_LogPath
         {
-            get => _puTTY_SessionLogPath;
+            get => _puTTY_LogPath;
             set
             {
-                if (value == _puTTY_SessionLogPath)
+                if (value == _puTTY_LogPath)
                     return;
 
-                _puTTY_SessionLogPath = value;
+                _puTTY_LogPath = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private string _puTTY_SessionLogFileName = GlobalStaticConfiguration.PuTTY_SessionLogFileName;
-        public string PuTTY_SessionLogFileName
+        private string _puTTY_LogFileName = GlobalStaticConfiguration.PuTTY_LogFileName;
+        public string PuTTY_LogFileName
         {
-            get => _puTTY_SessionLogFileName;
+            get => _puTTY_LogFileName;
             set
             {
-                if (value == _puTTY_SessionLogFileName)
+                if (value == _puTTY_LogFileName)
                     return;
 
-                _puTTY_SessionLogFileName = value;
+                _puTTY_LogFileName = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

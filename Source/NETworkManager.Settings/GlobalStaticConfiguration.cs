@@ -118,9 +118,9 @@ namespace NETworkManager.Settings
 
         // Application: PuTTY
         public static ConnectionMode PuTTY_DefaultConnectionMode => ConnectionMode.SSH;
-        public static LogMode PuTTY_SessionLogMode => LogMode.SessionLog;
-        public static string PuTTY_SessionLogPath => Path.Combine("%LocalAppData%", AssemblyManager.Current.Name, "PuTTY_LogFiles");
-        public static string PuTTY_SessionLogFileName => "&H_&Y-&M-&D_&T.log";
+        public static LogMode PuTTY_LogMode => LogMode.SessionLog;
+        public static string PuTTY_LogPath => Path.Combine("%LocalAppData%", AssemblyManager.Current.Name, "PuTTY_LogFiles");
+        public static string PuTTY_LogFileName => "&H_&Y-&M-&D_&T.log";
         public static int PuTTY_SSHPort => 22;
         public static string PuTTY_SerialLine => "COM1";
         public static int PuTTY_TelnetPort => 23;

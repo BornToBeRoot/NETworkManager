@@ -1647,58 +1647,116 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _puTTY_OverrideEnableSessionLog;
-        public bool PuTTY_OverrideEnableSessionLog
+        private bool _puTTY_OverrideEnableLog;
+        public bool PuTTY_OverrideEnableLog
         {
-            get => _puTTY_OverrideEnableSessionLog;
+            get => _puTTY_OverrideEnableLog;
             set
             {
-                if (value == _puTTY_OverrideEnableSessionLog)
+                if (value == _puTTY_OverrideEnableLog)
                     return;
 
-                _puTTY_OverrideEnableSessionLog = value;
+                _puTTY_OverrideEnableLog = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _puTTY_EnableSessionLog;
-        public bool PuTTY_EnableSessionLog
+        private bool _puTTY_EnableLog;
+        public bool PuTTY_EnableLog
         {
-            get => _puTTY_EnableSessionLog;
+            get => _puTTY_EnableLog;
             set
             {
-                if (value == _puTTY_EnableSessionLog)
+                if (value == _puTTY_EnableLog)
                     return;
 
-                _puTTY_EnableSessionLog = value;
+                _puTTY_EnableLog = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _puTTY_OverrideSessionLogFileName;
-        public bool PuTTY_OverrideSessionLogFileName
+        private bool _puTTY_OverrideLogMode;
+        public bool PuTTY_OverrideLogMode
         {
-            get => _puTTY_OverrideSessionLogFileName;
+            get => _puTTY_OverrideLogMode;
             set
             {
-                if (value == _puTTY_OverrideSessionLogFileName)
+                if (value == _puTTY_OverrideLogMode)
                     return;
 
-                _puTTY_OverrideSessionLogFileName = value;
+                _puTTY_OverrideLogMode = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _puTTY_SessionLogFileName;
-        public string PuTTY_SessionLogFileName
+        public IEnumerable<LogMode> PuTTY_LogModes => Enum.GetValues(typeof(LogMode)).Cast<LogMode>();
+
+        private LogMode _puTTY_LogMode;
+        public LogMode PuTTY_LogMode
         {
-            get => _puTTY_SessionLogFileName;
+            get => _puTTY_LogMode;
             set
             {
-                if (value == _puTTY_SessionLogFileName)
+                if (Equals(value, _puTTY_LogMode))
                     return;
 
-                _puTTY_SessionLogFileName = value;
+                _puTTY_LogMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _puTTY_OverrideLogPath;
+        public bool PuTTY_OverrideLogPath
+        {
+            get => _puTTY_OverrideLogPath;
+            set
+            {
+                if (value == _puTTY_OverrideLogPath)
+                    return;
+
+                _puTTY_OverrideLogPath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _puTTY_LogPath;
+        public string PuTTY_LogPath
+        {
+            get => _puTTY_LogPath;
+            set
+            {
+                if (value == _puTTY_LogPath)
+                    return;
+
+                _puTTY_LogPath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _puTTY_OverrideLogFileName;
+        public bool PuTTY_OverrideLogFileName
+        {
+            get => _puTTY_OverrideLogFileName;
+            set
+            {
+                if (value == _puTTY_OverrideLogFileName)
+                    return;
+
+                _puTTY_OverrideLogFileName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _puTTY_LogFileName;
+        public string PuTTY_LogFileName
+        {
+            get => _puTTY_LogFileName;
+            set
+            {
+                if (value == _puTTY_LogFileName)
+                    return;
+
+                _puTTY_LogFileName = value;
                 OnPropertyChanged();
             }
         }
@@ -2124,7 +2182,7 @@ namespace NETworkManager.ViewModels
             PowerShell_Host = profileInfo.PowerShell_Host;
             PowerShell_OverrideAdditionalCommandLine = profileInfo.PowerShell_OverrideAdditionalCommandLine;
             PowerShell_AdditionalCommandLine = profileInfo.PowerShell_AdditionalCommandLine;
-            PowerShell_ExecutionPolicies = System.Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
+            PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
             PowerShell_OverrideExecutionPolicy = profileInfo.PowerShell_OverrideExecutionPolicy;
             PowerShell_ExecutionPolicy = editMode != ProfileEditMode.Add ? profileInfo.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
 
@@ -2159,10 +2217,14 @@ namespace NETworkManager.ViewModels
             PuTTY_Username = profileInfo.PuTTY_Username;
             PuTTY_OverrideProfile = profileInfo.PuTTY_OverrideProfile;
             PuTTY_Profile = profileInfo.PuTTY_Profile;
-            PuTTY_OverrideEnableSessionLog = profileInfo.PuTTY_OverrideEnableSessionLog;
-            PuTTY_EnableSessionLog = profileInfo.PuTTY_EnableSessionLog;
-            PuTTY_OverrideSessionLogFileName = profileInfo.PuTTY_OverrideSessionLogFileName;
-            PuTTY_SessionLogFileName = profileInfo.PuTTY_SessionLogFileName;
+            PuTTY_OverrideEnableLog = profileInfo.PuTTY_OverrideEnableLog;
+            PuTTY_EnableLog = profileInfo.PuTTY_EnableLog;
+            PuTTY_OverrideLogMode = profileInfo.PuTTY_OverrideLogMode;
+            PuTTY_LogMode = PuTTY_LogModes.FirstOrDefault(x => x == profileInfo.PuTTY_LogMode);
+            PuTTY_OverrideLogPath = profileInfo.PuTTY_OverrideLogPath;
+            PuTTY_LogPath = profileInfo.PuTTY_LogPath;
+            PuTTY_OverrideLogFileName = profileInfo.PuTTY_OverrideLogFileName;
+            PuTTY_LogFileName = profileInfo.PuTTY_LogFileName;
             PuTTY_OverrideAdditionalCommandLine = profileInfo.PuTTY_OverrideAdditionalCommandLine;
             PuTTY_AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine;
 

@@ -96,6 +96,7 @@ namespace NETworkManager.Controls
             WindowHost.Width = (int)ActualWidth;
 
             Connect();
+
             _initialized = true;
         }
 
@@ -123,7 +124,7 @@ namespace NETworkManager.Controls
             IsConnecting = true;
 
             // Create log path
-            DirectoryCreator.CreateWithEnvironmentVariables(SettingsManager.Current.PuTTY_SessionLogPath);
+            DirectoryCreator.CreateWithEnvironmentVariables(_sessionInfo.LogPath);
 
             var info = new ProcessStartInfo
             {

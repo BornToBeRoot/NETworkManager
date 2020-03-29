@@ -45,7 +45,7 @@
         <TextBox Width="250" Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.PuTTYProfile}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" Text="{Binding Profile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.EnableSessionLog}" IsChecked="{Binding EnableSessionLog}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.EnableLog}" IsChecked="{Binding EnableLog}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.LogMode}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding LogModes}" SelectedItem="{Binding LogMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,10">
             <ComboBox.ItemTemplate>
@@ -54,20 +54,20 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBlock Text="{x:Static localization:Strings.SessionLogPath}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox IsEnabled="{Binding EnableSessionLog}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
+        <TextBlock Text="{x:Static localization:Strings.LogPath}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox IsEnabled="{Binding EnableLog}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="SessionLogPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="LogPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBlock Text="{x:Static localization:Strings.SessionLogFileName}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" IsEnabled="{Binding EnableSessionLog}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
+        <TextBlock Text="{x:Static localization:Strings.LogFileName}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="250" IsEnabled="{Binding EnableLog}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="SessionLogFileName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="LogFileName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />                              
                     </Binding.ValidationRules>

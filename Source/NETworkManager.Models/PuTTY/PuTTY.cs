@@ -1,4 +1,7 @@
-﻿namespace NETworkManager.Models.PuTTY
+﻿using System;
+using System.IO;
+
+namespace NETworkManager.Models.PuTTY
 {
     public partial class PuTTY
     {
@@ -34,9 +37,24 @@
             if (!string.IsNullOrEmpty(profileInfo.Username))
                 command += $" -l {profileInfo.Username}";
 
-            // Session log
-            if (profileInfo.EnableSessionLog)
-                command += $" -sessionlog {'"'}{ profileInfo.SessionLogFullName}{'"'}";
+            // Log
+            if (profileInfo.EnableLog)
+            {
+                switch(profileInfo.LogMode)
+                {
+                    case LogMode.SessionLog:
+                        command += $" -sessionlog";
+                        break;
+                    case LogMode.SSHLog:
+                        command += $" -sshlog";
+                        break;
+                    case LogMode.SSHRawLog:
+                        command += $" -sshrawlog";
+                        break;
+                }
+
+                command += $" {'"'}{ Environment.ExpandEnvironmentVariables(Path.Combine(profileInfo.LogPath, profileInfo.LogFileName))}{'"'}";
+            }                
             
             // Additional commands
             if (!string.IsNullOrEmpty(profileInfo.AdditionalCommandLine))

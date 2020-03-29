@@ -170,19 +170,19 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _enableSessionLog;
-        public bool EnableSessionLog
+        private bool _enableLog;
+        public bool EnableLog
         {
-            get => _enableSessionLog;
+            get => _enableLog;
             set
             {
-                if (value == _enableSessionLog)
+                if (value == _enableLog)
                     return;
 
                 if (!_isLoading)
                     SettingsManager.Current.PuTTY_EnableSessionLog = value;
 
-                _enableSessionLog = value;
+                _enableLog = value;
                 OnPropertyChanged();
             }
         }
@@ -199,43 +199,43 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_SessionLogMode = value;
+                    SettingsManager.Current.PuTTY_LogMode = value;
 
                 _logMode = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _sessionLogPath;
-        public string SessionLogPath
+        private string _logPath;
+        public string LogPath
         {
-            get => _sessionLogPath;
+            get => _logPath;
             set
             {
-                if (value == _sessionLogPath)
+                if (value == _logPath)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_SessionLogPath = value;
+                    SettingsManager.Current.PuTTY_LogPath = value;
 
-                _sessionLogPath = value;
+                _logPath = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _sessionLogFileName;
-        public string SessionLogFileName
+        private string _logFileName;
+        public string LogFileName
         {
-            get => _sessionLogFileName;
+            get => _logFileName;
             set
             {
-                if (value == _sessionLogFileName)
+                if (value == _logFileName)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PuTTY_SessionLogFileName = value;
+                    SettingsManager.Current.PuTTY_LogFileName = value;
 
-                _sessionLogFileName = value;
+                _logFileName = value;
                 OnPropertyChanged();
             }
         }
@@ -382,10 +382,10 @@ namespace NETworkManager.ViewModels
             IsConfigured = File.Exists(ApplicationFilePath);
             Username = SettingsManager.Current.PuTTY_Username;
             Profile = SettingsManager.Current.PuTTY_Profile;
-            EnableSessionLog = SettingsManager.Current.PuTTY_EnableSessionLog;
-            LogMode = LogModes.FirstOrDefault(x => x == SettingsManager.Current.PuTTY_SessionLogMode);
-            SessionLogPath = SettingsManager.Current.PuTTY_SessionLogPath;
-            SessionLogFileName = SettingsManager.Current.PuTTY_SessionLogFileName;
+            EnableLog = SettingsManager.Current.PuTTY_EnableSessionLog;
+            LogMode = LogModes.FirstOrDefault(x => x == SettingsManager.Current.PuTTY_LogMode);
+            LogPath = SettingsManager.Current.PuTTY_LogPath;
+            LogFileName = SettingsManager.Current.PuTTY_LogFileName;
             AdditionalCommandLine = SettingsManager.Current.PuTTY_AdditionalCommandLine;
             SerialLine = SettingsManager.Current.PuTTY_SerialLine;
             SSHPort = SettingsManager.Current.PuTTY_SSHPort;

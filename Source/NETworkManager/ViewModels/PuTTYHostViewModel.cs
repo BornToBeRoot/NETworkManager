@@ -197,7 +197,7 @@ namespace NETworkManager.ViewModels
 
             _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
-            
+
             LoadSettings();
 
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
@@ -371,27 +371,28 @@ namespace NETworkManager.ViewModels
                 AddBaudToHistory(instance.Baud.ToString());
                 AddUsernameToHistory(instance.Username);
                 AddProfileToHistory(instance.Profile);
-                               
+
                 // Create Profile info
                 var info = new PuTTYSessionInfo
                 {
                     HostOrSerialLine = instance.ConnectionMode == ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
                     PortOrBaud = instance.ConnectionMode == ConnectionMode.Serial ? instance.Baud : instance.Port,
-                    Username = instance.Username,                    
-                    Profile = instance.Profile,          
-                    EnableSessionLog = SettingsManager.Current.PuTTY_EnableSessionLog,
-                    SessionLogFullName = Environment.ExpandEnvironmentVariables(Path.Combine(SettingsManager.Current.PuTTY_SessionLogPath, SettingsManager.Current.PuTTY_SessionLogFileName)),
+                    Username = instance.Username,
+                    Profile = instance.Profile,
+                    EnableLog = SettingsManager.Current.PuTTY_EnableSessionLog,
+                    LogMode = SettingsManager.Current.PuTTY_LogMode,
+                    LogFileName = SettingsManager.Current.PuTTY_LogFileName,
+                    LogPath = SettingsManager.Current.PuTTY_LogPath,
                     AdditionalCommandLine = instance.AdditionalCommandLine
                 };
 
-                // Connect
                 Connect(info);
             }, async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
-            }, host);
+                {
+                    await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                    ConfigurationManager.Current.FixAirspace = false;
+                }, host);
 
             customDialog.Content = new PuTTYConnectDialog
             {
@@ -410,7 +411,7 @@ namespace NETworkManager.ViewModels
         private void ConnectProfileExternal()
         {
             // Create log path
-            DirectoryCreator.CreateWithEnvironmentVariables(SettingsManager.Current.PuTTY_SessionLogPath);
+            DirectoryCreator.CreateWithEnvironmentVariables(SettingsManager.Current.PuTTY_LogPath);
 
             var info = new ProcessStartInfo
             {
@@ -423,7 +424,7 @@ namespace NETworkManager.ViewModels
 
         private void Connect(PuTTYSessionInfo profileInfo, string header = null)
         {
-            // Add PuTTY path here...
+            // Must be added here. So that it works with profiles and the connect dialog.
             profileInfo.ApplicationFilePath = SettingsManager.Current.PuTTY_ApplicationFilePath;
 
             TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuTTYControl(profileInfo)));
@@ -508,7 +509,7 @@ namespace NETworkManager.ViewModels
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.PuTTY_ProfileHistory.Add(x));
         }
-                
+
         private void StartDelayedSearch()
         {
             if (!IsSearching)

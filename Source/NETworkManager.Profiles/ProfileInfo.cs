@@ -124,12 +124,14 @@ namespace NETworkManager.Profiles
         public string PuTTY_Username { get; set; }
         public bool PuTTY_OverrideProfile { get; set; }
         public string PuTTY_Profile { get; set; }
-        public bool PuTTY_OverrideEnableSessionLog { get; set; }
-        public bool PuTTY_EnableSessionLog { get; set; }
-        public bool PuTTY_OverrideSessionLogMode { get; set; }
-        public LogMode PuTTY_SessionLogMode { get; set; } = GlobalStaticConfiguration.PuTTY_SessionLogMode;
-        public bool PuTTY_OverrideSessionLogFileName { get; set; }
-        public string PuTTY_SessionLogFileName { get; set; } = GlobalStaticConfiguration.PuTTY_SessionLogFileName;
+        public bool PuTTY_OverrideEnableLog { get; set; }
+        public bool PuTTY_EnableLog { get; set; }
+        public bool PuTTY_OverrideLogMode { get; set; }
+        public LogMode PuTTY_LogMode { get; set; } = GlobalStaticConfiguration.PuTTY_LogMode;
+        public bool PuTTY_OverrideLogPath { get; set; }
+        public string PuTTY_LogPath { get; set; } = GlobalStaticConfiguration.PuTTY_LogPath;
+        public bool PuTTY_OverrideLogFileName { get; set; }
+        public string PuTTY_LogFileName { get; set; } = GlobalStaticConfiguration.PuTTY_LogFileName;
         public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
         public string PuTTY_AdditionalCommandLine { get; set; }
         

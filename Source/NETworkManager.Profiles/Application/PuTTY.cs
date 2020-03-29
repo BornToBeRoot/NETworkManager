@@ -1,7 +1,5 @@
 ﻿using NETworkManager.Models.PuTTY;
 using NETworkManager.Settings;
-using System.IO;
-using System;
 
 namespace NETworkManager.Profiles.Application
 {
@@ -16,8 +14,10 @@ namespace NETworkManager.Profiles.Application
                 PortOrBaud = profileInfo.PuTTY_OverridePortOrBaud ? profileInfo.PuTTY_PortOrBaud : Settings.Application.PuTTY.GetPortOrBaudByConnectionMode(profileInfo.PuTTY_ConnectionMode),
                 Username = profileInfo.PuTTY_OverrideUsername ? profileInfo.PuTTY_Username : SettingsManager.Current.PuTTY_Username,
                 Profile = profileInfo.PuTTY_OverrideProfile ? profileInfo.PuTTY_Profile : SettingsManager.Current.PuTTY_Profile,
-                EnableSessionLog = profileInfo.PuTTY_OverrideEnableSessionLog ? profileInfo.PuTTY_EnableSessionLog : SettingsManager.Current.PuTTY_EnableSessionLog,
-                SessionLogFullName = Environment.ExpandEnvironmentVariables(Path.Combine(SettingsManager.Current.PuTTY_SessionLogPath, profileInfo.PuTTY_OverrideSessionLogFileName ? profileInfo.PuTTY_SessionLogFileName : SettingsManager.Current.PuTTY_SessionLogFileName)),
+                EnableLog = profileInfo.PuTTY_OverrideEnableLog ? profileInfo.PuTTY_EnableLog : SettingsManager.Current.PuTTY_EnableSessionLog,
+                LogMode = profileInfo.PuTTY_OverrideLogMode ? profileInfo.PuTTY_LogMode : SettingsManager.Current.PuTTY_LogMode,
+                LogPath = profileInfo.PuTTY_OverrideLogPath ? profileInfo.PuTTY_LogPath : SettingsManager.Current.PuTTY_LogPath,
+                LogFileName = profileInfo.PuTTY_OverrideLogFileName ? profileInfo.PuTTY_LogFileName : SettingsManager.Current.PuTTY_LogFileName,
                 AdditionalCommandLine = profileInfo.PuTTY_OverrideAdditionalCommandLine ? profileInfo.PuTTY_AdditionalCommandLine : SettingsManager.Current.PuTTY_AdditionalCommandLine
             };
 
