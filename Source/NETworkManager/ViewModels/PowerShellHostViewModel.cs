@@ -17,6 +17,7 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
 using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {

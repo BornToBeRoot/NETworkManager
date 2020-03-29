@@ -26,6 +26,7 @@ using NETworkManager.Localization;
 using NETworkManager.Localization.Translators;
 using NETworkManager.Update;
 using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager
 {
@@ -791,78 +792,9 @@ namespace NETworkManager
             ListViewApplication.ScrollIntoView(SelectedApplication);
         }
 
-        // This works, but is currently not used :) 
-        /*
-        private void EventSystem_RedirectProfileToApplicationEvent(object sender, EventArgs e)
-        {
-            if (!(e is EventSystemRedirectProfileApplicationArgs profile))
-                return;
-
-            // Change view
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationViewInfo>().FirstOrDefault(x => x.Name == profile.Application);
-
-            // Crate a new tab / perform action
-            switch (profile.Application)
-            {
-                case Models.Application.Name.None:
-                    break;
-                case Models.Application.Name.Dashboard:
-                    break;
-                case Models.Application.Name.NetworkInterface:
-                    break;
-                case Models.Application.Name.WiFi:
-                    break;
-                case Models.Application.Name.IPScanner:
-                    _ipScannerHostView.AddTab(profile.Profile);
-                    break;
-                case Models.Application.Name.PortScanner:
-                    _portScannerHostView.AddTab(profile.Profile);
-                    break;
-                case Models.Application.Name.Ping:
-                    _pingHostView.AddTab(profile.Profile);
-                    break;
-                case Models.Application.Name.PingMonitor:
-                    break;
-                case Models.Application.Name.Traceroute:
-                    _tracerouteHostView.AddTab(profile.Profile);
-                    break;
-                case Models.Application.Name.DNSLookup:
-                    break;
-                case Models.Application.Name.RemoteDesktop:
-                    break;
-                case Models.Application.Name.PowerShell:
-                    break;
-                case Models.Application.Name.PuTTY:
-                    break;
-                case Models.Application.Name.TigerVNC:
-                    break;
-                case Models.Application.Name.SNMP:
-                    break;
-                case Models.Application.Name.WakeOnLAN:
-                    break;
-                case Models.Application.Name.HTTPHeaders:
-                    break;
-                case Models.Application.Name.Whois:
-                    break;
-                case Models.Application.Name.SubnetCalculator:
-                    break;
-                case Models.Application.Name.Lookup:
-                    break;
-                case Models.Application.Name.Connections:
-                    break;
-                case Models.Application.Name.Listeners:
-                    break;
-                case Models.Application.Name.ARPTable:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-        */
-
         private void EventSystem_RedirectDataToApplicationEvent(object sender, EventArgs e)
         {
-            if (!(e is EventSystemRedirectDataApplicationArgs data))
+            if (!(e is EventSystemRedirectArgs data))
                 return;
 
             // Change view

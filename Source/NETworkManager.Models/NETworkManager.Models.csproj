@@ -49,8 +49,8 @@
     <Compile Include="ApplicationManager.cs" />
     <Compile Include="ApplicationName.cs" />
     <Compile Include="ApplicationInfo.cs" />
-    <Compile Include="EventSystem.cs" />
-    <Compile Include="EventSystemRedirectDataApplicationArgs.cs" />
+    <Compile Include="EventSystem\EventSystem.cs" />
+    <Compile Include="EventSystem\EventSystemRedirectArgs.cs" />
     <Compile Include="Export\ExportManager.cs" />
     <Compile Include="Export\ExportManager.ExportFileType.cs" />
     <Compile Include="Lookup\OUIInfo.cs" />

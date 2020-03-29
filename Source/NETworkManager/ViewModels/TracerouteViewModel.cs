@@ -21,6 +21,7 @@ using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {
@@ -299,21 +300,21 @@ namespace NETworkManager.ViewModels
 
             var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname) ? SelectedTraceResult.Hostname : SelectedTraceResult.IPAddress.ToString();
 
-            EventSystem.RedirectDataToApplication(app, host);
+            EventSystem.RedirectToApplication(app, host);
         }
 
         public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(p => PerformDNSLookupIPAddressAction());
 
         private void PerformDNSLookupIPAddressAction()
         {
-            EventSystem.RedirectDataToApplication(ApplicationName.DNSLookup, SelectedTraceResult.IPAddress.ToString());
+            EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedTraceResult.IPAddress.ToString());
         }
 
         public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
 
         private void PerformDNSLookupHostnameAction()
         {
-            EventSystem.RedirectDataToApplication(ApplicationName.DNSLookup, SelectedTraceResult.Hostname);
+            EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedTraceResult.Hostname);
         }
 
         public ICommand CopySelectedHopCommand => new RelayCommand(p => CopySelectedHopAction());

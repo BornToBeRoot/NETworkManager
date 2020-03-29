@@ -25,6 +25,7 @@ using NETworkManager.Profiles;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Translators;
 using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels
 {
@@ -376,21 +377,21 @@ namespace NETworkManager.ViewModels
 
             var host = !string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.Hostname : SelectedHostResult.PingInfo.IPAddress.ToString();
 
-            EventSystem.RedirectDataToApplication(applicationName, host);
+            EventSystem.RedirectToApplication(applicationName, host);
         }
 
         public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(p => PerformDNSLookupIPAddressAction());
 
         private void PerformDNSLookupIPAddressAction()
         {
-            EventSystem.RedirectDataToApplication(ApplicationName.DNSLookup, SelectedHostResult.PingInfo.IPAddress.ToString());
+            EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedHostResult.PingInfo.IPAddress.ToString());
         }
 
         public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
 
         private void PerformDNSLookupHostnameAction()
         {
-            EventSystem.RedirectDataToApplication(ApplicationName.DNSLookup, SelectedHostResult.Hostname);
+            EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedHostResult.Hostname);
         }
 
         public ICommand CustomCommandCommand => new RelayCommand(CustomCommandAction);
@@ -401,6 +402,7 @@ namespace NETworkManager.ViewModels
         }
 
         public ICommand AddProfileSelectedHostCommand => new RelayCommand(p => AddProfileSelectedHostAction());
+
         private async void AddProfileSelectedHostAction()
         {
             ProfileInfo profileInfo = new ProfileInfo()
