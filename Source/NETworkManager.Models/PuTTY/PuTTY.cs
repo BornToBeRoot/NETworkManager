@@ -34,6 +34,10 @@
             if (!string.IsNullOrEmpty(profileInfo.Username))
                 command += $" -l {profileInfo.Username}";
 
+            // Session log
+            if (profileInfo.EnableSessionLog)
+                command += $" -sessionlog {'"'}{ profileInfo.SessionLogFullName}{'"'}";
+            
             // Additional commands
             if (!string.IsNullOrEmpty(profileInfo.AdditionalCommandLine))
                 command += $" {profileInfo.AdditionalCommandLine}";

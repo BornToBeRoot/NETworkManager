@@ -124,8 +124,13 @@ namespace NETworkManager.Profiles
         public string PuTTY_Username { get; set; }
         public bool PuTTY_OverrideProfile { get; set; }
         public string PuTTY_Profile { get; set; }
+        public bool PuTTY_OverrideEnableSessionLog { get; set; }
+        public bool PuTTY_EnableSessionLog { get; set; }
+        public bool PuTTY_OverrideSessionLogFileName { get; set; }
+        public string PuTTY_SessionLogFileName { get; set; } = GlobalStaticConfiguration.PuTTY_SessionLogFileName;
         public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
         public string PuTTY_AdditionalCommandLine { get; set; }
+        
 
         public bool TigerVNC_Enabled { get; set; }
         public bool TigerVNC_InheritHost { get; set; } = true;
@@ -149,6 +154,9 @@ namespace NETworkManager.Profiles
         public bool Whois_InheritHost { get; set; } = true;
         public string Whois_Domain { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the<see cref="ProfileInfo"/> class.
+        /// </summary>
         public ProfileInfo()
         {
 

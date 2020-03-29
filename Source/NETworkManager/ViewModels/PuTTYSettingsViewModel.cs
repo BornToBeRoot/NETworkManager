@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Input;
 using NETworkManager.Models.PuTTY;
-using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {
@@ -151,6 +150,57 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+             
+        private string _profile;
+        public string Profile
+        {
+            get => _profile;
+            set
+            {
+                if (value == _profile)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PuTTY_Profile = value;
+
+                _profile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _enableSessionLog;
+        public bool EnableSessionLog
+        {
+            get => _enableSessionLog;
+            set
+            {
+                if (value == _enableSessionLog)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PuTTY_EnableSessionLog = value;
+
+                _enableSessionLog = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _sessionLogFileName;
+        public string SessionLogFileName
+        {
+            get => _sessionLogFileName;
+            set
+            {
+                if (value == _sessionLogFileName)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PuTTY_SessionLogFileName = value;
+
+                _sessionLogFileName = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _additionalCommandLine;
         public string AdditionalCommandLine
@@ -169,22 +219,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _profile;
-        public string Profile
-        {
-            get => _profile;
-            set
-            {
-                if (value == _profile)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.PuTTY_Profile = value;
-
-                _profile = value;
-                OnPropertyChanged();
-            }
-        }
 
         private string _serialLine;
         public string SerialLine
@@ -310,6 +344,8 @@ namespace NETworkManager.ViewModels
             IsConfigured = File.Exists(ApplicationFilePath);
             Username = SettingsManager.Current.PuTTY_Username;
             Profile = SettingsManager.Current.PuTTY_Profile;
+            EnableSessionLog = SettingsManager.Current.PuTTY_EnableSessionLog;
+            SessionLogFileName = SettingsManager.Current.PuTTY_SessionLogFileName;
             AdditionalCommandLine = SettingsManager.Current.PuTTY_AdditionalCommandLine;
             SerialLine = SettingsManager.Current.PuTTY_SerialLine;
             SSHPort = SettingsManager.Current.PuTTY_SSHPort;

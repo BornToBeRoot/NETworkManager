@@ -371,15 +371,17 @@ namespace NETworkManager.ViewModels
                 AddBaudToHistory(instance.Baud.ToString());
                 AddUsernameToHistory(instance.Username);
                 AddProfileToHistory(instance.Profile);
-
+                               
                 // Create Profile info
                 var info = new PuTTYSessionInfo
                 {
-                    HostOrSerialLine = instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
+                    HostOrSerialLine = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
-                    PortOrBaud = instance.ConnectionMode == Models.PuTTY.PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
-                    Username = instance.Username,
-                    Profile = instance.Profile,
+                    PortOrBaud = instance.ConnectionMode == PuTTY.ConnectionMode.Serial ? instance.Baud : instance.Port,
+                    Username = instance.Username,                    
+                    Profile = instance.Profile,          
+                    EnableSessionLog = SettingsManager.Current.PuTTY_EnableSessionLog,
+                    SessionLogFullName = Path.Combine(Settings.Application.PuTTY.LogPath, SettingsManager.Current.PuTTY_SessionLogFileName),
                     AdditionalCommandLine = instance.AdditionalCommandLine
                 };
 
@@ -407,6 +409,9 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfileExternal()
         {
+            // Create log path
+            Directory.CreateDirectory(Settings.Application.PuTTY.LogPath);
+
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
@@ -418,6 +423,9 @@ namespace NETworkManager.ViewModels
 
         private void Connect(PuTTYSessionInfo profileInfo, string header = null)
         {
+            // Create log path
+            Settings.Application.PuTTY.CreateLogPath();
+
             // Add PuTTY path here...
             profileInfo.ApplicationFilePath = SettingsManager.Current.PuTTY_ApplicationFilePath;
 

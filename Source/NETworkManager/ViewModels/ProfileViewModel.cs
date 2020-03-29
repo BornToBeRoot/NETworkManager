@@ -22,7 +22,7 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
         public ICollectionView ProfileViews { get; }
-        
+
         #region General
         private string _name;
         public string Name
@@ -1649,6 +1649,62 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _puTTY_OverrideEnableSessionLog;
+        public bool PuTTY_OverrideEnableSessionLog
+        {
+            get => _puTTY_OverrideEnableSessionLog;
+            set
+            {
+                if (value == _puTTY_OverrideEnableSessionLog)
+                    return;
+
+                _puTTY_OverrideEnableSessionLog = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _puTTY_EnableSessionLog;
+        public bool PuTTY_EnableSessionLog
+        {
+            get => _puTTY_EnableSessionLog;
+            set
+            {
+                if (value == _puTTY_EnableSessionLog)
+                    return;
+
+                _puTTY_EnableSessionLog = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _puTTY_OverrideSessionLogFileName;
+        public bool PuTTY_OverrideSessionLogFileName
+        {
+            get => _puTTY_OverrideSessionLogFileName;
+            set
+            {
+                if (value == _puTTY_OverrideSessionLogFileName)
+                    return;
+
+                _puTTY_OverrideSessionLogFileName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _puTTY_SessionLogFileName;
+        public string PuTTY_SessionLogFileName
+        {
+            get => _puTTY_SessionLogFileName;
+            set
+            {
+                if (value == _puTTY_SessionLogFileName)
+                    return;
+
+                _puTTY_SessionLogFileName = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _puTTY_OverrideAdditionalCommandLine;
         public bool PuTTY_OverrideAdditionalCommandLine
         {
@@ -2105,6 +2161,10 @@ namespace NETworkManager.ViewModels
             PuTTY_Username = profileInfo.PuTTY_Username;
             PuTTY_OverrideProfile = profileInfo.PuTTY_OverrideProfile;
             PuTTY_Profile = profileInfo.PuTTY_Profile;
+            PuTTY_OverrideEnableSessionLog = profileInfo.PuTTY_OverrideEnableSessionLog;
+            PuTTY_EnableSessionLog = profileInfo.PuTTY_EnableSessionLog;
+            PuTTY_OverrideSessionLogFileName = profileInfo.PuTTY_OverrideSessionLogFileName;
+            PuTTY_SessionLogFileName = profileInfo.PuTTY_SessionLogFileName;
             PuTTY_OverrideAdditionalCommandLine = profileInfo.PuTTY_OverrideAdditionalCommandLine;
             PuTTY_AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine;
 

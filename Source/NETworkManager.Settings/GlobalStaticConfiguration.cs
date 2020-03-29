@@ -118,6 +118,7 @@ namespace NETworkManager.Settings
 
         // Application: PuTTY
         public static PuTTY.ConnectionMode PuTTY_DefaultConnectionMode => PuTTY.ConnectionMode.SSH;
+        public static string PuTTY_SessionLogFileName = "&H_&Y&M&D_&T.log";
         public static int PuTTY_SSHPort => 22;
         public static string PuTTY_SerialLine => "COM1";
         public static int PuTTY_TelnetPort => 23;
