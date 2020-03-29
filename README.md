@@ -9,11 +9,7 @@ Add some text here...
 |[:package:&nbsp;Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe)| `A7BD0182269F012701D56285141A6627` `9F41145F748539C7233C3129BE3765CB` | Installs the software in `%ProgramFiles(x86)%`. Settings are saved in `%AppData%`. See [available parameters](http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline). |
 |[:package:&nbsp;Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip)| `BEA66D1B8E1DE820B6077FD1F98ABDF5` `BDD4D7CD0477FC27941EFED326DCCEAD` | Portable version for USB-Stick/Cloud. Settings are saved in the program folder. |
 |[:package:&nbsp;Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip)| `497C6DEFAD22B074B0E8D0E439485451` `28503512434C096D221D2978B1344F91` | Binaries can be deployed anywhere (network share, etc.). Settings are saved in %AppData%. |
-|[:link:&nbsp;Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"}| -/- | Package Manager for Windows. Installs the setup via Chocolatey. |
-
-[:page_facing_up: Changelog](Changelog.md)
-
-[:book Documentation](Documentation/README.md)
+|[:link:&nbsp;Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"} | -/- | Package Manager for Windows. Installs the setup via Chocolatey. |
 
 ## Preview
 
@@ -45,6 +41,14 @@ Add some text here...
 - Connections
 - Listeners
 - ARP Table
+
+## Changelog
+
+[:page_facing_up: Changelog](Changelog.md)
+
+## Documentation
+
+[:book: Documentation](Documentation/README.md)
 
 ## Languages
 
