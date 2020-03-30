@@ -70,11 +70,11 @@
                                     </Style>
                                 </Rectangle.Style>
                             </Rectangle>
-                        </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GithubDocumentationUrl}" Command="{Binding OpenDocumentationCommand}" Margin="10,0,0,0">
+                        </Button>                       
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GithubNewIssueUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24" >
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=BookPerspectiveHelp}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:JamIcons Kind=BugF}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -88,10 +88,10 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GithubNewIssueUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" Margin="10,0,0,0">
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GithubDocumentationUrl}" Command="{Binding OpenDocumentationCommand}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24" >
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:JamIcons Kind=BugF}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=BookPerspectiveHelp}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">

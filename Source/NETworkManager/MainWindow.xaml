@@ -95,6 +95,15 @@
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </StackPanel>
+                </Button>            
+                <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.ReportAnIssueOrCreateAFeatureRequest}" CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:JamIcons Kind=BugF}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </StackPanel>
                 </Button>
                 <Button Command="{Binding OpenDocumentationCommand}" ToolTip="{x:Static localization:Strings.OpenDocumentation}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
@@ -105,15 +114,6 @@
                         </Rectangle>
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.ReportAnIssueOrCreateAFeatureRequest}" CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" Cursor="Hand">
-                    <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:JamIcons Kind=BugF}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                    </StackPanel>
-                </Button>              
             </StackPanel>
         </mahAppsControls:WindowCommands>
     </mahAppsControls:MetroWindow.RightWindowCommands>

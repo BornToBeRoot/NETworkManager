@@ -7,13 +7,11 @@ namespace NETworkManager.Documentation
     {
         public DocumentationIdentifier Identifier { get; set; }
         public string Path { get; set; }
-        public List<LocalizationInfo> Localizations { get; set; }
 
-        public DocumentationInfo(DocumentationIdentifier identifier, string path, List<LocalizationInfo> localizations)
+        public DocumentationInfo(DocumentationIdentifier identifier, string path)
         {
             Identifier = identifier;
             Path = path;
-            Localizations = localizations;
         }
     }
 }
