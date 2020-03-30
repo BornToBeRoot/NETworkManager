@@ -12,6 +12,9 @@
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PuTTYSettingsViewModel}">
     <UserControl.Resources>
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:PuTTYLogModeToStringConverter x:Key="PuTTYLogModeToStringConverter" />
     </UserControl.Resources>
     <StackPanel>
@@ -55,7 +58,7 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <TextBlock Text="{x:Static localization:Strings.LogPath}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox IsEnabled="{Binding EnableLog}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
+        <TextBox IsEnabled="{Binding EnableLog}" Visibility="{Binding IsPortable, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="LogPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -65,6 +68,16 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
+        <TextBox Text="{Binding PortableLogPath, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Visibility="{Binding IsPortable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <Grid Visibility="{Binding IsPortable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Width="24" Height="24" Style="{StaticResource WarnImageRectangle}" />
+            <TextBlock Grid.Column="2" Text="{x:Static localization:Strings.LocationCannotBeChangedInThePortableVersion}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
+        </Grid>
         <TextBlock Text="{x:Static localization:Strings.LogFileName}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" IsEnabled="{Binding EnableLog}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>

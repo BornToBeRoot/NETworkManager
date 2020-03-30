@@ -1,10 +1,14 @@
 ﻿using NETworkManager.Models.PuTTY;
-using static NETworkManager.Models.PuTTY.PuTTY;
+using System.IO;
 
 namespace NETworkManager.Settings.Application
 {
     public static class PuTTY
     {
+        public static string PortableLogPath => Path.Combine(ConfigurationManager.Current.ExecutionPath, "PuTTY_LogFiles");
+
+        public static string LogPath => ConfigurationManager.Current.IsPortable ? PortableLogPath : SettingsManager.Current.PuTTY_LogPath;
+
         public static int GetPortOrBaudByConnectionMode(ConnectionMode mode)
         {
             var portOrBaud = 0;

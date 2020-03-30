@@ -16,6 +16,10 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
 
+        public bool IsPortable => ConfigurationManager.Current.IsPortable;
+
+        public string PortableLogPath => Settings.Application.PuTTY.PortableLogPath;
+
         private readonly bool _isLoading;
 
         private string _applicationFilePath;

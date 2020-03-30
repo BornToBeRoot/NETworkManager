@@ -383,7 +383,7 @@ namespace NETworkManager.ViewModels
                     EnableLog = SettingsManager.Current.PuTTY_EnableSessionLog,
                     LogMode = SettingsManager.Current.PuTTY_LogMode,
                     LogFileName = SettingsManager.Current.PuTTY_LogFileName,
-                    LogPath = SettingsManager.Current.PuTTY_LogPath,
+                    LogPath = Settings.Application.PuTTY.LogPath,
                     AdditionalCommandLine = instance.AdditionalCommandLine
                 };
 
@@ -411,7 +411,7 @@ namespace NETworkManager.ViewModels
         private void ConnectProfileExternal()
         {
             // Create log path
-            DirectoryCreator.CreateWithEnvironmentVariables(SettingsManager.Current.PuTTY_LogPath);
+            DirectoryCreator.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
 
             var info = new ProcessStartInfo
             {
