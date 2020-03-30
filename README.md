@@ -47,7 +47,7 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
 |[:package:&nbsp;Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip)| `BEA66D1B8E1DE820B6077FD1F98ABDF5` `BDD4D7CD0477FC27941EFED326DCCEAD` | Portable version for USB-Stick/Cloud. Settings are saved in the program folder. |
 |[:package:&nbsp;Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip)| `497C6DEFAD22B074B0E8D0E439485451` `28503512434C096D221D2978B1344F91` | Binaries can be deployed anywhere (network share, etc.). Settings are saved in %AppData%. |
 
-The Setup is also available via [:link:&nbsp;Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"}.
+The setup is also available in the Windows Package Manager [:link:&nbsp;Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"}.
 
 ## Features
 
