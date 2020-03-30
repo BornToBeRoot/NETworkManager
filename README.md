@@ -41,17 +41,20 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
 
 ## Download
 
-**File**: [:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe)\
-**Description**: Portable version for USB-Stick/Cloud. Settings are saved in the program folder.\
-**Checksum (SHA256)**: `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB`
+**File: ** [:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe)<br />
+**Description:** Installs the software in `%ProgramFiles(x86)%`. Settings are saved in `%AppData%`. See [available parameters](http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline).<br />
+**Checksum (SHA256):** `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB` 
 
-**File**: [:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe)\
-**Description**: Portable version for USB-Stick/Cloud. Settings are saved in the program folder.\
-**Checksum (SHA256)**: `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB`
+**File:** [:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip)<br />
+**Description:** Portable version for USB-Stick/Cloud. Settings are saved in the program folder.<br />
+**Checksum (SHA256)**: `BEA66D1B8E1DE820B6077FD1F98ABDF5BDD4D7CD0477FC27941EFED326DCCEAD`
 
-**File**: [:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe)\
-**Description**: Portable version for USB-Stick/Cloud. Settings are saved in the program folder.\
-**Checksum (SHA256)**: `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB`
+**File:** [:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip)<br />
+**Description:** Binaries can be deployed anywhere (network share, etc.). Settings are saved in %AppData%.<br />
+**Checksum (SHA256):** `497C6DEFAD22B074B0E8D0E43948545128503512434C096D221D2978B1344F91`
+
+**Link:** [:link: Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"}<br />
+**Description:** Package Manager for Windows. Installs the setup via Chocolatey.
 
 ## Features
 
