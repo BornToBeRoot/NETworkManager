@@ -3233,7 +3233,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application to display..
+        ///   Looks up a localized string similar to Application that is displayed at startup..
         /// </summary>
         public static string HelpMessage_ParameterApplication {
             get {
@@ -3251,7 +3251,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reset all settings..
+        ///   Looks up a localized string similar to Resets all application settings..
         /// </summary>
         public static string HelpMessage_ParameterResetSettings {
             get {

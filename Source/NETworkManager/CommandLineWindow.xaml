@@ -1,4 +1,4 @@
-﻿<mahAppsControls:MetroWindow x:Class="NETworkManager.Views.CommandLineHelpWindow"
+﻿<mahAppsControls:MetroWindow x:Class="NETworkManager.CommandLineWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +10,7 @@
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         mc:Ignorable="d"
         Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Topmost="True" Style="{DynamicResource DefaultWindow}" MinHeight="500" Height="500" MinWidth="650" Width="650" WindowStartupLocation="CenterOwner" IsMinButtonEnabled="False" IsMaxRestoreButtonEnabled="False" ShowInTaskbar="False"
-        d:DataContext="{d:DesignInstance viewModels:CommandLineHelpViewModel}">
+        d:DataContext="{d:DesignInstance viewModels:CommandLineViewModel}">
     <mahAppsControls:MetroWindow.WindowButtonCommands>
         <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </mahAppsControls:MetroWindow.WindowButtonCommands>

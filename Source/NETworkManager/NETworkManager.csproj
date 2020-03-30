@@ -203,7 +203,7 @@
     <Compile Include="ViewModels\SubnetCalculatorSubnettingViewModel.cs" />
     <Compile Include="ViewModels\LookupOUILookupViewModel.cs" />
     <Compile Include="ViewModels\RemoteDesktopHostViewModel.cs" />
-    <Compile Include="ViewModels\CommandLineHelpViewModel.cs" />
+    <Compile Include="ViewModels\CommandLineViewModel.cs" />
     <Compile Include="ViewModels\HTTPHeadersSettingsViewModel.cs" />
     <Compile Include="ViewModels\PuTTYSettingsViewModel.cs" />
     <Compile Include="ViewModels\SNMPSettingsViewModel.cs" />
@@ -397,8 +397,8 @@
     <Compile Include="Views\WakeOnLANSettingsView.xaml.cs">
       <DependentUpon>WakeOnLANSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CommandLineHelpWindow.xaml.cs">
-      <DependentUpon>CommandLineHelpWindow.xaml</DependentUpon>
+    <Compile Include="CommandLineWindow.xaml.cs">
+      <DependentUpon>CommandLineWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\DragablzTabHostWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -833,7 +833,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\CommandLineHelpWindow.xaml">
+    <Page Include="CommandLineWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

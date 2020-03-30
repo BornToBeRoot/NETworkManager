@@ -1,13 +1,13 @@
 ﻿using NETworkManager.ViewModels;
 
-namespace NETworkManager.Views
+namespace NETworkManager
 { 
     // ReSharper disable once UnusedMember.Global, called from App.xaml.cs
-    public partial class CommandLineHelpWindow
+    public partial class CommandLineWindow
     {
-        private readonly CommandLineHelpViewModel _viewModel = new CommandLineHelpViewModel();
+        private readonly CommandLineViewModel _viewModel = new CommandLineViewModel();
 
-        public CommandLineHelpWindow()
+        public CommandLineWindow()
         {
             InitializeComponent();
             DataContext = _viewModel;

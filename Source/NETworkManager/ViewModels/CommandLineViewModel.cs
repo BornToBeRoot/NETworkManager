@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
-    public class CommandLineHelpViewModel : ViewModelBase
+    public class CommandLineViewModel : ViewModelBase
     {
         #region Variables
         private bool _displayWrongParameter;
@@ -94,7 +94,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public CommandLineHelpViewModel()
+        public CommandLineViewModel()
         {
             if (!string.IsNullOrEmpty(CommandLineManager.Current.WrongParameter))
             {
@@ -105,7 +105,7 @@ namespace NETworkManager.ViewModels
             ParameterHelp = CommandLineManager.ParameterHelp;
             ParameterResetSettings = CommandLineManager.ParameterResetSettings;
             ParameterApplication = CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication);
-            ParameterApplicationValues = string.Join(" ,", System.Enum.GetValues(typeof(ApplicationName)).Cast<ApplicationName>().ToList());
+            ParameterApplicationValues = string.Join(", ", System.Enum.GetValues(typeof(ApplicationName)).Cast<ApplicationName>().ToList());
         }
         #endregion
     }
