@@ -40,10 +40,5 @@ Enabled
 ### Use custom API
 Description...
 
-**Default**
-```
-
-```
-
 
 [back](../README.md)
