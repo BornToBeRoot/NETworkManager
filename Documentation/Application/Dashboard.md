@@ -6,9 +6,9 @@ Description...
 ## Settings
 
 ### Public ICMP test IP address
-IP address which is pinged during the connection test.
+During the connection test, a ping / ICMP packet is sent to this IP address to determine whether a host can be reached outside of your local network. It can be changed to any IP address as long as this IP address responds to ping / ICMP packets.
 
-**Default value**
+**Default**
 ```
 1.1.1.1
 ```
@@ -16,7 +16,7 @@ IP address which is pinged during the connection test.
 ### Public DNS test domain
 Public domain name
 
-**Default value**
+**Default**
 ```
 one.one.one.one
 ```
@@ -24,7 +24,7 @@ one.one.one.one
 ### Public DNS test IP address
 Description...
 
-**Default value**
+**Default**
 ```
 1.1.1.1
 ```
@@ -32,7 +32,7 @@ Description...
 ### Check public IP address
 Description...
 
-**Default value**
+**Default**
 ```
 Enabled
 ```
@@ -40,9 +40,9 @@ Enabled
 ### Use custom API
 Description...
 
-**Default value**
+**Default**
 ```
--/-
+
 ```
 
 
