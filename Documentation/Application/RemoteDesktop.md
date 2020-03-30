@@ -1,5 +1,5 @@
 # Remote Desktop
 
-![RemoteDesktop](../../_images/RemoteDesktop.png)
+![RemoteDesktop](RemoteDesktop.png)
 
 [back](../README.md)

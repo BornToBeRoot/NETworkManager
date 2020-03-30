@@ -1,5 +1,5 @@
 # Web Console
 
-![WebConsole](../../_images/WebConsole.png)
+![WebConsole](WebConsole.png)
 
 [back](../README.md)

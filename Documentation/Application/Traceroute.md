@@ -1,5 +1,5 @@
 # Traceroute
 
-![Traceroute](../../_images/Traceroute.png)
+![Traceroute](Traceroute.png)
 
 [back](../README.md)

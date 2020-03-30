@@ -4,20 +4,20 @@
 
 ### Walk
 
-![SNMP_v2c_Walk](../../_images/SNMP_v2c_Walk.png)
+![SNMP_v2c_Walk](SNMP_v2c_Walk.png)
 
 ## v3
 
 ### Set
 
-![SNMP_v3_Set](../../_images/SNMP_v3_Set.png)
+![SNMP_v3_Set](SNMP_v3_Set.png)
 
 ### Get
 
-![SNMP_v3_Get](../../_images/SNMP_v3_Get.png)
+![SNMP_v3_Get](SNMP_v3_Get.png)
 
 ### Walk
 
-![SNMP_v3_Walk](../../_images/SNMP_v3_Walk.png)
+![SNMP_v3_Walk](SNMP_v3_Walk.png)
 
 [back](../README.md)

@@ -1,5 +1,5 @@
 # Whois
 
-![Whois](../../_images/Whois.png)
+![Whois](Whois.png)
 
 [back](../README.md)

@@ -1,5 +1,5 @@
 # Dashboard
 
-![Dashboard](../../_images/Dashboard.png)
+![Dashboard](Dashboard.png)
 
 [back](../README.md)

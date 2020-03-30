@@ -1,5 +1,5 @@
 # Wake on LAN
 
-![WakeOnLAN](../../_images/WakeOnLAN.png)
+![WakeOnLAN](WakeOnLAN.png)
 
 [back](../README.md)

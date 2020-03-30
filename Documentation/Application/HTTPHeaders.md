@@ -1,5 +1,5 @@
 # HTTP Headers
 
-![HTTPHeaders](../../_images/HTTPHeaders.png)
+![HTTPHeaders](HTTPHeaders.png)
 
 [back](../README.md)

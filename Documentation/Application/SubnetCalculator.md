@@ -2,15 +2,15 @@
 
 ## Calculator
 
-![SubnetCalculator_Calculator](../../_images/SubnetCalculator_Calculator.png)
+![SubnetCalculator_Calculator](SubnetCalculator_Calculator.png)
 
 ## Subnetting
 
-![SubnetCalculator_Subnetting](../../_images/SubnetCalculator_Subnetting.png)
+![SubnetCalculator_Subnetting](SubnetCalculator_Subnetting.png)
 
 ## Wide Subnet
 
-![SubnetCalculator_WideSubnet](../../_images/SubnetCalculator_WideSubnet.png)
+![SubnetCalculator_WideSubnet](SubnetCalculator_WideSubnet.png)
 
 
 [back](../README.md)

@@ -1,5 +1,5 @@
 # Connections
 
-![Connections](../../_images/Connections.png)
+![Connections](Connections.png)
 
 [back](../README.md)

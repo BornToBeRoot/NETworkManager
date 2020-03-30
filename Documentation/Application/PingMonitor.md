@@ -1,5 +1,5 @@
 # Ping Monitor
 
-![PingMonitor](../../_images/PingMonitor.png)
+![PingMonitor](PingMonitor.png)
 
 [back](../README.md)

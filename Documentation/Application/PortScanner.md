@@ -1,5 +1,5 @@
 # Port Scanner
 
-![PortScanner](../../_images/PortScanner.png)
+![PortScanner](PortScanner.png)
 
 [back](../README.md)

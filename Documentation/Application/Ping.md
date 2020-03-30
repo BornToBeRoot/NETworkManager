@@ -1,5 +1,5 @@
 # Ping
 
-![Ping](../../_images/Ping.png)
+![Ping](Ping.png)
 
 [back](../README.md)

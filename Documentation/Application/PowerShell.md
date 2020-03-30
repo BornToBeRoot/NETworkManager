@@ -1,5 +1,5 @@
 # PowerShell
 
-![PowerShell](../../_images/PowerShell.png)
+![PowerShell](PowerShell.png)
 
 [back](../README.md)

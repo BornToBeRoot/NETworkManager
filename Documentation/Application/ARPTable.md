@@ -1,5 +1,5 @@
 # ARP Table
 
-![ARPTable](../_images/ARPTable.png)
+![ARPTable](ARPTable.png)
 
 [back](../README.md)

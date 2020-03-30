@@ -1,5 +1,5 @@
 # Discovery Protocol
 
-![DiscoveryProtocol](../../_images/DiscoveryProtocol.png)
+![DiscoveryProtocol](DiscoveryProtocol.png)
 
 [back](../README.md)
