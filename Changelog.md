@@ -37,11 +37,9 @@ Date: **26.01.2020**
   - Context menu icons are now correct [#257](http://github.com/BornToBeRoot/NETworkManager/issues/257){:target="_blank"}
 - Some bugs in the UI fixed (label, translation, placeholder, etc.) 
 
-## Libraries
-  - WebView added
-  - Others updated
-
-## Other
+## Other  
+  - Libary Microsoft.Toolkit.Wpf.UI.Controls.WebView added
+  - Libraries updated
   - Language files updated
 
 # Version 2019.12.0
@@ -129,15 +127,13 @@ Date: **25.12.2019**
 - Ping Monitor
   - ScrollBar fixed
 
-## Libraries
-  - Heijden.DNS removed from source
-  - Microsoft.Windows.SDK.Contracts added
-  - DnsClient.NET added
-  - Others updated
-
 ## Other
   - Language files updated
   - Resources (OUI, Ports, Whois) updated
+  - Libary Heijden.DNS removed from source
+  - Libary DnsClient.NET added
+  - Libary Microsoft.Windows.SDK.Contracts added
+  - Libraries updated
   - Some small bugfixes and improvements
 
 ---
