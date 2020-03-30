@@ -2,14 +2,14 @@
 
 ## Parameter `--help`
 
-**Parameter**: `--help`\
-**Values**: `-/-`\
+**Parameter**: `--help`<br />
+**Values**: `-/-`<br />
 **Example**: `.\NETworkmanager.exe --help`
 
 ## Parameter `--reset-settings`
 
-**Parameter**: `--help`\
-**Values**: `-/-`\
+**Parameter**: `--help`<br />
+**Values**: `-/-`<br />
 **Example**: `.\NETworkmanager.exe --reset-settings`
 
 [back](../README.md)
