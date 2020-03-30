@@ -3,11 +3,6 @@
 ## Parameter `--help`
 Displays a dialog with possible command line arguments and values.
 
-**Values** 
-```
--/-
-```
-
 **Example** 
 ```
 .\NETworkmanager.exe --help
@@ -15,11 +10,6 @@ Displays a dialog with possible command line arguments and values.
 
 ## Parameter `--reset-settings`
 Resets all application settings.
-
-**Values** 
-```
--/-
-```
 
 **Example** 
 ```
