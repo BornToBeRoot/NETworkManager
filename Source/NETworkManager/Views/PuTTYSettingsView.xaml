@@ -60,6 +60,7 @@
                 <Binding Path="LogPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:DirectoryPathWithEnvironmentVariablesValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -69,7 +70,8 @@
             <TextBox.Text>
                 <Binding Path="LogFileName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />                              
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:FileNameValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

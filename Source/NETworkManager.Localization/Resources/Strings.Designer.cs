@@ -2662,7 +2662,16 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter valid file path!.
+        ///   Looks up a localized string similar to Enter a valid file name!.
+        /// </summary>
+        public static string EnterValidFileName {
+            get {
+                return ResourceManager.GetString("EnterValidFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid file path!.
         /// </summary>
         public static string EnterValidFilePath {
             get {

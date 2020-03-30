@@ -1874,7 +1874,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>File</value>
   </data>
   <data name="EnterValidFilePath" xml:space="preserve">
-    <value>Enter valid file path!</value>
+    <value>Enter a valid file path!</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>All</value>
@@ -2880,5 +2880,8 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
     <value>SSH and Raw Log</value>
+  </data>
+  <data name="EnterValidFileName" xml:space="preserve">
+    <value>Enter a valid file name!</value>
   </data>
 </root>

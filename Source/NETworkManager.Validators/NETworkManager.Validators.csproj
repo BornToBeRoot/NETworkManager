@@ -51,7 +51,9 @@
     <Compile Include="EmptyOrIPv4AddressValidator.cs" />
     <Compile Include="EmptyValidator.cs" />
     <Compile Include="FileExistsValidator.cs" />
+    <Compile Include="FileNameValidator.cs" />
     <Compile Include="FilePathValidator.cs" />
+    <Compile Include="DirectoryPathWithEnvironmentVariablesValidator.cs" />
     <Compile Include="HttpAndHttpsUriValidator.cs" />
     <Compile Include="Int32Validator.cs" />
     <Compile Include="IPAddressValidator.cs" />
