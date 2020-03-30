@@ -41,7 +41,7 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
 
 ## Download
 
-**File: ** [:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe)<br />
+**File:** [:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe)<br />
 **Description:** Installs the software in `%ProgramFiles(x86)%`. Settings are saved in `%AppData%`. See [available parameters](http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline).<br />
 **Checksum (SHA256):** `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB` 
 
