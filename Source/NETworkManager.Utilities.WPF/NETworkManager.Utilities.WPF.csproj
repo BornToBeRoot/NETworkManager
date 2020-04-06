@@ -48,6 +48,7 @@
     <Compile Include="BindingProxy.cs" />
     <Compile Include="PasswordBoxBindingBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\GlobalAssemblyInfo.cs" />
     <Compile Include="ProtocolSettingsLayout.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -45,6 +45,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Translators\AccentTranslator.cs" />
     <Compile Include="Translators\PuTTYLogModeTranslator.cs" />
     <Compile Include="Translators\SettingsViewGroupTranslator.cs" />

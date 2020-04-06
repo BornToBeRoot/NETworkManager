@@ -62,6 +62,7 @@
     <Compile Include="NativeMethods.cs" />
     <Compile Include="PortRangeHelper.cs" />
     <Compile Include="PowerShellHelper.cs" />
+    <Compile Include="Properties\GlobalAssemblyInfo.cs" />
     <Compile Include="RegexHelper.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="SecureStringHelper.cs" />

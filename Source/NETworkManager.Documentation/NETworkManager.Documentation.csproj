@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="BaseInfo.cs" />
     <Compile Include="DocumentationIdentifier.cs" />
     <Compile Include="DocumentationInfo.cs" />

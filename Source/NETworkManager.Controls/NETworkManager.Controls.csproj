@@ -45,6 +45,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="MultiSelectDataGrid.cs" />
     <Compile Include="MultiSelectScrollingDataGrid.cs" />
     <Compile Include="ObservableSetCollection.cs" />

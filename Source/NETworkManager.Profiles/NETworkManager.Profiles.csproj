@@ -45,6 +45,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Application\PowerShell.cs" />
     <Compile Include="Application\PuTTY.cs" />
     <Compile Include="Application\RemoteDesktop.cs" />

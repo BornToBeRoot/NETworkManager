@@ -46,6 +46,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="BaudValidator.cs" />
     <Compile Include="DomainValidator.cs" />
     <Compile Include="EmptyOrIPv4AddressValidator.cs" />

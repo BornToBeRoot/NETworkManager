@@ -48,6 +48,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AppearanceManager.cs" />
     <Compile Include="Application\PuTTY.cs" />
     <Compile Include="AssemblyInfo.cs" />
