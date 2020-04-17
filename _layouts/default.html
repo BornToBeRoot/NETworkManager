@@ -54,7 +54,7 @@
     <main id="content" class="main-content" role="main">
       {{ content }}
       <footer class="site-footer">
-        {% unless site.github.is_project_page %}
+        {% unless site.baseurl %}
           <a href="javascript:history.back()" class="btn" style="background-color: #157878;">back</a>
         {% endunless %}
 
