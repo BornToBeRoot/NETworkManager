@@ -9,21 +9,12 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
 <img alt="NETworkManager" src="NETworkManager_Preview.gif" />
 
 <div align="center">
-  <p>   
 	<a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
       <img alt="All releases" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=flat-square" />
     </a>
-    <a href="https://github.com/BornToBeroot/NETworkManager/stargazers" target="_blank">
-      <img alt="GitHub stars" src="https://img.shields.io/github/stars/BornToBeroot/NETworkManager.svg?style=flat-square" />
-    </a>    
-    <a href="https://github.com/BornToBeroot/NETworkManager/network" target="_blank">       
-      <img alt="GitHub forks" src="https://img.shields.io/github/forks/BornToBeroot/NETworkManager.svg?style=flat-square" />
-    </a>     
     <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
       <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=flat-square&&label=master" />
     </a>   
-  </p> 
-  <p> 
     <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
       <img alt="Transifex" src="https://img.shields.io/badge/transifex-translate-green.svg?style=flat-square" />
     </a>   
@@ -36,7 +27,6 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
     <a href="https://twitter.com/intent/tweet?text=NETworkManager%20-%20A%20powerful%20tool%20for%20managing%20networks%20and%20troubleshoot network problems!&url=https%3A%2F%2Fgithub.com%2FBornToBeRoot%2FNETworkManager&hashtags=networkmanager,ipscanner,portscanner,ssh,vnc,remotedesktop,dns,traceroute,pingmonitor" target="_blank">
      <img alt="Transifex" src="https://img.shields.io/badge/twitter-tweet-blue.svg?style=flat-square" />     
     </a>          
-  </p> 
 </div>
 
 ## Download
