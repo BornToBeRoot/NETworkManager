@@ -139,5 +139,3 @@ Date: **25.12.2019**
 ---
 
 You can find the changelog for version 1.x [here](Changelog_v1.md).
-
-[back](../README.md)

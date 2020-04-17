@@ -54,8 +54,7 @@
     <main id="content" class="main-content" role="main">
       {{ content }}
       <footer class="site-footer">
-          <!-- back to home page... -->
-          <!-- <a href="{{ '#download' | prepend: site.baseurl }}" class="btn"></a> -->
+        <a href="{{ prepend: site.baseurl }}" class="btn">:house: Back to home page</a>
 
           <!--
           {% if site.github.is_project_page %}
@@ -69,5 +68,7 @@
     </main>
     
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
   </body>
 </html>
