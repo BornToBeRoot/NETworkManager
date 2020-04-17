@@ -20,31 +20,35 @@
       </p>
         
       <h1 class="project-name">{{ site.github.repository_name }}</h1>
-      <h2 class="project-tagline">{{ page.path | replace: "README.md", "" | replace: "/README.md", "" | replace: "/", " > " | replace: ".md", ""}}</h2> 
+      <h2 class="project-tagline">{{ page.path | replace: "/README.md", "" | replace: "README.md", "" | replace: "/", " > " | replace: ".md", ""}}</h2> 
       
       <a href="{{ site.github.repository_url }}" class="btn">:octocat: View on GitHub</a>
       <a href="{{ '/Changelog.html' | prepend: site.baseurl }}" class="btn">:page_facing_up: Changelog</a>
       <a href="{{ '/Documentation/' | prepend: site.baseurl }}" class="btn">:book: Documentation</a>
       <a href="{{ '#download' | prepend: site.baseurl }}" class="btn">:package: Download</a>
 
-      <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
-        <img alt="All releases" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=flat-square" />
-      </a>
-      <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
-        <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=flat-square&&label=master" />
-      </a>   
-      <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
-        <img alt="Transifex" src="https://img.shields.io/badge/transifex-translate-green.svg?style=flat-square" />
-      </a>   
-      <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Feature-Request&template=Feature_request.md">
-        <img alt="Transifex" src="https://img.shields.io/badge/github-feature_request-green.svg?style=flat-square" />
-      </a>   
-      <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Issue&template=Bug_report.md">
-        <img alt="Transifex" src="https://img.shields.io/badge/github-bug_report-red.svg?style=flat-square" />
-      </a>   
-      <a href="https://twitter.com/intent/tweet?text=NETworkManager%20-%20A%20powerful%20tool%20for%20managing%20networks%20and%20troubleshoot network problems!&url=https%3A%2F%2Fgithub.com%2FBornToBeRoot%2FNETworkManager&hashtags=networkmanager,ipscanner,portscanner,ssh,vnc,remotedesktop,dns,traceroute,pingmonitor" target="_blank">
-       <img alt="Transifex" src="https://img.shields.io/badge/twitter-tweet-blue.svg?style=flat-square" />     
-      </a>   
+      <p>
+          <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
+            <img alt="All releases" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=flat-square" />
+          </a>
+          <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
+            <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=flat-square&&label=master" />
+          </a>   
+        <br />
+          <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
+            <img alt="Transifex" src="https://img.shields.io/badge/transifex-translate-green.svg?style=flat-square" />
+          </a>   
+          <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Feature-Request&template=Feature_request.md">
+              <img alt="Transifex" src="https://img.shields.io/badge/github-feature_request-green.svg?style=flat-square" />
+          </a>   
+          <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Issue&template=Bug_report.md">
+              <img alt="Transifex" src="https://img.shields.io/badge/github-bug_report-red.svg?style=flat-square" />
+          </a>  
+        <br /> 
+          <a href="https://twitter.com/intent/tweet?text=NETworkManager%20-%20A%20powerful%20tool%20for%20managing%20networks%20and%20troubleshoot network problems!&url=https%3A%2F%2Fgithub.com%2FBornToBeRoot%2FNETworkManager&hashtags=networkmanager,ipscanner,portscanner,ssh,vnc,remotedesktop,dns,traceroute,pingmonitor" target="_blank">
+            <img alt="Transifex" src="https://img.shields.io/badge/twitter-tweet-blue.svg?style=flat-square" />     
+          </a>   
+      </p>
     </header>
 
     <main id="content" class="main-content" role="main">
