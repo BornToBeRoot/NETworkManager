@@ -76,14 +76,6 @@ The setup is also available in the Windows Package Manager [:link:&nbsp;Chocolat
 - Listeners
 - ARP Table
 
-## Changelog
-
-[:page_facing_up: Changelog](Changelog.md)
-
-## Documentation
-
-[:book: Documentation](Documentation/README.md)
-
 ## Languages
 
 Official:

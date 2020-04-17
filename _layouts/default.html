@@ -23,13 +23,15 @@
       <h2 class="project-tagline">{{ page.dir }}</h2> 
       
         <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
+        <a href="{{ 'Changelog.html' | prepend: site.baseurl }}" class="btn">:page_facing_up: Changelog</a>
+        <a href="{{ 'Documentation/' | prepend: site.baseurl }}" class="btn">:book: Documentation</a>
         <a href="{{ '#download' | prepend: site.baseurl }}" class="btn">Download</a>
     </header>
 
     <main id="content" class="main-content" role="main">
       {{ content }}
       <footer class="site-footer">
-          <!-- <h3> Add some content here... </h3> -->
+          <a href="{{ '#download' | prepend: site.baseurl }}" class="btn">Download</a>
 
           {% if site.github.is_project_page %}
             <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
