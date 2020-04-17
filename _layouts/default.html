@@ -34,7 +34,7 @@
           Changelog
         </div>
       </a>
-      <a href="{{ '/Documentation/#documentation' | prepend: site.baseurl }}" class="btn">:book: 
+      <a href="{{ '/Documentation/#documentation' | prepend: site.baseurl }}" class="btn"> 
         <div>
           <img height="24px" width="24px" style="vertical-align:middle" src="https://github.githubassets.com/images/icons/emoji/unicode/1f4d6.png" />              
           Documentation      
@@ -75,8 +75,14 @@
       {{ content }}
       <footer class="site-footer">
           <a href="javascript:history.back()" class="btn" style="background-color: #157878;">back</a>
-      </footer>
-    </main>
+          <a href="{{ site.baseurl }}" class="btn">
+            <div>
+              <img height="24px" width="24px" style="vertical-align:middle" src="https://github.githubassets.com/images/icons/emoji/unicode/1f3e0.png" />
+              Homepage
+            </div>
+          </a>     
+        </footer>
+      </main>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
