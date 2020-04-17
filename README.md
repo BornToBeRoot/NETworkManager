@@ -8,10 +8,6 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
 
 <img alt="NETworkManager" src="NETworkManager_Preview.gif" />
 
-<div align="center">
-	         
-</div>
-
 ## Download
 
 | File | Checksum | Description
