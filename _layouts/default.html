@@ -54,7 +54,12 @@
     <main id="content" class="main-content" role="main">
       {{ content }}
       <footer class="site-footer">
-        <a href="{{ prepend: site.baseurl }}" class="btn" style="background-color: #157878; vertical-align: middle; margin: 5px;">:house: Back to home page</a>
+        <a href="{{ prepend: site.baseurl }}" class="btn" style="background-color: #157878;">
+          <div>
+            <img style="vertical-align:middle" src="https://github.githubassets.com/images/icons/emoji/unicode/1f3e0.png">
+            <span style="">Works.</span>
+          </div>
+        </a>
 
           <!--
           {% if site.github.is_project_page %}
