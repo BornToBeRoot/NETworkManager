@@ -20,7 +20,7 @@
       </p>
         
       <h1 class="project-name">{{ site.github.repository_name }}</h1>
-      <h2 class="project-tagline">{{ page.path | replace: "/README.md", "" | replace: "/", " > " | replace: ".md", ""}}</h2> 
+      <h2 class="project-tagline">{{ page.path | replace: "README.md", "" | replace: "/README.md", "" | replace: "/", " > " | replace: ".md", ""}}</h2> 
       
       <a href="{{ site.github.repository_url }}" class="btn">:octocat: View on GitHub</a>
       <a href="{{ '/Changelog.html' | prepend: site.baseurl }}" class="btn">:page_facing_up: Changelog</a>
