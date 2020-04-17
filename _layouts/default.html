@@ -22,7 +22,12 @@
       <h1 class="project-name">{{ site.github.repository_name }}</h1>
       <h2 class="project-tagline">{{ page.path | replace: "/README.md", "" | replace: "README.md", "" | replace: "/", " > " | replace: ".md", ""}}</h2> 
       
-      <a href="{{ site.github.repository_url }}" class="btn">:octocat: View on GitHub</a>
+      <a href="{{ site.github.repository_url }}" class="btn">
+        <div>
+          <img height="24px" width="24px" style="vertical-align:middle" src="https://github.githubassets.com/images/icons/emoji/octocat.png">
+          View on GitHub
+        </div>
+      </a>
       <a href="{{ '/Changelog.html#version-202010' | prepend: site.baseurl }}" class="btn">:page_facing_up: Changelog</a>
       <a href="{{ '/Documentation/#documentation' | prepend: site.baseurl }}" class="btn">:book: Documentation</a>
       <a href="{{ '#download' | prepend: site.baseurl }}" class="btn">:package: Download</a>
