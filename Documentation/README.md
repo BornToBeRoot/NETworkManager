@@ -28,6 +28,4 @@
 
 ## Other
 
-- [Command Line Arguments](Other/CommandLineArguments.md)
-
-[back](../README.md)
+- [Command Line Arguments](Other/CommandLineArguments.md#command-line-arguments)

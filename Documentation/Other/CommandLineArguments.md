@@ -28,5 +28,3 @@ None, Dashboard, NetworkInterface, WiFi, IPScanner, PortScanner, Ping, PingMonit
 ```
 .\NETworkmanager.exe --application:RemoteDeskop
 ```
-
-[back](../README.md)
