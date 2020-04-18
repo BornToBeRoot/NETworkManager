@@ -12,9 +12,9 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
 
 | File | Checksum | Description
 |---|---|---|
-|[:package:&nbsp;Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe)| `A7BD0182269F012701D56285141A6627` `9F41145F748539C7233C3129BE3765CB` | Installs the software in `%ProgramFiles(x86)%`. Settings are saved in `%AppData%`. See [available parameters](http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline). |
-|[:package:&nbsp;Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip)| `BEA66D1B8E1DE820B6077FD1F98ABDF5` `BDD4D7CD0477FC27941EFED326DCCEAD` | Portable version for USB-Stick/Cloud. Settings are saved in the program folder. |
-|[:package:&nbsp;Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip)| `497C6DEFAD22B074B0E8D0E439485451` `28503512434C096D221D2978B1344F91` | Binaries can be deployed anywhere (network share, etc.). Settings are saved in %AppData%. |
+|[:package:&nbsp;Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe){:target="_blank"}| `A7BD0182269F012701D56285141A6627` `9F41145F748539C7233C3129BE3765CB` | Installs the software in `%ProgramFiles(x86)%`. Settings are saved in `%AppData%`. See [available parameters](http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline){:target="_blank"}. |
+|[:package:&nbsp;Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip){:target="_blank"}| `BEA66D1B8E1DE820B6077FD1F98ABDF5` `BDD4D7CD0477FC27941EFED326DCCEAD` | Portable version for USB-Stick/Cloud. Settings are saved in the program folder. |
+|[:package:&nbsp;Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip){:target="_blank"}| `497C6DEFAD22B074B0E8D0E439485451` `28503512434C096D221D2978B1344F91` | Binaries can be deployed anywhere (network share, etc.). Settings are saved in %AppData%. |
 
 The setup is also available in the Windows Package Manager [:link:&nbsp;Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"}.
 
@@ -50,24 +50,24 @@ The setup is also available in the Windows Package Manager [:link:&nbsp;Chocolat
 Official:
 - English
 - German
-- Russian
 
 Community:
-- Chinese
 - Brazilian Portuguese
+- Chinese
 - Dutch
 - French
 - Italy
+- Russian
 - Spanish
 
 Help translate on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager){:target="_blank"}.
 
 ## System requirements
 
-- Windows 10 Build 1809 or later
+- Windows 10 or Server 2016
 - .NET-Framework 4.7.2
 
-[Last release for Windows 7 / 8.1 and Server 2008 R2 / 2012 R2 / 2016](https://github.com/BornToBeRoot/NETworkManager/releases/tag/v1.11.0.0){:target="_blank"}
+[Last release for Windows 7 / 8.1 and Server 2008 R2 / 2012 R2]({{ '/Changelog_v1.html#version-11100' | prepend: site.baseurl }})
 
 ## License
 
