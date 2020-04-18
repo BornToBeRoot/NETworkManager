@@ -8,17 +8,17 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
 
 <img alt="NETworkManager" src="NETworkManager_Preview.gif" />
 
-## Download
+## : package: Download
 
-| File | Checksum |
-|---|---|
-|[:package:&nbsp;Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe){:target="_blank"}| `A7BD0182269F012701D56285141A6627` `9F41145F748539C7233C3129BE3765CB` | 
-|[:package:&nbsp;Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip){:target="_blank"}| `BEA66D1B8E1DE820B6077FD1F98ABDF5` `BDD4D7CD0477FC27941EFED326DCCEAD` | 
-|[:package:&nbsp;Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip){:target="_blank"}| `497C6DEFAD22B074B0E8D0E439485451` `28503512434C096D221D2978B1344F91` |
+| File | Checksum | Help |
+|---|---|---|
+|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe){:target="_blank"}| `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB` | :book: |
+|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip){:target="_blank"}| `BEA66D1B8E1DE820B6077FD1F98ABDF5BDD4D7CD0477FC27941EFED326DCCEAD` | :book: |
+|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip){:target="_blank"}| `497C6DEFAD22B074B0E8D0E43948545128503512434C096D221D2978B1344F91` | :book: |
 
-The setup is also available in the Windows Package Manager [:link:&nbsp;Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"}.
+The setup is also available in the Windows Package Manager [:link: Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"}.
 
-## Features
+## :rocket:	Features
 
 - Dashboard 
 - Network Interface - Information, Bandwidth, Configure
