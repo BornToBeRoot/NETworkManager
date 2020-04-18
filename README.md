@@ -8,17 +8,17 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
 
 <img alt="NETworkManager" src="NETworkManager_Preview.gif" />
 
-## : package: Download
+## Download :package:
 
 | File | Checksum | Help |
 |---|---|---|
-|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe){:target="_blank"}| `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB` | :book: |
-|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip){:target="_blank"}| `BEA66D1B8E1DE820B6077FD1F98ABDF5BDD4D7CD0477FC27941EFED326DCCEAD` | :book: |
-|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip){:target="_blank"}| `497C6DEFAD22B074B0E8D0E43948545128503512434C096D221D2978B1344F91` | :book: |
+|[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe){:target="_blank"}| `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB` | :book: |
+|[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip){:target="_blank"}| `BEA66D1B8E1DE820B6077FD1F98ABDF5BDD4D7CD0477FC27941EFED326DCCEAD` | :book: |
+|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip){:target="_blank"}| `497C6DEFAD22B074B0E8D0E43948545128503512434C096D221D2978B1344F91` | :book: |
 
 The setup is also available in the Windows Package Manager [:link: Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"}.
 
-## :rocket:	Features
+## Features :rocket:
 
 - Dashboard 
 - Network Interface - Information, Bandwidth, Configure
@@ -45,7 +45,7 @@ The setup is also available in the Windows Package Manager [:link: Chocolatey](h
 - Listeners
 - ARP Table
 
-## Languages
+## Languages :flags:
 
 Official:
 - English
@@ -62,14 +62,14 @@ Community:
 
 Help translate on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager){:target="_blank"}.
 
-## System requirements
+## System requirements :computer:
 
 - Windows 10 or Server 2016
 - .NET-Framework 4.7.2
 
 [Last release for Windows 7 / 8.1 and Server 2008 R2 / 2012 R2]({{ '/Changelog_v1.html#version-11100' | prepend: site.baseurl }})
 
-## License
+## License :memo:
 
 This software is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE){:target="_blank"}.
 
