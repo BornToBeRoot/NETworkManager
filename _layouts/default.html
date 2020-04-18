@@ -75,10 +75,9 @@
       {{ content }}     
     </main>
 
-    {{ page.url }}
-    {{ site.baseurl }}
 
     <footer class="page-header" style="background-color: #159957; background-image: linear-gradient(120deg, #155799, #159957);">
+      {{% unless page.url == "/" or  page.url == "/index.html" %}}
       <a href="javascript:history.back()" class="btn">back</a>
       <a href="{{ site.baseurl }}" class="btn">
         <div>
@@ -86,6 +85,7 @@
           Homepage
         </div>
       </a>     
+      {{% endunless %}}
     </footer>
 
     <script async defer src="https://buttons.github.io/buttons.js"></script>
