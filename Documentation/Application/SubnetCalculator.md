@@ -11,6 +11,3 @@
 ## Wide Subnet
 
 ![SubnetCalculator_WideSubnet](SubnetCalculator_WideSubnet.png)
-
-
-[back](../README.md)

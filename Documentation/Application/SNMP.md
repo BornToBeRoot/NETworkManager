@@ -19,5 +19,3 @@
 ### Walk
 
 ![SNMP_v3_Walk](SNMP_v3_Walk.png)
-
-[back](../README.md)

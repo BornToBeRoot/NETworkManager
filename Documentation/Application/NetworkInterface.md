@@ -12,5 +12,3 @@ The **Network Interface** tool detects all network adapters of the computer with
 ## Configure
 
 ![NetworkInterface_Configure](NetworkInterface_Configure.png)
-
-[back](../README.md)
