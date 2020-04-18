@@ -76,7 +76,7 @@
     </main>
 
     <footer class="page-header" style="background-color: #159957; background-image: linear-gradient(120deg, #155799, #159957);">
-      {{% unless page.url == "/" %}}
+      {{% if page.url != "/" %}}
       <a href="javascript:history.back()" class="btn">back</a>
       <a href="{{ site.baseurl }}" class="btn">
         <div>
