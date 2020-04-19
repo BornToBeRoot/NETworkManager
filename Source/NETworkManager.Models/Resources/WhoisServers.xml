@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Whois servers by domain from IANA
-Generated 12/25/2019 03:15:30-->
+Generated 04/20/2020 00:44:38-->
 <WhoisServers>
   <WhoisServer>
     <TLD>AAA</TLD>
@@ -692,7 +692,7 @@ Generated 12/25/2019 03:15:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>BOSTIK</TLD>
-    <Server>whois-bostik.nic.fr</Server>
+    <Server>whois.nic.bostik</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>BOSTON</TLD>
@@ -2978,10 +2978,6 @@ Generated 12/25/2019 03:15:30-->
     <Server>whois.nic.li</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>LIAISON</TLD>
-    <Server>whois.nic.liaison</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>LIDL</TLD>
     <Server>whois.nic.lidl</Server>
   </WhoisServer>
@@ -3508,10 +3504,6 @@ Generated 12/25/2019 03:15:30-->
   <WhoisServer>
     <TLD>NAB</TLD>
     <Server>whois.nic.nab</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>NADEX</TLD>
-    <Server>whois.nic.nadex</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>NAGOYA</TLD>
@@ -4999,7 +4991,7 @@ Generated 12/25/2019 03:15:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>TH</TLD>
-    <Server>whois.thnic.co.th</Server>
+    <Server>whois.thains.co.th</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>THD</TLD>
@@ -5353,10 +5345,6 @@ Generated 12/25/2019 03:15:30-->
   <WhoisServer>
     <TLD>VISION</TLD>
     <Server>whois.nic.vision</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>VISTAPRINT</TLD>
-    <Server>whois.nic.vistaprint</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>VIVA</TLD>
@@ -5788,10 +5776,6 @@ Generated 12/25/2019 03:15:30-->
     <Server>whois.nic.xn--efvy88h</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>XN--ESTV75G</TLD>
-    <Server>whois.nic.xn--estv75g</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>XN--FCT429K</TLD>
     <Server>
     </Server>
@@ -5997,6 +5981,11 @@ Generated 12/25/2019 03:15:30-->
     <Server>whois.nic.xn--mgbca7dzdo</Server>
   </WhoisServer>
   <WhoisServer>
+    <TLD>XN--MGBCPQ6GPA1A</TLD>
+    <Server>
+    </Server>
+  </WhoisServer>
+  <WhoisServer>
     <TLD>XN--MGBERP4A5D4AR</TLD>
     <Server>whois.nic.net.sa</Server>
   </WhoisServer>
@@ -6068,7 +6057,7 @@ Generated 12/25/2019 03:15:30-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--O3CW4H</TLD>
-    <Server>whois.thnic.co.th</Server>
+    <Server>whois.thains.co.th</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--OGBPF8FL</TLD>
@@ -6100,6 +6089,10 @@ Generated 12/25/2019 03:15:30-->
   <WhoisServer>
     <TLD>XN--PSSY2U</TLD>
     <Server>whois.nic.xn--pssy2u</Server>
+  </WhoisServer>
+  <WhoisServer>
+    <TLD>XN--Q7CE6A</TLD>
+    <Server>whois.nic.la</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--Q9JYB4C</TLD>

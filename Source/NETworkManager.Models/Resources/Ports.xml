@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 12/25/2019 03:15:31-->
+Generated 04/20/2020 00:44:30-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -31419,13 +31419,13 @@ Generated 12/25/2019 03:15:31-->
   <Port>
     <Number>2864</Number>
     <Protocol>tcp</Protocol>
-    <Name>astromed-main</Name>
+    <Name>astronova-main</Name>
     <Description>main 5001 cmd</Description>
   </Port>
   <Port>
     <Number>2864</Number>
     <Protocol>udp</Protocol>
-    <Name>astromed-main</Name>
+    <Name>astronova-main</Name>
     <Description>main 5001 cmd</Description>
   </Port>
   <Port>
@@ -47545,6 +47545,30 @@ Generated 12/25/2019 03:15:31-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>4195</Number>
+    <Protocol>tcp</Protocol>
+    <Name>aws-wsp</Name>
+    <Description>AWS protocol for cloud remoting solution</Description>
+  </Port>
+  <Port>
+    <Number>4195</Number>
+    <Protocol>udp</Protocol>
+    <Name>aws-wsp</Name>
+    <Description>AWS protocol for cloud remoting solution</Description>
+  </Port>
+  <Port>
+    <Number>4195</Number>
+    <Protocol>sctp</Protocol>
+    <Name>aws-wsp</Name>
+    <Description>AWS protocol for cloud remoting solution</Description>
+  </Port>
+  <Port>
+    <Number>4195</Number>
+    <Protocol>dccp</Protocol>
+    <Name>aws-wsp</Name>
+    <Description>AWS protocol for cloud remoting solution</Description>
+  </Port>
+  <Port>
     <Number>4197</Number>
     <Protocol>tcp</Protocol>
     <Name>hctl</Name>
@@ -49129,6 +49153,18 @@ Generated 12/25/2019 03:15:31-->
     <Description>Matrix Configuration Protocol</Description>
   </Port>
   <Port>
+    <Number>4460</Number>
+    <Protocol>tcp</Protocol>
+    <Name>ntske</Name>
+    <Description>Network Time Security Key Establishment</Description>
+  </Port>
+  <Port>
+    <Number>4460</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>4484</Number>
     <Protocol>tcp</Protocol>
     <Name>hpssmgmt</Name>
@@ -49739,6 +49775,18 @@ Generated 12/25/2019 03:15:31-->
     <Protocol>udp</Protocol>
     <Name>ventoso</Name>
     <Description>Bidirectional single port remote radio VOIP and Control stream</Description>
+  </Port>
+  <Port>
+    <Number>4646</Number>
+    <Protocol>tcp</Protocol>
+    <Name>dots-signal</Name>
+    <Description>Distributed Denial-of-Service Open Threat Signaling (DOTS) Signal Channel</Description>
+  </Port>
+  <Port>
+    <Number>4646</Number>
+    <Protocol>udp</Protocol>
+    <Name>dots-signal</Name>
+    <Description>Distributed Denial-of-Service Open Threat Signaling (DOTS) Signal Channel</Description>
   </Port>
   <Port>
     <Number>4658</Number>
@@ -58777,6 +58825,18 @@ Generated 12/25/2019 03:15:31-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>6440</Number>
+    <Protocol>tcp</Protocol>
+    <Name>heliosd</Name>
+    <Description>heliosd daemon</Description>
+  </Port>
+  <Port>
+    <Number>6440</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>6442</Number>
     <Protocol>tcp</Protocol>
     <Name>tarp</Name>
@@ -60429,6 +60489,18 @@ Generated 12/25/2019 03:15:31-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>6924</Number>
+    <Protocol>tcp</Protocol>
+    <Name>split-ping</Name>
+    <Description>Ping with RX/TX latency/loss split</Description>
+  </Port>
+  <Port>
+    <Number>6924</Number>
+    <Protocol>udp</Protocol>
+    <Name>split-ping</Name>
+    <Description>Ping with RX/TX latency/loss split</Description>
+  </Port>
+  <Port>
     <Number>6935</Number>
     <Protocol>tcp</Protocol>
     <Name>ethoscan</Name>
@@ -61365,7 +61437,7 @@ Generated 12/25/2019 03:15:31-->
     <Description>Inter-Channel Termination Protocol (ICTP) for multi-wavelength PON (Passive Optical Network) systems</Description>
   </Port>
   <Port>
-    <Number>7702</Number>
+    <Number>7202</Number>
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
@@ -65199,6 +65271,18 @@ Generated 12/25/2019 03:15:31-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>8710</Number>
+    <Protocol>tcp</Protocol>
+    <Name>semi-grpc</Name>
+    <Description>gRPC for SEMI Standards implementations</Description>
+  </Port>
+  <Port>
+    <Number>8710</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>8711</Number>
     <Protocol>tcp</Protocol>
     <Name>nvc</Name>
@@ -66891,6 +66975,18 @@ Generated 12/25/2019 03:15:31-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>9310</Number>
+    <Protocol>tcp</Protocol>
+    <Name>sapms</Name>
+    <Description>SAP Message Server</Description>
+  </Port>
+  <Port>
+    <Number>9310</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>9312</Number>
     <Protocol>tcp</Protocol>
     <Name>sphinxapi</Name>
@@ -68253,6 +68349,18 @@ Generated 12/25/2019 03:15:31-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>10023</Number>
+    <Protocol>udp</Protocol>
+    <Name>cefd-vmp</Name>
+    <Description>Comtech EF-Data's Vipersat Management Protocol</Description>
+  </Port>
+  <Port>
+    <Number>10023</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>10050</Number>
     <Protocol>tcp</Protocol>
     <Name>zabbix-agent</Name>
@@ -68649,6 +68757,18 @@ Generated 12/25/2019 03:15:31-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>10443</Number>
+    <Protocol>tcp</Protocol>
+    <Name>cirrossp</Name>
+    <Description>CirrosSP Workstation Communication</Description>
+  </Port>
+  <Port>
+    <Number>10443</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>10500</Number>
     <Protocol>tcp</Protocol>
     <Name>record</Name>
@@ -68863,18 +68983,6 @@ Generated 12/25/2019 03:15:31-->
     <Protocol>udp</Protocol>
     <Name>metasys</Name>
     <Description>Metasys</Description>
-  </Port>
-  <Port>
-    <Number>10023</Number>
-    <Protocol>udp</Protocol>
-    <Name>cefd-vmp</Name>
-    <Description>Comtech EF-Data's Vipersat Management Protocol</Description>
-  </Port>
-  <Port>
-    <Number>10023</Number>
-    <Protocol>tcp</Protocol>
-    <Name>record</Name>
-    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>11095</Number>
@@ -72971,6 +73079,18 @@ Generated 12/25/2019 03:15:31-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>28010</Number>
+    <Protocol>tcp</Protocol>
+    <Name>gruber-cashreg</Name>
+    <Description>Gruber cash registry protocol</Description>
+  </Port>
+  <Port>
+    <Number>28010</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>28119</Number>
     <Protocol>tcp</Protocol>
     <Name>record</Name>
@@ -73611,6 +73731,18 @@ Generated 12/25/2019 03:15:31-->
     <Protocol>udp</Protocol>
     <Name>idmgratm</Name>
     <Description>Attachmate ID Manager</Description>
+  </Port>
+  <Port>
+    <Number>33000</Number>
+    <Protocol>tcp</Protocol>
+    <Name>wg-endpt-comms</Name>
+    <Description>WatchGuard Endpoint Communications</Description>
+  </Port>
+  <Port>
+    <Number>33000</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>33060</Number>

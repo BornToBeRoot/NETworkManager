@@ -619,7 +619,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ARPTable.
+        ///   Looks up a localized string similar to ARP Table.
         /// </summary>
         public static string ApplicationName_ARPTable {
             get {
@@ -6805,7 +6805,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WakeOnLAN.
+        ///   Looks up a localized string similar to Wake On LAN.
         /// </summary>
         public static string SettingsViewName_WakeOnLAN {
             get {
