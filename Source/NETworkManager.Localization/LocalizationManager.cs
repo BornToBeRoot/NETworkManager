@@ -57,7 +57,7 @@ namespace NETworkManager.Localization
         {
             new LocalizationInfo("English", "English", GetImageUri("en-US"), "BornToBeRoot", "en-US", 100, true),
             new LocalizationInfo("German", "Deutsch",  GetImageUri("de-DE"), "BornToBeRoot", "de-DE", 100, true),
-            new LocalizationInfo("Russian", "Русский", GetImageUri("ru-RU"), "LaXe", "ru-RU", 81.18, true),
+            new LocalizationInfo("Russian", "Русский", GetImageUri("ru-RU"), "LaXe", "ru-RU", 81.18, false),
             new LocalizationInfo("Spanish", "Español", GetImageUri("es-ES"), "MS-PC", "es-ES", 99.88, false),
             new LocalizationInfo("Italian", "Italiano", GetImageUri("it-IT"), "simone.ferrari", "it-IT", 87.45, false),
             new LocalizationInfo("Dutch", "Nederlands", GetImageUri("nl-NL"), "Get_r3kt_by_Me", "nl-NL", 43.54, false),
