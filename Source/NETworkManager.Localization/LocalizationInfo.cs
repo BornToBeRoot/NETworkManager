@@ -43,7 +43,7 @@ namespace NETworkManager.Localization
         public bool IsOfficial { get; set; }
                 
         /// <summary>
-        /// Create an empty instance.
+        /// Create an empty instance of <see cref="LocalizationInfo"/>.
         /// </summary>
         public LocalizationInfo()
         {
@@ -51,7 +51,7 @@ namespace NETworkManager.Localization
         }
 
         /// <summary>
-        /// Create an instance with a culture code.
+        /// Create an instance of <see cref="LocalizationInfo"/> with a culture code.
         /// </summary>
         /// <param name="code">Culture code (like "en-US")</param>
         public LocalizationInfo(string code)
@@ -60,7 +60,7 @@ namespace NETworkManager.Localization
         }
 
         /// <summary>
-        /// Create an instance with all parameters.
+        /// Create an instance of <see cref="LocalizationInfo"/> with all parameters.
         /// </summary>
         /// <param name="name"><see cref="Name"/>.</param>
         /// <param name="nativeName"><see cref="NativeName"/>.</param>

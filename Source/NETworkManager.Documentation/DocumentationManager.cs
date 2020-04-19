@@ -7,40 +7,58 @@ using System.Windows.Input;
 
 namespace NETworkManager.Documentation
 {
+    /// <summary>
+    /// This class is designed to interact with the documentation at https://borntoberoot.github.io/NETworkManager/.
+    /// </summary>
     public static class DocumentationManager
     {
+        /// <summary>
+        /// Base path of the documentation.
+        /// </summary>
         public const string DocumentationBaseUrl = @"https://borntoberoot.github.io/NETworkManager/Documentation/";
 
-        public static List<DocumentationInfo> List => new List<DocumentationInfo>
+        /// <summary>
+        /// Constant to identify the header, which should be displayed, of the website at <see cref="DocumentationBaseUrl"/>. 
+        /// </summary>
+        public const string DocumentationBaseUrlHeader = @"#documentation";
+
+        /// <summary>
+        /// List with all known documentation entries.
+        /// </summary>
+        private static List<DocumentationInfo> List => new List<DocumentationInfo>
         {
-            new DocumentationInfo(DocumentationIdentifier.ApplicationDashboard, @"Application/Dashboard.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"Application/NetworkInterface.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationWiFi, @"Application/WiFi.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationIPScanner, @"Application/IPScanner.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationPortScanner, @"Application/PortScanner.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationPing, @"Application/Ping.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationPingMonitor, @"Application/PingMonitor.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationTraceroute, @"Application/Traceroute.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationDnsLookup, @"Application/DNSLookup.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationRemoteDesktop, @"Application/RemoteDesktop.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationPowerShell, @"Application/PowerShell.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationPutty, @"Application/PuTTY.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationTigerVNC, @"Application/TigerVNC.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationWebConsole, @"Application/WebConsole.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationSnmp, @"Application/SNMP.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationDiscoveryProtocol, @"Application/DiscoveryProtocol.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationWakeOnLan, @"Application/WakeOnLAN.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationHttpHeaders, @"Application/HTTPHeaders.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationWhois, @"Application/Whois.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationSubnetCalculator, @"Application/SubnetCalculator.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationLookup, @"Application/Lookup.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationConnections, @"Application/Connections.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationListeners, @"Application/Listeners.html"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationArpTable, @"Application/ARPTable.html"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationDashboard, @"Application/Dashboard.html#dashboard"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"Application/NetworkInterface.html#network-interface"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationWiFi, @"Application/WLAN.html#wlan"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationIPScanner, @"Application/IPScanner.html#ip-scanner"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationPortScanner, @"Application/PortScanner.html#port-scanner"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationPing, @"Application/Ping.html#ping"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationPingMonitor, @"Application/PingMonitor.html#ping-monitor"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationTraceroute, @"Application/Traceroute.html#traceroute"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationDnsLookup, @"Application/DNSLookup.html#dns-lookup"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationRemoteDesktop, @"Application/RemoteDesktop.html#remote-desktop"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationPowerShell, @"Application/PowerShell.html#powershell"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationPutty, @"Application/PuTTY.html#putty"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationTigerVNC, @"Application/TigerVNC.html#tigervnc"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationWebConsole, @"Application/WebConsole.html#web-console"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationSnmp, @"Application/SNMP.html#snmp"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationDiscoveryProtocol, @"Application/DiscoveryProtocol.html#discovery-protocol"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationWakeOnLan, @"Application/WakeOnLAN.html#wake-on-lan"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationHttpHeaders, @"Application/HTTPHeaders.html#http-headers"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationWhois, @"Application/Whois.html#whois"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationSubnetCalculator, @"Application/SubnetCalculator.html#subnet-calculator"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationLookup, @"Application/Lookup.html#lookup"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationConnections, @"Application/Connections.html#connections"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationListeners, @"Application/Listeners.html#listeners"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationArpTable, @"Application/ARPTable.html#arp-table"),
         };
 
-        // Get localized documentation url (if available), else return the english page
-        public static string CreateUrl(DocumentationIdentifier documentationIdentifier)
+        /// <summary>
+        /// Method to create the documentation url from <see cref="DocumentationIdentifier"/>.
+        /// </summary>
+        /// <param name="documentationIdentifier"><see cref="DocumentationIdentifier"/> of the documentation page you want to open.</param>
+        /// <returns>URL of the documentation page.</returns>
+        private static string CreateUrl(DocumentationIdentifier documentationIdentifier)
         {
             var info = List.FirstOrDefault(x => x.Identifier == documentationIdentifier);
 
@@ -48,24 +66,41 @@ namespace NETworkManager.Documentation
 
             if (info != null)
                 url += info.Path;
+            else
+                url += DocumentationBaseUrlHeader;
 
             return url;
         }
 
+        /// <summary>
+        /// Method for opening a documentation page with the default webbrowser based on the <see cref="DocumentationIdentifier"/> .
+        /// </summary>
+        /// <param name="documentationIdentifier"><see cref="DocumentationIdentifier"/> of the documentation page you want to open.</param>
         public static void OpenDocumentation(DocumentationIdentifier documentationIdentifier)
         {
             Process.Start(CreateUrl(documentationIdentifier));
         }
 
-        #region ICommands & Actions
+        /// <summary>
+        /// Command to open a documentation page based on <see cref="DocumentationIdentifier"/>.
+        /// </summary>
         public static ICommand OpenDocumentationCommand => new RelayCommand(OpenDocumentationAction);
 
+        /// <summary>
+        /// Method to open a documentation page based on <see cref="DocumentationIdentifier"/>.
+        /// </summary>
+        /// <param name="documentationIdentifier"></param>
         private static void OpenDocumentationAction(object documentationIdentifier)
         {
             if (documentationIdentifier != null)
                 OpenDocumentation((DocumentationIdentifier)documentationIdentifier);
         }
 
+        /// <summary>
+        /// Method to get the <see cref="DocumentationIdentifier"/> from an <see cref="ApplicationName"/>.
+        /// </summary>
+        /// <param name="name"><see cref="ApplicationName"/> from which you want to get the <see cref="DocumentationIdentifier"/>.</param>
+        /// <returns><see cref="DocumentationIdentifier"/> of the application.</returns>
         public static DocumentationIdentifier GetIdentifierByAppliactionName(ApplicationName name)
         {
             switch (name)
@@ -118,6 +153,5 @@ namespace NETworkManager.Documentation
                     return DocumentationIdentifier.Default;
             }
         }
-        #endregion
     }
 }
