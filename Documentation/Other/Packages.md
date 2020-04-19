@@ -6,7 +6,7 @@ Installs the software in `%ProgramFiles(x86)%`. Settings are saved in `%AppData%
 ## Portable
 Portable version for USB-Stick/Cloud. Settings are saved in the program folder.
 
-## Archive
+## Archiv
 Binaries can be deployed anywhere (network share, etc.). Settings are saved in %AppData%.
 
 ## Chocolatey
