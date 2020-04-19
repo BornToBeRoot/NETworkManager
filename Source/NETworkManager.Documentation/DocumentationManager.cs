@@ -117,6 +117,8 @@ namespace NETworkManager.Documentation
                     return DocumentationIdentifier.ApplicationPortScanner;
                 case ApplicationName.Ping:
                     return DocumentationIdentifier.ApplicationPing;
+                case ApplicationName.PingMonitor:
+                    return DocumentationIdentifier.ApplicationPingMonitor;
                 case ApplicationName.Traceroute:
                     return DocumentationIdentifier.ApplicationTraceroute;
                 case ApplicationName.DNSLookup:
@@ -129,8 +131,12 @@ namespace NETworkManager.Documentation
                     return DocumentationIdentifier.ApplicationPutty;
                 case ApplicationName.TigerVNC:
                     return DocumentationIdentifier.ApplicationTigerVNC;
+                case ApplicationName.WebConsole:
+                    return DocumentationIdentifier.ApplicationWebConsole;
                 case ApplicationName.SNMP:
                     return DocumentationIdentifier.ApplicationSnmp;
+                case ApplicationName.DiscoveryProtocol:
+                    return DocumentationIdentifier.ApplicationDiscoveryProtocol;
                 case ApplicationName.WakeOnLAN:
                     return DocumentationIdentifier.ApplicationWakeOnLan;
                 case ApplicationName.HTTPHeaders:
