@@ -2744,10 +2744,10 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>Ping</value>
   </data>
   <data name="ProfileViewName_PingMonitor" xml:space="preserve">
-    <value>PingMonitor</value>
+    <value>Ping Monitor</value>
   </data>
   <data name="ProfileViewName_PortScanner" xml:space="preserve">
-    <value>PortScanner</value>
+    <value>Port Scanner</value>
   </data>
   <data name="ProfileViewName_PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -2768,7 +2768,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>Wake on LAN</value>
   </data>
   <data name="ProfileViewName_WebConsole" xml:space="preserve">
-    <value>WebConsole</value>
+    <value>Web Console</value>
   </data>
   <data name="ProfileViewName_Whois" xml:space="preserve">
     <value>Whois</value>
@@ -2798,7 +2798,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>HotKeys</value>
   </data>
   <data name="SettingsViewName_HTTPHeaders" xml:space="preserve">
-    <value>HTTPHeaders</value>
+    <value>HTTP Headers</value>
   </data>
   <data name="SettingsViewName_IPScanner" xml:space="preserve">
     <value>IP Scanner</value>

@@ -5012,7 +5012,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PingMonitor.
+        ///   Looks up a localized string similar to Ping Monitor.
         /// </summary>
         public static string ProfileViewName_PingMonitor {
             get {
@@ -5021,7 +5021,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PortScanner.
+        ///   Looks up a localized string similar to Port Scanner.
         /// </summary>
         public static string ProfileViewName_PortScanner {
             get {
@@ -5084,7 +5084,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WebConsole.
+        ///   Looks up a localized string similar to Web Console.
         /// </summary>
         public static string ProfileViewName_WebConsole {
             get {
@@ -6670,7 +6670,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HTTPHeaders.
+        ///   Looks up a localized string similar to HTTP Headers.
         /// </summary>
         public static string SettingsViewName_HTTPHeaders {
             get {
