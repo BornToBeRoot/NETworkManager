@@ -6,9 +6,9 @@
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"                             
-        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:resources="clr-namespace:NETworkManager.Properties"
+        xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
         Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Height="300" Width="250" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" Style="{StaticResource DefaultWindow}" ShowMinButton="False" ShowMaxRestoreButton="False" Closing="StatusWindow_Closing">
@@ -104,6 +104,6 @@
             <TextBlock Text="{Binding CountdownText}" Foreground="{DynamicResource GrayBrush5}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
             <mahAppsControls:MetroProgressBar Value="{Binding CountdownValue}" Minimum="0" Maximum="10" Foreground="{DynamicResource AccentColorBrush}" />
         </StackPanel>
-        <Button Grid.Row="3" Content="{x:Static localization:Strings.Open}" Command="{Binding OpenMainWindowCommand}" Style="{StaticResource DefaultButton}" />
+        <Button Grid.Row="3" Content="{x:Static localization:Strings.Show}" Command="{Binding OpenMainWindowCommand}" Style="{StaticResource DefaultButton}" />
     </Grid>
 </mahAppsControls:MetroWindow>
