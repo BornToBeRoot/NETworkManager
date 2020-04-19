@@ -12,9 +12,9 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
 
 | File | Checksum | Help |
 |---|---|---|
-|[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe){:target="_blank"}| `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB` | :book: |
-|[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip){:target="_blank"}| `BEA66D1B8E1DE820B6077FD1F98ABDF5BDD4D7CD0477FC27941EFED326DCCEAD` | :book: |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip){:target="_blank"}| `497C6DEFAD22B074B0E8D0E43948545128503512434C096D221D2978B1344F91` | :book: |
+|[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe){:target="_blank"}| `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB` | [:book:](Documentation/Other/Packages.md#setup) |
+|[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip){:target="_blank"}| `BEA66D1B8E1DE820B6077FD1F98ABDF5BDD4D7CD0477FC27941EFED326DCCEAD` | [:book:](Documentation/Other/Packages.md#portable) |
+|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip){:target="_blank"}| `497C6DEFAD22B074B0E8D0E43948545128503512434C096D221D2978B1344F91` | [:book:](Documentation/Other/Packages.md#archiv) |
 
 The setup is also available in the Windows Package Manager [:link: Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"}.
 
