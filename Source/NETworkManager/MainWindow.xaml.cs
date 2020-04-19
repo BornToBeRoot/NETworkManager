@@ -862,7 +862,7 @@ namespace NETworkManager
         }
         #endregion
 
-        #region Settings
+    #region Settings
         private void OpenSettings()
         {
             // Save current language code
@@ -948,8 +948,7 @@ namespace NETworkManager
             ChangeApplicationView(SelectedApplication.Name, true);
         }
         #endregion
-
-        #region Handle WndProc messages (Single instance, handle HotKeys)
+                #region Handle WndProc messages (Single instance, handle HotKeys)
         private HwndSource _hwndSoure;
 
         // This is called after MainWindow() and before OnContentRendered() --> to register hotkeys...

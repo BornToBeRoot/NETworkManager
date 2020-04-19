@@ -29,7 +29,7 @@ namespace NETworkManager.Documentation
         {
             new DocumentationInfo(DocumentationIdentifier.ApplicationDashboard, @"Application/Dashboard.html#dashboard"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"Application/NetworkInterface.html#network-interface"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationWiFi, @"Application/WLAN.html#wlan"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationWiFi, @"Application/WiFi.html#wifi"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationIPScanner, @"Application/IPScanner.html#ip-scanner"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPortScanner, @"Application/PortScanner.html#port-scanner"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPing, @"Application/Ping.html#ping"),
