@@ -202,7 +202,7 @@
     <value>DNS</value>
   </data>
   <data name="DNSLookup" xml:space="preserve">
-    <value>Búsqueda de DNS</value>
+    <value>Búsqueda DNS</value>
   </data>
   <data name="DontFragment" xml:space="preserve">
     <value>No fragmentar</value>
@@ -235,7 +235,7 @@
     <value>Historial</value>
   </data>
   <data name="HotKeys" xml:space="preserve">
-    <value>Atajos del teclado</value>
+    <value>Atajos de teclado</value>
   </data>
   <data name="HTTPHeaders" xml:space="preserve">
     <value>Encabezados HTTP</value>
@@ -379,7 +379,7 @@
     <value>Tema</value>
   </data>
   <data name="Traceroute" xml:space="preserve">
-    <value>Traceroute</value>
+    <value>Rastrear ruta</value>
   </data>
   <data name="Tray" xml:space="preserve">
     <value>Fijar</value>
@@ -649,7 +649,7 @@
     <value>Añadir</value>
   </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
-    <value>Añadir una pestaña para realizar una búsqueda de DNS...</value>
+    <value>Añadir una pestaña para realizar una búsqueda DNS...</value>
   </data>
   <data name="AddATabToPerformANetworkScan" xml:space="preserve">
     <value>Añadir una pestaña para realizar un escaneo de red...</value>
@@ -664,7 +664,7 @@
     <value>Añadir una pestaña para realizar un escaneo de puertos...</value>
   </data>
   <data name="AddATabToPerformATrace" xml:space="preserve">
-    <value>Añadir una pestaña para realizar un seguimiento...</value>
+    <value>Añadir una pestaña para realizar un rastreo...</value>
   </data>
   <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
     <value>Añadir una pestaña para consultar los encabezados HTTP...</value>
@@ -820,7 +820,7 @@
     <value>Configuración automática de DNS</value>
   </data>
   <data name="DNSLookupDots" xml:space="preserve">
-    <value>Búsqueda de DNS...</value>
+    <value>Búsqueda DNS...</value>
   </data>
   <data name="DNSServer" xml:space="preserve">
     <value>Servidor DNS</value>
@@ -897,9 +897,6 @@
   <data name="InheritHostFromDefault" xml:space="preserve">
     <value>Heredar el host de forma predeterminada</value>
   </data>
-  <data name="InstallRDP8dot1Message" xml:space="preserve">
-    <value>¡Debe instalar la versión 8.1 del protocolo de escritorio remoto (RDP) en su sistema para usar la funcionalidad de escritorio remoto!</value>
-  </data>
   <data name="IPRange" xml:space="preserve">
     <value>Rango de IP</value>
   </data>
@@ -916,7 +913,7 @@
     <value>Dirección MAC o proveedor</value>
   </data>
   <data name="MagicPacketSentMessage" xml:space="preserve">
-    <value>¡Paquete mágico enviado con éxito!</value>
+    <value>¡Paquete mágico enviado correctamente!</value>
   </data>
   <data name="MaximumNumberOfHopsReached" xml:space="preserve">
     <value>¡Número máximo ({0}) de saltos/router alcanzados!</value>
@@ -1133,13 +1130,13 @@ Crear uno...</value>
 (¡Los archivos de perfil no están afectados!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
-    <value>¡Configuración exportada con éxito!</value>
+    <value>¡Configuración exportada correctamente!</value>
   </data>
   <data name="SettingsSuccessfullyImported" xml:space="preserve">
-    <value>¡Configuración importada con éxito!</value>
+    <value>¡Configuración importada correctamente!</value>
   </data>
   <data name="SettingsSuccessfullyReset" xml:space="preserve">
-    <value>¡Configuración restablecida con éxito!</value>
+    <value>¡Configuración restablecida correctamente!</value>
   </data>
   <data name="ShowClosedPorts" xml:space="preserve">
     <value>Mostrar puertos cerrados</value>
@@ -1303,12 +1300,6 @@ Crear uno...</value>
   <data name="DeleteTable" xml:space="preserve">
     <value>Eliminar tabla</value>
   </data>
-  <data name="DocumentationTitle_00001" xml:space="preserve">
-    <value>Cómo instalar RDP 8.1 en Windows 7/Server 2008 R2</value>
-  </data>
-  <data name="DocumentationTitle_00002" xml:space="preserve">
-    <value>¿Cómo crear un tema y un tono personalizados?</value>
-  </data>
   <data name="EnterLocationDots" xml:space="preserve">
     <value>Ingresar ubicación...</value>
   </data>
@@ -1328,7 +1319,7 @@ Crear uno...</value>
     <value>Mostrar este cuadro de diálogo.</value>
   </data>
   <data name="HelpMessage_ParameterResetSettings" xml:space="preserve">
-    <value>Restablecer todas las configuraciones.</value>
+    <value>Restablece toda la configuración de la aplicación.</value>
   </data>
   <data name="HelpMessage_PasswordNotDisplayedCanBeOverwritten" xml:space="preserve">
     <value>La contraseña no se muestra durante la edición, pero se puede sobrescribir.</value>
@@ -1459,10 +1450,10 @@ Crear uno...</value>
   <data name="Applications" xml:space="preserve">
     <value>Aplicaciones</value>
   </data>
-  <data name="BaseDark" xml:space="preserve">
+  <data name="AppTheme_BaseDark" xml:space="preserve">
     <value>Oscuro</value>
   </data>
-  <data name="BaseLight" xml:space="preserve">
+  <data name="AppTheme_BaseLight" xml:space="preserve">
     <value>Claro</value>
   </data>
   <data name="Black" xml:space="preserve">
@@ -1490,7 +1481,7 @@ Crear uno...</value>
     <value>¡Ingrese una o más direcciones IP válidas!</value>
   </data>
   <data name="EnterValidBaud" xml:space="preserve">
-    <value>Ingrese un baud válido.</value>
+    <value>¡Ingrese un baud válido!</value>
   </data>
   <data name="EnterValidHosts" xml:space="preserve">
     <value>¡Ingrese hosts válidos (múltiples hosts no pueden terminar con ";")!</value>
@@ -1589,7 +1580,7 @@ Crear uno...</value>
     <value>Error de búsqueda de nombre DNS.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed2" xml:space="preserve">
-    <value>Búsqueda de DNS fallida.</value>
+    <value>Búsqueda DNS fallida.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_EncryptionError" xml:space="preserve">
     <value>Error de cifrado.</value>
@@ -1944,9 +1935,6 @@ Crear uno...</value>
   </data>
   <data name="FilePath" xml:space="preserve">
     <value>Ruta de archivo</value>
-  </data>
-  <data name="ThisFeatureIsOnlyAvailableInWindows10Server2016OrLater" xml:space="preserve">
-    <value>¡Esta función solo está disponible en Windows 10/Server 2016 o posterior!</value>
   </data>
   <data name="OverrideDefaultSettings" xml:space="preserve">
     <value>Anular la configuración predeterminada</value>
@@ -2519,7 +2507,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>LLDP / CDP</value>
   </data>
   <data name="RestartAsAdmin" xml:space="preserve">
-    <value>Restart as Administrator</value>
+    <value>Reiniciar como administrador</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
     <value>¡Para analizar los paquetes de red, la aplicación debe iniciarse con derechos elevados!</value>
@@ -2567,7 +2555,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>Ayuda</value>
   </data>
   <data name="HelpMessage_ParameterApplication" xml:space="preserve">
-    <value>Aplicación a mostrar.</value>
+    <value>Aplicación que se muestra al inicio.</value>
   </data>
   <data name="Parameter" xml:space="preserve">
     <value>Parámetro</value>
@@ -2586,5 +2574,314 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   </data>
   <data name="WebViewControlCertificateIsInvalidMessage" xml:space="preserve">
     <value>¡El control WebView (Microsoft Edge) no puede conectarse a sitios web con un certificado no válido!</value>
+  </data>
+  <data name="MicrosoftWindowsSDKContractsIsNotAvailable" xml:space="preserve">
+    <value>Se requiere Microsoft.Windows.SDK.Contracts para esta característica, pero no está disponible en este sistema (ej. en Windows Server).</value>
+  </data>
+  <data name="ApplicationName_ARPTable" xml:space="preserve">
+    <value>ARP Table</value>
+  </data>
+  <data name="ApplicationName_Connections" xml:space="preserve">
+    <value>Conexiones</value>
+  </data>
+  <data name="ApplicationName_Dashboard" xml:space="preserve">
+    <value>Panel de control</value>
+  </data>
+  <data name="ApplicationName_DiscoveryProtocol" xml:space="preserve">
+    <value>Protocolo de descubrimiento</value>
+  </data>
+  <data name="ApplicationName_DNSLookup" xml:space="preserve">
+    <value>Búsqueda DNS</value>
+  </data>
+  <data name="ApplicationName_HTTPHeaders" xml:space="preserve">
+    <value>Encabezados HTTP</value>
+  </data>
+  <data name="ApplicationName_IPScanner" xml:space="preserve">
+    <value>Escáner de IP</value>
+  </data>
+  <data name="ApplicationName_Listeners" xml:space="preserve">
+    <value>Listeners</value>
+  </data>
+  <data name="ApplicationName_Lookup" xml:space="preserve">
+    <value>Búsqueda</value>
+  </data>
+  <data name="ApplicationName_NetworkInterface" xml:space="preserve">
+    <value>Interfaz de red</value>
+  </data>
+  <data name="ApplicationName_Ping" xml:space="preserve">
+    <value>Ping</value>
+  </data>
+  <data name="ApplicationName_PingMonitor" xml:space="preserve">
+    <value>Monitoreador de ping</value>
+  </data>
+  <data name="ApplicationName_PortScanner" xml:space="preserve">
+    <value>Escáner de puertos</value>
+  </data>
+  <data name="ApplicationName_PowerShell" xml:space="preserve">
+    <value>PowerShell</value>
+  </data>
+  <data name="ApplicationName_PuTTY" xml:space="preserve">
+    <value>PuTTY</value>
+  </data>
+  <data name="ApplicationName_RemoteDesktop" xml:space="preserve">
+    <value>Escritorio remoto</value>
+  </data>
+  <data name="ApplicationName_SNMP" xml:space="preserve">
+    <value>SNMP</value>
+  </data>
+  <data name="ApplicationName_SubnetCalculator" xml:space="preserve">
+    <value>Calculadora de subredes</value>
+  </data>
+  <data name="ApplicationName_TigerVNC" xml:space="preserve">
+    <value>TigerVNC</value>
+  </data>
+  <data name="ApplicationName_Traceroute" xml:space="preserve">
+    <value>Rastrear ruta</value>
+  </data>
+  <data name="ApplicationName_WakeOnLAN" xml:space="preserve">
+    <value>Wake on LAN</value>
+  </data>
+  <data name="ApplicationName_WebConsole" xml:space="preserve">
+    <value>Consola web</value>
+  </data>
+  <data name="ApplicationName_Whois" xml:space="preserve">
+    <value>Whois</value>
+  </data>
+  <data name="ApplicationName_WiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="Accent_Amber" xml:space="preserve">
+    <value>Ámbar</value>
+  </data>
+  <data name="Accent_Black" xml:space="preserve">
+    <value>Negro</value>
+  </data>
+  <data name="Accent_Blue" xml:space="preserve">
+    <value>Azul</value>
+  </data>
+  <data name="Accent_Brown" xml:space="preserve">
+    <value>Marrón</value>
+  </data>
+  <data name="Accent_Cobalt" xml:space="preserve">
+    <value>Cobalto</value>
+  </data>
+  <data name="Accent_Crimson" xml:space="preserve">
+    <value>Carmesí</value>
+  </data>
+  <data name="Accent_Cyan" xml:space="preserve">
+    <value>Cian</value>
+  </data>
+  <data name="Accent_Emerald" xml:space="preserve">
+    <value>Esmeralda</value>
+  </data>
+  <data name="Accent_Green" xml:space="preserve">
+    <value>Verde</value>
+  </data>
+  <data name="Accent_Indigo" xml:space="preserve">
+    <value>Índigo</value>
+  </data>
+  <data name="Accent_Lime" xml:space="preserve">
+    <value>Lima</value>
+  </data>
+  <data name="Accent_Magenta" xml:space="preserve">
+    <value>Magenta</value>
+  </data>
+  <data name="Accent_Mauve" xml:space="preserve">
+    <value>Malva</value>
+  </data>
+  <data name="Accent_Olive" xml:space="preserve">
+    <value>Oliva</value>
+  </data>
+  <data name="Accent_Orange" xml:space="preserve">
+    <value>Naranja</value>
+  </data>
+  <data name="Accent_Purple" xml:space="preserve">
+    <value>Morado</value>
+  </data>
+  <data name="Accent_Red" xml:space="preserve">
+    <value>Rojo</value>
+  </data>
+  <data name="Accent_Sienna" xml:space="preserve">
+    <value>Siena</value>
+  </data>
+  <data name="Accent_Taupe" xml:space="preserve">
+    <value>Gris pardo</value>
+  </data>
+  <data name="Accent_Teal" xml:space="preserve">
+    <value>Verde azulado</value>
+  </data>
+  <data name="Accent_Violet" xml:space="preserve">
+    <value>Rosado</value>
+  </data>
+  <data name="Accent_Yellow" xml:space="preserve">
+    <value>Amarillo</value>
+  </data>
+  <data name="Accen_Steel" xml:space="preserve">
+    <value>Acero</value>
+  </data>
+  <data name="AppTheme_Black" xml:space="preserve">
+    <value>Negro</value>
+  </data>
+  <data name="AppTheme_White" xml:space="preserve">
+    <value>Blanco</value>
+  </data>
+  <data name="ProfileViewName_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="ProfileViewName_DNSLookup" xml:space="preserve">
+    <value>Búsqueda DNS</value>
+  </data>
+  <data name="ProfileViewName_HTTPHeaders" xml:space="preserve">
+    <value>Encabezados HTTP</value>
+  </data>
+  <data name="ProfileViewName_IP Scanner" xml:space="preserve">
+    <value>Escáner de IP</value>
+  </data>
+  <data name="ProfileViewName_NetworkInterface" xml:space="preserve">
+    <value>Interfaz de red</value>
+  </data>
+  <data name="ProfileViewName_Ping" xml:space="preserve">
+    <value>Ping</value>
+  </data>
+  <data name="ProfileViewName_PingMonitor" xml:space="preserve">
+    <value>Ping Monitor</value>
+  </data>
+  <data name="ProfileViewName_PortScanner" xml:space="preserve">
+    <value>Port Scanner</value>
+  </data>
+  <data name="ProfileViewName_PowerShell" xml:space="preserve">
+    <value>PowerShell</value>
+  </data>
+  <data name="ProfileViewName_PuTTY" xml:space="preserve">
+    <value>PuTTY</value>
+  </data>
+  <data name="ProfileViewName_RemoteDesktop" xml:space="preserve">
+    <value>Escritorio remoto</value>
+  </data>
+  <data name="ProfileViewName_TigerVNC" xml:space="preserve">
+    <value>TigerVNC</value>
+  </data>
+  <data name="ProfileViewName_Traceroute" xml:space="preserve">
+    <value>Rastrear ruta</value>
+  </data>
+  <data name="ProfileViewName_WakeOnLAN" xml:space="preserve">
+    <value>Wake on LAN</value>
+  </data>
+  <data name="ProfileViewName_WebConsole" xml:space="preserve">
+    <value>Web Console</value>
+  </data>
+  <data name="ProfileViewName_Whois" xml:space="preserve">
+    <value>Whois</value>
+  </data>
+  <data name="SettingsViewGroup_Applications" xml:space="preserve">
+    <value>Aplicaciones</value>
+  </data>
+  <data name="SettingsViewGroup_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="SettingsViewName_Appearance" xml:space="preserve">
+    <value>Apariencia</value>
+  </data>
+  <data name="SettingsViewName_Autostart" xml:space="preserve">
+    <value>Inicio automático</value>
+  </data>
+  <data name="SettingsViewName_Dashboard" xml:space="preserve">
+    <value>Panel de control</value>
+  </data>
+  <data name="SettingsViewName_DNSLookup" xml:space="preserve">
+    <value>Búsqueda DNS</value>
+  </data>
+  <data name="SettingsViewName_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="SettingsViewName_HotKeys" xml:space="preserve">
+    <value>Atajos de teclado</value>
+  </data>
+  <data name="SettingsViewName_HTTPHeaders" xml:space="preserve">
+    <value>HTTP Headers</value>
+  </data>
+  <data name="SettingsViewName_IPScanner" xml:space="preserve">
+    <value>Escáner de IP</value>
+  </data>
+  <data name="SettingsViewName_Language" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="SettingsViewName_Ping" xml:space="preserve">
+    <value>Ping</value>
+  </data>
+  <data name="SettingsViewName_PortScanner" xml:space="preserve">
+    <value>Escáner de puertos</value>
+  </data>
+  <data name="SettingsViewName_PowerShell" xml:space="preserve">
+    <value>PowerShell</value>
+  </data>
+  <data name="SettingsViewName_Profiles" xml:space="preserve">
+    <value>Perfiles</value>
+  </data>
+  <data name="SettingsViewName_PuTTY" xml:space="preserve">
+    <value>PuTTY</value>
+  </data>
+  <data name="SettingsViewName_RemoteDesktop" xml:space="preserve">
+    <value>Escritorio remoto</value>
+  </data>
+  <data name="SettingsViewName_Settings" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="SettingsViewName_SNMP" xml:space="preserve">
+    <value>SNMP</value>
+  </data>
+  <data name="SettingsViewName_Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="SettingsViewName_TigerVNC" xml:space="preserve">
+    <value>TigerVNC</value>
+  </data>
+  <data name="SettingsViewName_Traceroute" xml:space="preserve">
+    <value>Rastrear ruta</value>
+  </data>
+  <data name="SettingsViewName_Update" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="SettingsViewName_WakeOnLAN" xml:space="preserve">
+    <value>Wake On LAN</value>
+  </data>
+  <data name="SettingsViewName_Whois" xml:space="preserve">
+    <value>Whois</value>
+  </data>
+  <data name="SettingsViewName_Window" xml:space="preserve">
+    <value>Ventana</value>
+  </data>
+  <data name="EnableLog" xml:space="preserve">
+    <value>Habilitar registro</value>
+  </data>
+  <data name="LogFileName" xml:space="preserve">
+    <value>Nombre del archivo de registro</value>
+  </data>
+  <data name="LogPath" xml:space="preserve">
+    <value>Ruta del registro</value>
+  </data>
+  <data name="LogMode" xml:space="preserve">
+    <value>Modo de registro</value>
+  </data>
+  <data name="Log" xml:space="preserve">
+    <value>Registro</value>
+  </data>
+  <data name="SSHLog" xml:space="preserve">
+    <value>Registro SSH</value>
+  </data>
+  <data name="SSHRawLog" xml:space="preserve">
+    <value>Registro SSH sin procesar</value>
+  </data>
+  <data name="PuTTYLogMode_SessionLog" xml:space="preserve">
+    <value>Registro de sesión</value>
+  </data>
+  <data name="PuTTYLogMode_SSHLog" xml:space="preserve">
+    <value>Registro SSH</value>
+  </data>
+  <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
+    <value>SSH y registro sin procesar</value>
+  </data>
+  <data name="EnterValidFileName" xml:space="preserve">
+    <value>¡Ingrese un nombre de archivo válido!</value>
   </data>
 </root>
