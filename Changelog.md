@@ -1,3 +1,35 @@
+# Version 2020.4.0
+Date: **21.04.2020**
+
+| File | Checksum
+|---|---|
+|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.4.0/NETworkManager_2020.4.0_Setup.exe)| `6AA9E156ABEB79BB07574C7C076F53FE0630D69E5680A83E8E1D175E4C75E20A` |
+|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.4.0/NETworkManager_2020.4.0_Portable.zip)| `36FDC504ECD9BA7E7334131909F81CE36FB91E7FB267DA53B077F95C697B4751` |
+|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.4.0/NETworkManager_2020.4.0_Archiv.zip)| `468099D5B9E8862AA6024290BD1FD375FD3A2CE9E7E4FE94AA0DDB97687E81CC` |
+
+## What's new?
+- Code has been refactored and improved to simplify future developments.
+- New documentation at https://borntoberoot.github.io/NETworkManager/
+
+## Improvements
+- Network Interface
+  - Button "Clear DNS cache" moved tab "Information" [#248](http://github.com/BornToBeRoot/NETworkManager/issues/248){:target="_blank"}
+  - Button "Release & Renew" moved tab "Information" [#248](http://github.com/BornToBeRoot/NETworkManager/issues/248){:target="_blank"}
+- PuTTY
+  - PuTTY log can be enabled in the settings/profile. Session output will be saved in a file. [#278](http://github.com/BornToBeRoot/NETworkManager/issues/278){:target="_blank"}
+
+## Bugfixes
+- Settings
+  - Portable modus was not displayed correctly. [#277](http://github.com/BornToBeRoot/NETworkManager/issues/277){:target="_blank"}
+- Crash on Server 2019 when select WiFi fixed [#267](http://github.com/BornToBeRoot/NETworkManager/issues/267){:target="_blank"}
+- Crash in IP scanner when IP address could not be detected fixed [#268](http://github.com/BornToBeRoot/NETworkManager/issues/268){:target="_blank"}
+
+## Other
+  - Libraries updated
+  - Language files updated
+  - Resources (OUI, Ports, Whois) updated
+  - Code cleanup [#261](http://github.com/BornToBeRoot/NETworkManager/issues/261){:target="_blank"}, [#262](http://github.com/BornToBeRoot/NETworkManager/issues/262){:target="_blank"}
+
 # Version 2020.1.0
 Date: **26.01.2020**
 
