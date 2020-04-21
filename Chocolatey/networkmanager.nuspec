@@ -7,12 +7,12 @@
     <owners>BornToBeRoot</owners>
     <title>NETworkManager</title>
     <authors>BornToBeRoot</authors>
-    <projectUrl>https://github.com/BornToBeRoot/NETworkManager</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/BornToBeRoot/NETworkManager/master/NETworkManager_Logo.svg</iconUrl>
+    <projectUrl>https://borntoberoot.github.io/NETworkManager</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/BornToBeRoot/NETworkManager/gh-pages/NETworkManager.svg</iconUrl>
     <licenseUrl>https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/BornToBeRoot/NETworkManager</projectSourceUrl>
-    <docsUrl>https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</docsUrl>
+    <docsUrl>https://borntoberoot.github.io/NETworkManager/Documentation/#documentation</docsUrl>
     <bugTrackerUrl>https://github.com/BornToBeRoot/NETworkManager/issues</bugTrackerUrl>
     <tags>networkinterface ipscanner portscanner traceroute ping dns whois subnet snmp remotedesktop powershell ssh vnc lldp cdp</tags>
     <summary>A powerful tool for managing networks and troubleshoot network problems!</summary>
