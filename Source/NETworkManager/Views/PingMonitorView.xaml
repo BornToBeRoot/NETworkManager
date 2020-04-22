@@ -17,6 +17,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="48" />
             <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="10" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="10" />
             <ColumnDefinition Width="Auto" />
@@ -29,7 +31,7 @@
             <Rectangle.Style>
                 <Style TargetType="{x:Type Rectangle}">
                     <Setter Property="OpacityMask" Value="{StaticResource VisualDisconnected}" />
-                    <Setter Property="Fill" Value="Red" />
+                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
                     <Style.Triggers>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -41,10 +43,16 @@
                                 <Setter Property="Fill" Value="#badc58" />
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
-                        <DataTrigger Binding="{Binding IsPingRunning}" Value="False">
-                            <Setter Property="OpacityMask" Value="{StaticResource VisualConnected}" />
-                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
-                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsReachable}" Value="False" />
+                                <Condition Binding="{Binding IsPingRunning}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="OpacityMask" Value="{StaticResource VisualDisconnected}" />
+                                <Setter Property="Fill" Value="Red" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
                     </Style.Triggers>
                 </Style>
             </Rectangle.Style>
@@ -56,15 +64,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="1*" />                
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -100,15 +104,34 @@
                         <Binding Path="PingsLost" />
                     </MultiBinding>
                 </TextBlock.Text>
-            </TextBlock>
-            <TextBlock Grid.Column="8" Grid.Row="0" Text="{x:Static localization:Strings.AverageTime}" />
-            <TextBlock Grid.Column="10" Grid.Row="0" Text="{Binding AverageTime, StringFormat={}{0} ms}" />
-            <TextBlock Grid.Column="8" Grid.Row="2" Text="{x:Static localization:Strings.Minimum}" />
-            <TextBlock Grid.Column="10" Grid.Row="2" Text="{Binding MinimumTime, StringFormat={}{0} ms}" />
-            <TextBlock Grid.Column="8" Grid.Row="4" Text="{x:Static localization:Strings.Maximum}" />
-            <TextBlock Grid.Column="10" Grid.Row="4" Text="{Binding MaximumTime, StringFormat={}{0} ms}" />
+            </TextBlock>           
         </Grid>
         <Grid Grid.Column="4">
+
+            
+            
+            
+            
+            
+            
+            
+            <Rectangle Width="48" Height="48" Fill="{DynamicResource GrayBrush3}">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Unicons Kind=ChartLine}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+
+
+
+
+
+
+
+
+
+
+        </Grid>
+        <Grid Grid.Column="6">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10" />
