@@ -25,8 +25,7 @@ namespace NETworkManager.Profiles
             new ProfileViewInfo(ProfileViewName.PuTTY, ApplicationManager.GetIcon(ApplicationName.PuTTY)),
             new ProfileViewInfo(ProfileViewName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC)),
             new ProfileViewInfo(ProfileViewName.WebConsole, ApplicationManager.GetIcon(ApplicationName.WebConsole)),
-            new ProfileViewInfo(ProfileViewName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN)),
-            new ProfileViewInfo(ProfileViewName.HTTPHeaders, ApplicationManager.GetIcon(ApplicationName.HTTPHeaders)),
+            new ProfileViewInfo(ProfileViewName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN)),            
             new ProfileViewInfo(ProfileViewName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois))
         };              
     }

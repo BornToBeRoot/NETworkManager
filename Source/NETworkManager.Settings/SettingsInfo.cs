@@ -3336,128 +3336,6 @@ namespace NETworkManager.Settings
         }
         #endregion
 
-        #region HTTP Headers
-        private ObservableCollection<string> _httpHeaders_WebsiteUriHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> HTTPHeaders_WebsiteUriHistory
-        {
-            get => _httpHeaders_WebsiteUriHistory;
-            set
-            {
-                if (value == _httpHeaders_WebsiteUriHistory)
-                    return;
-
-                _httpHeaders_WebsiteUriHistory = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private int _httpHeaders_Timeout = GlobalStaticConfiguration.HTTPHeaders_Timeout;
-        public int HTTPHeaders_Timeout
-        {
-            get => _httpHeaders_Timeout;
-            set
-            {
-                if (value == _httpHeaders_Timeout)
-                    return;
-
-                _httpHeaders_Timeout = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _httpHeaders_ExpandStatistics = true;
-        public bool HTTPHeaders_ExpandStatistics
-        {
-            get => _httpHeaders_ExpandStatistics;
-            set
-            {
-                if (value == _httpHeaders_ExpandStatistics)
-                    return;
-
-                _httpHeaders_ExpandStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _httpHeaders_ExpandProfileView = true;
-        public bool HTTPHeaders_ExpandProfileView
-        {
-            get => _httpHeaders_ExpandProfileView;
-            set
-            {
-                if (value == _httpHeaders_ExpandProfileView)
-                    return;
-
-                _httpHeaders_ExpandProfileView = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private double _httpHeaders_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-        public double HTTPHeaders_ProfileWidth
-        {
-            get => _httpHeaders_ProfileWidth;
-            set
-            {
-                if (Math.Abs(value - _httpHeaders_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
-                    return;
-
-                _httpHeaders_ProfileWidth = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _httpHeaders_ShowStatistics = true;
-        public bool HTTPHeaders_ShowStatistics
-        {
-            get => _httpHeaders_ShowStatistics;
-            set
-            {
-                if (value == _httpHeaders_ShowStatistics)
-                    return;
-
-                _httpHeaders_ShowStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private string _httpHeaders_ExportFilePath;
-        public string HTTPHeaders_ExportFilePath
-        {
-            get => _httpHeaders_ExportFilePath;
-            set
-            {
-                if (value == _httpHeaders_ExportFilePath)
-                    return;
-
-                _httpHeaders_ExportFilePath = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private ExportManager.ExportFileType _httpHeaders_ExportFileType = GlobalStaticConfiguration.HTTPHeaders_ExportFileType;
-        public ExportManager.ExportFileType HTTPHeaders_ExportFileType
-        {
-            get => _httpHeaders_ExportFileType;
-            set
-            {
-                if (value == _httpHeaders_ExportFileType)
-                    return;
-
-                _httpHeaders_ExportFileType = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-        #endregion
-
         #region Subnet Calculator
 
         #region Calculator
@@ -4008,9 +3886,6 @@ namespace NETworkManager.Settings
             // SNMP
             SNMP_HostHistory.CollectionChanged += CollectionChanged;
             SNMP_OIDHistory.CollectionChanged += CollectionChanged;
-
-            // HTTP Header
-            HTTPHeaders_WebsiteUriHistory.CollectionChanged += CollectionChanged;
 
             // Subnet Calculator / Calculator
             SubnetCalculator_Calculator_SubnetHistory.CollectionChanged += CollectionChanged;

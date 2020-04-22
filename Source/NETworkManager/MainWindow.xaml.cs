@@ -430,7 +430,7 @@ namespace NETworkManager
                 var regex = new Regex(@" |-");
 
                 var search = regex.Replace(Search, "");
-                                
+
                 // Search by TranslatedName and Name
                 return info.IsVisible && (regex.Replace(ApplicationNameTranslator.GetInstance().Translate(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
             };
@@ -541,7 +541,6 @@ namespace NETworkManager
         private DiscoveryProtocolView _discoveryProtocolView;
         private WakeOnLANView _wakeOnLanView;
         private SubnetCalculatorHostView _subnetCalculatorHostView;
-        private HTTPHeadersHostView _httpHeadersHostView;
         private LookupHostView _lookupHostView;
         private WhoisHostView _whoisHostView;
         private ConnectionsView _connectionsView;
@@ -714,14 +713,6 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _wakeOnLanView;
                     break;
-                case ApplicationName.HTTPHeaders:
-                    if (_httpHeadersHostView == null)
-                        _httpHeadersHostView = new HTTPHeadersHostView();
-                    else
-                        _httpHeadersHostView.OnViewVisible();
-
-                    ContentControlApplication.Content = _httpHeadersHostView;
-                    break;
                 case ApplicationName.Whois:
                     if (_whoisHostView == null)
                         _whoisHostView = new WhoisHostView();
@@ -758,7 +749,7 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _listenersView;
                     break;
-                case  ApplicationName.ARPTable:
+                case ApplicationName.ARPTable:
                     if (_arpTableView == null)
                         _arpTableView = new ARPTableView();
                     else
@@ -840,8 +831,6 @@ namespace NETworkManager
                     break;
                 case ApplicationName.WakeOnLAN:
                     break;
-                case ApplicationName.HTTPHeaders:
-                    break;
                 case ApplicationName.Whois:
                     break;
                 case ApplicationName.SubnetCalculator:
@@ -862,7 +851,7 @@ namespace NETworkManager
         }
         #endregion
 
-    #region Settings
+        #region Settings
         private void OpenSettings()
         {
             // Save current language code
@@ -948,7 +937,8 @@ namespace NETworkManager
             ChangeApplicationView(SelectedApplication.Name, true);
         }
         #endregion
-                #region Handle WndProc messages (Single instance, handle HotKeys)
+        
+        #region Handle WndProc messages (Single instance, handle HotKeys)
         private HwndSource _hwndSoure;
 
         // This is called after MainWindow() and before OnContentRendered() --> to register hotkeys...

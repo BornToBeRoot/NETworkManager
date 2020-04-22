@@ -186,14 +186,12 @@
     <Compile Include="ViewModels\PortScannerHostViewModel.cs" />
     <Compile Include="ViewModels\IPScannerHostViewModel.cs" />
     <Compile Include="ViewModels\DNSLookupHostViewModel.cs" />
-    <Compile Include="ViewModels\HTTPHeadersHostViewModel.cs" />
     <Compile Include="ViewModels\SNMPHostViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
     <Compile Include="ViewModels\PuTTYHostViewModel.cs" />
     <Compile Include="ViewModels\PingHostViewModel.cs" />
     <Compile Include="ViewModels\SNMPViewModel.cs" />
-    <Compile Include="ViewModels\HTTPHeadersViewModel.cs" />
     <Compile Include="ViewModels\ARPTableViewModel.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
     <Compile Include="ViewModels\CredentialsMasterPasswordViewModel.cs" />
@@ -207,7 +205,6 @@
     <Compile Include="ViewModels\LookupOUILookupViewModel.cs" />
     <Compile Include="ViewModels\RemoteDesktopHostViewModel.cs" />
     <Compile Include="ViewModels\CommandLineViewModel.cs" />
-    <Compile Include="ViewModels\HTTPHeadersSettingsViewModel.cs" />
     <Compile Include="ViewModels\PuTTYSettingsViewModel.cs" />
     <Compile Include="ViewModels\SNMPSettingsViewModel.cs" />
     <Compile Include="ViewModels\RemoteDesktopSettingsViewModel.cs" />
@@ -313,9 +310,6 @@
     <Compile Include="Views\DNSLookupHostView.xaml.cs">
       <DependentUpon>DNSLookupHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HTTPHeadersHostView.xaml.cs">
-      <DependentUpon>HTTPHeadersHostView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\SNMPHostView.xaml.cs">
       <DependentUpon>SNMPHostView.xaml</DependentUpon>
     </Compile>
@@ -336,9 +330,6 @@
     </Compile>
     <Compile Include="Views\SNMPView.xaml.cs">
       <DependentUpon>SNMPView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\HTTPHeadersView.xaml.cs">
-      <DependentUpon>HTTPHeadersView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ARPTableView.xaml.cs">
       <DependentUpon>ARPTableView.xaml</DependentUpon>
@@ -378,9 +369,6 @@
     </Compile>
     <Compile Include="Views\RemoteDesktopConnectDialog.xaml.cs">
       <DependentUpon>RemoteDesktopConnectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\HTTPHeadersSettingsView.xaml.cs">
-      <DependentUpon>HTTPHeadersSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PuTTYSettingsView.xaml.cs">
       <DependentUpon>PuTTYSettingsView.xaml</DependentUpon>
@@ -652,10 +640,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\HTTPHeadersHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\SNMPHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -681,10 +665,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SNMPView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\HTTPHeadersView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -763,10 +743,6 @@
     <Page Include="Views\RemoteDesktopConnectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\HTTPHeadersSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PuTTYSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>

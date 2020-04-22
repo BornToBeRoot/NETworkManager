@@ -15,8 +15,7 @@
         PuTTY,
         TigerVNC,
         WebConsole,
-        WakeOnLAN,
-        HTTPHeaders,
+        WakeOnLAN,        
         Whois
     }
 }

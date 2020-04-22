@@ -44,7 +44,6 @@ namespace NETworkManager.Documentation
             new DocumentationInfo(DocumentationIdentifier.ApplicationSnmp, @"Application/SNMP.html#snmp"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationDiscoveryProtocol, @"Application/DiscoveryProtocol.html#discovery-protocol"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationWakeOnLan, @"Application/WakeOnLAN.html#wake-on-lan"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationHttpHeaders, @"Application/HTTPHeaders.html#http-headers"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationWhois, @"Application/Whois.html#whois"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationSubnetCalculator, @"Application/SubnetCalculator.html#subnet-calculator"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationLookup, @"Application/Lookup.html#lookup"),
@@ -139,8 +138,6 @@ namespace NETworkManager.Documentation
                     return DocumentationIdentifier.ApplicationDiscoveryProtocol;
                 case ApplicationName.WakeOnLAN:
                     return DocumentationIdentifier.ApplicationWakeOnLan;
-                case ApplicationName.HTTPHeaders:
-                    return DocumentationIdentifier.ApplicationHttpHeaders;
                 case ApplicationName.Whois:
                     return DocumentationIdentifier.ApplicationWhois;
                 case ApplicationName.SubnetCalculator:

@@ -93,9 +93,6 @@ namespace NETworkManager.Models
                 case ApplicationName.WakeOnLAN:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Power });
                     break;
-                case ApplicationName.HTTPHeaders:
-                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Web });
-                    break;
                 case ApplicationName.Whois:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.CloudSearchOutline });
                     break;

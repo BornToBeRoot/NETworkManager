@@ -96,11 +96,6 @@
         WakeOnLAN,
 
         /// <summary>
-        /// HTTP Headers application.
-        /// </summary>
-        HTTPHeaders,
-
-        /// <summary>
         /// Whois application.
         /// </summary>
         Whois,

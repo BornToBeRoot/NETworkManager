@@ -24,7 +24,6 @@
         TigerVNC,
         SNMP,
         WakeOnLAN,
-        HTTPHeaders,
         Whois
     }
 }

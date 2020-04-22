@@ -130,9 +130,6 @@
                                                     <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.WakeOnLAN}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.WakeOnLAN_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.HTTPHeaders}">
-                                                        <Setter Property="IsChecked" Value="{Binding DataContext.HTTPHeaders_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
-                                                    </DataTrigger>
                                                     <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.Whois}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.Whois_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
@@ -1398,40 +1395,6 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="{x:Static localization:Strings.HTTPHeaders}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
-                        <StackPanel>
-                            <StackPanel IsEnabled="{Binding HTTPHeaders_Enabled}">
-                                <Grid>
-                                    <Grid.Resources>
-                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                    </Grid.Resources>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="1*" />
-                                        <ColumnDefinition Width="34" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" />
-                                    <TextBox x:Name="TextBoxHTTPHeadersWebsite" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleWebsiteUri}">
-                                        <TextBox.Text>
-                                            <Binding Path="HTTPHeaders_Website" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                                <Binding.ValidationRules>
-                                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                    <validators:HttpAndHttpsUriValidator ValidatesOnTargetUpdated="True" />
-                                                </Binding.ValidationRules>
-                                            </Binding>
-                                        </TextBox.Text>
-                                    </TextBox>
-                                </Grid>
-                            </StackPanel>
-                        </StackPanel>
-                    </ScrollViewer>
-                </TabItem>
                 <TabItem Header="{x:Static localization:Strings.Whois}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel>
@@ -1780,16 +1743,6 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding WakeOnLAN_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding ElementName=TextBoxWakeOnLANPort, Path=(Validation.HasError)}" Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                            <!-- HTTPHeaders -->
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding HTTPHeaders_Enabled}" Value="True"/>
-                                    <Condition Binding="{Binding ElementName=TextBoxHTTPHeadersWebsite, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

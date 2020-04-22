@@ -150,9 +150,6 @@ namespace NETworkManager.Profiles
         public bool WakeOnLAN_OverridePort { get; set; }
         public int WakeOnLAN_Port { get; set; }
 
-        public bool HTTPHeaders_Enabled { get; set; }
-        public string HTTPHeaders_Website { get; set; }
-
         public bool Whois_Enabled { get; set; }
         public bool Whois_InheritHost { get; set; } = true;
         public string Whois_Domain { get; set; }

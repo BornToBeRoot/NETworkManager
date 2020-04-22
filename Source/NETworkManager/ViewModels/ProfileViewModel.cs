@@ -2246,10 +2246,6 @@ namespace NETworkManager.ViewModels
             WakeOnLAN_OverridePort = profileInfo.WakeOnLAN_OverridePort;
             WakeOnLAN_Port = profileInfo.WakeOnLAN_OverridePort ? profileInfo.WakeOnLAN_Port : SettingsManager.Current.WakeOnLAN_Port;
 
-            // HTTP Headers
-            HTTPHeaders_Enabled = profileInfo.HTTPHeaders_Enabled;
-            HTTPHeaders_Website = profileInfo.HTTPHeaders_Website;
-
             // Whois
             Whois_Enabled = profileInfo.Whois_Enabled;
             Whois_InheritHost = profileInfo.Whois_InheritHost;

@@ -96,11 +96,6 @@
         ApplicationWakeOnLan,
 
         /// <summary>
-        /// HTTP Headers documentation page.
-        /// </summary>
-        ApplicationHttpHeaders,
-
-        /// <summary>
         /// Whois documentation page.
         /// </summary>
         ApplicationWhois,

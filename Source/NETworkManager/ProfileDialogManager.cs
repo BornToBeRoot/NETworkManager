@@ -293,9 +293,6 @@ namespace NETworkManager
                 WakeOnLAN_OverridePort = instance.WakeOnLAN_OverridePort,
                 WakeOnLAN_Port = instance.WakeOnLAN_Port,
 
-                HTTPHeaders_Enabled = instance.HTTPHeaders_Enabled,
-                HTTPHeaders_Website = instance.HTTPHeaders_Website,
-
                 Whois_Enabled = instance.Whois_Enabled,
                 Whois_InheritHost = instance.Whois_InheritHost,
                 Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim()

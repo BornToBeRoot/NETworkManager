@@ -105,7 +105,6 @@ namespace NETworkManager.ViewModels
         private TigerVNCSettingsView _tigerVNCSettingsView;
         private SNMPSettingsView _snmpSettingsView;
         private WakeOnLANSettingsView _wakeOnLANSettingsView;
-        private HTTPHeadersSettingsView _httpHeadersSettingsView;
         private WhoisSettingsView _whoisSettingsView;
         #endregion
 
@@ -304,12 +303,6 @@ namespace NETworkManager.ViewModels
                         _wakeOnLANSettingsView = new WakeOnLANSettingsView();
 
                     SettingsContent = _wakeOnLANSettingsView;
-                    break;
-                case SettingsViewName.HTTPHeaders:
-                    if (_httpHeadersSettingsView == null)
-                        _httpHeadersSettingsView = new HTTPHeadersSettingsView();
-
-                    SettingsContent = _httpHeadersSettingsView;
                     break;
                 case SettingsViewName.Whois:
                     if (_whoisSettingsView == null)

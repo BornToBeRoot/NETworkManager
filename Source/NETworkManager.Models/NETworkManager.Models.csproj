@@ -87,8 +87,6 @@
     <Compile Include="Network\HostInfo.cs" />
     <Compile Include="Network\HostNotFoundException.cs" />
     <Compile Include="Network\HostRangeHelper.cs" />
-    <Compile Include="Network\HTTPHeaders.cs" />
-    <Compile Include="Network\HTTPHeadersOptions.cs" />
     <Compile Include="Network\IPNetworkInfo.cs" />
     <Compile Include="Network\IPScanner.cs" />
     <Compile Include="Network\IPv4Address.cs" />
