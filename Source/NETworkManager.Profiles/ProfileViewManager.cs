@@ -16,7 +16,6 @@ namespace NETworkManager.Profiles
             new ProfileViewInfo(ProfileViewName.NetworkInterface, ApplicationManager.GetIcon(ApplicationName.NetworkInterface)),
             new ProfileViewInfo(ProfileViewName.IPScanner, ApplicationManager.GetIcon(ApplicationName.IPScanner)),
             new ProfileViewInfo(ProfileViewName.PortScanner, ApplicationManager.GetIcon(ApplicationName.PortScanner)),
-            new ProfileViewInfo(ProfileViewName.Ping, ApplicationManager.GetIcon(ApplicationName.Ping)),
             new ProfileViewInfo(ProfileViewName.PingMonitor, ApplicationManager.GetIcon(ApplicationName.PingMonitor)),
             new ProfileViewInfo(ProfileViewName.Traceroute, ApplicationManager.GetIcon(ApplicationName.Traceroute)),
             new ProfileViewInfo(ProfileViewName.DNSLookup, ApplicationManager.GetIcon(ApplicationName.DNSLookup)),

@@ -2,7 +2,7 @@
 
 namespace NETworkManager.ViewModels
 {
-    public class PingSettingsViewModel : ViewModelBase
+    public class PingMonitorSettingsViewModel : ViewModelBase
     {
         #region Variables
         private readonly bool _isLoading;
@@ -176,7 +176,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public PingSettingsViewModel()
+        public PingMonitorSettingsViewModel()
         {
             _isLoading = true;
 

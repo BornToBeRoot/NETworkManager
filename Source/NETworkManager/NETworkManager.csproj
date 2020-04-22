@@ -190,7 +190,6 @@
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
     <Compile Include="ViewModels\PuTTYHostViewModel.cs" />
-    <Compile Include="ViewModels\PingHostViewModel.cs" />
     <Compile Include="ViewModels\SNMPViewModel.cs" />
     <Compile Include="ViewModels\ARPTableViewModel.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
@@ -322,11 +321,8 @@
     <Compile Include="Views\PuTTYHostView.xaml.cs">
       <DependentUpon>PuTTYHostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PingHostView.xaml.cs">
-      <DependentUpon>PingHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PingSettingsView.xaml.cs">
-      <DependentUpon>PingSettingsView.xaml</DependentUpon>
+    <Compile Include="Views\PingMonitorSettingsView.xaml.cs">
+      <DependentUpon>PingMonitorSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SNMPView.xaml.cs">
       <DependentUpon>SNMPView.xaml</DependentUpon>
@@ -656,11 +652,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PingHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PingSettingsView.xaml">
+    <Page Include="Views\PingMonitorSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -697,10 +689,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\TracerouteView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -844,7 +832,7 @@
     <Compile Include="ViewModels\LookupPortViewModel.cs" />
     <Compile Include="ViewModels\PortScannerSettingsViewModel.cs" />
     <Compile Include="ViewModels\IPScannerSettingsViewModel.cs" />
-    <Compile Include="ViewModels\PingSettingsViewModel.cs" />
+    <Compile Include="ViewModels\PingMonitorSettingsViewModel.cs" />
     <Compile Include="ViewModels\SettingsGeneralViewModel.cs" />
     <Compile Include="ViewModels\TracerouteSettingsViewModel.cs" />
     <Compile Include="Views\LookupHostView.xaml.cs">
@@ -857,7 +845,6 @@
     </Compile>
     <Compile Include="ViewModels\IPScannerViewModel.cs" />
     <Compile Include="ViewModels\NetworkInterfaceViewModel.cs" />
-    <Compile Include="ViewModels\PingViewModel.cs" />
     <Compile Include="ViewModels\SubnetCalculatorCalculatorViewModel.cs" />
     <Compile Include="ViewModels\TracerouteViewModel.cs" />
     <Compile Include="ViewModels\WakeOnLANViewModel.cs" />
@@ -872,9 +859,6 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\TracerouteView.xaml.cs">
       <DependentUpon>TracerouteView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PingView.xaml.cs">
-      <DependentUpon>PingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DNSLookupView.xaml.cs">
       <DependentUpon>DNSLookupView.xaml</DependentUpon>

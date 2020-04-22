@@ -57,9 +57,6 @@ namespace NETworkManager.Models
                 case ApplicationName.PortScanner:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.NetworkPort });
                     break;
-                case ApplicationName.Ping:
-                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.LanConnect });
-                    break;
                 case ApplicationName.PingMonitor:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.RadarScreen });
                     break;

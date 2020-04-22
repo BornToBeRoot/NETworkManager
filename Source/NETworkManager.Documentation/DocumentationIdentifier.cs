@@ -36,11 +36,6 @@
         ApplicationPortScanner,
 
         /// <summary>
-        /// Ping documentation page.
-        /// </summary>
-        ApplicationPing,
-
-        /// <summary>
         /// Ping monitor documentation page.
         /// </summary>
         ApplicationPingMonitor,

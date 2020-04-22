@@ -32,7 +32,6 @@ namespace NETworkManager.Documentation
             new DocumentationInfo(DocumentationIdentifier.ApplicationWiFi, @"Application/WiFi.html#wifi"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationIPScanner, @"Application/IPScanner.html#ip-scanner"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPortScanner, @"Application/PortScanner.html#port-scanner"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationPing, @"Application/Ping.html#ping"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPingMonitor, @"Application/PingMonitor.html#ping-monitor"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationTraceroute, @"Application/Traceroute.html#traceroute"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationDnsLookup, @"Application/DNSLookup.html#dns-lookup"),
@@ -114,8 +113,6 @@ namespace NETworkManager.Documentation
                     return DocumentationIdentifier.ApplicationIPScanner;
                 case ApplicationName.PortScanner:
                     return DocumentationIdentifier.ApplicationPortScanner;
-                case ApplicationName.Ping:
-                    return DocumentationIdentifier.ApplicationPing;
                 case ApplicationName.PingMonitor:
                     return DocumentationIdentifier.ApplicationPingMonitor;
                 case ApplicationName.Traceroute:

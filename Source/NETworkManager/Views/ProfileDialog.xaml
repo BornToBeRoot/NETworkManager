@@ -100,9 +100,6 @@
                                                     <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PortScanner}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.PortScanner_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.Ping}">
-                                                        <Setter Property="IsChecked" Value="{Binding DataContext.Ping_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
-                                                    </DataTrigger>
                                                     <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}" Value="{x:Static profiles:ProfileViewName.PingMonitor}">
                                                         <Setter Property="IsChecked" Value="{Binding DataContext.PingMonitor_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
                                                     </DataTrigger>
@@ -493,60 +490,6 @@
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
-                                    </TextBox>
-                                </Grid>
-                            </StackPanel>
-                        </StackPanel>
-                    </ScrollViewer>
-                </TabItem>
-                <TabItem Header="{x:Static localization:Strings.Ping}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
-                        <StackPanel>
-                            <StackPanel IsEnabled="{Binding Ping_Enabled}">
-                                <Grid>
-                                    <Grid.Resources>
-                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
-                                    </Grid.Resources>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="10" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="1*" />
-                                        <ColumnDefinition Width="34" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Ping_InheritHost}" />
-                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
-                                    <TextBox x:Name="TextBoxPingHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Ping_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
-                                        <TextBox.Style>
-                                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Ping_InheritHost}" Value="True">
-                                                        <Setter Property="TextBox.Text">
-                                                            <Setter.Value>
-                                                                <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Ping_InheritHost}" Value="False">
-                                                        <Setter Property="TextBox.Text">
-                                                            <Setter.Value>
-                                                                <Binding Path="Ping_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                                                    <Binding.ValidationRules>
-                                                                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                                    </Binding.ValidationRules>
-                                                                </Binding>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBox.Style>
                                     </TextBox>
                                 </Grid>
                             </StackPanel>
@@ -1544,17 +1487,6 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding PortScanner_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding ElementName=TextBoxPortScannerPorts, Path=(Validation.HasError)}" Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                            <!-- Ping -->
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Ping_Enabled}" Value="True"/>
-                                    <Condition Binding="{Binding Ping_InheritHost}" Value="False"/>
-                                    <Condition Binding="{Binding ElementName=TextBoxPingHost, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

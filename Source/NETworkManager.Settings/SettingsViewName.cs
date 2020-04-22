@@ -15,7 +15,7 @@
         Dashboard,
         IPScanner,
         PortScanner,
-        Ping,
+        PingMonitor,
         Traceroute,
         DNSLookup,
         RemoteDesktop,

@@ -96,7 +96,7 @@ namespace NETworkManager.ViewModels
         private DashboardSettingsView _dashboardSettingsView;        
         private IPScannerSettingsView _ipScannerSettingsView;
         private PortScannerSettingsView _portScannerSettingsView;
-        private PingSettingsView _pingSettingsViewModel;
+        private PingMonitorSettingsView _pingMonitorSettingsView;
         private TracerouteSettingsView _tracerouteSettingsView;
         private DNSLookupSettingsView _dnsLookupSettingsViewModel;
         private RemoteDesktopSettingsView _remoteDesktopSettingsView;
@@ -249,12 +249,11 @@ namespace NETworkManager.ViewModels
 
                     SettingsContent = _portScannerSettingsView;
                     break;
+                case SettingsViewName.PingMonitor:
+                    if (_pingMonitorSettingsView == null)
+                        _pingMonitorSettingsView = new PingMonitorSettingsView();
 
-                case SettingsViewName.Ping:
-                    if (_pingSettingsViewModel == null)
-                        _pingSettingsViewModel = new PingSettingsView();
-
-                    SettingsContent = _pingSettingsViewModel;
+                    SettingsContent = _pingMonitorSettingsView;
                     break;
                 case SettingsViewName.Traceroute:
                     if (_tracerouteSettingsView == null)

@@ -90,9 +90,6 @@ namespace NETworkManager.Controls
                 case ApplicationName.PortScanner:
                     ((PortScannerView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
-                case ApplicationName.Ping:
-                    ((PingView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
-                    break;
                 case ApplicationName.Traceroute:
                     ((TracerouteView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;

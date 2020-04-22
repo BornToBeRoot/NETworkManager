@@ -6,7 +6,6 @@
         NetworkInterface,
         IPScanner,
         PortScanner,
-        Ping,
         PingMonitor,
         Traceroute,
         DNSLookup,

@@ -36,11 +36,6 @@
         PortScanner,
 
         /// <summary>
-        /// Ping application.
-        /// </summary>
-        Ping,
-
-        /// <summary>
         /// Ping monitor application.
         /// </summary>
         PingMonitor,

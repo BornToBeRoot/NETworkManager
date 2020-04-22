@@ -25,7 +25,7 @@ namespace NETworkManager.Settings
             new SettingsViewInfo(SettingsViewName.Dashboard, ApplicationManager.GetIcon(ApplicationName.Dashboard), SettingsViewGroup.Applications),
             new SettingsViewInfo(SettingsViewName.IPScanner, ApplicationManager.GetIcon(ApplicationName.IPScanner), SettingsViewGroup.Applications),
             new SettingsViewInfo(SettingsViewName.PortScanner, ApplicationManager.GetIcon(ApplicationName.PortScanner), SettingsViewGroup.Applications),
-            new SettingsViewInfo(SettingsViewName.Ping, ApplicationManager.GetIcon(ApplicationName.Ping), SettingsViewGroup.Applications),
+            new SettingsViewInfo(SettingsViewName.PingMonitor, ApplicationManager.GetIcon(ApplicationName.PingMonitor), SettingsViewGroup.Applications),
             new SettingsViewInfo(SettingsViewName.Traceroute, ApplicationManager.GetIcon(ApplicationName.Traceroute), SettingsViewGroup.Applications),
             new SettingsViewInfo(SettingsViewName.DNSLookup, ApplicationManager.GetIcon(ApplicationName.DNSLookup), SettingsViewGroup.Applications ),
             new SettingsViewInfo(SettingsViewName.RemoteDesktop, ApplicationManager.GetIcon(ApplicationName.RemoteDesktop), SettingsViewGroup.Applications),

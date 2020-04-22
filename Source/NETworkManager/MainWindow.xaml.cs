@@ -528,7 +528,6 @@ namespace NETworkManager
         private WiFiView _wiFiView;
         private IPScannerHostView _ipScannerHostView;
         private PortScannerHostView _portScannerHostView;
-        private PingHostView _pingHostView;
         private PingMonitorView _pingMonitorView;
         private TracerouteHostView _tracerouteHostView;
         private DNSLookupHostView _dnsLookupHostView;
@@ -616,14 +615,6 @@ namespace NETworkManager
                         _portScannerHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _portScannerHostView;
-                    break;
-                case ApplicationName.Ping:
-                    if (_pingHostView == null)
-                        _pingHostView = new PingHostView();
-                    else
-                        _pingHostView.OnViewVisible();
-
-                    ContentControlApplication.Content = _pingHostView;
                     break;
                 case ApplicationName.PingMonitor:
                     if (_pingMonitorView == null)
@@ -799,9 +790,6 @@ namespace NETworkManager
                     break;
                 case ApplicationName.PortScanner:
                     _portScannerHostView.AddTab(data.Args);
-                    break;
-                case ApplicationName.Ping:
-                    _pingHostView.AddTab(data.Args);
                     break;
                 case ApplicationName.PingMonitor:
                     _pingMonitorView.AddHost(data.Args);
