@@ -7,6 +7,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+        xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingMonitorViewModel}">
     <UserControl.Resources>
@@ -107,29 +108,27 @@
             </TextBlock>           
         </Grid>
         <Grid Grid.Column="4">
-
-            
-            
-            
-            
-            
-            
-            
-            <Rectangle Width="48" Height="48" Fill="{DynamicResource GrayBrush3}">
-                <Rectangle.OpacityMask>
-                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Unicons Kind=ChartLine}" />
-                </Rectangle.OpacityMask>
-            </Rectangle>
-
-
-
-
-
-
-
-
-
-
+            <!--
+            <liveChart:CartesianChart Series="{Binding Series}" LegendLocation="Right" Margin="0,0,0,20">
+                <liveChart:CartesianChart.DataTooltip>
+                    <controls:LvlChartsBandwidthTooltip Background="Transparent" />
+                </liveChart:CartesianChart.DataTooltip>
+                <liveChart:CartesianChart.AxisX>
+                    <liveChart:Axis LabelFormatter="{Binding FormatterDate}">
+                        <liveChart:Axis.Separator>
+                            <liveChart:Separator StrokeThickness="0" />
+                        </liveChart:Axis.Separator>
+                    </liveChart:Axis>
+                </liveChart:CartesianChart.AxisX>
+                <liveChart:CartesianChart.AxisY>
+                    <liveChart:Axis MinValue="0" LabelFormatter="{Binding FormatterSpeed}">
+                        <liveChart:Axis.Separator>
+                            <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource GrayBrush8}" StrokeDashArray="10" />
+                        </liveChart:Axis.Separator>
+                    </liveChart:Axis>
+                </liveChart:CartesianChart.AxisY>
+            </liveChart:CartesianChart>
+            -->
         </Grid>
         <Grid Grid.Column="6">
             <Grid.RowDefinitions>
