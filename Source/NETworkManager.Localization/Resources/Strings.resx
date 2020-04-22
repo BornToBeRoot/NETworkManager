@@ -2806,8 +2806,8 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="SettingsViewName_Language" xml:space="preserve">
     <value>Language</value>
   </data>
-  <data name="SettingsViewName_Ping" xml:space="preserve">
-    <value>Ping</value>
+  <data name="SettingsViewName_PingMonitor" xml:space="preserve">
+    <value>Ping Monitor</value>
   </data>
   <data name="SettingsViewName_PortScanner" xml:space="preserve">
     <value>Port Scanner</value>

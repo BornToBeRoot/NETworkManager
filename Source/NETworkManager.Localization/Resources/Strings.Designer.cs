@@ -6697,11 +6697,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ping.
+        ///   Looks up a localized string similar to Ping Monitor.
         /// </summary>
-        public static string SettingsViewName_Ping {
+        public static string SettingsViewName_PingMonitor {
             get {
-                return ResourceManager.GetString("SettingsViewName_Ping", resourceCulture);
+                return ResourceManager.GetString("SettingsViewName_PingMonitor", resourceCulture);
             }
         }
         
