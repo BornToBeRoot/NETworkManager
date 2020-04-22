@@ -178,8 +178,18 @@ namespace NETworkManager.Models.Network
                 {
                     bag.Add(ipHostOrRange);
                 }
-                // like example.com, example.com/24 or example.com/255.255.255.128
-                else if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex))
+                // example.com
+                else if(Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex))
+                {
+                    // Wait for task inside a Parallel.Foreach
+                    var dnsResovlerTask = DnsLookupHelper.ResolveIPAddress(ipHostOrRange);
+
+                    Task.WaitAll(dnsResovlerTask);
+
+                    bag.Add($"{dnsResovlerTask.Result}");
+                }
+                // example.com/24 or example.com/255.255.255.128
+                else if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex))
                 {
                     var hostAndSubnet = ipHostOrRange.Split('/');
 
@@ -188,13 +198,14 @@ namespace NETworkManager.Models.Network
 
                     Task.WaitAll(dnsResovlerTask);
 
+                    // IPv6 is not supported for ranges
                     if (dnsResovlerTask.Result == null || dnsResovlerTask.Result.AddressFamily != AddressFamily.InterNetwork)
                     {
                         exceptions.Enqueue(new HostNotFoundException(hostAndSubnet[0]));
                         return;
                     }
 
-                    bag.Add(ipHostOrRange.Contains('/') ? $"{dnsResovlerTask.Result}/{hostAndSubnet[1]}" : $"{dnsResovlerTask.Result}");
+                    bag.Add($"{dnsResovlerTask.Result}/{hostAndSubnet[1]}");
                 }
             });
 
