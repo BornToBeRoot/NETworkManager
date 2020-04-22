@@ -20,7 +20,6 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
-using NETworkManager.Localization;
 using NETworkManager.Localization.Translators;
 
 namespace NETworkManager.ViewModels

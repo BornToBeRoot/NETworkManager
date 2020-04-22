@@ -16,33 +16,32 @@ namespace NETworkManager.Validators
             if (value == null)
                 return new ValidationResult(false, Localization.Resources.Strings.EnterValidIPScanRange);
 
-            foreach (var ipHostOrRange in ((string) value).Replace(" ", "").Split(';'))
+            foreach (var ipHostOrRange in ((string)value).Replace(" ", "").Split(';'))
             {
-                // like 192.168.0.1
+                // 192.168.0.1
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRegex))
                     continue;
 
-                // like 192.168.0.0/24
+                // 192.168.0.0/24
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressCidrRegex))
                     continue;
 
-                // like 192.168.0.0/255.255.255.0
+                // 192.168.0.0/255.255.255.0
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSubnetmaskRegex))
                     continue;
 
-                // like 192.168.0.0 - 192.168.0.100
+                // 192.168.0.0 - 192.168.0.100
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex))
                 {
                     var range = ipHostOrRange.Split('-');
 
-                    if (IPv4Address.ToInt32(IPAddress.Parse(range[0])) >=
-                        IPv4Address.ToInt32(IPAddress.Parse(range[1])))
+                    if (IPv4Address.ToInt32(IPAddress.Parse(range[0])) > IPv4Address.ToInt32(IPAddress.Parse(range[1])))
                         isValid = false;
 
                     continue;
                 }
 
-                // like 192.168.[50-100].1
+                // 192.168.[50-100].1
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
                 {
                     var octets = ipHostOrRange.Split('.');
@@ -69,15 +68,19 @@ namespace NETworkManager.Validators
                     continue;
                 }
 
-                // like server-01.example.com
+                // 2001:db8:85a3::8a2e:370:7334
+                if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv6AddressRegex))
+                    continue;
+
+                // server-01.example.com
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex))
                     continue;
 
-                // like server-01.example.com/24
+                // server-01.example.com/24
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex))
                     continue;
 
-                // like server-01.example.com/255.255.255.0
+                // server-01.example.com/255.255.255.0
                 if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex))
                     continue;
 

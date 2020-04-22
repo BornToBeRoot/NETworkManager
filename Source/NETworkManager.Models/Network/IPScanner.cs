@@ -114,7 +114,10 @@ namespace NETworkManager.Models.Network
 
                                      if (pingReply != null && IPStatus.Success == pingReply.Status)
                                      {
-                                         pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status);
+                                         if (ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                                             pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options.Ttl, pingReply.Status);
+                                         else
+                                             pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Status);
 
                                          pingable = true;
                                          break; // Continue with the next checks...

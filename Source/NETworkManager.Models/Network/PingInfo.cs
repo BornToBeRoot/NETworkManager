@@ -1,5 +1,4 @@
-﻿using NETworkManager.Utilities;
-using System;
+﻿using System;
 using System.Net;
 using System.Net.NetworkInformation;
 
@@ -71,6 +70,14 @@ namespace NETworkManager.Models.Network
             Bytes = bytes;
             Time = time;
             TTL = ttl;
+            Status = status;
+        }
+
+        public PingInfo(IPAddress ipAddress, int bytes, long time, IPStatus status)
+        {
+            IPAddress = ipAddress;
+            Bytes = bytes;
+            Time = time;
             Status = status;
         }
 
