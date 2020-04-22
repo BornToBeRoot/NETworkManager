@@ -1,45 +1,39 @@
-﻿using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.ViewModels;
-using System.Windows;
-using System.Windows.Controls;
+﻿using NETworkManager.ViewModels;
+using System;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Views
 {
     public partial class PingMonitorView
     {
-        private readonly PingMonitorViewModel _viewModel = new PingMonitorViewModel(DialogCoordinator.Instance);
+        private readonly PingMonitorViewModel _viewModel;
 
-        public PingMonitorView()
+        public int HostId => _viewModel.HostId;
+
+        public PingMonitorView(int hostId, Action<int> closeCallback, PingMonitorOptions options)
         {
             InitializeComponent();
+
+            _viewModel = new PingMonitorViewModel(hostId, closeCallback, options);
+
             DataContext = _viewModel;
-        }
-      
-        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-        {
-            if (sender is ContextMenu menu)
-                menu.DataContext = _viewModel;
+
+            Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
-        private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
-                _viewModel.AddHostProfileCommand.Execute(null);
+            _viewModel.OnLoaded();
         }
 
-        public void AddHost(string host)
+        private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
         {
-            _viewModel.AddHost(host);
+            _viewModel.OnClose();
         }
 
-        public void OnViewHide()
+        public void CloseView()
         {
-            _viewModel.OnViewHide();
+            _viewModel.OnClose();
         }
-
-        public void OnViewVisible()
-        {
-            _viewModel.OnViewVisible();
-        }      
     }
 }

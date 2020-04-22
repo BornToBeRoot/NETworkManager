@@ -528,7 +528,7 @@ namespace NETworkManager
         private WiFiView _wiFiView;
         private IPScannerHostView _ipScannerHostView;
         private PortScannerHostView _portScannerHostView;
-        private PingMonitorView _pingMonitorView;
+        private PingMonitorHostView _pingMonitorHostView;
         private TracerouteHostView _tracerouteHostView;
         private DNSLookupHostView _dnsLookupHostView;
         private RemoteDesktopHostView _remoteDesktopHostView;
@@ -617,12 +617,12 @@ namespace NETworkManager
                     ContentControlApplication.Content = _portScannerHostView;
                     break;
                 case ApplicationName.PingMonitor:
-                    if (_pingMonitorView == null)
-                        _pingMonitorView = new PingMonitorView();
+                    if (_pingMonitorHostView == null)
+                        _pingMonitorHostView = new PingMonitorHostView();
                     else
-                        _pingMonitorView.OnViewVisible();
+                        _pingMonitorHostView.OnViewVisible();
 
-                    ContentControlApplication.Content = _pingMonitorView;
+                    ContentControlApplication.Content = _pingMonitorHostView;
                     break;
                 case ApplicationName.Traceroute:
                     if (_tracerouteHostView == null)
@@ -792,7 +792,7 @@ namespace NETworkManager
                     _portScannerHostView.AddTab(data.Args);
                     break;
                 case ApplicationName.PingMonitor:
-                    _pingMonitorView.AddHost(data.Args);
+                    _pingMonitorHostView.AddHost(data.Args);
                     break;
                 case ApplicationName.Traceroute:
                     _tracerouteHostView.AddTab(data.Args);

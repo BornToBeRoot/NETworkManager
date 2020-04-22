@@ -19,7 +19,6 @@ using LiveCharts.Wpf;
 using MahApps.Metro.Controls;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
-using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {

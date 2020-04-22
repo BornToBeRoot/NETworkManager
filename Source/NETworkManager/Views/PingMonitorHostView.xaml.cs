@@ -1,39 +1,45 @@
-﻿using NETworkManager.ViewModels;
-using System;
-using NETworkManager.Models.Network;
+﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.ViewModels;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
     public partial class PingMonitorHostView
     {
-        private readonly PingMonitorHostViewModel _viewModel;
+        private readonly PingMonitorHostViewModel _viewModel = new PingMonitorHostViewModel(DialogCoordinator.Instance);
 
-        public int HostId => _viewModel.HostId;
-
-        public PingMonitorHostView(int hostId, Action<int> closeCallback, PingMonitorOptions options)
+        public PingMonitorHostView()
         {
             InitializeComponent();
-
-            _viewModel = new PingMonitorHostViewModel(hostId, closeCallback, options);
-
             DataContext = _viewModel;
-
-            Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
-
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+      
+        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
-            _viewModel.OnLoaded();
+            if (sender is ContextMenu menu)
+                menu.DataContext = _viewModel;
         }
 
-        private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+        private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            _viewModel.OnClose();
+            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+                _viewModel.AddHostProfileCommand.Execute(null);
         }
 
-        public void CloseView()
+        public void AddHost(string host)
         {
-            _viewModel.OnClose();
+            _viewModel.AddHost(host);
         }
+
+        public void OnViewHide()
+        {
+            _viewModel.OnViewHide();
+        }
+
+        public void OnViewVisible()
+        {
+            _viewModel.OnViewVisible();
+        }      
     }
 }

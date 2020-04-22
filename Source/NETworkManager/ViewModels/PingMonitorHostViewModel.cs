@@ -1,30 +1,30 @@
-﻿using NETworkManager.Models.Network;
-using NETworkManager.Settings;
-using System;
-using System.Linq;
-using System.Net;
-using System.Threading;
-using System.Windows;
+﻿using NETworkManager.Settings;
 using System.Windows.Input;
-using System.Diagnostics;
-using System.Windows.Threading;
+using MahApps.Metro.Controls.Dialogs;
+using System.Windows;
+using System;
+using NETworkManager.Models.Network;
+using System.ComponentModel;
+using System.Windows.Data;
 using NETworkManager.Utilities;
+using System.Linq;
 using System.Collections.ObjectModel;
+using NETworkManager.Views;
+using System.Net;
+using NETworkManager.Profiles;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels
 {
-    public class PingMonitorHostViewModel : ViewModelBase
+    public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     {
-        #region Variables        
-        private CancellationTokenSource _cancellationTokenSource;
+        #region  Variables 
+        private readonly IDialogCoordinator _dialogCoordinator;
+        private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
 
-        public readonly int HostId;
-        private readonly Action<int> _closeCallback;
-        private readonly PingMonitorOptions _pingMonitorOptions;
-        private bool _firstLoad = true;
+        private readonly bool _isLoading;
 
-        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
-        private readonly Stopwatch _stopwatch = new Stopwatch();
+        private int _hostId;
 
         private string _host;
         public string Host
@@ -40,364 +40,441 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private IPAddress _ipAddress;
-        public IPAddress IPAddress
+        public ICollectionView HostHistoryView { get; }
+
+        private bool _isWorking;
+        public bool IsWorking
         {
-            get => _ipAddress;
+            get => _isWorking;
             set
             {
-                if (value == _ipAddress)
+                if (value == _isWorking)
                     return;
 
-                _ipAddress = value;
+                _isWorking = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _isPingRunning;
-        public bool IsPingRunning
+        private bool _displayStatusMessage;
+        public bool DisplayStatusMessage
         {
-            get => _isPingRunning;
+            get => _displayStatusMessage;
             set
             {
-                if (value == _isPingRunning)
+                if (value == _displayStatusMessage)
                     return;
 
-                _isPingRunning = value;
+                _displayStatusMessage = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _isReachable;
-        public bool IsReachable
+        private string _statusMessage;
+        public string StatusMessage
         {
-            get => _isReachable;
+            get => _statusMessage;
             set
             {
-                if (value == _isReachable)
+                if (value == _statusMessage)
                     return;
 
-                _isReachable = value;
+                _statusMessage = value;
                 OnPropertyChanged();
             }
         }
 
-        private ObservableCollection<PingInfo> _pingResults = new ObservableCollection<PingInfo>();
-        public ObservableCollection<PingInfo> PingResults
+        private ObservableCollection<PingMonitorView> _hosts = new ObservableCollection<PingMonitorView>();
+        public ObservableCollection<PingMonitorView> Hosts
         {
-            get => _pingResults;
+            get => _hosts;
             set
             {
-                if (value != null && value == _pingResults)
+                if (value != null && value == _hosts)
                     return;
 
-                _pingResults = value;
+                _hosts = value;
             }
         }
 
-        private int _pingsTransmitted;
-        public int PingsTransmitted
+        public ICollectionView HostsView { get; }
+
+        private PingMonitorView _selectedHost;
+        public PingMonitorView SelectedHost
         {
-            get => _pingsTransmitted;
+            get => _selectedHost;
             set
             {
-                if (value == _pingsTransmitted)
+                if (value == _selectedHost)
                     return;
 
-                _pingsTransmitted = value;
+                _selectedHost = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _pingsReceived;
-        public int PingsReceived
+        #region Profiles
+        public ICollectionView Profiles { get; }
+
+        private ProfileInfo _selectedProfile;
+        public ProfileInfo SelectedProfile
         {
-            get => _pingsReceived;
+            get => _selectedProfile;
             set
             {
-                if (value == _pingsReceived)
+                if (value == _selectedProfile)
                     return;
 
-                _pingsReceived = value;
+                _selectedProfile = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _pingsLost;
-        public int PingsLost
+        private string _search;
+        public string Search
         {
-            get => _pingsLost;
+            get => _search;
             set
             {
-                if (value == _pingsLost)
+                if (value == _search)
                     return;
 
-                _pingsLost = value;
+                _search = value;
+
+                StartDelayedSearch();
+
                 OnPropertyChanged();
             }
         }
 
-        private long _minimumTime;
-        public long MinimumTime
+        private bool _isSearching;
+        public bool IsSearching
         {
-            get => _minimumTime;
+            get => _isSearching;
             set
             {
-                if (value == _minimumTime)
+                if (value == _isSearching)
                     return;
 
-                _minimumTime = value;
+                _isSearching = value;
                 OnPropertyChanged();
             }
         }
 
-        private long _maximumTime;
-        public long MaximumTime
+        private bool _canProfileWidthChange = true;
+        private double _tempProfileWidth;
+
+        private bool _expandProfileView;
+        public bool ExpandProfileView
         {
-            get => _maximumTime;
+            get => _expandProfileView;
             set
             {
-                if (value == _maximumTime)
+                if (value == _expandProfileView)
                     return;
 
-                _maximumTime = value;
+                if (!_isLoading)
+                    SettingsManager.Current.Ping_ExpandProfileView = value;
+
+                _expandProfileView = value;
+
+                if (_canProfileWidthChange)
+                    ResizeProfile(false);
+
                 OnPropertyChanged();
             }
         }
 
-        private int _averageTime;
-        public int AverageTime
+        private GridLength _profileWidth;
+        public GridLength ProfileWidth
         {
-            get => _averageTime;
+            get => _profileWidth;
             set
             {
-                if (value == _averageTime)
+                if (value == _profileWidth)
                     return;
 
-                _averageTime = value;
-                OnPropertyChanged();
-            }
-        }
+                if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
+                    SettingsManager.Current.Ping_ProfileWidth = value.Value;
 
-        private DateTime? _startTime;
-        public DateTime? StartTime
-        {
-            get => _startTime;
-            set
-            {
-                if (value == _startTime)
-                    return;
+                _profileWidth = value;
 
-                _startTime = value;
-                OnPropertyChanged();
-            }
-        }
+                if (_canProfileWidthChange)
+                    ResizeProfile(true);
 
-        private TimeSpan _duration;
-        public TimeSpan Duration
-        {
-            get => _duration;
-            set
-            {
-                if (value == _duration)
-                    return;
-
-                _duration = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DateTime? _endTime;
-        public DateTime? EndTime
-        {
-            get => _endTime;
-            set
-            {
-                if (value == _endTime)
-                    return;
-
-                _endTime = value;
                 OnPropertyChanged();
             }
         }
         #endregion
+        #endregion
 
-        #region Contructor, load settings    
-        public PingMonitorHostViewModel(int hostId, Action<int> closeCallback, PingMonitorOptions options)
+        #region Constructor, load settings
+        public PingMonitorHostViewModel(IDialogCoordinator instance)
         {
-            HostId = hostId;
-            _closeCallback = closeCallback;
-            _pingMonitorOptions = options;
+            _isLoading = true;
 
-            Host = options.Host;
-            IPAddress = options.IPAddress;
+            _dialogCoordinator = instance;
+
+            // Host history
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PingMonitor_HostHistory);
+
+            // Hosts
+            HostsView = CollectionViewSource.GetDefaultView(Hosts);
+
+            // Profiles
+            Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+            Profiles.Filter = o =>
+            {
+                if (!(o is ProfileInfo info))
+                    return false;
+
+                if (string.IsNullOrEmpty(Search))
+                    return info.PingMonitor_Enabled;
+
+                var search = Search.Trim();
+
+                // Search by: Tag=xxx (exact match, ignore case)
+                if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
+                    return !string.IsNullOrEmpty(info.Tags) && info.PingMonitor_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+
+                // Search by: Name, Ping_Host
+                return info.PingMonitor_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Ping_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+            };
+
+            // This will select the first entry as selected item...
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PingMonitor_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+
+            _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+            _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+
+            LoadSettings();
+
+            _isLoading = false;
         }
 
-        public void OnLoaded()
+        private void LoadSettings()
         {
-            if (!_firstLoad)
-                return;
+            ExpandProfileView = SettingsManager.Current.PingMonitor_ExpandProfileView;
 
-            StartPing();
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.PingMonitor_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
-            _firstLoad = false;
+            _tempProfileWidth = SettingsManager.Current.PingMonitor_ProfileWidth;
         }
         #endregion
 
         #region ICommands & Actions
-        public ICommand PingCommand => new RelayCommand(p => PingAction());
+        public ICommand AddHostCommand => new RelayCommand(p => AddHostAction());
 
-        private void PingAction()
+        private void AddHostAction()
         {
-            Ping();
+            AddHost(Host);
+
+            // Add the hostname or ip address to the history
+            AddHostToHistory(Host);
+
+            Host = "";
         }
 
-        public ICommand CloseCommand => new RelayCommand(p => CloseAction());
+        public ICommand AddHostProfileCommand => new RelayCommand(p => AddHostProfileAction(), AddHostProfile_CanExecute);
 
-        private void CloseAction()
+        private bool AddHostProfile_CanExecute(object obj)
         {
-            _closeCallback(HostId);
+            return SelectedProfile != null;
+        }
+
+        private void AddHostProfileAction()
+        {
+            AddHost(SelectedProfile.PingMonitor_Host);
+        }
+
+        public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
+
+        private void AddProfileAction()
+        {
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);
+        }
+
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
+
+        private void EditProfileAction()
+        {
+            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        }
+
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
+
+        private void CopyAsProfileAction()
+        {
+            ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        }
+
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
+
+        private void DeleteProfileAction()
+        {
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+        }
+
+        public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
+
+        private void EditGroupAction(object group)
+        {
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+        }
+
+        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
+
+        private void ClearSearchAction()
+        {
+            Search = string.Empty;
         }
         #endregion
 
-        #region Methods      
-        private void Ping()
+        #region Methods
+        public async void AddHost(string host)
         {
-            if (IsPingRunning)
-                StopPing();
+            IsWorking = true;
+            DisplayStatusMessage = false;
+
+            _hostId++;
+
+            string hostname = string.Empty;
+
+            // Resolve hostname
+            if (IPAddress.TryParse(host, out IPAddress ipAddress))
+            {
+                hostname = await DnsLookupHelper.ResolveHostname(ipAddress);
+            }
+            else // Resolve ip address
+            {
+                hostname = host;
+                ipAddress = await DnsLookupHelper.ResolveIPAddress(host);
+            }
+
+            if (ipAddress != null)
+            {
+                Hosts.Add(new PingMonitorView(_hostId, RemoveHost, new PingMonitorOptions(hostname, ipAddress)));
+            }
             else
-                StartPing();
-        }
-
-        private void StartPing()
-        {
-            IsPingRunning = true;
-
-            // Measure the time
-            StartTime = DateTime.Now;
-            _stopwatch.Start();
-            _dispatcherTimer.Tick += DispatcherTimer_Tick;
-            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            _dispatcherTimer.Start();
-            EndTime = null;
-
-            // Reset the latest results
-            PingResults.Clear();
-            PingsTransmitted = 0;
-            PingsReceived = 0;
-            PingsLost = 0;
-            AverageTime = 0;
-            MinimumTime = 0;
-            MaximumTime = 0;
-
-            _cancellationTokenSource = new CancellationTokenSource();
-
-            var ping = new Ping
             {
-                Timeout = SettingsManager.Current.Ping_Timeout,
-                Buffer = new byte[SettingsManager.Current.Ping_Buffer],
-                TTL = SettingsManager.Current.Ping_TTL,
-                DontFragment = SettingsManager.Current.Ping_DontFragment,
-                WaitTime = SettingsManager.Current.Ping_WaitTime,
-                ExceptionCancelCount = SettingsManager.Current.Ping_ExceptionCancelCount,
-                Hostname = Host
-            };
+                StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, host);
+                DisplayStatusMessage = true;
+            }
 
-            ping.PingReceived += Ping_PingReceived;            
-            ping.PingException += Ping_PingException;
-            ping.UserHasCanceled += Ping_UserHasCanceled;
-
-            ping.SendAsync(IPAddress, _cancellationTokenSource.Token);
-        }
-           
-        private void StopPing()
-        {
-            _cancellationTokenSource?.Cancel();
+            IsWorking = false;
         }
 
-        private void PingFinished()
+        private void RemoveHost(int hostId)
         {
-            IsPingRunning = false;
+            var index = -1;
 
-            // Stop timer and stopwatch
-            _stopwatch.Stop();
-            _dispatcherTimer.Stop();
-
-            Duration = _stopwatch.Elapsed;
-            EndTime = DateTime.Now;
-
-            _stopwatch.Reset();
-        }
-
-        public void OnClose()
-        {
-            // Stop the ping
-            if (IsPingRunning)
-                StopPing();
-        }
-        #endregion
-
-        #region Events
-        private void Ping_PingReceived(object sender, PingReceivedArgs e)
-        {
-            var pingInfo = PingInfo.Parse(e);
-
-            // Add the result to the collection
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            foreach (var host in Hosts)
             {
-                lock (PingResults)
-                    PingResults.Add(pingInfo);
-            }));
+                if (host.HostId == hostId)
+                    index = Hosts.IndexOf(host);
+            }
 
-            // Calculate statistics
-            PingsTransmitted++;
-
-            if (pingInfo.Status == System.Net.NetworkInformation.IPStatus.Success)
+            if (index != -1)
             {
-                IsReachable = true;
+                Hosts[index].CloseView();
+                Hosts.RemoveAt(index);
+            }
+        }
 
-                PingsReceived++;
+        private void AddHostToHistory(string host)
+        {
+            // Create the new list
+            var list = ListHelper.Modify(SettingsManager.Current.PingMonitor_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
-                if (PingsReceived == 1)
+            // Clear the old items
+            SettingsManager.Current.PingMonitor_HostHistory.Clear();
+            OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PingMonitor_HostHistory.Add(x));
+        }
+
+        private void StartDelayedSearch()
+        {
+            if (!IsSearching)
+            {
+                IsSearching = true;
+
+                _searchDispatcherTimer.Start();
+            }
+            else
+            {
+                _searchDispatcherTimer.Stop();
+                _searchDispatcherTimer.Start();
+            }
+        }
+
+        private void StopDelayedSearch()
+        {
+            _searchDispatcherTimer.Stop();
+
+            RefreshProfiles();
+
+            IsSearching = false;
+        }
+
+        private void ResizeProfile(bool dueToChangedSize)
+        {
+            _canProfileWidthChange = false;
+
+            if (dueToChangedSize)
+            {
+                ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix;
+            }
+            else
+            {
+                if (ExpandProfileView)
                 {
-                    MinimumTime = pingInfo.Time;
-                    MaximumTime = pingInfo.Time;
+                    ProfileWidth = Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) < GlobalStaticConfiguration.FloatPointFix ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded) : new GridLength(_tempProfileWidth);
                 }
                 else
                 {
-                    if (MinimumTime > pingInfo.Time)
-                        MinimumTime = pingInfo.Time;
-
-                    if (MaximumTime < pingInfo.Time)
-                        MaximumTime = pingInfo.Time;
-
-                    // lock, because the collection is changed from another thread...
-                    // I hope this won't slow the application or causes a hight cpu load
-                    lock (PingResults)
-                        AverageTime = (int)PingResults.Average(s => s.Time);
+                    _tempProfileWidth = ProfileWidth.Value;
+                    ProfileWidth = new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
                 }
             }
-            else
-            {
-                IsReachable = false;
 
-                PingsLost++;
-            }
+            _canProfileWidthChange = true;
         }
 
-        private void Ping_UserHasCanceled(object sender, EventArgs e)
+        public void OnViewVisible()
         {
-            PingFinished();
+            RefreshProfiles();
         }
 
-        private void Ping_PingException(object sender, PingExceptionArgs e)
+        public void OnViewHide()
         {
-            PingFinished();
+
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        public void RefreshProfiles()
         {
-            Duration = _stopwatch.Elapsed;
+            Profiles.Refresh();
+        }
+
+        public void OnProfileDialogOpen()
+        {
+
+        }
+
+        public void OnProfileDialogClose()
+        {
+
+        }
+        #endregion
+
+        #region Event
+        private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            StopDelayedSearch();
         }
         #endregion
     }

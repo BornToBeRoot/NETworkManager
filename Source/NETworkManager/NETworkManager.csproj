@@ -155,8 +155,8 @@
     <Compile Include="ViewModels\CustomCommandViewModel.cs" />
     <Compile Include="ViewModels\DiscoveryProtocolViewModel.cs" />
     <Compile Include="ViewModels\ProfileFileViewModel.cs" />
-    <Compile Include="ViewModels\PingMonitorViewModel.cs" />
     <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
+    <Compile Include="ViewModels\PingMonitorViewModel.cs" />
     <Compile Include="ViewModels\SettingsProfilesViewModel.cs" />
     <Compile Include="ViewModels\WebConsoleConnectViewModel.cs" />
     <Compile Include="ViewModels\WebConsoleHostViewModel.cs" />
@@ -222,11 +222,11 @@
     <Compile Include="Views\ProfileFileDialog.xaml.cs">
       <DependentUpon>ProfileFileDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PingMonitorView.xaml.cs">
-      <DependentUpon>PingMonitorView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\PingMonitorHostView.xaml.cs">
       <DependentUpon>PingMonitorHostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PingMonitorView.xaml.cs">
+      <DependentUpon>PingMonitorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsProfilesView.xaml.cs">
       <DependentUpon>SettingsProfilesView.xaml</DependentUpon>
@@ -520,11 +520,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PingMonitorView.xaml">
+    <Page Include="Views\PingMonitorHostView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PingMonitorHostView.xaml">
+    <Page Include="Views\PingMonitorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
