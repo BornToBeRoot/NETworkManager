@@ -294,12 +294,11 @@ namespace NETworkManager.ViewModels
 
             var ping = new Ping
             {
-                Timeout = SettingsManager.Current.Ping_Timeout,
-                Buffer = new byte[SettingsManager.Current.Ping_Buffer],
-                TTL = SettingsManager.Current.Ping_TTL,
-                DontFragment = SettingsManager.Current.Ping_DontFragment,
-                WaitTime = SettingsManager.Current.Ping_WaitTime,
-                ExceptionCancelCount = SettingsManager.Current.Ping_ExceptionCancelCount,
+                Timeout = SettingsManager.Current.PingMonitor_Timeout,
+                Buffer = new byte[SettingsManager.Current.PingMonitor_Buffer],
+                TTL = SettingsManager.Current.PingMonitor_TTL,
+                DontFragment = SettingsManager.Current.PingMonitor_DontFragment,
+                WaitTime = SettingsManager.Current.PingMonitor_WaitTime,
                 Hostname = Host
             };
 

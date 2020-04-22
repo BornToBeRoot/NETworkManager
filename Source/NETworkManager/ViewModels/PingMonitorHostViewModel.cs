@@ -174,7 +174,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Ping_ExpandProfileView = value;
+                    SettingsManager.Current.PingMonitor_ExpandProfileView = value;
 
                 _expandProfileView = value;
 
@@ -195,7 +195,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
-                    SettingsManager.Current.Ping_ProfileWidth = value.Value;
+                    SettingsManager.Current.PingMonitor_ProfileWidth = value.Value;
 
                 _profileWidth = value;
 

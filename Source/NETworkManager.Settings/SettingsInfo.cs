@@ -1166,233 +1166,6 @@ namespace NETworkManager.Settings
         }
         #endregion
 
-        #region Ping
-        private int _ping_Buffer = GlobalStaticConfiguration.Ping_Buffer;
-        public int Ping_Buffer
-        {
-            get => _ping_Buffer;
-            set
-            {
-                if (value == _ping_Buffer)
-                    return;
-
-                _ping_Buffer = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _ping_DontFragement = true;
-        public bool Ping_DontFragment
-        {
-            get => _ping_DontFragement;
-            set
-            {
-                if (value == _ping_DontFragement)
-                    return;
-
-                _ping_DontFragement = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private ObservableCollection<string> _ping_HostHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> Ping_HostHistory
-        {
-            get => _ping_HostHistory;
-            set
-            {
-                if (value == _ping_HostHistory)
-                    return;
-
-                _ping_HostHistory = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _ping_ResolveHostnamePreferIPv4 = true;
-        public bool Ping_ResolveHostnamePreferIPv4
-        {
-            get => _ping_ResolveHostnamePreferIPv4;
-            set
-            {
-                if (value == _ping_ResolveHostnamePreferIPv4)
-                    return;
-
-                _ping_ResolveHostnamePreferIPv4 = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private int _ping_Timeout = GlobalStaticConfiguration.Ping_Timeout;
-        public int Ping_Timeout
-        {
-            get => _ping_Timeout;
-            set
-            {
-                if (value == _ping_Timeout)
-                    return;
-
-                _ping_Timeout = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private int _ping_TTL = GlobalStaticConfiguration.Ping_TTL;
-        public int Ping_TTL
-        {
-            get => _ping_TTL;
-            set
-            {
-                if (value == _ping_TTL)
-                    return;
-
-                _ping_TTL = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private int _ping_WaitTime = GlobalStaticConfiguration.Ping_WaitTime;
-        public int Ping_WaitTime
-        {
-            get => _ping_WaitTime;
-            set
-            {
-                if (value == _ping_WaitTime)
-                    return;
-
-                _ping_WaitTime = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private int _ping_ExceptionCancelCount = GlobalStaticConfiguration.Ping_ExceptionCancelCount;
-        public int Ping_ExceptionCancelCount
-        {
-            get => _ping_ExceptionCancelCount;
-            set
-            {
-                if (value == _ping_ExceptionCancelCount)
-                    return;
-
-                _ping_ExceptionCancelCount = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _ping_ExpandStatistics = true;
-        public bool Ping_ExpandStatistics
-        {
-            get => _ping_ExpandStatistics;
-            set
-            {
-                if (value == _ping_ExpandStatistics)
-                    return;
-
-                _ping_ExpandStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _ping_ExpandProfileView = true;
-        public bool Ping_ExpandProfileView
-        {
-            get => _ping_ExpandProfileView;
-            set
-            {
-                if (value == _ping_ExpandProfileView)
-                    return;
-
-                _ping_ExpandProfileView = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private double _ping_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-        public double Ping_ProfileWidth
-        {
-            get => _ping_ProfileWidth;
-            set
-            {
-                if (Math.Abs(value - _ping_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
-                    return;
-
-                _ping_ProfileWidth = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _ping_ShowStatistics = true;
-        public bool Ping_ShowStatistics
-        {
-            get => _ping_ShowStatistics;
-            set
-            {
-                if (value == _ping_ShowStatistics)
-                    return;
-
-                _ping_ShowStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private string _ping_ExportFilePath;
-        public string Ping_ExportFilePath
-        {
-            get => _ping_ExportFilePath;
-            set
-            {
-                if (value == _ping_ExportFilePath)
-                    return;
-
-                _ping_ExportFilePath = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private ExportManager.ExportFileType _ping_ExportFileType = GlobalStaticConfiguration.Ping_ExportFileType;
-        public ExportManager.ExportFileType Ping_ExportFileType
-        {
-            get => _ping_ExportFileType;
-            set
-            {
-                if (value == _ping_ExportFileType)
-                    return;
-
-                _ping_ExportFileType = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _ping_HighlightTimeouts = true;
-        public bool Ping_HighlightTimeouts
-        {
-            get => _ping_HighlightTimeouts;
-            set
-            {
-                if (value == _ping_HighlightTimeouts)
-                    return;
-
-                _ping_HighlightTimeouts = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-        #endregion
-
         #region Ping Monitor
         private ObservableCollection<string> _pingMonitor_HostHistory = new ObservableCollection<string>();
         public ObservableCollection<string> PingMonitor_HostHistory
@@ -1404,6 +1177,81 @@ namespace NETworkManager.Settings
                     return;
 
                 _pingMonitor_HostHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _pingMonitor_Buffer = GlobalStaticConfiguration.PingMonitor_Buffer;
+        public int PingMonitor_Buffer
+        {
+            get => _pingMonitor_Buffer;
+            set
+            {
+                if (value == _pingMonitor_Buffer)
+                    return;
+
+                _pingMonitor_Buffer = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _pingMonitor_DontFragement = true;
+        public bool PingMonitor_DontFragment
+        {
+            get => _pingMonitor_DontFragement;
+            set
+            {
+                if (value == _pingMonitor_DontFragement)
+                    return;
+
+                _pingMonitor_DontFragement = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _pingMonitor_Timeout = GlobalStaticConfiguration.PingMonitor_Timeout;
+        public int PingMonitor_Timeout
+        {
+            get => _pingMonitor_Timeout;
+            set
+            {
+                if (value == _pingMonitor_Timeout)
+                    return;
+
+                _pingMonitor_Timeout = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _pingMonitor_TTL = GlobalStaticConfiguration.PingMonitor_TTL;
+        public int PingMonitor_TTL
+        {
+            get => _pingMonitor_TTL;
+            set
+            {
+                if (value == _pingMonitor_TTL)
+                    return;
+
+                _pingMonitor_TTL = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _pingMonitor_WaitTime = GlobalStaticConfiguration.PingMonitor_WaitTime;
+        public int PingMonitor_WaitTime
+        {
+            get => _pingMonitor_WaitTime;
+            set
+            {
+                if (value == _pingMonitor_WaitTime)
+                    return;
+
+                _pingMonitor_WaitTime = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -1424,6 +1272,35 @@ namespace NETworkManager.Settings
             }
         }
 
+        private string _pingMonitor_ExportFilePath;
+        public string PingMonitor_ExportFilePath
+        {
+            get => _pingMonitor_ExportFilePath;
+            set
+            {
+                if (value == _pingMonitor_ExportFilePath)
+                    return;
+
+                _pingMonitor_ExportFilePath = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _pingMonitor_ExportFileType = GlobalStaticConfiguration.PingMonitor_ExportFileType;
+        public ExportManager.ExportFileType PingMonitor_ExportFileType
+        {
+            get => _pingMonitor_ExportFileType;
+            set
+            {
+                if (value == _pingMonitor_ExportFileType)
+                    return;
+
+                _pingMonitor_ExportFileType = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
 
         private bool _pingMonitor_ExpandProfileView = true;
         public bool PingMonitor_ExpandProfileView
@@ -3852,8 +3729,8 @@ namespace NETworkManager.Settings
             PortScanner_HostHistory.CollectionChanged += CollectionChanged;
             PortScanner_PortHistory.CollectionChanged += CollectionChanged;
 
-            // Ping
-            Ping_HostHistory.CollectionChanged += CollectionChanged;
+            // Ping Monitor
+            PingMonitor_HostHistory.CollectionChanged += CollectionChanged;
 
             // Traceroute
             Traceroute_HostHistory.CollectionChanged += CollectionChanged;

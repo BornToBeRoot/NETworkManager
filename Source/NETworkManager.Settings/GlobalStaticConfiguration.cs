@@ -76,13 +76,12 @@ namespace NETworkManager.Settings
         public static int PortScanner_Timeout => 4000;
         public static ExportManager.ExportFileType PortScanner_ExportFileType => ExportManager.ExportFileType.CSV;
 
-        // Application: Ping
-        public static int Ping_Buffer => 32;
-        public static int Ping_Timeout => 4000;
-        public static int Ping_TTL => 64;
-        public static int Ping_WaitTime => 1000;
-        public static int Ping_ExceptionCancelCount => 3;
-        public static ExportManager.ExportFileType Ping_ExportFileType => ExportManager.ExportFileType.CSV;
+        // Application: Ping Monitor
+        public static int PingMonitor_Buffer => 32;
+        public static int PingMonitor_Timeout => 4000;
+        public static int PingMonitor_TTL => 64;
+        public static int PingMonitor_WaitTime => 1000;
+        public static ExportManager.ExportFileType PingMonitor_ExportFileType => ExportManager.ExportFileType.CSV;
 
         // Application: Traceroute
         public static int Traceroute_MaximumHops => 30;

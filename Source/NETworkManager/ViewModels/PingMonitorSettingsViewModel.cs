@@ -17,7 +17,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Ping_Timeout = value;
+                    SettingsManager.Current.PingMonitor_Timeout = value;
 
                 _timeout = value;
                 OnPropertyChanged();
@@ -34,7 +34,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Ping_Buffer = value;
+                    SettingsManager.Current.PingMonitor_Buffer = value;
 
                 _buffer = value;
                 OnPropertyChanged();
@@ -51,7 +51,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Ping_TTL = value;
+                    SettingsManager.Current.PingMonitor_TTL = value;
 
                 _ttl = value;
                 OnPropertyChanged();
@@ -68,7 +68,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Ping_DontFragment = value;
+                    SettingsManager.Current.PingMonitor_DontFragment = value;
 
                 _dontFragment = value;
                 OnPropertyChanged();
@@ -85,29 +85,13 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Ping_WaitTime = value;
+                    SettingsManager.Current.PingMonitor_WaitTime = value;
 
                 _waitTime = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _exceptionCancelCount;
-        public int ExceptionCancelCount
-        {
-            get => _exceptionCancelCount;
-            set
-            {
-                if (value == _exceptionCancelCount)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Ping_ExceptionCancelCount = value;
-
-                _exceptionCancelCount = value;
-                OnPropertyChanged();
-            }
-        }
 
         private bool _resolveHostnamePreferIPv4;
         public bool ResolveHostnamePreferIPv4
@@ -119,7 +103,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Ping_ResolveHostnamePreferIPv4 = value;
+                    SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4 = value;
 
                 _resolveHostnamePreferIPv4 = value;
                 OnPropertyChanged();
@@ -139,40 +123,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        
-        private bool _highlightTimeouts;
-        public bool HighlightTimeouts
-        {
-            get => _highlightTimeouts;
-            set
-            {
-                if (value == _highlightTimeouts)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Ping_HighlightTimeouts = value;
-
-                _highlightTimeouts = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _showStatistics;
-        public bool ShowStatistics
-        {
-            get => _showStatistics;
-            set
-            {
-                if (value == _showStatistics)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Ping_ShowStatistics = value;
-
-                _showStatistics = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #region Contructor, load settings
@@ -187,20 +137,16 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {            
-            Timeout = SettingsManager.Current.Ping_Timeout;
-            Buffer = SettingsManager.Current.Ping_Buffer;
-            TTL = SettingsManager.Current.Ping_TTL;
-            DontFragment = SettingsManager.Current.Ping_DontFragment;
-            WaitTime = SettingsManager.Current.Ping_WaitTime;
-            ExceptionCancelCount = SettingsManager.Current.Ping_ExceptionCancelCount;
+            Timeout = SettingsManager.Current.PingMonitor_Timeout;
+            Buffer = SettingsManager.Current.PingMonitor_Buffer;
+            TTL = SettingsManager.Current.PingMonitor_TTL;
+            DontFragment = SettingsManager.Current.PingMonitor_DontFragment;
+            WaitTime = SettingsManager.Current.PingMonitor_WaitTime;
 
-            if (SettingsManager.Current.Ping_ResolveHostnamePreferIPv4)
+            if (SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4)
                 ResolveHostnamePreferIPv4 = true;
             else
                 ResolveHostnamePreferIPv6 = true;
-
-            HighlightTimeouts = SettingsManager.Current.Ping_HighlightTimeouts;
-            ShowStatistics = SettingsManager.Current.Ping_ShowStatistics;
         }
         #endregion
     }
