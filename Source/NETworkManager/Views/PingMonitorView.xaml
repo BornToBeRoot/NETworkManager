@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+        xmlns:controls="clr-namespace:NETworkManager.Controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -102,9 +103,9 @@
         </Grid>
         <Grid Grid.Column="4">
             <liveChart:CartesianChart Series="{Binding Series}" LegendLocation="None" DisableAnimations="True">
-                <!-- <liveChart:CartesianChart.DataTooltip>
-                    <controls:LvlChartsBandwidthTooltip Background="Transparent" />
-                </liveChart:CartesianChart.DataTooltip> -->
+                <liveChart:CartesianChart.DataTooltip>
+                    <controls:LvlChartsPingTimeTooltip Background="Transparent" />
+                </liveChart:CartesianChart.DataTooltip> 
                 <liveChart:CartesianChart.AxisX>
                     <liveChart:Axis LabelFormatter="{Binding FormatterDate}">
                         <liveChart:Axis.Separator>

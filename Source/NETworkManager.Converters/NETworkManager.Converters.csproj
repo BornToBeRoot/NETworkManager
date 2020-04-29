@@ -54,6 +54,7 @@
     <Compile Include="IsDefaultSettingsLocationToBooleanConverter.cs" />
     <Compile Include="IsProfilesLocationToBooleanConverter.cs" />
     <Compile Include="IsSettingsLocationToBooleanConverter.cs" />
+    <Compile Include="LvlChartsPingTimeValueConverter.cs" />
     <Compile Include="PuTTYLogModeToStringConverter.cs" />
     <Compile Include="SettingsViewGroupToTranslatedStringConverter.cs" />
     <Compile Include="SettingsViewNameToTranslatedStringConverter.cs" />

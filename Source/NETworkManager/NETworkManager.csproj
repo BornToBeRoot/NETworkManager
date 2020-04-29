@@ -130,6 +130,9 @@
       <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DragablzTabItem.cs" />
+    <Compile Include="Controls\LvlChartsPingTimeTooltip.xaml.cs">
+      <DependentUpon>LvlChartsPingTimeTooltip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LvlChartsBandwidthTooltip.xaml.cs">
       <DependentUpon>LvlChartsBandwidthTooltip.xaml</DependentUpon>
     </Compile>
@@ -388,6 +391,10 @@
       <DependentUpon>CommandLineWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\DragablzTabHostWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LvlChartsPingTimeTooltip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
