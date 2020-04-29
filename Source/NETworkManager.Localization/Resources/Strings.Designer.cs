@@ -3920,6 +3920,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lost.
+        /// </summary>
+        public static string Lost {
+            get {
+                return ResourceManager.GetString("Lost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MAC Address.
         /// </summary>
         public static string MACAddress {
@@ -5279,6 +5288,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RAW {
             get {
                 return ResourceManager.GetString("RAW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Received.
+        /// </summary>
+        public static string Received {
+            get {
+                return ResourceManager.GetString("Received", resourceCulture);
             }
         }
         
@@ -7107,6 +7125,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status change.
+        /// </summary>
+        public static string StatusChange {
+            get {
+                return ResourceManager.GetString("StatusChange", resourceCulture);
             }
         }
         

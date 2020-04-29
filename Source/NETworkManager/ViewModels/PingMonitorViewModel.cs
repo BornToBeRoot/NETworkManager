@@ -1,15 +1,15 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using System;
-using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
-using System.Diagnostics;
 using System.Windows.Threading;
 using NETworkManager.Utilities;
-using System.Collections.ObjectModel;
+using LiveCharts;
+using LiveCharts.Configurations;
+using LiveCharts.Wpf;
 
 namespace NETworkManager.ViewModels
 {
@@ -22,9 +22,6 @@ namespace NETworkManager.ViewModels
         private readonly Action<int> _closeCallback;
         private readonly PingMonitorOptions _pingMonitorOptions;
         private bool _firstLoad = true;
-
-        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
-        private readonly Stopwatch _stopwatch = new Stopwatch();
 
         private string _host;
         public string Host
@@ -82,16 +79,17 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<PingInfo> _pingResults = new ObservableCollection<PingInfo>();
-        public ObservableCollection<PingInfo> PingResults
+        private DateTime _statusTime;
+        public DateTime StatusTime
         {
-            get => _pingResults;
+            get => _statusTime;
             set
             {
-                if (value != null && value == _pingResults)
+                if (value == _statusTime)
                     return;
 
-                _pingResults = value;
+                _statusTime = value;
+                OnPropertyChanged();
             }
         }
 
@@ -137,89 +135,29 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private long _minimumTime;
-        public long MinimumTime
+        private void InitialTimeChart()
         {
-            get => _minimumTime;
-            set
-            {
-                if (value == _minimumTime)
-                    return;
+            var dayConfig = Mappers.Xy<LvlChartsPingTimeInfo>()
+                .X(dayModel => (double)dayModel.DateTime.Ticks / TimeSpan.FromHours(1).Ticks)
+                .Y(dayModel => dayModel.Value);
 
-                _minimumTime = value;
-                OnPropertyChanged();
-            }
+            Series = new SeriesCollection(dayConfig)
+            {
+                new LineSeries
+                {
+                    Title = "Time",
+                    Values = new ChartValues<LvlChartsPingTimeInfo>(),
+                    PointGeometry = null
+                }
+            };
+
+            FormatterDate = value => new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)).ToString("hh:mm:ss");
+            FormatterPingTime = value => $"{value} ms";
         }
 
-        private long _maximumTime;
-        public long MaximumTime
-        {
-            get => _maximumTime;
-            set
-            {
-                if (value == _maximumTime)
-                    return;
-
-                _maximumTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _averageTime;
-        public int AverageTime
-        {
-            get => _averageTime;
-            set
-            {
-                if (value == _averageTime)
-                    return;
-
-                _averageTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DateTime? _startTime;
-        public DateTime? StartTime
-        {
-            get => _startTime;
-            set
-            {
-                if (value == _startTime)
-                    return;
-
-                _startTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private TimeSpan _duration;
-        public TimeSpan Duration
-        {
-            get => _duration;
-            set
-            {
-                if (value == _duration)
-                    return;
-
-                _duration = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DateTime? _endTime;
-        public DateTime? EndTime
-        {
-            get => _endTime;
-            set
-            {
-                if (value == _endTime)
-                    return;
-
-                _endTime = value;
-                OnPropertyChanged();
-            }
-        }
+        public Func<double, string> FormatterDate { get; set; }
+        public Func<double, string> FormatterPingTime { get; set; }
+        public SeriesCollection Series { get; set; }
         #endregion
 
         #region Contructor, load settings    
@@ -229,8 +167,10 @@ namespace NETworkManager.ViewModels
             _closeCallback = closeCallback;
             _pingMonitorOptions = options;
 
-            Host = options.Host;
-            IPAddress = options.IPAddress;
+            Host = _pingMonitorOptions.Host;
+            IPAddress = _pingMonitorOptions.IPAddress;
+
+            InitialTimeChart();
         }
 
         public void OnLoaded()
@@ -273,22 +213,14 @@ namespace NETworkManager.ViewModels
         {
             IsPingRunning = true;
 
-            // Measure the time
-            StartTime = DateTime.Now;
-            _stopwatch.Start();
-            _dispatcherTimer.Tick += DispatcherTimer_Tick;
-            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            _dispatcherTimer.Start();
-            EndTime = null;
-
             // Reset the latest results
-            PingResults.Clear();
+            StatusTime = DateTime.Now;
             PingsTransmitted = 0;
             PingsReceived = 0;
             PingsLost = 0;
-            AverageTime = 0;
-            MinimumTime = 0;
-            MaximumTime = 0;
+
+            // Reset chart
+            ResetTimeChart();
 
             _cancellationTokenSource = new CancellationTokenSource();
 
@@ -302,13 +234,13 @@ namespace NETworkManager.ViewModels
                 Hostname = Host
             };
 
-            ping.PingReceived += Ping_PingReceived;            
+            ping.PingReceived += Ping_PingReceived;
             ping.PingException += Ping_PingException;
             ping.UserHasCanceled += Ping_UserHasCanceled;
 
             ping.SendAsync(IPAddress, _cancellationTokenSource.Token);
         }
-           
+
         private void StopPing()
         {
             _cancellationTokenSource?.Cancel();
@@ -317,15 +249,23 @@ namespace NETworkManager.ViewModels
         private void PingFinished()
         {
             IsPingRunning = false;
+        }
 
-            // Stop timer and stopwatch
-            _stopwatch.Stop();
-            _dispatcherTimer.Stop();
+        public void ResetTimeChart()
+        {
+            if (Series == null)
+                return;
 
-            Duration = _stopwatch.Elapsed;
-            EndTime = DateTime.Now;
+            Series[0].Values.Clear();
 
-            _stopwatch.Reset();
+            var currentDateTime = DateTime.Now;
+
+            for (var i = 30; i > 0; i--)
+            {
+                var bandwidthInfo = new LvlChartsPingTimeInfo(currentDateTime.AddSeconds(-i), double.NaN);
+
+                Series[0].Values.Add(bandwidthInfo);
+            }
         }
 
         public void OnClose()
@@ -341,47 +281,43 @@ namespace NETworkManager.ViewModels
         {
             var pingInfo = PingInfo.Parse(e);
 
-            // Add the result to the collection
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                lock (PingResults)
-                    PingResults.Add(pingInfo);
-            }));
-
             // Calculate statistics
             PingsTransmitted++;
 
+            LvlChartsPingTimeInfo timeInfo;
+
             if (pingInfo.Status == System.Net.NetworkInformation.IPStatus.Success)
             {
-                IsReachable = true;
+                if (!IsReachable)
+                {
+                    StatusTime = DateTime.Now;
+                    IsReachable = true;
+                }
 
                 PingsReceived++;
 
-                if (PingsReceived == 1)
-                {
-                    MinimumTime = pingInfo.Time;
-                    MaximumTime = pingInfo.Time;
-                }
-                else
-                {
-                    if (MinimumTime > pingInfo.Time)
-                        MinimumTime = pingInfo.Time;
-
-                    if (MaximumTime < pingInfo.Time)
-                        MaximumTime = pingInfo.Time;
-
-                    // lock, because the collection is changed from another thread...
-                    // I hope this won't slow the application or causes a hight cpu load
-                    lock (PingResults)
-                        AverageTime = (int)PingResults.Average(s => s.Time);
-                }
+                timeInfo = new LvlChartsPingTimeInfo(pingInfo.Timestamp, pingInfo.Time);
             }
             else
             {
-                IsReachable = false;
+                if (IsReachable)
+                {
+                    StatusTime = DateTime.Now;
+                    IsReachable = false;
+                }
 
                 PingsLost++;
+
+                timeInfo = new LvlChartsPingTimeInfo(pingInfo.Timestamp, double.NaN);
             }
+
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                Series[0].Values.Add(timeInfo);
+
+                if (Series[0].Values.Count > 59)
+                    Series[0].Values.RemoveAt(0);
+            }));
         }
 
         private void Ping_UserHasCanceled(object sender, EventArgs e)
@@ -392,11 +328,6 @@ namespace NETworkManager.ViewModels
         private void Ping_PingException(object sender, PingExceptionArgs e)
         {
             PingFinished();
-        }
-
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            Duration = _stopwatch.Elapsed;
         }
         #endregion
     }

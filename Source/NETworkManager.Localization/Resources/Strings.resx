@@ -2884,4 +2884,13 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="EnterValidFileName" xml:space="preserve">
     <value>Enter a valid file name!</value>
   </data>
+  <data name="Lost" xml:space="preserve">
+    <value>Lost</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Received</value>
+  </data>
+  <data name="StatusChange" xml:space="preserve">
+    <value>Status change</value>
+  </data>
 </root>

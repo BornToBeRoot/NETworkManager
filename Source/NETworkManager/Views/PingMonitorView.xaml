@@ -11,14 +11,13 @@
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingMonitorViewModel}">
     <UserControl.Resources>
-        <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <converters:PercentConverter x:Key="PercentConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="48" />
             <ColumnDefinition Width="10" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="10" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="10" />
@@ -26,12 +25,13 @@
         </Grid.ColumnDefinitions>
         <Rectangle Grid.Column="0" Width="32" Height="32">
             <Rectangle.Resources>
-                <VisualBrush x:Key="VisualConnected" Stretch="Uniform" Visual="{iconPacks:Material Kind=ServerNetwork}"/>
-                <VisualBrush x:Key="VisualDisconnected" Stretch="Uniform" Visual="{iconPacks:Material Kind=ServerNetworkOff}"/>
+                <VisualBrush x:Key="VisualConnected" Stretch="Uniform" Visual="{iconPacks:Material Kind=LanConnect}"/>
+                <VisualBrush x:Key="VisualDisconnected" Stretch="Uniform" Visual="{iconPacks:Material Kind=LanDisconnect}"/>
+                <VisualBrush x:Key="VisualPending" Stretch="Uniform" Visual="{iconPacks:Material Kind=LanPending}"/>
             </Rectangle.Resources>
             <Rectangle.Style>
                 <Style TargetType="{x:Type Rectangle}">
-                    <Setter Property="OpacityMask" Value="{StaticResource VisualDisconnected}" />
+                    <Setter Property="OpacityMask" Value="{StaticResource VisualPending}" />
                     <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
                     <Style.Triggers>
                         <MultiDataTrigger>
@@ -65,11 +65,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -84,19 +84,12 @@
             <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Host}" Style="{StaticResource BoldTextBlock}" />
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPAddress}" />
             <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding IPAddress}" Style="{StaticResource BoldTextBlock}" />
-            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Duration}" />
-            <TextBlock Grid.Column="2" Grid.Row="4" Text="{Binding Duration, StringFormat={}{0:hh}h {0:mm}m {0:ss}s {0:ff}ms}" />
-            <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.PacketsTransmitted}" />
-            <TextBlock Grid.Column="6" Grid.Row="0" Text="{Binding PingsTransmitted}" />
-            <TextBlock Grid.Column="4" Grid.Row="2" Text="{x:Static localization:Strings.ReceivedLost}" />
-            <TextBlock Grid.Column="6" Grid.Row="2">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{}{0} / {1}">
-                        <Binding Path="PingsReceived" />
-                        <Binding Path="PingsLost" />
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.StatusChange}" />
+            <TextBlock Grid.Column="2" Grid.Row="4" Text="{Binding StatusTime, StringFormat={}{0:hh}h {0:mm}m {0:ss}s}" Style="{StaticResource BoldTextBlock}" />
+            <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.Received}" />
+            <TextBlock Grid.Column="6" Grid.Row="0" Text="{Binding PingsReceived}" />
+            <TextBlock Grid.Column="4" Grid.Row="2" Text="{x:Static localization:Strings.Lost}" />
+            <TextBlock Grid.Column="6" Grid.Row="2" Text="{Binding PingsLost}" />
             <TextBlock Grid.Column="4" Grid.Row="4" Text="{x:Static localization:Strings.PacketLoss}" />
             <TextBlock Grid.Column="6" Grid.Row="4">
                 <TextBlock.Text>
@@ -105,14 +98,13 @@
                         <Binding Path="PingsLost" />
                     </MultiBinding>
                 </TextBlock.Text>
-            </TextBlock>           
+            </TextBlock>            
         </Grid>
         <Grid Grid.Column="4">
-            <!--
-            <liveChart:CartesianChart Series="{Binding Series}" LegendLocation="Right" Margin="0,0,0,20">
-                <liveChart:CartesianChart.DataTooltip>
+            <liveChart:CartesianChart Series="{Binding Series}" LegendLocation="None" DisableAnimations="True">
+                <!-- <liveChart:CartesianChart.DataTooltip>
                     <controls:LvlChartsBandwidthTooltip Background="Transparent" />
-                </liveChart:CartesianChart.DataTooltip>
+                </liveChart:CartesianChart.DataTooltip> -->
                 <liveChart:CartesianChart.AxisX>
                     <liveChart:Axis LabelFormatter="{Binding FormatterDate}">
                         <liveChart:Axis.Separator>
@@ -121,14 +113,13 @@
                     </liveChart:Axis>
                 </liveChart:CartesianChart.AxisX>
                 <liveChart:CartesianChart.AxisY>
-                    <liveChart:Axis MinValue="0" LabelFormatter="{Binding FormatterSpeed}">
+                    <liveChart:Axis MinValue="0" LabelFormatter="{Binding FormatterPingTime}">
                         <liveChart:Axis.Separator>
                             <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource GrayBrush8}" StrokeDashArray="10" />
                         </liveChart:Axis.Separator>
                     </liveChart:Axis>
                 </liveChart:CartesianChart.AxisY>
             </liveChart:CartesianChart>
-            -->
         </Grid>
         <Grid Grid.Column="6">
             <Grid.RowDefinitions>

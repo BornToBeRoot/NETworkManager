@@ -64,6 +64,12 @@ namespace NETworkManager.Models.Network
             Status = status;
         }
 
+        public PingInfo(DateTime timestamp, long time)
+        {
+            Timestamp = timestamp;
+            Time = time;
+        }
+
         public PingInfo(IPAddress ipAddress, int bytes, long time, int ttl, IPStatus status)
         {
             IPAddress = ipAddress;

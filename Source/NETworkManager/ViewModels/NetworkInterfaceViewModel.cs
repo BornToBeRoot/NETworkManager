@@ -1039,9 +1039,10 @@ namespace NETworkManager.ViewModels
 
         private void StartBandwidthMeter(string networkInterfaceId)
         {
-            // Reset
+            // Reset chart
             ResetBandwidthChart();
 
+            // Reset statistic
             _resetBandwidthStatisticOnNextUpdate = true;
 
             _bandwidthMeter = new BandwidthMeter(networkInterfaceId);
@@ -1131,10 +1132,10 @@ namespace NETworkManager.ViewModels
             Series[1].Values.Add(new BandwidthInfo(e.DateTime, e.ByteSentSpeed));
 
             // Remove data older than 60 seconds
-            if (Series[0].Values.Count >= 60)
+            if (Series[0].Values.Count > 59)
                 Series[0].Values.RemoveAt(0);
 
-            if (Series[1].Values.Count >= 60)
+            if (Series[1].Values.Count > 59)
                 Series[1].Values.RemoveAt(0);
         }
 
