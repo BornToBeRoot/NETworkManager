@@ -447,7 +447,7 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.GHz2dot4}" Style="{StaticResource HeaderTextBlock}" />
-                        <liveChart:CartesianChart Grid.Row="1" Series="{Binding Radio1Series}" LegendLocation="Right">
+                        <liveChart:CartesianChart Grid.Row="1" Series="{Binding Radio1Series}" LegendLocation="Bottom" DisableAnimations="True">
                             <liveChart:CartesianChart.DataTooltip>
                                 <controls:LvlChartsWiFiChannelTooltip Background="Transparent" />
                             </liveChart:CartesianChart.DataTooltip>
@@ -489,7 +489,7 @@
                             </liveChart:CartesianChart.AxisY>
                         </liveChart:CartesianChart>
                         <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.GHz5}" Style="{StaticResource HeaderTextBlock}" />
-                        <liveChart:CartesianChart Grid.Row="4" Series="{Binding Radio2Series}" LegendLocation="Right">
+                        <liveChart:CartesianChart Grid.Row="4" Series="{Binding Radio2Series}" LegendLocation="Bottom" DisableAnimations="True">
                             <liveChart:CartesianChart.DataTooltip>
                                 <controls:LvlChartsWiFiChannelTooltip Background="Transparent" />
                             </liveChart:CartesianChart.DataTooltip>

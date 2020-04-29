@@ -439,7 +439,7 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <liveChart:CartesianChart Grid.Row="2" Series="{Binding Series}" LegendLocation="Right" Margin="0,0,0,20">
+                    <liveChart:CartesianChart Grid.Row="2" Series="{Binding Series}" LegendLocation="Right" Margin="0,0,0,20" DisableAnimations="True">
                         <liveChart:CartesianChart.DataTooltip>
                             <controls:LvlChartsBandwidthTooltip Background="Transparent" />
                         </liveChart:CartesianChart.DataTooltip>
