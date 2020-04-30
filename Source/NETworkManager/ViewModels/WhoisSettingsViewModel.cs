@@ -8,22 +8,7 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
         
-        private bool _showStatistics;
-        public bool ShowStatistics
-        {
-            get => _showStatistics;
-            set
-            {
-                if (value == _showStatistics)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Whois_ShowStatistics = value;
-
-                _showStatistics = value;
-                OnPropertyChanged();
-            }
-        }
+       
         #endregion
 
         #region Contructor, load settings
@@ -38,7 +23,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ShowStatistics = SettingsManager.Current.Whois_ShowStatistics;
+
         }
         #endregion
     }

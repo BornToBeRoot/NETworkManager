@@ -92,23 +92,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private bool _showStatistics;
-        public bool ShowStatistics
-        {
-            get => _showStatistics;
-            set
-            {
-                if (value == _showStatistics)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.PortScanner_ShowStatistics = value;
-
-                _showStatistics = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #region Constructor, load settings
@@ -128,7 +111,6 @@ namespace NETworkManager.ViewModels
             ShowClosed = SettingsManager.Current.PortScanner_ShowClosed;
             Timeout = SettingsManager.Current.PortScanner_Timeout;
             ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname;
-            ShowStatistics = SettingsManager.Current.PortScanner_ShowStatistics;
         }
         #endregion
     }

@@ -28,8 +28,6 @@
         <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
         <RadioButton Content="{x:Static localization:Strings.IPv4}" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
-        <RadioButton Content="{x:Static localization:Strings.IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" Margin="0,0,0,20" />
-        <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowStatistics}"   IsChecked="{Binding ShowStatistics}" />
+        <RadioButton Content="{x:Static localization:Strings.IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" />
     </StackPanel>
 </UserControl>

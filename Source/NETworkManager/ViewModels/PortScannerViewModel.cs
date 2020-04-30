@@ -9,7 +9,6 @@ using NETworkManager.Models.Network;
 using System.Threading;
 using System.Net;
 using System.Windows.Threading;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
@@ -33,9 +32,6 @@ namespace NETworkManager.ViewModels
 
         public readonly int TabId;
         private bool _firstLoad = true;
-
-        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
-        private readonly Stopwatch _stopwatch = new Stopwatch();
 
         private string _lastSortDescriptionAscending = string.Empty;
 
@@ -175,20 +171,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int _portsOpen;
-        public int PortsOpen
-        {
-            get => _portsOpen;
-            set
-            {
-                if (value == _portsOpen)
-                    return;
-
-                _portsOpen = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _preparingScan;
         public bool PreparingScan
         {
@@ -199,65 +181,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _preparingScan = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DateTime? _startTime;
-        public DateTime? StartTime
-        {
-            get => _startTime;
-            set
-            {
-                if (value == _startTime)
-                    return;
-
-                _startTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private TimeSpan _duration;
-        public TimeSpan Duration
-        {
-            get => _duration;
-            set
-            {
-                if (value == _duration)
-                    return;
-
-                _duration = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DateTime? _endTime;
-        public DateTime? EndTime
-        {
-            get => _endTime;
-            set
-            {
-                if (value == _endTime)
-                    return;
-
-                _endTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _expandStatistics;
-        public bool ExpandStatistics
-        {
-            get => _expandStatistics;
-            set
-            {
-                if (value == _expandStatistics)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.PortScanner_ExpandStatistics = value;
-
-                _expandStatistics = value;
                 OnPropertyChanged();
             }
         }
@@ -289,9 +212,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public bool ShowStatistics => SettingsManager.Current.PortScanner_ShowStatistics;
-
         #endregion
 
         #region Constructor, load settings, shutdown
@@ -324,7 +244,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ExpandStatistics = SettingsManager.Current.PortScanner_ExpandStatistics;
+
         }
 
         public void OnLoaded()
@@ -427,16 +347,7 @@ namespace NETworkManager.ViewModels
             IsScanRunning = true;
             PreparingScan = true;
 
-            // Measure the time
-            StartTime = DateTime.Now;
-            _stopwatch.Start();
-            _dispatcherTimer.Tick += DispatcherTimer_Tick;
-            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            _dispatcherTimer.Start();
-            EndTime = null;
-
             PortScanResult.Clear();
-            PortsOpen = 0;
 
             // Change the tab title (not nice, but it works)
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -519,15 +430,6 @@ namespace NETworkManager.ViewModels
 
         private void ScanFinished()
         {
-            // Stop timer and stopwatch
-            _stopwatch.Stop();
-            _dispatcherTimer.Stop();
-
-            Duration = _stopwatch.Elapsed;
-            EndTime = DateTime.Now;
-
-            _stopwatch.Reset();
-
             CancelScan = false;
             IsScanRunning = false;
         }
@@ -647,23 +549,17 @@ namespace NETworkManager.ViewModels
                 lock (PortScanResult)
                     PortScanResult.Add(portInfo);
             }));
-
-            if (portInfo.State == PortState.Open)
-                PortsOpen++;
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Duration = _stopwatch.Elapsed;
+
         }
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case nameof(SettingsInfo.PortScanner_ShowStatistics):
-                    OnPropertyChanged(nameof(ShowStatistics));
-                    break;
                 case nameof(SettingsInfo.PortScanner_ResolveHostname):
                     OnPropertyChanged(nameof(ResolveHostname));
                     break;

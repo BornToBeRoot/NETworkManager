@@ -878,22 +878,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _ipScanner_ExpandStatistics = true;
-        public bool IPScanner_ExpandStatistics
-        {
-            get => _ipScanner_ExpandStatistics;
-            set
-            {
-                if (value == _ipScanner_ExpandStatistics)
-                    return;
-
-                _ipScanner_ExpandStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+               
         private bool _ipScanner_ExpandProfileView = true;
         public bool IPScanner_ExpandProfileView
         {
@@ -923,22 +908,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _ipScanner_ShowStatistics = true;
-        public bool IPScanner_ShowStatistics
-        {
-            get => _ipScanner_ShowStatistics;
-            set
-            {
-                if (value == _ipScanner_ShowStatistics)
-                    return;
-
-                _ipScanner_ShowStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+                
         private string _ipScanner_ExportFilePath;
         public string IPScanner_ExportFilePath
         {
@@ -1074,22 +1044,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _portScanner_ExpandStatistics = true;
-        public bool PortScanner_ExpandStatistics
-        {
-            get => _portScanner_ExpandStatistics;
-            set
-            {
-                if (value == _portScanner_ExpandStatistics)
-                    return;
-
-                _portScanner_ExpandStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+      
         private bool _portScanner_ExpandProfileView = true;
         public bool PortScanner_ExpandProfileView
         {
@@ -1119,22 +1074,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _portScanner_ShowStatistics = true;
-        public bool PortScanner_ShowStatistics
-        {
-            get => _portScanner_ShowStatistics;
-            set
-            {
-                if (value == _portScanner_ShowStatistics)
-                    return;
-
-                _portScanner_ShowStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+       
         private string _portScanner_ExportFilePath;
         public string PortScanner_ExportFilePath
         {
@@ -1424,21 +1364,6 @@ namespace NETworkManager.Settings
             }
         }
 
-        private bool _traceroute_ExpandStatistics;
-        public bool Traceroute_ExpandStatistics
-        {
-            get => _traceroute_ExpandStatistics;
-            set
-            {
-                if (value == _traceroute_ExpandStatistics)
-                    return;
-
-                _traceroute_ExpandStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
         private bool _traceroute_ExpandProfileView = true;
         public bool Traceroute_ExpandProfileView
         {
@@ -1464,21 +1389,6 @@ namespace NETworkManager.Settings
                     return;
 
                 _traceroute_ProfileWidth = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _traceroute_ShowStatistics = true;
-        public bool Traceroute_ShowStatistics
-        {
-            get => _traceroute_ShowStatistics;
-            set
-            {
-                if (value == _traceroute_ShowStatistics)
-                    return;
-
-                _traceroute_ShowStatistics = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -1725,22 +1635,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _dnsLookup_ExpandStatistics = true;
-        public bool DNSLookup_ExpandStatistics
-        {
-            get => _dnsLookup_ExpandStatistics;
-            set
-            {
-                if (value == _dnsLookup_ExpandStatistics)
-                    return;
-
-                _dnsLookup_ExpandStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+       
         private bool _dnsLookup_ExpandProfileView = true;
         public bool DNSLookup_ExpandProfileView
         {
@@ -1770,22 +1665,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _dnsLookup_ShowStatistics = true;
-        public bool DNSLookup_ShowStatistics
-        {
-            get => _dnsLookup_ShowStatistics;
-            set
-            {
-                if (value == _dnsLookup_ShowStatistics)
-                    return;
-
-                _dnsLookup_ShowStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+      
         private string _dnsLookup_ExportFilePath;
         public string DNSLookup_ExportFilePath
         {
@@ -3012,22 +2892,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _snmp_ExpandStatistics = true;
-        public bool SNMP_ExpandStatistics
-        {
-            get => _snmp_ExpandStatistics;
-            set
-            {
-                if (value == _snmp_ExpandStatistics)
-                    return;
-
-                _snmp_ExpandStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+               
         private SNMPV3Security _snmp_Security = GlobalStaticConfiguration.SNMP_Security;
         public SNMPV3Security SNMP_Security
         {
@@ -3071,22 +2936,7 @@ namespace NETworkManager.Settings
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
-        }
-
-        private bool _snmp_ShowStatistics = true;
-        public bool SNMP_ShowStatistics
-        {
-            get => _snmp_ShowStatistics;
-            set
-            {
-                if (value == _snmp_ShowStatistics)
-                    return;
-
-                _snmp_ShowStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
+        }   
 
         private string _snmp_ExportFilePath;
         public string SNMP_ExportFilePath
@@ -3435,22 +3285,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _whois_ExpandStatistics = true;
-        public bool Whois_ExpandStatistics
-        {
-            get => _whois_ExpandStatistics;
-            set
-            {
-                if (value == _whois_ExpandStatistics)
-                    return;
-
-                _whois_ExpandStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+             
         private bool _whois_ExpandProfileView = true;
         public bool Whois_ExpandProfileView
         {
@@ -3480,22 +3315,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _whois_ShowStatistics = true;
-        public bool Whois_ShowStatistics
-        {
-            get => _whois_ShowStatistics;
-            set
-            {
-                if (value == _whois_ShowStatistics)
-                    return;
-
-                _whois_ShowStatistics = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+       
         private string _whois_ExportFilePath;
         public string Whois_ExportFilePath
         {

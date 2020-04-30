@@ -8,7 +8,6 @@
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WhoisSettingsViewModel}">
     <StackPanel>
-        <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowStatistics}" IsChecked="{Binding ShowStatistics}" />
+        
     </StackPanel>
 </UserControl>

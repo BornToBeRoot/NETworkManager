@@ -302,23 +302,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private bool _showStatistics;
-        public bool ShowStatistics
-        {
-            get => _showStatistics;
-            set
-            {
-                if (value == _showStatistics)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_ShowStatistics = value;
-
-                _showStatistics = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #region Constructor, load settings
@@ -357,7 +340,6 @@ namespace NETworkManager.ViewModels
             DNSTimeout = SettingsManager.Current.IPScanner_DNSTimeout;
             DNSShowErrorMessage = SettingsManager.Current.IPScanner_DNSShowErrorMessage;
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
-            ShowStatistics = SettingsManager.Current.IPScanner_ShowStatistics;
         }
         #endregion
 

@@ -29,9 +29,6 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
-        private readonly Stopwatch _stopwatch = new Stopwatch();
-
         public readonly int TabId;
 
         private readonly bool _isLoading;
@@ -318,82 +315,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private DateTime? _startTime;
-        public DateTime? StartTime
-        {
-            get => _startTime;
-            set
-            {
-                if (value == _startTime)
-                    return;
-
-                _startTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private TimeSpan _duration;
-        public TimeSpan Duration
-        {
-            get => _duration;
-            set
-            {
-                if (value == _duration)
-                    return;
-
-                _duration = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DateTime? _endTime;
-        public DateTime? EndTime
-        {
-            get => _endTime;
-            set
-            {
-                if (value == _endTime)
-                    return;
-
-                _endTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _responses;
-        public int Responses
-        {
-            get => _responses;
-            set
-            {
-                if (value == _responses)
-                    return;
-
-                _responses = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _expandStatistics;
-        public bool ExpandStatistics
-        {
-            get => _expandStatistics;
-            set
-            {
-                if (value == _expandStatistics)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.SNMP_ExpandStatistics = value;
-
-                _expandStatistics = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool ShowStatistics => SettingsManager.Current.SNMP_ShowStatistics;
-
         #endregion
 
         #region Contructor, load settings
@@ -442,7 +363,6 @@ namespace NETworkManager.ViewModels
             Security = Securitys.FirstOrDefault(x => x == SettingsManager.Current.SNMP_Security);
             AuthenticationProvider = AuthenticationProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_AuthenticationProvider);
             PrivacyProvider = PrivacyProviders.FirstOrDefault(x => x == SettingsManager.Current.SNMP_PrivacyProvider);
-            ExpandStatistics = SettingsManager.Current.SNMP_ExpandStatistics;
         }
         #endregion
 
@@ -514,16 +434,7 @@ namespace NETworkManager.ViewModels
             DisplayStatusMessage = false;
             IsWorking = true;
 
-            // Measure time
-            StartTime = DateTime.Now;
-            _stopwatch.Start();
-            _dispatcherTimer.Tick += DispatcherTimer_Tick;
-            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            _dispatcherTimer.Start();
-            EndTime = null;
-
             QueryResults.Clear();
-            Responses = 0;
 
             // Change the tab title (not nice, but it works)
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -595,15 +506,6 @@ namespace NETworkManager.ViewModels
         private void Finished()
         {
             IsWorking = false;
-
-            // Stop timer and stopwatch
-            _stopwatch.Stop();
-            _dispatcherTimer.Stop();
-
-            Duration = _stopwatch.Elapsed;
-            EndTime = DateTime.Now;
-
-            _stopwatch.Reset();
         }
 
         public void OnClose()
@@ -648,8 +550,6 @@ namespace NETworkManager.ViewModels
                 lock (QueryResults)
                     QueryResults.Add(snmpReceivedInfo);
             }));
-
-            Responses++;
         }
 
         private void Snmp_TimeoutReached(object sender, EventArgs e)
@@ -688,15 +588,9 @@ namespace NETworkManager.ViewModels
             Finished();
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            Duration = _stopwatch.Elapsed;
-        }
-
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.SNMP_ShowStatistics))
-                OnPropertyChanged(nameof(ShowStatistics));
+
         }
         #endregion
     }

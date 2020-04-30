@@ -39,9 +39,6 @@ namespace NETworkManager.ViewModels
         public readonly int TabId;
         private bool _firstLoad = true;
 
-        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
-        private readonly Stopwatch _stopwatch = new Stopwatch();
-
         private readonly bool _isLoading;
 
         private string _host;
@@ -176,21 +173,7 @@ namespace NETworkManager.ViewModels
                 _ipAddressesScanned = value;
                 OnPropertyChanged();
             }
-        }
-
-        private int _hostsFound;
-        public int HostsFound
-        {
-            get => _hostsFound;
-            set
-            {
-                if (value == _hostsFound)
-                    return;
-
-                _hostsFound = value;
-                OnPropertyChanged();
-            }
-        }
+        }      
 
         private bool _preparingScan;
         public bool PreparingScan
@@ -232,70 +215,9 @@ namespace NETworkManager.ViewModels
                 _statusMessage = value;
                 OnPropertyChanged();
             }
-        }
+        }               
 
-        private DateTime? _startTime;
-        public DateTime? StartTime
-        {
-            get => _startTime;
-            set
-            {
-                if (value == _startTime)
-                    return;
-
-                _startTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private TimeSpan _duration;
-        public TimeSpan Duration
-        {
-            get => _duration;
-            set
-            {
-                if (value == _duration)
-                    return;
-
-                _duration = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DateTime? _endTime;
-        public DateTime? EndTime
-        {
-            get => _endTime;
-            set
-            {
-                if (value == _endTime)
-                    return;
-
-                _endTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public IEnumerable<CustomCommandInfo> CustomCommands => SettingsManager.Current.IPScanner_CustomCommands;
-
-        private bool _expandStatistics;
-        public bool ExpandStatistics
-        {
-            get => _expandStatistics;
-            set
-            {
-                if (value == _expandStatistics)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.IPScanner_ExpandStatistics = value;
-
-                _expandStatistics = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool ShowStatistics => SettingsManager.Current.IPScanner_ShowStatistics;
+        public IEnumerable<CustomCommandInfo> CustomCommands => SettingsManager.Current.IPScanner_CustomCommands;   
         #endregion
 
         #region Constructor, load settings, shutdown
@@ -340,7 +262,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ExpandStatistics = SettingsManager.Current.IPScanner_ExpandStatistics;
+
         }
         #endregion
 
@@ -512,17 +434,8 @@ namespace NETworkManager.ViewModels
             DisplayStatusMessage = false;
             IsScanRunning = true;
             PreparingScan = true;
-
-            // Measure the time
-            StartTime = DateTime.Now;
-            _stopwatch.Start();
-            _dispatcherTimer.Tick += DispatcherTimer_Tick;
-            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            _dispatcherTimer.Start();
-            EndTime = null;
-
+                       
             HostResults.Clear();
-            HostsFound = 0;
 
             // Change the tab title (not nice, but it works)
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -618,15 +531,6 @@ namespace NETworkManager.ViewModels
 
         private void ScanFinished()
         {
-            // Stop timer and stopwatch
-            _stopwatch.Stop();
-            _dispatcherTimer.Stop();
-
-            Duration = _stopwatch.Elapsed;
-            EndTime = DateTime.Now;
-
-            _stopwatch.Reset();
-
             CancelScan = false;
             IsScanRunning = false;
         }
@@ -769,8 +673,6 @@ namespace NETworkManager.ViewModels
                 lock (HostResults)
                     HostResults.Add(ipScannerHostInfo);
             }));
-
-            HostsFound++;
         }
 
         private void ScanComplete(object sender, EventArgs e)
@@ -798,12 +700,7 @@ namespace NETworkManager.ViewModels
 
             ScanFinished();
         }
-
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            Duration = _stopwatch.Elapsed;
-        }
-
+       
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -813,10 +710,7 @@ namespace NETworkManager.ViewModels
                     break;
                 case nameof(SettingsInfo.IPScanner_ResolveHostname):
                     OnPropertyChanged(nameof(ResolveHostname));
-                    break;
-                case nameof(SettingsInfo.IPScanner_ShowStatistics):
-                    OnPropertyChanged(nameof(ShowStatistics));
-                    break;
+                    break;             
             }
         }
         #endregion

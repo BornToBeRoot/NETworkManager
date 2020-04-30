@@ -8,7 +8,6 @@ using NETworkManager.Settings;
 using NETworkManager.Models.Network;
 using System.Threading;
 using NETworkManager.Utilities;
-using System.Diagnostics;
 using System.Windows.Threading;
 using System.ComponentModel;
 using System.Globalization;
@@ -34,9 +33,6 @@ namespace NETworkManager.ViewModels
 
         public readonly int TabId;
         private bool _firstLoad = true;
-
-        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer();
-        private readonly Stopwatch _stopwatch = new Stopwatch();
 
         private readonly bool _isLoading;
 
@@ -156,82 +152,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private DateTime? _startTime;
-        public DateTime? StartTime
-        {
-            get => _startTime;
-            set
-            {
-                if (value == _startTime)
-                    return;
-
-                _startTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private TimeSpan _duration;
-        public TimeSpan Duration
-        {
-            get => _duration;
-            set
-            {
-                if (value == _duration)
-                    return;
-
-                _duration = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DateTime? _endTime;
-        public DateTime? EndTime
-        {
-            get => _endTime;
-            set
-            {
-                if (value == _endTime)
-                    return;
-
-                _endTime = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _expandStatistics;
-        public bool ExpandStatistics
-        {
-            get => _expandStatistics;
-            set
-            {
-                if (value == _expandStatistics)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Traceroute_ExpandStatistics = value;
-
-                _expandStatistics = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _hops;
-        public int Hops
-        {
-            get => _hops;
-            set
-            {
-                if (value == _hops)
-                    return;
-
-                _hops = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool ShowStatistics => SettingsManager.Current.Traceroute_ShowStatistics;
-
         #endregion
 
         #region Constructor, load settings
@@ -271,7 +191,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ExpandStatistics = SettingsManager.Current.Traceroute_ExpandStatistics;
+
         }
         #endregion
 
@@ -379,16 +299,7 @@ namespace NETworkManager.ViewModels
             DisplayStatusMessage = false;
             IsTraceRunning = true;
 
-            // Measure the time
-            StartTime = DateTime.Now;
-            _stopwatch.Start();
-            _dispatcherTimer.Tick += DispatcherTimer_Tick;
-            _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            _dispatcherTimer.Start();
-            EndTime = null;
-
             TraceResults.Clear();
-            Hops = 0;
 
             // Change the tab title (not nice, but it works)
             var window = System.Windows.Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -459,15 +370,6 @@ namespace NETworkManager.ViewModels
         private void TracerouteFinished()
         {
             IsTraceRunning = false;
-
-            // Stop timer and stopwatch
-            _stopwatch.Stop();
-            _dispatcherTimer.Stop();
-
-            Duration = _stopwatch.Elapsed;
-            EndTime = DateTime.Now;
-
-            _stopwatch.Reset();          
         }
 
         private async void Export()
@@ -530,13 +432,11 @@ namespace NETworkManager.ViewModels
         {
             var tracerouteInfo = TracerouteHopInfo.Parse(e);
 
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 lock (TraceResults)
                     TraceResults.Add(tracerouteInfo);
             }));
-
-            Hops++;
         }
 
         private void Traceroute_MaximumHopsReached(object sender, MaximumHopsReachedArgs e)
@@ -560,21 +460,13 @@ namespace NETworkManager.ViewModels
             TracerouteFinished();
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            Duration = _stopwatch.Elapsed;
-        }
-
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
                 case nameof(SettingsInfo.Traceroute_ResolveHostname):
                     OnPropertyChanged(nameof(ResolveHostname));
-                    break;
-                case nameof(SettingsInfo.Traceroute_ShowStatistics):
-                    OnPropertyChanged(nameof(ShowStatistics));
-                    break;
+                    break;              
             }
         }
         #endregion               

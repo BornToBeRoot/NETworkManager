@@ -106,7 +106,7 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,20">
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
             <Button Command="{Binding DeleteCustomCommandCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
@@ -186,7 +186,5 @@
                 </Button.Content>
             </Button>
         </StackPanel>
-        <TextBlock Text="{x:Static localization:Strings.Statistics}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowStatistics}" IsChecked="{Binding ShowStatistics}" />
     </StackPanel>
 </UserControl>
