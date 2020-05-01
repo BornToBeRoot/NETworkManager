@@ -38,21 +38,20 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="0,0,0,10">
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" Style="{StaticResource CenterTextBlock}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxPort, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Hosts}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
+                <ComboBox Grid.Column="2" x:Name="ComboBoxHost" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -62,8 +61,8 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Ports}" Style="{StaticResource CenterTextBlock}" />
-                <ComboBox Grid.Column="2" Grid.Row="2" x:Name="ComboBoxPort" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <TextBlock Grid.Column="4" Text="{x:Static localization:Strings.Ports}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
+                <ComboBox Grid.Column="6" x:Name="ComboBoxPort" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -73,7 +72,7 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4" Grid.Row="2" Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" HorizontalAlignment="Right">
+                <Button Grid.Column="8" Command="{Binding ScanCommand}" IsDefault="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsScanRunning}" HorizontalAlignment="Right">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
