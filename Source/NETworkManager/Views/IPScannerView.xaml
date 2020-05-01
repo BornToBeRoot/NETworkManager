@@ -52,9 +52,9 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Hosts}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="ComboBoxIPRange" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" x:Name="ComboBoxHosts" ItemsSource="{Binding HostsHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
-                        <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="Hosts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                 <validators:MultipleHostsRangeValidator ValidatesOnTargetUpdated="True" />
@@ -62,14 +62,14 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4" Command="{Binding DetectIPRangeCommand}" ToolTip="{x:Static localization:Strings.DetectLocalIPAddressAndSubnetmask}">
+                <Button Grid.Column="4" Command="{Binding DetectSubnetCommand}" ToolTip="{x:Static localization:Strings.DetectLocalIPAddressAndSubnetmask}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsScanRunning}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding IsIPRangeDetectionRunning}" Value="True">
+                                <DataTrigger Binding="{Binding IsSubnetDetectionRunning}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                             </Style.Triggers>
@@ -86,7 +86,7 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxIPRange}" Value="True" >
+                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHosts}" Value="True" >
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding CancelScan}" Value="True">
@@ -144,7 +144,7 @@
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Style>
-                <mahAppsControls:MetroProgressBar Maximum="{Binding IPAddressesToScan}" Foreground="{DynamicResource AccentColorBrush}"  Value="{Binding IPAddressesScanned}">
+                <mahAppsControls:MetroProgressBar Maximum="{Binding HostsToScan}" Foreground="{DynamicResource AccentColorBrush}"  Value="{Binding HostsScanned}">
                     <mahAppsControls:MetroProgressBar.Style>
                         <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}" >
                             <Setter Property="IsIndeterminate" Value="False" />
@@ -175,8 +175,8 @@
                     </TextBlock.Style>
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0} / {1} ">
-                            <Binding Path="IPAddressesScanned" />
-                            <Binding Path="IPAddressesToScan" />
+                            <Binding Path="HostsScanned" />
+                            <Binding Path="HostsToScan" />
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
@@ -184,7 +184,7 @@
             <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
-        <controls:MultiSelectDataGrid Grid.Row="3" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding HostResultsView}" SelectedItem="{Binding SelectedHostResult}" SelectedItemsList="{Binding SelectedHostResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <controls:MultiSelectDataGrid Grid.Row="3" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedHostResult}" SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
@@ -194,15 +194,6 @@
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkPort}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.Ping}" Command="{Binding RedirectDataToApplicationCommand}" CommandParameter="Ping">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=LanConnect}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -242,7 +233,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding PerformDNSLookupHostnameCommand}" IsEnabled="{Binding Data.SelectedHostResult.Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
+                        <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding PerformDNSLookupHostnameCommand}" IsEnabled="{Binding Data.SelectedResult.Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
                                     <Rectangle.OpacityMask>

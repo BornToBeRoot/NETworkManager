@@ -41,32 +41,32 @@ namespace NETworkManager.ViewModels
 
         private readonly bool _isLoading;
 
-        private string _host;
-        public string Host
+        private string _hosts;
+        public string Hosts
         {
-            get => _host;
+            get => _hosts;
             set
             {
-                if (value == _host)
+                if (value == _hosts)
                     return;
 
-                _host = value;
+                _hosts = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICollectionView HostHistoryView { get; }
+        public ICollectionView HostsHistoryView { get; }
 
-        private bool _isIPRangeDetectionRunning;
-        public bool IsIPRangeDetectionRunning
+        private bool _isSubnetDetectionRunning;
+        public bool IsSubnetDetectionRunning
         {
-            get => _isIPRangeDetectionRunning;
+            get => _isSubnetDetectionRunning;
             set
             {
-                if (value == _isIPRangeDetectionRunning)
+                if (value == _isSubnetDetectionRunning)
                     return;
 
-                _isIPRangeDetectionRunning = value;
+                _isSubnetDetectionRunning = value;
                 OnPropertyChanged();
             }
         }
@@ -100,20 +100,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<HostInfo> _hostResults = new ObservableCollection<HostInfo>();
-        public ObservableCollection<HostInfo> HostResults
+        private ObservableCollection<HostInfo> _results = new ObservableCollection<HostInfo>();
+        public ObservableCollection<HostInfo> Results
         {
-            get => _hostResults;
+            get => _results;
             set
             {
-                if (value != null && value == _hostResults)
+                if (value != null && value == _results)
                     return;
 
-                _hostResults = value;
+                _results = value;
             }
         }
 
-        public ICollectionView HostResultsView { get; }
+        public ICollectionView ResultsView { get; }
 
         private HostInfo _selectedHostResult;
         public HostInfo SelectedHostResult
@@ -129,16 +129,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private IList _selectedHostResults = new ArrayList();
-        public IList SelectedHostResults
+        private IList _selectedResults = new ArrayList();
+        public IList SelectedResults
         {
-            get => _selectedHostResults;
+            get => _selectedResults;
             set
             {
-                if (Equals(value, _selectedHostResults))
+                if (Equals(value, _selectedResults))
                     return;
 
-                _selectedHostResults = value;
+                _selectedResults = value;
                 OnPropertyChanged();
             }
         }
@@ -147,30 +147,30 @@ namespace NETworkManager.ViewModels
 
         public bool ResolveMACAddress => SettingsManager.Current.IPScanner_ResolveMACAddress;
 
-        private int _ipAddressesToScan;
-        public int IPAddressesToScan
+        private int _hostsToScan;
+        public int HostsToScan
         {
-            get => _ipAddressesToScan;
+            get => _hostsToScan;
             set
             {
-                if (value == _ipAddressesToScan)
+                if (value == _hostsToScan)
                     return;
 
-                _ipAddressesToScan = value;
+                _hostsToScan = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _ipAddressesScanned;
-        public int IPAddressesScanned
+        private int _hostsScanned;
+        public int HostsScanned
         {
-            get => _ipAddressesScanned;
+            get => _hostsScanned;
             set
             {
-                if (value == _ipAddressesScanned)
+                if (value == _hostsScanned)
                     return;
 
-                _ipAddressesScanned = value;
+                _hostsScanned = value;
                 OnPropertyChanged();
             }
         }      
@@ -228,14 +228,14 @@ namespace NETworkManager.ViewModels
             _dialogCoordinator = instance;
 
             TabId = tabId;
-            Host = hostOrIPRange;
+            Hosts = hostOrIPRange;
 
             // Host history
-            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostHistory);
+            HostsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostsHistory);
 
             // Result view
-            HostResultsView = CollectionViewSource.GetDefaultView(HostResults);
-            HostResultsView.SortDescriptions.Add(new SortDescription(nameof(HostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
+            ResultsView = CollectionViewSource.GetDefaultView(Results);
+            ResultsView.SortDescriptions.Add(new SortDescription(nameof(HostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
 
             // Add default custom commands...
             if (SettingsManager.Current.IPScanner_CustomCommands.Count == 0)
@@ -254,7 +254,7 @@ namespace NETworkManager.ViewModels
             if (!_firstLoad)
                 return;
 
-            if (!string.IsNullOrEmpty(Host))
+            if (!string.IsNullOrEmpty(Hosts))
                 StartScan();
 
             _firstLoad = false;
@@ -280,9 +280,9 @@ namespace NETworkManager.ViewModels
             Scan();
         }
 
-        public ICommand DetectIPRangeCommand => new RelayCommand(p => DetectIPRangeAction());
+        public ICommand DetectSubnetCommand => new RelayCommand(p => DetectSubnetAction());
 
-        private void DetectIPRangeAction()
+        private void DetectSubnetAction()
         {
             DetectIPRange();
         }
@@ -294,7 +294,7 @@ namespace NETworkManager.ViewModels
             if (!(name is string appName))
                 return;
 
-            if (!System.Enum.TryParse(appName, out ApplicationName applicationName))
+            if (!Enum.TryParse(appName, out ApplicationName applicationName))
                 return;
 
             var host = !string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.Hostname : SelectedHostResult.PingInfo.IPAddress.ToString();
@@ -435,7 +435,7 @@ namespace NETworkManager.ViewModels
             IsScanRunning = true;
             PreparingScan = true;
                        
-            HostResults.Clear();
+            Results.Clear();
 
             // Change the tab title (not nice, but it works)
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -444,7 +444,7 @@ namespace NETworkManager.ViewModels
             {
                 foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
-                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Host;
+                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Hosts;
                 }
             }
 
@@ -455,7 +455,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Host.Replace(" ", "").Split(';'), _cancellationTokenSource.Token);
+                ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Hosts.Replace(" ", "").Split(';'), _cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
@@ -482,13 +482,13 @@ namespace NETworkManager.ViewModels
                 return;
             }
 
-            IPAddressesToScan = ipAddresses.Length;
-            IPAddressesScanned = 0;
+            HostsToScan = ipAddresses.Length;
+            HostsScanned = 0;
 
             PreparingScan = false;
 
             // Add host(s) to the history
-            AddHostToHistory(Host);
+            AddHostToHistory(Hosts);
 
             var ipScanner = new IPScanner
             {
@@ -537,7 +537,7 @@ namespace NETworkManager.ViewModels
 
         private async void DetectIPRange()
         {
-            IsIPRangeDetectionRunning = true;
+            IsSubnetDetectionRunning = true;
 
             var localIP = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse("1.1.1.1"));
 
@@ -553,10 +553,10 @@ namespace NETworkManager.ViewModels
                     {
                         subnetmaskDetected = true;
 
-                        Host = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.Subnetmask.First())}";
+                        Hosts = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.Subnetmask.First())}";
 
                         // Fix: If the user clears the textbox and then clicks again on the button, the textbox remains empty...
-                        OnPropertyChanged(nameof(Host));
+                        OnPropertyChanged(nameof(Hosts));
 
                         break;
                     }
@@ -570,7 +570,7 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.CouldNotDetectLocalIPAddressMessage, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
 
-            IsIPRangeDetectionRunning = false;
+            IsSubnetDetectionRunning = false;
         }
 
         private async void CustomCommand(object guid)
@@ -609,14 +609,14 @@ namespace NETworkManager.ViewModels
         private void AddHostToHistory(string ipRange)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory.ToList(), ipRange, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.IPScanner_HostsHistory.ToList(), ipRange, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.IPScanner_HostHistory.Clear();
-            OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
+            SettingsManager.Current.IPScanner_HostsHistory.Clear();
+            OnPropertyChanged(nameof(Hosts)); // Raise property changed again, after the collection has been cleared
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.IPScanner_HostHistory.Add(x));
+            list.ForEach(x => SettingsManager.Current.IPScanner_HostsHistory.Add(x));
         }
 
         private async void Export()
@@ -632,7 +632,7 @@ namespace NETworkManager.ViewModels
 
                 try
                 {
-                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? HostResults : new ObservableCollection<HostInfo>(SelectedHostResults.Cast<HostInfo>().ToArray()));
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<HostInfo>(SelectedResults.Cast<HostInfo>().ToArray()));
                 }
                 catch (Exception ex)
                 {
@@ -670,8 +670,8 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (HostResults)
-                    HostResults.Add(ipScannerHostInfo);
+                lock (Results)
+                    Results.Add(ipScannerHostInfo);
             }));
         }
 
@@ -682,7 +682,7 @@ namespace NETworkManager.ViewModels
 
         private void ProgressChanged(object sender, ProgressChangedArgs e)
         {
-            IPAddressesScanned = e.Value;
+            HostsScanned = e.Value;
         }
 
         private void DnsResolveFailed(AggregateException e)

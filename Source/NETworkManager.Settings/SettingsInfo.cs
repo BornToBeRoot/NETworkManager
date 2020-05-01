@@ -669,16 +669,16 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _ipScanner_HostHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> IPScanner_HostHistory
+        private ObservableCollection<string> _ipScanner_HostsHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> IPScanner_HostsHistory
         {
-            get => _ipScanner_HostHistory;
+            get => _ipScanner_HostsHistory;
             set
             {
-                if (value == _ipScanner_HostHistory)
+                if (value == _ipScanner_HostsHistory)
                     return;
 
-                _ipScanner_HostHistory = value;
+                _ipScanner_HostsHistory = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -3542,7 +3542,7 @@ namespace NETworkManager.Settings
             General_ApplicationList.CollectionChanged += CollectionChanged;
 
             // IP Scanner
-            IPScanner_HostHistory.CollectionChanged += CollectionChanged;
+            IPScanner_HostsHistory.CollectionChanged += CollectionChanged;
             IPScanner_CustomCommands.CollectionChanged += CollectionChanged;
 
             // Port Scanner

@@ -4823,7 +4823,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Port(s).
+        ///   Looks up a localized string similar to Ports.
         /// </summary>
         public static string Ports {
             get {
