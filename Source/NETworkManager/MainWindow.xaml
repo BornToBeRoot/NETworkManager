@@ -77,12 +77,12 @@
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding OpenWebsiteCommand}" Opacity="1" Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource AccentColorBrush}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Download}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Rocket}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Text="{Binding UpdateText}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                        <TextBlock Text="{x:Static localization:Strings.UpdateAvailable}" Foreground="{DynamicResource AccentColorBrush}" VerticalAlignment="Center" Margin="5,0,0,0" />
                     </StackPanel>
                 </Button>
                 <ComboBox ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile}" DisplayMemberPath="Name" Foreground="{DynamicResource GrayBrush5}" Background="{DynamicResource GrayBrush8}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0" />

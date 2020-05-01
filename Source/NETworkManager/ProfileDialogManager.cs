@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Profiles;
+using NETworkManager.Settings;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
 
@@ -34,6 +35,7 @@ namespace NETworkManager
             };
 
             viewModel.OnProfileDialogOpen();
+
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
