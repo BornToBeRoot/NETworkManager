@@ -242,20 +242,6 @@ namespace NETworkManager
             }
         }
 
-        private string _updateText;
-        public string UpdateText
-        {
-            get => _updateText;
-            set
-            {
-                if (value == _updateText)
-                    return;
-
-                _updateText = value;
-                OnPropertyChanged();
-            }
-        }
-
         private ICollectionView _profileFiles;
         public ICollectionView ProfileFiles
         {
@@ -972,7 +958,6 @@ namespace NETworkManager
 
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
-            UpdateText = string.Format(Localization.Resources.Strings.VersionxxIsAvailable, e.Version);
             IsUpdateAvailable = true;
         }
         #endregion

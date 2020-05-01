@@ -79,7 +79,7 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/releases/latest.
+        ///   Looks up a localized string similar to https://borntoberoot.github.io/NETworkManager/#download-package.
         /// </summary>
         public static string NETworkManager_LatestReleaseURL {
             get {
@@ -124,7 +124,7 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager.
+        ///   Looks up a localized string similar to https://borntoberoot.github.io/NETworkManager/.
         /// </summary>
         public static string NETworkManager_ProjectUrl {
             get {

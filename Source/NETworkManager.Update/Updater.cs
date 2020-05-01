@@ -46,7 +46,7 @@ namespace NETworkManager.Update
         /// Triggers the <see cref="Error"/> event.
         /// </summary>
         protected virtual void OnError()
-        {            
+        {
             Error?.Invoke(this, EventArgs.Empty);
         }
         #endregion
