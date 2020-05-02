@@ -57,7 +57,7 @@
                         <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=GithubCircle}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Github}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">

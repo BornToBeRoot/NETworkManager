@@ -90,7 +90,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=GithubCircle}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Github}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </StackPanel>
