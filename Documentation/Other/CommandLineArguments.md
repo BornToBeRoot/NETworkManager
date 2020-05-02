@@ -21,7 +21,7 @@ Application that is displayed at startup. This parameter overwrites the applicat
 
 **Values** 
 ```
-None, Dashboard, NetworkInterface, WiFi, IPScanner, PortScanner, Ping, PingMonitor, Traceroute, DNSLookup, RemoteDesktop, PowerShell, PuTTY, TigerVNC, WebConsole, SNMP, DiscoveryProtocol, WakeOnLAN, HTTPHeaders, Whois, SubnetCalculator, Lookup, Connections, Listeners, ARPTable
+None, Dashboard, NetworkInterface, WiFi, IPScanner, PortScanner, PingMonitor, Traceroute, DNSLookup, RemoteDesktop, PowerShell, PuTTY, TigerVNC, WebConsole, SNMP, DiscoveryProtocol, WakeOnLAN, Whois, SubnetCalculator, Lookup, Connections, Listeners, ARPTable
 ```
 
 **Example** 
