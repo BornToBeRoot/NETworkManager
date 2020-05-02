@@ -282,7 +282,7 @@ namespace NETworkManager.ViewModels
 
         private bool AddHostProfile_CanExecute(object obj)
         {
-            return SelectedProfile != null;
+            return !IsSearching && SelectedProfile != null;
         }
 
         private void AddHostProfileAction()

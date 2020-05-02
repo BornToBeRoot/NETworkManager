@@ -13,7 +13,6 @@ using System.Windows;
 using System.Linq;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
-using NETworkManager.Settings;
 using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
@@ -209,7 +208,7 @@ namespace NETworkManager.ViewModels
 
         private bool ScanProfile_CanExecute(object obj)
         {
-            return SelectedProfile != null;
+            return !IsSearching && SelectedProfile != null;
         }
 
         private void ScanProfileAction()

@@ -13,7 +13,6 @@ using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
-using NETworkManager.Settings;
 using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
@@ -209,7 +208,7 @@ namespace NETworkManager.ViewModels
 
         private bool TraceProfile_CanExecute(object obj)
         {
-            return SelectedProfile != null;
+            return !IsSearching && SelectedProfile != null;
         }
 
         private void TraceProfileAction()

@@ -208,7 +208,7 @@ namespace NETworkManager.ViewModels
 
         private bool LookupProfile_CanExecute(object obj)
         {
-            return SelectedProfile != null;
+            return !IsSearching && SelectedProfile != null;
         }
 
         private void LookupProfileAction()

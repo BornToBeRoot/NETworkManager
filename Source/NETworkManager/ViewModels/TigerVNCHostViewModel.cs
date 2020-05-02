@@ -253,7 +253,7 @@ namespace NETworkManager.ViewModels
 
         private bool ConnectProfile_CanExecute(object obj)
         {
-            return SelectedProfile != null;
+            return !IsSearching && SelectedProfile != null;
         }
 
         private void ConnectProfileAction()

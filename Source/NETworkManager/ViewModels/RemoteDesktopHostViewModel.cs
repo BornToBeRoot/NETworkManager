@@ -15,7 +15,6 @@ using System.Windows;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
-using NETworkManager.Settings;
 using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
@@ -281,7 +280,7 @@ namespace NETworkManager.ViewModels
 
         private bool ConnectProfile_CanExecute(object obj)
         {
-            return SelectedProfile != null;
+            return !IsSearching && SelectedProfile != null;
         }
 
         private void ConnectProfileAction()

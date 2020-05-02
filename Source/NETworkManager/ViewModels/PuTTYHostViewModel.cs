@@ -245,7 +245,6 @@ namespace NETworkManager.ViewModels
             return false;
         }
 
-
         public ICommand PuTTY_ReconnectCommand => new RelayCommand(PuTTY_ReconnectAction);
 
         private void PuTTY_ReconnectAction(object view)
@@ -281,7 +280,7 @@ namespace NETworkManager.ViewModels
 
         private bool ConnectProfile_CanExecute(object obj)
         {
-            return SelectedProfile != null;
+            return !IsSearching && SelectedProfile != null;
         }
 
         private void ConnectProfileAction()
