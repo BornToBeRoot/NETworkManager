@@ -18,7 +18,7 @@ namespace NETworkManager.Converters
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null && value is LvlChartsPingTimeInfo info)
+            if (value != null && value is LvlChartsDefaultInfo info)
                 return $"{info.Value} ms";
 
             return "-/-";

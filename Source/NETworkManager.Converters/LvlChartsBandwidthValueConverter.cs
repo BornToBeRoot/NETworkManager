@@ -1,5 +1,4 @@
-﻿using NETworkManager.Models.Network;
-using NETworkManager.Utilities;
+﻿using NETworkManager.Utilities;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -19,8 +18,8 @@ namespace NETworkManager.Converters
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null && value is BandwidthInfo info)
-                return $"{FileSizeConverter.GetBytesReadable(info.Value * 8)}it/s";
+            if (value != null && value is LvlChartsDefaultInfo info)
+                return $"{FileSizeConverter.GetBytesReadable((long)info.Value * 8)}it/s";
 
             return "-/-";
         }

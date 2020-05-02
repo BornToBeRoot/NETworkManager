@@ -553,7 +553,7 @@ namespace NETworkManager.ViewModels
 
         private void InitialBandwidthChart()
         {
-            var dayConfig = Mappers.Xy<BandwidthInfo>()
+            var dayConfig = Mappers.Xy<LvlChartsDefaultInfo>()
                 .X(dayModel => (double)dayModel.DateTime.Ticks / TimeSpan.FromHours(1).Ticks)
                 .Y(dayModel => dayModel.Value);
 
@@ -562,13 +562,13 @@ namespace NETworkManager.ViewModels
                 new LineSeries
                 {
                     Title = "Download",
-                    Values = new ChartValues<BandwidthInfo>(),
+                    Values = new ChartValues<LvlChartsDefaultInfo>(),
                     PointGeometry = null
                 },
                 new LineSeries
                 {
                     Title = "Upload",
-                    Values = new ChartValues<BandwidthInfo>(),
+                    Values = new ChartValues<LvlChartsDefaultInfo>(),
                     PointGeometry = null
                 }
             };
@@ -1028,7 +1028,7 @@ namespace NETworkManager.ViewModels
 
             for (var i = 60; i > 0; i--)
             {
-                var bandwidthInfo = new BandwidthInfo(currentDateTime.AddSeconds(-i), 0);
+                var bandwidthInfo = new LvlChartsDefaultInfo(currentDateTime.AddSeconds(-i), double.NaN);
 
                 Series[0].Values.Add(bandwidthInfo);
                 Series[1].Values.Add(bandwidthInfo);
@@ -1128,8 +1128,8 @@ namespace NETworkManager.ViewModels
             BandwidthDiffBytesSent = BandwidthTotalBytesSent - _bandwidthTotalBytesSentTemp;
 
             // Add chart entry
-            Series[0].Values.Add(new BandwidthInfo(e.DateTime, e.ByteReceivedSpeed));
-            Series[1].Values.Add(new BandwidthInfo(e.DateTime, e.ByteSentSpeed));
+            Series[0].Values.Add(new LvlChartsDefaultInfo(e.DateTime, e.ByteReceivedSpeed));
+            Series[1].Values.Add(new LvlChartsDefaultInfo(e.DateTime, e.ByteSentSpeed));
 
             // Remove data older than 60 seconds
             if (Series[0].Values.Count > 59)

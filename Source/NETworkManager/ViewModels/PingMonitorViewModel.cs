@@ -137,7 +137,7 @@ namespace NETworkManager.ViewModels
 
         private void InitialTimeChart()
         {
-            var dayConfig = Mappers.Xy<LvlChartsPingTimeInfo>()
+            var dayConfig = Mappers.Xy<LvlChartsDefaultInfo>()
                 .X(dayModel => (double)dayModel.DateTime.Ticks / TimeSpan.FromHours(1).Ticks)
                 .Y(dayModel => dayModel.Value);
 
@@ -146,7 +146,7 @@ namespace NETworkManager.ViewModels
                 new LineSeries
                 {
                     Title = "Time",
-                    Values = new ChartValues<LvlChartsPingTimeInfo>(),
+                    Values = new ChartValues<LvlChartsDefaultInfo>(),
                     PointGeometry = null
                 }
             };
@@ -262,7 +262,7 @@ namespace NETworkManager.ViewModels
 
             for (var i = 30; i > 0; i--)
             {
-                var bandwidthInfo = new LvlChartsPingTimeInfo(currentDateTime.AddSeconds(-i), double.NaN);
+                var bandwidthInfo = new LvlChartsDefaultInfo(currentDateTime.AddSeconds(-i), double.NaN);
 
                 Series[0].Values.Add(bandwidthInfo);
             }
@@ -284,7 +284,7 @@ namespace NETworkManager.ViewModels
             // Calculate statistics
             PingsTransmitted++;
 
-            LvlChartsPingTimeInfo timeInfo;
+            LvlChartsDefaultInfo timeInfo;
 
             if (pingInfo.Status == System.Net.NetworkInformation.IPStatus.Success)
             {
@@ -296,7 +296,7 @@ namespace NETworkManager.ViewModels
 
                 PingsReceived++;
 
-                timeInfo = new LvlChartsPingTimeInfo(pingInfo.Timestamp, pingInfo.Time);
+                timeInfo = new LvlChartsDefaultInfo(pingInfo.Timestamp, pingInfo.Time);
             }
             else
             {
@@ -308,7 +308,7 @@ namespace NETworkManager.ViewModels
 
                 PingsLost++;
 
-                timeInfo = new LvlChartsPingTimeInfo(pingInfo.Timestamp, double.NaN);
+                timeInfo = new LvlChartsDefaultInfo(pingInfo.Timestamp, double.NaN);
             }
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate

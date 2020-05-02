@@ -63,7 +63,6 @@
     <Compile Include="Lookup\PortLookupInfo.cs" />
     <Compile Include="Network\ARP.cs" />
     <Compile Include="Network\ARPInfo.cs" />
-    <Compile Include="Network\BandwidthInfo.cs" />
     <Compile Include="Network\BandwidthMeter.cs" />
     <Compile Include="Network\BandwidthMeterSpeedArgs.cs" />
     <Compile Include="Network\Connection.cs" />

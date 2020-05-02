@@ -466,22 +466,22 @@
                                     <liveChart:Axis.Sections>
                                         <liveChart:AxisSection Value="0" SectionWidth="30">
                                             <liveChart:AxisSection.Fill>
-                                                <SolidColorBrush Opacity="0.4" Color="#5EA4BF" />
+                                                <SolidColorBrush Opacity="0.25" Color="#5EA4BF" />
                                             </liveChart:AxisSection.Fill>
                                         </liveChart:AxisSection>
                                         <liveChart:AxisSection Value="30" SectionWidth="37" >
                                             <liveChart:AxisSection.Fill>
-                                                <SolidColorBrush Opacity="0.4" Color="#badc58" />
+                                                <SolidColorBrush Opacity="0.25" Color="#badc58" />
                                             </liveChart:AxisSection.Fill>
                                         </liveChart:AxisSection>
                                         <liveChart:AxisSection Value="67" SectionWidth="13" >
                                             <liveChart:AxisSection.Fill>
-                                                <SolidColorBrush Opacity="0.4" Color="#FF970D" />
+                                                <SolidColorBrush Opacity="0.25" Color="#FF970D" />
                                             </liveChart:AxisSection.Fill>
                                         </liveChart:AxisSection>
                                         <liveChart:AxisSection Value="80" SectionWidth="20">
                                             <liveChart:AxisSection.Fill>
-                                                <SolidColorBrush Opacity="0.4" Color="#A4442B" />
+                                                <SolidColorBrush Opacity="0.25" Color="#A4442B" />
                                             </liveChart:AxisSection.Fill>
                                         </liveChart:AxisSection>
                                     </liveChart:Axis.Sections>
@@ -508,22 +508,22 @@
                                     <liveChart:Axis.Sections>
                                         <liveChart:AxisSection Value="0" SectionWidth="30">
                                             <liveChart:AxisSection.Fill>
-                                                <SolidColorBrush Opacity="0.4" Color="#5EA4BF" />
+                                                <SolidColorBrush Opacity="0.25" Color="#5EA4BF" />
                                             </liveChart:AxisSection.Fill>
                                         </liveChart:AxisSection>
                                         <liveChart:AxisSection Value="30" SectionWidth="37" >
                                             <liveChart:AxisSection.Fill>
-                                                <SolidColorBrush Opacity="0.4" Color="#badc58" />
+                                                <SolidColorBrush Opacity="0.25" Color="#badc58" />
                                             </liveChart:AxisSection.Fill>
                                         </liveChart:AxisSection>
                                         <liveChart:AxisSection Value="67" SectionWidth="13" >
                                             <liveChart:AxisSection.Fill>
-                                                <SolidColorBrush Opacity="0.4" Color="#FF970D" />
+                                                <SolidColorBrush Opacity="0.25" Color="#FF970D" />
                                             </liveChart:AxisSection.Fill>
                                         </liveChart:AxisSection>
                                         <liveChart:AxisSection Value="80" SectionWidth="20">
                                             <liveChart:AxisSection.Fill>
-                                                <SolidColorBrush Opacity="0.4" Color="#A4442B" />
+                                                <SolidColorBrush Opacity="0.25" Color="#A4442B" />
                                             </liveChart:AxisSection.Fill>
                                         </liveChart:AxisSection>
                                     </liveChart:Axis.Sections>

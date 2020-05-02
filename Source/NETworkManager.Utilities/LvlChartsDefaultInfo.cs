@@ -1,12 +1,12 @@
 ﻿using System;
 namespace NETworkManager.Utilities
 {
-    public class LvlChartsPingTimeInfo
+    public class LvlChartsDefaultInfo
     {
         public DateTime DateTime { get; }
         public double Value { get; set; }
 
-        public LvlChartsPingTimeInfo(DateTime dateTime, double value)
+        public LvlChartsDefaultInfo(DateTime dateTime, double value)
         {
             DateTime = dateTime;
             Value = value;

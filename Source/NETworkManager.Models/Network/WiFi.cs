@@ -62,8 +62,6 @@ namespace NETworkManager.Models.Network
             return wifiNetworks;
         }
 
-
-
         public static int GetChannelFromChannelFrequency(int kilohertz)
         {
             int channel = -1;

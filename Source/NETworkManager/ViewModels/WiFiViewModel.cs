@@ -404,11 +404,11 @@ namespace NETworkManager.ViewModels
         {
             ChartValues<double> values = GetDefaultChartValues(radio);
 
-            values[index - 2] = 0;
+            values[index - 2] = -1;
             values[index - 1] = network.NetworkRssiInDecibelMilliwatts * -1;
             values[index] = network.NetworkRssiInDecibelMilliwatts * -1;
             values[index + 1] = network.NetworkRssiInDecibelMilliwatts * -1;
-            values[index + 2] = 0;
+            values[index + 2] = -1;
 
             return values;
         }
