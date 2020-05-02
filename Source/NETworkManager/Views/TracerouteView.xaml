@@ -138,15 +138,6 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.Ping}" Command="{Binding RedirectDataToApplicationCommand}"  CommandParameter="Ping">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=LanConnect}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                    </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.PingMonitor}" Command="{Binding RedirectDataToApplicationCommand}"  CommandParameter="PingMonitor">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
