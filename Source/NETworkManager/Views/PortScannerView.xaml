@@ -51,9 +51,9 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Hosts}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="ComboBoxHost" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" x:Name="ComboBoxHosts" ItemsSource="{Binding HostsHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
-                        <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="Hosts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                 <validators:MultipleHostsRangeValidator ValidatesOnTargetUpdated="True" />
@@ -62,9 +62,9 @@
                     </ComboBox.Text>
                 </ComboBox>
                 <TextBlock Grid.Column="4" Text="{x:Static localization:Strings.Ports}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="6" x:Name="ComboBoxPort" ItemsSource="{Binding PortHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="6" x:Name="ComboBoxPorts" ItemsSource="{Binding PortsHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}" IsEnabled="{Binding IsScanRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
-                        <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                 <validators:PortRangeValidator ValidatesOnTargetUpdated="True" />
@@ -77,10 +77,10 @@
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="True">
+                                <DataTrigger Binding="{Binding ElementName=ComboBoxHosts, Path=(Validation.HasError)}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=ComboBoxPort, Path=(Validation.HasError)}" Value="True" >
+                                <DataTrigger Binding="{Binding ElementName=ComboBoxPorts, Path=(Validation.HasError)}" Value="True" >
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding CancelScan}" Value="True">
@@ -182,7 +182,7 @@
         The sort function is in the code behind -> when you click on the header of the column, the SortMemberPath is passed to the viewmodel
         CanUserSortColumns="False" -> Default sort won't work with grouped
         -->
-        <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding PortScanResultsView}" SelectedItem="{Binding SelectedPortScanResult}" SelectedItemsList="{Binding SelectedPortScanResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedResult}" SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />

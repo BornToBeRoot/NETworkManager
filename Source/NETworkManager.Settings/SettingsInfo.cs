@@ -941,31 +941,31 @@ namespace NETworkManager.Settings
         #endregion
 
         #region Port Scanner
-        private ObservableCollection<string> _portScanner_HostHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> PortScanner_HostHistory
+        private ObservableCollection<string> _portScanner_HostsHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PortScanner_HostsHistory
         {
-            get => _portScanner_HostHistory;
+            get => _portScanner_HostsHistory;
             set
             {
-                if (value == _portScanner_HostHistory)
+                if (value == _portScanner_HostsHistory)
                     return;
 
-                _portScanner_HostHistory = value;
+                _portScanner_HostsHistory = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private ObservableCollection<string> _portScanner_PortHistory = new ObservableCollection<string>();
-        public ObservableCollection<string> PortScanner_PortHistory
+        private ObservableCollection<string> _portScanner_PortsHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PortScanner_PortsHistory
         {
-            get => _portScanner_PortHistory;
+            get => _portScanner_PortsHistory;
             set
             {
-                if (value == _portScanner_PortHistory)
+                if (value == _portScanner_PortsHistory)
                     return;
 
-                _portScanner_PortHistory = value;
+                _portScanner_PortsHistory = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -3546,8 +3546,8 @@ namespace NETworkManager.Settings
             IPScanner_CustomCommands.CollectionChanged += CollectionChanged;
 
             // Port Scanner
-            PortScanner_HostHistory.CollectionChanged += CollectionChanged;
-            PortScanner_PortHistory.CollectionChanged += CollectionChanged;
+            PortScanner_HostsHistory.CollectionChanged += CollectionChanged;
+            PortScanner_PortsHistory.CollectionChanged += CollectionChanged;
 
             // Ping Monitor
             PingMonitor_HostHistory.CollectionChanged += CollectionChanged;

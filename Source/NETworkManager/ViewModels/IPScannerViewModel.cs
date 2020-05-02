@@ -115,16 +115,16 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView ResultsView { get; }
 
-        private HostInfo _selectedHostResult;
-        public HostInfo SelectedHostResult
+        private HostInfo _selectedResult;
+        public HostInfo SelectedResult
         {
-            get => _selectedHostResult;
+            get => _selectedResult;
             set
             {
-                if (value == _selectedHostResult)
+                if (value == _selectedResult)
                     return;
 
-                _selectedHostResult = value;
+                _selectedResult = value;
                 OnPropertyChanged();
             }
         }
@@ -297,7 +297,7 @@ namespace NETworkManager.ViewModels
             if (!Enum.TryParse(appName, out ApplicationName applicationName))
                 return;
 
-            var host = !string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.Hostname : SelectedHostResult.PingInfo.IPAddress.ToString();
+            var host = !string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.Hostname : SelectedResult.PingInfo.IPAddress.ToString();
 
             EventSystem.RedirectToApplication(applicationName, host);
         }
@@ -306,14 +306,14 @@ namespace NETworkManager.ViewModels
 
         private void PerformDNSLookupIPAddressAction()
         {
-            EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedHostResult.PingInfo.IPAddress.ToString());
+            EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedResult.PingInfo.IPAddress.ToString());
         }
 
         public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(p => PerformDNSLookupHostnameAction());
 
         private void PerformDNSLookupHostnameAction()
         {
-            EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedHostResult.Hostname);
+            EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedResult.Hostname);
         }
 
         public ICommand CustomCommandCommand => new RelayCommand(CustomCommandAction);
@@ -329,8 +329,8 @@ namespace NETworkManager.ViewModels
         {
             ProfileInfo profileInfo = new ProfileInfo()
             {
-                Name = string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.PingInfo.IPAddress.ToString() : SelectedHostResult.Hostname.TrimEnd('.'),
-                Host = SelectedHostResult.PingInfo.IPAddress.ToString()
+                Name = string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.PingInfo.IPAddress.ToString() : SelectedResult.Hostname.TrimEnd('.'),
+                Host = SelectedResult.PingInfo.IPAddress.ToString()
             };
 
             var customDialog = new CustomDialog
@@ -360,56 +360,56 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            ClipboardHelper.SetClipboard(SelectedHostResult.PingInfo.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedResult.PingInfo.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
-            ClipboardHelper.SetClipboard(SelectedHostResult.Hostname);
+            ClipboardHelper.SetClipboard(SelectedResult.Hostname);
         }
 
         public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
 
         private void CopySelectedMACAddressAction()
         {
-            ClipboardHelper.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedHostResult.MACAddress.ToString()));
+            ClipboardHelper.SetClipboard(MACAddressHelper.GetDefaultFormat(SelectedResult.MACAddress.ToString()));
         }
 
         public ICommand CopySelectedVendorCommand => new RelayCommand(p => CopySelectedVendorAction());
 
         private void CopySelectedVendorAction()
         {
-            ClipboardHelper.SetClipboard(SelectedHostResult.Vendor);
+            ClipboardHelper.SetClipboard(SelectedResult.Vendor);
         }
 
         public ICommand CopySelectedBytesCommand => new RelayCommand(p => CopySelectedBytesAction());
 
         private void CopySelectedBytesAction()
         {
-            ClipboardHelper.SetClipboard(SelectedHostResult.PingInfo.Bytes.ToString());
+            ClipboardHelper.SetClipboard(SelectedResult.PingInfo.Bytes.ToString());
         }
 
         public ICommand CopySelectedTimeCommand => new RelayCommand(p => CopySelectedTimeAction());
 
         private void CopySelectedTimeAction()
         {
-            ClipboardHelper.SetClipboard(SelectedHostResult.PingInfo.Time.ToString());
+            ClipboardHelper.SetClipboard(SelectedResult.PingInfo.Time.ToString());
         }
 
         public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
 
         private void CopySelectedTTLAction()
         {
-            ClipboardHelper.SetClipboard(SelectedHostResult.PingInfo.TTL.ToString());
+            ClipboardHelper.SetClipboard(SelectedResult.PingInfo.TTL.ToString());
         }
 
         public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
         {            
-            ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedHostResult.PingInfo.Status));
+            ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedResult.PingInfo.Status));
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -583,8 +583,8 @@ namespace NETworkManager.ViewModels
                     return; // ToDo: Log and error message
 
                 // Replace vars
-                string hostname = !string.IsNullOrEmpty(SelectedHostResult.Hostname) ? SelectedHostResult.Hostname.TrimEnd('.') : "";
-                string ipAddress = SelectedHostResult.PingInfo.IPAddress.ToString();
+                string hostname = !string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.Hostname.TrimEnd('.') : "";
+                string ipAddress = SelectedResult.PingInfo.IPAddress.ToString();
 
                 info.FilePath = Regex.Replace(info.FilePath, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
                 info.FilePath = Regex.Replace(info.FilePath, "\\$\\$ipaddress\\$\\$", ipAddress, RegexOptions.IgnoreCase);

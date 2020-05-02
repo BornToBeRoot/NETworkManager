@@ -37,37 +37,37 @@ namespace NETworkManager.ViewModels
 
         private bool _isLoading;
 
-        private string _host;
-        public string Host
+        private string _hosts;
+        public string Hosts
         {
-            get => _host;
+            get => _hosts;
             set
             {
-                if (value == _host)
+                if (value == _hosts)
                     return;
 
-                _host = value;
+                _hosts = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICollectionView HostHistoryView { get; }
+        public ICollectionView HostsHistoryView { get; }
 
-        private string _port;
-        public string Port
+        private string _ports;
+        public string Ports
         {
-            get => _port;
+            get => _ports;
             set
             {
-                if (value == _port)
+                if (value == _ports)
                     return;
 
-                _port = value;
+                _ports = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICollectionView PortHistoryView { get; }
+        public ICollectionView PortsHistoryView { get; }
 
         private bool _isScanRunning;
         public bool IsScanRunning
@@ -111,32 +111,32 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICollectionView PortScanResultsView { get; }
+        public ICollectionView ResultsView { get; }
 
-        private PortInfo _selectedPortScanResult;
-        public PortInfo SelectedPortScanResult
+        private PortInfo _selectedResult;
+        public PortInfo SelectedResult
         {
-            get => _selectedPortScanResult;
+            get => _selectedResult;
             set
             {
-                if (value == _selectedPortScanResult)
+                if (value == _selectedResult)
                     return;
 
-                _selectedPortScanResult = value;
+                _selectedResult = value;
                 OnPropertyChanged();
             }
         }
 
-        private IList _selectedPortScanResults = new ArrayList();
-        public IList SelectedPortScanResults
+        private IList _selectedResults = new ArrayList();
+        public IList SelectedResults
         {
-            get => _selectedPortScanResults;
+            get => _selectedResults;
             set
             {
-                if (Equals(value, _selectedPortScanResults))
+                if (Equals(value, _selectedResults))
                     return;
 
-                _selectedPortScanResults = value;
+                _selectedResults = value;
                 OnPropertyChanged();
             }
         }
@@ -222,17 +222,17 @@ namespace NETworkManager.ViewModels
             _dialogCoordinator = instance;
 
             TabId = tabId;
-            Host = host;
-            Port = port;
+            Hosts = host;
+            Ports = port;
 
             // Set collection view
-            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostHistory);
-            PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortHistory);
+            HostsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostsHistory);
+            PortsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortsHistory);
 
             // Result view
-            PortScanResultsView = CollectionViewSource.GetDefaultView(PortScanResult);
-            PortScanResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.IPAddress)));
-            PortScanResultsView.SortDescriptions.Add(new SortDescription(nameof(PortInfo.IPAddressInt32), ListSortDirection.Descending));
+            ResultsView = CollectionViewSource.GetDefaultView(PortScanResult);
+            ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.IPAddress)));
+            ResultsView.SortDescriptions.Add(new SortDescription(nameof(PortInfo.IPAddressInt32), ListSortDirection.Descending));
 
             LoadSettings();
 
@@ -252,7 +252,7 @@ namespace NETworkManager.ViewModels
             if (!_firstLoad)
                 return;
 
-            if (!string.IsNullOrEmpty(Host) && !string.IsNullOrEmpty(Port))
+            if (!string.IsNullOrEmpty(Hosts) && !string.IsNullOrEmpty(Ports))
                 StartScan();
 
             _firstLoad = false;
@@ -283,49 +283,49 @@ namespace NETworkManager.ViewModels
 
         private void CopySelectedIPAddressAction()
         {
-            ClipboardHelper.SetClipboard(SelectedPortScanResult.IPAddress.ToString());
+            ClipboardHelper.SetClipboard(SelectedResult.IPAddress.ToString());
         }
 
         public ICommand CopySelectedHostnameCommand => new RelayCommand(p => CopySelectedHostnameAction());
 
         private void CopySelectedHostnameAction()
         {
-            ClipboardHelper.SetClipboard(SelectedPortScanResult.Hostname);
+            ClipboardHelper.SetClipboard(SelectedResult.Hostname);
         }
 
         public ICommand CopySelectedPortCommand => new RelayCommand(p => CopySelectedPortAction());
 
         private void CopySelectedPortAction()
         {
-            ClipboardHelper.SetClipboard(SelectedPortScanResult.Port.ToString());
+            ClipboardHelper.SetClipboard(SelectedResult.Port.ToString());
         }
 
         public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
         {
-            ClipboardHelper.SetClipboard(PortStateTranslator.GetInstance().Translate(SelectedPortScanResult.State));
+            ClipboardHelper.SetClipboard(PortStateTranslator.GetInstance().Translate(SelectedResult.State));
         }
 
         public ICommand CopySelectedProtocolCommand => new RelayCommand(p => CopySelectedProtocolAction());
 
         private void CopySelectedProtocolAction()
         {
-            ClipboardHelper.SetClipboard(SelectedPortScanResult.LookupInfo.Protocol.ToString());
+            ClipboardHelper.SetClipboard(SelectedResult.LookupInfo.Protocol.ToString());
         }
 
         public ICommand CopySelectedServiceCommand => new RelayCommand(p => CopySelectedServiceAction());
 
         private void CopySelectedServiceAction()
         {
-            ClipboardHelper.SetClipboard(SelectedPortScanResult.LookupInfo.Service);
+            ClipboardHelper.SetClipboard(SelectedResult.LookupInfo.Service);
         }
 
         public ICommand CopySelectedDescriptionCommand => new RelayCommand(p => CopySelectedDescriptionAction());
 
         private void CopySelectedDescriptionAction()
         {
-            ClipboardHelper.SetClipboard(SelectedPortScanResult.LookupInfo.Description);
+            ClipboardHelper.SetClipboard(SelectedResult.LookupInfo.Description);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -356,7 +356,7 @@ namespace NETworkManager.ViewModels
             {
                 foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
-                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Host;
+                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Hosts;
                 }
             }
 
@@ -367,7 +367,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Host.Replace(" ", "").Split(';'), _cancellationTokenSource.Token);
+                ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Hosts.Replace(" ", "").Split(';'), _cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
@@ -394,7 +394,7 @@ namespace NETworkManager.ViewModels
                 return;
             }
 
-            var ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Port);
+            var ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
 
             PortsToScan = ports.Length * ipAddresses.Length;
             PortsScanned = 0;
@@ -402,8 +402,8 @@ namespace NETworkManager.ViewModels
             PreparingScan = false;
 
             // Add host(s) to the history
-            AddHostToHistory(Host);
-            AddPortToHistory(Port);
+            AddHostToHistory(Hosts);
+            AddPortToHistory(Ports);
 
             var portScanner = new PortScanner
             {
@@ -447,7 +447,7 @@ namespace NETworkManager.ViewModels
 
                 try
                 {
-                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? PortScanResult : new ObservableCollection<PortInfo>(SelectedPortScanResults.Cast<PortInfo>().ToArray()));
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? PortScanResult : new ObservableCollection<PortInfo>(SelectedResults.Cast<PortInfo>().ToArray()));
                 }
                 catch (Exception ex)
                 {
@@ -472,42 +472,42 @@ namespace NETworkManager.ViewModels
         private void AddHostToHistory(string host)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PortScanner_HostsHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.PortScanner_HostHistory.Clear();
-            OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
+            SettingsManager.Current.PortScanner_HostsHistory.Clear();
+            OnPropertyChanged(nameof(Hosts)); // Raise property changed again, after the collection has been cleared
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PortScanner_HostHistory.Add(x));
+            list.ForEach(x => SettingsManager.Current.PortScanner_HostsHistory.Add(x));
         }
 
         private void AddPortToHistory(string port)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PortScanner_PortsHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
-            SettingsManager.Current.PortScanner_PortHistory.Clear();
-            OnPropertyChanged(nameof(Port)); // Raise property changed again, after the collection has been cleared
+            SettingsManager.Current.PortScanner_PortsHistory.Clear();
+            OnPropertyChanged(nameof(Ports)); // Raise property changed again, after the collection has been cleared
 
             // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PortScanner_PortHistory.Add(x));
+            list.ForEach(x => SettingsManager.Current.PortScanner_PortsHistory.Add(x));
         }
 
         public void SortResultByPropertyName(string sortDescription)
         {
-            PortScanResultsView.SortDescriptions.Clear();
-            PortScanResultsView.SortDescriptions.Add(new SortDescription(nameof(PortInfo.IPAddressInt32), ListSortDirection.Descending));
+            ResultsView.SortDescriptions.Clear();
+            ResultsView.SortDescriptions.Add(new SortDescription(nameof(PortInfo.IPAddressInt32), ListSortDirection.Descending));
 
             if (_lastSortDescriptionAscending.Equals(sortDescription))
             {
-                PortScanResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Descending));
+                ResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Descending));
                 _lastSortDescriptionAscending = string.Empty;
             }
             else
             {
-                PortScanResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Ascending));
+                ResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Ascending));
                 _lastSortDescriptionAscending = sortDescription;
             }
         }
