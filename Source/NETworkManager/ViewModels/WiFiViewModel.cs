@@ -394,7 +394,7 @@ namespace NETworkManager.ViewModels
         {
             ChartValues<double> values = new ChartValues<double>();
 
-            for (int i = 0; i < (radio == WiFi.Radio.Radio1 ? Radio1Labels.Length : Radio2Labels.Length); i++)
+            for (int i = 0; i < (radio == WiFi.Radio.One ? Radio1Labels.Length : Radio2Labels.Length); i++)
                 values.Add(-1);
 
             return values;
@@ -420,7 +420,7 @@ namespace NETworkManager.ViewModels
             Radio1Series.Add(new LineSeries
             {
                 Title = network.SSID,
-                Values = SetChartValues(network, WiFi.Radio.Radio1, index),
+                Values = SetChartValues(network, WiFi.Radio.One, index),
                 PointGeometry = null,
                 LineSmoothness = 0
             });
@@ -433,7 +433,7 @@ namespace NETworkManager.ViewModels
             Radio2Series.Add(new LineSeries
             {
                 Title = network.SSID,
-                Values = SetChartValues(network, WiFi.Radio.Radio2, index),
+                Values = SetChartValues(network, WiFi.Radio.Two, index),
                 PointGeometry = null,
                 LineSmoothness = 0
             });

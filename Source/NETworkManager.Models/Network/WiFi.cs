@@ -287,8 +287,8 @@ namespace NETworkManager.Models.Network
 
         public enum Radio
         {
-            Radio1,
-            Radio2
+            One,
+            Two
         }
     }
 }
