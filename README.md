@@ -12,9 +12,9 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
 
 | File | Checksum | Help |
 |---|---|---|
-|[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.4.0/NETworkManager_2020.4.0_Setup.exe){:target="_blank"}| `6AA9E156ABEB79BB07574C7C076F53FE0630D69E5680A83E8E1D175E4C75E20A` | [:book:](Documentation/Other/Packages.md#setup) |
-|[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.4.0/NETworkManager_2020.4.0_Portable.zip){:target="_blank"}| `36FDC504ECD9BA7E7334131909F81CE36FB91E7FB267DA53B077F95C697B4751` | [:book:](Documentation/Other/Packages.md#portable) |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.4.0/NETworkManager_2020.4.0_Archiv.zip){:target="_blank"}| `468099D5B9E8862AA6024290BD1FD375FD3A2CE9E7E4FE94AA0DDB97687E81CC` | [:book:](Documentation/Other/Packages.md#archiv) |
+|[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.0/NETworkManager_2020.5.0_Setup.exe){:target="_blank"}| `6AA9E156ABEB79BB07574C7C076F53FE0630D69E5680A83E8E1D175E4C75E20A` | [:book:](Documentation/Other/Packages.md#setup) |
+|[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.0/NETworkManager_2020.5.0_Portable.zip){:target="_blank"}| `36FDC504ECD9BA7E7334131909F81CE36FB91E7FB267DA53B077F95C697B4751` | [:book:](Documentation/Other/Packages.md#portable) |
+|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.0/NETworkManager_2020.5.0_Archiv.zip){:target="_blank"}| `468099D5B9E8862AA6024290BD1FD375FD3A2CE9E7E4FE94AA0DDB97687E81CC` | [:book:](Documentation/Other/Packages.md#archiv) |
 
 The setup is also available in the Windows Package Manager [:link: Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"}.
 
@@ -25,7 +25,6 @@ The setup is also available in the Windows Package Manager [:link: Chocolatey](h
 - WLAN - Networks, Channels
 - IP Scanner
 - Port Scanner
-- Ping
 - Ping Monitor
 - Traceroute
 - DNS Lookup
@@ -37,7 +36,6 @@ The setup is also available in the Windows Package Manager [:link: Chocolatey](h
 - SNMP - Get, Walk, Set
 - Discovery Protocol - LLDP, CDP
 - Wake on LAN
-- HTTP Headers
 - Whois
 - Subnet Calculator - Calculator, Subnetting, Supernetting
 - Lookup - OUI, Port
