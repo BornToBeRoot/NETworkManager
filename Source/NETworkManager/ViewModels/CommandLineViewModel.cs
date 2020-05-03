@@ -1,6 +1,9 @@
-﻿using NETworkManager.Models;
+﻿using NETworkManager.Documentation;
+using NETworkManager.Models;
 using NETworkManager.Settings;
+using NETworkManager.Utilities;
 using System.Linq;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
@@ -106,6 +109,18 @@ namespace NETworkManager.ViewModels
             ParameterResetSettings = CommandLineManager.ParameterResetSettings;
             ParameterApplication = CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication);
             ParameterApplicationValues = string.Join(", ", System.Enum.GetValues(typeof(ApplicationName)).Cast<ApplicationName>().ToList());
+        }
+        #endregion
+
+        #region ICommand & Actions
+        public ICommand OpenDocumentationCommand
+        {
+            get { return new RelayCommand(p => OpenDocumentationAction()); }
+        }
+
+        private void OpenDocumentationAction()
+        {
+            DocumentationManager.OpenDocumentation(DocumentationIdentifier.CommandLineArguments);
         }
         #endregion
     }

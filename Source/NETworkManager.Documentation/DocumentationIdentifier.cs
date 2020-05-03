@@ -118,6 +118,11 @@
         /// <summary>
         /// ARP Table documentation page.
         /// </summary>
-        ApplicationArpTable
+        ApplicationArpTable,
+
+        /// <summary>
+        /// Command line arguments.
+        /// </summary>
+        CommandLineArguments            
     }
 }

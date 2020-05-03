@@ -49,6 +49,7 @@ namespace NETworkManager.Documentation
             new DocumentationInfo(DocumentationIdentifier.ApplicationConnections, @"Application/Connections.html#connections"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationListeners, @"Application/Listeners.html#listeners"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationArpTable, @"Application/ARPTable.html#arp-table"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationArpTable, @"Other/CommandLineArguments.html#command-line-arguments"),
         };
 
         /// <summary>
