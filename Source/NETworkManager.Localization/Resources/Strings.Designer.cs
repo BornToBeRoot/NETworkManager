@@ -5202,7 +5202,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PuTTY location....
+        ///   Looks up a localized string similar to C:\Program Files\PuTTY\putty.exe.
         /// </summary>
         public static string PuTTYLocationDots {
             get {
@@ -7035,6 +7035,24 @@ namespace NETworkManager.Localization.Resources {
         public static string SSHPort {
             get {
                 return ResourceManager.GetString("SSHPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SSH key.
+        /// </summary>
+        public static string SSHPrivateKey {
+            get {
+                return ResourceManager.GetString("SSHPrivateKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C:\Data\Keys\private_ssh.ppk.
+        /// </summary>
+        public static string SSHPrivateKeyLocationDots {
+            get {
+                return ResourceManager.GetString("SSHPrivateKeyLocationDots", resourceCulture);
             }
         }
         

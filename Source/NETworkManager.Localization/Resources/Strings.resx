@@ -1373,7 +1373,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Paste</value>
   </data>
   <data name="PuTTYLocationDots" xml:space="preserve">
-    <value>PuTTY location...</value>
+    <value>C:\Program Files\PuTTY\putty.exe</value>
   </data>
   <data name="Reconnect" xml:space="preserve">
     <value>Reconnect</value>
@@ -2895,5 +2895,11 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>Update available!</value>
+  </data>
+  <data name="SSHPrivateKey" xml:space="preserve">
+    <value>SSH key</value>
+  </data>
+  <data name="SSHPrivateKeyLocationDots" xml:space="preserve">
+    <value>C:\Data\Keys\private_ssh.ppk</value>
   </data>
 </root>

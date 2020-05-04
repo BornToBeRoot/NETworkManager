@@ -23,6 +23,7 @@ namespace NETworkManager.Settings
 
         // Filter
         public static string ApplicationFileExtensionFilter => "Application (*.exe)|*.exe";
+        public static string PuTTYPrivateKeyFileExtensionFilter => "PuTTY Private Key Files (*.ppk)|*.ppk";
         public static string ZipFileExtensionFilter => "ZIP Archive (*.zip)|*.zip";
         public static string XmlFileExtensionFilter => "XML-File (*.xml)|*.xml";
 

@@ -156,7 +156,24 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-             
+
+        private string _sshPrivateKey;
+        public string SSHPrivateKey
+        {
+            get => _sshPrivateKey;
+            set
+            {
+                if (value == _sshPrivateKey)
+                    return;
+
+                 if (!_isLoading)
+                     SettingsManager.Current.PuTTY_SSHPrivateKey = value;
+
+                _sshPrivateKey = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _profile;
         public string Profile
         {
@@ -385,6 +402,7 @@ namespace NETworkManager.ViewModels
 
             IsConfigured = File.Exists(ApplicationFilePath);
             Username = SettingsManager.Current.PuTTY_Username;
+            SSHPrivateKey = SettingsManager.Current.PuTTY_SSHPrivateKey;
             Profile = SettingsManager.Current.PuTTY_Profile;
             EnableLog = SettingsManager.Current.PuTTY_EnableSessionLog;
             LogMode = LogModes.FirstOrDefault(x => x == SettingsManager.Current.PuTTY_LogMode);
@@ -400,9 +418,9 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand BrowseFileCommand => new RelayCommand(p => BrowseFileAction());
+        public ICommand ApplicationBrowseFileCommand => new RelayCommand(p => ApplicationBrowseFileAction());
 
-        private void BrowseFileAction()
+        private void ApplicationBrowseFileAction()
         {
             var openFileDialog = new System.Windows.Forms.OpenFileDialog
             {
@@ -418,6 +436,19 @@ namespace NETworkManager.ViewModels
         private void ConfigureAction()
         {
             Configure();
+        }
+
+        public ICommand SSHPrivateKeyBrowseFileCommand => new RelayCommand(p => SSHPrivateKeyBrowseFileAction());
+
+        private void SSHPrivateKeyBrowseFileAction()
+        {
+            var openFileDialog = new System.Windows.Forms.OpenFileDialog
+            {
+                Filter = GlobalStaticConfiguration.PuTTYPrivateKeyFileExtensionFilter
+            };
+
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                SSHPrivateKey = openFileDialog.FileName;
         }
         #endregion
 
@@ -438,11 +469,18 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public void SetFilePathFromDragDrop(string filePath)
+        public void SetApplicationFilePathFromDragDrop(string filePath)
         {
             ApplicationFilePath = filePath;
 
             OnPropertyChanged(nameof(ApplicationFilePath));
+        }
+
+        public void SetSSHPrivateKeyFilePathFromDragDrop(string filePath)
+        {
+            SSHPrivateKey = filePath;
+
+            OnPropertyChanged(nameof(SSHPrivateKey));
         }
         #endregion
     }

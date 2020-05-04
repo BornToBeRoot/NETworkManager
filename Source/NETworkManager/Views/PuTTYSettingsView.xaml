@@ -14,13 +14,13 @@
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />        
         <converters:PuTTYLogModeToStringConverter x:Key="PuTTYLogModeToStringConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.PuTTY}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.FilePath}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox x:Name="TextBoxApplicationFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.PuTTYLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxApplicationFilePath_Drop" PreviewDragOver="TextBoxApplicationFilePath_PreviewDragOver" Margin="0,0,0,10">
+        <TextBox x:Name="TextBoxApplicationFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.PuTTYLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding ApplicationBrowseFileCommand}" AllowDrop="True" Drop="TextBoxApplicationFilePath_Drop" PreviewDragOver="TextBoxApplicationFilePath_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="ApplicationFilePath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -46,6 +46,16 @@
         </WrapPanel>
         <TextBlock Text="{x:Static localization:Strings.Username}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.SSHPrivateKey}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox x:Name="TextBoxSSHPrivateKey" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.SSHPrivateKeyLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding SSHPrivateKeyBrowseFileCommand}" AllowDrop="True" Drop="TextBoxSSHPrivateKeyFilePath_Drop" PreviewDragOver="TextBoxSSHPrivateKeyFilePath_PreviewDragOver" Margin="0,0,0,10">
+            <TextBox.Text>
+                <Binding Path="SSHPrivateKey" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validators:EmptyOrFileExistsValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <TextBlock Text="{x:Static localization:Strings.PuTTYProfile}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" Text="{Binding Profile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.EnableLog}" IsChecked="{Binding EnableLog}" Margin="0,0,0,10"/>

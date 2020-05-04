@@ -2332,6 +2332,21 @@ namespace NETworkManager.Settings
             }
         }
 
+        private string _puTTY_SSHPrivateKey;
+        public string PuTTY_SSHPrivateKey
+        {
+            get => _puTTY_SSHPrivateKey;
+            set
+            {
+                if (value == _puTTY_SSHPrivateKey)
+                    return;
+
+                _puTTY_SSHPrivateKey = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         private string _puTTY_Profile;
         public string PuTTY_Profile
         {

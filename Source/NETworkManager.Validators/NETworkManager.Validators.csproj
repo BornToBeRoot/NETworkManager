@@ -53,6 +53,7 @@
     <Compile Include="DomainValidator.cs" />
     <Compile Include="EmptyOrIPv4AddressValidator.cs" />
     <Compile Include="EmptyValidator.cs" />
+    <Compile Include="EmptyOrFileExistsValidator.cs" />
     <Compile Include="FileExistsValidator.cs" />
     <Compile Include="FileNameValidator.cs" />
     <Compile Include="FilePathValidator.cs" />
