@@ -147,7 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ControlzEx">
-      <Version>3.0.2.4</Version>
+      <Version>4.2.2</Version>
     </PackageReference>
     <PackageReference Include="IPNetwork2">
       <Version>2.5.202</Version>
