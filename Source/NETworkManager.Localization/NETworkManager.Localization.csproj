@@ -1,156 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FF225C2E-AA67-4B10-939A-6C046CEF8697}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NETworkManager.Localization</RootNamespace>
     <AssemblyName>NETworkManager.Localization</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoWarn>1701;1702;CA1712</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\NETworkManager.Localization.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+  
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <PackageReference Include="MahApps.Metro" Version="1.6.5" />
   </ItemGroup>
+  
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="Translators\AccentTranslator.cs" />
-    <Compile Include="Translators\PuTTYLogModeTranslator.cs" />
-    <Compile Include="Translators\SettingsViewGroupTranslator.cs" />
-    <Compile Include="Translators\SettingsViewNameTranslator.cs" />
-    <Compile Include="Translators\ProfileViewNameTranslator.cs" />
-    <Compile Include="Translators\AppThemeTranslator.cs" />
-    <Compile Include="Translators\TimeUnitTranslator.cs" />
-    <Compile Include="Translators\ConnectionStateTranslator.cs" />
-    <Compile Include="Translators\RemoteDesktopAudioCaptureRedirectionModeTranslator.cs" />
-    <Compile Include="Translators\RemoteDesktopAudioRedirectionModeTranslator.cs" />
-    <Compile Include="Translators\DiscoveryProtocolTranslator.cs" />
-    <Compile Include="Translators\RemoteDesktopKeyboardHookModeTranslator.cs" />
-    <Compile Include="Translators\RemoteDesktopNetworkConnectionTypeTranslator.cs" />
-    <Compile Include="Translators\ApplicationNameTranslator.cs" />
-    <Compile Include="Translators\TcpStateTranslator.cs" />
-    <Compile Include="Translators\PortStateTranslator.cs" />
-    <Compile Include="ILocalizationStringTranslator.cs" />
-    <Compile Include="Translators\IPStatusTranslator.cs" />
-    <Compile Include="LocalizationInfo.cs" />
-    <Compile Include="LocalizationManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\StaticStrings.Designer.cs">
-      <DependentUpon>StaticStrings.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\Strings.Designer.cs">
-      <DependentUpon>Strings.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
+    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
+    <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj" />
+    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Flags\de-DE.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Flags\en-US.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Flags\es-ES.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Flags\fr-FR.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Flags\it-IT.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Flags\nl-NL.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Flags\pt-BR.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Flags\ru-RU.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Flags\zh-CN.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\StaticStrings.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>StaticStrings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.de-DE.resx" />
-    <EmbeddedResource Include="Resources\Strings.es-ES.resx" />
-    <EmbeddedResource Include="Resources\Strings.fr-FR.resx" />
-    <EmbeddedResource Include="Resources\Strings.it-IT.resx" />
-    <EmbeddedResource Include="Resources\Strings.nl-NL.resx" />
-    <EmbeddedResource Include="Resources\Strings.pt-BR.resx" />
-    <EmbeddedResource Include="Resources\Strings.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Strings.ru-RU.resx" />
-    <EmbeddedResource Include="Resources\Strings.zh-CN.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
-      <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
-      <Name>NETworkManager.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj">
-      <Project>{d3b37f13-e8e6-4218-9e8e-96d52432a9cf}</Project>
-      <Name>NETworkManager.Profiles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj">
-      <Project>{954e8703-3e6e-42bf-bd28-f0b19be10e0c}</Project>
-      <Name>NETworkManager.Settings</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
-      <Project>{5c3d1749-d260-4566-b448-b94b3ad9eeff}</Project>
-      <Name>NETworkManager.Utilities</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="MahApps.Metro">
-      <Version>1.6.5</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  
 </Project>

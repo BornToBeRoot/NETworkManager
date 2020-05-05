@@ -168,88 +168,88 @@ namespace NETworkManager.Controls
         {
             IsConnecting = true;
 
-            RdpClient.CreateControl();
+            //RdpClient.CreateControl();
 
-            RdpClient.Server = _rdpSessionInfo.Hostname;
-            RdpClient.AdvancedSettings9.RDPPort = _rdpSessionInfo.Port;
+            //RdpClient.Server = _rdpSessionInfo.Hostname;
+            //RdpClient.AdvancedSettings9.RDPPort = _rdpSessionInfo.Port;
 
-            if (_rdpSessionInfo.CustomCredentials)
-            {
-                RdpClient.UserName = _rdpSessionInfo.Username;
-                RdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.Password);
-            }
+            //if (_rdpSessionInfo.CustomCredentials)
+            //{
+            //    RdpClient.UserName = _rdpSessionInfo.Username;
+            //    RdpClient.AdvancedSettings9.ClearTextPassword = SecureStringHelper.ConvertToString(_rdpSessionInfo.Password);
+            //}
 
-            // AdvancedSettings
-            RdpClient.AdvancedSettings9.AuthenticationLevel = _rdpSessionInfo.AuthenticationLevel;
-            RdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpSessionInfo.EnableCredSspSupport;
+            //// AdvancedSettings
+            //RdpClient.AdvancedSettings9.AuthenticationLevel = _rdpSessionInfo.AuthenticationLevel;
+            //RdpClient.AdvancedSettings9.EnableCredSspSupport = _rdpSessionInfo.EnableCredSspSupport;
 
-            // Keyboard
-            RdpClient.SecuredSettings3.KeyboardHookMode = (int)_rdpSessionInfo.KeyboardHookMode;
+            //// Keyboard
+            //RdpClient.SecuredSettings3.KeyboardHookMode = (int)_rdpSessionInfo.KeyboardHookMode;
 
-            // Devices and resources
-            RdpClient.AdvancedSettings9.RedirectClipboard = _rdpSessionInfo.RedirectClipboard;
-            RdpClient.AdvancedSettings9.RedirectDevices = _rdpSessionInfo.RedirectDevices;
-            RdpClient.AdvancedSettings9.RedirectDrives = _rdpSessionInfo.RedirectDrives;
-            RdpClient.AdvancedSettings9.RedirectPorts = _rdpSessionInfo.RedirectPorts;
-            RdpClient.AdvancedSettings9.RedirectSmartCards = _rdpSessionInfo.RedirectSmartCards;
-            RdpClient.AdvancedSettings9.RedirectPrinters = _rdpSessionInfo.RedirectPrinters;
+            //// Devices and resources
+            //RdpClient.AdvancedSettings9.RedirectClipboard = _rdpSessionInfo.RedirectClipboard;
+            //RdpClient.AdvancedSettings9.RedirectDevices = _rdpSessionInfo.RedirectDevices;
+            //RdpClient.AdvancedSettings9.RedirectDrives = _rdpSessionInfo.RedirectDrives;
+            //RdpClient.AdvancedSettings9.RedirectPorts = _rdpSessionInfo.RedirectPorts;
+            //RdpClient.AdvancedSettings9.RedirectSmartCards = _rdpSessionInfo.RedirectSmartCards;
+            //RdpClient.AdvancedSettings9.RedirectPrinters = _rdpSessionInfo.RedirectPrinters;
 
-            // Audio
-            RdpClient.AdvancedSettings9.AudioRedirectionMode = (uint)_rdpSessionInfo.AudioRedirectionMode;
-            RdpClient.AdvancedSettings9.AudioCaptureRedirectionMode = _rdpSessionInfo.AudioCaptureRedirectionMode == 0 ? true : false;
+            //// Audio
+            //RdpClient.AdvancedSettings9.AudioRedirectionMode = (uint)_rdpSessionInfo.AudioRedirectionMode;
+            //RdpClient.AdvancedSettings9.AudioCaptureRedirectionMode = _rdpSessionInfo.AudioCaptureRedirectionMode == 0 ? true : false;
 
-            // Performance
-            RdpClient.AdvancedSettings9.BitmapPeristence = _rdpSessionInfo.PersistentBitmapCaching ? 1 : 0;
-            RdpClient.AdvancedSettings9.EnableAutoReconnect = _rdpSessionInfo.ReconnectIfTheConnectionIsDropped;
+            //// Performance
+            //RdpClient.AdvancedSettings9.BitmapPeristence = _rdpSessionInfo.PersistentBitmapCaching ? 1 : 0;
+            //RdpClient.AdvancedSettings9.EnableAutoReconnect = _rdpSessionInfo.ReconnectIfTheConnectionIsDropped;
 
-            // Experience
-            if (_rdpSessionInfo.NetworkConnectionType != 0)
-            {
-                RdpClient.AdvancedSettings9.NetworkConnectionType = (uint)_rdpSessionInfo.NetworkConnectionType;
+            //// Experience
+            //if (_rdpSessionInfo.NetworkConnectionType != 0)
+            //{
+            //    RdpClient.AdvancedSettings9.NetworkConnectionType = (uint)_rdpSessionInfo.NetworkConnectionType;
 
-                if (!_rdpSessionInfo.DesktopBackground)
-                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_WALLPAPER;
+            //    if (!_rdpSessionInfo.DesktopBackground)
+            //        RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_WALLPAPER;
 
-                if (_rdpSessionInfo.FontSmoothing)
-                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_ENABLE_FONT_SMOOTHING;
+            //    if (_rdpSessionInfo.FontSmoothing)
+            //        RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_ENABLE_FONT_SMOOTHING;
 
-                if (_rdpSessionInfo.DesktopComposition)
-                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_ENABLE_DESKTOP_COMPOSITION;
+            //    if (_rdpSessionInfo.DesktopComposition)
+            //        RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_ENABLE_DESKTOP_COMPOSITION;
 
-                if (!_rdpSessionInfo.ShowWindowContentsWhileDragging)
-                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_FULLWINDOWDRAG;
+            //    if (!_rdpSessionInfo.ShowWindowContentsWhileDragging)
+            //        RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_FULLWINDOWDRAG;
 
-                if (!_rdpSessionInfo.MenuAndWindowAnimation)
-                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_MENUANIMATIONS;
+            //    if (!_rdpSessionInfo.MenuAndWindowAnimation)
+            //        RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_MENUANIMATIONS;
 
-                if (!_rdpSessionInfo.VisualStyles)
-                    RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_THEMING;
-            }
+            //    if (!_rdpSessionInfo.VisualStyles)
+            //        RdpClient.AdvancedSettings9.PerformanceFlags |= RemoteDesktopPerformanceConstants.TS_PERF_DISABLE_THEMING;
+            //}
 
-            // Display
-            RdpClient.ColorDepth = _rdpSessionInfo.ColorDepth;      // 8, 15, 16, 24
+            //// Display
+            //RdpClient.ColorDepth = _rdpSessionInfo.ColorDepth;      // 8, 15, 16, 24
 
-            if (_rdpSessionInfo.AdjustScreenAutomatically || _rdpSessionInfo.UseCurrentViewSize)
-            {
-                RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
-                RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
-            }
-            else
-            {
-                RdpClient.DesktopWidth = _rdpSessionInfo.DesktopWidth;
-                RdpClient.DesktopHeight = _rdpSessionInfo.DesktopHeight;
-            }
+            //if (_rdpSessionInfo.AdjustScreenAutomatically || _rdpSessionInfo.UseCurrentViewSize)
+            //{
+            //    RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
+            //    RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
+            //}
+            //else
+            //{
+            //    RdpClient.DesktopWidth = _rdpSessionInfo.DesktopWidth;
+            //    RdpClient.DesktopHeight = _rdpSessionInfo.DesktopHeight;
+            //}
 
-            FixWindowsFormsHostSize();
+            //FixWindowsFormsHostSize();
 
-            // Events
-            RdpClient.OnConnected += RdpClient_OnConnected;
-            RdpClient.OnDisconnected += RdpClient_OnDisconnected;
+            //// Events
+            //RdpClient.OnConnected += RdpClient_OnConnected;
+            //RdpClient.OnDisconnected += RdpClient_OnDisconnected;
 
-            RdpClient.AdvancedSettings9.EnableWindowsKey = 1;       // Enable window key
-            RdpClient.AdvancedSettings9.allowBackgroundInput = 1;   // Background input to send keystrokes like ctrl+alt+del
+            //RdpClient.AdvancedSettings9.EnableWindowsKey = 1;       // Enable window key
+            //RdpClient.AdvancedSettings9.allowBackgroundInput = 1;   // Background input to send keystrokes like ctrl+alt+del
 
-            RdpClient.Connect();
+            //RdpClient.Connect();
         }
 
         private void Reconnect()
@@ -261,13 +261,13 @@ namespace NETworkManager.Controls
 
             if (_rdpSessionInfo.AdjustScreenAutomatically)
             {
-                RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
-                RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
+                //RdpClient.DesktopWidth = (int)RdpGrid.ActualWidth;
+                //RdpClient.DesktopHeight = (int)RdpGrid.ActualHeight;
             }
 
             FixWindowsFormsHostSize();
 
-            RdpClient.Connect();
+            //RdpClient.Connect();
         }
 
         public void FullScreen()
@@ -275,7 +275,7 @@ namespace NETworkManager.Controls
             if (!IsConnected)
                 return;
 
-            RdpClient.FullScreen = true;
+            //RdpClient.FullScreen = true;
         }
 
         public void AdjustScreen()
@@ -283,15 +283,15 @@ namespace NETworkManager.Controls
             if (!IsConnected)
                 return;
 
-            RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
+            //RdpClient.Reconnect((uint)RdpGrid.ActualWidth, (uint)RdpGrid.ActualHeight);
 
             FixWindowsFormsHostSize();
         }
 
         private void FixWindowsFormsHostSize()
         {
-            RdpClientWidth = RdpClient.DesktopWidth;
-            RdpClientHeight = RdpClient.DesktopHeight;
+            //RdpClientWidth = RdpClient.DesktopWidth;
+            //RdpClientHeight = RdpClient.DesktopHeight;
         }
 
         public void SendKey(Keystroke keystroke)
@@ -299,13 +299,13 @@ namespace NETworkManager.Controls
             if (!IsConnected)
                 return;
 
-            MSTSCLib.IMsRdpClientNonScriptable ocx = (MSTSCLib.IMsRdpClientNonScriptable)RdpClient.GetOcx();
+            //MSTSCLib.IMsRdpClientNonScriptable ocx = (MSTSCLib.IMsRdpClientNonScriptable)RdpClient.GetOcx();
 
             var info = RemoteDesktop.GetKeystroke(keystroke);
 
-            RdpClient.Focus();
+            //RdpClient.Focus();
 
-            ocx.SendKeys(info.KeyData.Length, info.ArrayKeyUp, info.KeyData);
+            //ocx.SendKeys(info.KeyData.Length, info.ArrayKeyUp, info.KeyData);
         }
 
         private void Disconnect()
@@ -313,7 +313,7 @@ namespace NETworkManager.Controls
             if (!IsConnected)
                 return;
 
-            RdpClient.Disconnect();
+            //RdpClient.Disconnect();
         }
 
         public void CloseTab()
@@ -432,13 +432,13 @@ namespace NETworkManager.Controls
             IsConnecting = false;
         }
 
-        private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
-        {
-            IsConnected = false;
-            IsConnecting = false;
+        //private void RdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
+        //{
+        //    IsConnected = false;
+        //    IsConnecting = false;
 
-            DisconnectReason = GetDisconnectReason(e.discReason);
-        }
+        //    DisconnectReason = GetDisconnectReason(e.discReason);
+        //}
 
         private void RdpGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {

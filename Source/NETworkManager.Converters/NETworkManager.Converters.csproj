@@ -1,156 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BD4DDC21-7B64-41B2-BAC7-8173E0FE84BE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NETworkManager.Converters</RootNamespace>
     <AssemblyName>NETworkManager.Converters</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DocumentationFile>bin\Debug\NETworkManager.Converters.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS1591</NoWarn>
   </PropertyGroup>
+  
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
+    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
+    <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj" />
+    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj" />
+    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
   </ItemGroup>
+  
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="AccentToBrushConverter.cs" />
-    <Compile Include="IsDefaultProfilesLocationToBooleanConverter.cs" />
-    <Compile Include="IsDefaultSettingsLocationToBooleanConverter.cs" />
-    <Compile Include="IsProfilesLocationToBooleanConverter.cs" />
-    <Compile Include="IsSettingsLocationToBooleanConverter.cs" />
-    <Compile Include="LvlChartsPingTimeValueConverter.cs" />
-    <Compile Include="PuTTYLogModeToStringConverter.cs" />
-    <Compile Include="SettingsViewGroupToTranslatedStringConverter.cs" />
-    <Compile Include="SettingsViewNameToTranslatedStringConverter.cs" />
-    <Compile Include="ProfileViewNameToTranslatedStringConverter.cs" />
-    <Compile Include="BandwidthBytesToSpeedConverter.cs" />
-    <Compile Include="BandwidthBytesWithSizeConverter.cs" />
-    <Compile Include="BigIntegerToStringConverter.cs" />
-    <Compile Include="BooleanReverseConverter.cs" />
-    <Compile Include="BooleanReverseToVisibilityCollapsedConverter.cs" />
-    <Compile Include="BooleanReverseToVisibilityHiddenConverter.cs" />
-    <Compile Include="BooleansOrConverter.cs" />
-    <Compile Include="BooleanToStringConverter.cs" />
-    <Compile Include="BooleanToVisibilityCollapsedConverter.cs" />
-    <Compile Include="BooleanToVisibilityHiddenConverter.cs" />
-    <Compile Include="Bytes1000ToSizeConverter.cs" />
-    <Compile Include="Bytes1000ToSpeedConverter.cs" />
-    <Compile Include="ConnectionStateToRectangleStyleConverter.cs" />
-    <Compile Include="DNSServerInfoToString.cs" />
-    <Compile Include="IntGreater1ToBooleanConverter.cs" />
-    <Compile Include="IntToStringConverter.cs" />
-    <Compile Include="IntZeroReverseToVisibilityCollapsedConverter.cs" />
-    <Compile Include="IntZeroToVisibilityCollapsedConverter.cs" />
-    <Compile Include="IPAddressArrayToStringConverter.cs" />
-    <Compile Include="IPAddressToStringConverter.cs" />
-    <Compile Include="ListToStringConverter.cs" />
-    <Compile Include="LvlChartsBandwidthValueConverter.cs" />
-    <Compile Include="LvlChartsHeaderConverter.cs" />
-    <Compile Include="NetworkAuthenticationTypeToHumanReadableStringConverter.cs" />
-    <Compile Include="NullableDateTimeToStringConverter.cs" />
-    <Compile Include="NullOrEmptyToBoolConverter.cs" />
-    <Compile Include="NullOrEmptyToStringConverter.cs" />
-    <Compile Include="NullToFalseConverter.cs" />
-    <Compile Include="OperationalStatusToStringConverter.cs" />
-    <Compile Include="PercentConverter.cs" />
-    <Compile Include="PhysicalAddressToStringConverter.cs" />
-    <Compile Include="PingStatusToBooleanConverter.cs" />
-    <Compile Include="PingTimeToStringConverter.cs" />
-    <Compile Include="RemoteDesktopAudioCaptureRedirectionModeToStringConverter.cs" />
-    <Compile Include="RemoteDesktopAudioRedirectionModeToStringConverter.cs" />
-    <Compile Include="RemoteDesktopKeyboardHookModeToStringConverter.cs" />
-    <Compile Include="RemoteDesktopNetworkConnectionTypeToStringConverter.cs" />
-    <Compile Include="SelectedItemsToBooleanConverter.cs" />
-    <Compile Include="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter.cs" />
-    <Compile Include="StringIsNotNullOrEmptyToBooleanConverter.cs" />
-    <Compile Include="StringIsNotNullOrEmptyToVisibilityCollapsedConverter.cs" />
-    <Compile Include="TcpStateToStringConverter.cs" />
-    <Compile Include="TimeSpanToMillisecondConverter.cs" />
-    <Compile Include="TimeSpanToStringConverter.cs" />
-    <Compile Include="TimestampToStringConverter.cs" />
-    <Compile Include="TimeUnitToStringConverter.cs" />
-    <Compile Include="AccentToStringConverter.cs" />
-    <Compile Include="ApplicationNameToIconConverter.cs" />
-    <Compile Include="ApplicationNameToTranslatedStringConverter.cs" />
-    <Compile Include="AppThemeToBrushConverter.cs" />
-    <Compile Include="AppThemeToStringConverter.cs" />
-    <Compile Include="ConnectionStateToStringConverter.cs" />
-    <Compile Include="AutoRefreshTimeToStringConverter.cs" />
-    <Compile Include="DiscoveryProtocolToStringConverter.cs" />
-    <Compile Include="IPStatusToStringConverter.cs" />
-    <Compile Include="PortStateToStringConverter.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValidateNetworkInterfaceConfigConverter.cs" />
-    <Compile Include="ValidateSubnetCalculatorSubnettingConverter.cs" />
-    <Compile Include="ValidateSubnetCalculatorSupernettingConverter.cs" />
-    <Compile Include="WiFiChannelAndDBMConverter.cs" />
-    <Compile Include="WiFiPhyKindConverter.cs" />
+    <PackageReference Include="LiveCharts.Wpf.NetCore3" Version="0.9.7" />
+    <PackageReference Include="MahApps.Metro" Version="1.6.5" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj">
-      <Project>{FF225C2E-AA67-4B10-939A-6C046CEF8697}</Project>
-      <Name>NETworkManager.Localization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
-      <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
-      <Name>NETworkManager.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj">
-      <Project>{D3B37F13-E8E6-4218-9E8E-96D52432A9CF}</Project>
-      <Name>NETworkManager.Profiles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj">
-      <Project>{954E8703-3E6E-42BF-BD28-F0B19BE10E0C}</Project>
-      <Name>NETworkManager.Settings</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
-      <Project>{5c3d1749-d260-4566-b448-b94b3ad9eeff}</Project>
-      <Name>NETworkManager.Utilities</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="LiveCharts.Wpf">
-      <Version>0.9.7</Version>
-    </PackageReference>
-    <PackageReference Include="MahApps.Metro">
-      <Version>1.6.5</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  
 </Project>

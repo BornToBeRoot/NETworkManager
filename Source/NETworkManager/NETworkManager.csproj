@@ -1,1087 +1,156 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E825EC30-AFA2-476A-AC2C-7537630A645B}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NETworkManager</RootNamespace>
     <AssemblyName>NETworkManager</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <DocumentationFile>bin\Debug\NETworkManager.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>NETworkManager.App</StartupObject>
-  </PropertyGroup>
-  <PropertyGroup>
     <ApplicationIcon>NETworkManager.ico</ApplicationIcon>
+    <OutputType>WinExe</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <!--<PreBuildEvent>PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File "$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1" "$(TargetDir)"</PreBuildEvent>-->
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>x64</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AxMSTSCLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>obj\Debug\AxMSTSCLib.dll</HintPath>
-    </Reference>
-    <Reference Include="MSTSCLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>bin\Debug\MSTSCLib.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsFormsIntegration" />
-  </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="..\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="Controls\DragablzInterTabClient.cs" />
-    <Compile Include="Controls\DragablzTabHostWindow.xaml.cs">
-      <DependentUpon>DragablzTabHostWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DragablzTabItem.cs" />
-    <Compile Include="Controls\LvlChartsPingTimeTooltip.xaml.cs">
-      <DependentUpon>LvlChartsPingTimeTooltip.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\LvlChartsBandwidthTooltip.xaml.cs">
-      <DependentUpon>LvlChartsBandwidthTooltip.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\LvlChartsWiFiChannelTooltip.xaml.cs">
-      <DependentUpon>LvlChartsWiFiChannelTooltip.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PowerShellControl.xaml.cs">
-      <DependentUpon>PowerShellControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\WebConsoleControl.xaml.cs">
-      <DependentUpon>WebConsoleControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TightVNCControl.xaml.cs">
-      <DependentUpon>TightVNCControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PuTTYControl.xaml.cs">
-      <DependentUpon>PuTTYControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ProfileDialogManager.cs" />
-    <Compile Include="StatusWindow.xaml.cs">
-      <DependentUpon>StatusWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\CustomCommandViewModel.cs" />
-    <Compile Include="ViewModels\DiscoveryProtocolViewModel.cs" />
-    <Compile Include="ViewModels\ProfileFileViewModel.cs" />
-    <Compile Include="ViewModels\PingMonitorHostViewModel.cs" />
-    <Compile Include="ViewModels\PingMonitorViewModel.cs" />
-    <Compile Include="ViewModels\SettingsProfilesViewModel.cs" />
-    <Compile Include="ViewModels\WebConsoleConnectViewModel.cs" />
-    <Compile Include="ViewModels\WebConsoleHostViewModel.cs" />
-    <Compile Include="ViewModels\WiFiViewModel.cs" />
-    <Compile Include="ViewModels\FirstRunViewModel.cs" />
-    <Compile Include="ViewModels\NetworkInterfaceAddIPAddressViewModel.cs" />
-    <Compile Include="ViewModels\ExportViewModel.cs" />
-    <Compile Include="ViewModels\DNSServerViewModel.cs" />
-    <Compile Include="ViewModels\SubnetCalculatorWideSubnetViewModel.cs" />
-    <Compile Include="ViewModels\PowerShellConnectViewModel.cs" />
-    <Compile Include="ViewModels\TigerVNCConnectViewModel.cs" />
-    <Compile Include="ViewModels\PowerShellHostViewModel.cs" />
-    <Compile Include="ViewModels\PowerShellSettingsViewModel.cs" />
-    <Compile Include="ViewModels\TigerVNCSettingsViewModel.cs" />
-    <Compile Include="ViewModels\TigerVNCHostViewModel.cs" />
-    <Compile Include="ViewModels\DashboardViewModel.cs" />
-    <Compile Include="ViewModels\DashboardSettingsViewModel.cs" />
-    <Compile Include="ViewModels\SettingsStatusViewModel.cs" />
-    <Compile Include="ViewModels\WhoisSettingsViewModel.cs" />
-    <Compile Include="ViewModels\WhoisHostViewModel.cs" />
-    <Compile Include="ViewModels\WhoisViewModel.cs" />
-    <Compile Include="ViewModels\ProfilesViewModel.cs" />
-    <Compile Include="ViewModels\ListenersViewModel.cs" />
-    <Compile Include="ViewModels\ConnectionsViewModel.cs" />
-    <Compile Include="ViewModels\SubnetCalculatorHostViewModel.cs" />
-    <Compile Include="ViewModels\LookupHostViewModel.cs" />
-    <Compile Include="ViewModels\PortScannerHostViewModel.cs" />
-    <Compile Include="ViewModels\IPScannerHostViewModel.cs" />
-    <Compile Include="ViewModels\DNSLookupHostViewModel.cs" />
-    <Compile Include="ViewModels\SNMPHostViewModel.cs" />
-    <Compile Include="ViewModels\ProfileViewModel.cs" />
-    <Compile Include="ViewModels\TracerouteHostViewModel.cs" />
-    <Compile Include="ViewModels\PuTTYHostViewModel.cs" />
-    <Compile Include="ViewModels\SNMPViewModel.cs" />
-    <Compile Include="ViewModels\ARPTableViewModel.cs" />
-    <Compile Include="ViewModels\GroupViewModel.cs" />
-    <Compile Include="ViewModels\CredentialsMasterPasswordViewModel.cs" />
-    <Compile Include="ViewModels\CredentialsSetMasterPasswordViewModel.cs" />
-    <Compile Include="ViewModels\ConfirmRemoveViewModel.cs" />
-    <Compile Include="ViewModels\ARPTableAddEntryViewModel.cs" />
-    <Compile Include="ViewModels\PuTTYConnectViewModel.cs" />
-    <Compile Include="ViewModels\RemoteDesktopConnectViewModel.cs" />
-    <Compile Include="ViewModels\DNSLookupViewModel.cs" />
-    <Compile Include="ViewModels\SubnetCalculatorSubnettingViewModel.cs" />
-    <Compile Include="ViewModels\LookupOUILookupViewModel.cs" />
-    <Compile Include="ViewModels\RemoteDesktopHostViewModel.cs" />
-    <Compile Include="ViewModels\CommandLineViewModel.cs" />
-    <Compile Include="ViewModels\PuTTYSettingsViewModel.cs" />
-    <Compile Include="ViewModels\SNMPSettingsViewModel.cs" />
-    <Compile Include="ViewModels\RemoteDesktopSettingsViewModel.cs" />
-    <Compile Include="ViewModels\DNSLookupSettingsViewModel.cs" />
-    <Compile Include="ViewModels\WakeOnLANSettingsViewModel.cs" />
-    <Compile Include="Controls\RemoteDesktopControl.xaml.cs">
-      <DependentUpon>RemoteDesktopControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\SettingsUpdateViewModel.cs" />
-    <Compile Include="Views\CustomCommandDialog.xaml.cs">
-      <DependentUpon>CustomCommandDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DiscoveryProtocolView.xaml.cs">
-      <DependentUpon>DiscoveryProtocolView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProfileFileDialog.xaml.cs">
-      <DependentUpon>ProfileFileDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PingMonitorHostView.xaml.cs">
-      <DependentUpon>PingMonitorHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PingMonitorView.xaml.cs">
-      <DependentUpon>PingMonitorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsProfilesView.xaml.cs">
-      <DependentUpon>SettingsProfilesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WebConsoleConnectDialog.xaml.cs">
-      <DependentUpon>WebConsoleConnectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WebConsoleHostView.xaml.cs">
-      <DependentUpon>WebConsoleHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WiFiView.xaml.cs">
-      <DependentUpon>WiFiView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FirstRunDialog.xaml.cs">
-      <DependentUpon>FirstRunDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NetworkInterfaceAddIPAddressDialog.xaml.cs">
-      <DependentUpon>NetworkInterfaceAddIPAddressDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ExportDialog.xaml.cs">
-      <DependentUpon>ExportDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DNSServerDialog.xaml.cs">
-      <DependentUpon>DNSServerDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SubnetCalculatorWideSubnetView.xaml.cs">
-      <DependentUpon>SubnetCalculatorWideSubnetView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PowerShellConnectDialog.xaml.cs">
-      <DependentUpon>PowerShellConnectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TigerVNCConnectDialog.xaml.cs">
-      <DependentUpon>TigerVNCConnectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PowerShellHostView.xaml.cs">
-      <DependentUpon>PowerShellHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PowerShellSettingsView.xaml.cs">
-      <DependentUpon>PowerShellSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TigerVNCSettingsView.xaml.cs">
-      <DependentUpon>TigerVNCSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TigerVNCHostView.xaml.cs">
-      <DependentUpon>TigerVNCHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DashboardView.xaml.cs">
-      <DependentUpon>DashboardView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DashboardSettingsView.xaml.cs">
-      <DependentUpon>DashboardSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsStatusView.xaml.cs">
-      <DependentUpon>SettingsStatusView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WhoisSettingsView.xaml.cs">
-      <DependentUpon>WhoisSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WhoisHostView.xaml.cs">
-      <DependentUpon>WhoisHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WhoisView.xaml.cs">
-      <DependentUpon>WhoisView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProfilesView.xaml.cs">
-      <DependentUpon>ProfilesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ListenersView.xaml.cs">
-      <DependentUpon>ListenersView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ConnectionsView.xaml.cs">
-      <DependentUpon>ConnectionsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PortScannerHostView.xaml.cs">
-      <DependentUpon>PortScannerHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IPScannerHostView.xaml.cs">
-      <DependentUpon>IPScannerHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DNSLookupHostView.xaml.cs">
-      <DependentUpon>DNSLookupHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SNMPHostView.xaml.cs">
-      <DependentUpon>SNMPHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProfileDialog.xaml.cs">
-      <DependentUpon>ProfileDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TracerouteHostView.xaml.cs">
-      <DependentUpon>TracerouteHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PuTTYHostView.xaml.cs">
-      <DependentUpon>PuTTYHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PingMonitorSettingsView.xaml.cs">
-      <DependentUpon>PingMonitorSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SNMPView.xaml.cs">
-      <DependentUpon>SNMPView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ARPTableView.xaml.cs">
-      <DependentUpon>ARPTableView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SubnetCalculatorSubnettingView.xaml.cs">
-      <DependentUpon>SubnetCalculatorSubnettingView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SubnetCalculatorHostView.xaml.cs">
-      <DependentUpon>SubnetCalculatorHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LookupOUILookupView.xaml.cs">
-      <DependentUpon>LookupOUILookupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LookupPortLookupView.xaml.cs">
-      <DependentUpon>LookupPortLookupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RemoteDesktopHostView.xaml.cs">
-      <DependentUpon>RemoteDesktopHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\GroupDialog.xaml.cs">
-      <DependentUpon>GroupDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CredentialsMasterPasswordDialog.xaml.cs">
-      <DependentUpon>CredentialsMasterPasswordDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CredentialsSetMasterPasswordDialog.xaml.cs">
-      <DependentUpon>CredentialsSetMasterPasswordDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ConfirmRemoveDialog.xaml.cs">
-      <DependentUpon>ConfirmRemoveDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ARPTableAddEntryDialog.xaml.cs">
-      <DependentUpon>ARPTableAddEntryDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PuTTYConnectDialog.xaml.cs">
-      <DependentUpon>PuTTYConnectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RemoteDesktopConnectDialog.xaml.cs">
-      <DependentUpon>RemoteDesktopConnectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PuTTYSettingsView.xaml.cs">
-      <DependentUpon>PuTTYSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SNMPSettingsView.xaml.cs">
-      <DependentUpon>SNMPSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RemoteDesktopSettingsView.xaml.cs">
-      <DependentUpon>RemoteDesktopSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsUpdateView.xaml.cs">
-      <DependentUpon>SettingsUpdateView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DNSLookupSettingsView.xaml.cs">
-      <DependentUpon>DNSLookupSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WakeOnLANSettingsView.xaml.cs">
-      <DependentUpon>WakeOnLANSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="CommandLineWindow.xaml.cs">
-      <DependentUpon>CommandLineWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Controls\DragablzTabHostWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\LvlChartsPingTimeTooltip.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\LvlChartsBandwidthTooltip.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\LvlChartsWiFiChannelTooltip.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\PowerShellControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\WebConsoleControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\TightVNCControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\PuTTYControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\ContextMenu\ContextMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ToggleButtonStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\DropDownButtonStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\GridSplitterStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\RadioButtonStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\CheckBoxStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ContextMenuStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\DragablzStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ExpanderStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\PasswordBoxStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\RectangleStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ListBoxStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ToolTipStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\WindowStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ComboBoxStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ScrollViewerStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ScrollBarStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\TabControlStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\NumericUpDownStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Templates\ValidationErrorTemplates.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\MetroDialogStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\RemoteDesktopControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <SplashScreen Include="Resources\Images\SplashScreen.png" />
-    <Page Include="StatusWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CustomCommandDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\DiscoveryProtocolView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ProfileFileDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PingMonitorHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PingMonitorView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsProfilesView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\WebConsoleConnectDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\WebConsoleHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\WiFiView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\FirstRunDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\NetworkInterfaceAddIPAddressDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ExportDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\DNSServerDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SubnetCalculatorWideSubnetView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PowerShellConnectDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TigerVNCConnectDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PowerShellHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PowerShellSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TigerVNCSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TigerVNCHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\DashboardView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\DashboardSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsStatusView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\WhoisSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\WhoisHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\WhoisView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ProfilesView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ListenersView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ConnectionsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PortScannerHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\IPScannerHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\DNSLookupHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SNMPHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ProfileDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TracerouteHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PuTTYHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PingMonitorSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SNMPView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ARPTableView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SubnetCalculatorSubnettingView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SubnetCalculatorHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\LookupOUILookupView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\LookupPortLookupView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\RemoteDesktopHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\LookupHostView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TracerouteView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\DNSLookupView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PortScannerView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\IPScannerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\GroupDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\CredentialsMasterPasswordDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\CredentialsSetMasterPasswordDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ConfirmRemoveDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ARPTableAddEntryDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PuTTYConnectDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\RemoteDesktopConnectDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PuTTYSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SNMPSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\RemoteDesktopSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsUpdateView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\DNSLookupSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\WakeOnLANSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\PortScannerSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\TracerouteSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\IPScannerSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsGeneralView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsAutostartView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsHotKeysView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsLanguageView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsAppearanceView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsWindowView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\AboutView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CommandLineWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\SettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\NetworkInterfaceView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\WakeOnLANView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SubnetCalculatorCalculatorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ViewModels\PortScannerViewModel.cs" />
-    <Compile Include="ViewModels\LookupPortViewModel.cs" />
-    <Compile Include="ViewModels\PortScannerSettingsViewModel.cs" />
-    <Compile Include="ViewModels\IPScannerSettingsViewModel.cs" />
-    <Compile Include="ViewModels\PingMonitorSettingsViewModel.cs" />
-    <Compile Include="ViewModels\SettingsGeneralViewModel.cs" />
-    <Compile Include="ViewModels\TracerouteSettingsViewModel.cs" />
-    <Compile Include="Views\LookupHostView.xaml.cs">
-      <DependentUpon>LookupHostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="ViewModels\IPScannerViewModel.cs" />
-    <Compile Include="ViewModels\NetworkInterfaceViewModel.cs" />
-    <Compile Include="ViewModels\SubnetCalculatorCalculatorViewModel.cs" />
-    <Compile Include="ViewModels\TracerouteViewModel.cs" />
-    <Compile Include="ViewModels\WakeOnLANViewModel.cs" />
-    <Compile Include="ViewModels\AboutViewModel.cs" />
-    <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
-    <Compile Include="ViewModels\SettingsAppearanceViewModel.cs" />
-    <Compile Include="ViewModels\SettingsLanguageViewModel.cs" />
-    <Compile Include="ViewModels\SettingsHotKeysViewModel.cs" />
-    <Compile Include="ViewModels\SettingsSettingsViewModel.cs" />
-    <Compile Include="ViewModels\SettingsAutostartViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Views\TracerouteView.xaml.cs">
-      <DependentUpon>TracerouteView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\DNSLookupView.xaml.cs">
-      <DependentUpon>DNSLookupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PortScannerSettingsView.xaml.cs">
-      <DependentUpon>PortScannerSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TracerouteSettingsView.xaml.cs">
-      <DependentUpon>TracerouteSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IPScannerSettingsView.xaml.cs">
-      <DependentUpon>IPScannerSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsGeneralView.xaml.cs">
-      <DependentUpon>SettingsGeneralView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsSettingsView.xaml.cs">
-      <DependentUpon>SettingsSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsAutostartView.xaml.cs">
-      <DependentUpon>SettingsAutostartView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsHotKeysView.xaml.cs">
-      <DependentUpon>SettingsHotKeysView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsLanguageView.xaml.cs">
-      <DependentUpon>SettingsLanguageView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsAppearanceView.xaml.cs">
-      <DependentUpon>SettingsAppearanceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsWindowView.xaml.cs">
-      <DependentUpon>SettingsWindowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AboutView.xaml.cs">
-      <DependentUpon>AboutView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PortScannerView.xaml.cs">
-      <DependentUpon>PortScannerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NetworkInterfaceView.xaml.cs">
-      <DependentUpon>NetworkInterfaceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IPScannerView.xaml.cs">
-      <DependentUpon>IPScannerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WakeOnLANView.xaml.cs">
-      <DependentUpon>WakeOnLANView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SubnetCalculatorCalculatorView.xaml.cs">
-      <DependentUpon>SubnetCalculatorCalculatorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Resources\Styles\DataGridStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ToogleSwitchStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\GroupBoxStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\ButtonStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\TextBoxStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Styles\TextBlockStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <None Include="app.config" />
-    <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.manifest" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
+    <None Remove="Resources\Images\SplashScreen.png" />
     <Resource Include="Resources\Images\NETworkManager.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="NETworkManager.ico" />
+    <Resource Include="Resources\Images\SplashScreen.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AirspaceFixer">
-      <Version>1.0.5</Version>
-    </PackageReference>
-    <PackageReference Include="DnsClient">
-      <Version>1.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="Dragablz">
-      <Version>0.0.3.203</Version>
-    </PackageReference>
-    <PackageReference Include="IPNetwork2">
-      <Version>2.5.202</Version>
-    </PackageReference>
-    <PackageReference Include="Lextm.SharpSnmpLib">
-      <Version>12.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="LiveCharts.Wpf">
-      <Version>0.9.7</Version>
-    </PackageReference>
-    <PackageReference Include="LoadingIndicators.WPF">
-      <Version>0.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="MahApps.Metro">
-      <Version>1.6.5</Version>
-    </PackageReference>
-    <PackageReference Include="MahApps.Metro.IconPacks">
-      <Version>4.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies">
-      <Version>1.1.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls.WebView">
-      <Version>6.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Windows.SDK.Contracts">
-      <Version>10.0.17763.1000</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.3</Version>
-    </PackageReference>
+    <Page Remove="Resources\Styles\ButtonStyles.xaml" />
+    <Page Remove="Resources\Styles\CheckBoxStyles.xaml" />
+    <Page Remove="Resources\Styles\ComboBoxStyles.xaml" />
+    <Page Remove="Resources\Styles\ContextMenuStyles.xaml" />
+    <Page Remove="Resources\Styles\DataGridStyles.xaml" />
+    <Page Remove="Resources\Styles\DragablzStyles.xaml" />
+    <Page Remove="Resources\Styles\DropDownButtonStyles.xaml" />
+    <Page Remove="Resources\Styles\ExpanderStyles.xaml" />
+    <Page Remove="Resources\Styles\GridSplitterStyles.xaml" />
+    <Page Remove="Resources\Styles\GroupBoxStyles.xaml" />
+    <Page Remove="Resources\Styles\ListBoxStyle.xaml" />
+    <Page Remove="Resources\Styles\MetroDialogStyles.xaml" />
+    <Page Remove="Resources\Styles\NumericUpDownStyles.xaml" />
+    <Page Remove="Resources\Styles\PasswordBoxStyles.xaml" />
+    <Page Remove="Resources\Styles\RadioButtonStyles.xaml" />
+    <Page Remove="Resources\Styles\RectangleStyles.xaml" />
+    <Page Remove="Resources\Styles\ScrollBarStyles.xaml" />
+    <Page Remove="Resources\Styles\ScrollViewerStyles.xaml" />
+    <Page Remove="Resources\Styles\TabControlStyles.xaml" />
+    <Page Remove="Resources\Styles\TextBlockStyles.xaml" />
+    <Page Remove="Resources\Styles\TextBoxStyles.xaml" />
+    <Page Remove="Resources\Styles\ToggleButtonStyles.xaml" />
+    <Page Remove="Resources\Styles\ToogleSwitchStyles.xaml" />
+    <Page Remove="Resources\Styles\ToolTipStyles.xaml" />
+    <Page Remove="Resources\Styles\WindowStyles.xaml" />
+
+    <Content Include="Resources\Styles\ButtonStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\CheckBoxStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\ComboBoxStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\ContextMenuStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\DataGridStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\DragablzStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\DropDownButtonStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\ExpanderStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\GridSplitterStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\GroupBoxStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\ListBoxStyle.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\MetroDialogStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\NumericUpDownStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\PasswordBoxStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\RadioButtonStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\RectangleStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\ScrollBarStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\ScrollViewerStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\TabControlStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\TextBlockStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\TextBoxStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\ToggleButtonStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\ToogleSwitchStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\ToolTipStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Styles\WindowStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj">
-      <Project>{95ea884c-e498-4a47-a316-dc890bf7f0d2}</Project>
-      <Name>NETworkManager.Controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Converters\NETworkManager.Converters.csproj">
-      <Project>{bd4ddc21-7b64-41b2-bac7-8173e0fe84be}</Project>
-      <Name>NETworkManager.Converters</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Documentation\NETworkManager.Documentation.csproj">
-      <Project>{95ce4ad5-14c0-4486-9c11-5d6a5ec48176}</Project>
-      <Name>NETworkManager.Documentation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj">
-      <Project>{ff225c2e-aa67-4b10-939a-6c046cef8697}</Project>
-      <Name>NETworkManager.Localization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
-      <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
-      <Name>NETworkManager.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj">
-      <Project>{d3b37f13-e8e6-4218-9e8e-96d52432a9cf}</Project>
-      <Name>NETworkManager.Profiles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj">
-      <Project>{954e8703-3e6e-42bf-bd28-f0b19be10e0c}</Project>
-      <Name>NETworkManager.Settings</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Update\NETworkManager.Update.csproj">
-      <Project>{008467af-d83f-4b1e-8733-b65136f595f2}</Project>
-      <Name>NETworkManager.Update</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Utilities.WPF\NETworkManager.Utilities.WPF.csproj">
-      <Project>{93733008-7269-460d-8390-ab281c75db91}</Project>
-      <Name>NETworkManager.Utilities.WPF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
-      <Project>{5C3D1749-D260-4566-B448-B94B3AD9EEFF}</Project>
-      <Name>NETworkManager.Utilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Validators\NETworkManager.Validators.csproj">
-      <Project>{29172e71-52af-4e64-9683-30c5f4d0c746}</Project>
-      <Name>NETworkManager.Validators</Name>
-    </ProjectReference>
+    <PackageReference Include="AirspaceFixer" Version="1.0.5" />
+    <PackageReference Include="DnsClient" Version="1.3.1" />
+    <PackageReference Include="Dragablz.NetCore" Version="0.3.3" />
+    <PackageReference Include="IPNetwork2" Version="2.5.189" />
+    <PackageReference Include="Lextm.SharpSnmpLib" Version="12.0.0" />
+    <PackageReference Include="LiveCharts.Wpf.NetCore3" Version="0.9.7" />
+    <PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
+    <PackageReference Include="MahApps.Metro" Version="1.6.5" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.0.0" />
+    <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls.WebView" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.18362.2005" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File "$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1" "$(TargetDir)"</PreBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />
+    <ProjectReference Include="..\NETworkManager.Converters\NETworkManager.Converters.csproj" />
+    <ProjectReference Include="..\NETworkManager.Documentation\NETworkManager.Documentation.csproj" />
+    <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
+    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
+    <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj" />
+    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj" />
+    <ProjectReference Include="..\NETworkManager.Update\NETworkManager.Update.csproj" />
+    <ProjectReference Include="..\NETworkManager.Utilities.WPF\NETworkManager.Utilities.WPF.csproj" />
+    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
+    <ProjectReference Include="..\NETworkManager.Validators\NETworkManager.Validators.csproj" />
+  </ItemGroup>
 </Project>

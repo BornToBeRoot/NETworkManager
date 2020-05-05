@@ -1,187 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8A2859DC-38B6-4E9D-A6B2-1828DC6641B3}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NETworkManager.Models</RootNamespace>
     <AssemblyName>NETworkManager.Models</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\NETworkManager.Models.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <PackageReference Include="DnsClient" Version="1.3.1" />
+    <PackageReference Include="IPNetwork2" Version="2.5.189" />
+    <PackageReference Include="Lextm.SharpSnmpLib" Version="12.0.0" />
+    <PackageReference Include="MahApps.Metro" Version="1.6.5" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.0.0" />
+    <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls.WebView" Version="6.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="ApplicationManager.cs" />
-    <Compile Include="ApplicationName.cs" />
-    <Compile Include="ApplicationInfo.cs" />
-    <Compile Include="EventSystem\EventSystem.cs" />
-    <Compile Include="EventSystem\EventSystemRedirectArgs.cs" />
-    <Compile Include="Export\ExportManager.cs" />
-    <Compile Include="Export\ExportManager.ExportFileType.cs" />
-    <Compile Include="Lookup\OUIInfo.cs" />
-    <Compile Include="Lookup\OUILookup.cs" />
-    <Compile Include="Lookup\PortLookup.cs" />
-    <Compile Include="Lookup\PortLookup.Protocol.cs" />
-    <Compile Include="Lookup\PortLookupInfo.cs" />
-    <Compile Include="Network\ARP.cs" />
-    <Compile Include="Network\ARPInfo.cs" />
-    <Compile Include="Network\BandwidthMeter.cs" />
-    <Compile Include="Network\BandwidthMeterSpeedArgs.cs" />
-    <Compile Include="Network\Connection.cs" />
-    <Compile Include="Network\Connection.Protocol.cs" />
-    <Compile Include="Network\ConnectionInfo.cs" />
-    <Compile Include="Network\ConnectionState.cs" />
-    <Compile Include="Network\DiscoveryProtocol.cs" />
-    <Compile Include="Network\DiscoveryProtocol.Protocol.cs" />
-    <Compile Include="Network\DiscoveryProtocolErrorArgs.cs" />
-    <Compile Include="Network\DiscoveryProtocolPackageArgs.cs" />
-    <Compile Include="Network\DiscoveryProtocolPackageInfo.cs" />
-    <Compile Include="Network\DiscoveryProtocolWarningArgs.cs" />
-    <Compile Include="Network\DNSLookup.cs" />
-    <Compile Include="Network\DNSLookupCompleteArgs.cs" />
-    <Compile Include="Network\DNSLookupErrorArgs.cs" />
-    <Compile Include="Network\DNSLookupRecordArgs.cs" />
-    <Compile Include="Network\DNSLookupRecordInfo.cs" />
-    <Compile Include="Network\DNSServer.cs" />
-    <Compile Include="Network\DNSServerInfo.cs" />
-    <Compile Include="Network\HostFoundArgs.cs" />
-    <Compile Include="Network\HostInfo.cs" />
-    <Compile Include="Network\HostNotFoundException.cs" />
-    <Compile Include="Network\HostRangeHelper.cs" />
-    <Compile Include="Network\IPNetworkInfo.cs" />
-    <Compile Include="Network\IPScanner.cs" />
-    <Compile Include="Network\IPv4Address.cs" />
-    <Compile Include="Network\Listener.cs" />
-    <Compile Include="Network\Listener.Protocol.cs" />
-    <Compile Include="Network\ListenerInfo.cs" />
-    <Compile Include="Network\MaximumHopsReachedArgs.cs" />
-    <Compile Include="Network\NetworkInterface.cs" />
-    <Compile Include="Network\NetworkInterfaceConfig.cs" />
-    <Compile Include="Network\NetworkInterfaceInfo.cs" />
-    <Compile Include="Network\Ping.cs" />
-    <Compile Include="Network\PingExceptionArgs.cs" />
-    <Compile Include="Network\PingInfo.cs" />
-    <Compile Include="Network\PingMonitorOptions.cs" />
-    <Compile Include="Network\PingReceivedArgs.cs" />
-    <Compile Include="Network\PortInfo.cs" />
-    <Compile Include="Network\PortScannedArgs.cs" />
-    <Compile Include="Network\PortScanner.cs" />
-    <Compile Include="Network\PortState.cs" />
-    <Compile Include="Network\ProgressChangedArgs.cs" />
-    <Compile Include="Network\SNMP.cs" />
-    <Compile Include="Network\SNMPReceivedArgs.cs" />
-    <Compile Include="Network\SNMPReceivedInfo.cs" />
-    <Compile Include="Network\Subnetmask.cs" />
-    <Compile Include="Network\SubnetmaskInfo.cs" />
-    <Compile Include="Network\Traceroute.cs" />
-    <Compile Include="Network\TracerouteHopInfo.cs" />
-    <Compile Include="Network\TracerouteHopReceivedArgs.cs" />
-    <Compile Include="Network\WakeOnLAN.cs" />
-    <Compile Include="Network\WakeOnLanInfo.cs" />
-    <Compile Include="Network\Whois.cs" />
-    <Compile Include="Network\WhoisServerInfo.cs" />
-    <Compile Include="Network\WiFi.cs" />
-    <Compile Include="Network\WiFiAdapterInfo.cs" />
-    <Compile Include="Network\WiFiNetworkInfo.cs" />
-    <Compile Include="PowerShell\PowerShell.cs" />
-    <Compile Include="PowerShell\ExecutionPolicy.cs" />
-    <Compile Include="PowerShell\PowerShellSessionInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PuTTY\LogMode.cs" />
-    <Compile Include="PuTTY\ConnectionMode.cs" />
-    <Compile Include="PuTTY\PuTTY.cs" />
-    <Compile Include="PuTTY\PuTTYSessionInfo.cs" />
-    <Compile Include="RemoteDesktop\AudioCaptureRedirectionMode.cs" />
-    <Compile Include="RemoteDesktop\AudioRedirectionMode.cs" />
-    <Compile Include="RemoteDesktop\KeyboardHookMode.cs" />
-    <Compile Include="RemoteDesktop\Keystroke.cs" />
-    <Compile Include="RemoteDesktop\NetworkConnectionType.cs" />
-    <Compile Include="RemoteDesktop\RemoteDesktop.cs" />
-    <Compile Include="RemoteDesktop\RemoteDesktopKeystrokeInfo.cs" />
-    <Compile Include="RemoteDesktop\RemoteDesktopPerformanceConstants.cs" />
-    <Compile Include="RemoteDesktop\RemoteDesktopSessionInfo.cs" />
-    <Compile Include="TigerVNC\TigerVNC.cs" />
-    <Compile Include="TigerVNC\TigerVNCSessionInfo.cs" />
-    <Compile Include="WebConsole\WebConsoleSessionInfo.cs" />
+    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\DiscoveryProtocol.ps1" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="ControlzEx">
-      <Version>3.0.2.4</Version>
-    </PackageReference>
-    <PackageReference Include="IPNetwork2">
-      <Version>2.5.202</Version>
-    </PackageReference>
-    <PackageReference Include="Lextm.SharpSnmpLib">
-      <Version>12.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="MahApps.Metro.IconPacks">
-      <Version>4.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies">
-      <Version>1.1.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls.WebView">
-      <Version>6.0.1</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj">
-      <Project>{5c3d1749-d260-4566-b448-b94b3ad9eeff}</Project>
-      <Name>NETworkManager.Utilities</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\OUI.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Ports.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\WhoisServers.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  
 </Project>

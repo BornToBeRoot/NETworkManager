@@ -38,7 +38,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="dragablz:TabablzControl.IsWrappingTabItem" Value="True">
-                            <Setter TargetName="contentPresenter" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.(networkManagerControls:DragablzTabItem.Header)}" />
+                            <!--<Setter TargetName="contentPresenter" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.(networkManagerControls:DragablzTabItem.Header)}" />-->
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
