@@ -164,7 +164,7 @@
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
                                             </Grid.RowDefinitions>
-                                            <Grid Grid.Row="0" Margin="5">
+                                            <Grid Grid.Row="0" Margin="10">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="48" />
                                                     <ColumnDefinition Width="10" />
@@ -291,7 +291,7 @@
                                                     </Rectangle>
                                                 </ToggleButton>
                                             </Grid>
-                                            <Grid Grid.Row="1" Margin="5,15,5,5" Visibility="{Binding Path=(network:WiFiNetworkInfo.ExpandDetails), Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                            <Grid Grid.Row="1" Margin="10" Visibility="{Binding Path=(network:WiFiNetworkInfo.ExpandDetails), Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="58" />
                                                     <ColumnDefinition Width="Auto" />
