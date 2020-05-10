@@ -3,14 +3,22 @@ using System.IO;
 
 namespace NETworkManager.Models.PuTTY
 {
+    /// <summary>
+    /// Class control PuTTY.
+    /// </summary>
     public partial class PuTTY
     {
-        public static string BuildCommandLine(PuTTYSessionInfo profileInfo)
+        /// <summary>
+        /// Build command line arguments based on a <see cref="PuTTYSessionInfo"/>.
+        /// </summary>
+        /// <param name="sessionInfo">Instance of <see cref="PuTTYSessionInfo"/>.</param>
+        /// <returns>Command line arguments like "-ssh -l root -i C:\data\key.ppk"</returns>
+        public static string BuildCommandLine(PuTTYSessionInfo sessionInfo)
         {
             var command = string.Empty;
 
             // Protocol
-            switch (profileInfo.Mode)
+            switch (sessionInfo.Mode)
             {
                 case ConnectionMode.SSH:
                     command += "-ssh";
@@ -29,18 +37,22 @@ namespace NETworkManager.Models.PuTTY
                     break;
             }
 
-            // Profile
-            if (!string.IsNullOrEmpty(profileInfo.Profile))
-                command += $" -load {'"'}{profileInfo.Profile}{'"'}";
-
             // Username
-            if (!string.IsNullOrEmpty(profileInfo.Username))
-                command += $" -l {profileInfo.Username}";
+            if (!string.IsNullOrEmpty(sessionInfo.Username))
+                command += $" -l {sessionInfo.Username}";
+
+            // Private key
+            if (!string.IsNullOrEmpty(sessionInfo.PrivateKey))
+                command += $" -i {'"'}{sessionInfo.PrivateKey}{'"'}";
+
+            // Profile
+            if (!string.IsNullOrEmpty(sessionInfo.Profile))
+                command += $" -load {'"'}{sessionInfo.Profile}{'"'}";
 
             // Log
-            if (profileInfo.EnableLog)
+            if (sessionInfo.EnableLog)
             {
-                switch(profileInfo.LogMode)
+                switch (sessionInfo.LogMode)
                 {
                     case LogMode.SessionLog:
                         command += $" -sessionlog";
@@ -53,20 +65,20 @@ namespace NETworkManager.Models.PuTTY
                         break;
                 }
 
-                command += $" {'"'}{ Environment.ExpandEnvironmentVariables(Path.Combine(profileInfo.LogPath, profileInfo.LogFileName))}{'"'}";
-            }                
-            
+                command += $" {'"'}{ Environment.ExpandEnvironmentVariables(Path.Combine(sessionInfo.LogPath, sessionInfo.LogFileName))}{'"'}";
+            }
+
             // Additional commands
-            if (!string.IsNullOrEmpty(profileInfo.AdditionalCommandLine))
-                command += $" {profileInfo.AdditionalCommandLine}";
+            if (!string.IsNullOrEmpty(sessionInfo.AdditionalCommandLine))
+                command += $" {sessionInfo.AdditionalCommandLine}";
 
             // SerialLine, Baud
-            if (profileInfo.Mode == ConnectionMode.Serial)
-                command += $" {profileInfo.HostOrSerialLine} -sercfg {profileInfo.PortOrBaud}";
+            if (sessionInfo.Mode == ConnectionMode.Serial)
+                command += $" {sessionInfo.HostOrSerialLine} -sercfg {sessionInfo.PortOrBaud}";
 
             // Port, Host
-            if (profileInfo.Mode != ConnectionMode.Serial)
-                command += $" -P {profileInfo.PortOrBaud} {profileInfo.HostOrSerialLine}";
+            if (sessionInfo.Mode != ConnectionMode.Serial)
+                command += $" -P {sessionInfo.PortOrBaud} {sessionInfo.HostOrSerialLine}";
 
             return command;
         }

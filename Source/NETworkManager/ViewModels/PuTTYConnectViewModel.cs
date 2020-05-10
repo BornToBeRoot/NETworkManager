@@ -5,10 +5,10 @@ using System;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Input;
-using static NETworkManager.Models.PuTTY.PuTTY;
 
 namespace NETworkManager.ViewModels
 {
+ 
     public class PuTTYConnectViewModel : ViewModelBase
     {
         public ICommand ConnectCommand { get; }
@@ -193,6 +193,21 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private string _privateKeyFile;
+        public string PrivateKeyFile
+        {
+            get => _privateKeyFile;
+            set
+            {
+                if (value == _privateKeyFile)
+                    return;
+
+                _privateKeyFile = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private string _profile;
         public string Profile
         {
@@ -231,6 +246,8 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView UsernameHistoryView { get; }
 
+        public ICollectionView PrivateKeyFileHistoryView { get; set; }
+
         public ICollectionView ProfileHistoryView { get; }
 
         public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand, Action<PuTTYConnectViewModel> cancelHandler, string host = null)
@@ -246,6 +263,7 @@ namespace NETworkManager.ViewModels
             PortHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PortHistory);
             BaudHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_BaudHistory);
             UsernameHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_UsernameHistory);
+            PrivateKeyFileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_PrivateKeyFileHistory);
             ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PuTTY_ProfileHistory);
 
             LoadSettings();
@@ -276,6 +294,7 @@ namespace NETworkManager.ViewModels
             }
 
             Username = SettingsManager.Current.PuTTY_Username;
+            PrivateKeyFile = SettingsManager.Current.PuTTY_PrivateKeyFile;
             Profile = SettingsManager.Current.PuTTY_Profile;
             SerialLine = SettingsManager.Current.PuTTY_SerialLine;
             AdditionalCommandLine = SettingsManager.Current.PuTTY_AdditionalCommandLine;

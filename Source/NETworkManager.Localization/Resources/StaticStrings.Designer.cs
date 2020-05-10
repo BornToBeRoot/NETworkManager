@@ -538,6 +538,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to C:\Data\Keys\private_ssh.ppk.
+        /// </summary>
+        public static string PrivateKeyFileLocationDots {
+            get {
+                return ResourceManager.GetString("PrivateKeyFileLocationDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NETworkManager.
         /// </summary>
         public static string ProductName {

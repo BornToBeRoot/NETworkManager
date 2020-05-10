@@ -2,16 +2,32 @@
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
-using System.Diagnostics.CodeAnalysis;
 
 namespace NETworkManager.Profiles
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    /// <summary>
+    /// Class represents a profile.
+    /// </summary>
     public class ProfileInfo
     {
+        /// <summary>
+        /// Name of the profile.
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Hostname or IP address of the host.
+        /// </summary>
         public string Host { get; set; }
+
+        /// <summary>
+        /// Name of the group. Profiles are grouped based on the name.
+        /// </summary>
         public string Group { get; set; }
+
+        /// <summary>
+        /// Tags to classify the profiles and to filter by it.
+        /// </summary>
         public string Tags { get; set; }
 
         public bool NetworkInterface_Enabled { get; set; }
@@ -31,10 +47,6 @@ namespace NETworkManager.Profiles
         public bool PortScanner_InheritHost { get; set; } = true;
         public string PortScanner_Host { get; set; }
         public string PortScanner_Ports { get; set; }
-
-        public bool Ping_Enabled { get; set; }
-        public bool Ping_InheritHost { get; set; } = true;
-        public string Ping_Host { get; set; }
 
         public bool PingMonitor_Enabled { get; set; }
         public bool PingMonitor_InheritHost { get; set; } = true;
@@ -122,6 +134,8 @@ namespace NETworkManager.Profiles
         public int PuTTY_PortOrBaud { get; set; }
         public bool PuTTY_OverrideUsername { get; set; }
         public string PuTTY_Username { get; set; }
+        public bool PuTTY_OverridePrivateKeyFile { get; set; }
+        public string PuTTY_PrivateKeyFile { get; set; }
         public bool PuTTY_OverrideProfile { get; set; }
         public string PuTTY_Profile { get; set; }
         public bool PuTTY_OverrideEnableLog { get; set; }

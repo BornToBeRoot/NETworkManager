@@ -1010,7 +1010,9 @@
                                         <RowDefinition Height="10" />
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="10" />
-                                        <RowDefinition Height="Auto" /> 
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*" />
@@ -1112,7 +1114,7 @@
                                         </TextBox.Text>
                                     </TextBox>
                                     <CheckBox Grid.Column="0" Grid.Row="12" Content="{x:Static localization:Strings.Username}" IsChecked="{Binding PuTTY_OverrideUsername}" Style="{StaticResource DefaultCheckBox}" />
-                                    <TextBox Grid.Column="2" Grid.Row="12" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding PuTTY_OverrideUsername}">
+                                    <TextBox Grid.Column="2" Grid.Row="12" x:Name="TextBoxPuTTYUsername"  mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding PuTTY_OverrideUsername}">
                                         <TextBox.Text>
                                             <Binding Path="PuTTY_Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
@@ -1121,28 +1123,30 @@
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
-                                    <CheckBox Grid.Column="0" Grid.Row="14" Content="{x:Static localization:Strings.Profile}" IsChecked="{Binding PuTTY_OverrideProfile}" Style="{StaticResource DefaultCheckBox}" />
-                                    <TextBox Grid.Column="2" Grid.Row="14" IsEnabled="{Binding PuTTY_OverrideProfile}">
+                                    <CheckBox Grid.Column="0" Grid.Row="14" Content="{x:Static localization:Strings.PrivateKeyFile}" IsChecked="{Binding PuTTY_OverridePrivateKeyFile}" Style="{StaticResource DefaultCheckBox}" />
+                                    <TextBox Grid.Column="2" Grid.Row="14" x:Name="TextBoxPuTTYPrivateKeyFile" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.PrivateKeyFileLocationDots}" IsEnabled="{Binding PuTTY_OverridePrivateKeyFile}">
                                         <TextBox.Text>
-                                            <Binding Path="PuTTY_Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding Path="PuTTY_PrivateKeyFile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
-                                                    <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                                    <validators:FileExistsValidator ValidatesOnTargetUpdated="True" />
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
-                                    <CheckBox Grid.Column="0" Grid.Row="16" Content="{x:Static localization:Strings.EnableLog}" IsChecked="{Binding PuTTY_OverrideEnableLog}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="16" OnLabel="" OffLabel="" IsChecked="{Binding PuTTY_EnableLog}" IsEnabled="{Binding PuTTY_OverrideEnableLog}" />
-                                    <CheckBox Grid.Column="0" Grid.Row="18" Content="{x:Static localization:Strings.LogMode}" IsChecked="{Binding PuTTY_OverrideLogMode}" Style="{StaticResource DefaultCheckBox}" />
-                                    <ComboBox Grid.Column="2" Grid.Row="18" ItemsSource="{Binding PuTTY_LogModes}" SelectedItem="{Binding PuTTY_LogMode}" IsEnabled="{Binding PuTTY_OverrideLogMode}">
+                                    <CheckBox Grid.Column="0" Grid.Row="16" Content="{x:Static localization:Strings.Profile}" IsChecked="{Binding PuTTY_OverrideProfile}" Style="{StaticResource DefaultCheckBox}" />
+                                    <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding PuTTY_Profile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding PuTTY_OverrideProfile}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="18" Content="{x:Static localization:Strings.EnableLog}" IsChecked="{Binding PuTTY_OverrideEnableLog}" Style="{StaticResource DefaultCheckBox}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="18" OnLabel="" OffLabel="" IsChecked="{Binding PuTTY_EnableLog}" IsEnabled="{Binding PuTTY_OverrideEnableLog}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="20" Content="{x:Static localization:Strings.LogMode}" IsChecked="{Binding PuTTY_OverrideLogMode}" Style="{StaticResource DefaultCheckBox}" />
+                                    <ComboBox Grid.Column="2" Grid.Row="20" ItemsSource="{Binding PuTTY_LogModes}" SelectedItem="{Binding PuTTY_LogMode}" IsEnabled="{Binding PuTTY_OverrideLogMode}">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding Converter={StaticResource PuTTYLogModeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
-                                    <CheckBox Grid.Column="0" Grid.Row="20" Content="{x:Static localization:Strings.LogPath}" IsChecked="{Binding PuTTY_OverrideLogPath}" Style="{StaticResource DefaultCheckBox}" />
-                                    <TextBox Grid.Column="2" Grid.Row="20" x:Name="TextBoxPuTTYLogPath" IsEnabled="{Binding PuTTY_OverrideLogPath}">
+                                    <CheckBox Grid.Column="0" Grid.Row="22" Content="{x:Static localization:Strings.LogPath}" IsChecked="{Binding PuTTY_OverrideLogPath}" Style="{StaticResource DefaultCheckBox}" />
+                                    <TextBox Grid.Column="2" Grid.Row="22" x:Name="TextBoxPuTTYLogPath" IsEnabled="{Binding PuTTY_OverrideLogPath}">
                                         <TextBox.Text>
                                             <Binding Path="PuTTY_LogPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
@@ -1152,8 +1156,8 @@
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
-                                    <CheckBox Grid.Column="0" Grid.Row="22" Content="{x:Static localization:Strings.LogFileName}" IsChecked="{Binding PuTTY_OverrideLogFileName}" Style="{StaticResource DefaultCheckBox}" />
-                                    <TextBox Grid.Column="2" Grid.Row="22" x:Name="TextBoxPuTTYLogFileName" IsEnabled="{Binding PuTTY_OverrideLogFileName}">
+                                    <CheckBox Grid.Column="0" Grid.Row="24" Content="{x:Static localization:Strings.LogFileName}" IsChecked="{Binding PuTTY_OverrideLogFileName}" Style="{StaticResource DefaultCheckBox}" />
+                                    <TextBox Grid.Column="2" Grid.Row="24" x:Name="TextBoxPuTTYLogFileName" IsEnabled="{Binding PuTTY_OverrideLogFileName}">
                                         <TextBox.Text>
                                             <Binding Path="PuTTY_LogFileName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
@@ -1163,8 +1167,8 @@
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
-                                    <CheckBox Grid.Column="0" Grid.Row="24" Content="{x:Static localization:Strings.AdditionalCommandLine}" IsChecked="{Binding PuTTY_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultCheckBox}"/>
-                                    <TextBox Grid.Column="2" Grid.Row="24" Text="{Binding PuTTY_AdditionalCommandLine}" IsEnabled="{Binding PuTTY_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="26" Content="{x:Static localization:Strings.AdditionalCommandLine}" IsChecked="{Binding PuTTY_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultCheckBox}"/>
+                                    <TextBox Grid.Column="2" Grid.Row="26" Text="{Binding PuTTY_AdditionalCommandLine}" IsEnabled="{Binding PuTTY_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
                                 </Grid>
                             </StackPanel>
                         </StackPanel>
@@ -1597,6 +1601,26 @@
                                     <Condition Binding="{Binding PuTTY_OverridePortOrBaud}" Value="True" />
                                     <Condition Binding="{Binding PuTTY_UseSerial}" Value="True" />
                                     <Condition Binding="{Binding ElementName=TextBoxPuTTYBaud, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding PuTTY_OverrideUsername}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPuTTYUsername, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding PuTTY_OverridePrivateKeyFile}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPuTTYPrivateKeyFile, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

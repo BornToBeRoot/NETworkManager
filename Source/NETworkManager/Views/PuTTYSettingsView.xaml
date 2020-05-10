@@ -46,10 +46,10 @@
         </WrapPanel>
         <TextBlock Text="{x:Static localization:Strings.Username}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.SSHPrivateKey}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox x:Name="TextBoxSSHPrivateKey" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.SSHPrivateKeyLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding SSHPrivateKeyBrowseFileCommand}" AllowDrop="True" Drop="TextBoxSSHPrivateKeyFilePath_Drop" PreviewDragOver="TextBoxSSHPrivateKeyFilePath_PreviewDragOver" Margin="0,0,0,10">
+        <TextBlock Text="{x:Static localization:Strings.PrivateKeyFile}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox x:Name="TextBoxPrivateKeyFile" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.PrivateKeyFileLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding PrivateKeyFileBrowseFileCommand}" AllowDrop="True" Drop="TextBoxPrivateKeyFilePath_Drop" PreviewDragOver="TextBoxPrivateKeyFilePath_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
-                <Binding Path="SSHPrivateKey" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="PrivateKeyFile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyOrFileExistsValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
@@ -68,7 +68,7 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <TextBlock Text="{x:Static localization:Strings.LogPath}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox IsEnabled="{Binding EnableLog}" Visibility="{Binding IsPortable, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
+        <TextBox IsEnabled="{Binding EnableLog}" Visibility="{Binding IsPortable, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding LogPathBrowseFolderCommand}" AllowDrop="True" Drop="TextBoxLogPathFolderPath_Drop" PreviewDragOver="TextBoxLogPathFolderPath_PreviewDragOver" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="LogPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

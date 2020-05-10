@@ -157,19 +157,19 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _sshPrivateKey;
-        public string SSHPrivateKey
+        private string _privateKeyFile;
+        public string PrivateKeyFile
         {
-            get => _sshPrivateKey;
+            get => _privateKeyFile;
             set
             {
-                if (value == _sshPrivateKey)
+                if (value == _privateKeyFile)
                     return;
 
-                 if (!_isLoading)
-                     SettingsManager.Current.PuTTY_SSHPrivateKey = value;
+                if (!_isLoading)
+                    SettingsManager.Current.PuTTY_PrivateKeyFile = value;
 
-                _sshPrivateKey = value;
+                _privateKeyFile = value;
                 OnPropertyChanged();
             }
         }
@@ -402,7 +402,7 @@ namespace NETworkManager.ViewModels
 
             IsConfigured = File.Exists(ApplicationFilePath);
             Username = SettingsManager.Current.PuTTY_Username;
-            SSHPrivateKey = SettingsManager.Current.PuTTY_SSHPrivateKey;
+            PrivateKeyFile = SettingsManager.Current.PuTTY_PrivateKeyFile;
             Profile = SettingsManager.Current.PuTTY_Profile;
             EnableLog = SettingsManager.Current.PuTTY_EnableSessionLog;
             LogMode = LogModes.FirstOrDefault(x => x == SettingsManager.Current.PuTTY_LogMode);
@@ -438,9 +438,9 @@ namespace NETworkManager.ViewModels
             Configure();
         }
 
-        public ICommand SSHPrivateKeyBrowseFileCommand => new RelayCommand(p => SSHPrivateKeyBrowseFileAction());
+        public ICommand PrivateKeyFileBrowseFileCommand => new RelayCommand(p => PrivateKeyFileBrowseFileAction());
 
-        private void SSHPrivateKeyBrowseFileAction()
+        private void PrivateKeyFileBrowseFileAction()
         {
             var openFileDialog = new System.Windows.Forms.OpenFileDialog
             {
@@ -448,7 +448,20 @@ namespace NETworkManager.ViewModels
             };
 
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                SSHPrivateKey = openFileDialog.FileName;
+                PrivateKeyFile = openFileDialog.FileName;
+        }
+
+        public ICommand LogPathBrowseFolderCommand => new RelayCommand(p => LogPathBrowseFolderAction());
+
+        private void LogPathBrowseFolderAction()
+        {
+            var openFolderDialog = new System.Windows.Forms.FolderBrowserDialog
+            {
+                ShowNewFolderButton = true
+            };
+
+            if (openFolderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                LogPath = openFolderDialog.SelectedPath;
         }
         #endregion
 
@@ -469,6 +482,10 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        /// <summary>
+        /// Method to set the <see cref="ApplicationFilePath"/> from drag and drop.
+        /// </summary>
+        /// <param name="filePath">Path to the file.</param>
         public void SetApplicationFilePathFromDragDrop(string filePath)
         {
             ApplicationFilePath = filePath;
@@ -476,11 +493,26 @@ namespace NETworkManager.ViewModels
             OnPropertyChanged(nameof(ApplicationFilePath));
         }
 
-        public void SetSSHPrivateKeyFilePathFromDragDrop(string filePath)
+        /// <summary>
+        /// Method to set the <see cref="PrivateKeyFile"/> drag drop.
+        /// </summary>
+        /// <param name="filePath">Path to the file.</param>
+        public void SetPrivateKeyFilePathFromDragDrop(string filePath)
         {
-            SSHPrivateKey = filePath;
+            PrivateKeyFile = filePath;
 
-            OnPropertyChanged(nameof(SSHPrivateKey));
+            OnPropertyChanged(nameof(PrivateKeyFile));
+        }
+
+        /// <summary>
+        /// Method to set the <see cref="LogPath"/> from drag and drop.
+        /// </summary>
+        /// <param name="folderPath">Path to the folder.</param>
+        public void SetLogPathFolderPathFromDragDrop(string folderPath)
+        {
+            LogPath = folderPath;
+
+            OnPropertyChanged(nameof(LogPath));
         }
         #endregion
     }

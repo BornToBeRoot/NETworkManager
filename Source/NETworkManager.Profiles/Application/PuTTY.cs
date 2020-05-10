@@ -13,6 +13,7 @@ namespace NETworkManager.Profiles.Application
                 HostOrSerialLine = profileInfo.PuTTY_HostOrSerialLine,
                 PortOrBaud = profileInfo.PuTTY_OverridePortOrBaud ? profileInfo.PuTTY_PortOrBaud : Settings.Application.PuTTY.GetPortOrBaudByConnectionMode(profileInfo.PuTTY_ConnectionMode),
                 Username = profileInfo.PuTTY_OverrideUsername ? profileInfo.PuTTY_Username : SettingsManager.Current.PuTTY_Username,
+                PrivateKey = profileInfo.PuTTY_OverridePrivateKeyFile ? profileInfo.PuTTY_PrivateKeyFile : SettingsManager.Current.PuTTY_PrivateKeyFile,
                 Profile = profileInfo.PuTTY_OverrideProfile ? profileInfo.PuTTY_Profile : SettingsManager.Current.PuTTY_Profile,
                 EnableLog = profileInfo.PuTTY_OverrideEnableLog ? profileInfo.PuTTY_EnableLog : SettingsManager.Current.PuTTY_EnableSessionLog,
                 LogMode = profileInfo.PuTTY_OverrideLogMode ? profileInfo.PuTTY_LogMode : SettingsManager.Current.PuTTY_LogMode,

@@ -285,4 +285,7 @@
   <data name="InternetExplorer" xml:space="preserve">
     <value>Internet Explorer</value>
   </data>
+  <data name="PrivateKeyFileLocationDots" xml:space="preserve">
+    <value>C:\Data\Keys\private_ssh.ppk</value>
+  </data>
 </root>
