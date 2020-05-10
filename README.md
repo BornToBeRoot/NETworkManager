@@ -10,7 +10,7 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
 
 ## Download :package:
 
-| File | Checksum | Help |
+| File | Checksum [SHA256] | Help |
 |---|---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.0/NETworkManager_2020.5.0_Setup.exe){:target="_blank"}| `6AA9E156ABEB79BB07574C7C076F53FE0630D69E5680A83E8E1D175E4C75E20A` | [:book:](Documentation/Other/Packages.md#setup) |
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.0/NETworkManager_2020.5.0_Portable.zip){:target="_blank"}| `36FDC504ECD9BA7E7334131909F81CE36FB91E7FB267DA53B077F95C697B4751` | [:book:](Documentation/Other/Packages.md#portable) |
