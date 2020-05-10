@@ -1,7 +1,7 @@
 # Version 2020.4.0
 Date: **21.04.2020**
 
-| File | Checksum
+| File | Checksum [SHA256]
 |---|---|
 |[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.4.0/NETworkManager_2020.4.0_Setup.exe)| `6AA9E156ABEB79BB07574C7C076F53FE0630D69E5680A83E8E1D175E4C75E20A` |
 |[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.4.0/NETworkManager_2020.4.0_Portable.zip)| `36FDC504ECD9BA7E7334131909F81CE36FB91E7FB267DA53B077F95C697B4751` |
@@ -33,7 +33,7 @@ Date: **21.04.2020**
 # Version 2020.1.0
 Date: **26.01.2020**
 
-| File | Checksum
+| File | Checksum [SHA256]
 |---|---|
 |[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe)| `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB` |
 |[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip)| `BEA66D1B8E1DE820B6077FD1F98ABDF5BDD4D7CD0477FC27941EFED326DCCEAD` |
@@ -77,7 +77,7 @@ Date: **26.01.2020**
 # Version 2019.12.0
 Date: **25.12.2019**
 
-| File | Checksum
+| File | Checksum [SHA256]
 |---|---|
 |[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Setup.exe)| `C615367946A818B4E67632FA99937723B4006385D86F62F52842709DC35CBA1F` |
 |[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Portable.zip)| `1A5A16A863425D827E1C58D711C337873C4C44B914D44F3FC27E327043597078` |
