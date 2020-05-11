@@ -115,6 +115,7 @@
     <EmbeddedResource Include="Resources\Strings.de-DE.resx" />
     <EmbeddedResource Include="Resources\Strings.es-ES.resx" />
     <EmbeddedResource Include="Resources\Strings.fr-FR.resx" />
+    <EmbeddedResource Include="Resources\Strings.hu-HU.resx" />
     <EmbeddedResource Include="Resources\Strings.it-IT.resx" />
     <EmbeddedResource Include="Resources\Strings.nl-NL.resx" />
     <EmbeddedResource Include="Resources\Strings.pt-BR.resx" />
@@ -151,6 +152,9 @@
     <PackageReference Include="MahApps.Metro">
       <Version>1.6.5</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Flags\hu-HU.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -121,7 +121,7 @@
     <value>Sobre</value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>Accent</value>
+    <value>Realce</value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
     <value>Adicionar credenciais</value>
@@ -145,19 +145,19 @@
     <value>Autenticação</value>
   </data>
   <data name="Autostart" xml:space="preserve">
-    <value>Autostart</value>
+    <value>Iniciar automático</value>
   </data>
   <data name="Calculator" xml:space="preserve">
     <value>Calculadora</value>
   </data>
   <data name="CommandLineArguments" xml:space="preserve">
-    <value>Command Line Arguments</value>
+    <value>Argumentos da Linha de Comando</value>
   </data>
   <data name="Configure" xml:space="preserve">
     <value>Configurar</value>
   </data>
   <data name="Confirm" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Confirmar</value>
   </data>
   <data name="Connect" xml:space="preserve">
     <value>Conectar</value>
@@ -175,13 +175,13 @@
     <value>Credenciais</value>
   </data>
   <data name="Data" xml:space="preserve">
-    <value>Data</value>
+    <value>Dados</value>
   </data>
   <data name="DefaultApplication" xml:space="preserve">
     <value>Aplicativo padrão</value>
   </data>
   <data name="DeleteCredentials" xml:space="preserve">
-    <value>Delete credentials</value>
+    <value>Excluir credenciais</value>
   </data>
   <data name="DeleteProfile" xml:space="preserve">
     <value>Excluir perfil</value>
@@ -196,13 +196,13 @@
     <value>Desconectado</value>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Display</value>
+    <value>Exibição</value>
   </data>
   <data name="DNS" xml:space="preserve">
     <value>DNS</value>
   </data>
   <data name="DNSLookup" xml:space="preserve">
-    <value>DNS Lookup</value>
+    <value>Pesquisa de DNS</value>
   </data>
   <data name="DontFragment" xml:space="preserve">
     <value>Não fragmentar</value>
@@ -217,10 +217,10 @@
     <value>Editar Perfil</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Erro</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>Export</value>
+    <value>Exportar</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filtro</value>
@@ -229,19 +229,19 @@
     <value>Geral</value>
   </data>
   <data name="Headers" xml:space="preserve">
-    <value>Headers</value>
+    <value>Cabeçalhos</value>
   </data>
   <data name="History" xml:space="preserve">
-    <value>History</value>
+    <value>Histórico</value>
   </data>
   <data name="HotKeys" xml:space="preserve">
-    <value>HotKeys</value>
+    <value>Teclas de Atalho</value>
   </data>
   <data name="HTTPHeaders" xml:space="preserve">
-    <value>HTTP Headers</value>
+    <value>Cabeçalhos HTTP</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>Import</value>
+    <value>Importar</value>
   </data>
   <data name="Information" xml:space="preserve">
     <value>Informação</value>
@@ -250,7 +250,7 @@
     <value>Interface</value>
   </data>
   <data name="IPScanner" xml:space="preserve">
-    <value>IP Scanner</value>
+    <value>Scanner de IP</value>
   </data>
   <data name="Keyboard" xml:space="preserve">
     <value>Teclado</value>
@@ -271,13 +271,13 @@
     <value>Localização</value>
   </data>
   <data name="Lookup" xml:space="preserve">
-    <value>Lookup</value>
+    <value>Pesquisa</value>
   </data>
   <data name="MACAddress" xml:space="preserve">
     <value>Endereço MAC</value>
   </data>
   <data name="MasterPassword" xml:space="preserve">
-    <value>Master Password</value>
+    <value>Senha Mestre</value>
   </data>
   <data name="Multithreading" xml:space="preserve">
     <value>Multithreading</value>
@@ -295,7 +295,7 @@
     <value>OUI</value>
   </data>
   <data name="OverwriteQuestion" xml:space="preserve">
-    <value>Overwrite?</value>
+    <value>Substituir?</value>
   </data>
   <data name="Ping" xml:space="preserve">
     <value>Ping</value>
@@ -307,7 +307,7 @@
     <value>Portátil</value>
   </data>
   <data name="PortScanner" xml:space="preserve">
-    <value>Port Scanner</value>
+    <value>Scanner de Portas</value>
   </data>
   <data name="Profiles" xml:space="preserve">
     <value>Perfis</value>
@@ -316,28 +316,28 @@
     <value>PuTTY</value>
   </data>
   <data name="Query" xml:space="preserve">
-    <value>Query</value>
+    <value>Consultar</value>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
     <value>Área de trabalho remota</value>
   </data>
   <data name="Reset" xml:space="preserve">
-    <value>Reset</value>
+    <value>Redefinir</value>
   </data>
   <data name="ResolvePTR" xml:space="preserve">
-    <value>Resolve PTR</value>
+    <value>Resolver PTR</value>
   </data>
   <data name="Resources" xml:space="preserve">
-    <value>Resources</value>
+    <value>Recursos</value>
   </data>
   <data name="Result" xml:space="preserve">
-    <value>Result</value>
+    <value>Resultado</value>
   </data>
   <data name="Route" xml:space="preserve">
-    <value>Route</value>
+    <value>Rota</value>
   </data>
   <data name="Scan" xml:space="preserve">
-    <value>Scan</value>
+    <value>Verificar</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Procurar</value>
@@ -346,7 +346,7 @@
     <value>Selecione um perfil...</value>
   </data>
   <data name="SetMasterPassword" xml:space="preserve">
-    <value>Set Master Password</value>
+    <value>Definir Senha Mestre</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Configurações</value>
@@ -361,16 +361,16 @@
     <value>Socket</value>
   </data>
   <data name="Statistics" xml:space="preserve">
-    <value>Statistics</value>
+    <value>Estatísticas</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
   <data name="Subnet" xml:space="preserve">
-    <value>Subnet</value>
+    <value>Sub-rede</value>
   </data>
   <data name="Subnetting" xml:space="preserve">
-    <value>Subnetting</value>
+    <value>Sub-redes</value>
   </data>
   <data name="Success" xml:space="preserve">
     <value>Sucesso!</value>
@@ -382,7 +382,7 @@
     <value>Traceroute</value>
   </data>
   <data name="Tray" xml:space="preserve">
-    <value>Tray</value>
+    <value>Área de Notificação</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>Atualizar</value>
@@ -400,13 +400,13 @@
     <value>Wake on LAN</value>
   </data>
   <data name="Website" xml:space="preserve">
-    <value>Website</value>
+    <value>Site da Web</value>
   </data>
   <data name="Window" xml:space="preserve">
-    <value>Window</value>
+    <value>Janela</value>
   </data>
   <data name="WrongPassword" xml:space="preserve">
-    <value>Wrong password!</value>
+    <value>Senha incorreta!</value>
   </data>
   <data name="Client" xml:space="preserve">
     <value>Cliente</value>
@@ -415,34 +415,34 @@
     <value>Administrador</value>
   </data>
   <data name="AlwaysShowIconInTray" xml:space="preserve">
-    <value>Always show icon in tray</value>
+    <value>Sempre exibir ícone na área de notificação</value>
   </data>
   <data name="Attempts" xml:space="preserve">
-    <value>Attempts</value>
+    <value>Tentativas</value>
   </data>
   <data name="AverageTime" xml:space="preserve">
-    <value>Average time</value>
+    <value>Tempo médio</value>
   </data>
   <data name="Broadcast" xml:space="preserve">
-    <value>Broadcast</value>
+    <value>Transmissão</value>
   </data>
   <data name="Buffer" xml:space="preserve">
     <value>Buffer</value>
   </data>
   <data name="Bytes" xml:space="preserve">
-    <value>Bytes</value>
+    <value>bytes</value>
   </data>
   <data name="CIDR" xml:space="preserve">
     <value>CIDR</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Close</value>
+    <value>Fechar</value>
   </data>
   <data name="DefaultGateway" xml:space="preserve">
     <value>Gateway-Padrão</value>
   </data>
   <data name="DeleteDots" xml:space="preserve">
-    <value>Delete...</value>
+    <value>Excluir...</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Descrição</value>
@@ -451,34 +451,34 @@
     <value>DHCP ativado</value>
   </data>
   <data name="DHCPLeaseExpires" xml:space="preserve">
-    <value>DHCP lease expires</value>
+    <value>Concessão DHCP expira</value>
   </data>
   <data name="DHCPLeaseObtained" xml:space="preserve">
-    <value>DHCP lease obtained</value>
+    <value>Concessão DHCP obtida</value>
   </data>
   <data name="DHCPServer" xml:space="preserve">
-    <value>DHCP server</value>
+    <value>Servidor DHCP</value>
   </data>
   <data name="DNSServers" xml:space="preserve">
-    <value>DNS server(s)</value>
+    <value>Servidor(es) DNS</value>
   </data>
   <data name="DNSSuffix" xml:space="preserve">
-    <value>DNS suffix</value>
+    <value>Sufixo DNS</value>
   </data>
   <data name="DynamicIPv4Address" xml:space="preserve">
-    <value>Dynamic IPv4 address</value>
+    <value>Endereço IPv4 dinâmico</value>
   </data>
   <data name="DynamicIPv4DNSServer" xml:space="preserve">
-    <value>Dynamic IPv4 DNS server</value>
+    <value>Servidor DNS IPv4 dinâmico</value>
   </data>
   <data name="Hop" xml:space="preserve">
-    <value>Hop</value>
+    <value>Salto</value>
   </data>
   <data name="Hops" xml:space="preserve">
-    <value>Hops</value>
+    <value>Saltos</value>
   </data>
   <data name="Hostname" xml:space="preserve">
-    <value>Hostname</value>
+    <value>Nome do host</value>
   </data>
   <data name="IPAddress" xml:space="preserve">
     <value>Endereço IP</value>
@@ -493,7 +493,7 @@
     <value>Endereço IPv4</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
-    <value>IPv4-Default-Gateway</value>
+    <value>Gateway Padrão IPv4</value>
   </data>
   <data name="IPv6" xml:space="preserve">
     <value>IPv6</value>
@@ -502,25 +502,25 @@
     <value>Endereço IPV6</value>
   </data>
   <data name="IPv6AddressLinkLocal" xml:space="preserve">
-    <value>Link-local IPv6 address</value>
+    <value>Endereço IPV6 link local</value>
   </data>
   <data name="IPv6DefaultGateway" xml:space="preserve">
-    <value>IPv6-Default-Gateway</value>
+    <value>Gateway Padrão IPv6</value>
   </data>
   <data name="Maximum" xml:space="preserve">
-    <value>Maximum</value>
+    <value>Máximo</value>
   </data>
   <data name="MaximumHopsRouter" xml:space="preserve">
-    <value>Maximum hops/router</value>
+    <value>Saltos máximos/roteador</value>
   </data>
   <data name="MinimizeInsteadOfTerminating" xml:space="preserve">
-    <value>Minimize main window instead of terminating the application</value>
+    <value>Minimizar janela principal em vez de finalizar o aplicativo</value>
   </data>
   <data name="MinimizeToTrayInsteadOfTaskbar" xml:space="preserve">
-    <value>Minimize to tray instead of taskbar</value>
+    <value>Minimizar para a área de notificação em vez da barra de tarefas</value>
   </data>
   <data name="Minimum" xml:space="preserve">
-    <value>Minimum</value>
+    <value>Mínimo</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Nome</value>
@@ -529,22 +529,22 @@
     <value>Endereço de rede</value>
   </data>
   <data name="NewSubnetmaskOrCIDR" xml:space="preserve">
-    <value>New subnetmask or CIDR</value>
+    <value>Nova máscara de sub-rede ou CIDR</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>Não</value>
   </data>
   <data name="ObtainAnIPAddressAutomatically" xml:space="preserve">
     <value>Obter um endereço IP automaticamente</value>
   </data>
   <data name="ObtainDNSServerAddressAutomatically" xml:space="preserve">
-    <value>Obtain DNS server address automatically</value>
+    <value>Obter endereço do servidor DNS automaticamente</value>
   </data>
   <data name="PacketLoss" xml:space="preserve">
-    <value>Packet loss</value>
+    <value>Perda de pacotes</value>
   </data>
   <data name="PacketsTransmitted" xml:space="preserve">
-    <value>Packets transmitted</value>
+    <value>Pacotes transmitidos</value>
   </data>
   <data name="PhysicalAddress" xml:space="preserve">
     <value>Endereço Físico</value>
@@ -553,16 +553,16 @@
     <value>Protocolo preferido ao resolver o nome do host:</value>
   </data>
   <data name="PrimaryDNSServer" xml:space="preserve">
-    <value>Primary DNS server</value>
+    <value>Servidor DNS primário</value>
   </data>
   <data name="ReceivedLost" xml:space="preserve">
-    <value>Received / Lost</value>
+    <value>Recebido / Perdido</value>
   </data>
   <data name="ResolveHostname" xml:space="preserve">
-    <value>Resolve hostname</value>
+    <value>Resolver nome do host</value>
   </data>
   <data name="RestartRequired" xml:space="preserve">
-    <value>Restart required</value>
+    <value>Necessário reiniciar</value>
   </data>
   <data name="RestartRequiredSettingsChangedMessage" xml:space="preserve">
     <value>Algumas configurações são aplicadas somente após a reinicialização do aplicativo!</value>
@@ -571,67 +571,67 @@
     <value>Salvar configurações na pasta do aplicativo</value>
   </data>
   <data name="SecondaryDNSServer" xml:space="preserve">
-    <value>Secondary DNS server</value>
+    <value>Servidor DNS secundário</value>
   </data>
   <data name="Show" xml:space="preserve">
-    <value>Show</value>
+    <value>Exibir</value>
   </data>
   <data name="ShowTheFollowingApplicationOnStartup" xml:space="preserve">
-    <value>Show the following application on startup:</value>
+    <value>Exibir seguinte aplicativo ao iniciar:</value>
   </data>
   <data name="Slogan" xml:space="preserve">
-    <value>A powerful tool for managing networks and troubleshoot network problems!</value>
+    <value>Uma ferramenta poderosa para gerenciar redes e solucionar problemas de rede!</value>
   </data>
   <data name="Speed" xml:space="preserve">
-    <value>Speed</value>
+    <value>Velocidade</value>
   </data>
   <data name="StartMinimizedInTray" xml:space="preserve">
-    <value>Start minimized in tray</value>
+    <value>Iniciar minimizado na área de notificação</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
-    <value>Start with Windows (current user)</value>
+    <value>Iniciar com o Windows (usuário atual)</value>
   </data>
   <data name="StaticIPv4Address" xml:space="preserve">
-    <value>Static IPv4 address</value>
+    <value>Endereço IPv4 estático</value>
   </data>
   <data name="StaticIPv4DNSServer" xml:space="preserve">
-    <value>Static IPv4 DNS server</value>
+    <value>Servidor DNS IPv4 estático</value>
   </data>
   <data name="Subnetmask" xml:space="preserve">
-    <value>Subnetmask</value>
+    <value>Máscara de sub-rede</value>
   </data>
   <data name="SubnetmaskOrCIDR" xml:space="preserve">
-    <value>Subnetmask or CIDR</value>
+    <value>Máscara de sub-rede ou CIDR</value>
   </data>
   <data name="Threads" xml:space="preserve">
-    <value>Threads</value>
+    <value>Segmentos</value>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>Time</value>
+    <value>Tempo</value>
   </data>
   <data name="Time1" xml:space="preserve">
-    <value>Time 1</value>
+    <value>Tempo 1</value>
   </data>
   <data name="Time2" xml:space="preserve">
-    <value>Time 2</value>
+    <value>Tempo 2</value>
   </data>
   <data name="Time3" xml:space="preserve">
-    <value>Time 3</value>
+    <value>Tempo 3</value>
   </data>
   <data name="Timeout" xml:space="preserve">
-    <value>Timeout</value>
+    <value>Tempo limite</value>
   </data>
   <data name="TimeoutMS" xml:space="preserve">
-    <value>Timeout (ms)</value>
+    <value>Tempo limite (ms)</value>
   </data>
   <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>Time to wait between each ping</value>
+    <value>Tempo para esperar entre cada ping</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>Type</value>
+    <value>Tipo</value>
   </data>
   <data name="UseTheFollowingDNSServerAddresses" xml:space="preserve">
     <value>Use os seguintes endereços de servidor DNS</value>
@@ -640,73 +640,73 @@
     <value>Use o seguinte endereço IP</value>
   </data>
   <data name="WakeUp" xml:space="preserve">
-    <value>Wake up</value>
+    <value>Acordar</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Sim</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Adicionar</value>
   </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
-    <value>Add a tab to perform a DNS lookup...</value>
+    <value>Adicionar aba para realizar pesquisa de DNS...</value>
   </data>
   <data name="AddATabToPerformANetworkScan" xml:space="preserve">
-    <value>Add a tab to perform a network scan...</value>
+    <value>Adicionar aba para realizar varredura de rede...</value>
   </data>
   <data name="AddATabToPerformAnSNMPAction" xml:space="preserve">
-    <value>Add a tab to perform an SNMP action...</value>
+    <value>Adicionar aba para realizar uma ação SNMP...</value>
   </data>
   <data name="AddATabToPerformAPing" xml:space="preserve">
-    <value>Add a tab to perform a ping...</value>
+    <value>Adicionar aba para realizar ping...</value>
   </data>
   <data name="AddATabToPerformAPortScan" xml:space="preserve">
-    <value>Add a tab to perform a port scan...</value>
+    <value>Adicionar aba para realizar varredura de portas...</value>
   </data>
   <data name="AddATabToPerformATrace" xml:space="preserve">
-    <value>Add a tab to perform a trace...</value>
+    <value>Adicionar aba para realizar trace...</value>
   </data>
   <data name="AddATabToQueryTheHTTPHeaders" xml:space="preserve">
-    <value>Add a tab to query the HTTP headers...</value>
+    <value>Adicionar aba para consultar cabeçalhos HTTP...</value>
   </data>
   <data name="AddDNSSuffixToHostname" xml:space="preserve">
-    <value>Add DNS suffix (primary) to hostname</value>
+    <value>Adicionar sufixo DNS (primário) ao nome do host</value>
   </data>
   <data name="AdditionalCommandLine" xml:space="preserve">
-    <value>Additional command line</value>
+    <value>Linha de comando adicional</value>
   </data>
   <data name="Additionals" xml:space="preserve">
-    <value>Additionals</value>
+    <value>Adicionais</value>
   </data>
   <data name="AddProfileDots" xml:space="preserve">
-    <value>Add profile...</value>
+    <value>Adicionar perfil...</value>
   </data>
   <data name="AdjustScreenAutomatically" xml:space="preserve">
-    <value>Adjust screen automatically</value>
+    <value>Ajustar tela automaticamente</value>
   </data>
   <data name="Answers" xml:space="preserve">
-    <value>Answers</value>
+    <value>Respostas</value>
   </data>
   <data name="ApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>Application is restarted afterwards</value>
+    <value>Aplicativo será reiniciado depois</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>Apply</value>
+    <value>Aplicar</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Apply Windows key combinations (e.g. ALT+TAB):</value>
+    <value>Aplicar combinação de teclas do Windows (ex.: ALT + TAB):</value>
   </data>
   <data name="Auth" xml:space="preserve">
-    <value>Auth</value>
+    <value>Autenticar</value>
   </data>
   <data name="AuthenticationLevel" xml:space="preserve">
-    <value>Authentication level</value>
+    <value>Nível de autenticação</value>
   </data>
   <data name="Authorities" xml:space="preserve">
-    <value>Authorities</value>
+    <value>Autoridades</value>
   </data>
   <data name="AutomaticallyUpdateEvery" xml:space="preserve">
-    <value>Automatically update every</value>
+    <value>Atualizar automático a cada</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>voltar</value>
@@ -718,88 +718,88 @@
     <value>Baud</value>
   </data>
   <data name="CanceledByUserMessage" xml:space="preserve">
-    <value>The operation has been canceled by the user!</value>
+    <value>A operação foi cancelada pelo usuário!</value>
   </data>
   <data name="CapsLockIsEnabled" xml:space="preserve">
-    <value>Caps lock is enabled!</value>
+    <value>Capslock está ativado!</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Verificar atualizações na inicialização</value>
   </data>
   <data name="Class" xml:space="preserve">
-    <value>Class</value>
+    <value>Classe</value>
   </data>
   <data name="ClearFilter" xml:space="preserve">
-    <value>Clear filter</value>
+    <value>Limpar filtro</value>
   </data>
   <data name="ColorDepthBit" xml:space="preserve">
-    <value>Color depth (bit)</value>
+    <value>Profundidade de cores (bits)</value>
   </data>
   <data name="Community" xml:space="preserve">
-    <value>Community</value>
+    <value>Comunidade</value>
   </data>
   <data name="ConfigureThePathToPuTTYInTheSettingsDots" xml:space="preserve">
     <value>Configure o caminho para PuTTY nas configurações ...</value>
   </data>
   <data name="ConfirmClose" xml:space="preserve">
-    <value>Confirm close</value>
+    <value>Confirmar fechar</value>
   </data>
   <data name="ConfirmCloseMessage" xml:space="preserve">
     <value>Tem certeza de que deseja fechar o aplicativo?</value>
   </data>
   <data name="ConnectAsDots" xml:space="preserve">
-    <value>Connect as...</value>
+    <value>Conectar como...</value>
   </data>
   <data name="ConnectExternal" xml:space="preserve">
-    <value>Connect external</value>
+    <value>Conectar externo</value>
   </data>
   <data name="ConnectTheNetworkCardToConfigureIt" xml:space="preserve">
     <value>Conecte a placa de rede a uma rede para configurá-la!</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>Copiar</value>
   </data>
   <data name="CopyAsDots" xml:space="preserve">
     <value>Copiar como...</value>
   </data>
   <data name="CopyDots" xml:space="preserve">
-    <value>Copy...</value>
+    <value>Copiar...</value>
   </data>
   <data name="CouldNotResolveHostnameFor" xml:space="preserve">
-    <value>Could not resolve hostname for: "{0}"</value>
+    <value>Não foi possível resolver o nome do host para: "{0}"</value>
   </data>
   <data name="Credential" xml:space="preserve">
-    <value>Credential</value>
+    <value>Credencial</value>
   </data>
   <data name="CredentialNotFoundMessage" xml:space="preserve">
-    <value>Edit the Profile and select a different credential or delete the existing one</value>
+    <value>Edite o Perfil e selecione uma credencial diferente ou exclua a existente</value>
   </data>
   <data name="CredentialsEncryptionDisclaimer" xml:space="preserve">
-    <value>The credentials are stored encrypted with AES-256 (Rijndael) in a file. The key for the encryption results from a master password (Rfc2898DeriveBytes). The application uses a SecureString for passwords. For some functions, passwords must be converted from a SecureString to plain text, or vice versa.</value>
+    <value>As credenciais são armazenadas criptografadas com AES-256 (Rijndael) em um arquivo. A chave para a criptografia resulta de uma senha mestre (Rfc2898DeriveBytes). O aplicativo usa uma SecureString para senhas. Para algumas funções, as senhas devem ser convertidas de uma SecureString para texto sem formatação ou vice-versa.</value>
   </data>
   <data name="Custom" xml:space="preserve">
-    <value>Custom</value>
+    <value>Personalizado</value>
   </data>
   <data name="CustomScreenSize" xml:space="preserve">
-    <value>Custom screen size:</value>
+    <value>Tamanho de tela personalizado:</value>
   </data>
   <data name="DataHasBeenUpdated" xml:space="preserve">
-    <value>Data has been updated!</value>
+    <value>Os dados foram atualizados!</value>
   </data>
   <data name="DecryptAndLoadCredentialsMessage" xml:space="preserve">
-    <value>Credentials must be decrypted and loaded to manage them.</value>
+    <value>As credenciais devem ser descriptografadas e carregadas para gerenciá-las.</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>Default</value>
+    <value>Padrão</value>
   </data>
   <data name="BaudRate" xml:space="preserve">
-    <value>Baud rate</value>
+    <value>Taxa de transmissão</value>
   </data>
   <data name="DefaultPort" xml:space="preserve">
-    <value>Default port:</value>
+    <value>Porta padrão:</value>
   </data>
   <data name="RloginPort" xml:space="preserve">
-    <value>Rlogin port</value>
+    <value>Porta Rlogin</value>
   </data>
   <data name="SSHPort" xml:space="preserve">
     <value>Porta SSH</value>
@@ -808,85 +808,85 @@
     <value>Porta Telnet</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
-    <value>The selected credential will be deleted permanently.</value>
+    <value>A credencial selecionada será excluída permanentemente.</value>
   </data>
   <data name="DeleteEntry" xml:space="preserve">
-    <value>Delete entry</value>
+    <value>Excluir entrada</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
     <value>Os perfis selecionados serão excluídos permanentemente.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
-    <value>DNS autconfiguration</value>
+    <value>Autoconfiguração DNS</value>
   </data>
   <data name="DNSLookupDots" xml:space="preserve">
-    <value>DNS Lookup...</value>
+    <value>Pesquisa de DNS...</value>
   </data>
   <data name="DNSServer" xml:space="preserve">
-    <value>DNS server</value>
+    <value>Servidor DNS</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
-    <value>Open documentation</value>
+    <value>Abrir documentação</value>
   </data>
   <data name="Domain" xml:space="preserve">
-    <value>Domain</value>
+    <value>Domínio</value>
   </data>
   <data name="Duration" xml:space="preserve">
     <value>Duração</value>
   </data>
   <data name="EditDots" xml:space="preserve">
-    <value>Edit...</value>
+    <value>Editar...</value>
   </data>
   <data name="Enable" xml:space="preserve">
-    <value>Enable</value>
+    <value>Habilitar</value>
   </data>
   <data name="EnableCredentialSecuritySupportProvider" xml:space="preserve">
-    <value>Enable Credential Security Support Provider</value>
+    <value>Ativar Provedor de Suporte à Segurança de Credenciais</value>
   </data>
   <data name="EndTime" xml:space="preserve">
-    <value>End time</value>
+    <value>Hora final</value>
   </data>
   <data name="EnterASubnetToCalculateIt" xml:space="preserve">
-    <value>Enter a subnet to calculate it...</value>
+    <value>Insira uma sub-rede para calculá-la...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
-    <value>Enter subnet and a new subnet mask to create subnets...</value>
+    <value>Digite a sub-rede e uma nova máscara de sub-rede para criar sub-redes...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>Couldn't connect to 'api.github.com', check your network connection!</value>
+    <value>Não foi possível conectar em 'api.github.com', verifique sua conexão de rede!</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
-    <value>Error in response!</value>
+    <value>Erro na resposta!</value>
   </data>
   <data name="ErrorInResponseCheckIfYouHaveWritePermissions" xml:space="preserve">
-    <value>Error in response! Check if you have write permissions.</value>
+    <value>Erro na resposta! Verifique se você possui permissão de escrita.</value>
   </data>
   <data name="Expand" xml:space="preserve">
-    <value>Expand</value>
+    <value>Expandir</value>
   </data>
   <data name="FirstUsableIPAddress" xml:space="preserve">
-    <value>First usable IP address</value>
+    <value>Primeiro endereço IP utilizável</value>
   </data>
   <data name="FixedScreenSize" xml:space="preserve">
-    <value>Fixed screen size:</value>
+    <value>Tamanho fixo da tela:</value>
   </data>
   <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork the Project on GitHub</value>
+    <value>Star/Fork Projeto no GirHub</value>
   </data>
   <data name="Found" xml:space="preserve">
-    <value>Found</value>
+    <value>Encontrado</value>
   </data>
   <data name="Group" xml:space="preserve">
-    <value>Group</value>
+    <value>Grupo</value>
   </data>
   <data name="Height" xml:space="preserve">
-    <value>Height</value>
+    <value>Altura</value>
   </data>
   <data name="Host" xml:space="preserve">
     <value>Host</value>
   </data>
   <data name="HostnameOrIPAddress" xml:space="preserve">
-    <value>Hostname or IP address</value>
+    <value>Nome do host ou endereço IP</value>
   </data>
   <data name="Hosts" xml:space="preserve">
     <value>Hosts</value>
@@ -895,226 +895,226 @@
     <value>ID</value>
   </data>
   <data name="InheritHostFromDefault" xml:space="preserve">
-    <value>Inherit host from default</value>
+    <value>Herdar host do padrão</value>
   </data>
   <data name="IPRange" xml:space="preserve">
-    <value>IP range</value>
+    <value>Intervalo de IP</value>
   </data>
   <data name="LastUsableIPAddress" xml:space="preserve">
-    <value>Last usable IP address</value>
+    <value>Último endereço IP utilizável</value>
   </data>
   <data name="LocalIPAddress" xml:space="preserve">
-    <value>Local IP address</value>
+    <value>Endereço IP local</value>
   </data>
   <data name="LocalPort" xml:space="preserve">
-    <value>Local port</value>
+    <value>Porta local</value>
   </data>
   <data name="MACAddressOrVendor" xml:space="preserve">
-    <value>MAC address or vendor</value>
+    <value>Endereço MAC ou fabricante</value>
   </data>
   <data name="MagicPacketSentMessage" xml:space="preserve">
-    <value>Magic packet successfully sent!</value>
+    <value>Pacote Magic enviado com sucesso!</value>
   </data>
   <data name="MaximumNumberOfHopsReached" xml:space="preserve">
-    <value>Maximum number ({0}) of hops/router reached!</value>
+    <value>Número máximo ({0}) de saltos/roteador atingido!</value>
   </data>
   <data name="MessageSize" xml:space="preserve">
-    <value>Message size</value>
+    <value>Tamanho da mensagem</value>
   </data>
   <data name="Mode" xml:space="preserve">
-    <value>Mode</value>
+    <value>Modo</value>
   </data>
   <data name="Multicast" xml:space="preserve">
     <value>Multicast</value>
   </data>
   <data name="MultipleInstances" xml:space="preserve">
-    <value>Multiple instances</value>
+    <value>Múltiplas instâncias</value>
   </data>
   <data name="NetworkLocationCannotBeReachedMessage" xml:space="preserve">
-    <value>The network address cannot be reached. Check if your computer is connected to the network. For information about network troubleshooting, see Windows Help.</value>
+    <value>O endereço de rede não pôde ser alcançado. Verifique se o seu computador está conectado à rede. Para obter informações sobre solução de problemas de rede, consulte a Ajuda do Windows.</value>
   </data>
   <data name="NewConnectionDots" xml:space="preserve">
-    <value>New connection...</value>
+    <value>Nova conexão...</value>
   </data>
   <data name="NoDNSRecordFoundCheckYourInputAndSettings" xml:space="preserve">
-    <value>No DNS record found for "{0}"! Check your input and the settings.</value>
+    <value>Nenhum registro DNS encontrado para "{0}"! Verifique sua entrada e configurações.</value>
   </data>
   <data name="NoEnabledNetworkAdaptersFound" xml:space="preserve">
-    <value>No enabled network adapters found!</value>
+    <value>Nenhum adaptador de rede habilitado encontrado!</value>
   </data>
   <data name="NoPortsFoundCheckYourInput" xml:space="preserve">
-    <value>No ports found. Check your input!</value>
+    <value>Nenhuma porta encontrada. Verifique sua entrada!</value>
   </data>
   <data name="NoProfilesFoundCreateOne" xml:space="preserve">
-    <value>No profiles found!
-Create one...</value>
+    <value>Nenhum perfil encontrado!
+Crie um...</value>
   </data>
   <data name="NothingFound" xml:space="preserve">
-    <value>Nothing found!</value>
+    <value>Nada encontrado!</value>
   </data>
   <data name="NothingToDoCheckYourInput" xml:space="preserve">
-    <value>Nothing to do. Check your input!</value>
+    <value>Nada para fazer. Verifique sua entrada!</value>
   </data>
   <data name="NoUpdateAvailable" xml:space="preserve">
-    <value>No update available!</value>
+    <value>Nenhuma atualização disponível!</value>
   </data>
   <data name="NoValidFileFoundToImport" xml:space="preserve">
-    <value>No valid file found to import.</value>
+    <value>Nenhum arquivo válido encontrado para importar.</value>
   </data>
   <data name="NoVendorFoundCheckYourInput" xml:space="preserve">
-    <value>No vendor found. Check your input!</value>
+    <value>Nenhum fornecedor encontrado. Verifique sua entrada!</value>
   </data>
   <data name="NumberOfErrorsAfterWhichIsCanceled" xml:space="preserve">
-    <value>Number of errors after which is canceled:</value>
+    <value>Número de erros após o qual é cancelado:</value>
   </data>
   <data name="NumberOfStoredEntries" xml:space="preserve">
-    <value>Number of stored entries</value>
+    <value>Número de entradas armazenadas</value>
   </data>
   <data name="OID" xml:space="preserve">
     <value>OID</value>
   </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
-    <value>Only when using the full screen</value>
+    <value>Somente ao usar a tela cheia</value>
   </data>
   <data name="RemoteDesktopKeyboardHookMode_OnTheRemoteComputer" xml:space="preserve">
-    <value>On the remote computer</value>
+    <value>No computador remoto</value>
   </data>
   <data name="RemoteDesktopKeyboardHookMode_OnThisComputer" xml:space="preserve">
-    <value>On this computer</value>
+    <value>Neste computador</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>Abrir</value>
   </data>
   <data name="OpenLicense" xml:space="preserve">
-    <value>Open license</value>
+    <value>Abrir licença</value>
   </data>
   <data name="OpenProject" xml:space="preserve">
     <value>Abrir projeto</value>
   </data>
   <data name="OpenWebsite" xml:space="preserve">
-    <value>Open website</value>
+    <value>Abrir site</value>
   </data>
   <data name="Override" xml:space="preserve">
-    <value>override</value>
+    <value>sobrepor</value>
   </data>
   <data name="OverwriteSettingsInTheDestinationFolder" xml:space="preserve">
-    <value>Overwrite settings in the destination folder?
+    <value>Substituir configurações na pasta de destino?
 
-If you click "Move &amp; Restart", the remaining files will be copied and the application will be restarted with the new settings!</value>
+Se você clicar em "Mover &amp; Reiniciar", os arquivos restantes serão copiados e o aplicativo será reiniciado com as novas configurações!</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Senha</value>
   </data>
   <data name="PasswordsDoNotMatch" xml:space="preserve">
-    <value>Passwords do not match!</value>
+    <value>As senhas não correspondem!</value>
   </data>
   <data name="Path" xml:space="preserve">
-    <value>Path</value>
+    <value>Caminho</value>
   </data>
   <data name="PortOrService" xml:space="preserve">
     <value>Porta ou serviço</value>
   </data>
   <data name="Ports" xml:space="preserve">
-    <value>Port(s)</value>
+    <value>Portas</value>
   </data>
   <data name="Priv" xml:space="preserve">
     <value>Priv</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value>Profile</value>
+    <value>Perfil</value>
   </data>
   <data name="ProfilesReloaded" xml:space="preserve">
-    <value>Profiles reloaded</value>
+    <value>Perfis recarregados</value>
   </data>
   <data name="Protocol" xml:space="preserve">
-    <value>Protocol</value>
+    <value>Protocolo</value>
   </data>
   <data name="PuTTYProcessHasEnded" xml:space="preserve">
-    <value>PuTTY process has ended!</value>
+    <value>Processo PuTTY foi finalizado!</value>
   </data>
   <data name="PuTTYProfile" xml:space="preserve">
-    <value>PuTTY profile</value>
+    <value>Perfil PuTTY</value>
   </data>
   <data name="Questions" xml:space="preserve">
-    <value>Questions</value>
+    <value>Perguntas</value>
   </data>
   <data name="RAW" xml:space="preserve">
     <value>RAW</value>
   </data>
   <data name="Recursion" xml:space="preserve">
-    <value>Recursion</value>
+    <value>Recursão</value>
   </data>
   <data name="RedirectClipboard" xml:space="preserve">
-    <value>Redirect clipboard</value>
+    <value>Redirecionar área de transferência</value>
   </data>
   <data name="RedirectDevices" xml:space="preserve">
-    <value>Redirect devices</value>
+    <value>Redirecionar dispositivos</value>
   </data>
   <data name="RedirectDrives" xml:space="preserve">
-    <value>Redirect drives</value>
+    <value>Redirecionar unidades</value>
   </data>
   <data name="RedirectPorts" xml:space="preserve">
-    <value>Redirect ports</value>
+    <value>Redirecionar portas</value>
   </data>
   <data name="RedirectPrinters" xml:space="preserve">
-    <value>Redirect printers</value>
+    <value>Redirecionar impressoras</value>
   </data>
   <data name="RedirectSmartcards" xml:space="preserve">
-    <value>Redirect smartcards</value>
+    <value>Redirecionar cartões inteligentes</value>
   </data>
   <data name="RemainingTime" xml:space="preserve">
-    <value>Remaining time</value>
+    <value>Tempo restante</value>
   </data>
   <data name="RemoteIPAddress" xml:space="preserve">
-    <value>Remote IP address</value>
+    <value>Endereço IP remoto</value>
   </data>
   <data name="RemotePort" xml:space="preserve">
-    <value>Remote port</value>
+    <value>Porta remota</value>
   </data>
   <data name="Repeat" xml:space="preserve">
-    <value>Repeat</value>
+    <value>Repetir</value>
   </data>
   <data name="ResolveCNAMEOnANYRequests" xml:space="preserve">
-    <value>Resolve CNAME on ANY requests</value>
+    <value>Resolver CNAME em QUALQUER solicitação</value>
   </data>
   <data name="Responses" xml:space="preserve">
-    <value>Responses</value>
+    <value>Respostas</value>
   </data>
   <data name="Rlogin" xml:space="preserve">
     <value>Rlogin</value>
   </data>
   <data name="Scanned" xml:space="preserve">
-    <value>Scanned</value>
+    <value>Examinado</value>
   </data>
   <data name="SearchedApplicationNotFound" xml:space="preserve">
-    <value>Searched application not found!</value>
+    <value>Aplicativo pesquisado não encontrado!</value>
   </data>
   <data name="SearchedLanguageNotFound" xml:space="preserve">
-    <value>Searched language not found!</value>
+    <value>Idioma pesquisado não encontrado!</value>
   </data>
   <data name="SearchedSettingNotFound" xml:space="preserve">
-    <value>Searched setting not found!</value>
+    <value>Configuração pesquisada não encontrada!</value>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>Security</value>
+    <value>Segurança</value>
   </data>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Selecione uma resolução de tela</value>
   </data>
   <data name="SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>The selected settings are overwritten and the application is restarted afterwards!</value>
+    <value>As configurações selecionadas são substituídas e o aplicativo é reiniciado em seguida!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
-    <value>The selected settings are reset.</value>
+    <value>As configurações selecionadas foram redefinidas.</value>
   </data>
   <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
-    <value>Select the settings you want to export:</value>
+    <value>Selecione as configurações que deseja exportar:</value>
   </data>
   <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
-    <value>Select the settings you want to import:</value>
+    <value>Selecione as configurações que deseja importar:</value>
   </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
-    <value>This will reset all settings!</value>
+    <value>Isto irá redefinir todas as configurações!</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>Serial</value>
@@ -1123,32 +1123,32 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>SerialLine</value>
   </data>
   <data name="Service" xml:space="preserve">
-    <value>Service</value>
+    <value>Serviço</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset!
-(Profile files are not affected!)</value>
+    <value>O arquivo de configurações encontrado está corrompido ou não é compatível com esta versão. Todas as configurações foram redefinidas.
+(Arquivos de perfil não foram afetados!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
-    <value>Settings successfully exported!</value>
+    <value>Configurações exportadas com sucesso!</value>
   </data>
   <data name="SettingsSuccessfullyImported" xml:space="preserve">
-    <value>Settings successfully imported!</value>
+    <value>Configurações importadas com sucesso!</value>
   </data>
   <data name="SettingsSuccessfullyReset" xml:space="preserve">
-    <value>Settings successfully reset!</value>
+    <value>Configurações redefinidas com sucesso!</value>
   </data>
   <data name="ShowClosedPorts" xml:space="preserve">
-    <value>Show closed ports</value>
+    <value>Mostrar portas fechadas</value>
   </data>
   <data name="ShowCurrentApplicationTitle" xml:space="preserve">
-    <value>Show current application title</value>
+    <value>Mostrar título do aplicativo atual</value>
   </data>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
     <value>Mostrar apenas os tipos de consulta mais comuns</value>
   </data>
   <data name="ShowScanResultForAllIPAddresses" xml:space="preserve">
-    <value>Show scan result for all IP addresses</value>
+    <value>Mostrar resultado da varredura para todos os endereços IP</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
     <value>Mostre estatisticas</value>
@@ -1160,13 +1160,13 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Hora de início</value>
   </data>
   <data name="State" xml:space="preserve">
-    <value>State</value>
+    <value>Estado</value>
   </data>
   <data name="Subnet1" xml:space="preserve">
-    <value>Subnet 1</value>
+    <value>Sub-rede 1</value>
   </data>
   <data name="Subnet2" xml:space="preserve">
-    <value>Subnet 2</value>
+    <value>Sub-rede 2</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
@@ -1175,559 +1175,559 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Telnet</value>
   </data>
   <data name="TheApplicationCanBeStartedWithoutParameters" xml:space="preserve">
-    <value>The application can be started without parameters!</value>
+    <value>O aplicativo pode ser iniciado sem parâmetros!</value>
   </data>
   <data name="TheFollowingHostnamesCouldNotBeResolved" xml:space="preserve">
-    <value>The following hostnames could not be resolved:</value>
+    <value>Os seguintes nomes de host não puderam ser resolvidos:</value>
   </data>
   <data name="TheFollowingParametersAreAvailable" xml:space="preserve">
-    <value>The following parameters are available:</value>
+    <value>Os seguintes parâmetros estão disponíveis:</value>
   </data>
   <data name="TheFollowingParametersCanNotBeProcesses" xml:space="preserve">
-    <value>The following parameters can not be processed:</value>
+    <value>Os seguintes parâmetros não podem ser processados:</value>
   </data>
   <data name="TheProcessCanTakeUpSomeTimeAndResources" xml:space="preserve">
-    <value>The process can take up some time and resources (CPU / RAM).</value>
+    <value>O processo pode levar algum tempo e recursos (CPU / RAM).</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>The settings location is not affected</value>
+    <value>O local das configurações não é afetado</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
-    <value>Timeout on SNMP query.</value>
+    <value>Tempo limite na consulta SNMP.</value>
   </data>
   <data name="TimeoutWhenQueryingDNSServerMessage" xml:space="preserve">
-    <value>Timeout when querying the DNS server with the IP address "{0}"!</value>
+    <value>Tempo limite ao consultar o servidor DNS com o endereço IP "{0}"!</value>
   </data>
   <data name="Timestamp" xml:space="preserve">
-    <value>Timestamp</value>
+    <value>Carimbo de data/hora</value>
   </data>
   <data name="Trace" xml:space="preserve">
     <value>Trace</value>
   </data>
   <data name="UnkownError" xml:space="preserve">
-    <value>Unkown error!</value>
+    <value>Erro desconhecido!</value>
   </data>
   <data name="UntrayBringWindowToFront" xml:space="preserve">
-    <value>Untray / Bring window to front</value>
+    <value>Trazer janela para a frente</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
   </data>
   <data name="UseCredentials" xml:space="preserve">
-    <value>Use credentials</value>
+    <value>Usar credenciais</value>
   </data>
   <data name="UseCurrentViewSize" xml:space="preserve">
-    <value>Use the current view size as the screen size</value>
+    <value>Usar tamanho de visualização atual como tamanho da tela</value>
   </data>
   <data name="UseCustomDNSServer" xml:space="preserve">
-    <value>Use custom DNS server</value>
+    <value>Usar servidor DNS personalizado</value>
   </data>
   <data name="UseCustomDNSSuffix" xml:space="preserve">
-    <value>Use custom DNS suffix</value>
+    <value>Usar sufixo DNS personalizado</value>
   </data>
   <data name="UseResolverCache" xml:space="preserve">
-    <value>Use resolver cache</value>
+    <value>Usar cache do resolvedor</value>
   </data>
   <data name="UserInterfaceLocked" xml:space="preserve">
-    <value>User interface locked!</value>
+    <value>Interface do usuário bloqueada!</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Username</value>
+    <value>Nome de usuário</value>
   </data>
   <data name="Vendor" xml:space="preserve">
-    <value>Vendor</value>
+    <value>Fornecedor</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Version</value>
+    <value>Versão</value>
   </data>
   <data name="VersionxxIsAvailable" xml:space="preserve">
-    <value>Version {0} is available!</value>
+    <value>Versão {0} disponível!</value>
   </data>
   <data name="WalkMode" xml:space="preserve">
-    <value>Walk mode</value>
+    <value>Modo de caminhada</value>
   </data>
   <data name="Width" xml:space="preserve">
-    <value>Width</value>
+    <value>Largura</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Credentials could not be decrypted with the given password.</value>
+    <value>Não foi possível descriptografar as credenciais com a senha fornecida.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
-    <value>The entered password is wrong.</value>
+    <value>A senha digitada está errada.</value>
   </data>
   <data name="AddDots" xml:space="preserve">
-    <value>Add...</value>
+    <value>Adicionar...</value>
   </data>
   <data name="AddEntryDots" xml:space="preserve">
-    <value>Add entry...</value>
+    <value>Adicionar entrada...</value>
   </data>
   <data name="Calculate" xml:space="preserve">
-    <value>Calculate</value>
+    <value>Calcular</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Cancelar</value>
   </data>
   <data name="Change" xml:space="preserve">
-    <value>Change</value>
+    <value>Alterar</value>
   </data>
   <data name="ChangeMasterPasswordDots" xml:space="preserve">
-    <value>Change Master Password...</value>
+    <value>Mudar Senha Mestre...</value>
   </data>
   <data name="Check" xml:space="preserve">
-    <value>Check</value>
+    <value>Verificar</value>
   </data>
   <data name="CheckForUpdates" xml:space="preserve">
     <value>Verificar atualizações</value>
   </data>
   <data name="Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>Fechado</value>
   </data>
   <data name="Continue" xml:space="preserve">
-    <value>Continue</value>
+    <value>Continuar</value>
   </data>
   <data name="CustomColon" xml:space="preserve">
-    <value>Custom:</value>
+    <value>Personalizado:</value>
   </data>
   <data name="Cut" xml:space="preserve">
-    <value>Cut</value>
+    <value>Recortar</value>
   </data>
   <data name="DecryptAndLoadDots" xml:space="preserve">
-    <value>Decrypt and load...</value>
+    <value>Descriptografar e carregar...</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Excluir</value>
   </data>
   <data name="DeleteTable" xml:space="preserve">
-    <value>Delete table</value>
+    <value>Excluir tabela</value>
   </data>
   <data name="EnterLocationDots" xml:space="preserve">
-    <value>Enter location...</value>
+    <value>Entre o local...</value>
   </data>
   <data name="Everything" xml:space="preserve">
-    <value>Everything</value>
+    <value>Tudo</value>
   </data>
   <data name="FilterDots" xml:space="preserve">
-    <value>Filter...</value>
+    <value>Filtro...</value>
   </data>
   <data name="FlushDNSCache" xml:space="preserve">
-    <value>Flush DNS cache</value>
+    <value>Limpar cache DNS</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
-    <value>Decrypt and load your credentials to select them.</value>
+    <value>Descriptografa e carrega suas credenciais para selecioná-las.</value>
   </data>
   <data name="HelpMessage_ParameterHelp" xml:space="preserve">
-    <value>Displays this dialog.</value>
+    <value>Mostra este diálogo.</value>
   </data>
   <data name="HelpMessage_ParameterResetSettings" xml:space="preserve">
-    <value>Resets all application settings.</value>
+    <value>Redefine todas as configurações do aplicativo.</value>
   </data>
   <data name="HelpMessage_PasswordNotDisplayedCanBeOverwritten" xml:space="preserve">
-    <value>The password is not displayed when editing, but can be overwritten.</value>
+    <value>A senha não é exibida durante a edição, mas pode ser substituída.</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0] If server authentication fails, connect to the computer without warning.
-[1] If server authentication fails, do not establish a connection.
-[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.
-[3] No authentication requirement is specified.</value>
+    <value>[0] Se a autenticação do servidor falhar, conectar ao computador sem avisos.
+[1] Se a autenticação do servidor falhar, não estabelecer uma conexão.
+[2] Se a autenticação do servidor falhar, mostrar aviso e permitir conectar ou recusar a conexão.
+[3] Nenhum requerimento de autenticação é especificado.</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
-    <value>Tags help you organize profiles/Profiles by topics/projects. Multiple tags can be used with ";" be separated. Search by tags with "tag=xxx".</value>
+    <value>As tags lhe ajudam a organizar perfis/Perfis por tópicos/projetos. Múltiplas tags podem ser usadas separadas com ";". Pesquise por tags com "tag=xxx".</value>
   </data>
   <data name="TimeUnit_Hour" xml:space="preserve">
-    <value>Hour(s)</value>
+    <value>hora(s)</value>
   </data>
   <data name="LocationOfTheImport" xml:space="preserve">
-    <value>Location of the import file...</value>
+    <value>Local do arquivo importado...</value>
   </data>
   <data name="TimeUnit_Minute" xml:space="preserve">
-    <value>Minute(s)</value>
+    <value>minuto(s)</value>
   </data>
   <data name="MoveAndRestart" xml:space="preserve">
-    <value>Move &amp; Restart</value>
+    <value>Mover &amp; Reiniciar</value>
   </data>
   <data name="NetworkConnectionsDots" xml:space="preserve">
-    <value>Network connections....</value>
+    <value>Conexões de rede...</value>
   </data>
   <data name="NotChanged" xml:space="preserve">
-    <value>(not changed)</value>
+    <value>(não alterado)</value>
   </data>
   <data name="Off" xml:space="preserve">
-    <value>Off</value>
+    <value>Desligado</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="On" xml:space="preserve">
-    <value>On</value>
+    <value>Ligado</value>
   </data>
   <data name="OpenLocation" xml:space="preserve">
-    <value>Open location</value>
+    <value>Abrir local</value>
   </data>
   <data name="OpenSettings" xml:space="preserve">
-    <value>Open settings</value>
+    <value>Abrir configurações</value>
   </data>
   <data name="Overwrite" xml:space="preserve">
-    <value>Overwrite</value>
+    <value>Substituir</value>
   </data>
   <data name="Paste" xml:space="preserve">
-    <value>Paste</value>
+    <value>Colar</value>
   </data>
   <data name="PuTTYLocationDots" xml:space="preserve">
-    <value>PuTTY location...</value>
+    <value>C:\Program Files\PuTTY\putty.exe</value>
   </data>
   <data name="Reconnect" xml:space="preserve">
-    <value>Reconnect</value>
+    <value>Reconectar</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Atualizar</value>
   </data>
   <data name="RestartNow" xml:space="preserve">
-    <value>Restart now</value>
+    <value>Reiniciar agora</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Salvar</value>
   </data>
   <data name="SearchDots" xml:space="preserve">
-    <value>Search...</value>
+    <value>Pesquisar...</value>
   </data>
   <data name="TimeUnit_Second" xml:space="preserve">
-    <value>Second(s)</value>
+    <value>segundo(s)</value>
   </data>
   <data name="Send" xml:space="preserve">
-    <value>Send</value>
+    <value>Enviar</value>
   </data>
   <data name="SetMasterPasswordDots" xml:space="preserve">
-    <value>Set Master Password...</value>
+    <value>Definir Senha Mestre...</value>
   </data>
   <data name="ShowLocalLicenses" xml:space="preserve">
-    <value>Show local licenses</value>
+    <value>Mostrar licenças locais</value>
   </data>
   <data name="SubnetCalculator" xml:space="preserve">
-    <value>Subnet Calculator</value>
+    <value>Calculadora de sub-rede</value>
   </data>
   <data name="Validate" xml:space="preserve">
-    <value>Validate</value>
+    <value>Validar</value>
   </data>
   <data name="Connections" xml:space="preserve">
-    <value>Connections</value>
+    <value>Conexões</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>Enter a valid ip range!</value>
+    <value>Entre um intervalo de IP válido!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
-    <value>Enter a valid IPv4 address!</value>
+    <value>Entre um endereço IPv4 válido!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Enter a valid MAC address (like 00:F1:23:AB:F2:35)!</value>
+    <value>Entre um endereço MAC válido (como 00:F1:23:AB:F2:35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
-    <value>Enter a valid port (1 - 65535)!</value>
+    <value>Entre uma porta válida (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Enter a valid subnetmask (like 255.255.255.0)!</value>
+    <value>Entre uma máscara de sub-rede válida (como 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Enter a valid subnetmask or CIDR (like 255.255.255.0 or /24)!</value>
+    <value>Digite uma sub-máscara de rede ou CIDR válido (como 255.255.255.0 ou /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
-    <value>Field cannot be empty!</value>
+    <value>O campo não pode estar vazio!</value>
   </data>
   <data name="FileDoesNotExist" xml:space="preserve">
-    <value>File does not exists!</value>
+    <value>O arquivo não existe!</value>
   </data>
   <data name="FolderDoesNotExist" xml:space="preserve">
     <value>Pasta não existe!</value>
   </data>
   <data name="Listeners" xml:space="preserve">
-    <value>Listeners</value>
+    <value>Escutas</value>
   </data>
   <data name="Amber" xml:space="preserve">
-    <value>Amber</value>
+    <value>Âmbar</value>
   </data>
   <data name="Appearance" xml:space="preserve">
     <value>Aparência</value>
   </data>
   <data name="Applications" xml:space="preserve">
-    <value>Applications</value>
+    <value>Aplicativos</value>
   </data>
   <data name="AppTheme_BaseDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Escuro</value>
   </data>
   <data name="AppTheme_BaseLight" xml:space="preserve">
-    <value>Light</value>
+    <value>Claro</value>
   </data>
   <data name="Black" xml:space="preserve">
-    <value>Black</value>
+    <value>Preto</value>
   </data>
   <data name="Blue" xml:space="preserve">
-    <value>Blue</value>
+    <value>Azu</value>
   </data>
   <data name="Brown" xml:space="preserve">
-    <value>Brown</value>
+    <value>Marrom</value>
   </data>
   <data name="Cobalt" xml:space="preserve">
-    <value>Cobalt</value>
+    <value>Cobalto</value>
   </data>
   <data name="Crimson" xml:space="preserve">
-    <value>Crimson</value>
+    <value>Carmesim</value>
   </data>
   <data name="Cyan" xml:space="preserve">
-    <value>Cyan</value>
+    <value>Ciano</value>
   </data>
   <data name="Emerald" xml:space="preserve">
-    <value>Emerald</value>
+    <value>Esmeralda</value>
   </data>
   <data name="EnterOneOrMoreValidIPAddresses" xml:space="preserve">
-    <value>Enter one or more valid IP addresses!</value>
+    <value>Digite um ou mais endereços IP válidos!</value>
   </data>
   <data name="EnterValidBaud" xml:space="preserve">
-    <value>Enter a valid baud!</value>
+    <value>Digite um baud válido!</value>
   </data>
   <data name="EnterValidHosts" xml:space="preserve">
-    <value>Enter valid hosts (multiple hosts can not end with ";")!</value>
+    <value>Digite hosts válidos (múltiplos hosts não podem terminar com ";")!</value>
   </data>
   <data name="EnterValidIPAddress" xml:space="preserve">
-    <value>Enter a valid IP address!</value>
+    <value>Digite um endereço de IP válido!</value>
   </data>
   <data name="EnterValidNumber" xml:space="preserve">
-    <value>Enter a valid number!</value>
+    <value>Entre um número válido!</value>
   </data>
   <data name="EnterValidOID" xml:space="preserve">
-    <value>Enter a valid OID!</value>
+    <value>Digite um OID válido!</value>
   </data>
   <data name="EnterValidPortOrPortRange" xml:space="preserve">
-    <value>Enter a valid port and/or port range (1 - 65535)!</value>
+    <value>Digite uma porta válida e/ou intervalo de portas (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Enter a valid subnet (like 192.168.178.133/26)!</value>
+    <value>Digite uma sub-rede válida (como 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Enter a valid website (like https://example.com/index.html)</value>
+    <value>Insira um site válido (como https://exemplo.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
-    <value>Green</value>
+    <value>Verde</value>
   </data>
   <data name="ImportExport" xml:space="preserve">
-    <value>Import / Export</value>
+    <value>Importar / Exportar</value>
   </data>
   <data name="Indigo" xml:space="preserve">
-    <value>Indigo</value>
+    <value>Índigo</value>
   </data>
   <data name="IPStatus_DestinationHostUnreachable" xml:space="preserve">
-    <value>Destination host unreachable.</value>
+    <value>Host de destino inacessível.</value>
   </data>
   <data name="IPStatus_DestinationNetworkUnreachable" xml:space="preserve">
-    <value>Destination network unreachable.</value>
+    <value>Rede de destino inacessível.</value>
   </data>
   <data name="IPStatus_DestinationPortUnreachable" xml:space="preserve">
-    <value>Destination port unreachable.</value>
+    <value>Porta de destino inacessível.</value>
   </data>
   <data name="IPStatus_Success" xml:space="preserve">
-    <value>Success</value>
+    <value>Sucesso</value>
   </data>
   <data name="IPStatus_TimedOut" xml:space="preserve">
-    <value>Request timed out.</value>
+    <value>O pedido expirou.</value>
   </data>
   <data name="IPStatus_TtlExpired" xml:space="preserve">
-    <value>TTL expired in transit.</value>
+    <value>TTL expirou em trânsito.</value>
   </data>
   <data name="KeyMustHave8CharactersOrMore" xml:space="preserve">
-    <value>Key must have 8 characters or more!</value>
+    <value>A chave deve ter 8 caracteres ou mais!</value>
   </data>
   <data name="Lime" xml:space="preserve">
-    <value>Lime</value>
+    <value>Lima</value>
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>Magenta</value>
   </data>
   <data name="Mauve" xml:space="preserve">
-    <value>Mauve</value>
+    <value>Roxo</value>
   </data>
   <data name="Olive" xml:space="preserve">
-    <value>Olive</value>
+    <value>Oliva</value>
   </data>
   <data name="OnlyNumbersCanBeEntered" xml:space="preserve">
-    <value>Only numbers can be entered!</value>
+    <value>Somente números podem ser inseridos!</value>
   </data>
   <data name="Orange" xml:space="preserve">
-    <value>Orange</value>
+    <value>Laranja</value>
   </data>
   <data name="Pink" xml:space="preserve">
-    <value>Pink</value>
+    <value>Rosa</value>
   </data>
   <data name="Purple" xml:space="preserve">
-    <value>Purple</value>
+    <value>Púrpura</value>
   </data>
   <data name="Red" xml:space="preserve">
-    <value>Red</value>
+    <value>Vermelho</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_AtClientWinsockFDCLOSE" xml:space="preserve">
-    <value>Socket closed.</value>
+    <value>Socket fechado.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ByServer" xml:space="preserve">
-    <value>Remote disconnect by server.</value>
+    <value>Desconexão remota por servidor.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ClientDecompressionError" xml:space="preserve">
-    <value>Decompression error.</value>
+    <value>Erro de descompressão.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ConnectionTimedOut" xml:space="preserve">
-    <value>Connection timed out.</value>
+    <value>A conexão expirou.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DecryptionError" xml:space="preserve">
-    <value>Decryption error.</value>
+    <value>Erro de descriptografia.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed" xml:space="preserve">
-    <value>DNS name lookup failure.</value>
+    <value>Falha na pesquisa de nome DNS.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_DNSLookupFailed2" xml:space="preserve">
-    <value>DNS lookup failed.</value>
+    <value>A pesquisa de DNS falhou.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_EncryptionError" xml:space="preserve">
-    <value>Encryption error.</value>
+    <value>Erro de criptografia.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_GetHostByNameFailed" xml:space="preserve">
-    <value>Windows Sockets gethostbyname call failed.</value>
+    <value>Falha na chamada gethostbyname do Windows Sockets.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_HostNotFound" xml:space="preserve">
-    <value>Host not found.</value>
+    <value>Host não encontrado.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalError" xml:space="preserve">
-    <value>Internal error.</value>
+    <value>Erro interno.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalSecurityError" xml:space="preserve">
-    <value>Internal security error.</value>
+    <value>Erro de segurança interno.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InternalSecurityError2" xml:space="preserve">
-    <value>Internal security error.</value>
+    <value>Erro de segurança interno.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidEncryption" xml:space="preserve">
     <value>O método de criptografia especificado não é válido.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidIP" xml:space="preserve">
-    <value>Bad IP address specified.</value>
+    <value>Endereço IP inválido especificado.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidIPAddr" xml:space="preserve">
-    <value>The IP address specified is not valid.</value>
+    <value>O endereço IP especificado não é válido.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidSecurityData" xml:space="preserve">
-    <value>Security data is not valid.</value>
+    <value>Os dados de segurança não são válidos.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_InvalidServerSecurityInfo" xml:space="preserve">
-    <value>Server security data is not valid.</value>
+    <value>Os dados de segurança do servidor não são válidos.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LicensingFailed" xml:space="preserve">
-    <value>License negotiation failed.</value>
+    <value>Falha na negociação da licença.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LicensingTimeout" xml:space="preserve">
-    <value>Licensing time-out.</value>
+    <value>Tempo limite do licenciamento.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_LocalNotError" xml:space="preserve">
-    <value>Local disconnection.</value>
+    <value>Desconexão local.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_NoInfo" xml:space="preserve">
-    <value>No information is available.</value>
+    <value>Nenhuma informação disponível</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory" xml:space="preserve">
-    <value>Out of memory.</value>
+    <value>Falta de memória.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory2" xml:space="preserve">
-    <value>Out of memory.</value>
+    <value>Falta de memória.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_OutOfMemory3" xml:space="preserve">
-    <value>Out of memory.</value>
+    <value>Falta de memória.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_RemoteByUser" xml:space="preserve">
-    <value>Remote disconnect by user.</value>
+    <value>Desconexão remota pelo usuário.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_ServerCertificateUnpackErr" xml:space="preserve">
-    <value>Failed to unpack server certificate.</value>
+    <value>Falha ao descompactar certificado do servidor.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SocketConnectFailed" xml:space="preserve">
-    <value>Windows Sockets connect failed.</value>
+    <value>Falha na conexão do Windows Sockets.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SocketRecvFailed" xml:space="preserve">
-    <value>Windows Sockets recv call failed.</value>
+    <value>Falha na chamada de recv dos soquetes do Windows.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountDisabled" xml:space="preserve">
-    <value>The account is disabled.</value>
+    <value>A conta está desabilitada.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountExpired" xml:space="preserve">
-    <value>The account is expired.</value>
+    <value>A conta está expirada.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountLockedOut" xml:space="preserve">
-    <value>The account is locked out.</value>
+    <value>A conta está bloqueada.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrAccountRestriction" xml:space="preserve">
-    <value>The account is restricted.</value>
+    <value>A conta é restrita.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrCertExpired" xml:space="preserve">
-    <value>The received certificate is expired.</value>
+    <value>O certificado recebido está expirado.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrDelegationPolicy" xml:space="preserve">
-    <value>The policy does not support delegation of credentials to the target server.</value>
+    <value>A política não suporta delegação de credenciais no servidor de destino.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer" xml:space="preserve">
-    <value>The server authentication policy does not allow connection requests using saved credentials. The user must enter new credentials.</value>
+    <value>A política de autenticação do servidor não permite solicitações de conexão usando credenciais salvas. O usuário deve inserir novas credenciais.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrLogonFailure" xml:space="preserve">
-    <value>Login failed.</value>
+    <value>Falha no login.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoAuthenticatingAuthority" xml:space="preserve">
-    <value>No authority could be contacted for authentication. The domain name of the authenticating party could be wrong, the domain could be unreachable, or there might have been a trust relationship failure.</value>
+    <value>Nenhuma autoridade pôde ser contatada para autenticação. O nome de domínio da parte autenticada pode estar errado, o domínio pode estar inacessível ou pode ter havido uma falha na relação de confiança.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrNoSuchUser" xml:space="preserve">
-    <value>The specified user has no account.</value>
+    <value>O usuário especificado não possui conta.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPasswordExpired" xml:space="preserve">
-    <value>The password is expired.</value>
+    <value>A senha expirou.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPasswordMustChange" xml:space="preserve">
-    <value>The user password must be changed before logging on for the first time.</value>
+    <value>A senha do usuário deve ser alterada antes de efetuar o logon pela primeira vez.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrPolicyNTLMOnly" xml:space="preserve">
-    <value>Delegation of credentials to the target server is not allowed unless mutual authentication has been achieved.</value>
+    <value>A delegação de credenciais ao servidor de destino não é permitida, a menos que a autenticação mútua tenha sido alcançada.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked" xml:space="preserve">
-    <value>The smart card is blocked.</value>
+    <value>O cartão inteligente está bloqueado.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrSmartcardWrongPIN" xml:space="preserve">
-    <value>An incorrect PIN was presented to the smart card.</value>
+    <value>Um PIN incorreto foi apresentado ao cartão inteligente.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TimeoutOccurred" xml:space="preserve">
-    <value>Timeout occurred.</value>
+    <value>Ocorreu o tempo limite.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TimerError" xml:space="preserve">
-    <value>Internal timer error.</value>
+    <value>Erro interno do temporizador.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_WinsockSendFailed" xml:space="preserve">
-    <value>Windows Sockets send call failed.</value>
+    <value>Falha no envio de chamada do Windows Sockets.</value>
   </data>
   <data name="Sienna" xml:space="preserve">
     <value>Sienna</value>
   </data>
   <data name="SpacesAreNotAllowed" xml:space="preserve">
-    <value>Spaces are not allowed!</value>
+    <value>Espaços não são permitidos.</value>
   </data>
   <data name="Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>Aço</value>
   </data>
   <data name="Taupe" xml:space="preserve">
     <value>Taupe</value>
   </data>
   <data name="TcpState_Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>Fechado</value>
   </data>
   <data name="TcpState_CloseWait" xml:space="preserve">
     <value>CloseWait</value>
   </data>
   <data name="TcpState_Closing" xml:space="preserve">
-    <value>Closing</value>
+    <value>Fechando</value>
   </data>
   <data name="TcpState_DeleteTcb" xml:space="preserve">
     <value>DeleteTcb</value>
   </data>
   <data name="TcpState_Established" xml:space="preserve">
-    <value>Established</value>
+    <value>Estabelecida</value>
   </data>
   <data name="TcpState_FinWait1" xml:space="preserve">
     <value>FinWait1</value>
@@ -1739,7 +1739,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>LastAck</value>
   </data>
   <data name="TcpState_Listen" xml:space="preserve">
-    <value>Listen</value>
+    <value>Escutando</value>
   </data>
   <data name="TcpState_SynReceived" xml:space="preserve">
     <value>SynReceived</value>
@@ -1751,91 +1751,91 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>TimeWait</value>
   </data>
   <data name="TcpState_Unknown" xml:space="preserve">
-    <value>Unkown</value>
+    <value>Desconhecido</value>
   </data>
   <data name="Teal" xml:space="preserve">
-    <value>Teal</value>
+    <value>Verde Azulado</value>
   </data>
   <data name="Violet" xml:space="preserve">
-    <value>Violet</value>
+    <value>Violeta</value>
   </data>
   <data name="White" xml:space="preserve">
-    <value>White</value>
+    <value>Branco</value>
   </data>
   <data name="Yellow" xml:space="preserve">
-    <value>Yellow</value>
+    <value>Amarelo</value>
   </data>
   <data name="EnterValidValueBetween25and100" xml:space="preserve">
-    <value>Enter a valid value between 25 and 100!</value>
+    <value>Entre um valor válido entre 25 e 100!</value>
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
-    <value>A profile with this name already exists!</value>
+    <value>Um perfil com este nome já existe!</value>
   </data>
   <data name="CredentialWithThisNameAlreadyExists" xml:space="preserve">
-    <value>A Credential with this name already exists!</value>
+    <value>Uma Credencial com este nome já existe!</value>
   </data>
   <data name="PortState_Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>Fechado</value>
   </data>
   <data name="PortState_Open" xml:space="preserve">
-    <value>Open</value>
+    <value>Abrir</value>
   </data>
   <data name="AtLeastOneApplicationMustBeVisible" xml:space="preserve">
-    <value>At least one application must be visible!</value>
+    <value>Pelo menos um aplicativo deve ser visível!</value>
   </data>
   <data name="HiddenApplications" xml:space="preserve">
-    <value>Hidden applications</value>
+    <value>Aplicativos ocultos</value>
   </data>
   <data name="VisibleApplications" xml:space="preserve">
-    <value>Visible applications</value>
+    <value>Aplicativos visíveis</value>
   </data>
   <data name="VisibleApplicationsInTheBar" xml:space="preserve">
-    <value>Visible applications in the bar:</value>
+    <value>Aplicativos visíveis na barra:</value>
   </data>
   <data name="Whois" xml:space="preserve">
     <value>Whois</value>
   </data>
   <data name="AddATabToQueryWhois" xml:space="preserve">
-    <value>Add a tab to query whois...</value>
+    <value>Adicionar aba para consultar whois...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>Enter a valid domain (like "example.com")!</value>
+    <value>Entre um domínio válido (como "exemplo.com")!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
-    <value>Whois server not found for the domain: "{0}"</value>
+    <value>Servidor whois não encontrado para o domínio: "{0}"</value>
   </data>
   <data name="Routing" xml:space="preserve">
-    <value>Routing</value>
+    <value>Roteamento</value>
   </data>
   <data name="Release" xml:space="preserve">
-    <value>Release</value>
+    <value>Liberar</value>
   </data>
   <data name="ReleaseRenew" xml:space="preserve">
-    <value>Release &amp; Renew</value>
+    <value>Liberar &amp; Renovar</value>
   </data>
   <data name="Renew" xml:space="preserve">
-    <value>Renew</value>
+    <value>Renovar</value>
   </data>
   <data name="WindowsDNSSettings" xml:space="preserve">
-    <value>Windows DNS settings</value>
+    <value>Configuraçõe de DNS do WIndows</value>
   </data>
   <data name="DeleteDNSServer" xml:space="preserve">
-    <value>Delete DNS server</value>
+    <value>Excluir servidor DNS</value>
   </data>
   <data name="DeleteDNSServerMessage" xml:space="preserve">
-    <value>The selected DNS server will be deleted permanently.</value>
+    <value>O servidor DNS selecionado será excluído permanentemente.</value>
   </data>
   <data name="AddDNSServer" xml:space="preserve">
-    <value>Add DNS server</value>
+    <value>Adicionar servidor DNS</value>
   </data>
   <data name="EditDNSServer" xml:space="preserve">
-    <value>Edit DNS server</value>
+    <value>Editar servidor DNS</value>
   </data>
   <data name="DNSServerWithThisNameAlreadyExists" xml:space="preserve">
-    <value>A DNS server with this name already exists!</value>
+    <value>Um servidor DNS com este nome já existe!</value>
   </data>
   <data name="RestartSession" xml:space="preserve">
-    <value>Restart session</value>
+    <value>Reiniciar sessão</value>
   </data>
   <data name="TigerVNC" xml:space="preserve">
     <value>TigerVNC</value>
@@ -1844,76 +1844,76 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Configure o caminho para o TigerVNC nas configurações ...</value>
   </data>
   <data name="TigerVNCLocationDots" xml:space="preserve">
-    <value>TigerVNC location...</value>
+    <value>Local do TigerVNC...</value>
   </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
-    <value>TigerVNC process has ended!</value>
+    <value>Processo TigerVNC foi finalizado!</value>
   </data>
   <data name="ConnectingDots" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Conectando...</value>
   </data>
   <data name="ResolveMACAddressAndVendor" xml:space="preserve">
-    <value>Resolve MAC address and vendor</value>
+    <value>Resolver endereço MAC e fornecedor</value>
   </data>
   <data name="Note" xml:space="preserve">
-    <value>Note</value>
+    <value>Nota</value>
   </data>
   <data name="ExportAll" xml:space="preserve">
-    <value>Export all</value>
+    <value>Exportar tudo</value>
   </data>
   <data name="ExportDots" xml:space="preserve">
-    <value>Export...</value>
+    <value>Exportar...</value>
   </data>
   <data name="ExportSelected" xml:space="preserve">
-    <value>Export selected</value>
+    <value>Exportar selecionados</value>
   </data>
   <data name="LocationDots" xml:space="preserve">
-    <value>Location...</value>
+    <value>Local...</value>
   </data>
   <data name="File" xml:space="preserve">
-    <value>File</value>
+    <value>Arquivo</value>
   </data>
   <data name="EnterValidFilePath" xml:space="preserve">
-    <value>Enter a valid file path!</value>
+    <value>Entre o caminho válido do arquivo!</value>
   </data>
   <data name="All" xml:space="preserve">
-    <value>All</value>
+    <value>Tudo</value>
   </data>
   <data name="Format" xml:space="preserve">
-    <value>Format</value>
+    <value>Formato</value>
   </data>
   <data name="Selected" xml:space="preserve">
-    <value>Selected</value>
+    <value>Selecionados</value>
   </data>
   <data name="AnErrorOccurredWhileExportingTheData" xml:space="preserve">
-    <value>An error occurred while exporting the data. See error message for details:</value>
+    <value>Ocorreu um erro ao exportar os dados. Veja a mensagem de erro para detalhes:</value>
   </data>
   <data name="Design" xml:space="preserve">
     <value>Design</value>
   </data>
   <data name="HighlightTimeouts" xml:space="preserve">
-    <value>Highlight timeouts</value>
+    <value>Realçar tempos limite</value>
   </data>
   <data name="EnterSubnetsToCreateAWideSubnet" xml:space="preserve">
-    <value>Enter subnets to create a wide subnet...</value>
+    <value>Insira sub-redes para criar uma ampla sub-rede...</value>
   </data>
   <data name="WideSubnet" xml:space="preserve">
-    <value>Wide Subnet</value>
+    <value>Sub-rede Ampla</value>
   </data>
   <data name="AddTabDots" xml:space="preserve">
-    <value>Add tab...</value>
+    <value>Adicionar aba...</value>
   </data>
   <data name="AddIPv4AddressDots" xml:space="preserve">
-    <value>Add IPv4 address...</value>
+    <value>Adicionar endereço IPv4... </value>
   </data>
   <data name="AddIPv4Address" xml:space="preserve">
-    <value>Add IPv4 address</value>
+    <value>Adicionar endereço IPv4</value>
   </data>
   <data name="HostThreads" xml:space="preserve">
-    <value>Host threads</value>
+    <value>Segmentos do host</value>
   </data>
   <data name="PortThreads" xml:space="preserve">
-    <value>Port threads</value>
+    <value>Segmento de porta</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -1922,28 +1922,28 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Configure o caminho para o PowerShell nas configurações ...</value>
   </data>
   <data name="PowerShellProcessHasEnded" xml:space="preserve">
-    <value>PowerShell process has ended!</value>
+    <value>Processo do Powershell foi finalizado!</value>
   </data>
   <data name="ExecutionPolicy" xml:space="preserve">
-    <value>Execution Policy</value>
+    <value>Política de Execução</value>
   </data>
   <data name="RemoteConsole" xml:space="preserve">
-    <value>Remote console</value>
+    <value>Console remoto</value>
   </data>
   <data name="PowerShellLocationDots" xml:space="preserve">
-    <value>PowerShell location...</value>
+    <value>Local do PowerShell...</value>
   </data>
   <data name="FilePath" xml:space="preserve">
-    <value>File path</value>
+    <value>Caminho do arquivo</value>
   </data>
   <data name="OverrideDefaultSettings" xml:space="preserve">
-    <value>Override default settings</value>
+    <value>Substituir configurações padrão</value>
   </data>
   <data name="ResolveIPv4AddressForThisHost" xml:space="preserve">
-    <value>Resolve IPv4 address for this host</value>
+    <value>Resolver endereço IPv4 para este host</value>
   </data>
   <data name="Hide" xml:space="preserve">
-    <value>Hide</value>
+    <value>Ocultar</value>
   </data>
   <data name="TotalBytesReceived" xml:space="preserve">
     <value>Total de bytes recebidos</value>
@@ -1961,83 +1961,83 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Upload</value>
   </data>
   <data name="ApplyWindowsKeyCombinations" xml:space="preserve">
-    <value>Apply Windows key combinations</value>
+    <value>Aplicar combinação de teclas do Windows</value>
   </data>
   <data name="CredentialSecuritySupportProvider" xml:space="preserve">
-    <value>Credential Security Support Provider</value>
+    <value>Provedor de Suporte à Segurança de Credenciais</value>
   </data>
   <data name="BackgroundJob" xml:space="preserve">
-    <value>Background job</value>
+    <value>Tarefa em segundo plano</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>The background job will save settings, profiles and credentials every x-minutes.
+    <value>A tarefa em segundo plano irá salvar configurações, perfis e credenciais a cada x minutos.
 
-Value 0 will disable this feature.
+Valor 0 desabilita este recurso.
 
-Changing this value requires a restart of the application to take effect.</value>
+Alterar esse valor requer uma reinicialização do aplicativo para entrar em vigor.</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
-    <value>Run background job every x-minute</value>
+    <value>Executar tarefa em segundo plano a cada x minuto(s)</value>
   </data>
   <data name="YourSystemOSIsIncompatibleWithTheLatestRelease" xml:space="preserve">
     <value>Seu sistema operacional é incompatível com a versão mais recente!</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
+    <value>Painel de Controle</value>
   </data>
   <data name="AllSettingsCanBeChangedLaterInTheSettings" xml:space="preserve">
-    <value>All settings can be changed later in the settings</value>
+    <value>Todas as configurações podem ser alteradas mais tarde nas Configurações</value>
   </data>
   <data name="CheckPublicIPAddress" xml:space="preserve">
-    <value>Check public IP address</value>
+    <value>Verificar endereço de IP público</value>
   </data>
   <data name="FirstRunMessage" xml:space="preserve">
-    <value>Thanks for using NETworkManager!
+    <value>Obrigado por usar o NETworkManager!
 
-To provide additional features the application uses services on the Internet that are not operated by me. No data will be sent to me at any time.</value>
+Para fornecer recursos adicionais, o aplicativo usa serviços na Internet que não são operados por mim. Nenhum dado será enviado a mim a qualquer momento.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>When starting the program, it checks in the background whether a new program version is available on GitHub.
+    <value>Ao iniciar o programa, ele verifica em segundo plano se uma nova versão do programa está disponível no GitHub.
 
 URL: https://api.github.com/</value>
   </data>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
-    <value>The public IP address is determined via ipify.org.
+    <value>O endereço IP público é determinado via ipify.org.
 
 URL: https://api.ipify.org/</value>
   </data>
   <data name="Privacy" xml:space="preserve">
-    <value>Privacy</value>
+    <value>Privacidade</value>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Welcome</value>
+    <value>Bem-vindo</value>
   </data>
   <data name="ExternalServices" xml:space="preserve">
-    <value>External services</value>
+    <value>Serviços externos</value>
   </data>
   <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
-    <value>Star/Fork the Project on GitHub.
+    <value>Star/Fork Projeto no GitHub.
 
 URL: https://github.com/BornToBeRoot/NETworkManager/</value>
   </data>
   <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value>Help translate the project on Transifex.
+    <value>Ajude a traduzir o projeto no Transifex.
 
 URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
   </data>
   <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
-    <value>Contact via Twitter.
+    <value>Contato via Twitter.
 
 URL: https://twitter.com/BornToBeRoot_DE</value>
   </data>
   <data name="Connection" xml:space="preserve">
-    <value>Connection</value>
+    <value>Conexão</value>
   </data>
   <data name="Computer" xml:space="preserve">
     <value>Computador</value>
   </data>
   <data name="GatewayRouter" xml:space="preserve">
-    <value>Gateway / Router</value>
+    <value>Gateway / Roteador</value>
   </data>
   <data name="Internet" xml:space="preserve">
     <value>Internet</value>
@@ -2046,7 +2046,7 @@ URL: https://twitter.com/BornToBeRoot_DE</value>
     <value>Verifique a configuração do adaptador de rede (dns) e se o servidor dns está configurado corretamente.</value>
   </data>
   <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
-    <value>Check your network adapter configuration (dhcp, static ip) and if you are connected to a network.</value>
+    <value>Verifica a configuração do adaptador de rede (DHCP, IP estático) e se você está conectado em uma rede.</value>
   </data>
   <data name="ConnectionState_Error" xml:space="preserve">
     <value>Error</value>
@@ -2055,260 +2055,260 @@ URL: https://twitter.com/BornToBeRoot_DE</value>
     <value>OK</value>
   </data>
   <data name="ConnectionState_Warning" xml:space="preserve">
-    <value>Warning</value>
+    <value>Aviso</value>
   </data>
   <data name="CouldNotDetectGatewayIPAddressMessage" xml:space="preserve">
-    <value>Could not detect gateway ip address!</value>
+    <value>Não foi possível detectar o endereço IP do gateway!</value>
   </data>
   <data name="CouldNotDetectLocalIPAddressMessage" xml:space="preserve">
-    <value>Could not detect local ip address!</value>
+    <value>Não foi possível detectar o endereço IP local!</value>
   </data>
   <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>Could not get public ip address via WebRequest (http/https) from "{0}"! Check your network connection (firewall, proxy, etc.).</value>
+    <value>Não foi possível obter o endereço IP público via WebRequest (http/https) de "{0}"! Verifique sua conexão de rede (firewall, proxy, etc.).</value>
   </data>
   <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
-    <value>No A dns records resolved for "{0}"!</value>
+    <value>Nenhum registro DNS A resolvido para "{0}"!</value>
   </data>
   <data name="NoPTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
-    <value>No PTR dns record resolved for "{0}"!</value>
+    <value>Nenhum registro DNS PTR resolvido para "{0}"!</value>
   </data>
   <data name="XADNSRecordsResolvedForXXXMessage" xml:space="preserve">
-    <value>"{0}" A dns records resolved for "{1}"!</value>
+    <value>"{0}" registros DNS A resolvidos para "{1}"!</value>
   </data>
   <data name="PTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
-    <value>PTR dns record resolved for "{0}"!</value>
+    <value>Registro DNS PTR resolvido para "{0}"!</value>
   </data>
   <data name="GotXXXAsPublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>Got "{0}" as public ip address from "{1}"!</value>
+    <value>Obtido "{0}" como endereço de IP público de "{1}"!</value>
   </data>
   <data name="ResolvedXXXAsHostnameForIPAddressXXXMessage" xml:space="preserve">
-    <value>Resolved "{0}" as hostname for ip address "{1}"!</value>
+    <value>"{0}" resolvido como nome do host para o endereço de IP "{1}"!</value>
   </data>
   <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
-    <value>Public IP address check
-is disabled!</value>
+    <value>Verificação de endereço de IP
+público está desabilitada!</value>
   </data>
   <data name="TCPIPStackIsAvailableMessage" xml:space="preserve">
-    <value>TCP/IP stack is available. "{0}" is reachable via ICMP!</value>
+    <value>A pilha TCP/IP está disponível. "{0}" está acessível via ICMP!</value>
   </data>
   <data name="TCPIPStackIsNotAvailableMessage" xml:space="preserve">
-    <value>TCP/IP stack is not available... "{0}" is not reachable via ICMP!</value>
+    <value>A pilha TCP/IP não está disponível. "{0}" não está acessível via ICMP!</value>
   </data>
   <data name="XXXDetectedAsGatewayIPAddress" xml:space="preserve">
-    <value>"{0}" detected as gateway ip address!</value>
+    <value>"{0}" detectado como endereço IP do gateway!</value>
   </data>
   <data name="XXXDetectedAsLocalIPAddressMessage" xml:space="preserve">
-    <value>"{0}" detected as local ip address!</value>
+    <value>"{0}" detectado como endereço IP local!</value>
   </data>
   <data name="XXXIsNotReachableViaICMPMessage" xml:space="preserve">
-    <value>"{0}" is not reachable via ICMP!</value>
+    <value>"{0}" não está acessível via ICMP!</value>
   </data>
   <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
-    <value>"{0}" is reachable via ICMP!</value>
+    <value>"{0}" está acessível via ICMP!</value>
   </data>
   <data name="UseCustomAPI" xml:space="preserve">
-    <value>Use custom API</value>
+    <value>Usar API personalizada</value>
   </data>
   <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IP address as response.</value>
+    <value>URL para um serviço da web que pode ser acessado via http ou https e retorna um endereço IP como resposta.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>Could not parse public ip address from "{0}"! Try another service or use the default... </value>
+    <value>Não foi possível analisar o endereço IP público de "{0}"! Tente outro serviço ou use o padrão...</value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
-    <value>Could not connect to "{0}"!</value>
+    <value>Não foi possível conectar-se a "{0}"!</value>
   </data>
   <data name="PublicDNSTestDomain" xml:space="preserve">
-    <value>Public DNS test domain</value>
+    <value>Domínio de teste de DNS público</value>
   </data>
   <data name="PublicDNSTestIPAddress" xml:space="preserve">
-    <value>Public DNS test IP address</value>
+    <value>Endereço IP de teste de DNS público</value>
   </data>
   <data name="PublicICMPTestIPAddress" xml:space="preserve">
-    <value>Public ICMP test IP address</value>
+    <value>Endereço IP de teste público do ICMP</value>
   </data>
   <data name="IPv4ProtocolAvailable" xml:space="preserve">
-    <value>IPv4 protocol available</value>
+    <value>Protocolo IPv4 disponível</value>
   </data>
   <data name="IPv6ProtocolAvailable" xml:space="preserve">
-    <value>IPv6 protocol available</value>
+    <value>Protocolo IPv6 disponível</value>
   </data>
   <data name="CopyNoun" xml:space="preserve">
-    <value>Copy</value>
+    <value>Copiar</value>
   </data>
   <data name="Official" xml:space="preserve">
-    <value>Official</value>
+    <value>Oficial</value>
   </data>
   <data name="HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Help translate on transifex</value>
+    <value>Ajude a traduzir no Transifex</value>
   </data>
   <data name="NetworkConnectionType" xml:space="preserve">
-    <value>Network connection type</value>
+    <value>Tipo de conexão de rede</value>
   </data>
   <data name="DesktopBackground" xml:space="preserve">
-    <value>Desktop background</value>
+    <value>Fundo da Área de Trabalho</value>
   </data>
   <data name="DesktopComposition" xml:space="preserve">
-    <value>Desktop composition</value>
+    <value>Composição da Área de Trabalho</value>
   </data>
   <data name="Experience" xml:space="preserve">
-    <value>Experience</value>
+    <value>Experiência</value>
   </data>
   <data name="FontSmoothing" xml:space="preserve">
-    <value>Font smoothing</value>
+    <value>Suavização de fonte</value>
   </data>
   <data name="MenuAndWindowAnimation" xml:space="preserve">
-    <value>Menu and window animation</value>
+    <value>Animação do menu e da janela</value>
   </data>
   <data name="Performance" xml:space="preserve">
-    <value>Performance</value>
+    <value>Desempenho</value>
   </data>
   <data name="PersistentBitmapCaching" xml:space="preserve">
-    <value>Persistent bitmap caching</value>
+    <value>Cache de bitmap persistente</value>
   </data>
   <data name="ReconnectIfTheConnectionIsDropped" xml:space="preserve">
-    <value>Reconnect if the connection is dropped</value>
+    <value>Reconectar se a conexão cair</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_BroadbandHigh" xml:space="preserve">
-    <value>High-speed broadband (2 Mbps - 10 Mbps)</value>
+    <value>Banda larga de alta velocidade (2 Mbps - 10 Mbps)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_BroadbandLow" xml:space="preserve">
-    <value>Low-speed broadband (256 kbps - 2 Mbps)</value>
+    <value>Banda larga de baixa velocidade (256 kbps - 2 Mbps)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_DetectAutomatically" xml:space="preserve">
-    <value>Detect connection quality automatically</value>
+    <value>Detectar qualidade da conexão automaticamente</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_LAN" xml:space="preserve">
-    <value>LAN (10 Mbps or higher)</value>
+    <value>LAN (10 Mbps ou superior)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_Modem" xml:space="preserve">
     <value>Modem (56 kbps)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_Satellite" xml:space="preserve">
-    <value>Satellite (2 Mbps - 16 Mbps with high latency)</value>
+    <value>Satélite (2 Mbps - 16 Mbps com latência alta)</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_WAN" xml:space="preserve">
-    <value>WAN (10 Mbps or higher with high latency)</value>
+    <value>WAN (10 Mbps or superior com latência alta)</value>
   </data>
   <data name="ShowWindowContentsWhileDragging" xml:space="preserve">
-    <value>Show window contents while dragging</value>
+    <value>Mostrar conteúdo da janela ao arrastar</value>
   </data>
   <data name="VisualStyles" xml:space="preserve">
-    <value>Visual styles</value>
+    <value>Estilos visuais</value>
   </data>
   <data name="RemoteAudio" xml:space="preserve">
-    <value>Remote audio</value>
+    <value>Áudio remoto</value>
   </data>
   <data name="RemoteAudioPlayback" xml:space="preserve">
-    <value>Remote audio playback</value>
+    <value>Reprodução de áudio remoto</value>
   </data>
   <data name="RemoteAudioRecording" xml:space="preserve">
-    <value>Remote audio recording</value>
+    <value>Gravação de áudio remoto</value>
   </data>
   <data name="RemoteDesktopAudioCaptureRedirectionMode_DoNotRecord" xml:space="preserve">
-    <value>Do not record</value>
+    <value>Não gravar</value>
   </data>
   <data name="RemoteDesktopAudioCaptureRedirectionMode_RecordFromThisComputer" xml:space="preserve">
-    <value>Record from this computer</value>
+    <value>Gravar deste computador</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_DoNotPlay" xml:space="preserve">
-    <value>Do not play</value>
+    <value>Não reproduzir</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnRemoteComputer" xml:space="preserve">
-    <value>Play on remote computer</value>
+    <value>Reproduzir no computador remoto</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
-    <value>Play on this computer</value>
+    <value>Reproduzir neste computador</value>
   </data>
   <data name="HelpMessage_PublicDNSTestDomain" xml:space="preserve">
-    <value>Domain to test dns server settings (Domain must resolve A or AAAA record).</value>
+    <value>Domínio para testar as configurações do servidor DNS (o domínio deve resolver o registro A ou AAAA).</value>
   </data>
   <data name="HelpMessage_PublicDNSTestIPAddress" xml:space="preserve">
-    <value>IP address to test dns server settings (IP address must resolve PTR record).</value>
+    <value>Endereço IP para testar as configurações do servidor DNS (o endereço IP deve resolver o registro PTR).</value>
   </data>
   <data name="HelpMessage_PublicICMPTestIPAddress" xml:space="preserve">
-    <value>IP address to test connection via ping (ICMP).</value>
+    <value>Endereço IP para testar a conexão via ping (ICMP).</value>
   </data>
   <data name="Gateway" xml:space="preserve">
     <value>Gateway</value>
   </data>
   <data name="CustomCommands" xml:space="preserve">
-    <value>Custom commands</value>
+    <value>Comandos personalizados</value>
   </data>
   <data name="AddCustomCommand" xml:space="preserve">
-    <value>Add custom command</value>
+    <value>Adicionar comando personalizado</value>
   </data>
   <data name="Arguments" xml:space="preserve">
-    <value>Arguments</value>
+    <value>Argumentos</value>
   </data>
   <data name="DeleteCustomCommand" xml:space="preserve">
-    <value>Delete custom command</value>
+    <value>Excluir comando personalizado</value>
   </data>
   <data name="EditCustomCommand" xml:space="preserve">
-    <value>Edit custom command</value>
+    <value>Editar comando personalizado</value>
   </data>
   <data name="Program" xml:space="preserve">
-    <value>Program</value>
+    <value>Programa</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
-    <value>The selected custom command will be deleted permanently.</value>
+    <value>O comando personalizado selecionado será excluído permanentemente.</value>
   </data>
   <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
-    <value>The following variables are available:
+    <value>As seguintes variáveis estão disponíveis:
 
-$$ipaddress$$	--&gt;	IP adresse
-$$hostname$$	--&gt;	Hostname</value>
+$$ipaddress$$--&gt;Endereço IP
+$$hostname$$--&gt;Nome do host</value>
   </data>
   <data name="Restart" xml:space="preserve">
-    <value>Restart</value>
+    <value>Reiniciar</value>
   </data>
   <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
-    <value>Could not resolve ip address for hostname!</value>
+    <value>Não foi possível resolver o endereço IP do nome do host!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
-    <value>Keyboard shortcuts</value>
+    <value>Atalhos de teclado</value>
   </data>
   <data name="AdjustScreen" xml:space="preserve">
-    <value>Adjust screen</value>
+    <value>Ajustar tela</value>
   </data>
   <data name="Fullscreen" xml:space="preserve">
-    <value>Fullscreen</value>
+    <value>Tela cheia</value>
   </data>
   <data name="CouldNotSendKeystroke" xml:space="preserve">
-    <value>Could not send keystroke!</value>
+    <value>Não foi possível enviar pressionamento de tecla!</value>
   </data>
   <data name="Disconnect" xml:space="preserve">
-    <value>Disconnect</value>
+    <value>Desconectar</value>
   </data>
   <data name="DetectLocalIPAddressAndSubnetmask" xml:space="preserve">
-    <value>Detect local ip address and subnetmask</value>
+    <value>Detectar endereço IP local e máscara de sub-rede</value>
   </data>
   <data name="CouldNotDetectSubnetmask" xml:space="preserve">
-    <value>Could not detect subnetmask!</value>
+    <value>Não foi possível detectar a máscara de sub-rede!</value>
   </data>
   <data name="DetectingNetworkDots" xml:space="preserve">
-    <value>Detecting  network...</value>
+    <value>Detectando rede...</value>
   </data>
   <data name="ClosingInXSecondsDots" xml:space="preserve">
-    <value>Closing in {0} seconds...</value>
+    <value>Fechando em {0} segundos...</value>
   </data>
   <data name="NetworkUnavailable" xml:space="preserve">
-    <value>Network unavailable!</value>
+    <value>Rede indisponível!</value>
   </data>
   <data name="IPAddressToDetectLocalIPAddressBasedOnRouting" xml:space="preserve">
-    <value>IP address to detect local ip address based on routing</value>
+    <value>Endereço IP para detectar o endereço IP local com base no roteamento</value>
   </data>
   <data name="ShowStatusWindowOnNetworkChange" xml:space="preserve">
-    <value>Show status window on network change</value>
+    <value>Mostrar janela de status ao alterar rede</value>
   </data>
   <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
-    <value>Time in seconds how long the window should be displayed</value>
+    <value>Tempo em segundos de quanto tempo a janela deve ser exibida</value>
   </data>
   <data name="WiFi" xml:space="preserve">
-    <value>WiFi</value>
+    <value>Wi-Fi</value>
   </data>
   <data name="Networks" xml:space="preserve">
     <value>Redes</value>
@@ -2317,19 +2317,19 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Procurando redes...</value>
   </data>
   <data name="NoWiFiAdaptersFound" xml:space="preserve">
-    <value>No WiFi adapters found!</value>
+    <value>Nenhum adaptador Wi-Fi encontrado!</value>
   </data>
   <data name="SearchingWiFiAdaptersDots" xml:space="preserve">
-    <value>Searching for WiFi adapters...</value>
+    <value>Procurando adaptadores Wi-Fi!</value>
   </data>
   <data name="NoWiFiNetworksFound" xml:space="preserve">
     <value>Nenhuma rede WiFi encontrada!</value>
   </data>
   <data name="Channels" xml:space="preserve">
-    <value>Channels</value>
+    <value>Canais</value>
   </data>
   <data name="Channel" xml:space="preserve">
-    <value>Channel</value>
+    <value>Canal</value>
   </data>
   <data name="GHz2dot4" xml:space="preserve">
     <value>2.4 GHz</value>
@@ -2338,7 +2338,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>5 GHz</value>
   </data>
   <data name="SignalStrength" xml:space="preserve">
-    <value>Signal strength</value>
+    <value>Potência do sinal</value>
   </data>
   <data name="CurrentDownloadSpeed" xml:space="preserve">
     <value>Velocidade atual de download</value>
@@ -2353,149 +2353,149 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Uso de rede</value>
   </data>
   <data name="TotalDownload" xml:space="preserve">
-    <value>Total download</value>
+    <value>Download total</value>
   </data>
   <data name="TotalUpload" xml:space="preserve">
-    <value>Total upload</value>
+    <value>Upload total</value>
   </data>
   <data name="Retries" xml:space="preserve">
-    <value>Retries</value>
+    <value>Tentativas</value>
   </data>
   <data name="UseCache" xml:space="preserve">
-    <value>Use cache</value>
+    <value>Usar cache</value>
   </data>
   <data name="UseOnlyTCP" xml:space="preserve">
-    <value>Use only TCP</value>
+    <value>Usar comente TCP</value>
   </data>
   <data name="QueryClass" xml:space="preserve">
-    <value>Query class</value>
+    <value>Classe de consulta</value>
   </data>
   <data name="DomainName" xml:space="preserve">
-    <value>Domain name</value>
+    <value>Nome do domínio</value>
   </data>
   <data name="TimeoutS" xml:space="preserve">
-    <value>Timeout (s)</value>
+    <value>Tempo limite (s)</value>
   </data>
   <data name="ReportAnIssueOrCreateAFeatureRequest" xml:space="preserve">
-    <value>Report an issue or create a feature request</value>
+    <value>Reporte um erro ou crie um pedido de recurso</value>
   </data>
   <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
-    <value>Report an issue or create a feature request.
+    <value>Reporte um erro ou crie um pedido de recurso.
 
 URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
   </data>
   <data name="AuthenticationColon" xml:space="preserve">
-    <value>Authentication:</value>
+    <value>Autenticação:</value>
   </data>
   <data name="BeaconIntervalColon" xml:space="preserve">
-    <value>Beacon interval:</value>
+    <value>Intervalo beacon:</value>
   </data>
   <data name="Encryption" xml:space="preserve">
-    <value>Encryption</value>
+    <value>Criptografia</value>
   </data>
   <data name="EncryptionColon" xml:space="preserve">
-    <value>Encryption:</value>
+    <value>Criptografia:</value>
   </data>
   <data name="Infrastructure" xml:space="preserve">
-    <value>Infrastructure</value>
+    <value>Infra-estrutura</value>
   </data>
   <data name="NetworkKindColon" xml:space="preserve">
-    <value>Network kind:</value>
+    <value>Tipo de rede:</value>
   </data>
   <data name="PhyKindColon" xml:space="preserve">
-    <value>Phy kind:</value>
+    <value>Tipo de Phy:</value>
   </data>
   <data name="UptimeColon" xml:space="preserve">
-    <value>Uptime:</value>
+    <value>Tempo de atividade:</value>
   </data>
   <data name="ShowErrorMessage" xml:space="preserve">
-    <value>Show error message</value>
+    <value>Mostrar mensagem de erro</value>
   </data>
   <data name="PingMonitor" xml:space="preserve">
-    <value>Ping Monitor</value>
+    <value>Monitor de Ping</value>
   </data>
   <data name="AddHost" xml:space="preserve">
-    <value>Add host</value>
+    <value>Adicionar host</value>
   </data>
   <data name="AddAHostToMonitor" xml:space="preserve">
-    <value>Add a host to monitor</value>
+    <value>Adicione um host para monitorar</value>
   </data>
   <data name="Pause" xml:space="preserve">
-    <value>Pause</value>
+    <value>Pausar</value>
   </data>
   <data name="Resume" xml:space="preserve">
-    <value>Resume</value>
+    <value>Continuar</value>
   </data>
   <data name="CouldNotResolveIPAddressFor" xml:space="preserve">
-    <value>Could not resolve ip address for: "{0}"</value>
+    <value>Não foi possível resolver o endereço IP para: "{0}"</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
-    <value>The application will be restarted...</value>
+    <value>O aplicativo será reiniciado...</value>
   </data>
   <data name="UseOther" xml:space="preserve">
-    <value>Use other</value>
+    <value>Usar outro</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
-    <value>Could not export file! See error message: "{0}"</value>
+    <value>Não foi possível exportar o arquivo! Veja a mensagem de erro: "{0}"</value>
   </data>
   <data name="FileExportedToXX" xml:space="preserve">
-    <value>File exported to "{0}"!</value>
+    <value>Arquivo exportado para "{0}"!</value>
   </data>
   <data name="ClouldNotImportFileSeeErrorMessageXX" xml:space="preserve">
-    <value>Could not import file! See error message: "{0}"</value>
+    <value>Não foi possível importar o arquivo! Veja a mensagem de erro: "{0}"</value>
   </data>
   <data name="LocationCannotBeChangedInThePortableVersion" xml:space="preserve">
-    <value>Location cannot be changed in portable version!</value>
+    <value>A localização não pode ser alterada na versão portátil!</value>
   </data>
   <data name="IsEncrypted" xml:space="preserve">
-    <value>Is encrypted</value>
+    <value>Está criptografado</value>
   </data>
   <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
-    <value>Open documentation on GitHub.
+    <value>Abrir documentação no GitHub.
 
 URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
-    <value>Customer 1</value>
+    <value>Cliente 1</value>
   </data>
   <data name="AddProfileFile" xml:space="preserve">
-    <value>Add profile file</value>
+    <value>Adicionar arquivo de perfi</value>
   </data>
   <data name="DisableEncryptionDots" xml:space="preserve">
-    <value>Disable encryption...</value>
+    <value>Desabilitar criptografia...</value>
   </data>
   <data name="EditProfileFile" xml:space="preserve">
-    <value>Edit profile file</value>
+    <value>Editar arquivo de perfi</value>
   </data>
   <data name="EnableEncryptionDots" xml:space="preserve">
-    <value>Enable encryption...</value>
+    <value>Habilitar criptografia...</value>
   </data>
   <data name="EncryptionDots" xml:space="preserve">
-    <value>Encryption...</value>
+    <value>Criptografia...</value>
   </data>
   <data name="RemoveProfileFile" xml:space="preserve">
-    <value>Remove profile file</value>
+    <value>Remover arquivo de perfil</value>
   </data>
   <data name="ProfileNameAlreadyExists" xml:space="preserve">
-    <value>Profile name already exists!</value>
+    <value>O nome de perfil já existe!</value>
   </data>
   <data name="Rename" xml:space="preserve">
-    <value>Rename</value>
+    <value>Renomear</value>
   </data>
   <data name="DeleteProfileFile" xml:space="preserve">
-    <value>Delete profile file</value>
+    <value>Excluir arquivo de perfil</value>
   </data>
   <data name="DeleteProfileFileMessage" xml:space="preserve">
-    <value>Selected profile file will be deleted permanently.</value>
+    <value>O arquivo de perfil selecionado será excluído permanentemente.</value>
   </data>
   <data name="ResetProfilesMessage" xml:space="preserve">
-    <value>All profiles in this profile file will be permanently deleted!</value>
+    <value>Todos os perfis neste arquivo de perfil serão excluídos permanentemente!</value>
   </data>
   <data name="Patch" xml:space="preserve">
     <value>Patch</value>
   </data>
   <data name="RestartTheApplicationToChangeTheLanguage" xml:space="preserve">
-    <value>Restart the application to change the language!</value>
+    <value>Reinicie o aplicativo para alterar o idioma!</value>
   </data>
   <data name="CurrentlyDownloaded" xml:space="preserve">
     <value>Atualmente baixado</value>
@@ -2507,37 +2507,37 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>LLDP / CDP</value>
   </data>
   <data name="RestartAsAdmin" xml:space="preserve">
-    <value>Restart as Administrator</value>
+    <value>Reiniciar como Administrador</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>To analyze network packets, the application must be started with elevated rights!</value>
+    <value>Para analisar pacotes de rede, o aplicativo deve ser iniciado com direitos elevados!</value>
   </data>
   <data name="Capture" xml:space="preserve">
-    <value>Capture</value>
+    <value>Capturar</value>
   </data>
   <data name="Device" xml:space="preserve">
-    <value>Device</value>
+    <value>Dispositivo</value>
   </data>
   <data name="DurationS" xml:space="preserve">
-    <value>Duration (s)</value>
+    <value>Duração (s)</value>
   </data>
   <data name="Model" xml:space="preserve">
-    <value>Model</value>
+    <value>Modelo</value>
   </data>
   <data name="VLAN" xml:space="preserve">
     <value>VLAN</value>
   </data>
   <data name="CaptureNetworkPacketsToViewLLDPorCDPInformation" xml:space="preserve">
-    <value>Capture network packets to view LLDP or CDP information!</value>
+    <value>Capturar pacotes de rede para visualizar informações LLDP ou CDP!</value>
   </data>
   <data name="NoDiscoveryProtocolPackagesReceived" xml:space="preserve">
-    <value>No discovery protocol packages received!</value>
+    <value>Nenhum pacote de protocolo de descoberta recebido!</value>
   </data>
   <data name="CapturingNetworkPackagesDots" xml:space="preserve">
-    <value>Capturing network packages...</value>
+    <value>Capturando pacotes de rede...</value>
   </data>
   <data name="DiscoveryProtocol" xml:space="preserve">
-    <value>Discovery Protocol</value>
+    <value>Protocolo de Descoberta</value>
   </data>
   <data name="DiscoveryProtocolIdentifier_CDP" xml:space="preserve">
     <value>CDP</value>
@@ -2549,73 +2549,73 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>LLDP / CDP</value>
   </data>
   <data name="XXSecondsRemainingDots" xml:space="preserve">
-    <value>{0} seconds remaining...</value>
+    <value>{0} segundos restantes...</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value>Help</value>
+    <value>Ajuda</value>
   </data>
   <data name="HelpMessage_ParameterApplication" xml:space="preserve">
-    <value>Application that is displayed at startup.</value>
+    <value>Aplicativo que é exibido na inicialização.</value>
   </data>
   <data name="Parameter" xml:space="preserve">
-    <value>Parameter</value>
+    <value>Parâmetro</value>
   </data>
   <data name="Value" xml:space="preserve">
-    <value>Value</value>
+    <value>Valor</value>
   </data>
   <data name="WebConsole" xml:space="preserve">
-    <value>Web Console</value>
+    <value>Console Web</value>
   </data>
   <data name="Reload" xml:space="preserve">
-    <value>Reload</value>
+    <value>Recarregar</value>
   </data>
   <data name="Browser" xml:space="preserve">
-    <value>Browser</value>
+    <value>Navegador</value>
   </data>
   <data name="WebViewControlCertificateIsInvalidMessage" xml:space="preserve">
-    <value>The WebView control (Microsoft Edge) cannot connect to websites with an invalid certificate!</value>
+    <value>O controle WebView (Microsoft Edge) não pode se conectar a sites com um certificado inválido!</value>
   </data>
   <data name="MicrosoftWindowsSDKContractsIsNotAvailable" xml:space="preserve">
-    <value>Microsoft.Windows.SDK.Contracts is required for this feature but not available on this system (e.g. on Windows Server).</value>
+    <value>O Microsoft.Windows.SDK.Contracts é necessário para esse recurso, mas não está disponível neste sistema (por exemplo, no Windows Server).</value>
   </data>
   <data name="ApplicationName_ARPTable" xml:space="preserve">
-    <value>ARP Table</value>
+    <value>Tabela ARP</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
-    <value>Connections</value>
+    <value>Conexões</value>
   </data>
   <data name="ApplicationName_Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
+    <value>Painel de Controle</value>
   </data>
   <data name="ApplicationName_DiscoveryProtocol" xml:space="preserve">
-    <value>Discovery Protocol</value>
+    <value>Protocolo de Descoberta</value>
   </data>
   <data name="ApplicationName_DNSLookup" xml:space="preserve">
-    <value>DNS Lookup</value>
+    <value>Pesquisa de DNS</value>
   </data>
   <data name="ApplicationName_HTTPHeaders" xml:space="preserve">
-    <value>HTTP Headers</value>
+    <value>Cabeçalhos HTTP</value>
   </data>
   <data name="ApplicationName_IPScanner" xml:space="preserve">
-    <value>IP Scanner</value>
+    <value>Scanner de IP</value>
   </data>
   <data name="ApplicationName_Listeners" xml:space="preserve">
-    <value>Listeners</value>
+    <value>Escutas</value>
   </data>
   <data name="ApplicationName_Lookup" xml:space="preserve">
-    <value>Lookup</value>
+    <value>Pesquisa</value>
   </data>
   <data name="ApplicationName_NetworkInterface" xml:space="preserve">
-    <value>Network Interface</value>
+    <value>Interface de Rede</value>
   </data>
   <data name="ApplicationName_Ping" xml:space="preserve">
     <value>Ping</value>
   </data>
   <data name="ApplicationName_PingMonitor" xml:space="preserve">
-    <value>Ping Monitor</value>
+    <value>Monitor de Ping</value>
   </data>
   <data name="ApplicationName_PortScanner" xml:space="preserve">
-    <value>Port Scanner</value>
+    <value>Scanner de Portas</value>
   </data>
   <data name="ApplicationName_PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -2624,13 +2624,13 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>PuTTY</value>
   </data>
   <data name="ApplicationName_RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
+    <value>Área de Trabalho Remota</value>
   </data>
   <data name="ApplicationName_SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
   <data name="ApplicationName_SubnetCalculator" xml:space="preserve">
-    <value>Subnet Calculator</value>
+    <value>Calculadora de Sub-rede</value>
   </data>
   <data name="ApplicationName_TigerVNC" xml:space="preserve">
     <value>TigerVNC</value>
@@ -2642,64 +2642,64 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>Wake on LAN</value>
   </data>
   <data name="ApplicationName_WebConsole" xml:space="preserve">
-    <value>Web Console</value>
+    <value>Console Web</value>
   </data>
   <data name="ApplicationName_Whois" xml:space="preserve">
     <value>Whois</value>
   </data>
   <data name="ApplicationName_WiFi" xml:space="preserve">
-    <value>WiFi</value>
+    <value>Wi-Fi</value>
   </data>
   <data name="Accent_Amber" xml:space="preserve">
-    <value>Amber</value>
+    <value>Âmbar</value>
   </data>
   <data name="Accent_Black" xml:space="preserve">
-    <value>Black</value>
+    <value>Preto</value>
   </data>
   <data name="Accent_Blue" xml:space="preserve">
-    <value>Blue</value>
+    <value>Azul</value>
   </data>
   <data name="Accent_Brown" xml:space="preserve">
-    <value>Brown</value>
+    <value>Marrom</value>
   </data>
   <data name="Accent_Cobalt" xml:space="preserve">
-    <value>Cobalt</value>
+    <value>Cobalto</value>
   </data>
   <data name="Accent_Crimson" xml:space="preserve">
-    <value>Crimson</value>
+    <value>Carmesim</value>
   </data>
   <data name="Accent_Cyan" xml:space="preserve">
-    <value>Cyan</value>
+    <value>Ciano</value>
   </data>
   <data name="Accent_Emerald" xml:space="preserve">
-    <value>Emerald</value>
+    <value>Esmeralda</value>
   </data>
   <data name="Accent_Green" xml:space="preserve">
-    <value>Green</value>
+    <value>Verde</value>
   </data>
   <data name="Accent_Indigo" xml:space="preserve">
-    <value>Indigo</value>
+    <value>Índigo</value>
   </data>
   <data name="Accent_Lime" xml:space="preserve">
-    <value>Lime</value>
+    <value>Lima</value>
   </data>
   <data name="Accent_Magenta" xml:space="preserve">
     <value>Magenta</value>
   </data>
   <data name="Accent_Mauve" xml:space="preserve">
-    <value>Mauve</value>
+    <value>Roxo</value>
   </data>
   <data name="Accent_Olive" xml:space="preserve">
-    <value>Olive</value>
+    <value>Oliva</value>
   </data>
   <data name="Accent_Orange" xml:space="preserve">
-    <value>Orange</value>
+    <value>Laranja</value>
   </data>
   <data name="Accent_Purple" xml:space="preserve">
-    <value>Purple</value>
+    <value>Púrpura</value>
   </data>
   <data name="Accent_Red" xml:space="preserve">
-    <value>Red</value>
+    <value>Vermelho</value>
   </data>
   <data name="Accent_Sienna" xml:space="preserve">
     <value>Sienna</value>
@@ -2708,46 +2708,46 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>Taupe</value>
   </data>
   <data name="Accent_Teal" xml:space="preserve">
-    <value>Teal</value>
+    <value>Verde Azulado</value>
   </data>
   <data name="Accent_Violet" xml:space="preserve">
-    <value>Pink</value>
+    <value>Rosa</value>
   </data>
   <data name="Accent_Yellow" xml:space="preserve">
-    <value>Yellow</value>
+    <value>Amarelo</value>
   </data>
   <data name="Accen_Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>Aço</value>
   </data>
   <data name="AppTheme_Black" xml:space="preserve">
-    <value>Black</value>
+    <value>Preto</value>
   </data>
   <data name="AppTheme_White" xml:space="preserve">
-    <value>White</value>
+    <value>Branco</value>
   </data>
   <data name="ProfileViewName_General" xml:space="preserve">
-    <value>General</value>
+    <value>Geral</value>
   </data>
   <data name="ProfileViewName_DNSLookup" xml:space="preserve">
-    <value>DNS Lookup</value>
+    <value>Pesquisa de DNS</value>
   </data>
   <data name="ProfileViewName_HTTPHeaders" xml:space="preserve">
-    <value>HTTP Headers</value>
+    <value>Cabeçalhos HTTP</value>
   </data>
   <data name="ProfileViewName_IP Scanner" xml:space="preserve">
-    <value>IP Scanner</value>
+    <value>Scanner de IP</value>
   </data>
   <data name="ProfileViewName_NetworkInterface" xml:space="preserve">
-    <value>Network Interface</value>
+    <value>Interface de Rede</value>
   </data>
   <data name="ProfileViewName_Ping" xml:space="preserve">
     <value>Ping</value>
   </data>
   <data name="ProfileViewName_PingMonitor" xml:space="preserve">
-    <value>Ping Monitor</value>
+    <value>Monitor de Ping</value>
   </data>
   <data name="ProfileViewName_PortScanner" xml:space="preserve">
-    <value>Port Scanner</value>
+    <value>Scanner de Portas</value>
   </data>
   <data name="ProfileViewName_PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -2756,7 +2756,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>PuTTY</value>
   </data>
   <data name="ProfileViewName_RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
+    <value>Área de Trabalho Remota</value>
   </data>
   <data name="ProfileViewName_TigerVNC" xml:space="preserve">
     <value>TigerVNC</value>
@@ -2768,64 +2768,64 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>Wake on LAN</value>
   </data>
   <data name="ProfileViewName_WebConsole" xml:space="preserve">
-    <value>Web Console</value>
+    <value>Console Web</value>
   </data>
   <data name="ProfileViewName_Whois" xml:space="preserve">
     <value>Whois</value>
   </data>
   <data name="SettingsViewGroup_Applications" xml:space="preserve">
-    <value>Applications</value>
+    <value>Aplicativos</value>
   </data>
   <data name="SettingsViewGroup_General" xml:space="preserve">
-    <value>General</value>
+    <value>Geral</value>
   </data>
   <data name="SettingsViewName_Appearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>Aparência</value>
   </data>
   <data name="SettingsViewName_Autostart" xml:space="preserve">
-    <value>Autostart</value>
+    <value>Iniciar automático</value>
   </data>
   <data name="SettingsViewName_Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
+    <value>Painel de Controle</value>
   </data>
   <data name="SettingsViewName_DNSLookup" xml:space="preserve">
-    <value>DNS Lookup</value>
+    <value>Pesquisa de DNS</value>
   </data>
   <data name="SettingsViewName_General" xml:space="preserve">
-    <value>General</value>
+    <value>Geral</value>
   </data>
   <data name="SettingsViewName_HotKeys" xml:space="preserve">
-    <value>HotKeys</value>
+    <value>Teclas de Atalho</value>
   </data>
   <data name="SettingsViewName_HTTPHeaders" xml:space="preserve">
-    <value>HTTP Headers</value>
+    <value>Cabeçalhos HTTP</value>
   </data>
   <data name="SettingsViewName_IPScanner" xml:space="preserve">
-    <value>IP Scanner</value>
+    <value>Scanner de IP</value>
   </data>
   <data name="SettingsViewName_Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Idioma</value>
   </data>
-  <data name="SettingsViewName_Ping" xml:space="preserve">
-    <value>Ping</value>
+  <data name="SettingsViewName_PingMonitor" xml:space="preserve">
+    <value>Monitor de Ping</value>
   </data>
   <data name="SettingsViewName_PortScanner" xml:space="preserve">
-    <value>Port Scanner</value>
+    <value>Scanner de Portas</value>
   </data>
   <data name="SettingsViewName_PowerShell" xml:space="preserve">
     <value>PowerShell</value>
   </data>
   <data name="SettingsViewName_Profiles" xml:space="preserve">
-    <value>Profiles</value>
+    <value>Perfis</value>
   </data>
   <data name="SettingsViewName_PuTTY" xml:space="preserve">
     <value>PuTTY</value>
   </data>
   <data name="SettingsViewName_RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
+    <value>Área de Trabalho Remota</value>
   </data>
   <data name="SettingsViewName_Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Configurações</value>
   </data>
   <data name="SettingsViewName_SNMP" xml:space="preserve">
     <value>SNMP</value>
@@ -2840,7 +2840,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>Traceroute</value>
   </data>
   <data name="SettingsViewName_Update" xml:space="preserve">
-    <value>Update</value>
+    <value>Atualizar</value>
   </data>
   <data name="SettingsViewName_WakeOnLAN" xml:space="preserve">
     <value>Wake On LAN</value>
@@ -2849,39 +2849,54 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>Whois</value>
   </data>
   <data name="SettingsViewName_Window" xml:space="preserve">
-    <value>Window</value>
+    <value>Janela</value>
   </data>
   <data name="EnableLog" xml:space="preserve">
-    <value>Enable log</value>
+    <value>Habilitar registro</value>
   </data>
   <data name="LogFileName" xml:space="preserve">
-    <value>Log file name</value>
+    <value>Nome do arquivo de registro</value>
   </data>
   <data name="LogPath" xml:space="preserve">
-    <value>Log path</value>
+    <value>Caminho do registro</value>
   </data>
   <data name="LogMode" xml:space="preserve">
-    <value>Log mode</value>
+    <value>Modo de registro</value>
   </data>
   <data name="Log" xml:space="preserve">
-    <value>Log</value>
+    <value>Registro</value>
   </data>
   <data name="SSHLog" xml:space="preserve">
-    <value>SSH log</value>
+    <value>Registro SSH</value>
   </data>
   <data name="SSHRawLog" xml:space="preserve">
-    <value>SSH Raw log</value>
+    <value>Registro Raw SSH</value>
   </data>
   <data name="PuTTYLogMode_SessionLog" xml:space="preserve">
-    <value>Session log</value>
+    <value>Registro da sessão</value>
   </data>
   <data name="PuTTYLogMode_SSHLog" xml:space="preserve">
-    <value>SSH log</value>
+    <value>Registro SSH</value>
   </data>
   <data name="PuTTYLogMode_SSHRawLog" xml:space="preserve">
-    <value>SSH and Raw Log</value>
+    <value>Registro SSH e Raw</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
-    <value>Enter a valid file name!</value>
+    <value>Entre o nome válido de arquivo!</value>
+  </data>
+  <data name="Lost" xml:space="preserve">
+    <value>Perdido</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Recebido</value>
+  </data>
+  <data name="StatusChange" xml:space="preserve">
+    <value>Mudança de status</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>Atualização disponível!</value>
+  </data>
+  <data name="PrivateKeyFile" xml:space="preserve">
+    <value>Arquivo de chave privada</value>
   </data>
 </root>

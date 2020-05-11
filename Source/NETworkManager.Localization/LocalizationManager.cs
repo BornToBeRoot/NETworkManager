@@ -58,13 +58,14 @@ namespace NETworkManager.Localization
             new LocalizationInfo("English", "English", GetImageUri("en-US"), "BornToBeRoot", "en-US", 100, true),
             new LocalizationInfo("German", "Deutsch",  GetImageUri("de-DE"), "BornToBeRoot", "de-DE", 100, true),
 
-            new LocalizationInfo("Brazilian Portuguese", "português brasileiro", GetImageUri("pt-BR"), "ghroll", "pt-BR", 11.40, false),
-            new LocalizationInfo("Chinese", "汉语", GetImageUri("zh-CN"), "dockernes, pedoc, Bonelol, ccstorm", "zh-CN", 68.64, false),
-            new LocalizationInfo("Dutch", "Nederlands", GetImageUri("nl-NL"), "Get_r3kt_by_Me", "nl-NL", 38.16, false),
-            new LocalizationInfo("French", "Français", GetImageUri("fr-FR"), "f4alm, logounet", "fr-FR", 88.16, false),
-            new LocalizationInfo("Italian", "Italiano", GetImageUri("it-IT"), "simone.ferrari", "it-IT", 77.08, false),            
-            new LocalizationInfo("Russian", "Русский", GetImageUri("ru-RU"), "LaXe", "ru-RU", 71.49, false),
-            new LocalizationInfo("Spanish", "Español", GetImageUri("es-ES"), "MS-PC", "es-ES", 99.34, false)
+            new LocalizationInfo("Brazilian Portuguese", "português brasileiro", GetImageUri("pt-BR"), "ghroll, igorruckert", "pt-BR", 100),
+            new LocalizationInfo("Chinese", "汉语", GetImageUri("zh-CN"), "dockernes, pedoc, Bonelol, ccstorm", "zh-CN", 68.05),
+            new LocalizationInfo("Dutch", "Nederlands", GetImageUri("nl-NL"), "Get_r3kt_by_Me", "nl-NL", 37.84),
+            new LocalizationInfo("French", "Français", GetImageUri("fr-FR"), "f4alm, logounet", "fr-FR", 87.46),
+            new LocalizationInfo("Hungarian", "Magyar", GetImageUri("hu-HU"), "zoozley", "hu-HU", 7.31),
+            new LocalizationInfo("Italian", "Italiano", GetImageUri("it-IT"), "simone.ferrari", "it-IT", 76.44),            
+            new LocalizationInfo("Russian", "Русский", GetImageUri("ru-RU"), "LaXe", "ru-RU", 70.88),
+            new LocalizationInfo("Spanish", "Español", GetImageUri("es-ES"), "MS-PC", "es-ES", 99.89)
         };
 
         /// <summary>
