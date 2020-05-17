@@ -9,7 +9,7 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsHotKeysViewModel}">
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.HotKeys}" />
-        <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.UntrayBringWindowToFront}" IsChecked="{Binding HotKeyShowWindowEnabled}" Margin="0,0,0,10"/>
+        <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.UntrayBringWindowToFront}" IsOn="{Binding HotKeyShowWindowEnabled}" Margin="0,0,0,10"/>
         <mahAppsControls:HotKeyBox AreModifierKeysRequired="True" HotKey="{Binding HotKeyShowWindow}" Width="250" HorizontalAlignment="Left" />
     </StackPanel>
 </UserControl>

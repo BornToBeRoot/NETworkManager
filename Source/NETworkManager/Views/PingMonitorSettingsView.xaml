@@ -15,7 +15,7 @@
         <mah:NumericUpDown Value="{Binding Buffer}" Minimum="1" Maximum="65535" Interval="1" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.TTL}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding TTL}" Minimum="1" Maximum="255" Interval="1" Margin="0,0,0,10" />
-        <mah:ToggleSwitch IsChecked="{Binding DontFragment}" Header="{x:Static localization:Strings.DontFragment}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch IsOn="{Binding DontFragment}" Header="{x:Static localization:Strings.DontFragment}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.TimeToWaitBetweenEachPing}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding WaitTime}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,20"/>        
         <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />

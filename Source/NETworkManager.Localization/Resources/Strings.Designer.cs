@@ -4931,6 +4931,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Private key file.
+        /// </summary>
+        public static string PrivateKeyFile {
+            get {
+                return ResourceManager.GetString("PrivateKeyFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string Profile {
@@ -7035,24 +7044,6 @@ namespace NETworkManager.Localization.Resources {
         public static string SSHPort {
             get {
                 return ResourceManager.GetString("SSHPort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SSH key.
-        /// </summary>
-        public static string SSHPrivateKey {
-            get {
-                return ResourceManager.GetString("SSHPrivateKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to C:\Data\Keys\private_ssh.ppk.
-        /// </summary>
-        public static string SSHPrivateKeyLocationDots {
-            get {
-                return ResourceManager.GetString("SSHPrivateKeyLocationDots", resourceCulture);
             }
         }
         

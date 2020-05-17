@@ -1,4 +1,5 @@
-﻿using MahApps.Metro;
+﻿using ControlzEx.Theming;
+using MahApps.Metro;
 using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
@@ -8,8 +9,8 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
-        private AppTheme _appThemeSelectedItem;
-        public AppTheme AppThemeSelectedItem
+        private Theme _appThemeSelectedItem;
+        public Theme AppThemeSelectedItem
         {
             get => _appThemeSelectedItem;
             set
@@ -28,25 +29,25 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private Accent _accentSelectedItem;
-        public Accent AccentSelectedItem
-        {
-            get => _accentSelectedItem;
-            set
-            {
-                if (value == _accentSelectedItem)
-                    return;
+        //private Accent _accentSelectedItem;
+        //public Accent AccentSelectedItem
+        //{
+        //    get => _accentSelectedItem;
+        //    set
+        //    {
+        //        if (value == _accentSelectedItem)
+        //            return;
 
-                if (!_isLoading)
-                {
-                    AppearanceManager.ChangeAccent(value.Name);
-                    SettingsManager.Current.Appearance_Accent = value.Name;
-                }
+        //        if (!_isLoading)
+        //        {
+        //            AppearanceManager.ChangeAccent(value.Name);
+        //            SettingsManager.Current.Appearance_Accent = value.Name;
+        //        }
 
-                _accentSelectedItem = value;
-                OnPropertyChanged();
-            }
-        }
+        //        _accentSelectedItem = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
         #endregion        
 
         #region Constructor, LoadSettings
@@ -61,8 +62,8 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            AppThemeSelectedItem = ThemeManager.DetectAppStyle().Item1;
-            AccentSelectedItem = ThemeManager.DetectAppStyle().Item2;
+            //AppThemeSelectedItem = ThemeManager.DetectAppStyle().Item1;
+            //AccentSelectedItem = ThemeManager.DetectAppStyle().Item2;
         }
         #endregion
     }

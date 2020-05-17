@@ -35,7 +35,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.RemoteConsole}" />
-            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OffLabel="" OnLabel="" IsChecked="{Binding EnableRemoteConsole}" />
+            <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OffContent="" OnContent="" IsOn="{Binding EnableRemoteConsole}" />
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
             <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}" IsEnabled="{Binding EnableRemoteConsole}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>

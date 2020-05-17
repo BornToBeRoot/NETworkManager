@@ -369,6 +369,7 @@ namespace NETworkManager.ViewModels
                 AddPortToHistory(instance.Port.ToString());
                 AddBaudToHistory(instance.Baud.ToString());
                 AddUsernameToHistory(instance.Username);
+                AddPrivateKeyToHistory(instance.PrivateKeyFile);
                 AddProfileToHistory(instance.Profile);
 
                 // Create Profile info
@@ -378,6 +379,7 @@ namespace NETworkManager.ViewModels
                     Mode = instance.ConnectionMode,
                     PortOrBaud = instance.ConnectionMode == ConnectionMode.Serial ? instance.Baud : instance.Port,
                     Username = instance.Username,
+                    PrivateKey = instance.PrivateKeyFile,
                     Profile = instance.Profile,
                     EnableLog = SettingsManager.Current.PuTTY_EnableSessionLog,
                     LogMode = SettingsManager.Current.PuTTY_LogMode,
@@ -461,10 +463,10 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.PuTTY_SerialLineHistory.Add(x));
         }
 
-        private static void AddPortToHistory(string host)
+        private static void AddPortToHistory(string port)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_PortHistory.Clear();
@@ -473,10 +475,10 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.PuTTY_PortHistory.Add(x));
         }
 
-        private static void AddBaudToHistory(string host)
+        private static void AddBaudToHistory(string baud)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), baud, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_BaudHistory.Clear();
@@ -485,16 +487,28 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.PuTTY_BaudHistory.Add(x));
         }
 
-        private static void AddUsernameToHistory(string host)
+        private static void AddUsernameToHistory(string username)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), username, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_UsernameHistory.Clear();
 
             // Fill with the new items
             list.ForEach(x => SettingsManager.Current.PuTTY_UsernameHistory.Add(x));
+        }
+
+        private static void AddPrivateKeyToHistory(string host)
+        {
+            // Create the new list
+            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_PrivateKeyFileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.PuTTY_PrivateKeyFileHistory.Clear();
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.PuTTY_PrivateKeyFileHistory.Add(x));
         }
 
         private static void AddProfileToHistory(string host)

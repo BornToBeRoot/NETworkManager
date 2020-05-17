@@ -1,4 +1,5 @@
-﻿using MahApps.Metro;
+﻿using ControlzEx.Theming;
+using MahApps.Metro;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Localization.Translators
@@ -30,7 +31,7 @@ namespace NETworkManager.Localization.Translators
         /// </summary>
         /// <param name="appTheme"><see cref="AppTheme"/>.</param>
         /// <returns>Translated <see cref="AppTheme"/>.</returns>
-        public string Translate(AppTheme appTheme)
+        public string Translate(Theme appTheme)
         {
             return Translate(appTheme.ToString());
         }

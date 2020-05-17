@@ -7,7 +7,7 @@
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"                     
         xmlns:resources="clr-namespace:NETworkManager.Properties"
@@ -94,7 +94,7 @@
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </StackPanel>
-                </Button>            
+                </Button>
                 <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.ReportAnIssueOrCreateAFeatureRequest}" CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
@@ -374,10 +374,24 @@
                                                             <Setter Property="ToolTip" Value="{x:Null}" />
                                                         </MultiDataTrigger.Setters>
                                                     </MultiDataTrigger>
+                                                    <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" >
+                                                        <Setter Property="Background" Value="{DynamicResource GrayBrush8}" />
+                                                    </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
-                                        <Rectangle Grid.Column="0" Width="24" Height="24">
+                                        <Rectangle Grid.Column="0" Width="4" Height="48" HorizontalAlignment="Left">
+                                            <Rectangle.Style>
+                                                <Style TargetType="{x:Type Rectangle}">
+                                                    <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" >
+                                                        <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                                                    </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Rectangle.Style>
+                                        </Rectangle>
+                                        <Rectangle Grid.Column="0" Width="24" Height="24" Margin="0,0,-2,0">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Uniform" Visual="{Binding Name, Converter={StaticResource ApplicationNameToIconConverter}}" />
                                             </Rectangle.OpacityMask>
@@ -385,17 +399,17 @@
                                                 <Style TargetType="{x:Type Rectangle}">
                                                     <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Path=IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" >
+                                                        <DataTrigger Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" >
                                                             <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" >
+                                                        <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" >
                                                             <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </Rectangle.Style>
                                         </Rectangle>
-                                        <TextBlock Grid.Column="1" Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}">
+                                        <TextBlock Grid.Column="1" Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}" Margin="2,0,0,0">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                     <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />

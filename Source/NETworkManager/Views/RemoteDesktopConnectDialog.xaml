@@ -7,7 +7,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-             xmlns:interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:RemoteDesktopConnectViewModel}">
@@ -61,7 +61,7 @@
                 </ComboBox.Text>
             </ComboBox>
             <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.UseCredentials}" />
-            <mah:ToggleSwitch Grid.Column="2" Grid.Row="3" OffLabel="" OnLabel="" IsChecked="{Binding UseCredentials}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" />
+            <mah:ToggleSwitch Grid.Column="2" Grid.Row="3" OffContent="" OnContent="" IsOn="{Binding UseCredentials}" IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}" />
         </Grid>
         <Grid Grid.Row="1" Visibility="{Binding UseCredentials, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0">
             <Grid.Resources>

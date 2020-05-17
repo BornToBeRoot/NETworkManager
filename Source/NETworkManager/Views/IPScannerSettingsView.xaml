@@ -14,7 +14,7 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.IPScanner}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowScanResultForAllIPAddresses}" IsChecked="{Binding ShowScanResultForAllIPAddresses}" Margin="0,0,0,20"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowScanResultForAllIPAddresses}" IsOn="{Binding ShowScanResultForAllIPAddresses}" Margin="0,0,0,20"/>
         <TextBlock Text="{x:Static localization:Strings.Multithreading}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock  Text="{x:Static localization:Strings.Threads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Threads}" Maximum="15000" Minimum="1" Interval="1" Margin="0,0,0,20" />
@@ -26,8 +26,8 @@
         <TextBlock  Text="{x:Static localization:Strings.Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding ICMPAttempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsChecked="{Binding ResolveHostname}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSServer}" IsChecked="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsOn="{Binding ResolveHostname}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSServer}" IsOn="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.DNSServer}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServer}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
@@ -50,17 +50,17 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}" IsChecked="{Binding DNSRecursion}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCache}" IsChecked="{Binding DNSUseCache}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}" IsOn="{Binding DNSRecursion}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCache}" IsOn="{Binding DNSUseCache}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.Protocol}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseOnlyTCP}" IsChecked="{Binding DNSUseTCPOnly}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseOnlyTCP}" IsOn="{Binding DNSUseTCPOnly}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Retries}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding DNSRetries}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.TimeoutS}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding DNSTimeout}" Maximum="15" Minimum="1" Interval="1" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowErrorMessage}" IsChecked="{Binding DNSShowErrorMessage}" Margin="0,0,0,20" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowErrorMessage}" IsOn="{Binding DNSShowErrorMessage}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.ARP}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveMACAddressAndVendor}" IsChecked="{Binding ResolveMACAddress}" Margin="0,0,0,20" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveMACAddressAndVendor}" IsOn="{Binding ResolveMACAddress}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.CustomCommands}" Style="{StaticResource HeaderTextBlock}" />
         <DataGrid x:Name="DataGridCustomCommands" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding CustomCommands}" SelectedItem="{Binding SelectedCustomCommand}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>

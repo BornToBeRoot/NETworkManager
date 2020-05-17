@@ -69,7 +69,7 @@ namespace NETworkManager.Localization
         /// <param name="code"><see cref="Code"/>.</param>
         /// <param name="percentTranslated"><see cref="PercentTranslated"/>.</param>
         /// <param name="isOfficial"><see cref="IsOfficial"/>.</param>
-        public LocalizationInfo(string name, string nativeName, Uri flagUri, string translator, string code, double percentTranslated, bool isOfficial)
+        public LocalizationInfo(string name, string nativeName, Uri flagUri, string translator, string code, double percentTranslated, bool isOfficial = false)
         {
             Name = name;
             NativeName = nativeName;

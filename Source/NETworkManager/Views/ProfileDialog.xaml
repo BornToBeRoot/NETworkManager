@@ -395,7 +395,7 @@
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding IPScanner_InheritHost}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding IPScanner_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPRange}" />
                                     <TextBox x:Name="TextBoxIPScannerIPRange" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding IPScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetWithCIDR}">
                                         <TextBox.Style>
@@ -452,7 +452,7 @@
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PortScanner_InheritHost}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding PortScanner_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                     <TextBox x:Name="TextBoxPortScannerHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding PortScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
                                         <TextBox.Style>
@@ -517,7 +517,7 @@
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PingMonitor_InheritHost}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding PingMonitor_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                     <TextBox x:Name="TextBoxPingMonitorHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding PingMonitor_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
                                         <TextBox.Style>
@@ -571,7 +571,7 @@
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Traceroute_InheritHost}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding Traceroute_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                     <TextBox x:Name="TextBoxTracerouteHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Traceroute_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
                                         <TextBox.Style>
@@ -625,7 +625,7 @@
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding DNSLookup_InheritHost}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding DNSLookup_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                     <TextBox x:Name="TextBoxDNSLookupHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding DNSLookup_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
                                         <TextBox.Style>
@@ -731,7 +731,7 @@
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding RemoteDesktop_InheritHost}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding RemoteDesktop_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                     <TextBox x:Name="TextBoxRemoteDesktopHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding RemoteDesktop_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
                                         <TextBox.Style>
@@ -824,7 +824,7 @@
                                         </TextBox.Text>
                                     </TextBox>
                                     <CheckBox Grid.Column="0" Grid.Row="16" Content="{x:Static localization:Strings.CredentialSecuritySupportProvider}" IsChecked="{Binding RemoteDesktop_OverrideCredSspSupport}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="16" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_EnableCredSspSupport}" IsEnabled="{Binding RemoteDesktop_OverrideCredSspSupport}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="16" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_EnableCredSspSupport}" IsEnabled="{Binding RemoteDesktop_OverrideCredSspSupport}" />
                                     <CheckBox Grid.Column="0" Grid.Row="18" Content="{x:Static localization:Strings.AuthenticationLevel}" IsChecked="{Binding RemoteDesktop_OverrideAuthenticationLevel}" Style="{StaticResource DefaultCheckBox}" />
                                     <mah:NumericUpDown Grid.Column="2" Grid.Row="18" Value="{Binding RemoteDesktop_AuthenticationLevel}" Maximum="3" Minimum="0" Interval="1" IsEnabled="{Binding RemoteDesktop_OverrideAuthenticationLevel}" />
                                     <Rectangle Grid.Column="3" Grid.Row="18" Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_RDPAuthenticationLevel}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
@@ -857,21 +857,21 @@
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                     <CheckBox Grid.Column="0" Grid.Row="26" Content="{x:Static localization:Strings.RedirectClipboard}" IsChecked="{Binding RemoteDesktop_OverrideRedirectClipboard}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="26" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectClipboard}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectClipboard}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="26" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_RedirectClipboard}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectClipboard}" />
                                     <CheckBox Grid.Column="0" Grid.Row="28" Content="{x:Static localization:Strings.RedirectDevices}" IsChecked="{Binding RemoteDesktop_OverrideRedirectDevices}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="28" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectDevices}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectDevices}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="28" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_RedirectDevices}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectDevices}" />
                                     <CheckBox Grid.Column="0" Grid.Row="30" Content="{x:Static localization:Strings.RedirectDrives}" IsChecked="{Binding RemoteDesktop_OverrideRedirectDrives}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="30" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectDrives}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectDrives}"/>
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="30" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_RedirectDrives}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectDrives}"/>
                                     <CheckBox Grid.Column="0" Grid.Row="32" Content="{x:Static localization:Strings.RedirectPorts}" IsChecked="{Binding RemoteDesktop_OverrideRedirectPorts}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="32" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectPorts}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectPorts}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="32" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_RedirectPorts}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectPorts}" />
                                     <CheckBox Grid.Column="0" Grid.Row="34" Content="{x:Static localization:Strings.RedirectSmartcards}" IsChecked="{Binding RemoteDesktop_OverrideRedirectSmartcards}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="34" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectSmartCards}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectSmartcards}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="34" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_RedirectSmartCards}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectSmartcards}" />
                                     <CheckBox Grid.Column="0" Grid.Row="36" Content="{x:Static localization:Strings.RedirectPrinters}" IsChecked="{Binding RemoteDesktop_OverrideRedirectPrinters}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="36" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_RedirectPrinters}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectPrinters}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="36" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_RedirectPrinters}" IsEnabled="{Binding RemoteDesktop_OverrideRedirectPrinters}" />
                                     <CheckBox Grid.Column="0" Grid.Row="38" Content="{x:Static localization:Strings.PersistentBitmapCaching}" IsChecked="{Binding RemoteDesktop_OverridePersistentBitmapCaching}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="38" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_PersistentBitmapCaching}" IsEnabled="{Binding RemoteDesktop_OverridePersistentBitmapCaching}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="38" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_PersistentBitmapCaching}" IsEnabled="{Binding RemoteDesktop_OverridePersistentBitmapCaching}" />
                                     <CheckBox Grid.Column="0" Grid.Row="40" Content="{x:Static localization:Strings.ReconnectIfTheConnectionIsDropped}" IsChecked="{Binding RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="40" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_ReconnectIfTheConnectionIsDropped}" IsEnabled="{Binding RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="40" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_ReconnectIfTheConnectionIsDropped}" IsEnabled="{Binding RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped}" />
                                     <CheckBox Grid.Column="0" Grid.Row="42" Content="{x:Static localization:Strings.NetworkConnectionType}" IsChecked="{Binding RemoteDesktop_OverrideNetworkConnectionType}" Style="{StaticResource DefaultCheckBox}" />
                                     <ComboBox Grid.Column="2" Grid.Row="42" ItemsSource="{Binding RemoteDesktop_NetworkConnectionTypes}" SelectedItem="{Binding RemoteDesktop_NetworkConnectionType}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}">
                                         <ComboBox.ItemTemplate>
@@ -881,17 +881,17 @@
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                     <TextBlock Grid.Column="0" Grid.Row="44" Text="{x:Static localization:Strings.DesktopBackground}" Margin="24,0,0,0" Style="{StaticResource DisabledTextBlock}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="44" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_DesktopBackground}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="44" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_DesktopBackground}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
                                     <TextBlock Grid.Column="0" Grid.Row="46" Text="{x:Static localization:Strings.FontSmoothing}" Margin="24,0,0,0" Style="{StaticResource DisabledTextBlock}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="46" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_FontSmoothing}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="46" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_FontSmoothing}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
                                     <TextBlock Grid.Column="0" Grid.Row="48" Text="{x:Static localization:Strings.DesktopComposition}" Margin="24,0,0,0" Style="{StaticResource DisabledTextBlock}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="48" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_DesktopComposition}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="48" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_DesktopComposition}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
                                     <TextBlock Grid.Column="0" Grid.Row="50" Text="{x:Static localization:Strings.ShowWindowContentsWhileDragging}" Margin="24,0,0,0" Style="{StaticResource DisabledTextBlock}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="50" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_ShowWindowContentsWhileDragging}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="50" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_ShowWindowContentsWhileDragging}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
                                     <TextBlock Grid.Column="0" Grid.Row="52" Text="{x:Static localization:Strings.MenuAndWindowAnimation}" Margin="24,0,0,0" Style="{StaticResource DisabledTextBlock}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="52" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_MenuAndWindowAnimation}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="52" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_MenuAndWindowAnimation}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
                                     <TextBlock Grid.Column="0" Grid.Row="54" Text="{x:Static localization:Strings.VisualStyles}" Margin="24,0,0,0" Style="{StaticResource DisabledTextBlock}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="54" OffLabel="" OnLabel="" IsChecked="{Binding RemoteDesktop_VisualStyles}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="54" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_VisualStyles}" IsEnabled="{Binding RemoteDesktop_OverrideNetworkConnectionType}" />
                                 </Grid>
                             </StackPanel>
                         </StackPanel>
@@ -927,9 +927,9 @@
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.RemoteConsole}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding PowerShell_EnableRemoteConsole}" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding PowerShell_EnableRemoteConsole}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnLabel="" OffLabel="" IsChecked="{Binding PowerShell_InheritHost}" IsEnabled="{Binding PowerShell_EnableRemoteConsole}" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnContent="" OffContent="" IsOn="{Binding PowerShell_InheritHost}" IsEnabled="{Binding PowerShell_EnableRemoteConsole}" />
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Host}" />
                                 <TextBox x:Name="TextBoxPowerShellHost" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
                                     <TextBox.Style>
@@ -1010,7 +1010,9 @@
                                         <RowDefinition Height="10" />
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="10" />
-                                        <RowDefinition Height="Auto" /> 
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*" />
@@ -1032,7 +1034,7 @@
                                         <RadioButton Content="{x:Static localization:Strings.RAW}" IsChecked="{Binding PuTTY_UseRAW}" />
                                     </WrapPanel>
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.InheritHostFromDefault}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnLabel="" OffLabel="" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" IsChecked="{Binding PuTTY_InheritHost}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnContent="" OffContent="" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" IsOn="{Binding PuTTY_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="4">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
@@ -1112,7 +1114,7 @@
                                         </TextBox.Text>
                                     </TextBox>
                                     <CheckBox Grid.Column="0" Grid.Row="12" Content="{x:Static localization:Strings.Username}" IsChecked="{Binding PuTTY_OverrideUsername}" Style="{StaticResource DefaultCheckBox}" />
-                                    <TextBox Grid.Column="2" Grid.Row="12" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding PuTTY_OverrideUsername}">
+                                    <TextBox Grid.Column="2" Grid.Row="12" x:Name="TextBoxPuTTYUsername"  mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding PuTTY_OverrideUsername}">
                                         <TextBox.Text>
                                             <Binding Path="PuTTY_Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
@@ -1121,28 +1123,30 @@
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
-                                    <CheckBox Grid.Column="0" Grid.Row="14" Content="{x:Static localization:Strings.Profile}" IsChecked="{Binding PuTTY_OverrideProfile}" Style="{StaticResource DefaultCheckBox}" />
-                                    <TextBox Grid.Column="2" Grid.Row="14" IsEnabled="{Binding PuTTY_OverrideProfile}">
+                                    <CheckBox Grid.Column="0" Grid.Row="14" Content="{x:Static localization:Strings.PrivateKeyFile}" IsChecked="{Binding PuTTY_OverridePrivateKeyFile}" Style="{StaticResource DefaultCheckBox}" />
+                                    <TextBox Grid.Column="2" Grid.Row="14" x:Name="TextBoxPuTTYPrivateKeyFile" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.PrivateKeyFileLocationDots}" IsEnabled="{Binding PuTTY_OverridePrivateKeyFile}">
                                         <TextBox.Text>
-                                            <Binding Path="PuTTY_Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding Path="PuTTY_PrivateKeyFile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
-                                                    <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                                    <validators:FileExistsValidator ValidatesOnTargetUpdated="True" />
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
-                                    <CheckBox Grid.Column="0" Grid.Row="16" Content="{x:Static localization:Strings.EnableLog}" IsChecked="{Binding PuTTY_OverrideEnableLog}" Style="{StaticResource DefaultCheckBox}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="16" OnLabel="" OffLabel="" IsChecked="{Binding PuTTY_EnableLog}" IsEnabled="{Binding PuTTY_OverrideEnableLog}" />
-                                    <CheckBox Grid.Column="0" Grid.Row="18" Content="{x:Static localization:Strings.LogMode}" IsChecked="{Binding PuTTY_OverrideLogMode}" Style="{StaticResource DefaultCheckBox}" />
-                                    <ComboBox Grid.Column="2" Grid.Row="18" ItemsSource="{Binding PuTTY_LogModes}" SelectedItem="{Binding PuTTY_LogMode}" IsEnabled="{Binding PuTTY_OverrideLogMode}">
+                                    <CheckBox Grid.Column="0" Grid.Row="16" Content="{x:Static localization:Strings.Profile}" IsChecked="{Binding PuTTY_OverrideProfile}" Style="{StaticResource DefaultCheckBox}" />
+                                    <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding PuTTY_Profile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding PuTTY_OverrideProfile}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="18" Content="{x:Static localization:Strings.EnableLog}" IsChecked="{Binding PuTTY_OverrideEnableLog}" Style="{StaticResource DefaultCheckBox}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="18" OnContent="" OffContent="" IsOn="{Binding PuTTY_EnableLog}" IsEnabled="{Binding PuTTY_OverrideEnableLog}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="20" Content="{x:Static localization:Strings.LogMode}" IsChecked="{Binding PuTTY_OverrideLogMode}" Style="{StaticResource DefaultCheckBox}" />
+                                    <ComboBox Grid.Column="2" Grid.Row="20" ItemsSource="{Binding PuTTY_LogModes}" SelectedItem="{Binding PuTTY_LogMode}" IsEnabled="{Binding PuTTY_OverrideLogMode}">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding Converter={StaticResource PuTTYLogModeToStringConverter}}" Style="{StaticResource DefaultTextBlock}"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
-                                    <CheckBox Grid.Column="0" Grid.Row="20" Content="{x:Static localization:Strings.LogPath}" IsChecked="{Binding PuTTY_OverrideLogPath}" Style="{StaticResource DefaultCheckBox}" />
-                                    <TextBox Grid.Column="2" Grid.Row="20" x:Name="TextBoxPuTTYLogPath" IsEnabled="{Binding PuTTY_OverrideLogPath}">
+                                    <CheckBox Grid.Column="0" Grid.Row="22" Content="{x:Static localization:Strings.LogPath}" IsChecked="{Binding PuTTY_OverrideLogPath}" Style="{StaticResource DefaultCheckBox}" />
+                                    <TextBox Grid.Column="2" Grid.Row="22" x:Name="TextBoxPuTTYLogPath" IsEnabled="{Binding PuTTY_OverrideLogPath}">
                                         <TextBox.Text>
                                             <Binding Path="PuTTY_LogPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
@@ -1152,8 +1156,8 @@
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
-                                    <CheckBox Grid.Column="0" Grid.Row="22" Content="{x:Static localization:Strings.LogFileName}" IsChecked="{Binding PuTTY_OverrideLogFileName}" Style="{StaticResource DefaultCheckBox}" />
-                                    <TextBox Grid.Column="2" Grid.Row="22" x:Name="TextBoxPuTTYLogFileName" IsEnabled="{Binding PuTTY_OverrideLogFileName}">
+                                    <CheckBox Grid.Column="0" Grid.Row="24" Content="{x:Static localization:Strings.LogFileName}" IsChecked="{Binding PuTTY_OverrideLogFileName}" Style="{StaticResource DefaultCheckBox}" />
+                                    <TextBox Grid.Column="2" Grid.Row="24" x:Name="TextBoxPuTTYLogFileName" IsEnabled="{Binding PuTTY_OverrideLogFileName}">
                                         <TextBox.Text>
                                             <Binding Path="PuTTY_LogFileName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
@@ -1163,8 +1167,8 @@
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
-                                    <CheckBox Grid.Column="0" Grid.Row="24" Content="{x:Static localization:Strings.AdditionalCommandLine}" IsChecked="{Binding PuTTY_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultCheckBox}"/>
-                                    <TextBox Grid.Column="2" Grid.Row="24" Text="{Binding PuTTY_AdditionalCommandLine}" IsEnabled="{Binding PuTTY_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
+                                    <CheckBox Grid.Column="0" Grid.Row="26" Content="{x:Static localization:Strings.AdditionalCommandLine}" IsChecked="{Binding PuTTY_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultCheckBox}"/>
+                                    <TextBox Grid.Column="2" Grid.Row="26" Text="{Binding PuTTY_AdditionalCommandLine}" IsEnabled="{Binding PuTTY_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
                                 </Grid>
                             </StackPanel>
                         </StackPanel>
@@ -1196,7 +1200,7 @@
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding TigerVNC_InheritHost}" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding TigerVNC_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                 <TextBox x:Name="TextBoxTigerVNCHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding TigerVNC_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
                                     <TextBox.Style>
@@ -1359,7 +1363,7 @@
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnLabel="" OffLabel="" IsChecked="{Binding Whois_InheritHost}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding Whois_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Domain}" />
                                     <TextBox x:Name="TextBoxWhoisDomain" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Whois_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
                                         <TextBox.Style>
@@ -1597,6 +1601,26 @@
                                     <Condition Binding="{Binding PuTTY_OverridePortOrBaud}" Value="True" />
                                     <Condition Binding="{Binding PuTTY_UseSerial}" Value="True" />
                                     <Condition Binding="{Binding ElementName=TextBoxPuTTYBaud, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding PuTTY_OverrideUsername}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPuTTYUsername, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding PuTTY_OverridePrivateKeyFile}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxPuTTYPrivateKeyFile, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

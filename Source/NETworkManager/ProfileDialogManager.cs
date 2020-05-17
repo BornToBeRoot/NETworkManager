@@ -1,6 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Profiles;
-using NETworkManager.Settings;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
 
@@ -183,10 +182,6 @@ namespace NETworkManager
                 PortScanner_Host = instance.PortScanner_InheritHost ? instance.Host?.Trim() : instance.PortScanner_Host?.Trim(),
                 PortScanner_Ports = instance.PortScanner_Ports?.Trim(),
 
-                Ping_Enabled = instance.Ping_Enabled,
-                Ping_InheritHost = instance.Ping_InheritHost,
-                Ping_Host = instance.Ping_InheritHost ? instance.Host?.Trim() : instance.Ping_Host?.Trim(),
-
                 PingMonitor_Enabled = instance.PingMonitor_Enabled,
                 PingMonitor_InheritHost = instance.PingMonitor_InheritHost,
                 PingMonitor_Host = instance.PingMonitor_InheritHost ? instance.Host?.Trim() : instance.PingMonitor_Host?.Trim(),
@@ -267,6 +262,8 @@ namespace NETworkManager
                 PuTTY_PortOrBaud = instance.PuTTY_PortOrBaud,
                 PuTTY_OverrideUsername = instance.PuTTY_OverrideUsername,
                 PuTTY_Username = instance.PuTTY_Username?.Trim(),
+                PuTTY_OverridePrivateKeyFile = instance.PuTTY_OverridePrivateKeyFile,
+                PuTTY_PrivateKeyFile = instance.PuTTY_PrivateKeyFile,
                 PuTTY_OverrideProfile = instance.PuTTY_OverrideProfile,
                 PuTTY_Profile = instance.PuTTY_Profile?.Trim(),
                 PuTTY_OverrideEnableLog = instance.PuTTY_OverrideEnableLog,

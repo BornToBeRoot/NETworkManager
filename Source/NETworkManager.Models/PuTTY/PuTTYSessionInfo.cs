@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models.PuTTY
 {
     /// <summary>
-    /// Stores informations about a putty session.
+    /// Stores informations about a PuTTY session.
     /// </summary>
     public class PuTTYSessionInfo
     {
@@ -29,6 +29,11 @@
         /// Username for login.
         /// </summary>
         public string Username { get; set; }
+
+        /// <summary>
+        /// Path to the private key.
+        /// </summary>
+        public string PrivateKey { get; set; }
 
         /// <summary>
         /// PuTTY profile to use.
@@ -61,7 +66,7 @@
         public string AdditionalCommandLine { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PuTTYSessionInfo"/> class.
+        /// Create an instance of <see cref="PuTTYSessionInfo"/>.
         /// </summary>
         public PuTTYSessionInfo()
         {

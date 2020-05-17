@@ -18,35 +18,35 @@ namespace NETworkManager.Settings
         public static void Load()
         {
             // Add custom themes
-            foreach (var file in Directory.GetFiles(ThemesFilePath))
-            {
-                var fileName = Path.GetFileName(file);
+            //foreach (var file in Directory.GetFiles(ThemesFilePath))
+            //{
+            //    var fileName = Path.GetFileName(file);
 
-                // Theme
-                if (fileName.EndsWith(CostomThemeFileExtension))
-                    ThemeManager.AddAppTheme(fileName.Substring(0, fileName.Length - CostomThemeFileExtension.Length), new Uri(file));
+            //    // Theme
+            //    if (fileName.EndsWith(CostomThemeFileExtension))
+            //        ThemeManager.AddAppTheme(fileName.Substring(0, fileName.Length - CostomThemeFileExtension.Length), new Uri(file));
 
-                // Accent
-                if (fileName.EndsWith(CostomAccentFileExtension))
-                    ThemeManager.AddAccent(fileName.Substring(0, fileName.Length - CostomAccentFileExtension.Length), new Uri(file));
-            }
+            //    // Accent
+            //    if (fileName.EndsWith(CostomAccentFileExtension))
+            //        ThemeManager.AddAccent(fileName.Substring(0, fileName.Length - CostomAccentFileExtension.Length), new Uri(file));
+            //}
 
-            // Change the AppTheme if it is not empty and different from the currently loaded
-            var appThemeName = SettingsManager.Current.Appearance_AppTheme;
+            //// Change the AppTheme if it is not empty and different from the currently loaded
+            //var appThemeName = SettingsManager.Current.Appearance_AppTheme;
 
-            if (!string.IsNullOrEmpty(appThemeName) && appThemeName != ThemeManager.DetectAppStyle().Item1.Name)
-                ChangeAppTheme(appThemeName);
+            //if (!string.IsNullOrEmpty(appThemeName) && appThemeName != ThemeManager.DetectAppStyle().Item1.Name)
+            //    ChangeAppTheme(appThemeName);
 
-            // Change the Accent if it is not empty and different from the currently loaded
-            var accentName = SettingsManager.Current.Appearance_Accent;
+            //// Change the Accent if it is not empty and different from the currently loaded
+            //var accentName = SettingsManager.Current.Appearance_Accent;
 
-            if (!string.IsNullOrEmpty(accentName) && accentName != ThemeManager.DetectAppStyle().Item2.Name)
-                ChangeAccent(accentName);
+            //if (!string.IsNullOrEmpty(accentName) && accentName != ThemeManager.DetectAppStyle().Item2.Name)
+            //    ChangeAccent(accentName);
 
-            MetroDialog.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
+            //MetroDialog.CustomResourceDictionary = new ResourceDictionary
+            //{
+            //    Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
+            //};
         }
 
         /// <summary>
@@ -55,11 +55,11 @@ namespace NETworkManager.Settings
         /// <param name="name">Name of the AppTheme</param>
         public static void ChangeAppTheme(string name)
         {
-            var theme = ThemeManager.GetAppTheme(name);
+            //var theme = ThemeManager.GetAppTheme(name);
 
-            // If user has renamed / removed a custom theme --> fallback default
-            if (theme != null)
-                ThemeManager.ChangeAppTheme(System.Windows.Application.Current, name);
+            //// If user has renamed / removed a custom theme --> fallback default
+            //if (theme != null)
+            //    ThemeManager.ChangeAppTheme(System.Windows.Application.Current, name);
         }
 
         /// <summary>
@@ -68,12 +68,12 @@ namespace NETworkManager.Settings
         /// <param name="name">Name of the Accent</param>
         public static void ChangeAccent(string name)
         {
-            var appStyle = ThemeManager.DetectAppStyle(System.Windows.Application.Current);
-            var accent = ThemeManager.GetAccent(name);
+            //var appStyle = ThemeManager.DetectAppStyle(System.Windows.Application.Current);
+            //var accent = ThemeManager.GetAccent(name);
 
-            // If user has renamed / removed a custom theme --> fallback default
-            if (accent != null)
-                ThemeManager.ChangeAppStyle(System.Windows.Application.Current, accent, appStyle.Item1);
+            //// If user has renamed / removed a custom theme --> fallback default
+            //if (accent != null)
+            //    ThemeManager.ChangeAppStyle(System.Windows.Application.Current, accent, appStyle.Item1);
         }
     }
 }

@@ -14,11 +14,11 @@
         <TextBlock  Text="{x:Static localization:Strings.PortThreads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding PortThreads}" Maximum="15000" Minimum="1" Interval="1" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.PortScanner}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowClosedPorts}"   IsChecked="{Binding ShowClosed}" Margin="0,0,0,20"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowClosedPorts}" IsOn="{Binding ShowClosed}" Margin="0,0,0,20"/>
         <TextBlock Text="{x:Static localization:Strings.Socket}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock  Text="{x:Static localization:Strings.Timeout}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown  Value="{Binding Timeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsChecked="{Binding ResolveHostname}"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsOn="{Binding ResolveHostname}"/>
     </StackPanel>
 </UserControl>

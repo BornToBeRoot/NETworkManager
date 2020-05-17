@@ -143,8 +143,8 @@
                 </Button.Content>
             </Button>
         </StackPanel>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.AddDNSSuffixToHostname}" IsChecked="{Binding AddDNSSuffix}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSSuffix}" IsEnabled="{Binding AddDNSSuffix}" IsChecked="{Binding UseCustomDNSSuffix}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.AddDNSSuffixToHostname}" IsOn="{Binding AddDNSSuffix}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSSuffix}" IsEnabled="{Binding AddDNSSuffix}" IsOn="{Binding UseCustomDNSSuffix}" Margin="0,0,0,10"/>
         <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSuffix}" Margin="0,0,0,10">
             <TextBox.Resources>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
@@ -170,12 +170,12 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}" IsChecked="{Binding Recursion}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCache}" IsChecked="{Binding UseCache}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}" IsOn="{Binding Recursion}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCache}" IsOn="{Binding UseCache}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.QueryClass}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding QueryClasses}" SelectedItem="{Binding QueryClass}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowOnlyMostCommonQueryTypes}" IsChecked="{Binding ShowOnlyMostCommonQueryTypes}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseOnlyTCP}" IsChecked="{Binding UseTCPOnly}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowOnlyMostCommonQueryTypes}" IsOn="{Binding ShowOnlyMostCommonQueryTypes}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseOnlyTCP}" IsOn="{Binding UseTCPOnly}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Retries}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Retries}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.TimeoutS}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />

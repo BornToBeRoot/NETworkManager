@@ -379,52 +379,6 @@ namespace NETworkManager.ViewModels
 
         #endregion
 
-        #region Ping
-        private bool _ping_Enabled;
-        public bool Ping_Enabled
-        {
-            get => _ping_Enabled;
-            set
-            {
-                if (value == _ping_Enabled)
-                    return;
-
-                _ping_Enabled = value;
-
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _ping_InheritHost;
-        public bool Ping_InheritHost
-        {
-            get => _ping_InheritHost;
-            set
-            {
-                if (value == _ping_InheritHost)
-                    return;
-
-                _ping_InheritHost = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _ping_Host;
-        public string Ping_Host
-        {
-            get => _ping_Host;
-            set
-            {
-                if (value == _ping_Host)
-                    return;
-
-                _ping_Host = value;
-                OnPropertyChanged();
-            }
-        }
-
-        #endregion
-
         #region Ping Monitor
         private bool _pingMonitor_Enabled;
         public bool PingMonitor_Enabled
@@ -1619,6 +1573,34 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _puTTY_OverridePrivateKeyFile;
+        public bool PuTTY_OverridePrivateKeyFile
+        {
+            get => _puTTY_OverridePrivateKeyFile;
+            set
+            {
+                if (value == _puTTY_OverridePrivateKeyFile)
+                    return;
+
+                _puTTY_OverridePrivateKeyFile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _puTTY__PrivateKeyFile;
+        public string PuTTY_PrivateKeyFile
+        {
+            get => _puTTY__PrivateKeyFile;
+            set
+            {
+                if (value == _puTTY__PrivateKeyFile)
+                    return;
+
+                _puTTY__PrivateKeyFile = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _puTTY_OverrideProfile;
         public bool PuTTY_OverrideProfile
         {
@@ -1980,37 +1962,6 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        #region HTTP Headers
-        private bool _httpHeaders_Enabled;
-        public bool HTTPHeaders_Enabled
-        {
-            get => _httpHeaders_Enabled;
-            set
-            {
-                if (value == _httpHeaders_Enabled)
-                    return;
-
-                _httpHeaders_Enabled = value;
-
-                OnPropertyChanged();
-            }
-        }
-
-        private string _httpHeaders_Website;
-        public string HTTPHeaders_Website
-        {
-            get => _httpHeaders_Website;
-            set
-            {
-                if (value == _httpHeaders_Website)
-                    return;
-
-                _httpHeaders_Website = value;
-                OnPropertyChanged();
-            }
-        }
-        #endregion
-
         #region Whois
         private bool _whois_Enabled;
         public bool Whois_Enabled
@@ -2104,11 +2055,6 @@ namespace NETworkManager.ViewModels
             PortScanner_InheritHost = profileInfo.PortScanner_InheritHost;
             PortScanner_Host = profileInfo.PortScanner_Host;
             PortScanner_Ports = profileInfo.PortScanner_Ports;
-
-            // Ping
-            Ping_Enabled = profileInfo.Ping_Enabled;
-            Ping_InheritHost = profileInfo.Ping_InheritHost;
-            Ping_Host = profileInfo.Ping_Host;
 
             // Ping Monitor
             PingMonitor_Enabled = profileInfo.PingMonitor_Enabled;
@@ -2215,6 +2161,8 @@ namespace NETworkManager.ViewModels
             PuTTY_PortOrBaud = profileInfo.PuTTY_OverridePortOrBaud ? profileInfo.PuTTY_PortOrBaud : Settings.Application.PuTTY.GetPortOrBaudByConnectionMode(PuTTY_ConnectionMode);
             PuTTY_OverrideUsername = profileInfo.PuTTY_OverrideUsername;
             PuTTY_Username = profileInfo.PuTTY_Username;
+            PuTTY_OverridePrivateKeyFile = profileInfo.PuTTY_OverridePrivateKeyFile;
+            PuTTY_PrivateKeyFile = profileInfo.PuTTY_PrivateKeyFile;
             PuTTY_OverrideProfile = profileInfo.PuTTY_OverrideProfile;
             PuTTY_Profile = profileInfo.PuTTY_Profile;
             PuTTY_OverrideEnableLog = profileInfo.PuTTY_OverrideEnableLog;

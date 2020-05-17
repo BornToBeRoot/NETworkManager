@@ -155,8 +155,7 @@
                 <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.PuTTY}" Binding="{Binding (profiles:ProfileInfo.PuTTY_Enabled)}" SortMemberPath="PuTTY_Enabled" />
                 <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.TigerVNC}" Binding="{Binding (profiles:ProfileInfo.TigerVNC_Enabled)}" SortMemberPath="TigerVNC_Enabled" />
                 <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.WebConsole}" Binding="{Binding (profiles:ProfileInfo.WebConsole_Enabled)}" SortMemberPath="WebConsole_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.WakeOnLAN}" Binding="{Binding (profiles:ProfileInfo.WakeOnLAN_Enabled)}" SortMemberPath="WakeOnLAN_Enabled" />
-                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.HTTPHeaders}" Binding="{Binding (profiles:ProfileInfo.HTTPHeaders_Enabled)}" SortMemberPath="HTTPHeaders_Enabled" />
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.WakeOnLAN}" Binding="{Binding (profiles:ProfileInfo.WakeOnLAN_Enabled)}" SortMemberPath="WakeOnLAN_Enabled" />                
                 <DataGridCheckBoxColumn ElementStyle="{StaticResource MetroDataGridCheckBox}" Header="{x:Static localization:Strings.Whois}" Binding="{Binding (profiles:ProfileInfo.Whois_Enabled)}" SortMemberPath="Whois_Enabled" />
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>

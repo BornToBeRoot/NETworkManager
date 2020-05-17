@@ -1015,7 +1015,7 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
     <value>Port oder Dienst</value>
   </data>
   <data name="Ports" xml:space="preserve">
-    <value>Port(s)</value>
+    <value>Ports</value>
   </data>
   <data name="Priv" xml:space="preserve">
     <value>Priv</value>
@@ -1373,7 +1373,7 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
     <value>Einfügen</value>
   </data>
   <data name="PuTTYLocationDots" xml:space="preserve">
-    <value>PuTTY-Speicherort...</value>
+    <value>C:\Program Files\PuTTY\putty.exe</value>
   </data>
   <data name="Reconnect" xml:space="preserve">
     <value>Wiederverbinden</value>
@@ -2806,8 +2806,8 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="SettingsViewName_Language" xml:space="preserve">
     <value>Sprache</value>
   </data>
-  <data name="SettingsViewName_Ping" xml:space="preserve">
-    <value>Ping</value>
+  <data name="SettingsViewName_PingMonitor" xml:space="preserve">
+    <value>Ping-Monitor</value>
   </data>
   <data name="SettingsViewName_PortScanner" xml:space="preserve">
     <value>Port-Scanner</value>
@@ -2883,5 +2883,20 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
     <value>Geben Sie einen gültigen Dateinamen ein!</value>
+  </data>
+  <data name="Lost" xml:space="preserve">
+    <value>Verloren</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>Empfangen</value>
+  </data>
+  <data name="StatusChange" xml:space="preserve">
+    <value>Status geändert</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>Update verfügbar!</value>
+  </data>
+  <data name="PrivateKeyFile" xml:space="preserve">
+    <value>Private Schlüsseldatei</value>
   </data>
 </root>

@@ -10,7 +10,7 @@
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Update}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10" >
-            <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.CheckForUpdatesAtStartup}" IsChecked="{Binding CheckForUpdatesAtStartup}" />
+            <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.CheckForUpdatesAtStartup}" IsOn="{Binding CheckForUpdatesAtStartup}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckForUpdatesAtStartup}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />

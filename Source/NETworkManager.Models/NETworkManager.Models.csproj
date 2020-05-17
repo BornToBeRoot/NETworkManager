@@ -10,11 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DnsClient" Version="1.3.1" />
-    <PackageReference Include="IPNetwork2" Version="2.5.189" />
+    <PackageReference Include="DnsClient" Version="1.3.2" />
+    <PackageReference Include="IPNetwork2" Version="2.5.202" />
     <PackageReference Include="Lextm.SharpSnmpLib" Version="12.0.0" />
-    <PackageReference Include="MahApps.Metro" Version="1.6.5" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.0.0" />
+    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0821" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.1.0" />
     <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.1.0" />
     <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls.WebView" Version="6.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />

@@ -878,7 +878,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-               
+
         private bool _ipScanner_ExpandProfileView = true;
         public bool IPScanner_ExpandProfileView
         {
@@ -908,7 +908,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-                
+
         private string _ipScanner_ExportFilePath;
         public string IPScanner_ExportFilePath
         {
@@ -1044,7 +1044,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-      
+
         private bool _portScanner_ExpandProfileView = true;
         public bool PortScanner_ExpandProfileView
         {
@@ -1074,7 +1074,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-       
+
         private string _portScanner_ExportFilePath;
         public string PortScanner_ExportFilePath
         {
@@ -1635,7 +1635,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-       
+
         private bool _dnsLookup_ExpandProfileView = true;
         public bool DNSLookup_ExpandProfileView
         {
@@ -1665,7 +1665,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-      
+
         private string _dnsLookup_ExportFilePath;
         public string DNSLookup_ExportFilePath
         {
@@ -2332,16 +2332,16 @@ namespace NETworkManager.Settings
             }
         }
 
-        private string _puTTY_SSHPrivateKey;
-        public string PuTTY_SSHPrivateKey
+        private string _puTTY_PrivateKeyFile;
+        public string PuTTY_PrivateKeyFile
         {
-            get => _puTTY_SSHPrivateKey;
+            get => _puTTY_PrivateKeyFile;
             set
             {
-                if (value == _puTTY_SSHPrivateKey)
+                if (value == _puTTY_PrivateKeyFile)
                     return;
 
-                _puTTY_SSHPrivateKey = value;
+                _puTTY_PrivateKeyFile = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -2492,6 +2492,21 @@ namespace NETworkManager.Settings
                     return;
 
                 _puTTY_UsernameHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _puTTY_PrivateKeyFileHistory = new ObservableCollection<string>();
+        public ObservableCollection<string> PuTTY_PrivateKeyFileHistory
+        {
+            get => _puTTY_PrivateKeyFileHistory;
+            set
+            {
+                if (value == _puTTY_PrivateKeyFileHistory)
+                    return;
+
+                _puTTY_PrivateKeyFileHistory = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -2907,7 +2922,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-               
+
         private SNMPV3Security _snmp_Security = GlobalStaticConfiguration.SNMP_Security;
         public SNMPV3Security SNMP_Security
         {
@@ -2951,7 +2966,7 @@ namespace NETworkManager.Settings
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
-        }   
+        }
 
         private string _snmp_ExportFilePath;
         public string SNMP_ExportFilePath
@@ -3300,7 +3315,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-             
+
         private bool _whois_ExpandProfileView = true;
         public bool Whois_ExpandProfileView
         {
@@ -3330,7 +3345,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-       
+
         private string _whois_ExportFilePath;
         public string Whois_ExportFilePath
         {
@@ -3586,6 +3601,7 @@ namespace NETworkManager.Settings
             PuTTY_PortHistory.CollectionChanged += CollectionChanged;
             PuTTY_BaudHistory.CollectionChanged += CollectionChanged;
             PuTTY_UsernameHistory.CollectionChanged += CollectionChanged;
+            PuTTY_PrivateKeyFileHistory.CollectionChanged += CollectionChanged;
             PuTTY_ProfileHistory.CollectionChanged += CollectionChanged;
 
             // TigerVNC

@@ -11,7 +11,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="MahApps.Metro" Version="1.6.5" />
+    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0821" />
   </ItemGroup>
   
   <ItemGroup>

@@ -18,9 +18,9 @@
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Autostart}" />
         <StackPanel>
-            <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.StartWithWindows}"   IsChecked="{Binding StartWithWindows}" IsEnabled="{Binding ConfiguringAutostart, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10"/>
+            <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.StartWithWindows}" IsOn="{Binding StartWithWindows}" IsEnabled="{Binding ConfiguringAutostart, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10"/>
             <mahAppsControls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding ConfiguringAutostart, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10"/>
-            <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.StartMinimizedInTray}"   IsChecked="{Binding StartMinimizedInTray}" />
+            <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.StartMinimizedInTray}" IsOn="{Binding StartMinimizedInTray}" />
         </StackPanel>
     </StackPanel>
 </UserControl>

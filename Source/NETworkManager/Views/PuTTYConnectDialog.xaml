@@ -41,6 +41,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Mode}" />
             <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
@@ -129,46 +131,71 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Profile}" />
-            <ComboBox x:Name="ComboBoxProfile" Grid.Column="2" Grid.Row="8" ItemsSource="{Binding ProfileHistoryView}" Style="{StaticResource EditableComboBox}">
+            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.PrivateKeyFile}" />
+            <ComboBox x:Name="ComboBoxPrivateKeyFile" Grid.Column="2" Grid.Row="8" ItemsSource="{Binding PrivateKeyFileHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.PrivateKeyFileLocationDots}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
-                    <Binding Path="Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="PrivateKeyFile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                            <validators:EmptyOrFileExistsValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
-            <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.AdditionalCommandLine}" />
-            <TextBox x:Name="TextBoxAdditionalCommandLine" Grid.Column="2" Grid.Row="10" Text="{Binding AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
+            <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.Profile}" />
+            <ComboBox x:Name="ComboBoxProfile" Text="{Binding Profile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="10" ItemsSource="{Binding ProfileHistoryView}" Style="{StaticResource EditableComboBox}" />
+            <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.AdditionalCommandLine}" />
+            <TextBox x:Name="TextBoxAdditionalCommandLine" Grid.Column="2" Grid.Row="12" Text="{Binding AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Cancel}" Command="{Binding CancelCommand}" IsCancel="True" Style="{StaticResource DefaultButton}" />
             <Button Content="{x:Static localization:Strings.Connect}" Command="{Binding ConnectCommand}" IsDefault="True" Margin="10,0,0,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
-                        <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="IsEnabled" Value="True" />
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding UseSerial}" Value="True" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxSerialLine}" Value="False" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxBaud}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxSerialLine}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding UseSerial}" Value="True" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxBaud}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger.Setters>
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding UseSerial}" Value="False" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}" Value="True" />
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxPort}" Value="False" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger.Setters>
                             </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding UseSerial}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxPort}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxUsername}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxPrivateKeyFile}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

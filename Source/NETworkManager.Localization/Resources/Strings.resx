@@ -2896,10 +2896,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="UpdateAvailable" xml:space="preserve">
     <value>Update available!</value>
   </data>
-  <data name="SSHPrivateKey" xml:space="preserve">
-    <value>SSH key</value>
-  </data>
-  <data name="SSHPrivateKeyLocationDots" xml:space="preserve">
-    <value>C:\Data\Keys\private_ssh.ppk</value>
+  <data name="PrivateKeyFile" xml:space="preserve">
+    <value>Private key file</value>
   </data>
 </root>

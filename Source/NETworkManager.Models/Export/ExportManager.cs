@@ -7,7 +7,6 @@ using System.Xml.Linq;
 using Newtonsoft.Json;
 using NETworkManager.Models.Lookup;
 using NETworkManager.Models.Network;
-using NETworkManager.Models;
 
 namespace NETworkManager.Models.Export
 {
