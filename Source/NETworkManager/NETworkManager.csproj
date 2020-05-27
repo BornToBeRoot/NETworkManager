@@ -1,129 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <ProjectGuid>{E825EC30-AFA2-476A-AC2C-7537630A645B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
     <RootNamespace>NETworkManager</RootNamespace>
     <AssemblyName>NETworkManager</AssemblyName>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>NETworkManager.App</StartupObject>
     <ApplicationIcon>NETworkManager.ico</ApplicationIcon>
-    <OutputType>WinExe</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <!--<PreBuildEvent>PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File "$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1" "$(TargetDir)"</PreBuildEvent>-->
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Resources\Images\SplashScreen.png" />
-    <Resource Include="Resources\Images\NETworkManager.ico" />
-    <Resource Include="NETworkManager.ico" />
-    <Resource Include="Resources\Images\SplashScreen.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Remove="Resources\Styles\ButtonStyles.xaml" />
-    <Page Remove="Resources\Styles\CheckBoxStyles.xaml" />
-    <Page Remove="Resources\Styles\ComboBoxStyles.xaml" />
-    <Page Remove="Resources\Styles\ContextMenuStyles.xaml" />
-    <Page Remove="Resources\Styles\DataGridStyles.xaml" />
-    <Page Remove="Resources\Styles\DragablzStyles.xaml" />
-    <Page Remove="Resources\Styles\DropDownButtonStyles.xaml" />
-    <Page Remove="Resources\Styles\ExpanderStyles.xaml" />
-    <Page Remove="Resources\Styles\GridSplitterStyles.xaml" />
-    <Page Remove="Resources\Styles\GroupBoxStyles.xaml" />
-    <Page Remove="Resources\Styles\ListBoxStyle.xaml" />
-    <Page Remove="Resources\Styles\MetroDialogStyles.xaml" />
-    <Page Remove="Resources\Styles\NumericUpDownStyles.xaml" />
-    <Page Remove="Resources\Styles\PasswordBoxStyles.xaml" />
-    <Page Remove="Resources\Styles\RadioButtonStyles.xaml" />
-    <Page Remove="Resources\Styles\RectangleStyles.xaml" />
-    <Page Remove="Resources\Styles\ScrollBarStyles.xaml" />
-    <Page Remove="Resources\Styles\ScrollViewerStyles.xaml" />
-    <Page Remove="Resources\Styles\TabControlStyles.xaml" />
-    <Page Remove="Resources\Styles\TextBlockStyles.xaml" />
-    <Page Remove="Resources\Styles\TextBoxStyles.xaml" />
-    <Page Remove="Resources\Styles\ToggleButtonStyles.xaml" />
-    <Page Remove="Resources\Styles\ToogleSwitchStyles.xaml" />
-    <Page Remove="Resources\Styles\ToolTipStyles.xaml" />
-    <Page Remove="Resources\Styles\WindowStyles.xaml" />
-
-    <Content Include="Resources\Styles\ButtonStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\CheckBoxStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\ComboBoxStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\ContextMenuStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\DataGridStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\DragablzStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\DropDownButtonStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\ExpanderStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\GridSplitterStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\GroupBoxStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\ListBoxStyle.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\MetroDialogStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\NumericUpDownStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\PasswordBoxStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\RadioButtonStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\RectangleStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\ScrollBarStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\ScrollViewerStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\TabControlStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\TextBlockStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\TextBoxStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\ToggleButtonStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\ToogleSwitchStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\ToolTipStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Styles\WindowStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AirspaceFixer" Version="1.0.5" />
     <PackageReference Include="DnsClient" Version="1.3.2" />
@@ -132,14 +20,26 @@
     <PackageReference Include="Lextm.SharpSnmpLib" Version="12.0.0" />
     <PackageReference Include="LiveCharts.Wpf.NetCore3" Version="0.9.7" />
     <PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
-    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0821" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.1.0" />
-    <PackageReference Include="MahApps.Metro.IconPacks.Entypo" Version="4.1.0" />
+    <PackageReference Include="MahApps.Metro" Version="2.0.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.2.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.Entypo" Version="4.2.0" />
     <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.1.0" />
     <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls.WebView" Version="6.0.1" />
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <Reference Include="AxMSTSCLib">
+      <HintPath>$(TargetDir)\AxMSTSCLib.dll</HintPath>
+    </Reference>
+
+    <Reference Include="MSTSCLib">
+      <HintPath>$(TargetDir)\MSTSCLib.dll</HintPath>
+    </Reference>
+
+    <Page Remove="Resources\Styles\WindowStyles.xaml" />
+    <Content Include="Resources\Styles\WindowStyles.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />
@@ -154,4 +54,7 @@
     <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
     <ProjectReference Include="..\NETworkManager.Validators\NETworkManager.Validators.csproj" />
   </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File &quot;$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1&quot; &quot;$(TargetDir)&quot;" />
+  </Target>
 </Project>

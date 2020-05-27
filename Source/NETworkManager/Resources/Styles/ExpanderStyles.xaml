@@ -57,7 +57,7 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="mahAppsControls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />
+        <!--<Setter Property="mahAppsControls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />-->
         <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ExpanderDownHeader}" />
     </Style>
@@ -117,7 +117,7 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Margin" Value="-4" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="mahAppsControls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />
+        <!--<Setter Property="mahAppsControls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />-->
         <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ExpanderDownHeaderReverse}" />
     </Style>
@@ -194,9 +194,9 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ExpandDirection" Value="Right" />
         <Setter Property="Padding" Value="10" />
-        <Setter Property="mahAppsControls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />
+        <!--<Setter Property="mahAppsControls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource GrayBrush3}" />-->
         <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
-        <Setter Property="mahAppsControls:ControlsHelper.HeaderFontSize" Value="14" />
+        <!--<Setter Property="mahAppsControls:ControlsHelper.HeaderFontSize" Value="14" />-->
         <Setter Property="mahAppsControls:ExpanderHelper.HeaderRightStyle" Value="{DynamicResource RightExpanderClosed}" />
         <Style.Triggers>
             <Trigger Property="IsExpanded" Value="True">
