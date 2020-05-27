@@ -44,7 +44,7 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.CommandLineArguments}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.TheFollowingParametersAreAvailable}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <Border Grid.Row="2" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" Margin="0,0,0,10" Padding="5">
+        <Border Grid.Row="2" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="1" Margin="0,0,0,10" Padding="5">
             <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled" >
                 <Grid>
                     <Grid.Resources>
@@ -96,11 +96,11 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.TheFollowingParametersCanNotBeProcesses}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-            <Border Grid.Row="1" BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="1" Padding="5">
+            <Border Grid.Row="1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="1" Padding="5">
                 <TextBox Text="{Binding WrongParameter}"/>
             </Border>
         </Grid>
-        <TextBlock Grid.Row="4" Text="{x:Static localization:Strings.TheApplicationCanBeStartedWithoutParameters}" Foreground="{DynamicResource AccentColorBrush}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
+        <TextBlock Grid.Row="4" Text="{x:Static localization:Strings.TheApplicationCanBeStartedWithoutParameters}" Foreground="{DynamicResource MahApps.Brushes.Accent}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
         <Button Grid.Row="5" Content="{x:Static localization:Strings.OK}" Click="Click" HorizontalAlignment="Right" Style="{StaticResource DefaultButton}" />
     </Grid>
 </mahAppsControls:MetroWindow>

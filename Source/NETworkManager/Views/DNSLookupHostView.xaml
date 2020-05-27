@@ -40,10 +40,10 @@
                             </Rectangle.OpacityMask>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -77,10 +77,10 @@
                             </Rectangle.OpacityMask>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -91,7 +91,7 @@
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -184,10 +184,10 @@
                                                                     </Rectangle.OpacityMask>
                                                                     <Rectangle.Style>
                                                                         <Style TargetType="{x:Type Rectangle}">
-                                                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                                             <Style.Triggers>
                                                                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                                                 </DataTrigger>
                                                                             </Style.Triggers>
                                                                         </Style>
@@ -256,10 +256,10 @@
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualPlus}" />
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                                 <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
@@ -274,7 +274,7 @@
                                         <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                                 <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
@@ -286,7 +286,7 @@
                         </Grid>
                     </Button>
                 </Grid>
-                <Border Grid.Column="0" Grid.Row="4" BorderBrush="{DynamicResource GrayBrush8}" Margin="-10" BorderThickness="0,1,0,0" Background="Transparent">
+                <Border Grid.Column="0" Grid.Row="4" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" Margin="-10" BorderThickness="0,1,0,0" Background="Transparent">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">
                             <Style.Triggers>
@@ -315,10 +315,10 @@
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualPlus}" />
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -330,7 +330,7 @@
                                         <Setter Property="Text" Value="{x:Static localization:Strings.AddProfileDots}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

@@ -93,7 +93,7 @@
                     </Style.Triggers>
                 </Style>
             </StackPanel.Style>
-            <Rectangle Grid.Column="0" Grid.Row="2" Width="48" Height="48" Fill="{DynamicResource GrayBrush3}">
+            <Rectangle Grid.Column="0" Grid.Row="2" Width="48" Height="48" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                 <Rectangle.OpacityMask>
                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
                 </Rectangle.OpacityMask>
@@ -101,8 +101,8 @@
             <TextBlock Text="{x:Static localization:Strings.NetworkUnavailable}" Style="{StaticResource MessageTextBlock}" />
         </StackPanel>
         <StackPanel Grid.Row="2" Margin="0,0,0,10" Visibility="{Binding IsCountdownRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <TextBlock Text="{Binding CountdownText}" Foreground="{DynamicResource GrayBrush5}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
-            <mahAppsControls:MetroProgressBar Value="{Binding CountdownValue}" Minimum="0" Maximum="10" Foreground="{DynamicResource AccentColorBrush}" />
+            <TextBlock Text="{Binding CountdownText}" Foreground="{DynamicResource MahApps.Brushes.Gray5}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
+            <mahAppsControls:MetroProgressBar Value="{Binding CountdownValue}" Minimum="0" Maximum="10" Foreground="{DynamicResource MahApps.Brushes.Accent}" />
         </StackPanel>
         <Button Grid.Row="3" Content="{x:Static localization:Strings.Show}" Command="{Binding OpenMainWindowCommand}" Style="{StaticResource DefaultButton}" />
     </Grid>

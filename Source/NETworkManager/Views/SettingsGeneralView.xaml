@@ -39,7 +39,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource BoldTextBlock}"  Text="{x:Static localization:Strings.VisibleApplications}" />
-            <ListBox Grid.Column="0" Grid.Row="2" ItemsSource="{Binding ApplicationsVisible}" SelectedItem="{Binding VisibleApplicationSelectedItem}" MouseDoubleClick="ListBoxVisibleToHide_OnMouseDoubleClick" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource GrayBrush8}">
+            <ListBox Grid.Column="0" Grid.Row="2" ItemsSource="{Binding ApplicationsVisible}" SelectedItem="{Binding VisibleApplicationSelectedItem}" MouseDoubleClick="ListBoxVisibleToHide_OnMouseDoubleClick" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}" d:DataContext="{d:DesignInstance models:ApplicationInfo}" />
@@ -54,10 +54,10 @@
                         </Rectangle.OpacityMask>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
-                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -71,10 +71,10 @@
                         </Rectangle.OpacityMask>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
-                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -83,7 +83,7 @@
                 </Button>
             </StackPanel>
             <TextBlock Grid.Column="4" Grid.Row="0" Style="{StaticResource BoldTextBlock}" Text="{x:Static localization:Strings.HiddenApplications}"/>
-            <ListBox Grid.Column="4" Grid.Row="2" ItemsSource="{Binding ApplicationsHidden}" SelectedItem="{Binding HiddenApplicationSelectedItem}" MouseDoubleClick="ListBoxHideToVisible_OnMouseDoubleClick" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource GrayBrush8}">
+            <ListBox Grid.Column="4" Grid.Row="2" ItemsSource="{Binding ApplicationsHidden}" SelectedItem="{Binding HiddenApplicationSelectedItem}" MouseDoubleClick="ListBoxHideToVisible_OnMouseDoubleClick" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}" d:DataContext="{d:DesignInstance models:ApplicationInfo}"/>
@@ -107,7 +107,7 @@
                 <ColumnDefinition Width="5" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Rectangle Width="24" Height="24" Fill="{DynamicResource AccentColorBrush}">
+            <Rectangle Width="24" Height="24" Fill="{DynamicResource MahApps.Brushes.Accent}">
                 <Rectangle.OpacityMask>
                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationVariant}" />
                 </Rectangle.OpacityMask>

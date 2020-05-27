@@ -85,10 +85,10 @@
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
-                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -111,10 +111,10 @@
                             </Rectangle.OpacityMask>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -174,7 +174,7 @@
                                 </Style>
                             </Rectangle.Resources>
                         </Rectangle>
-                        <Line Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" Margin="-4,0">
+                        <Line Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" StrokeThickness="4" Stroke="{DynamicResource MahApps.Brushes.Gray3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" Margin="-4,0">
                             <Line.Resources>
                                 <Style TargetType="{x:Type Line}">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -192,8 +192,8 @@
                                 </Style>
                             </Line.Resources>
                         </Line>
-                        <Line Grid.Row="0" Grid.Column="0" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
-                        <Line Grid.Row="0" Grid.Column="4" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                        <Line Grid.Row="0" Grid.Column="0" StrokeThickness="4" Stroke="{DynamicResource MahApps.Brushes.Gray3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                        <Line Grid.Row="0" Grid.Column="4" StrokeThickness="4" Stroke="{DynamicResource MahApps.Brushes.Gray3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
                     </Grid>
                     <Grid Grid.Column="5" Background="Transparent">
                         <Grid.ContextMenu>
@@ -239,10 +239,10 @@
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
-                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -265,10 +265,10 @@
                             </Rectangle.OpacityMask>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -328,7 +328,7 @@
                                 </Style>
                             </Rectangle.Resources>
                         </Rectangle>
-                        <Line Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" Margin="-4,0">
+                        <Line Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" StrokeThickness="4" Stroke="{DynamicResource MahApps.Brushes.Gray3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" Margin="-4,0">
                             <Line.Resources>
                                 <Style TargetType="{x:Type Line}">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -346,8 +346,8 @@
                                 </Style>
                             </Line.Resources>
                         </Line>
-                        <Line Grid.Row="0" Grid.Column="0" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
-                        <Line Grid.Row="0" Grid.Column="4" StrokeThickness="4" Stroke="{DynamicResource GrayBrush3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                        <Line Grid.Row="0" Grid.Column="0" StrokeThickness="4" Stroke="{DynamicResource MahApps.Brushes.Gray3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
+                        <Line Grid.Row="0" Grid.Column="4" StrokeThickness="4" Stroke="{DynamicResource MahApps.Brushes.Gray3}" X1="0" Y1="0" X2="1" Y2="0" Stretch="Uniform" />
                     </Grid>
                     <Grid Grid.Column="9" Grid.Row="0" Background="Transparent">
                         <Grid.ContextMenu>
@@ -393,10 +393,10 @@
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
-                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -419,10 +419,10 @@
                             </Rectangle.OpacityMask>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Path=IsMouseOver}" Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -444,7 +444,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Fill="{DynamicResource GrayBrush3}" Margin="10,5,0,5">
+                                <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                                     </Rectangle.OpacityMask>

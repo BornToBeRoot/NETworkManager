@@ -35,7 +35,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Border BorderThickness="0,0,1,0" BorderBrush="{DynamicResource GrayBrush8}">
+            <Border BorderThickness="0,0,1,0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
                 <ScrollViewer ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback" Style="{StaticResource FadeOutScrollViewer}">
                     <ListBox x:Name="ListBoxViews" ItemsSource="{Binding ProfileViews}" Margin="0,0,10,0">
                         <ListBox.ItemTemplate>
@@ -54,13 +54,13 @@
                                         </Rectangle.OpacityMask>
                                         <Rectangle.Style>
                                             <Style TargetType="{x:Type Rectangle}">
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Path=IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
-                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
-                                                        <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -69,16 +69,16 @@
                                     <TextBlock Grid.Column="1" Text="{Binding (profiles:ProfileViewInfo.Name), Converter={StaticResource ProfileViewNameToTranslatedStringConverter}}" >
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                 <Setter Property="Margin" Value="0,0,10,0" />
                                                 <Setter Property="VerticalAlignment" Value="Center" />
                                                 <Setter Property="FontSize" Value="14" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
-                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" Value="True" >
-                                                        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -237,10 +237,10 @@
                                         </Rectangle.OpacityMask>
                                         <Rectangle.Style>
                                             <Style TargetType="{x:Type Rectangle}">
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -760,7 +760,7 @@
                                         </TextBox.Style>
                                     </TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
-                                    <Separator Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                                    <Separator Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
                                     <CheckBox Grid.Column="0" Grid.Row="10" VerticalAlignment="Top" Content="{x:Static localization:Strings.Display}" IsChecked="{Binding RemoteDesktop_OverrideDisplay}" Style="{StaticResource DefaultCheckBox}" />
                                     <StackPanel Grid.Column="2" Grid.Row="10" IsEnabled="{Binding RemoteDesktop_OverrideDisplay}">
                                         <RadioButton x:Name="RadioButtonAdjustScreenAutomatically" Content="{x:Static localization:Strings.AdjustScreenAutomatically}" IsChecked="{Binding RemoteDesktop_AdjustScreenAutomatically}" Margin="0,0,0,10" />
@@ -967,7 +967,7 @@
                                     </TextBox.Style>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
-                                <Separator Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                                <Separator Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="10" Content="{x:Static localization:Strings.AdditionalCommandLine}" IsChecked="{Binding PowerShell_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox x:Name="TextBoxAdditionalCommandLine" Grid.Column="2" Grid.Row="10" Text="{Binding PowerShell_AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding PowerShell_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
                                 <CheckBox Grid.Column="0" Grid.Row="12" Content="{x:Static localization:Strings.ExecutionPolicy}" IsChecked="{Binding PowerShell_OverrideExecutionPolicy}" Style="{StaticResource DefaultCheckBox}" />
@@ -1080,7 +1080,7 @@
                                         </TextBox.Style>
                                     </TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
-                                    <Separator Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                                    <Separator Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
                                     <CheckBox Grid.Column="0" Grid.Row="10" IsChecked="{Binding PuTTY_OverridePortOrBaud}">
                                         <CheckBox.Style>
                                             <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultCheckBox}">
@@ -1229,7 +1229,7 @@
                                     </TextBox.Style>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
-                                <Separator Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4" Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                                <Separator Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="8" Content="{x:Static localization:Strings.Port}" IsChecked="{Binding TigerVNC_OverridePort}" Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox x:Name="TextBoxTigerVNCPort" Grid.Column="2" Grid.Row="8" IsEnabled="{Binding TigerVNC_OverridePort}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort5900}">
                                     <TextBox.Text>
@@ -1326,7 +1326,7 @@
                                     </TextBox.Text>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
-                                <Separator Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4" Background="{DynamicResource GrayBrush8}" Margin="0,0,0,10" />
+                                <Separator Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="8" Content="{x:Static localization:Strings.Port}" IsChecked="{Binding WakeOnLAN_OverridePort}" Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox x:Name="TextBoxWakeOnLANPort" Grid.Column="2" Grid.Row="8" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort7}" IsEnabled="{Binding WakeOnLAN_OverridePort}">
                                     <TextBox.Text>

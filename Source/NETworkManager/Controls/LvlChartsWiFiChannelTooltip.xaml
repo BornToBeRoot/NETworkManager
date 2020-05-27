@@ -41,8 +41,8 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Rectangle Grid.Column="0" Stroke="{Binding Series.Stroke}" Fill="{Binding Series.Stroke}" Height="2" Width="14"></Rectangle>
-                            <TextBlock Grid.Column="2" Text="{Binding ChartPoint.Instance}" VerticalAlignment="Center" Foreground="{DynamicResource GrayBrush3}"/>
-                            <TextBlock Grid.Column="4" Text="{Binding Series.Title}" VerticalAlignment="Center" Foreground="{DynamicResource AccentColorBrush}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding ChartPoint.Instance}" VerticalAlignment="Center" Foreground="{DynamicResource MahApps.Brushes.Gray3}"/>
+                            <TextBlock Grid.Column="4" Text="{Binding Series.Title}" VerticalAlignment="Center" Foreground="{DynamicResource MahApps.Brushes.Accent}"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

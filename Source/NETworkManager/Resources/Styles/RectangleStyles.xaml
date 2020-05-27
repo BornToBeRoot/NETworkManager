@@ -5,7 +5,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=HelpCircleOutline}"/>
@@ -19,7 +19,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationVariant}"/>
@@ -33,7 +33,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Alert}"/>
@@ -107,7 +107,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=HelpCircleOutline}"/>

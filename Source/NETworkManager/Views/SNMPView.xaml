@@ -418,7 +418,7 @@
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
                                 <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
-                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                             </Style>
                         </Rectangle.Style>
                     </Rectangle>
@@ -437,7 +437,7 @@
                 </Grid>
             </Button.Content>
         </Button>
-        <mahAppsControls:MetroProgressBar Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Margin="0,10,0,0">
+        <mahAppsControls:MetroProgressBar Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True" Margin="0,10,0,0">
             <mahAppsControls:MetroProgressBar.Style>
                 <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}" >
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -456,7 +456,7 @@
                 </Style>
             </mahAppsControls:MetroProgressBar.Style>
         </mahAppsControls:MetroProgressBar>
-        <TextBlock Grid.Row="6" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" Margin="0,10,0,0" Style="{StaticResource DefaultTextBlock}"/>
+        <TextBlock Grid.Row="6" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource MahApps.Brushes.Accent}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" Margin="0,10,0,0" Style="{StaticResource DefaultTextBlock}"/>
         <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="0">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">

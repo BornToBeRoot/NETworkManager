@@ -88,7 +88,7 @@
                                             <Rectangle.Style>
                                                 <Style TargetType="{x:Type Rectangle}">
                                                     <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
-                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                 </Style>
                                             </Rectangle.Style>
                                         </Rectangle>
@@ -103,7 +103,7 @@
                                 </Button.Content>
                             </Button>
                         </Grid>
-                        <mahAppsControls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True">
+                        <mahAppsControls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True">
                             <mahAppsControls:MetroProgressBar.Style>
                                 <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
                                     <Style.Triggers>
@@ -114,7 +114,7 @@
                                 </Style>
                             </mahAppsControls:MetroProgressBar.Style>
                         </mahAppsControls:MetroProgressBar>
-                        <TextBlock Grid.Row="2" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+                        <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
                     </Grid>
                     <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Hosts}" />
                     <ScrollViewer Grid.Row="3" Style="{StaticResource DefaultScrollViewer}">
@@ -133,7 +133,7 @@
                         <!-- /BUGFIX-->
                     </ListView>
                     </ScrollViewer>
-                    <TextBlock Grid.Row="3" Foreground="{DynamicResource GrayBrush3}" Text="{x:Static localization:Strings.AddAHostToMonitor}" Visibility="{Binding Hosts.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
+                    <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Text="{x:Static localization:Strings.AddAHostToMonitor}" Visibility="{Binding Hosts.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
                 </Grid>
                 <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
                 <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
@@ -218,10 +218,10 @@
                                                                             </Rectangle.OpacityMask>
                                                                             <Rectangle.Style>
                                                                                 <Style TargetType="{x:Type Rectangle}">
-                                                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                                                     <Style.Triggers>
                                                                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                                                         </DataTrigger>
                                                                                     </Style.Triggers>
                                                                                 </Style>
@@ -290,10 +290,10 @@
                                         <Rectangle.Style>
                                             <Style TargetType="{x:Type Rectangle}">
                                                 <Setter Property="OpacityMask" Value="{StaticResource VisualPlus}" />
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                                         <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
@@ -308,7 +308,7 @@
                                                 <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                                         <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
@@ -320,7 +320,7 @@
                                 </Grid>
                             </Button>
                         </Grid>
-                        <Border Grid.Column="0" Grid.Row="4" BorderBrush="{DynamicResource GrayBrush8}" Margin="-10" BorderThickness="0,1,0,0" Background="Transparent">
+                        <Border Grid.Column="0" Grid.Row="4" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" Margin="-10" BorderThickness="0,1,0,0" Background="Transparent">
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}">
                                     <Style.Triggers>
@@ -348,10 +348,10 @@
                                         <Rectangle.Style>
                                             <Style TargetType="{x:Type Rectangle}">
                                                 <Setter Property="OpacityMask" Value="{StaticResource VisualPlus}" />
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -363,7 +363,7 @@
                                                 <Setter Property="Text" Value="{x:Static localization:Strings.AddProfileDots}" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>

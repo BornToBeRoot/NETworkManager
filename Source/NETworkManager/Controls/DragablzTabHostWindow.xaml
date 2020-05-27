@@ -43,13 +43,13 @@
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
                                         <DataTemplate DataType="controls:DragablzTabItem">
-                                            <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
+                                            <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
                                                 <Grid>
                                                     <Grid.ContextMenu>
                                                         <ContextMenu>
                                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.RemoteDesktop_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
-                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                                         <Rectangle.OpacityMask>
                                                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restart}" />
                                                                         </Rectangle.OpacityMask>
@@ -58,7 +58,7 @@
                                                             </MenuItem>
                                                             <MenuItem Header="{x:Static localization:Strings.Disconnect}" Command="{Binding Data.RemoteDesktop_DisconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
-                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                                         <Rectangle.OpacityMask>
                                                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Disconnect}" />
                                                                         </Rectangle.OpacityMask>
@@ -68,7 +68,7 @@
                                                             <Separator />
                                                             <MenuItem Header="{x:Static localization:Strings.Fullscreen}" Command="{Binding Data.RemoteDesktop_FullscreenCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
-                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                                         <Rectangle.OpacityMask>
                                                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=ScreenFull}" />
                                                                         </Rectangle.OpacityMask>
@@ -77,7 +77,7 @@
                                                             </MenuItem>
                                                             <MenuItem Header="{x:Static localization:Strings.AdjustScreen}" Command="{Binding Data.RemoteDesktop_AdjustScreenCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
-                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                                         <Rectangle.OpacityMask>
                                                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Octicons Kind=ScreenNormal}" />
                                                                         </Rectangle.OpacityMask>
@@ -87,7 +87,7 @@
                                                             <Separator />
                                                             <MenuItem Header="{x:Static localization:Strings.KeyboardShortcuts}">
                                                                 <MenuItem.Icon>
-                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                                         <Rectangle.OpacityMask>
                                                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyboardVariant}" />
                                                                         </Rectangle.OpacityMask>
@@ -105,13 +105,13 @@
                                                             <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
-                                                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
-                                                                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
@@ -126,7 +126,7 @@
                                                                 </Rectangle.OpacityMask>
                                                                 <Rectangle.Style>
                                                                     <Style TargetType="{x:Type Rectangle}">
-                                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                                                                 <Setter Property="Fill" Value="Red" />
@@ -150,13 +150,13 @@
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
                                         <DataTemplate DataType="controls:DragablzTabItem">
-                                            <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
+                                            <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
                                                 <Grid>
                                                     <Grid.ContextMenu>
                                                         <ContextMenu>
                                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.PowerShell_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
-                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                                         <Rectangle.OpacityMask>
                                                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restart}" />
                                                                         </Rectangle.OpacityMask>
@@ -173,13 +173,13 @@
                                                             <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
-                                                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
-                                                                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
@@ -194,7 +194,7 @@
                                                                 </Rectangle.OpacityMask>
                                                                 <Rectangle.Style>
                                                                     <Style TargetType="{x:Type Rectangle}">
-                                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                                                                 <Setter Property="Fill" Value="Red" />
@@ -218,13 +218,13 @@
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
                                         <DataTemplate DataType="controls:DragablzTabItem">
-                                            <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
+                                            <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
                                                 <Grid>
                                                     <Grid.ContextMenu>
                                                         <ContextMenu>
                                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.PuTTY_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
-                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                                         <Rectangle.OpacityMask>
                                                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restart}" />
                                                                         </Rectangle.OpacityMask>
@@ -234,7 +234,7 @@
                                                             <Separator />
                                                             <MenuItem Header="{x:Static localization:Strings.RestartSession}" Command="{Binding Data.PuTTY_RestartSessionCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
-                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                                         <Rectangle.OpacityMask>
                                                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
                                                                         </Rectangle.OpacityMask>
@@ -251,13 +251,13 @@
                                                             <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
-                                                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
-                                                                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
@@ -272,7 +272,7 @@
                                                                 </Rectangle.OpacityMask>
                                                                 <Rectangle.Style>
                                                                     <Style TargetType="{x:Type Rectangle}">
-                                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                                                                 <Setter Property="Fill" Value="Red" />
@@ -296,13 +296,13 @@
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
                                         <DataTemplate DataType="controls:DragablzTabItem">
-                                            <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
+                                            <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
                                                 <Grid>
                                                     <Grid.ContextMenu>
                                                         <ContextMenu>
                                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.TigerVNC_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
-                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                                         <Rectangle.OpacityMask>
                                                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restart}" />
                                                                         </Rectangle.OpacityMask>
@@ -319,13 +319,13 @@
                                                             <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
-                                                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
-                                                                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
@@ -340,7 +340,7 @@
                                                                 </Rectangle.OpacityMask>
                                                                 <Rectangle.Style>
                                                                     <Style TargetType="{x:Type Rectangle}">
-                                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                                                                 <Setter Property="Fill" Value="Red" />
@@ -364,13 +364,13 @@
                                 <Setter Property="HeaderItemTemplate">
                                     <Setter.Value>
                                         <DataTemplate DataType="controls:DragablzTabItem">
-                                            <Border BorderBrush="{DynamicResource GrayBrush8}" BorderThickness="0,0,1,0">
+                                            <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
                                                 <Grid>
                                                     <Grid.ContextMenu>
                                                         <ContextMenu>
                                                             <MenuItem Header="{x:Static localization:Strings.Refresh}" Command="{Binding Data.WebConsole_RefreshCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
-                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource GrayBrush3}">
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                                         <Rectangle.OpacityMask>
                                                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restart}" />
                                                                         </Rectangle.OpacityMask>
@@ -387,13 +387,13 @@
                                                             <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                                                        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
-                                                                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
-                                                                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
@@ -408,7 +408,7 @@
                                                                 </Rectangle.OpacityMask>
                                                                 <Rectangle.Style>
                                                                     <Style TargetType="{x:Type Rectangle}">
-                                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                                                                 <Setter Property="Fill" Value="Red" />
