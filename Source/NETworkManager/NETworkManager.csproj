@@ -35,7 +35,7 @@
     <Reference Include="MSTSCLib">
       <HintPath>$(TargetDir)\MSTSCLib.dll</HintPath>
     </Reference>
-
+    
     <Page Remove="Resources\Styles\WindowStyles.xaml" />
     <Content Include="Resources\Styles\WindowStyles.xaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

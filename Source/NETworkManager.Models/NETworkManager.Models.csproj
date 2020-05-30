@@ -8,7 +8,7 @@
     <UseWPF>true</UseWPF>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="DnsClient" Version="1.3.2" />
     <PackageReference Include="IPNetwork2" Version="2.5.202" />
