@@ -996,7 +996,7 @@
       <Version>0.0.3.203</Version>
     </PackageReference>
     <PackageReference Include="IPNetwork2">
-      <Version>2.5.206</Version>
+      <Version>2.5.211</Version>
     </PackageReference>
     <PackageReference Include="Lextm.SharpSnmpLib">
       <Version>12.0.0</Version>
