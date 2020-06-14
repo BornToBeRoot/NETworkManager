@@ -10,6 +10,6 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Octokit" Version="0.47.0" />
+    <PackageReference Include="Octokit" Version="0.48.0" />
   </ItemGroup>
 </Project>
