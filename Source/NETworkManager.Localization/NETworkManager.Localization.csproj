@@ -150,7 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MahApps.Metro">
-      <Version>1.6.5</Version>
+      <Version>2.1.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
