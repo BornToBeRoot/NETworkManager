@@ -10,8 +10,8 @@
     <NoWarn>1701;1702;CA1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Resources\Flags\de-DE.png" />
     <None Remove="Resources\Flags\en-US.png" />
+    <None Remove="Resources\Flags\de-DE.png" />
     <None Remove="Resources\Flags\es-ES.png" />
     <None Remove="Resources\Flags\fr-FR.png" />
     <None Remove="Resources\Flags\hu-HU.png" />
@@ -22,16 +22,16 @@
     <None Remove="Resources\Flags\zh-CN.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Flags\de-DE.png" />
-    <EmbeddedResource Include="Resources\Flags\en-US.png" />
-    <EmbeddedResource Include="Resources\Flags\es-ES.png" />
-    <EmbeddedResource Include="Resources\Flags\fr-FR.png" />
-    <EmbeddedResource Include="Resources\Flags\hu-HU.png" />
-    <EmbeddedResource Include="Resources\Flags\it-IT.png" />
-    <EmbeddedResource Include="Resources\Flags\nl-NL.png" />
-    <EmbeddedResource Include="Resources\Flags\pt-BR.png" />
-    <EmbeddedResource Include="Resources\Flags\ru-RU.png" />
-    <EmbeddedResource Include="Resources\Flags\zh-CN.png" />
+    <Resource Include="Resources\Flags\en-US.png" />
+    <Resource Include="Resources\Flags\de-DE.png" />
+    <Resource Include="Resources\Flags\es-ES.png" />
+    <Resource Include="Resources\Flags\fr-FR.png" />
+    <Resource Include="Resources\Flags\hu-HU.png" />
+    <Resource Include="Resources\Flags\it-IT.png" />
+    <Resource Include="Resources\Flags\nl-NL.png" />
+    <Resource Include="Resources\Flags\pt-BR.png" />
+    <Resource Include="Resources\Flags\ru-RU.png" />
+    <Resource Include="Resources\Flags\zh-CN.png" />
   </ItemGroup>
   
   <ItemGroup>

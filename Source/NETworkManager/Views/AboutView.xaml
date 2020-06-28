@@ -34,7 +34,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Grid.Row="0" Width="128" Height="128" Source="/Resources/Images/NETworkManager.ico" VerticalAlignment="Center" />
+                <Image Grid.Column="0" Grid.Row="0" Width="128" Height="128" Source="/NETworkManager.ico" VerticalAlignment="Center" />
                 <StackPanel Grid.Column="1" Margin="20,0,0,0">
                     <TextBlock FontSize="32" Text="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock Text="{x:Static localization:Strings.Slogan}" Style="{DynamicResource WrapTextBlock}" Margin="0,0,0,5" />
