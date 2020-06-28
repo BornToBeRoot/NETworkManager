@@ -416,7 +416,7 @@
                 </ContextMenu>
             </controls:MultiSelectDataGrid.Resources>
             <controls:MultiSelectDataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
                     <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
 
                     <Style.Triggers>

@@ -88,7 +88,7 @@
                 <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
             </DataGrid.InputBindings>
             <DataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
                     <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick" />
                     <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
                     <Style.Triggers>
