@@ -2,11 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="DefaultTextBlock" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
     </Style>
 
     <Style x:Key="HeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource MahApps.Fonts.Family.Header}" />
+        <Setter Property="Foreground" Value="{StaticResource MahApps.Brushes.Accent}" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Margin" Value="0,0,0,10" />
     </Style>

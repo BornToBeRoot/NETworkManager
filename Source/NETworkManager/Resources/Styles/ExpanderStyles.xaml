@@ -62,7 +62,7 @@
         <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ExpanderDownHeader}" />
     </Style>
 
-    <Style x:Key="ExpanderDownHeaderReverse" BasedOn="{StaticResource ExpanderDownHeaderStyle}" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="ExpanderDownHeaderReverse" BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down}" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -122,13 +122,13 @@
         <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ExpanderDownHeaderReverse}" />
     </Style>
 
-    <Style x:Key="RightExpanderOpen" BasedOn="{StaticResource ExpanderDownHeaderStyle}" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="RightExpanderOpen" BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down}" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
-                            BorderBrush="{StaticResource GrayBrush8}"
+                            BorderBrush="{StaticResource MahApps.Brushes.Gray8}"
                             BorderThickness="0,0,0,1">
                         <Grid Background="Transparent" SnapsToDevicePixels="False" Margin="0,10,0,5">
                             <Grid.ColumnDefinitions>
@@ -153,7 +153,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="RightExpanderClosed" BasedOn="{StaticResource ExpanderRightHeaderStyle}" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="RightExpanderClosed" BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right}" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">

@@ -7,7 +7,7 @@
     <ControlTemplate x:Key="DefaultErrorTemplate">
         <StackPanel Orientation="Horizontal">
             <Grid>
-                <Polygon  x:Name="toolTipCorner"  Grid.ZIndex="2" Margin="0" Points="8,8 8,0 0,0" Fill="{DynamicResource MahApps.Brushes.Accent}" HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="True" />
+                <Polygon  x:Name="toolTipCorner" Grid.ZIndex="2" Margin="0" Points="8,8 8,0 0,0" Fill="{DynamicResource MahApps.Brushes.Accent}" HorizontalAlignment="Right" VerticalAlignment="Top" IsHitTestVisible="True" />
                 <AdornedElementPlaceholder x:Name="adorner"/>
                 <Popup PlacementTarget="{Binding ElementName=adorner}" PopupAnimation="Fade" HorizontalOffset="5">
                     <Popup.Style>
@@ -34,7 +34,7 @@
                         </Style>
                     </Popup.Style>
                     <StackPanel>
-                        <Border MaxWidth="300" Background="{DynamicResource WhiteColorBrush}" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="1" Padding="5">
+                        <Border MaxWidth="300" Background="{DynamicResource MahApps.Brushes.Window.Background}" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="1" Padding="5">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -45,7 +45,7 @@
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationVariant}" />                                        
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{Binding Path=/ErrorContent}" Foreground="{DynamicResource BlackColorBrush}" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Path=/ErrorContent}" Foreground="{DynamicResource MahApps.Brushes.Text}" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10,0,0,0"/>
                             </Grid>
                         </Border>
                     </StackPanel>

@@ -3,8 +3,8 @@
     <Style x:Key="DefaultToolTip" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource MahApps.Styles.ToolTip}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
     </Style>
 
     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />

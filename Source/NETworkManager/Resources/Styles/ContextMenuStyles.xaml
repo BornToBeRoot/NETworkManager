@@ -4,8 +4,8 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Style.Resources>
-            <SolidColorBrush x:Key="SubMenuBorderBrush" Color="{DynamicResource Gray8}" />
-            <SolidColorBrush x:Key="RightArrowFill" Color="{DynamicResource Gray3}" />
+            <SolidColorBrush x:Key="SubMenuBorderBrush" Color="{DynamicResource MahApps.Colors.Gray8}" />
+            <SolidColorBrush x:Key="RightArrowFill" Color="{DynamicResource MahApps.Colors.Gray3}" />
         </Style.Resources>
     </Style>
 
