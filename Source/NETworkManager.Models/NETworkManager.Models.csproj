@@ -9,6 +9,15 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\DiscoveryProtocol.ps1" />
+    <None Remove="Resources\OUI.xml" />
+    <None Remove="Resources\Ports.xml" />
+    <None Remove="Resources\WhoisServers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DiscoveryProtocol.ps1" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="DnsClient" Version="1.3.2" />
     <PackageReference Include="IPNetwork2" Version="2.5.211" />
     <PackageReference Include="Lextm.SharpSnmpLib" Version="12.0.0" />
@@ -21,6 +30,21 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\OUI.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Ports.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\WhoisServers.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   
 </Project>
