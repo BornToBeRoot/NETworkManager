@@ -13,7 +13,7 @@ namespace NETworkManager.Converters
     public sealed class AppThemeToStringConverter : IValueConverter
     {
         /// <summary>
-        /// Convert <see cref="heme"/> to translated <see cref="string"/>. 
+        /// Convert <see cref="Theme"/> to translated <see cref="string"/>. 
         /// </summary>
         /// <param name="value">Object from type <see cref="Theme"/>.</param>
         /// <param name="targetType"></param>
