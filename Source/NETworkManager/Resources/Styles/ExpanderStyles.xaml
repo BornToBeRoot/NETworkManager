@@ -53,7 +53,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="DefaultExpander" TargetType="{x:Type Expander}" BasedOn="{StaticResource MetroExpander}">
+    <Style x:Key="DefaultExpander" TargetType="{x:Type Expander}" BasedOn="{StaticResource MahApps.Styles.Expander}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="Transparent" />
@@ -113,7 +113,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="HeaderExpander" TargetType="{x:Type Expander}" BasedOn="{StaticResource MetroExpander}">
+    <Style x:Key="HeaderExpander" TargetType="{x:Type Expander}" BasedOn="{StaticResource MahApps.Styles.Expander}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Margin" Value="-4" />
         <Setter Property="Background" Value="Transparent" />
@@ -189,7 +189,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="RightExpander" TargetType="{x:Type Expander}" BasedOn="{StaticResource MetroExpander}">
+    <Style x:Key="RightExpander" TargetType="{x:Type Expander}" BasedOn="{StaticResource MahApps.Styles.Expander}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ExpandDirection" Value="Right" />

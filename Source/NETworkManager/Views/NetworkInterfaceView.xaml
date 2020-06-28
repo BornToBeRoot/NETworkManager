@@ -84,7 +84,7 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                                 <ComboBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MetroComboBoxItem}">
+                                    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MahApps.Styles.ComboBoxItem}">
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="ComboBoxItem">
@@ -376,7 +376,7 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                                 <ComboBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MetroComboBoxItem}">
+                                    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MahApps.Styles.ComboBoxItem}">
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="ComboBoxItem">
@@ -589,7 +589,7 @@
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                         <ComboBox.ItemContainerStyle>
-                                            <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MetroComboBoxItem}">
+                                            <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MahApps.Styles.ComboBoxItem}">
                                                 <Setter Property="Template">
                                                     <Setter.Value>
                                                         <ControlTemplate TargetType="ComboBoxItem">
@@ -945,7 +945,7 @@
                                     </GroupStyle>
                                 </ListBox.GroupStyle>
                                 <ListBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                                    <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MahApps.Styles.ListBoxItem}">
                                         <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
                                     </Style>
                                 </ListBox.ItemContainerStyle>

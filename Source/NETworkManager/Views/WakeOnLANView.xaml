@@ -193,7 +193,7 @@
                                         </MenuItem.Icon>
                                     </MenuItem>
                                 </ContextMenu>
-                                <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MetroListBoxItem}">
+                                <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MahApps.Styles.ListBoxItem}">
                                     <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
                                 </Style>
                             </ListBox.Resources>
