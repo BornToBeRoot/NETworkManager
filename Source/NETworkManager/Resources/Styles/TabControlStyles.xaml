@@ -12,7 +12,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid x:Name="PART_Grid" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Margin="0">
-                        <ContentPresenter x:Name="PART_HeaderContent" Margin="{TemplateBinding Padding}" ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.FontSize="18" TextBlock.FontFamily="{StaticResource HeaderFontFamily}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <ContentPresenter x:Name="PART_HeaderContent" Margin="{TemplateBinding Padding}" ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.FontSize="18" TextBlock.FontFamily="{StaticResource MahApps.Fonts.Family.Header}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <!--<Rectangle x:Name="PART_Selector" VerticalAlignment="Bottom" Height="2" Visibility="Collapsed" Fill="{DynamicResource MahApps.Brushes.Accent}" />-->
                     </Grid>
                     <ControlTemplate.Triggers>

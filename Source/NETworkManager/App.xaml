@@ -34,7 +34,7 @@
                 <ResourceDictionary Source="/Resources/Styles/GridSplitterStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/MetroDialogStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />                
                 <ResourceDictionary Source="/Resources/Styles/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollBarStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollViewerStyles.xaml" />

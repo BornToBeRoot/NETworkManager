@@ -264,7 +264,7 @@
                     </ContextMenu>
                 </DataGrid.Resources>
                 <DataGrid.RowStyle>
-                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
                                 <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>

@@ -13,10 +13,10 @@
     <PackageReference Include="DnsClient" Version="1.3.2" />
     <PackageReference Include="IPNetwork2" Version="2.5.211" />
     <PackageReference Include="Lextm.SharpSnmpLib" Version="12.0.0" />
-    <PackageReference Include="MahApps.Metro" Version="2.0.1" />
+    <PackageReference Include="MahApps.Metro" Version="2.1.0" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.2.0" />
     <PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls.WebView" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.Controls.WebView" Version="6.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 

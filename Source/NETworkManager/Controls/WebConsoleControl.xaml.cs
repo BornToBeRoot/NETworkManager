@@ -94,7 +94,7 @@ namespace NETworkManager.Controls
 
             Browser2.NavigationStarting += Browser2_NavigationStarting;
             Browser2.NavigationCompleted += Browser2_NavigationCompleted;
-
+            
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
