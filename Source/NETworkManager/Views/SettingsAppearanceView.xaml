@@ -8,61 +8,30 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsAppearanceViewModel}">
-    <UserControl.Resources>
-        <!-- Converters -->
-        <!--<converters:AppThemeToBrushConverter x:Key="AppThemeToBrushConverter" />-->
-        <!--<converters:AppThemeToStringConverter x:Key="AppThemeToStringConverter" />-->
-        <!-- <converters:AccentToBrushConverter x:Key="AccentToBrushConverter" /> -->
-        <!-- <converters:AccentToStringConverter x:Key="AccentToStringConverter" /> -->
-    </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.Theme}" Style="{StaticResource HeaderTextBlock}" />
-        <!--<ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{x:Static metro:ThemeManager.AppThemes}" VerticalAlignment="Top" BorderThickness="0" SelectionMode="Single" Margin="0,0,0,20">
+        <ComboBox ItemsSource="{Binding BaseColorSchemes}" SelectedItem="{Binding SelectedBaseColorScheme}" DisplayMemberPath="BaseColorScheme" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
+        <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Themes}" VerticalAlignment="Top" BorderThickness="0" SelectionMode="Single">           
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Rectangle Width="48" Height="48" Margin="-1,2" Fill="{Binding Converter={StaticResource AppThemeToBrushConverter}, ConverterParameter='Name'}" ToolTip="{Binding Converter={StaticResource AppThemeToStringConverter}, ConverterParameter='Name'}"/>
+                    <Rectangle Width="48" Height="48" Margin="-1,2" Fill="{Binding ShowcaseBrush}" ToolTip="{Binding Name}"/>
                 </DataTemplate>
-            </ListView.ItemTemplate>
+            </ListView.ItemTemplate>                        
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
-            --><!-- BUGFIX This has to be set, to enable mouse wheel scrolling --><!--
+            <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->            
             <ListBox.Template>
                 <ControlTemplate>
                     <ItemsPresenter />
                 </ControlTemplate>
-            </ListBox.Template>
-            --><!-- /BUGFIX--><!--
+            </ListBox.Template>            
+            <!-- /BUGFIX-->
             <ListView.SelectedItem>
-                <Binding Path="AppThemeSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
+                <Binding Path="SelectedTheme" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
             </ListView.SelectedItem>
-        </ListView>-->
-        <TextBlock Text="{x:Static localization:Strings.Accent}" Style="{StaticResource HeaderTextBlock}" />
-        <StackPanel Margin="0,0,0,20">
-            <!--<ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{x:Static metro:ThemeManager.Accents}" BorderThickness="0" SelectionMode="Single" Margin="0,0,0,10">
-                <ListView.ItemTemplate>
-                    <DataTemplate >
-                        --><!-- <Rectangle Width="48" Height="48" Margin="-1,2" Fill="{Binding Converter={StaticResource AccentToBrushConverter}, ConverterParameter='Name'}" ToolTip="{Binding Converter={StaticResource AccentToStringConverter}, ConverterParameter='Name'}"  /> --><!--
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                --><!-- BUGFIX This has to be set, to enable mouse wheel scrolling --><!--
-                <ListBox.Template>
-                    <ControlTemplate>
-                        <ItemsPresenter />
-                    </ControlTemplate>
-                </ListBox.Template>
-                --><!-- /BUGFIX--><!--
-                <ListView.SelectedItem>
-                    <Binding Path="AccentSelectedItem" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
-                </ListView.SelectedItem>
-            </ListView>-->           
-        </StackPanel>        
+        </ListView>
     </StackPanel>
 </UserControl>

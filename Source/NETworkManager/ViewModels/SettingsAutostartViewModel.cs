@@ -1,6 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Settings;
-using NETworkManager.Utilities;
 using System;
 using System.Threading.Tasks;
 

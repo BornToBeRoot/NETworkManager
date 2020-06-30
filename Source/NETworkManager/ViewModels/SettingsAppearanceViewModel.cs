@@ -1,6 +1,12 @@
 ﻿using ControlzEx.Theming;
 using MahApps.Metro;
 using NETworkManager.Settings;
+using System.ComponentModel;
+using System.Windows.Media;
+using System.Linq;
+using System.Windows.Data;
+using System.Collections.Generic;
+using Windows.UI.Xaml.Input;
 
 namespace NETworkManager.ViewModels
 {
@@ -9,22 +15,26 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
-        private Theme _appThemeSelectedItem;
-        public Theme AppThemeSelectedItem
+        public ICollectionView BaseColorSchemes { get; private set; }
+
+        public ICollectionView Themes { get; private set; }
+        
+        private Theme _selectedTheme;
+        public Theme SelectedTheme
         {
-            get => _appThemeSelectedItem;
+            get => _selectedTheme;
             set
             {
-                if (value == _appThemeSelectedItem)
+                if (value == _selectedTheme)
                     return;
 
                 if (!_isLoading)
                 {
-                    AppearanceManager.ChangeAppTheme(value.Name);
+                    AppearanceManager.ChangeTheme(value.Name);
                     SettingsManager.Current.Appearance_AppTheme = value.Name;
                 }
 
-                _appThemeSelectedItem = value;
+                _selectedTheme = value;
                 OnPropertyChanged();
             }
         }
@@ -54,6 +64,15 @@ namespace NETworkManager.ViewModels
         public SettingsAppearanceViewModel()
         {
             _isLoading = true;
+
+            BaseColorSchemes = new CollectionViewSource { Source = ThemeManager.Current.Themes.GroupBy(x => x.BaseColorScheme) }.View;
+
+            Themes = new CollectionViewSource { Source = ThemeManager.Current.Themes.Where(x => x.BaseColorScheme == "Light")}.View;
+            //Themes.GroupDescriptions.Add(new PropertyGroupDescription("BaseColorScheme"));
+            
+            //Colors = new CollectionViewSource { Source = typeof(Colors).GetProperties().Where(prop => typeof(Color).IsAssignableFrom(prop.PropertyType)).Select(prop => new KeyValuePair<string, Color>(prop.Name, (Color)prop.GetValue(null))).ToList() }.View;
+
+
 
             LoadSettings();
 
