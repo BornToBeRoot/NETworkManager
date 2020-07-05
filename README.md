@@ -24,5 +24,5 @@
       <img alt="Transifex" src="https://img.shields.io/badge/github-bug_report-red.svg?style=flat-square" />
     </a>     
   </p> 
-  <p> https://borntoberoot.github.io/NETworkManager/ </p>
+  <p> https://borntoberoot.net/NETworkManager/ </p>
 </div>
