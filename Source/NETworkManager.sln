@@ -3,32 +3,32 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager", "NETworkManager\NETworkManager.csproj", "{E825EC30-AFA2-476A-AC2C-7537630A645B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETworkManager", "NETworkManager\NETworkManager.csproj", "{E825EC30-AFA2-476A-AC2C-7537630A645B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Localization", "NETworkManager.Localization\NETworkManager.Localization.csproj", "{FF225C2E-AA67-4B10-939A-6C046CEF8697}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETworkManager.Localization", "NETworkManager.Localization\NETworkManager.Localization.csproj", "{FF225C2E-AA67-4B10-939A-6C046CEF8697}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Utilities", "NETworkManager.Utilities\NETworkManager.Utilities.csproj", "{5C3D1749-D260-4566-B448-B94B3AD9EEFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETworkManager.Utilities", "NETworkManager.Utilities\NETworkManager.Utilities.csproj", "{5C3D1749-D260-4566-B448-B94B3AD9EEFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Converters", "NETworkManager.Converters\NETworkManager.Converters.csproj", "{BD4DDC21-7B64-41B2-BAC7-8173E0FE84BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETworkManager.Converters", "NETworkManager.Converters\NETworkManager.Converters.csproj", "{BD4DDC21-7B64-41B2-BAC7-8173E0FE84BE}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FF225C2E-AA67-4B10-939A-6C046CEF8697} = {FF225C2E-AA67-4B10-939A-6C046CEF8697}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Utilities.WPF", "NETworkManager.Utilities.WPF\NETworkManager.Utilities.WPF.csproj", "{93733008-7269-460D-8390-AB281C75DB91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETworkManager.Utilities.WPF", "NETworkManager.Utilities.WPF\NETworkManager.Utilities.WPF.csproj", "{93733008-7269-460D-8390-AB281C75DB91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Models", "NETworkManager.Models\NETworkManager.Models.csproj", "{8A2859DC-38B6-4E9D-A6B2-1828DC6641B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETworkManager.Models", "NETworkManager.Models\NETworkManager.Models.csproj", "{8A2859DC-38B6-4E9D-A6B2-1828DC6641B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Update", "NETworkManager.Update\NETworkManager.Update.csproj", "{008467AF-D83F-4B1E-8733-B65136F595F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETworkManager.Update", "NETworkManager.Update\NETworkManager.Update.csproj", "{008467AF-D83F-4B1E-8733-B65136F595F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Controls", "NETworkManager.Controls\NETworkManager.Controls.csproj", "{95EA884C-E498-4A47-A316-DC890BF7F0D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETworkManager.Controls", "NETworkManager.Controls\NETworkManager.Controls.csproj", "{95EA884C-E498-4A47-A316-DC890BF7F0D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Validators", "NETworkManager.Validators\NETworkManager.Validators.csproj", "{29172E71-52AF-4E64-9683-30C5F4D0C746}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETworkManager.Validators", "NETworkManager.Validators\NETworkManager.Validators.csproj", "{29172E71-52AF-4E64-9683-30C5F4D0C746}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Documentation", "NETworkManager.Documentation\NETworkManager.Documentation.csproj", "{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETworkManager.Documentation", "NETworkManager.Documentation\NETworkManager.Documentation.csproj", "{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Settings", "NETworkManager.Settings\NETworkManager.Settings.csproj", "{954E8703-3E6E-42BF-BD28-F0B19BE10E0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETworkManager.Settings", "NETworkManager.Settings\NETworkManager.Settings.csproj", "{954E8703-3E6E-42BF-BD28-F0B19BE10E0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Profiles", "NETworkManager.Profiles\NETworkManager.Profiles.csproj", "{D3B37F13-E8E6-4218-9E8E-96D52432A9CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NETworkManager.Profiles", "NETworkManager.Profiles\NETworkManager.Profiles.csproj", "{D3B37F13-E8E6-4218-9E8E-96D52432A9CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA113DB7-AC5E-4AAF-B11B-6A6B644D255A}"
 	ProjectSection(SolutionItems) = preProject

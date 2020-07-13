@@ -1,6 +1,7 @@
 ﻿using DnsClient;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
@@ -62,7 +63,7 @@ namespace NETworkManager.Models.Network
 			{
 				foreach (var dnsServer in NameServer.ResolveNameServers(true, false))
 				{
-					//dnsServers.Add(dnsServer);
+					dnsServers.Add(new IPEndPoint(IPAddress.Parse(dnsServer.Address), dnsServer.Port));
 				}
 			}
 
@@ -99,12 +100,6 @@ namespace NETworkManager.Models.Network
 							Retries = Retries,
 						};
 						LookupClient dnsLookupClient = new LookupClient(lookupClientOptions);
-						//LookupClient dnsLookupClient == new LookupClient(dnsServer);
-						//dnsLookupClient.UseTcpOnly = UseTCPOnly;
-						//dnsLookupClient.UseCache = UseCache;
-						//dnsLookupClient.Recursion = Recursion;
-						//dnsLookupClient.Timeout = Timeout;
-						//dnsLookupClient.Retries = Retries;
 
 						try
 						{
@@ -114,7 +109,7 @@ namespace NETworkManager.Models.Network
 							// If there was an error... return
 							if (dnsResponse.HasError)
 							{
-								//OnLookupError(new DNSLookupErrorArgs(dnsResponse.ErrorMessage, dnsResponse.NameServer.Endpoint));
+								OnLookupError(new DNSLookupErrorArgs(dnsResponse.ErrorMessage, new IPEndPoint(IPAddress.Parse(dnsResponse.NameServer.Address), dnsResponse.NameServer.Port)));
 								return;
 							}
 
@@ -134,42 +129,42 @@ namespace NETworkManager.Models.Network
 
 		private void ProcessDnsQueryResponse(IDnsQueryResponse dnsQueryResponse)
 		{
-			//var dnsServer = dnsQueryResponse.NameServer.Endpoint;
+			var dnsServer = new IPEndPoint(IPAddress.Parse(dnsQueryResponse.NameServer.Address), dnsQueryResponse.NameServer.Port);
 
-			//// A
-			//foreach (var record in dnsQueryResponse.Answers.ARecords())
-			//    OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.Address.ToString(), dnsServer));
+            // A
+            foreach (var record in dnsQueryResponse.Answers.ARecords())
+                OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.Address.ToString(), dnsServer));
 
-			//// AAAA
-			//foreach (var record in dnsQueryResponse.Answers.AaaaRecords())
-			//    OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.Address.ToString(), dnsServer));
+            // AAAA
+            foreach (var record in dnsQueryResponse.Answers.AaaaRecords())
+                OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.Address.ToString(), dnsServer));
 
-			//// CNAME
-			//foreach (var record in dnsQueryResponse.Answers.CnameRecords())
-			//    OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.CanonicalName, dnsServer));
+            // CNAME
+            foreach (var record in dnsQueryResponse.Answers.CnameRecords())
+                OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.CanonicalName, dnsServer));
 
-			//// MX
-			//foreach (var record in dnsQueryResponse.Answers.MxRecords())
-			//    OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.Exchange, dnsServer));
+            // MX
+            foreach (var record in dnsQueryResponse.Answers.MxRecords())
+                OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.Exchange, dnsServer));
 
-			//// NS
-			//foreach (var record in dnsQueryResponse.Answers.NsRecords())
-			//    OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.NSDName, dnsServer));
+            // NS
+            foreach (var record in dnsQueryResponse.Answers.NsRecords())
+                OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.NSDName, dnsServer));
 
-			//// PTR
-			//foreach (var record in dnsQueryResponse.Answers.PtrRecords())
-			//    OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.PtrDomainName, dnsServer));
+            // PTR
+            foreach (var record in dnsQueryResponse.Answers.PtrRecords())
+                OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.PtrDomainName, dnsServer));
 
-			//// SOA
-			//foreach (var record in dnsQueryResponse.Answers.SoaRecords())
-			//    OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.MName + ", " + record.RName, dnsServer));
+            // SOA
+            foreach (var record in dnsQueryResponse.Answers.SoaRecords())
+                OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, record.MName + ", " + record.RName, dnsServer));
 
-			//// TXT
-			//foreach (var record in dnsQueryResponse.Answers.TxtRecords())
-			//    OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, string.Join(", ", record.Text), dnsServer));
+            // TXT
+            foreach (var record in dnsQueryResponse.Answers.TxtRecords())
+                OnRecordReceived(new DNSLookupRecordArgs(record.DomainName, record.TimeToLive, record.RecordClass, record.RecordType, string.Join(", ", record.Text), dnsServer));
 
-			// ToDo: implement more
-		}
+            // ToDo: implement more
+        }
 		#endregion
 	}
 }

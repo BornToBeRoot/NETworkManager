@@ -10,8 +10,8 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="MahApps.Metro" Version="2.1.0" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.2.0" />
+    <PackageReference Include="MahApps.Metro" Version="2.1.1" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.3.0" />
   </ItemGroup>
   
   <ItemGroup>
