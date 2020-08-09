@@ -24,7 +24,7 @@
   
   <ItemGroup>
     <PackageReference Include="LiveCharts.Wpf.NetCore3" Version="0.9.7" />
-    <PackageReference Include="MahApps.Metro" Version="2.1.1" />
+    <PackageReference Include="MahApps.Metro" Version="2.2.0" />
   </ItemGroup>
   
 </Project>
