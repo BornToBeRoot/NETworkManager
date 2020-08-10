@@ -187,22 +187,22 @@ namespace NETworkManager.Settings
         }
 
         // Appearance
-        private string _appearance_AppTheme;
-        public string Appearance_AppTheme
+        private string _appearance_Theme = GlobalStaticConfiguration.Appearance_Theme;
+        public string Appearance_Theme
         {
-            get => _appearance_AppTheme;
+            get => _appearance_Theme;
             set
             {
-                if (value == _appearance_AppTheme)
+                if (value == _appearance_Theme)
                     return;
 
-                _appearance_AppTheme = value;
+                _appearance_Theme = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private string _appearance_Accent;
+        private string _appearance_Accent = GlobalStaticConfiguration.Appearance_Accent;
         public string Appearance_Accent
         {
             get => _appearance_Accent;

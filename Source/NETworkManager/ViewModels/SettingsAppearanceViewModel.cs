@@ -1,12 +1,7 @@
-﻿using ControlzEx.Theming;
-using MahApps.Metro;
-using NETworkManager.Settings;
+﻿using NETworkManager.Settings;
 using System.ComponentModel;
-using System.Windows.Media;
-using System.Linq;
 using System.Windows.Data;
-using System.Collections.Generic;
-using Windows.UI.Xaml.Input;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -15,12 +10,10 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
-        public ICollectionView BaseColorSchemes { get; private set; }
-
         public ICollectionView Themes { get; private set; }
-        
-        private Theme _selectedTheme;
-        public Theme SelectedTheme
+
+        private ThemeColorInfo _selectedTheme;
+        public ThemeColorInfo SelectedTheme
         {
             get => _selectedTheme;
             set
@@ -31,7 +24,7 @@ namespace NETworkManager.ViewModels
                 if (!_isLoading)
                 {
                     AppearanceManager.ChangeTheme(value.Name);
-                    SettingsManager.Current.Appearance_AppTheme = value.Name;
+                    SettingsManager.Current.Appearance_Theme = value.Name;
                 }
 
                 _selectedTheme = value;
@@ -39,25 +32,29 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        //private Accent _accentSelectedItem;
-        //public Accent AccentSelectedItem
-        //{
-        //    get => _accentSelectedItem;
-        //    set
-        //    {
-        //        if (value == _accentSelectedItem)
-        //            return;
 
-        //        if (!_isLoading)
-        //        {
-        //            AppearanceManager.ChangeAccent(value.Name);
-        //            SettingsManager.Current.Appearance_Accent = value.Name;
-        //        }
+        public ICollectionView Accents { get; private set; }
 
-        //        _accentSelectedItem = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
+        private AccentColorInfo _selectedAccent;
+        public AccentColorInfo SelectedAccent
+        {
+            get => _selectedAccent;
+            set
+            {
+                if (value == _selectedAccent)
+                    return;
+
+                if (!_isLoading)
+                {
+                    AppearanceManager.ChangeAccent(value.Name);
+                    SettingsManager.Current.Appearance_Accent = value.Name;
+                }
+
+                _selectedAccent = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion        
 
         #region Constructor, LoadSettings
@@ -65,14 +62,9 @@ namespace NETworkManager.ViewModels
         {
             _isLoading = true;
 
-            BaseColorSchemes = new CollectionViewSource { Source = ThemeManager.Current.Themes.GroupBy(x => x.BaseColorScheme) }.View;
+            Accents = new CollectionViewSource { Source = AppearanceManager.Accents }.View;
 
-            Themes = new CollectionViewSource { Source = ThemeManager.Current.Themes.Where(x => x.BaseColorScheme == "Light")}.View;
-            //Themes.GroupDescriptions.Add(new PropertyGroupDescription("BaseColorScheme"));
-            
-            //Colors = new CollectionViewSource { Source = typeof(Colors).GetProperties().Where(prop => typeof(Color).IsAssignableFrom(prop.PropertyType)).Select(prop => new KeyValuePair<string, Color>(prop.Name, (Color)prop.GetValue(null))).ToList() }.View;
-
-
+            Themes = new CollectionViewSource { Source = AppearanceManager.Themes }.View;
 
             LoadSettings();
 
@@ -81,8 +73,8 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            //AppThemeSelectedItem = ThemeManager.DetectAppStyle().Item1;
-            //AccentSelectedItem = ThemeManager.DetectAppStyle().Item2;
+            SelectedTheme = Themes.Cast<ThemeColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Theme);
+            SelectedAccent = Accents.Cast<AccentColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Accent);
         }
         #endregion
     }
