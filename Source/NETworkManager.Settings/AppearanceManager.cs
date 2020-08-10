@@ -6,13 +6,29 @@ using System.Windows.Media;
 
 namespace NETworkManager.Settings
 {
+    /// <summary>
+    /// Class provides static variables and methods to change the theme and accent of the application.
+    /// </summary>
     public static class AppearanceManager
     {
+        /// <summary>
+        /// Containes the default settings for a new <see cref="BaseMetroDialog"/> 
+        /// </summary>
         public static MetroDialogSettings MetroDialog = new MetroDialogSettings();
-        public static List<AccentColorInfo> Accents { get; set; }
-
+        
+        /// <summary>
+        /// List who contains all MahApps.Metro themes.
+        /// </summary>
         public static List<ThemeColorInfo> Themes { get; set; }
 
+        /// <summary>
+        /// List who contains all MahApps.Metro accents.
+        /// </summary>
+        public static List<AccentColorInfo> Accents { get; set; }
+
+        /// <summary>
+        /// Load the MahApps.Metro themes and accents when needed.
+        /// </summary>
         static AppearanceManager()
         {
             Themes = ThemeManager.Current.Themes
@@ -28,17 +44,28 @@ namespace NETworkManager.Settings
                 .ToList();
         }
 
+        /// <summary>
+        /// Change the appearance based on the user settings. This method should be called once, when starting the application.
+        /// </summary>
         public static void Load()
         {
             ChangeTheme(SettingsManager.Current.Appearance_Theme);
             ChangeAccent(SettingsManager.Current.Appearance_Accent);
         }
 
+        /// <summary>
+        /// Method to change the application theme.
+        /// </summary>
+        /// <param name="name">Name of the theme.</param>
         public static void ChangeTheme(string name)
         {
             ThemeManager.Current.ChangeThemeBaseColor(System.Windows.Application.Current, name);
         }
 
+        /// <summary>
+        /// Method to change the application accent.
+        /// </summary>
+        /// <param name="name">Name of the accent.</param>
         public static void ChangeAccent(string name)
         {
             ThemeManager.Current.ChangeThemeColorScheme(System.Windows.Application.Current, name);
