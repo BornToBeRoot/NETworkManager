@@ -8,14 +8,14 @@ using System.Windows.Input;
 namespace NETworkManager.Documentation
 {
     /// <summary>
-    /// This class is designed to interact with the documentation at https://borntoberoot.github.io/NETworkManager/.
+    /// This class is designed to interact with the documentation at https://borntoberoot.net/NETworkManager/.
     /// </summary>
     public static class DocumentationManager
     {
         /// <summary>
         /// Base path of the documentation.
         /// </summary>
-        public const string DocumentationBaseUrl = @"https://borntoberoot.github.io/NETworkManager/Documentation/";
+        public const string DocumentationBaseUrl = @"https://borntoberoot.net/NETworkManager/Documentation/";
 
         /// <summary>
         /// Constant to identify the header, which should be displayed, of the website at <see cref="DocumentationBaseUrl"/>. 
