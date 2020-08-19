@@ -54,7 +54,7 @@
                                 <Setter Property="Cursor" Value="Hand"></Setter>
                             </Style>
                         </StackPanel.Resources>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}">
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Github}" />
@@ -152,7 +152,7 @@
                 <Button Grid.Column="0" x:Name="ButtonCheckForUpdates" HorizontalAlignment="Left" Command="{Binding CheckForUpdatesCommand}" IsEnabled="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}" Content="{x:Static localization:Strings.CheckForUpdates}" />
                 <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <StackPanel.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" />
+                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseUrl}" />
                     </StackPanel.InputBindings>
                     <StackPanel.Style>
                         <Style TargetType="{x:Type StackPanel}">

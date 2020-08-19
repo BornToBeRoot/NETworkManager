@@ -5,7 +5,6 @@ using NETworkManager.Utilities;
 using System.ComponentModel;
 using System;
 using System.Windows.Input;
-using System.Diagnostics;
 using NETworkManager.Localization;
 
 namespace NETworkManager.ViewModels
@@ -123,7 +122,7 @@ namespace NETworkManager.ViewModels
 
         private static void OpenWebsiteAction(object url)
         {
-            Process.Start((string)url);
+            ExternalProcessStarter.OpenUrl((string)url);            
         }
         #endregion
     }

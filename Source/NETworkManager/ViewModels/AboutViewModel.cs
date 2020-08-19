@@ -163,7 +163,7 @@ namespace NETworkManager.ViewModels
 
         private static void OpenWebsiteAction(object url)
         {
-            Process.Start((string)url);
+            ExternalProcessStarter.OpenUrl((string)url);            
         }
 
         public ICommand OpenDocumentationCommand

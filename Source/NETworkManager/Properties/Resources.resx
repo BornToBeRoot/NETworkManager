@@ -123,8 +123,8 @@
   <data name="NETworkManager_GitHub_User" xml:space="preserve">
     <value>BornToBeRoot</value>
   </data>
-  <data name="NETworkManager_LatestReleaseURL" xml:space="preserve">
-    <value>https://borntoberoot.net/NETworkManager/#download-package</value>
+  <data name="NETworkManager_LatestReleaseUrl" xml:space="preserve">
+    <value>https://borntoberoot.net/NETworkManager/Download</value>
   </data>
   <data name="NETworkManager_License" xml:space="preserve">
     <value>GNU General Public License v3.0</value>
@@ -140,6 +140,9 @@
   </data>
   <data name="NETworkManager_ProjectUrl" xml:space="preserve">
     <value>https://borntoberoot.net/NETworkManager/</value>
+  </data>
+  <data name="NETworkManager_RepoUrl" xml:space="preserve">
+    <value>https://github.com/BornToBeRoot/NETworkManager</value>
   </data>
   <data name="NETworkManager_TranslationUrl" xml:space="preserve">
     <value>https://www.transifex.com/BornToBeRoot/NETworkManager/</value>

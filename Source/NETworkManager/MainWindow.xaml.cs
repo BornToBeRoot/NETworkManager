@@ -1093,8 +1093,8 @@ namespace NETworkManager
         public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
 
         private static void OpenWebsiteAction(object url)
-        {
-            Process.Start((string)url);
+        {            
+            ExternalProcessStarter.OpenUrl((string)url);
         }
 
         public ICommand OpenDocumentationCommand
