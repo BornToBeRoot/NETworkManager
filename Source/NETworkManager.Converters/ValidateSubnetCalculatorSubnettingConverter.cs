@@ -1,7 +1,9 @@
 ﻿using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using System;
 using System.Globalization;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows.Data;
 
 namespace NETworkManager.Converters
@@ -42,22 +44,13 @@ namespace NETworkManager.Converters
                     break;
             }
 
-            newSubnetmaskOrCidr = newSubnetmaskOrCidr.TrimStart('/');
             int newCidr;
 
-            // ReSharper disable once SwitchStatementMissingSomeCases
-            switch (ipAddress.AddressFamily)
-            {
-                case System.Net.Sockets.AddressFamily.InterNetwork when newSubnetmaskOrCidr.Length < 3:
-                    newCidr = int.Parse(newSubnetmaskOrCidr);
-                    break;
-                case System.Net.Sockets.AddressFamily.InterNetwork:
-                    newCidr = Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCidr));
-                    break;
-                default:
-                    newCidr = int.Parse(newSubnetmaskOrCidr);
-                    break;
-            }
+            // Support subnetmask like 255.255.255.0
+            if (Regex.IsMatch(newSubnetmaskOrCidr, RegexHelper.SubnetmaskRegex))
+                newCidr = System.Convert.ToByte(Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCidr)));
+            else
+                newCidr = System.Convert.ToByte(newSubnetmaskOrCidr.TrimStart('/'));
 
             // Compare
             return newCidr > cidr;
