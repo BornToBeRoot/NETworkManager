@@ -3,22 +3,21 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Localization.Translators
 {
-    
-    ///<summary>
-    /// Class to translate <see cref="Accent"/>.
+    /// <summary>
+    /// Class to translate <see cref="AppTheme"/>.
     /// </summary>
-    public class AccentTranslator : SingletonBase<AccentTranslator>, ILocalizationStringTranslator
+    public class ThemeTranslator : SingletonBase<ThemeTranslator>, ILocalizationStringTranslator
     {
         /// <summary>
         /// Constant to identify the strings in the language files.
         /// </summary>
-        private const string _identifier = "Accent_";
+        private const string _identifier = "Theme_";
 
         /// <summary>
-        /// Method to translate <see cref="AccentColorInfo"/>.
+        /// Method to translate <see cref="ThemeColorInfo"/>.
         /// </summary>
-        /// <param name="value"><see cref="AccentColorInfo"/> as <see cref="string"/>.</param>
-        /// <returns>Translated <see cref="AccentColorInfo"/>.</returns>
+        /// <param name="value"><see cref="ThemeColorInfo"/> as <see cref="string"/>.</param>
+        /// <returns>Translated <see cref="ThemeColorInfo"/>.</returns>
         public string Translate(string value)
         {
             var translation = Resources.Strings.ResourceManager.GetString(_identifier + value, LocalizationManager.GetInstance().Culture);

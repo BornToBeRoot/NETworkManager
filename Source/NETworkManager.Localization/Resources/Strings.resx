@@ -1450,10 +1450,10 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="Applications" xml:space="preserve">
     <value>Applications</value>
   </data>
-  <data name="AppTheme_BaseDark" xml:space="preserve">
+  <data name="Theme_Dark" xml:space="preserve">
     <value>Dark</value>
   </data>
-  <data name="AppTheme_BaseLight" xml:space="preserve">
+  <data name="Theme_Light" xml:space="preserve">
     <value>Light</value>
   </data>
   <data name="Black" xml:space="preserve">
@@ -2708,12 +2708,6 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="Accen_Steel" xml:space="preserve">
     <value>Steel</value>
-  </data>
-  <data name="AppTheme_Black" xml:space="preserve">
-    <value>Black</value>
-  </data>
-  <data name="AppTheme_White" xml:space="preserve">
-    <value>White</value>
   </data>
   <data name="ProfileViewName_General" xml:space="preserve">
     <value>General</value>
