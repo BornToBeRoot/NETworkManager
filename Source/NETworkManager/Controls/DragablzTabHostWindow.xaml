@@ -7,13 +7,12 @@
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:controls="clr-namespace:NETworkManager.Controls"
-        xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
         xmlns:application="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         mc:Ignorable="d"
         Title="NETworkManager" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" TitleAlignment="Left"
-        d:DataContext="{d:DesignInstance networkManagerControls:DragablzTabHostWindow}">
+        d:DataContext="{d:DesignInstance application:DragablzTabHostWindow}">
     <mahAppsControls:MetroWindow.WindowButtonCommands>
         <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </mahAppsControls:MetroWindow.WindowButtonCommands>

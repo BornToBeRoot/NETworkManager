@@ -6,10 +6,10 @@
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         xmlns:windowsForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-        xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager"
+        xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mah:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:PuTTYControl}">
+        mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance controls:PuTTYControl}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
