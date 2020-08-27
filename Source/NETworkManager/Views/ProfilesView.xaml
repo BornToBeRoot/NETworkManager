@@ -45,7 +45,7 @@
                 <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.OpacityMask>
@@ -56,7 +56,7 @@
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                                 </Rectangle.OpacityMask>
@@ -65,7 +65,7 @@
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.CopyAsDots}" Command="{Binding CopyAsProfileCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentDuplicate}" />
                                 </Rectangle.OpacityMask>
@@ -74,7 +74,7 @@
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.OpacityMask>

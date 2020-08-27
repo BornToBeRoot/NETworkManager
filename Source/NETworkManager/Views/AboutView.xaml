@@ -192,7 +192,7 @@
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                         <MenuItem Header="{x:Static localization:Strings.OpenProject}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedLibraryInfo.WebsiteUrl}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
                                     </Rectangle.OpacityMask>
@@ -201,7 +201,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.OpenLicense}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedLibraryInfo.LicenseUrl}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
                                     </Rectangle.OpacityMask>
@@ -254,7 +254,7 @@
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                         <MenuItem Header="{x:Static localization:Strings.OpenWebsite}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedExternalServicesInfo.WebsiteUrl}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
                                     </Rectangle.OpacityMask>
@@ -290,7 +290,7 @@
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                         <MenuItem Header="{x:Static localization:Strings.OpenWebsite}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedResourceInfo.WebsiteUrl}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
                                     </Rectangle.OpacityMask>

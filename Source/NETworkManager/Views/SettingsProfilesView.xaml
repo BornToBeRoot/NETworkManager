@@ -113,7 +113,7 @@
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileFileCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                                 </Rectangle.OpacityMask>
@@ -122,7 +122,7 @@
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.EncryptionDots}" Visibility="Collapsed">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyVariant}" />
                                 </Rectangle.OpacityMask>
@@ -130,7 +130,7 @@
                         </MenuItem.Icon>
                         <MenuItem Header="{x:Static localization:Strings.EnableEncryptionDots}" Command="{Binding EnableEncryptionCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncryptionEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyVariant}" />
                                     </Rectangle.OpacityMask>
@@ -139,7 +139,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.ChangeMasterPasswordDots}" Command="{Binding EditProfileFileCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncryptionEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyVariant}" />
                                     </Rectangle.OpacityMask>
@@ -148,7 +148,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.DisableEncryptionDots}" Command="{Binding EditProfileFileCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncryptionEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=KeyVariant}" />
                                     </Rectangle.OpacityMask>
@@ -158,7 +158,7 @@
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileFileCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.OpacityMask>
