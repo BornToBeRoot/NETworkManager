@@ -14,9 +14,11 @@
     <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
       <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=flat-square&&label=master" />
     </a>   
+<!--
     <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/net5-develop">
       <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/net5-develop.svg?style=flat-square&&label=net5-develop" />
-    </a>   
+    </a>
+-->
   </p> 
   <p> 
     <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
@@ -24,7 +26,7 @@
     </a>   
     <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Feature-Request&template=Feature_request.md">
       <img alt="Transifex" src="https://img.shields.io/badge/github-feature_request-green.svg?style=flat-square" />
-    </a>   
+    </a>       
     <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Issue&template=Bug_report.md">
       <img alt="Transifex" src="https://img.shields.io/badge/github-bug_report-red.svg?style=flat-square" />
     </a>     
