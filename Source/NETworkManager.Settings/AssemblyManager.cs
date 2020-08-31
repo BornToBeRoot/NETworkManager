@@ -20,8 +20,6 @@ namespace NETworkManager.Settings
                 Location = Path.GetDirectoryName(assembly.Location),
                 Name = name.Name
             };
-
-            Debug.WriteLine(Current);
         }
     }
 }
