@@ -19,6 +19,9 @@
     </a>   
   </p> 
   <p> 
+     (net5-develop branch is failing because AppVeyor doesn't support .NET 5.0)
+  </p>
+  <p> 
     <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
       <img alt="Transifex" src="https://img.shields.io/badge/transifex-translate-green.svg?style=flat-square" />
     </a>   
