@@ -19,7 +19,8 @@
     </a>   
   </p> 
   <p> 
-     (net5-develop branch is failing because AppVeyor doesn't support .NET 5.0)
+     (net5-develop branch is failing because AppVeyor doesn't support .NET 5.0 yet. 
+    https://github.com/appveyor/ci/issues/3522)
   </p>
   <p> 
     <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
