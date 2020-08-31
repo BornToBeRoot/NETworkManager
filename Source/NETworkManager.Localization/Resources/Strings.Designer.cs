@@ -871,42 +871,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dark.
-        /// </summary>
-        public static string AppTheme_BaseDark {
-            get {
-                return ResourceManager.GetString("AppTheme_BaseDark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Light.
-        /// </summary>
-        public static string AppTheme_BaseLight {
-            get {
-                return ResourceManager.GetString("AppTheme_BaseLight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Black.
-        /// </summary>
-        public static string AppTheme_Black {
-            get {
-                return ResourceManager.GetString("AppTheme_Black", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to White.
-        /// </summary>
-        public static string AppTheme_White {
-            get {
-                return ResourceManager.GetString("AppTheme_White", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Are you sure?.
         /// </summary>
         public static string AreYouSure {
@@ -4904,6 +4868,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string Preview {
+            get {
+                return ResourceManager.GetString("Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Primary DNS server.
         /// </summary>
         public static string PrimaryDNSServer {
@@ -7462,6 +7435,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string Theme_Dark {
+            get {
+                return ResourceManager.GetString("Theme_Dark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string Theme_Light {
+            get {
+                return ResourceManager.GetString("Theme_Light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The process can take up some time and resources (CPU / RAM)..
         /// </summary>
         public static string TheProcessCanTakeUpSomeTimeAndResources {
@@ -7660,9 +7651,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open documentation on GitHub.
-        ///
-        ///URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation.
+        ///   Looks up a localized string similar to Open documentation on GitHub..
         /// </summary>
         public static string ToolTip_GithubDocumentationUrl {
             get {
@@ -7671,9 +7660,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Report an issue or create a feature request.
-        ///
-        ///URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose.
+        ///   Looks up a localized string similar to Report an issue or create a feature request..
         /// </summary>
         public static string ToolTip_GithubNewIssueUrl {
             get {
@@ -7682,9 +7669,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Star/Fork the Project on GitHub.
-        ///
-        ///URL: https://github.com/BornToBeRoot/NETworkManager/.
+        ///   Looks up a localized string similar to Star/Fork the Project on GitHub..
         /// </summary>
         public static string ToolTip_GitHubProjectUrl {
             get {
@@ -7693,9 +7678,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Help translate the project on Transifex.
-        ///
-        ///URL: https://transifex.com/BornToBeRoot/NETworkManager/.
+        ///   Looks up a localized string similar to Help translate the project on Transifex..
         /// </summary>
         public static string ToolTip_TransifexProjectUrl {
             get {
@@ -7704,9 +7687,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contact via Twitter.
-        ///
-        ///URL: https://twitter.com/BornToBeRoot_DE.
+        ///   Looks up a localized string similar to Contact via Twitter..
         /// </summary>
         public static string ToolTip_TwitterContactUrl {
             get {

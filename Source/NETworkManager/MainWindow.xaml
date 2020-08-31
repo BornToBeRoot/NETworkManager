@@ -68,7 +68,7 @@
             <StackPanel Orientation="Horizontal">
                 <Grid Background="{DynamicResource MahApps.Brushes.Gray8}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <TextBlock Text="Administrator" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Style="{StaticResource CenterTextBlock}" Margin="10,0"/>
-                </Grid>
+                </Grid>              
             </StackPanel>
         </mahAppsControls:WindowCommands>
     </mahAppsControls:MetroWindow.LeftWindowCommands>

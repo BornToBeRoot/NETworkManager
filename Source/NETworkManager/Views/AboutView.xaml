@@ -8,6 +8,7 @@
         xmlns:documentation="clr-namespace:NETworkManager.Documentation;assembly=NETworkManager.Documentation"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"             
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
@@ -41,6 +42,7 @@
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                         <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" VerticalAlignment="Center" />
                         <TextBlock Text="{Binding Patch}" Style="{StaticResource DefaultTextBlock}" Visibility="{Binding IsPatchVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                        <TextBlock Text="{x:Static localization:Strings.Preview}" Style="{StaticResource DefaultTextBlock}" Padding="5" Background="{DynamicResource MahApps.Brushes.Gray8}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPreview, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" VerticalAlignment="Center" Margin="5,0,0,0" />
                     </StackPanel>
                     <TextBlock Text="{x:Static resources:Resources.NETworkManager_License}" Style="{StaticResource LinkTextBlock}" Margin="0,0,0,5">
                         <TextBlock.InputBindings>
