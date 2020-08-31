@@ -22,6 +22,9 @@
     <None Remove="Resources\Flags\zh-CN.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Resources\Flags\en-US.png" />
     <Resource Include="Resources\Flags\de-DE.png" />
     <Resource Include="Resources\Flags\es-ES.png" />

@@ -38,6 +38,7 @@
       <HintPath>$(TargetDir)\MSTSCLib.dll</HintPath>
     </Reference>
     <Page Remove="Resources\Styles\WindowStyles.xaml" />
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
     <Content Include="Resources\Styles\WindowStyles.xaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

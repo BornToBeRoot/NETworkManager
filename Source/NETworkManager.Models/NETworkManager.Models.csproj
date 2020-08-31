@@ -15,6 +15,9 @@
 		<None Remove="Resources\WhoisServers.xml" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+	</ItemGroup>
+	<ItemGroup>
 		<EmbeddedResource Include="Resources\DiscoveryProtocol.ps1" />
 	</ItemGroup>
 	<ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 
 namespace NETworkManager.Settings
 {
@@ -18,6 +19,8 @@ namespace NETworkManager.Settings
                 Location = assembly.Location,
                 Name = name.Name
             };
+
+            Debug.WriteLine(Current);
         }
     }
 }

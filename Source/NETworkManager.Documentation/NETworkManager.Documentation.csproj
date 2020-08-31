@@ -11,6 +11,9 @@
     <DocumentationFile>bin\Debug\NETworkManager.Documentation.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
     <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
     <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
