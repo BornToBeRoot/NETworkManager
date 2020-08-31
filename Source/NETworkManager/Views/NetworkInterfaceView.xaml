@@ -47,6 +47,7 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Margin="0,0,0,20">
                         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Interface}" />
@@ -218,7 +219,19 @@
                             <TextBox Grid.Column="2" Grid.Row="20" Text="{Binding SelectedNetworkInterface.DNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
                         </Grid>
                     </ScrollViewer>
-                    <WrapPanel Grid.Row="4" HorizontalAlignment="Left" Orientation="Horizontal" >
+                    <mahAppsControls:MetroProgressBar Grid.Row="4" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True" Margin="0,0,0,10">
+                        <mahAppsControls:MetroProgressBar.Style>
+                            <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsConfigurationRunning}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </mahAppsControls:MetroProgressBar.Style>
+                    </mahAppsControls:MetroProgressBar>
+                    <WrapPanel Grid.Row="5" HorizontalAlignment="Left" Orientation="Horizontal" >
                         <Button Margin="0,0,10,0" Command="{Binding OpenNetworkConnectionsCommand}" Style="{StaticResource ImageWithTextButton}">
                             <Button.Content>
                                 <Grid>
@@ -775,9 +788,8 @@
                                     </Style.Triggers>
                                 </Style>
                             </mahAppsControls:MetroProgressBar.Style>
-                        </mahAppsControls:MetroProgressBar>
-                        <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-                        <Grid Grid.Row="4">
+                        </mahAppsControls:MetroProgressBar>                        
+                        <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="10" />
@@ -844,6 +856,7 @@
                                 </Button.Style>
                             </Button>
                         </Grid>
+                        <TextBlock Grid.Row="4" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
                     </Grid>
                     <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
                     <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">

@@ -1168,14 +1168,12 @@ namespace NETworkManager
             ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = ConfigurationManager.Current.ApplicationFullName,
-                Arguments = $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Process.GetCurrentProcess().Id} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{_currentApplicationViewName}"
+                Arguments = $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Process.GetCurrentProcess().Id} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{_currentApplicationViewName}",
+                UseShellExecute = true
             };
 
             if (asAdmin)
-            {
-                info.UseShellExecute = true;
                 info.Verb = "runas";
-            }
 
             Process.Start(info);
 

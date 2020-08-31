@@ -10,6 +10,7 @@ namespace NETworkManager.Utilities
             {
                 FileName = "powershell.exe",
                 Arguments = $"-NoProfile -NoLogo -Command {command}",
+                UseShellExecute = true,
                 WindowStyle = windowStyle
             };
 
