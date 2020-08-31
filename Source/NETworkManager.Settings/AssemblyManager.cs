@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using System.IO;
 
 namespace NETworkManager.Settings
 {
@@ -16,7 +17,7 @@ namespace NETworkManager.Settings
             Current = new AssemblyInfo
             {
                 Version = name.Version,
-                Location = assembly.Location,
+                Location = Path.GetDirectoryName(assembly.Location),
                 Name = name.Name
             };
 
