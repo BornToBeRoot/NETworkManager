@@ -1172,7 +1172,10 @@ namespace NETworkManager
             };
 
             if (asAdmin)
+            {
+                info.UseShellExecute = true;
                 info.Verb = "runas";
+            }
 
             Process.Start(info);
 
