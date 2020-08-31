@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-  <PropertyGroup>
-    <ProjectGuid>{5C3D1749-D260-4566-B448-B94B3AD9EEFF}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>NETworkManager.Utilities</RootNamespace>
-    <AssemblyName>NETworkManager.Utilities</AssemblyName>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <UseWindowsForms>true</UseWindowsForms>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
+	<PropertyGroup>
+		<ProjectGuid>{5C3D1749-D260-4566-B448-B94B3AD9EEFF}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>NETworkManager.Utilities</RootNamespace>
+		<AssemblyName>NETworkManager.Utilities</AssemblyName>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="DnsClient" Version="1.3.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="DnsClient" Version="1.3.2" />
+	</ItemGroup>
 </Project>

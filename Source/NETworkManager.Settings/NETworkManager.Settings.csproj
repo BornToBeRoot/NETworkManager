@@ -1,36 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-  <PropertyGroup>
-    <ProjectGuid>{954E8703-3E6E-42BF-BD28-F0B19BE10E0C}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>NETworkManager.Settings</RootNamespace>
-    <AssemblyName>NETworkManager.Settings</AssemblyName>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Themes\**" />
-    <EmbeddedResource Remove="Themes\**" />
-    <None Remove="Themes\**" />
-    <Page Remove="Themes\**" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="DnsClient" Version="1.3.2" />
-    <PackageReference Include="Lextm.SharpSnmpLib" Version="12.0.0" />
-    <PackageReference Include="MahApps.Metro" Version="2.2.0" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.4.0" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />
-    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
-    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<ProjectGuid>{954E8703-3E6E-42BF-BD28-F0B19BE10E0C}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>NETworkManager.Settings</RootNamespace>
+		<AssemblyName>NETworkManager.Settings</AssemblyName>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Themes\**" />
+		<EmbeddedResource Remove="Themes\**" />
+		<None Remove="Themes\**" />
+		<Page Remove="Themes\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="DnsClient" Version="1.3.2" />
+		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.0.0" />
+		<PackageReference Include="MahApps.Metro" Version="2.2.0" />
+		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.4.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />
+		<ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
+		<ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
+	</ItemGroup>
 </Project>

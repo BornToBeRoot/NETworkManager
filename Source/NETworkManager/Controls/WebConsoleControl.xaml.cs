@@ -5,9 +5,8 @@ using System;
 using System.Windows.Threading;
 using NETworkManager.Utilities;
 using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.WebConsole;
-using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
+using Microsoft.Web.WebView2.Core;
 
 namespace NETworkManager.Controls
 {
@@ -68,20 +67,6 @@ namespace NETworkManager.Controls
                 OnPropertyChanged();
             }
         }
-
-        private bool _isCertificateInvalid;
-        public bool IsCertificateInvalid
-        {
-            get => _isCertificateInvalid;
-            set
-            {
-                if (value == _isCertificateInvalid)
-                    return;
-
-                _isCertificateInvalid = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #region Constructor, load
@@ -94,7 +79,8 @@ namespace NETworkManager.Controls
 
             Browser2.NavigationStarting += Browser2_NavigationStarting;
             Browser2.NavigationCompleted += Browser2_NavigationCompleted;
-            
+            Browser2.WebMessageReceived += Browser2_WebMessageReceived;
+
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
 
@@ -116,19 +102,34 @@ namespace NETworkManager.Controls
         #endregion
 
         #region ICommands & Actions
-        public ICommand RefreshCommand
+        public ICommand NavigateCommand
         {
-            get { return new RelayCommand(p => RefreshAction(), RefreshCommand_CanExecute); }
+            get { return new RelayCommand(p => NavigateAction(), NavigateCommand_CanExecute); }
         }
 
-        private bool RefreshCommand_CanExecute(object obj)
+        private bool NavigateCommand_CanExecute(object obj)
         {
             return !IsLoading;
         }
 
-        private void RefreshAction()
+        private void NavigateAction()
         {
-            Browser2.Refresh();
+            Browser2.CoreWebView2.Navigate(Url);
+        }
+
+        public ICommand ReloadCommand
+        {
+            get { return new RelayCommand(p => ReloadAction(), ReloadCommand_CanExecute); }
+        }
+
+        private bool ReloadCommand_CanExecute(object obj)
+        {
+            return !IsLoading;
+        }
+
+        private void ReloadAction()
+        {
+            Browser2.Reload();
         }
 
         public ICommand GoBackCommand
@@ -165,7 +166,7 @@ namespace NETworkManager.Controls
         #region Methods       
         private void Connect()
         {
-            Browser2.Navigate(_sessionInfo.Url);
+            Browser2.Source = new Uri(_sessionInfo.Url);
         }
 
         public void CloseTab()
@@ -175,34 +176,25 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Events
-        private void Browser2_NavigationCompleted(object sender, WebViewControlNavigationCompletedEventArgs e)
+        private void Browser2_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
         {
-            Url = e.Uri.ToString();
-
-            switch (e.WebErrorStatus)
-            {
-                case WebErrorStatus.CertificateCommonNameIsIncorrect:
-                case WebErrorStatus.CertificateContainsErrors:
-                case WebErrorStatus.CertificateExpired:
-                case WebErrorStatus.CertificateIsInvalid:
-                case WebErrorStatus.CertificateRevoked:
-                    IsCertificateInvalid = true;
-                    break;
-            }
-
             if (FirstLoad)
                 FirstLoad = false;
 
             IsLoading = false;
         }
 
-        private void Browser2_NavigationStarting(object sender, WebViewControlNavigationStartingEventArgs e)
+        private void Browser2_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
         {
             IsLoading = true;
 
             Url = e.Uri.ToString();
+        }
 
-            IsCertificateInvalid = false;
+        private void Browser2_WebMessageReceived(object sender, CoreWebView2WebMessageReceivedEventArgs e)
+        {
+            string uri = e.TryGetWebMessageAsString();
+            Url = uri;
         }
         #endregion
     }

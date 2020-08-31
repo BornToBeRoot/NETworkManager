@@ -66,7 +66,7 @@
                                 <Grid>
                                     <Grid.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Header="{x:Static localization:Strings.Refresh}" Command="{Binding Data.WebConsole_RefreshCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                            <MenuItem Header="{x:Static localization:Strings.Reload}" Command="{Binding Data.WebConsole_ReloadCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                 <MenuItem.Icon>
                                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                         <Rectangle.OpacityMask>
