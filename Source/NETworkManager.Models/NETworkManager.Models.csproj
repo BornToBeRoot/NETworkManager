@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<ProjectGuid>{8A2859DC-38B6-4E9D-A6B2-1828DC6641B3}</ProjectGuid>
 		<OutputType>Library</OutputType>
 		<RootNamespace>NETworkManager.Models</RootNamespace>
 		<AssemblyName>NETworkManager.Models</AssemblyName>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TargetFramework>net5.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
@@ -24,7 +24,9 @@
 		<PackageReference Include="MahApps.Metro" Version="2.2.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.4.0" />
 		<PackageReference Include="Microsoft.PowerShell.5.ReferenceAssemblies" Version="1.1.0" />
-		<PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.17763.1000" />
+		<!--<PackageReference Include="Microsoft.Windows.CsWinRT" Version="0.1.0-prerelease.200629.3" />-->
+		<PackageReference Include="Microsoft.Web.WebView2" Version="0.9.579-prerelease" />
+		<PackageReference Include="Microsoft.Windows.SDK.NET" Version="10.0.18362.3-preview" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 	</ItemGroup>
 

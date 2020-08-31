@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<ProjectGuid>{5C3D1749-D260-4566-B448-B94B3AD9EEFF}</ProjectGuid>
 		<OutputType>Library</OutputType>
 		<RootNamespace>NETworkManager.Utilities</RootNamespace>
 		<AssemblyName>NETworkManager.Utilities</AssemblyName>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TargetFramework>net5.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
