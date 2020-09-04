@@ -5,9 +5,10 @@ branches:
    - master
    - net5-develop
 configuration: Release
-platform: Any CPU
+platform: x64
 before_build:
-   - MSBuild -t:restore .\Source\NETworkManager\NETworkManager.csproj
+  - nuget restore
+   #- MSBuild -t:restore .\Source\NETworkManager\NETworkManager.csproj
 install:
-- ps: Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
-- ps: '& $env:temp\dotnet-install.ps1 -Architecture x64 -Version "5.0.100-preview.8.20417.9" -InstallDir "$env:ProgramFiles\dotnet"'
+  - ps: Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
+  - ps: '& $env:temp\dotnet-install.ps1 -Architecture x64 -Version "5.0.100-preview.8.20417.9" -InstallDir "$env:ProgramFiles\dotnet"'
