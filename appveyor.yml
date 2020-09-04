@@ -8,6 +8,8 @@ configuration: Release
 platform: x64
 before_build:
   - nuget restore .\Source\NETworkManager.sln
+build_script:
+  - nuget build .\Source\NETworkManager.sln
    #- MSBuild -t:restore .\Source\NETworkManager\NETworkManager.csproj
 install:
   - ps: Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
