@@ -1,4 +1,3 @@
-version: 2.0.{build}
 image: Visual Studio 2019
 branches:
   only:
@@ -7,10 +6,13 @@ branches:
 configuration: Release
 platform: x64
 before_build:
-  - nuget restore .\Source\NETworkManager.sln
+  - dotnet restore .\Source\NETworkManager.sln
 build_script:
-  - nuget build .\Source\NETworkManager.sln
+  - dotnet build .\Source\NETworkManager.sln
    #- MSBuild -t:restore .\Source\NETworkManager\NETworkManager.csproj
 install:
   - ps: Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
   - ps: '& $env:temp\dotnet-install.ps1 -Architecture x64 -Version "5.0.100-preview.8.20417.9" -InstallDir "$env:ProgramFiles\dotnet"'
+skip_commits:
+  files:
+    - '**/*.md'
