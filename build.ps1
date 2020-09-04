@@ -1,6 +1,6 @@
 $Branch = "net5-develop"
 $Version = "2020.9.0"
-$IsPreview = $false
+$IsPreview = $true
 
 $Uri = "https://github.com/BornToBeRoot/NETworkManager/archive/$Branch.zip"
 $TempFolder = "$PSScriptRoot\Temp"
