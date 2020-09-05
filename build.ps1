@@ -3,9 +3,13 @@ $Version = "2020.9.0"
 $IsPreview = $true
 
 $Uri = "https://github.com/BornToBeRoot/NETworkManager/archive/$Branch.zip"
-$TempFolder = "$PSScriptRoot\Temp"
+
+$ScriptPath = $MyInvocation.MyCommand.Path
+$ScriptDir = Split-Path $ScriptPath
+
+$TempFolder = "$ScriptDir\Temp"
 $DownloadedFile = "$TempFolder\download.zip"
-$BuildPath = "$PSScriptRoot\Build"
+$BuildPath = "$ScriptDir\Build"
 
 # Download from Github
 New-Item -ItemType Directory -Path $TempFolder 
@@ -19,9 +23,9 @@ dotnet restore "$TempFolder\NETworkManager-$Branch\Source\NETworkManager.sln"
 dotnet build --configuration Release "$TempFolder\NETworkManager-$Branch\Source\NETworkManager.sln"
 
 # Copy files
-Copy-Item -Recurse -Path "$TempFolder\NETworkManager-$Branch\Source\NETworkManager\bin\Release\net5.0-windows" -Destination "$PSScriptRoot\Build\NETworkManager"
+Copy-Item -Recurse -Path "$TempFolder\NETworkManager-$Branch\Source\NETworkManager\bin\Release\net5.0-windows" -Destination "$BuildPath\NETworkManager"
 
-Remove-Item -Recurse -Path "$PSScriptRoot\Temp"
+Remove-Item -Recurse -Path $TempFolder
 
 # Is preview?
 if($IsPreview)
@@ -34,5 +38,5 @@ Compress-Archive -Path "$BuildPath\NETworkManager" -DestinationPath "$BuildPath\
 
 # Portable Build
 New-Item -Path "$BuildPath\NETworkManager" -Name "IsPortable.settings" -ItemType File
-Compress-Archive -Path "$BuildPath\NETworkManager" -DestinationPath "$PSScriptRoot\Build\NETworkManager_$($Version)_Portable.zip"
+Compress-Archive -Path "$BuildPath\NETworkManager" -DestinationPath "$BuildPath\NETworkManager_$($Version)_Portable.zip"
 Remove-Item -Path "$BuildPath\NETworkManager\IsPortable.settings"
