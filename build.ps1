@@ -1,31 +1,19 @@
-$Branch = "net5-develop"
 $Version = "2020.9.0"
 $IsPreview = $true
 
-$Uri = "https://github.com/BornToBeRoot/NETworkManager/archive/$Branch.zip"
+$BuildPath = "$PSScriptRoot\Build"
 
-$ScriptPath = $MyInvocation.MyCommand.Path
-$ScriptDir = Split-Path $ScriptPath
-
-$TempFolder = "$ScriptDir\Temp"
-$DownloadedFile = "$TempFolder\download.zip"
-$BuildPath = "$ScriptDir\Build"
-
-# Download from Github
-New-Item -ItemType Directory -Path $TempFolder 
-Invoke-WebRequest -Uri $Uri -UseBasicParsing -OutFile $DownloadedFile -ErrorAction Stop
-
-# Expand archive
-Expand-Archive -Path $DownloadedFile -DestinationPath $TempFolder
+if(Test-Path -Path $BuildPath)
+{
+    Remove-Item $BuildPath -Recurse
+}
 
 # Dotnet restore and build
-dotnet restore "$TempFolder\NETworkManager-$Branch\Source\NETworkManager.sln"
-dotnet build --configuration Release "$TempFolder\NETworkManager-$Branch\Source\NETworkManager.sln"
+dotnet restore "$PSScriptRoot\Source\NETworkManager.sln"
+dotnet build --configuration Release "$PSScriptRoot\Source\NETworkManager.sln"
 
 # Copy files
-Copy-Item -Recurse -Path "$TempFolder\NETworkManager-$Branch\Source\NETworkManager\bin\Release\net5.0-windows" -Destination "$BuildPath\NETworkManager"
-
-Remove-Item -Recurse -Path $TempFolder
+Copy-Item -Recurse -Path "$PSScriptRoot\Source\NETworkManager\bin\Release\net5.0-windows" -Destination "$BuildPath\NETworkManager"
 
 # Is preview?
 if($IsPreview)
