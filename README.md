@@ -41,9 +41,6 @@ __Requirements__
 - [SDK .NET 5.0 (Preview 8 or later)](https://dotnet.microsoft.com/download/dotnet/5.0)
 
 __Steps__
-1) Create an empty folder
-2) Open a PowerShell and navigate to this folder
-3) Run the build script:
-```powershell
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/BornToBeRoot/NETworkManager/net5-develop/build.ps1'))
+1. Download the branch as .zip archiv
+2. Run the `.\build.ps1` with PowerShell
 ```
