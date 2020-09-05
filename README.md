@@ -43,4 +43,3 @@ __Requirements__
 __Steps__
 1. Download the branch as .zip archiv
 2. Run the `.\build.ps1` with PowerShell
-```
