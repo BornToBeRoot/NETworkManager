@@ -11,6 +11,9 @@
     <DocumentationFile>bin\Debug\NETworkManager.Documentation.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Licenses\PSDiscoveryProtocol.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +56,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Licenses\Newtonsoft.Json.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Licenses\PSDiscoveryProtocol.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Licenses\Octokit.txt">
