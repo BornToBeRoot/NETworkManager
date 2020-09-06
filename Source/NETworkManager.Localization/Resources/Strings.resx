@@ -2886,4 +2886,19 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="Preview" xml:space="preserve">
     <value>Preview</value>
   </data>
+  <data name="PortProfiles" xml:space="preserve">
+    <value>Port profiles</value>
+  </data>
+  <data name="AddPortProfile" xml:space="preserve">
+    <value>Add port profile</value>
+  </data>
+  <data name="DeletePortProfile" xml:space="preserve">
+    <value>Delete port profile</value>
+  </data>
+  <data name="EditPortProfile" xml:space="preserve">
+    <value>Edit port profile</value>
+  </data>
+  <data name="DeletePortProfileMessage" xml:space="preserve">
+    <value>The selected port profile will be deleted permanently.</value>
+  </data>
 </root>

@@ -484,6 +484,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add port profile.
+        /// </summary>
+        public static string AddPortProfile {
+            get {
+                return ResourceManager.GetString("AddPortProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add profile.
         /// </summary>
         public static string AddProfile {
@@ -2041,6 +2050,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete port profile.
+        /// </summary>
+        public static string DeletePortProfile {
+            get {
+                return ResourceManager.GetString("DeletePortProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected port profile will be deleted permanently..
+        /// </summary>
+        public static string DeletePortProfileMessage {
+            get {
+                return ResourceManager.GetString("DeletePortProfileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete profile.
         /// </summary>
         public static string DeleteProfile {
@@ -2460,6 +2487,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EditGroup {
             get {
                 return ResourceManager.GetString("EditGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit port profile.
+        /// </summary>
+        public static string EditPortProfile {
+            get {
+                return ResourceManager.GetString("EditPortProfile", resourceCulture);
             }
         }
         
@@ -4783,6 +4819,15 @@ namespace NETworkManager.Localization.Resources {
         public static string PortOrService {
             get {
                 return ResourceManager.GetString("PortOrService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port profiles.
+        /// </summary>
+        public static string PortProfiles {
+            get {
+                return ResourceManager.GetString("PortProfiles", resourceCulture);
             }
         }
         

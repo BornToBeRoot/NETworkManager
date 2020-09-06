@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Models.Lookup;
 using System.Net;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network
 {

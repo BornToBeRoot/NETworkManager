@@ -971,6 +971,21 @@ namespace NETworkManager.Settings
             }
         }
 
+        private ObservableCollection<PortProfileInfo> _portScanner_PortProfiles = new ObservableCollection<PortProfileInfo>();
+        public ObservableCollection<PortProfileInfo> PortScanner_PortProfiles
+        {
+            get => _portScanner_PortProfiles;
+            set
+            {
+                if (value == _portScanner_PortProfiles)
+                    return;
+
+                _portScanner_PortProfiles = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         private bool _portScanner_ResolveHostname = true;
         public bool PortScanner_ResolveHostname
         {
@@ -3578,6 +3593,7 @@ namespace NETworkManager.Settings
             // Port Scanner
             PortScanner_HostsHistory.CollectionChanged += CollectionChanged;
             PortScanner_PortsHistory.CollectionChanged += CollectionChanged;
+            PortScanner_PortProfiles.CollectionChanged += CollectionChanged;
 
             // Ping Monitor
             PingMonitor_HostHistory.CollectionChanged += CollectionChanged;

@@ -229,6 +229,10 @@ namespace NETworkManager.ViewModels
             HostsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostsHistory);
             PortsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortsHistory);
 
+            // Add default port profiles...
+            if (SettingsManager.Current.PortScanner_PortProfiles.Count == 0)
+                SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.DefaultList());
+
             // Result view
             ResultsView = CollectionViewSource.GetDefaultView(PortScanResult);
             ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.IPAddress)));
@@ -267,6 +271,15 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
+        public ICommand OpenPortSelectionCommand => new RelayCommand(p => OpenPortSelectionAction(), OpenPortSelection_CanExecute);
+
+        private bool OpenPortSelection_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+
+        private void OpenPortSelectionAction()
+        {
+            Ports = "80; 443";
+        }
+
         public ICommand ScanCommand => new RelayCommand(p => ScanAction(), Scan_CanExecute);
 
         private bool Scan_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;

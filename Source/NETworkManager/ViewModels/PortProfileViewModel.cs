@@ -5,7 +5,7 @@ using NETworkManager.Models.Network;
 
 namespace NETworkManager.ViewModels
 {
-    public class DNSServerViewModel : ViewModelBase
+    public class PortProfileViewModel : ViewModelBase
     {
         private readonly bool _isLoading;
 
@@ -31,16 +31,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _dnsServers;
-        public string DNSServers
+        private string _ports;
+        public string Ports
         {
-            get => _dnsServers;
+            get => _ports;
             set
             {
-                if (_dnsServers == value)
+                if (_ports == value)
                     return;
 
-                _dnsServers = value;
+                _ports = value;
 
                 if (!_isLoading)
                     CheckInfoChanged();
@@ -49,27 +49,9 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int _port;
-        public int Port
-        {
-            get => _port;
-            set
-            {
-                if (_port == value)
-                    return;
+        private readonly PortProfileInfo _info;
 
-                _port = value;
-
-                if (!_isLoading)
-                    CheckInfoChanged();
-
-                OnPropertyChanged();
-            }
-        }
-
-        private readonly DNSServerInfo _info;
-
-        private string _previousDNSServerAsString;
+        private string _previousPortAsString;
 
         private bool _infoChanged;
         public bool InfoChanged
@@ -99,7 +81,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public DNSServerViewModel(Action<DNSServerViewModel> saveCommand, Action<DNSServerViewModel> cancelHandler, bool isEdited = false, DNSServerInfo info = null)
+        public PortProfileViewModel(Action<PortProfileViewModel> saveCommand, Action<PortProfileViewModel> cancelHandler, bool isEdited = false, PortProfileInfo info = null)
         {
             _isLoading = true;
 
@@ -108,21 +90,19 @@ namespace NETworkManager.ViewModels
 
             IsEdited = isEdited;
 
-            _info = info ?? new DNSServerInfo();
+            _info = info ?? new PortProfileInfo();
 
             Name = _info.Name;
 
             // List to string
-            if (_info.Servers != null)
-                DNSServers = string.Join("; ", _info.Servers);
+            if (_info.Ports != null)
+                Ports = _info.Ports;
 
-            _previousDNSServerAsString = DNSServers;
-
-            Port = _info.Port;
+            _previousPortAsString = Ports;
 
             _isLoading = false;
         }
 
-        public void CheckInfoChanged() => InfoChanged = _info.Name != Name || _previousDNSServerAsString != DNSServers || _info.Port != Port;
+        public void CheckInfoChanged() => InfoChanged = _info.Name != Name || _previousPortAsString != Ports;
     }
 }

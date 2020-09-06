@@ -4,9 +4,15 @@ namespace NETworkManager.Utilities
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class RegexHelper
-    {
-        // Match IPv4-Address like 192.168.178.1
+    {        
+        /// <summary>
+        /// Match an IPv4-Address like 192.168.178.1
+        /// </summary>
         private const string IPv4AddressValues = @"(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])";
+
+        /// <summary>
+        /// Match exactly an IPv4-Address like 192.168.178.1 
+        /// </summary>
         public const string IPv4AddressRegex = "^" + IPv4AddressValues + "$";
 
         // Match IPv4-Address within a string
