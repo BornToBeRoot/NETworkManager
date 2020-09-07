@@ -271,13 +271,13 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        public ICommand OpenPortSelectionCommand => new RelayCommand(p => OpenPortSelectionAction(), OpenPortSelection_CanExecute);
+        public ICommand OpenPortProfileSelectionCommand => new RelayCommand(p => OpenPortProfileSelectionAction(), OpenPortProfileSelection_CanExecute);
 
-        private bool OpenPortSelection_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+        private bool OpenPortProfileSelection_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        private void OpenPortSelectionAction()
+        private void OpenPortProfileSelectionAction()
         {
-            Ports = "80; 443";
+            OpenPortProfileSelection();
         }
 
         public ICommand ScanCommand => new RelayCommand(p => ScanAction(), Scan_CanExecute);
@@ -350,6 +350,31 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
+        private async void OpenPortProfileSelection()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.SelectPortProfile
+            };
+
+            var viewModel = new PortProfilesViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                Ports = instance.SelectedPortProfile.Ports;
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new PortProfilesDialog
+            {
+                DataContext = viewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
         private async void StartScan()
         {
             _isLoading = true;

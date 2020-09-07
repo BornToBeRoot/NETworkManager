@@ -6,7 +6,6 @@ using NETworkManager.Utilities;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
-using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -33,6 +32,7 @@ namespace NETworkManager.ViewModels
             }
 
         }
+
         private int _hostThreads;
         public int HostThreads
         {

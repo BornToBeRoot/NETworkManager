@@ -74,7 +74,7 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="8" Command="{Binding OpenPortSelectionCommand}" ToolTip="TODO...">
+                <Button Grid.Column="8" Command="{Binding OpenPortProfileSelectionCommand}" ToolTip="{x:Static localization:Strings.OpenPortProfilesDots}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
                             <Style.Triggers>
@@ -86,7 +86,7 @@
                     </Button.Resources>
                     <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=PlusCircleOutline}" />
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderSearchOutline}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>

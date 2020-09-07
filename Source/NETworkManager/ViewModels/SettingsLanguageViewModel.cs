@@ -93,7 +93,7 @@ namespace NETworkManager.ViewModels
 
                 var search = Search.Trim();
 
-                // Search by: Name
+                // Search by: Name, NativeName
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.NativeName.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
