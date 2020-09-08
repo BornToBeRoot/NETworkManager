@@ -79,13 +79,11 @@ namespace NETworkManager.Models.Network
         /// </summary>
         public DiscoveryProtocol()
         {
-            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("NETworkManager.Models.Resources.DiscoveryProtocol.ps1"))
-            {
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    DiscoveryScript = reader.ReadToEnd();
-                }
-            }
+            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("NETworkManager.Models.Resources.DiscoveryProtocol.ps1");
+            
+            using StreamReader reader = new StreamReader(stream);
+            
+            DiscoveryScript = reader.ReadToEnd();
         }
 
         #region Methods
@@ -101,8 +99,11 @@ namespace NETworkManager.Models.Network
             {
                 using (System.Management.Automation.PowerShell powerShell = System.Management.Automation.PowerShell.Create())
                 {
+
+                    powerShell.AddScript("Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process");
+                    powerShell.AddScript("Import-Module netadapter");
                     powerShell.AddScript(DiscoveryScript);
-                    powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -NetAdapter \"{netAdapter}\" -Duration {duration}" + (protocol != Protocol.LLDP_CDP ? $" -Type {protocol.ToString()}" : "") + "| Get-DiscoveryProtocolData");
+                    powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -NetAdapter \"{netAdapter}\" -Duration {duration}" + (protocol != Protocol.LLDP_CDP ? $" -Type {protocol}" : "") + "| Get-DiscoveryProtocolData");
 
                     Collection<PSObject> PSOutput = powerShell.Invoke();
 
