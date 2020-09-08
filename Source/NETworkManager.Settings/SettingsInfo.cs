@@ -186,6 +186,22 @@ namespace NETworkManager.Settings
             }
         }
 
+        // SplashScreen
+        private bool _splashScreen_Enabled;
+        public bool SplashScreen_Enabled
+        {
+            get => _splashScreen_Enabled;
+            set
+            {
+                if (value == _splashScreen_Enabled)
+                    return;
+
+                _splashScreen_Enabled = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         // Appearance
         private string _appearance_Theme = GlobalStaticConfiguration.Appearance_Theme;
         public string Appearance_Theme
