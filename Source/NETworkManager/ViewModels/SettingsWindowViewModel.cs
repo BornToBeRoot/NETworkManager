@@ -91,6 +91,23 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _splashScreenEnabled;
+        public bool SplashScreenEnabled
+        {
+            get => _splashScreenEnabled;
+            set
+            {
+                if (value == _splashScreenEnabled)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.SplashScreen_Enabled = value;
+
+                _splashScreenEnabled = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, LoadSettings
@@ -104,12 +121,13 @@ namespace NETworkManager.ViewModels
         }
 
         private void LoadSettings()
-        {
-            AlwaysShowIconInTray = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+        {            
             MinimizeInsteadOfTerminating = SettingsManager.Current.Window_MinimizeInsteadOfTerminating;
             ConfirmClose = SettingsManager.Current.Window_ConfirmClose;
             MultipleInstances = SettingsManager.Current.Window_MultipleInstances;
             MinimizeToTrayInsteadOfTaskbar = SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar;
+            AlwaysShowIconInTray = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+            SplashScreenEnabled = SettingsManager.Current.SplashScreen_Enabled;
         }
         #endregion
     }

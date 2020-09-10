@@ -12,8 +12,10 @@
         <controls:ToggleSwitch Header="{x:Static localization:Strings.MinimizeInsteadOfTerminating}" IsOn="{Binding MinimizeInsteadOfTerminating}" Margin="0,0,0,10" />
         <controls:ToggleSwitch Header="{x:Static localization:Strings.MinimizeToTrayInsteadOfTaskbar}" IsOn="{Binding MinimizeToTrayInsteadOfTaskbar}" Margin="0,0,0,10" />
         <controls:ToggleSwitch Header="{x:Static localization:Strings.ConfirmClose}" IsOn="{Binding ConfirmClose}" Margin="0,0,0,10"/>
-        <controls:ToggleSwitch Header="{x:Static localization:Strings.MultipleInstances}" IsOn="{Binding MultipleInstances}" Margin="0,0,0,10"/>
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.MultipleInstances}" IsOn="{Binding MultipleInstances}" Margin="0,0,0,20"/>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Tray}" />
-        <controls:ToggleSwitch Header="{x:Static localization:Strings.AlwaysShowIconInTray}" IsOn="{Binding AlwaysShowIconInTray}" />
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.AlwaysShowIconInTray}" IsOn="{Binding AlwaysShowIconInTray}" Margin="0,0,0,20" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.SplashScreen}" />
+        <controls:ToggleSwitch Header="{x:Static localization:Strings.ShowSplashScreenOnStart}" IsOn="{Binding SplashScreenEnabled}" />
     </StackPanel>
 </UserControl>

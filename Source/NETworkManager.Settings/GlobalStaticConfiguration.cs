@@ -31,6 +31,7 @@ namespace NETworkManager.Settings
         public static ApplicationName General_DefaultApplicationViewName => ApplicationName.Dashboard;
         public static int General_BackgroundJobInterval => 15;
         public static int General_HistoryListEntries => 5;
+        public static bool SplashScreen_Enabled => true;
         public static string Appearance_Theme => "Dark";
         public static string Appearance_Accent => "Lime";
         public static bool Status_ShowWindowOnNetworkChange => true;

@@ -6958,6 +6958,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show SplashScreen on start.
+        /// </summary>
+        public static string ShowSplashScreenOnStart {
+            get {
+                return ResourceManager.GetString("ShowSplashScreenOnStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show statistics.
         /// </summary>
         public static string ShowStatistics {
@@ -7053,6 +7062,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Speed {
             get {
                 return ResourceManager.GetString("Speed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SplashScreen.
+        /// </summary>
+        public static string SplashScreen {
+            get {
+                return ResourceManager.GetString("SplashScreen", resourceCulture);
             }
         }
         

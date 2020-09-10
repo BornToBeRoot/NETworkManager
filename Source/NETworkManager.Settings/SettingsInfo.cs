@@ -187,7 +187,7 @@ namespace NETworkManager.Settings
         }
 
         // SplashScreen
-        private bool _splashScreen_Enabled;
+        private bool _splashScreen_Enabled = GlobalStaticConfiguration.SplashScreen_Enabled;
         public bool SplashScreen_Enabled
         {
             get => _splashScreen_Enabled;

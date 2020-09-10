@@ -2907,4 +2907,10 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="OpenPortProfilesDots" xml:space="preserve">
     <value>Open port profiles...</value>
   </data>
+  <data name="ShowSplashScreenOnStart" xml:space="preserve">
+    <value>Show SplashScreen on start</value>
+  </data>
+  <data name="SplashScreen" xml:space="preserve">
+    <value>SplashScreen</value>
+  </data>
 </root>
