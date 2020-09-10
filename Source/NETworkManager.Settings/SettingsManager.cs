@@ -184,6 +184,9 @@ namespace NETworkManager.Settings
         public static void Reset()
         {
             InitDefault();
+
+            // Save manually, settings are not saved on a forced restart...
+            Save();
         }
         #endregion
         #endregion
