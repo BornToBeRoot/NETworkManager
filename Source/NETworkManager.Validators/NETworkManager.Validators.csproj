@@ -12,7 +12,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Lextm.SharpSnmpLib" Version="12.0.0" />
+    <PackageReference Include="Lextm.SharpSnmpLib" Version="12.1.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />

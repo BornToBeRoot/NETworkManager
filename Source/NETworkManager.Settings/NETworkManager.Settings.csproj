@@ -20,7 +20,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="DnsClient" Version="1.3.2" />
-		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.0.0" />
+		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.1.0" />
 		<PackageReference Include="MahApps.Metro" Version="2.2.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.4.0" />
 	</ItemGroup>
