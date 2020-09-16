@@ -150,7 +150,7 @@
       <Version>3.0.2.4</Version>
     </PackageReference>
     <PackageReference Include="IPNetwork2">
-      <Version>2.5.224</Version>
+      <Version>2.5.226</Version>
     </PackageReference>
     <PackageReference Include="Lextm.SharpSnmpLib">
       <Version>12.1.0</Version>
