@@ -484,9 +484,8 @@
                                     <TextBox x:Name="TextBoxPortScannerPorts" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}">
                                         <TextBox.Text>
                                             <Binding Path="PortScanner_Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                                <Binding.ValidationRules>
-                                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                    <validators:PortRangeValidator ValidatesOnTargetUpdated="True" />
+                                                <Binding.ValidationRules>                                                    
+                                                    <validators:EmptyOrPortRangeValidator ValidatesOnTargetUpdated="True" />
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
