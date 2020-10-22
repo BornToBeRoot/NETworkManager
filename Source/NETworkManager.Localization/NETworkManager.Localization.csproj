@@ -38,7 +38,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="MahApps.Metro" Version="2.2.0" />
+    <PackageReference Include="MahApps.Metro" Version="2.3.0" />
   </ItemGroup>
   
   <ItemGroup>
