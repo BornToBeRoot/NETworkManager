@@ -24,7 +24,7 @@
 		<PackageReference Include="DnsClient" Version="1.3.2" />
 		<PackageReference Include="IPNetwork2" Version="2.5.226" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.2.0" />
-		<PackageReference Include="MahApps.Metro" Version="2.3.2" />
+		<PackageReference Include="MahApps.Metro" Version="2.3.3" />
 		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
 		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.0.3" />		
 		<PackageReference Include="Microsoft.Web.WebView2" Version="0.9.579-prerelease" />
