@@ -418,7 +418,7 @@
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
                                 <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
-                                <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                             </Style>
                         </Rectangle.Style>
                     </Rectangle>
@@ -437,7 +437,7 @@
                 </Grid>
             </Button.Content>
         </Button>
-        <mahAppsControls:MetroProgressBar Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource AccentColorBrush}" IsIndeterminate="True" Margin="0,10,0,0">
+        <mahAppsControls:MetroProgressBar Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True" Margin="0,10,0,0">
             <mahAppsControls:MetroProgressBar.Style>
                 <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}" >
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -456,7 +456,7 @@
                 </Style>
             </mahAppsControls:MetroProgressBar.Style>
         </mahAppsControls:MetroProgressBar>
-        <TextBlock Grid.Row="6" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" Margin="0,10,0,0" Style="{StaticResource DefaultTextBlock}"/>
+        <TextBlock Grid.Row="6" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource MahApps.Brushes.Accent}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" Margin="0,10,0,0" Style="{StaticResource DefaultTextBlock}"/>
         <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="0">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
@@ -480,7 +480,7 @@
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.CopyDots}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                 </Rectangle.OpacityMask>
@@ -488,7 +488,7 @@
                         </MenuItem.Icon>
                         <MenuItem Header="{x:Static localization:Strings.OID}" Command="{Binding CopySelectedOIDCommand}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
@@ -497,7 +497,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Data}" Command="{Binding CopySelectedDataCommand}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
                                     </Rectangle.OpacityMask>
@@ -507,7 +507,7 @@
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
                                 </Rectangle.OpacityMask>
@@ -518,7 +518,7 @@
                 <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                         <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
                                 </Rectangle.OpacityMask>
@@ -541,7 +541,7 @@
                 </Style>
             </controls:MultiSelectDataGrid.Style>
             <controls:MultiSelectDataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
                     <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}" Value="1" >

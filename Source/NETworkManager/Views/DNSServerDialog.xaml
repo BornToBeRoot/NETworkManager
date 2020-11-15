@@ -64,9 +64,9 @@
                 </TextBox.Style>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.DNSServers}" />
-            <TextBox x:Name="TextBoxDNSServer" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServers}">
+            <TextBox x:Name="TextBoxDNSServers" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServers}">
                 <TextBox.Text>
-                    <Binding Path="DNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="DNSServers" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             <validators:MultipleIPAddressesValidator ValidatesOnTargetUpdated="True" />
@@ -96,7 +96,7 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxName}" Value="False" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxDNSServer}" Value="False" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxDNSServers}" Value="False" />
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxPort}" Value="False" />
                                     <Condition Binding="{Binding InfoChanged}" Value="True" />
                                 </MultiDataTrigger.Conditions>

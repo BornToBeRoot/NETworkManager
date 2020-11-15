@@ -1,5 +1,6 @@
 ﻿namespace NETworkManager.Documentation
 {
+
     public abstract class BaseInfo
     {
         public string Name { get; set; }

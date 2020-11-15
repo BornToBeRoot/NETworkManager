@@ -149,10 +149,24 @@ namespace NETworkManager.Controls
 
                         while ((DateTime.Now - startTime).TotalSeconds < 10)
                         {
-                            _process.Refresh();
+                            // Fix for netcore3.1 https://stackoverflow.com/questions/60342879/process-mainwindowhandle-is-non-zero-in-net-framework-but-zero-in-net-core-unl
+                            /*
+                            try
+                            {
+                                _process = Process.GetProcessById(_process.Id);
+                            }
+                            catch
+                            {
+                                break; // Process has exited
+                            }
+                            */
 
+
+                            _process.Refresh();
+                            
                             if (_process.HasExited)
                                 break;
+                            
 
                             _appWin = _process.MainWindowHandle;
 
@@ -201,7 +215,7 @@ namespace NETworkManager.Controls
                 if (!_closing)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = NETworkManager.Localization.Resources.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
                     ConfigurationManager.Current.FixAirspace = true;
 

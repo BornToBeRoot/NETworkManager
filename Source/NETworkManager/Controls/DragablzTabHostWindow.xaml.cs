@@ -270,8 +270,8 @@ namespace NETworkManager.Controls
         {
             if (view is WebConsoleControl control)
             {
-                if (control.RefreshCommand.CanExecute(null))
-                    control.RefreshCommand.Execute(null);
+                if (control.ReloadCommand.CanExecute(null))
+                    control.ReloadCommand.Execute(null);
             }
         }
         #endregion

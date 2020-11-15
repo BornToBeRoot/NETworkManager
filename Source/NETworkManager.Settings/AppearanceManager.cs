@@ -1,79 +1,74 @@
-﻿using MahApps.Metro;
+﻿using ControlzEx.Theming;
 using MahApps.Metro.Controls.Dialogs;
-using System;
-using System.IO;
-using System.Windows;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Media;
 
 namespace NETworkManager.Settings
 {
+    /// <summary>
+    /// Class provides static variables and methods to change the theme and accent of the application.
+    /// </summary>
     public static class AppearanceManager
     {
-        private static readonly string ThemesFilePath = Path.Combine(ConfigurationManager.Current.ExecutionPath, "Themes");
-
-        private const string CostomThemeFileExtension = @".Theme.xaml";
-        private const string CostomAccentFileExtension = @".Accent.xaml";
-
+        /// <summary>
+        /// Containes the default settings for a new <see cref="BaseMetroDialog"/> 
+        /// </summary>
         public static MetroDialogSettings MetroDialog = new MetroDialogSettings();
+        
+        /// <summary>
+        /// List who contains all MahApps.Metro themes.
+        /// </summary>
+        public static List<ThemeColorInfo> Themes { get; set; }
 
+        /// <summary>
+        /// List who contains all MahApps.Metro accents.
+        /// </summary>
+        public static List<AccentColorInfo> Accents { get; set; }
+
+        /// <summary>
+        /// Load the MahApps.Metro themes and accents when needed.
+        /// </summary>
+        static AppearanceManager()
+        {
+            Themes = ThemeManager.Current.Themes
+                .GroupBy(x => x.BaseColorScheme)
+                .Select(x => x.First())
+                .Select(x => new ThemeColorInfo { Name = x.BaseColorScheme, Color = x.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
+                .ToList();
+
+            Accents = ThemeManager.Current.Themes
+                .GroupBy(x => x.ColorScheme)
+                .OrderBy(x => x.Key)
+                .Select(x => new AccentColorInfo { Name = x.Key, Color = x.First().ShowcaseBrush })
+                .ToList();
+        }
+
+        /// <summary>
+        /// Change the appearance based on the user settings. This method should be called once, when starting the application.
+        /// </summary>
         public static void Load()
         {
-            // Add custom themes
-            foreach (var file in Directory.GetFiles(ThemesFilePath))
-            {
-                var fileName = Path.GetFileName(file);
-
-                // Theme
-                if (fileName.EndsWith(CostomThemeFileExtension))
-                    ThemeManager.AddAppTheme(fileName.Substring(0, fileName.Length - CostomThemeFileExtension.Length), new Uri(file));
-
-                // Accent
-                if (fileName.EndsWith(CostomAccentFileExtension))
-                    ThemeManager.AddAccent(fileName.Substring(0, fileName.Length - CostomAccentFileExtension.Length), new Uri(file));
-            }
-
-            // Change the AppTheme if it is not empty and different from the currently loaded
-            var appThemeName = SettingsManager.Current.Appearance_AppTheme;
-
-            if (!string.IsNullOrEmpty(appThemeName) && appThemeName != ThemeManager.DetectAppStyle().Item1.Name)
-                ChangeAppTheme(appThemeName);
-
-            // Change the Accent if it is not empty and different from the currently loaded
-            var accentName = SettingsManager.Current.Appearance_Accent;
-
-            if (!string.IsNullOrEmpty(accentName) && accentName != ThemeManager.DetectAppStyle().Item2.Name)
-                ChangeAccent(accentName);
-
-            MetroDialog.CustomResourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
-            };
+            ChangeTheme(SettingsManager.Current.Appearance_Theme);
+            ChangeAccent(SettingsManager.Current.Appearance_Accent);
         }
 
         /// <summary>
-        /// Change the AppTheme
+        /// Method to change the application theme.
         /// </summary>
-        /// <param name="name">Name of the AppTheme</param>
-        public static void ChangeAppTheme(string name)
+        /// <param name="name">Name of the theme.</param>
+        public static void ChangeTheme(string name)
         {
-            var theme = ThemeManager.GetAppTheme(name);
-
-            // If user has renamed / removed a custom theme --> fallback default
-            if (theme != null)
-                ThemeManager.ChangeAppTheme(System.Windows.Application.Current, name);
+            ThemeManager.Current.ChangeThemeBaseColor(System.Windows.Application.Current, name);
         }
 
         /// <summary>
-        /// Change the Accent
+        /// Method to change the application accent.
         /// </summary>
-        /// <param name="name">Name of the Accent</param>
+        /// <param name="name">Name of the accent.</param>
         public static void ChangeAccent(string name)
         {
-            var appStyle = ThemeManager.DetectAppStyle(System.Windows.Application.Current);
-            var accent = ThemeManager.GetAccent(name);
-
-            // If user has renamed / removed a custom theme --> fallback default
-            if (accent != null)
-                ThemeManager.ChangeAppStyle(System.Windows.Application.Current, accent, appStyle.Item1);
+            ThemeManager.Current.ChangeThemeColorScheme(System.Windows.Application.Current, name);
         }
     }
 }

@@ -87,7 +87,7 @@ namespace NETworkManager.Profiles
 
         public static string GetPortableProfilesLocation()
         {
-            return Path.Combine(Path.GetDirectoryName(AssemblyManager.Current.Location) ?? throw new InvalidOperationException(), ProfilesFolderName);
+            return Path.Combine(AssemblyManager.Current.Location ?? throw new InvalidOperationException(), ProfilesFolderName);
         }
 
         public static string GetProfilesLocation()

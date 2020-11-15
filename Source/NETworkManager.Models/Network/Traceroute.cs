@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +13,7 @@ namespace NETworkManager.Models.Network
     public class Traceroute
     {
         #region Variables
-        private LookupClient DnsLookupClient = new LookupClient();
+        private readonly LookupClient DnsLookupClient = new LookupClient();
 
         public int Timeout = 4000;
         public byte[] Buffer = new byte[32];

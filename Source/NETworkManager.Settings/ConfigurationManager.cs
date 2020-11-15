@@ -15,11 +15,12 @@ namespace NETworkManager.Settings
             Current = new ConfigurationInfo
             {
                 IsAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator),
-                ExecutionPath = Path.GetDirectoryName(AssemblyManager.Current.Location),
-                ApplicationFullName = AssemblyManager.Current.Location,
+                ExecutionPath = AssemblyManager.Current.Location,
+                ApplicationFullName = Path.Combine(AssemblyManager.Current.Location, AssemblyManager.Current.Name + ".exe"),
                 ApplicationName = AssemblyManager.Current.Name,
                 OSVersion = System.Environment.OSVersion.Version,
-                IsPortable = File.Exists(Path.Combine(Path.GetDirectoryName(AssemblyManager.Current.Location), $"{IsPortableFileName}.{IsPortableExtension}"))
+                IsPortable = File.Exists(Path.Combine(AssemblyManager.Current.Location, $"{IsPortableFileName}.{IsPortableExtension}")),
+                IsPreview = File.Exists(Path.Combine(AssemblyManager.Current.Location, "IsPreview.settings"))
             };
         }
     }

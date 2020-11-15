@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CSV" xml:space="preserve">
     <value>CSV</value>
@@ -287,5 +287,8 @@
   </data>
   <data name="PrivateKeyFileLocationDots" xml:space="preserve">
     <value>C:\Data\Keys\private_ssh.ppk</value>
+  </data>
+  <data name="ExamplePorts" xml:space="preserve">
+    <value>22; 80; 443</value>
   </data>
 </root>

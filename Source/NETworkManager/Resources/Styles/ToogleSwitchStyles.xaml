@@ -2,12 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization">
-    <Style x:Key="DefaultToggleSwitch" TargetType="{x:Type mah:ToggleSwitch}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" >
+    <Style x:Key="DefaultToggleSwitch" TargetType="{x:Type mah:ToggleSwitch}" BasedOn="{StaticResource MahApps.Styles.ToggleSwitch}" >
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="mah:ControlsHelper.HeaderFontSize" Value="14" />
-        <Setter Property="ThumbIndicatorBrush" Value="{DynamicResource GrayBrush3}" />
-        <Setter Property="OffLabel" Value="{x:Static localization:Strings.Off}" />
-        <Setter Property="OnLabel" Value="{x:Static localization:Strings.On}" />
+        <!--<Setter Property="mah:ControlsHelper.HeaderFontSize" Value="14" />-->
+        <!--<Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />-->
+        <Setter Property="OffContent" Value="{x:Static localization:Strings.Off}" />
+        <Setter Property="OnContent" Value="{x:Static localization:Strings.On}" />
         <Style.Resources>
             <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OffBorderBrush.Win10" Color="{DynamicResource Gray8}" />
         </Style.Resources>

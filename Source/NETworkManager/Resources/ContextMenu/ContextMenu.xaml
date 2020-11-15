@@ -8,10 +8,10 @@
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" Value="{DynamicResource MenuItemDisabledBrush}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -27,10 +27,10 @@
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" Value="{DynamicResource MenuItemDisabledBrush}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -40,16 +40,16 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
-        </MenuItem>
+        </MenuItem>        
         <MenuItem Header="{x:Static localization:Strings.Paste}" Command="Paste">
             <MenuItem.Icon>
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" Value="{DynamicResource MenuItemDisabledBrush}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -68,10 +68,10 @@
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" Value="{DynamicResource MenuItemDisabledBrush}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -90,10 +90,10 @@
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" Value="{DynamicResource MenuItemDisabledBrush}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -103,16 +103,16 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
-        </MenuItem>
+        </MenuItem>        
         <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
             <MenuItem.Icon>
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
                             <Style.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" Value="{DynamicResource MenuItemDisabledBrush}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

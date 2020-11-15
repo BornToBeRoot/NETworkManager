@@ -56,7 +56,7 @@
                                                 <Rectangle.Style>
                                                     <Style TargetType="{x:Type Rectangle}">
                                                         <Setter Property="OpacityMask" Value="{StaticResource VisualDown}" />
-                                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding IsOperational}" Value="True">
                                                                 <Setter Property="OpacityMask" Value="{StaticResource VisualUp}" />
@@ -67,13 +67,13 @@
                                             </Rectangle>
                                             <StackPanel Margin="10,0,0,0">
                                                 <TextBlock Text="{Binding Path=Name}" />
-                                                <TextBlock Text="{Binding Path=Description}" Foreground="{DynamicResource GrayBrush3}"/>
+                                                <TextBlock Text="{Binding Path=Description}" Foreground="{DynamicResource MahApps.Brushes.Gray3}"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                                 <ComboBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MetroComboBoxItem}">
+                                    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MahApps.Styles.ComboBoxItem}">
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="ComboBoxItem">
@@ -86,14 +86,14 @@
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="IsSelected" Value="True">
                                                             <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush9}" />
+                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray9}" />
                                                         </Trigger>
                                                         <MultiTrigger>
                                                             <MultiTrigger.Conditions>
                                                                 <Condition Property="IsSelected" Value="False" />
                                                                 <Condition Property="IsMouseOver" Value="True" />
                                                             </MultiTrigger.Conditions>
-                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush10}" />
+                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
                                                         </MultiTrigger>
                                                         <Trigger Property="IsEnabled" Value="False">
                                                             <Setter TargetName="contentPresenter" Property="Opacity" Value=".55" />
@@ -112,10 +112,10 @@
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
-                                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -168,7 +168,7 @@
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
-                                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=TimerRecord}" />
                                             </Rectangle.OpacityMask>
@@ -178,7 +178,7 @@
                                 </Button.Content>
                             </Button>
                         </Grid>
-                        <TextBlock Grid.Row="4" Foreground="{DynamicResource AccentColorBrush}" Text="{Binding StatusMessage}" TextWrapping="Wrap" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+                        <TextBlock Grid.Row="4" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" TextWrapping="Wrap" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
                         <TextBlock Grid.Row="5" Text="{x:Static localization:Strings.Details}" Style="{StaticResource HeaderTextBlock}"  Margin="0,20,0,10" />                         
                         <ScrollViewer Grid.Row="6">
                             <ScrollViewer.Style>
@@ -269,7 +269,7 @@
                         <StackPanel VerticalAlignment="Center" Grid.Row="6" Visibility="{Binding IsCapturing, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>
                             <TextBlock Text="{x:Static localization:Strings.CapturingNetworkPackagesDots}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-                            <TextBlock Text="{Binding TimeRemainingMessage}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource GrayBrush3}" HorizontalAlignment="Center" />                            
+                            <TextBlock Text="{Binding TimeRemainingMessage}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource MahApps.Brushes.Gray3}" HorizontalAlignment="Center" />                            
                         </StackPanel>
                     </Grid>
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
@@ -291,7 +291,7 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
                                         </Rectangle.OpacityMask>
@@ -311,7 +311,7 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Shield}" />
                                     </Rectangle.OpacityMask>

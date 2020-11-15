@@ -18,7 +18,7 @@
             <TextBlock Text="{x:Static localization:Strings.Privacy}" Style="{StaticResource HeaderTextBlock}" />
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10" >
-                    <mahAppsControls:ToggleSwitch  IsChecked="{Binding CheckForUpdatesAtStartup}" Header="{x:Static localization:Strings.CheckForUpdatesAtStartup}" />
+                    <mahAppsControls:ToggleSwitch IsOn="{Binding CheckForUpdatesAtStartup}" Header="{x:Static localization:Strings.CheckForUpdatesAtStartup}" />
                     <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckForUpdatesAtStartup}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                         <Rectangle.Resources>
                             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
@@ -26,7 +26,7 @@
                     </Rectangle>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                    <mahAppsControls:ToggleSwitch  IsChecked="{Binding CheckPublicIPAddress}" Header="{x:Static localization:Strings.CheckPublicIPAddress}" />
+                    <mahAppsControls:ToggleSwitch IsOn="{Binding CheckPublicIPAddress}" Header="{x:Static localization:Strings.CheckPublicIPAddress}" />
                     <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckPublicIPAddress}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                         <Rectangle.Resources>
                             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />

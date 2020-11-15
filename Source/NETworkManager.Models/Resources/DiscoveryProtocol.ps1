@@ -107,10 +107,9 @@ function Invoke-DiscoveryProtocolCapture {
     }
 
     process {
-
             $TempFile = New-TemporaryFile
             $ETLFile = Rename-Item -Path $TempFile.FullName -NewName $TempFile.FullName.Replace('.tmp', '.etl') -PassThru                      
-
+                        
             $Adapter = Get-NetAdapter -Name $NetAdapter | Select-Object -First 1 Name, MacAddress
 
             $MACAddress = [PhysicalAddress]::Parse($Adapter.MacAddress).ToString()

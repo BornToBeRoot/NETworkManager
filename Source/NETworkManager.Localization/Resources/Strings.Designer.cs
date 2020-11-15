@@ -484,6 +484,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add port profile.
+        /// </summary>
+        public static string AddPortProfile {
+            get {
+                return ResourceManager.GetString("AddPortProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add profile.
         /// </summary>
         public static string AddProfile {
@@ -867,42 +876,6 @@ namespace NETworkManager.Localization.Resources {
         public static string ApplyWindowsKeyCombinationsLikeAltTab {
             get {
                 return ResourceManager.GetString("ApplyWindowsKeyCombinationsLikeAltTab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dark.
-        /// </summary>
-        public static string AppTheme_BaseDark {
-            get {
-                return ResourceManager.GetString("AppTheme_BaseDark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Light.
-        /// </summary>
-        public static string AppTheme_BaseLight {
-            get {
-                return ResourceManager.GetString("AppTheme_BaseLight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Black.
-        /// </summary>
-        public static string AppTheme_Black {
-            get {
-                return ResourceManager.GetString("AppTheme_Black", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to White.
-        /// </summary>
-        public static string AppTheme_White {
-            get {
-                return ResourceManager.GetString("AppTheme_White", resourceCulture);
             }
         }
         
@@ -2077,6 +2050,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete port profile.
+        /// </summary>
+        public static string DeletePortProfile {
+            get {
+                return ResourceManager.GetString("DeletePortProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected port profile will be deleted permanently..
+        /// </summary>
+        public static string DeletePortProfileMessage {
+            get {
+                return ResourceManager.GetString("DeletePortProfileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete profile.
         /// </summary>
         public static string DeleteProfile {
@@ -2496,6 +2487,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EditGroup {
             get {
                 return ResourceManager.GetString("EditGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit port profile.
+        /// </summary>
+        public static string EditPortProfile {
+            get {
+                return ResourceManager.GetString("EditPortProfile", resourceCulture);
             }
         }
         
@@ -4560,6 +4560,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open port profiles....
+        /// </summary>
+        public static string OpenPortProfilesDots {
+            get {
+                return ResourceManager.GetString("OpenPortProfilesDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open project.
         /// </summary>
         public static string OpenProject {
@@ -4823,6 +4832,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Port profiles.
+        /// </summary>
+        public static string PortProfiles {
+            get {
+                return ResourceManager.GetString("PortProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ports.
         /// </summary>
         public static string Ports {
@@ -4900,6 +4918,15 @@ namespace NETworkManager.Localization.Resources {
         public static string PreferredProtocolWhenResolvingHostname {
             get {
                 return ResourceManager.GetString("PreferredProtocolWhenResolvingHostname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string Preview {
+            get {
+                return ResourceManager.GetString("Preview", resourceCulture);
             }
         }
         
@@ -6498,6 +6525,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select port profile.
+        /// </summary>
+        public static string SelectPortProfile {
+            get {
+                return ResourceManager.GetString("SelectPortProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select the settings you want to export:.
         /// </summary>
         public static string SelectTheSettingsYouWantToExport {
@@ -6922,6 +6958,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show SplashScreen on start.
+        /// </summary>
+        public static string ShowSplashScreenOnStart {
+            get {
+                return ResourceManager.GetString("ShowSplashScreenOnStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show statistics.
         /// </summary>
         public static string ShowStatistics {
@@ -7017,6 +7062,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Speed {
             get {
                 return ResourceManager.GetString("Speed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SplashScreen.
+        /// </summary>
+        public static string SplashScreen {
+            get {
+                return ResourceManager.GetString("SplashScreen", resourceCulture);
             }
         }
         
@@ -7462,6 +7516,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string Theme_Dark {
+            get {
+                return ResourceManager.GetString("Theme_Dark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string Theme_Light {
+            get {
+                return ResourceManager.GetString("Theme_Light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The process can take up some time and resources (CPU / RAM)..
         /// </summary>
         public static string TheProcessCanTakeUpSomeTimeAndResources {
@@ -7660,9 +7732,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open documentation on GitHub.
-        ///
-        ///URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation.
+        ///   Looks up a localized string similar to Open documentation on GitHub..
         /// </summary>
         public static string ToolTip_GithubDocumentationUrl {
             get {
@@ -7671,9 +7741,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Report an issue or create a feature request.
-        ///
-        ///URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose.
+        ///   Looks up a localized string similar to Report an issue or create a feature request..
         /// </summary>
         public static string ToolTip_GithubNewIssueUrl {
             get {
@@ -7682,9 +7750,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Star/Fork the Project on GitHub.
-        ///
-        ///URL: https://github.com/BornToBeRoot/NETworkManager/.
+        ///   Looks up a localized string similar to Star/Fork the Project on GitHub..
         /// </summary>
         public static string ToolTip_GitHubProjectUrl {
             get {
@@ -7693,9 +7759,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Help translate the project on Transifex.
-        ///
-        ///URL: https://transifex.com/BornToBeRoot/NETworkManager/.
+        ///   Looks up a localized string similar to Help translate the project on Transifex..
         /// </summary>
         public static string ToolTip_TransifexProjectUrl {
             get {
@@ -7704,9 +7768,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contact via Twitter.
-        ///
-        ///URL: https://twitter.com/BornToBeRoot_DE.
+        ///   Looks up a localized string similar to Contact via Twitter..
         /// </summary>
         public static string ToolTip_TwitterContactUrl {
             get {

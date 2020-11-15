@@ -1,30 +1,33 @@
-﻿using MahApps.Metro;
-using System;
+﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Windows.Data;
-using System.Windows.Media;
+using NETworkManager.Localization.Translators;
+using NETworkManager.Models.Appearance;
 
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Convert <see cref="AppTheme"/> to <see cref="Brush"/> or wise versa.
+    /// Convert <see cref="ThemeColorInfo"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
-    public sealed class AppThemeToBrushConverter : IValueConverter
+    public sealed class ThemeToStringConverter : IValueConverter
     {
+
         /// <summary>
-        /// Convert <see cref="AppTheme"/> to <see cref="Brush"/>. 
+        /// Convert <see cref="ThemeColorInfo"/> to translated <see cref="string"/>. 
         /// </summary>
-        /// <param name="value">Object from type <see cref="AppTheme"/>.</param>
+        /// <param name="value">Object from type <see cref="ThemeColorInfo"/>.</param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
-        /// <returns>Converted <see cref="Brush"/>.</returns>
+        /// <returns>Translated <see cref="ThemeColorInfo"/>.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {            
-            return ThemeManager.AppThemes.First(x => x.Name == ((AppTheme)System.Convert.ChangeType(value, typeof(AppTheme))).Name).Resources["WindowBackgroundBrush"] as Brush;
+        {
+            if (!(value is string theme))
+                return "-/-";
+
+            return ThemeTranslator.GetInstance().Translate(theme);
         }
-                
+
         /// <summary>
         /// !!! Method not implemented !!!
         /// </summary>

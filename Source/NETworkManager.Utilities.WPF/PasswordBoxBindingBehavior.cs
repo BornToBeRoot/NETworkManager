@@ -1,8 +1,8 @@
-﻿using System.Security;
+﻿using Microsoft.Xaml.Behaviors;
+using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Interactivity;
 
 namespace NETworkManager.Utilities.WPF
 {

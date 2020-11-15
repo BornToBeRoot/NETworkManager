@@ -5,7 +5,6 @@ using NETworkManager.Utilities;
 using System.ComponentModel;
 using System;
 using System.Windows.Input;
-using System.Diagnostics;
 using NETworkManager.Localization;
 
 namespace NETworkManager.ViewModels
@@ -94,7 +93,7 @@ namespace NETworkManager.ViewModels
 
                 var search = Search.Trim();
 
-                // Search by: Name
+                // Search by: Name, NativeName
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.NativeName.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
@@ -123,7 +122,7 @@ namespace NETworkManager.ViewModels
 
         private static void OpenWebsiteAction(object url)
         {
-            Process.Start((string)url);
+            ExternalProcessStarter.OpenUrl((string)url);            
         }
         #endregion
     }

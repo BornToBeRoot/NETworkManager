@@ -1,5 +1,7 @@
-﻿using MahApps.Metro;
-using NETworkManager.Settings;
+﻿using NETworkManager.Settings;
+using System.ComponentModel;
+using System.Windows.Data;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -8,33 +10,38 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
-        private AppTheme _appThemeSelectedItem;
-        public AppTheme AppThemeSelectedItem
+        public ICollectionView Themes { get; private set; }
+
+        private ThemeColorInfo _selectedTheme;
+        public ThemeColorInfo SelectedTheme
         {
-            get => _appThemeSelectedItem;
+            get => _selectedTheme;
             set
             {
-                if (value == _appThemeSelectedItem)
+                if (value == _selectedTheme)
                     return;
 
                 if (!_isLoading)
                 {
-                    AppearanceManager.ChangeAppTheme(value.Name);
-                    SettingsManager.Current.Appearance_AppTheme = value.Name;
+                    AppearanceManager.ChangeTheme(value.Name);
+                    SettingsManager.Current.Appearance_Theme = value.Name;
                 }
 
-                _appThemeSelectedItem = value;
+                _selectedTheme = value;
                 OnPropertyChanged();
             }
         }
 
-        private Accent _accentSelectedItem;
-        public Accent AccentSelectedItem
+
+        public ICollectionView Accents { get; private set; }
+
+        private AccentColorInfo _selectedAccent;
+        public AccentColorInfo SelectedAccent
         {
-            get => _accentSelectedItem;
+            get => _selectedAccent;
             set
             {
-                if (value == _accentSelectedItem)
+                if (value == _selectedAccent)
                     return;
 
                 if (!_isLoading)
@@ -43,16 +50,21 @@ namespace NETworkManager.ViewModels
                     SettingsManager.Current.Appearance_Accent = value.Name;
                 }
 
-                _accentSelectedItem = value;
+                _selectedAccent = value;
                 OnPropertyChanged();
             }
         }
+
         #endregion        
 
         #region Constructor, LoadSettings
         public SettingsAppearanceViewModel()
         {
             _isLoading = true;
+
+            Accents = new CollectionViewSource { Source = AppearanceManager.Accents }.View;
+
+            Themes = new CollectionViewSource { Source = AppearanceManager.Themes }.View;
 
             LoadSettings();
 
@@ -61,8 +73,8 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            AppThemeSelectedItem = ThemeManager.DetectAppStyle().Item1;
-            AccentSelectedItem = ThemeManager.DetectAppStyle().Item2;
+            SelectedTheme = Themes.Cast<ThemeColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Theme);
+            SelectedAccent = Accents.Cast<AccentColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Accent);
         }
         #endregion
     }

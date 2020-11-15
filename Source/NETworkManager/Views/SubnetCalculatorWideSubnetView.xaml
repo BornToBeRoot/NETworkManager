@@ -96,7 +96,7 @@
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualCalculator}" />
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                     </Style>
                                 </Rectangle.Style>
                             </Rectangle>
@@ -157,6 +157,6 @@
                 </Grid>
             </ScrollViewer>
         </StackPanel>
-        <TextBlock Grid.Row="2" Foreground="{DynamicResource GrayBrush3}" Text="{x:Static localization:Strings.EnterSubnetsToCreateAWideSubnet}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
+        <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Text="{x:Static localization:Strings.EnterSubnetsToCreateAWideSubnet}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
     </Grid>
 </UserControl>

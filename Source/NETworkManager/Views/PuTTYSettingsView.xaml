@@ -58,7 +58,7 @@
         </TextBox>
         <TextBlock Text="{x:Static localization:Strings.PuTTYProfile}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox Width="250" Text="{Binding Profile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.EnableLog}" IsChecked="{Binding EnableLog}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.EnableLog}" IsOn="{Binding EnableLog}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.LogMode}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <ComboBox ItemsSource="{Binding LogModes}" SelectedItem="{Binding LogMode}" MinWidth="250" Width="Auto" HorizontalAlignment="Left" Margin="0,0,0,10">
             <ComboBox.ItemTemplate>

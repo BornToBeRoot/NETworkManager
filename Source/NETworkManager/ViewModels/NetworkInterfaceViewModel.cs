@@ -640,7 +640,13 @@ namespace NETworkManager.ViewModels
         {
             try
             {
-                Process.Start("NCPA.cpl");
+                ProcessStartInfo info = new ProcessStartInfo
+                {
+                    FileName = "NCPA.cpl",
+                    UseShellExecute = true
+                };
+
+                Process.Start(info);
             }
             catch (Exception ex)
             {

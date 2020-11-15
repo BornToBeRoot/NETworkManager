@@ -229,6 +229,10 @@ namespace NETworkManager.ViewModels
             HostsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostsHistory);
             PortsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortsHistory);
 
+            // Add default port profiles...
+            if (SettingsManager.Current.PortScanner_PortProfiles.Count == 0)
+                SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.DefaultList());
+
             // Result view
             ResultsView = CollectionViewSource.GetDefaultView(PortScanResult);
             ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.IPAddress)));
@@ -267,6 +271,15 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
+        public ICommand OpenPortProfileSelectionCommand => new RelayCommand(p => OpenPortProfileSelectionAction(), OpenPortProfileSelection_CanExecute);
+
+        private bool OpenPortProfileSelection_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+
+        private void OpenPortProfileSelectionAction()
+        {
+            OpenPortProfileSelection();
+        }
+
         public ICommand ScanCommand => new RelayCommand(p => ScanAction(), Scan_CanExecute);
 
         private bool Scan_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
@@ -337,6 +350,31 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
+        private async void OpenPortProfileSelection()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.SelectPortProfile
+            };
+
+            var viewModel = new PortProfilesViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                Ports = instance.SelectedPortProfile.Ports;
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new PortProfilesDialog
+            {
+                DataContext = viewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
         private async void StartScan()
         {
             _isLoading = true;

@@ -186,23 +186,39 @@ namespace NETworkManager.Settings
             }
         }
 
-        // Appearance
-        private string _appearance_AppTheme;
-        public string Appearance_AppTheme
+        // SplashScreen
+        private bool _splashScreen_Enabled = GlobalStaticConfiguration.SplashScreen_Enabled;
+        public bool SplashScreen_Enabled
         {
-            get => _appearance_AppTheme;
+            get => _splashScreen_Enabled;
             set
             {
-                if (value == _appearance_AppTheme)
+                if (value == _splashScreen_Enabled)
                     return;
 
-                _appearance_AppTheme = value;
+                _splashScreen_Enabled = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private string _appearance_Accent;
+        // Appearance
+        private string _appearance_Theme = GlobalStaticConfiguration.Appearance_Theme;
+        public string Appearance_Theme
+        {
+            get => _appearance_Theme;
+            set
+            {
+                if (value == _appearance_Theme)
+                    return;
+
+                _appearance_Theme = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _appearance_Accent = GlobalStaticConfiguration.Appearance_Accent;
         public string Appearance_Accent
         {
             get => _appearance_Accent;
@@ -966,6 +982,21 @@ namespace NETworkManager.Settings
                     return;
 
                 _portScanner_PortsHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<PortProfileInfo> _portScanner_PortProfiles = new ObservableCollection<PortProfileInfo>();
+        public ObservableCollection<PortProfileInfo> PortScanner_PortProfiles
+        {
+            get => _portScanner_PortProfiles;
+            set
+            {
+                if (value == _portScanner_PortProfiles)
+                    return;
+
+                _portScanner_PortProfiles = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -3578,6 +3609,7 @@ namespace NETworkManager.Settings
             // Port Scanner
             PortScanner_HostsHistory.CollectionChanged += CollectionChanged;
             PortScanner_PortsHistory.CollectionChanged += CollectionChanged;
+            PortScanner_PortProfiles.CollectionChanged += CollectionChanged;
 
             // Ping Monitor
             PingMonitor_HostHistory.CollectionChanged += CollectionChanged;

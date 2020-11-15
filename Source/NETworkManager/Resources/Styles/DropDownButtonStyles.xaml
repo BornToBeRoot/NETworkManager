@@ -7,12 +7,12 @@
 
     <Style x:Key="ImageDropDrownButton" TargetType="{x:Type mah:DropDownButton}">
         <Setter Property="Height" Value="35" />
-        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ButtonStyle" Value="{StaticResource ImageButtonForDropDown}" />
-        <Setter Property="ArrowBrush" Value="{DynamicResource GrayBrush3}" />
-        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource GrayBrush5}" />
-        <Setter Property="ArrowPressedBrush" Value="{DynamicResource GrayBrush5}" />
+        <Setter Property="ArrowBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+        <Setter Property="ArrowPressedBrush" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         <Setter Property="MenuStyle" Value ="{StaticResource DefaultContextMenu}" />
     </Style>
 </ResourceDictionary>

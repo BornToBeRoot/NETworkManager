@@ -79,11 +79,11 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://borntoberoot.github.io/NETworkManager/#download-package.
+        ///   Looks up a localized string similar to https://borntoberoot.net/NETworkManager/Download.
         /// </summary>
-        public static string NETworkManager_LatestReleaseURL {
+        public static string NETworkManager_LatestReleaseUrl {
             get {
-                return ResourceManager.GetString("NETworkManager_LatestReleaseURL", resourceCulture);
+                return ResourceManager.GetString("NETworkManager_LatestReleaseUrl", resourceCulture);
             }
         }
         
@@ -124,11 +124,20 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://borntoberoot.github.io/NETworkManager/.
+        ///   Looks up a localized string similar to https://borntoberoot.net/NETworkManager/.
         /// </summary>
         public static string NETworkManager_ProjectUrl {
             get {
                 return ResourceManager.GetString("NETworkManager_ProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager.
+        /// </summary>
+        public static string NETworkManager_RepoUrl {
+            get {
+                return ResourceManager.GetString("NETworkManager_RepoUrl", resourceCulture);
             }
         }
         
@@ -142,7 +151,7 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://twitter.com/BornToBeRoot_DE.
+        ///   Looks up a localized string similar to https://twitter.com/_BornToBeRoot.
         /// </summary>
         public static string NETworkManager_TwitterUrl {
             get {

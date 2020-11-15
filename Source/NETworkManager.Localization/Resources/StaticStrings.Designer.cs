@@ -385,6 +385,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 22; 80; 443.
+        /// </summary>
+        public static string ExamplePorts {
+            get {
+                return ResourceManager.GetString("ExamplePorts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 22; 80; 443; 500 - 999; 8080.
         /// </summary>
         public static string ExamplePortScanRange {

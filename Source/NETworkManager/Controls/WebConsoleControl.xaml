@@ -8,12 +8,12 @@
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:edge="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
+        xmlns:webview="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mah:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance networkManagerControls:WebConsoleControl}">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />        
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -30,6 +30,8 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Button Command="{Binding GoBackCommand}" Grid.Column="0" Style="{StaticResource CleanButton}">
                 <Rectangle Width="24" Height="24" >
@@ -38,10 +40,10 @@
                     </Rectangle.OpacityMask>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -55,50 +57,63 @@
                     </Rectangle.OpacityMask>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Rectangle.Style>
                 </Rectangle>
             </Button>
-            <Button Command="{Binding RefreshCommand}" Grid.Column="4"  Style="{StaticResource CleanButton}">
+            <Button Command="{Binding ReloadCommand}" Grid.Column="4" Style="{StaticResource CleanButton}">
                 <Rectangle Width="24" Height="24" >
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                     </Rectangle.OpacityMask>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Rectangle.Style>
                 </Rectangle>
             </Button>
-            <TextBox x:Name="txtBoxAddress" Text="{Binding Url}" IsEnabled="False" Grid.Column="6" Style="{StaticResource DefaultTextBox}" />
+            <TextBox x:Name="txtBoxAddress" Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}" Grid.Column="6" Style="{StaticResource DefaultTextBox}" />
+            <Button Command="{Binding NavigateCommand}" IsDefault="True" Grid.Column="8" Style="{StaticResource CleanButton}">
+                <Rectangle Width="24" Height="24" >
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}" />
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+            </Button>
         </Grid>
         <mah:MetroProgressBar Grid.Row="1" IsIndeterminate="True" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10"/>
-        <edge:WebView Grid.Row="2" x:Name="Browser2">
-            <edge:WebView.Style>
-                <Style TargetType="{x:Type edge:WebView}">
+        <webview:WebView2 Grid.Row="2" x:Name="Browser2">
+            <webview:WebView2.Style>
+                <Style TargetType="{x:Type webview:WebView2}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsCertificateInvalid}" Value="True">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
                         <DataTrigger Binding="{Binding FirstLoad}" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </edge:WebView.Style>
-        </edge:WebView>
-        <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.WebViewControlCertificateIsInvalidMessage}" Style="{StaticResource MessageTextBlock}" Visibility="{Binding IsCertificateInvalid, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="10" />
+            </webview:WebView2.Style>
+        </webview:WebView2>
     </Grid>
 </UserControl>

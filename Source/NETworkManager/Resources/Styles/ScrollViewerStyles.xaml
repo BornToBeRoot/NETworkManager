@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="DefaultScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource MetroScrollViewer}">
+    <Style x:Key="DefaultScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource MahApps.Styles.ScrollViewer}">
         <Setter Property="PanningMode" Value="Both" />
         <Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
@@ -24,7 +24,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="FadeOutScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource MetroScrollViewer}">
+    <Style x:Key="FadeOutScrollViewer" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource MahApps.Styles.ScrollViewer}">
         <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
         <Setter Property="PanningMode" Value="VerticalOnly" />
         <Setter Property="Template">

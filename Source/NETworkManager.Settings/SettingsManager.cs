@@ -35,7 +35,7 @@ namespace NETworkManager.Settings
         public static string GetPortableSettingsLocation()
         {
 
-            return Path.Combine(Path.GetDirectoryName(AssemblyManager.Current.Location) ?? throw new InvalidOperationException(), SettingsFolderName);
+            return Path.Combine(AssemblyManager.Current.Location ?? throw new InvalidOperationException(), SettingsFolderName);
         }
 
         public static string GetSettingsLocation()
@@ -184,6 +184,9 @@ namespace NETworkManager.Settings
         public static void Reset()
         {
             InitDefault();
+
+            // Save manually, settings are not saved on a forced restart...
+            Save();
         }
         #endregion
         #endregion

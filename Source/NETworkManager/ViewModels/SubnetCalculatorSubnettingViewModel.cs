@@ -16,6 +16,7 @@ using MahApps.Metro.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Views;
+using System.Text.RegularExpressions;
 
 namespace NETworkManager.ViewModels
 {
@@ -287,7 +288,14 @@ namespace NETworkManager.ViewModels
             SubnetsResult.Clear();
 
             var subnet = IPNetwork.Parse(Subnet);
-            byte.TryParse(NewSubnetmaskOrCIDR.TrimStart('/'), out var newCidr);
+
+            byte newCidr = 0;
+
+            // Support subnetmask like 255.255.255.0
+            if (Regex.IsMatch(NewSubnetmaskOrCIDR, RegexHelper.SubnetmaskRegex))
+                newCidr = Convert.ToByte(Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(NewSubnetmaskOrCIDR)));
+            else
+                newCidr = Convert.ToByte(NewSubnetmaskOrCIDR.TrimStart('/'));
 
             // Ask the user if there is a large calculation...
             var baseCidr = subnet.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? 32 : 128;

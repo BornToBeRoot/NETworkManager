@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Threading;
 using NETworkManager.Profiles;
 using NETworkManager.Localization;
+using ABI.Windows.Devices.AllJoyn;
+using System.Threading.Tasks;
 
 namespace NETworkManager
 {
@@ -39,7 +41,7 @@ namespace NETworkManager
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
-        {
+        {            
             // If we have restart our application... wait until it has finished
             if (CommandLineManager.Current.RestartPid != -1)
             {
@@ -67,8 +69,8 @@ namespace NETworkManager
                 SettingsManager.InitDefault();
 
                 ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
-            }
-
+            }                     
+            
             // Init the location with the culture code...
             Localization.Resources.Strings.Culture = LocalizationManager.GetInstance(SettingsManager.Current.Localization_CultureCode).Culture;
 
@@ -100,6 +102,11 @@ namespace NETworkManager
                     _dispatcherTimer.Start();
                 }
 
+                // Show splash screen
+                if (SettingsManager.Current.SplashScreen_Enabled)
+                    new SplashScreen(@"SplashScreen.png").Show(true, true);
+
+                // Show main window
                 StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
             }
             else

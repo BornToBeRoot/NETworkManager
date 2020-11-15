@@ -22,7 +22,7 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private Models.Network.DiscoveryProtocol _discoveryProtocol = new Models.Network.DiscoveryProtocol();
+        private DiscoveryProtocol _discoveryProtocol = new DiscoveryProtocol();
         private readonly bool _isLoading;
         System.Timers.Timer _remainingTimer;
         private int _secondsRemaining;

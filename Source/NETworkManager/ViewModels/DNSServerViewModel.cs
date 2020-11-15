@@ -31,16 +31,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _dnsServer;
-        public string DNSServer
+        private string _dnsServers;
+        public string DNSServers
         {
-            get => _dnsServer;
+            get => _dnsServers;
             set
             {
-                if (_dnsServer == value)
+                if (_dnsServers == value)
                     return;
 
-                _dnsServer = value;
+                _dnsServers = value;
 
                 if (!_isLoading)
                     CheckInfoChanged();
@@ -114,15 +114,15 @@ namespace NETworkManager.ViewModels
 
             // List to string
             if (_info.Servers != null)
-                DNSServer = string.Join("; ", _info.Servers);
+                DNSServers = string.Join("; ", _info.Servers);
 
-            _previousDNSServerAsString = DNSServer;
+            _previousDNSServerAsString = DNSServers;
 
             Port = _info.Port;
 
             _isLoading = false;
         }
 
-        public void CheckInfoChanged() => InfoChanged = _info.Name != Name || _previousDNSServerAsString != DNSServer || _info.Port != Port;
+        public void CheckInfoChanged() => InfoChanged = _info.Name != Name || _previousDNSServerAsString != DNSServers || _info.Port != Port;
     }
 }

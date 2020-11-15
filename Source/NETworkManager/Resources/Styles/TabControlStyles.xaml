@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style x:Key="DefaultTabItem" TargetType="{x:Type TabItem}">
-        <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Height" Value="46" />
@@ -12,18 +12,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid x:Name="PART_Grid" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" Margin="0">
-                        <ContentPresenter x:Name="PART_HeaderContent" Margin="{TemplateBinding Padding}" ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.FontSize="18" TextBlock.FontFamily="{StaticResource HeaderFontFamily}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <!--<Rectangle x:Name="PART_Selector" VerticalAlignment="Bottom" Height="2" Visibility="Collapsed" Fill="{DynamicResource AccentColorBrush}" />-->
+                        <ContentPresenter x:Name="PART_HeaderContent" Margin="{TemplateBinding Padding}" ContentSource="Header" VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.FontSize="18" TextBlock.FontFamily="{StaticResource MahApps.Fonts.Family.Header}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <!--<Rectangle x:Name="PART_Selector" VerticalAlignment="Bottom" Height="2" Visibility="Collapsed" Fill="{DynamicResource MahApps.Brushes.Accent}" />-->
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger SourceName="PART_Grid" Property="IsMouseOver" Value="True">
                             <Trigger.Setters>
-                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                             </Trigger.Setters>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Trigger.Setters>
-                                <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                                 <!-- <Setter TargetName="PART_Selector" Property="Visibility" Value="Visible" /> -->
                             </Trigger.Setters>
                         </Trigger>
@@ -36,7 +36,7 @@
     <Style x:Key="DefaultTabControl" TargetType="{x:Type TabControl}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0,1,0,0" />
-        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource DefaultTabItem}" />
         <Setter Property="Template">
             <Setter.Value>

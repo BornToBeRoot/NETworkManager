@@ -18,6 +18,7 @@ namespace NETworkManager.Settings
         public string ApplicationFullName { get; set; }
         public string ApplicationName { get; set; }
         public bool IsPortable { get; set; }
+        public bool IsPreview { get; set; }
         public Version OSVersion { get; set; }
 
         // Everything below will be set dynamically in the application

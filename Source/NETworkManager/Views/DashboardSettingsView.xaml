@@ -65,7 +65,7 @@
             </TextBox.Text>
         </TextBox>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mahAppsControls:ToggleSwitch  IsChecked="{Binding CheckPublicIPAddress}" Header="{x:Static localization:Strings.CheckPublicIPAddress}" />
+            <mahAppsControls:ToggleSwitch IsOn="{Binding CheckPublicIPAddress}" Header="{x:Static localization:Strings.CheckPublicIPAddress}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckPublicIPAddress}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
@@ -73,7 +73,7 @@
             </Rectangle>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mahAppsControls:ToggleSwitch  IsChecked="{Binding UsePublicIPAddressCustomAPI}" Header="{x:Static localization:Strings.UseCustomAPI}" IsEnabled="{Binding CheckPublicIPAddress}" Margin="0,0,0,10" />
+            <mahAppsControls:ToggleSwitch IsOn="{Binding UsePublicIPAddressCustomAPI}" Header="{x:Static localization:Strings.UseCustomAPI}" IsEnabled="{Binding CheckPublicIPAddress}" Margin="0,0,0,10" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CustomPublicIPAddressAPI}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />

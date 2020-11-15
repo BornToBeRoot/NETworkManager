@@ -8,6 +8,7 @@
         xmlns:documentation="clr-namespace:NETworkManager.Documentation;assembly=NETworkManager.Documentation"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"             
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
@@ -34,13 +35,14 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Grid.Row="0" Width="128" Height="128" Source="/Resources/Images/NETworkManager.ico" VerticalAlignment="Center" />
+                <Image Grid.Column="0" Grid.Row="0" Width="128" Height="128" Source="/NETworkManager.ico" VerticalAlignment="Center" />
                 <StackPanel Grid.Column="1" Margin="20,0,0,0">
                     <TextBlock FontSize="32" Text="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{StaticResource HeaderTextBlock}" />
                     <TextBlock Text="{x:Static localization:Strings.Slogan}" Style="{DynamicResource WrapTextBlock}" Margin="0,0,0,5" />
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                         <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" VerticalAlignment="Center" />
                         <TextBlock Text="{Binding Patch}" Style="{StaticResource DefaultTextBlock}" Visibility="{Binding IsPatchVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" VerticalAlignment="Center" Margin="5,0,0,0" />
+                        <TextBlock Text="{x:Static localization:Strings.Preview}" Style="{StaticResource DefaultTextBlock}" Padding="5" Background="{DynamicResource MahApps.Brushes.Gray8}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPreview, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" VerticalAlignment="Center" Margin="5,0,0,0" />
                     </StackPanel>
                     <TextBlock Text="{x:Static resources:Resources.NETworkManager_License}" Style="{StaticResource LinkTextBlock}" Margin="0,0,0,5">
                         <TextBlock.InputBindings>
@@ -54,17 +56,17 @@
                                 <Setter Property="Cursor" Value="Hand"></Setter>
                             </Style>
                         </StackPanel.Resources>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_ProjectUrl}">
+                        <Button ToolTip="{x:Static localization:Strings.ToolTip_GitHubProjectUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Github}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -78,10 +80,10 @@
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -95,10 +97,10 @@
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -112,10 +114,10 @@
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -129,10 +131,10 @@
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="Fill" Value="{DynamicResource GrayBrush3}" />
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                <Setter Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -152,11 +154,11 @@
                 <Button Grid.Column="0" x:Name="ButtonCheckForUpdates" HorizontalAlignment="Left" Command="{Binding CheckForUpdatesCommand}" IsEnabled="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}" Content="{x:Static localization:Strings.CheckForUpdates}" />
                 <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <StackPanel.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseURL}" />
+                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseUrl}" />
                     </StackPanel.InputBindings>
                     <StackPanel.Style>
                         <Style TargetType="{x:Type StackPanel}">
-                            <Setter Property="TextBlock.Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="TextBlock.Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
                             <Setter Property="Cursor" Value="Hand" />
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
@@ -171,7 +173,7 @@
                         </Rectangle.OpacityMask>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
-                                <Setter Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}, Path=IsMouseOver}" Value="True">
                                         <Setter Property="Fill" Value="{DynamicResource BlackColorBrush}" />
@@ -192,7 +194,7 @@
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                         <MenuItem Header="{x:Static localization:Strings.OpenProject}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedLibraryInfo.WebsiteUrl}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
                                     </Rectangle.OpacityMask>
@@ -201,7 +203,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.OpenLicense}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedLibraryInfo.LicenseUrl}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
                                     </Rectangle.OpacityMask>
@@ -211,7 +213,7 @@
                     </ContextMenu>
                 </DataGrid.Resources>
                 <DataGrid.RowStyle>
-                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
                                 <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
@@ -238,7 +240,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource GrayBrush3}">
+                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderOpen}" />
                             </Rectangle.OpacityMask>
@@ -254,7 +256,7 @@
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                         <MenuItem Header="{x:Static localization:Strings.OpenWebsite}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedExternalServicesInfo.WebsiteUrl}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
                                     </Rectangle.OpacityMask>
@@ -264,7 +266,7 @@
                     </ContextMenu>
                 </DataGrid.Resources>
                 <DataGrid.RowStyle>
-                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
                                 <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
@@ -290,7 +292,7 @@
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                         <MenuItem Header="{x:Static localization:Strings.OpenWebsite}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding SelectedResourceInfo.WebsiteUrl}">
                             <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource BlackColorBrush}">
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
                                     </Rectangle.OpacityMask>
@@ -300,7 +302,7 @@
                     </ContextMenu>
                 </DataGrid.Resources>
                 <DataGrid.RowStyle>
-                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
                                 <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>

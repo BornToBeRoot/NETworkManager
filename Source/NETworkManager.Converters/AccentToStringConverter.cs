@@ -1,28 +1,29 @@
-﻿using MahApps.Metro;
-using NETworkManager.Localization.Translators;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using NETworkManager.Localization.Translators;
+using NETworkManager.Models.Appearance;
 
 namespace NETworkManager.Converters
 {
     /// <summary>
-    /// Convert <see cref="Accent"/> to translated <see cref="string"/> or wise versa.
+    /// Convert <see cref="AccentColorInfo"/> to translated <see cref="string"/> or wise versa.
     /// </summary>
     public sealed class AccentToStringConverter : IValueConverter
     {
+
         /// <summary>
-        /// Convert <see cref="Accent"/> to translated <see cref="string"/>. 
+        /// Convert <see cref="AccentColorInfo"/> to translated <see cref="string"/>. 
         /// </summary>
-        /// <param name="value">Object from type <see cref="Accent"/>.</param>
+        /// <param name="value">Object from type <see cref="AccentColorInfo"/>.</param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
-        /// <returns>Translated <see cref="Accent"/>.</returns>
+        /// <returns>Translated <see cref="AccentColorInfo"/>.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is Accent accent))
-                return "-/-" ;
+            if (!(value is string accent))
+                return "-/-";
 
             return AccentTranslator.GetInstance().Translate(accent);
         }

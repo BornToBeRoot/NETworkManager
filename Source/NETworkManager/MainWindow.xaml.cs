@@ -1093,8 +1093,8 @@ namespace NETworkManager
         public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
 
         private static void OpenWebsiteAction(object url)
-        {
-            Process.Start((string)url);
+        {            
+            ExternalProcessStarter.OpenUrl((string)url);
         }
 
         public ICommand OpenDocumentationCommand
@@ -1168,7 +1168,8 @@ namespace NETworkManager
             ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = ConfigurationManager.Current.ApplicationFullName,
-                Arguments = $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Process.GetCurrentProcess().Id} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{_currentApplicationViewName}"
+                Arguments = $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Process.GetCurrentProcess().Id} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{_currentApplicationViewName}",
+                UseShellExecute = true
             };
 
             if (asAdmin)

@@ -1,85 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D3B37F13-E8E6-4218-9E8E-96D52432A9CF}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NETworkManager.Profiles</RootNamespace>
     <AssemblyName>NETworkManager.Profiles</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\NETworkManager.Profiles.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
   </ItemGroup>
+  
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs">
-      <Link>Properties\GlobalAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="Application\PowerShell.cs" />
-    <Compile Include="Application\PuTTY.cs" />
-    <Compile Include="Application\RemoteDesktop.cs" />
-    <Compile Include="Application\TigerVNC.cs" />
-    <Compile Include="Application\WakeOnLan.cs" />
-    <Compile Include="Application\WebConsole.cs" />
-    <Compile Include="IProfileManager.cs" />
-    <Compile Include="ProfileEditMode.cs" />
-    <Compile Include="ProfileFileInfo.cs" />
-    <Compile Include="ProfileFileInfoArgs.cs" />
-    <Compile Include="ProfileInfo.cs" />
-    <Compile Include="ProfileManager.cs" />
-    <Compile Include="ProfileViewName.cs" />
-    <Compile Include="ProfileViewInfo.cs" />
-    <Compile Include="ProfileViewManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <PackageReference Include="MahApps.Metro" Version="2.3.4" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
   </ItemGroup>
+  
   <ItemGroup>
-    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj">
-      <Project>{8a2859dc-38b6-4e9d-a6b2-1828dc6641b3}</Project>
-      <Name>NETworkManager.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj">
-      <Project>{954e8703-3e6e-42bf-bd28-f0b19be10e0c}</Project>
-      <Name>NETworkManager.Settings</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
+    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="MahApps.Metro.IconPacks">
-      <Version>4.8.0</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>
