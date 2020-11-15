@@ -163,7 +163,7 @@ namespace NETworkManager.ViewModels
 
         private static void OpenWebsiteAction(object url)
         {
-            ExternalProcessStarter.OpenUrl((string)url);            
+            ExternalProcessStarter.OpenUrl((string)url);
         }
 
         public ICommand OpenDocumentationCommand
@@ -180,7 +180,7 @@ namespace NETworkManager.ViewModels
 
         private void OpenLicenseFolderAction()
         {
-            OpenLicenseFolder();
+            Process.Start("explorer.exe", LibraryManager.GetLicenseLocation());
         }
         #endregion
 
@@ -200,8 +200,6 @@ namespace NETworkManager.ViewModels
 
             updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version);
         }
-
-        public void OpenLicenseFolder() => Process.Start(LibraryManager.GetLicenseLocation());
         #endregion
 
         #region Events
@@ -220,7 +218,7 @@ namespace NETworkManager.ViewModels
             IsUpdateCheckRunning = false;
             ShowUpdaterMessage = true;
         }
-               
+
         private void Updater_Error(object sender, EventArgs e)
         {
             UpdaterMessage = Strings.ErrorCheckingApiGithubComVerifyYourNetworkConnection;
