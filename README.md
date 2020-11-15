@@ -36,7 +36,7 @@
 # Build
 
 __Requirements__
-- [SDK .NET 5.0 (Preview 8 or later)](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [SDK .NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 
 __Steps__
 1. Download the branch as .zip archiv
