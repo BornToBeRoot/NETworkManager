@@ -2,7 +2,6 @@ image: Visual Studio 2019
 branches:
   only:
    - master
-   - net5-develop
 configuration: Release
 platform: x64
 before_build:
