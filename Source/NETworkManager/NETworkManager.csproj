@@ -11,10 +11,23 @@
     <StartupObject>NETworkManager.App</StartupObject>
     <ApplicationIcon>NETworkManager.ico</ApplicationIcon>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Authors>BornToBeRoot</Authors>
+    <PackageProjectUrl>https://github.com/BornToBeRoot/NETworkManager</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/BornToBeRoot/NETworkManager/</RepositoryUrl>
+    <PackageLicenseFile>NETworkManager.txt</PackageLicenseFile>
+    <PackageIcon>NETworkManager.ico</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="NETworkManager.ico" />
     <None Remove="SplashScreen.png" />
+    <None Include="..\NETworkManager.Documentation\Licenses\NETworkManager.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="NETworkManager.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AirspaceFixer" Version="1.0.5" />
