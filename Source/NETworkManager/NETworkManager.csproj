@@ -33,7 +33,7 @@
     <PackageReference Include="AirspaceFixer" Version="1.0.5" />
     <PackageReference Include="DnsClient" Version="1.3.2" />
     <PackageReference Include="Dragablz.NetCore" Version="0.3.3" />
-    <PackageReference Include="IPNetwork2" Version="2.5.226" />
+    <PackageReference Include="IPNetwork2" Version="2.5.235" />
     <PackageReference Include="Lextm.SharpSnmpLib" Version="12.2.0" />
     <PackageReference Include="LiveCharts.Wpf.NetCore3" Version="0.9.7" />
     <PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
