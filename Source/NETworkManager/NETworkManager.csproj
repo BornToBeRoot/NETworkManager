@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
-
+    <TargetFramework>net5.0-windows10.0.17763.0</TargetFramework>
     <RootNamespace>NETworkManager</RootNamespace>
     <AssemblyName>NETworkManager</AssemblyName>
-
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>NETworkManager.App</StartupObject>
@@ -42,7 +40,7 @@
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.1.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.674-prerelease" />
     <PackageReference Include="Microsoft.Windows.SDK.NET" Version="10.0.18362.3-preview" />
-	<PackageReference Include="Microsoft.Windows.CsWinRT" Version="0.1.0-prerelease.200629.3" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="0.1.0-prerelease.200629.3" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.19" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <Reference Include="AxMSTSCLib">
