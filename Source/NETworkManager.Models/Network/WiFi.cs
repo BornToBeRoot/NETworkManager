@@ -285,7 +285,6 @@ namespace NETworkManager.Models.Network
             return kind;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1712:Do not prefix enum values with type name", Justification = "<Pending>")]
         public enum Radio
         {
             One,

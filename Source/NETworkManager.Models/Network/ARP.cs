@@ -12,8 +12,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network
-{
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
+{    
     public class ARP
     {
         #region Variables
