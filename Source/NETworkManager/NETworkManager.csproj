@@ -36,7 +36,7 @@
     <PackageReference Include="Lextm.SharpSnmpLib" Version="12.2.0" />
     <PackageReference Include="LiveCharts.Wpf.NetCore3" Version="0.9.7" />
     <PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
-    <PackageReference Include="MahApps.Metro" Version="2.4.0" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.1" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.1.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.674-prerelease" />    
