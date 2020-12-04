@@ -254,3 +254,4 @@ paket-files/
 
 # Custom
 Build/
+.vscode/

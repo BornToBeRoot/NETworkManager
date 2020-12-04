@@ -121,7 +121,7 @@ namespace NETworkManager.Settings
         // Application: PuTTY
         public static ConnectionMode PuTTY_DefaultConnectionMode => ConnectionMode.SSH;
         public static LogMode PuTTY_LogMode => LogMode.SessionLog;
-        public static string PuTTY_LogPath => Path.Combine("%LocalAppData%", AssemblyManager.Current.Name, "PuTTY_LogFiles");
+        public static string PuTTY_LogPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyManager.Current.Name, "PuTTY_Log");
         public static string PuTTY_LogFileName => "&H_&Y-&M-&D_&T.log";
         public static int PuTTY_SSHPort => 22;
         public static string PuTTY_SerialLine => "COM1";
@@ -132,6 +132,9 @@ namespace NETworkManager.Settings
 
         // Application: TigerVNC
         public static int TigerVNC_DefaultVNCPort => 5900;
+
+        // WebConsole
+        public static string WebConsole_Cache => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyManager.Current.Name, "WebConsole_Cache"); 
 
         // Application: SNMP
         public static WalkMode SNMP_WalkMode => WalkMode.WithinSubtree;

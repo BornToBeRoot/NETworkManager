@@ -38,6 +38,9 @@
 __Requirements__
 - [SDK .NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 
+__Optional__
+- [InnoSetup](https://jrsoftware.org/isinfo.php) to create an installer
+
 __Steps__
 1. Download the branch as .zip archiv
 2. Run the `.\build.ps1` with PowerShell
