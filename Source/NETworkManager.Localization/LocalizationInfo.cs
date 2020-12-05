@@ -23,11 +23,6 @@ namespace NETworkManager.Localization
         public Uri FlagUri { get; set; }
 
         /// <summary>
-        /// Translator(s), who have contributed to the translation. Multiple names are separated with ",".
-        /// </summary>
-        public string Translator { get; set; }
-
-        /// <summary>
         /// Culture code of the language.
         /// </summary>
         public string Code { get; set; }
@@ -65,16 +60,14 @@ namespace NETworkManager.Localization
         /// <param name="name"><see cref="Name"/>.</param>
         /// <param name="nativeName"><see cref="NativeName"/>.</param>
         /// <param name="flagUri"><see cref="FlagUri"/>.</param>
-        /// <param name="translator"><see cref="Translator"/>.</param>
         /// <param name="code"><see cref="Code"/>.</param>
         /// <param name="percentTranslated"><see cref="PercentTranslated"/>.</param>
         /// <param name="isOfficial"><see cref="IsOfficial"/>.</param>
-        public LocalizationInfo(string name, string nativeName, Uri flagUri, string translator, string code, double percentTranslated, bool isOfficial = false)
+        public LocalizationInfo(string name, string nativeName, Uri flagUri, string code, double percentTranslated, bool isOfficial = false)
         {
             Name = name;
             NativeName = nativeName;
-            FlagUri = flagUri;
-            Translator = translator;
+            FlagUri = flagUri;            
             Code = code;
             PercentTranslated = percentTranslated;
             IsOfficial = isOfficial;

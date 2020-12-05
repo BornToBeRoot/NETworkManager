@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>Acerca de</value>
@@ -808,13 +808,13 @@
     <value>Puerto telnet</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
-    <value>La credencial seleccionada se eliminará permanentemente.</value>
+    <value>La credencial seleccionada será eliminado permanentemente.</value>
   </data>
   <data name="DeleteEntry" xml:space="preserve">
     <value>Eliminar entrada</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Los perfiles seleccionados se eliminarán permanentemente.</value>
+    <value>Los perfiles seleccionados será eliminado permanentemente.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Configuración automática de DNS</value>
@@ -1450,10 +1450,10 @@ Crear uno...</value>
   <data name="Applications" xml:space="preserve">
     <value>Aplicaciones</value>
   </data>
-  <data name="AppTheme_BaseDark" xml:space="preserve">
+  <data name="Theme_Dark" xml:space="preserve">
     <value>Oscuro</value>
   </data>
-  <data name="AppTheme_BaseLight" xml:space="preserve">
+  <data name="Theme_Light" xml:space="preserve">
     <value>Claro</value>
   </data>
   <data name="Black" xml:space="preserve">
@@ -2016,19 +2016,13 @@ URL: https://api.ipify.org/</value>
     <value>Servicios externos</value>
   </data>
   <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
-    <value>El proyecto en GitHub.
-
-URL: https://github.com/BornToBeRoot/NETworkManager/</value>
+    <value>El proyecto en GitHub.</value>
   </data>
   <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value>Ayude a traducir el proyecto en Transifex.
-
-URL: https://www.transifex.com/BornToBeRoot/NETworkManager/</value>
+    <value>Ayuda a traducir el proyecto en Transifex.</value>
   </data>
   <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
-    <value>Contacto vía Twitter.
-
-URL: https://twitter.com/BornToBeRoot_DE</value>
+    <value>Contacto vía Twitter.</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>Conexión</value>
@@ -2251,7 +2245,7 @@ está deshabilitada!</value>
     <value>Programa</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
-    <value>El comando personalizado seleccionado se eliminará permanentemente.</value>
+    <value>El comando personalizado seleccionado será eliminado permanentemente.</value>
   </data>
   <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
     <value>Las siguientes variables están disponibles:
@@ -2380,9 +2374,7 @@ $$hostname$$	--&gt;	Nombre del host</value>
     <value>Informar de un problema o crear una solicitud de función</value>
   </data>
   <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
-    <value>Informar de un problema o crear una solicitud de función.
-
-URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
+    <value>Informar de un problema o crear una solicitud de función.</value>
   </data>
   <data name="AuthenticationColon" xml:space="preserve">
     <value>Autenticación:</value>
@@ -2451,9 +2443,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
     <value>Está cifrado</value>
   </data>
   <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
-    <value>Abrir documentación en GitHub.
-
-URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</value>
+    <value>Abrir documentación en GitHub.</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
     <value>Cliente 1</value>
@@ -2719,12 +2709,6 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="Accen_Steel" xml:space="preserve">
     <value>Acero</value>
   </data>
-  <data name="AppTheme_Black" xml:space="preserve">
-    <value>Negro</value>
-  </data>
-  <data name="AppTheme_White" xml:space="preserve">
-    <value>Blanco</value>
-  </data>
   <data name="ProfileViewName_General" xml:space="preserve">
     <value>General</value>
   </data>
@@ -2897,6 +2881,36 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
     <value>¡Actualización disponible!</value>
   </data>
   <data name="PrivateKeyFile" xml:space="preserve">
-    <value>Private key file</value>
+    <value>Archivo de clave privada</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Vista previa</value>
+  </data>
+  <data name="PortProfiles" xml:space="preserve">
+    <value>Perfiles de puertos</value>
+  </data>
+  <data name="AddPortProfile" xml:space="preserve">
+    <value>Añadir perfil de puerto</value>
+  </data>
+  <data name="DeletePortProfile" xml:space="preserve">
+    <value>Eliminar perfil de puerto</value>
+  </data>
+  <data name="EditPortProfile" xml:space="preserve">
+    <value>Editar perfil de puerto</value>
+  </data>
+  <data name="DeletePortProfileMessage" xml:space="preserve">
+    <value>El perfil de puerto seleccionado será eliminado permanentemente.</value>
+  </data>
+  <data name="SelectPortProfile" xml:space="preserve">
+    <value>Seleccionar perfil de puerto</value>
+  </data>
+  <data name="OpenPortProfilesDots" xml:space="preserve">
+    <value>Abrir perfiles de puertos...</value>
+  </data>
+  <data name="ShowSplashScreenOnStart" xml:space="preserve">
+    <value>Mostrar pantalla de bienvenida al inicio</value>
+  </data>
+  <data name="SplashScreen" xml:space="preserve">
+    <value>Pantalla de bienvenida</value>
   </data>
 </root>

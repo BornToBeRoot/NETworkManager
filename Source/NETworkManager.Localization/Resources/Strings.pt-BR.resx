@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>Sobre</value>
@@ -1450,10 +1450,10 @@ Se você clicar em "Mover &amp; Reiniciar", os arquivos restantes serão copiado
   <data name="Applications" xml:space="preserve">
     <value>Aplicativos</value>
   </data>
-  <data name="AppTheme_BaseDark" xml:space="preserve">
+  <data name="Theme_Dark" xml:space="preserve">
     <value>Escuro</value>
   </data>
-  <data name="AppTheme_BaseLight" xml:space="preserve">
+  <data name="Theme_Light" xml:space="preserve">
     <value>Claro</value>
   </data>
   <data name="Black" xml:space="preserve">
@@ -2016,19 +2016,13 @@ URL: https://api.ipify.org/</value>
     <value>Serviços externos</value>
   </data>
   <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
-    <value>Star/Fork Projeto no GitHub.
-
-URL: https://github.com/BornToBeRoot/NETworkManager/</value>
+    <value>Star/Fork Projeto no GirHub.</value>
   </data>
   <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value>Ajude a traduzir o projeto no Transifex.
-
-URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+    <value>Ajude a traduzir o projeto no Transifex.</value>
   </data>
   <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
-    <value>Contato via Twitter.
-
-URL: https://twitter.com/BornToBeRoot_DE</value>
+    <value>Contato pelo Twitter.</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>Conexão</value>
@@ -2043,7 +2037,7 @@ URL: https://twitter.com/BornToBeRoot_DE</value>
     <value>Internet</value>
   </data>
   <data name="CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage" xml:space="preserve">
-    <value>Verifique a configuração do adaptador de rede (dns) e se o servidor dns está configurado corretamente.</value>
+    <value>Verifique a configuração do adaptador de rede (DNS) e se o servidor DNS está configurado corretamente.</value>
   </data>
   <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
     <value>Verifica a configuração do adaptador de rede (DHCP, IP estático) e se você está conectado em uma rede.</value>
@@ -2380,9 +2374,7 @@ $$hostname$$--&gt;Nome do host</value>
     <value>Reporte um erro ou crie um pedido de recurso</value>
   </data>
   <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
-    <value>Reporte um erro ou crie um pedido de recurso.
-
-URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
+    <value>Reporte um erro ou crie um pedido de recurso.</value>
   </data>
   <data name="AuthenticationColon" xml:space="preserve">
     <value>Autenticação:</value>
@@ -2451,9 +2443,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
     <value>Está criptografado</value>
   </data>
   <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
-    <value>Abrir documentação no GitHub.
-
-URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</value>
+    <value>Abrir documentação no GitHub.</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
     <value>Cliente 1</value>
@@ -2719,12 +2709,6 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="Accen_Steel" xml:space="preserve">
     <value>Aço</value>
   </data>
-  <data name="AppTheme_Black" xml:space="preserve">
-    <value>Preto</value>
-  </data>
-  <data name="AppTheme_White" xml:space="preserve">
-    <value>Branco</value>
-  </data>
   <data name="ProfileViewName_General" xml:space="preserve">
     <value>Geral</value>
   </data>
@@ -2898,5 +2882,35 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   </data>
   <data name="PrivateKeyFile" xml:space="preserve">
     <value>Arquivo de chave privada</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Prévia</value>
+  </data>
+  <data name="PortProfiles" xml:space="preserve">
+    <value>Perfis de porta</value>
+  </data>
+  <data name="AddPortProfile" xml:space="preserve">
+    <value>Adicionar perfil de porta</value>
+  </data>
+  <data name="DeletePortProfile" xml:space="preserve">
+    <value>Excluir perfil de porta</value>
+  </data>
+  <data name="EditPortProfile" xml:space="preserve">
+    <value>Editar perfil de porta</value>
+  </data>
+  <data name="DeletePortProfileMessage" xml:space="preserve">
+    <value>O perfil de porta selecionado será excluído permanentemente.</value>
+  </data>
+  <data name="SelectPortProfile" xml:space="preserve">
+    <value>Selecionar perfil de porta</value>
+  </data>
+  <data name="OpenPortProfilesDots" xml:space="preserve">
+    <value>Abrir perfis de porta...</value>
+  </data>
+  <data name="ShowSplashScreenOnStart" xml:space="preserve">
+    <value>Mostrar Tela de Início ao abrir</value>
+  </data>
+  <data name="SplashScreen" xml:space="preserve">
+    <value>Tela de Início</value>
   </data>
 </root>

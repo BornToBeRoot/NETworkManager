@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>Über</value>
@@ -1450,10 +1450,10 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="Applications" xml:space="preserve">
     <value>Anwendungen</value>
   </data>
-  <data name="AppTheme_Dark" xml:space="preserve">
+  <data name="Theme_Dark" xml:space="preserve">
     <value>Dunkel</value>
   </data>
-  <data name="AppTheme_Light" xml:space="preserve">
+  <data name="Theme_Light" xml:space="preserve">
     <value>Hell</value>
   </data>
   <data name="Black" xml:space="preserve">
@@ -2016,19 +2016,13 @@ URL: https://api.ipify.org/</value>
     <value>Externe Dienste</value>
   </data>
   <data name="ToolTip_GitHubProjectUrl" xml:space="preserve">
-    <value>Star/Fork das Projekt auf GitHub.
-
-URL: https://github.com/BornToBeRoot/NETworkManager/</value>
+    <value>Star/Fork das Projekt auf GitHub.</value>
   </data>
   <data name="ToolTip_TransifexProjectUrl" xml:space="preserve">
-    <value>Hilf mit, das Projekt auf Transifex zu übersetzen.
-
-URL: https://transifex.com/BornToBeRoot/NETworkManager/</value>
+    <value>Helfen Sie bei der Übersetzung des Projects auf Transifex.</value>
   </data>
   <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
-    <value>Kontakt via Twitter.
-
-URL: https://twitter.com/BornToBeRoot_DE</value>
+    <value>Kontakt über Twitter.</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>Verbindung</value>
@@ -2380,9 +2374,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Problem melden oder einen Feature-Request erstellen</value>
   </data>
   <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
-    <value>Problem melden oder Feature-Request erstellen.
-
-URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
+    <value>Ein Problem melden oder eine Feature-Anfrage erstellen.</value>
   </data>
   <data name="AuthenticationColon" xml:space="preserve">
     <value>Authentifizierung:</value>
@@ -2451,9 +2443,7 @@ URL: https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>
     <value>Ist Verschlüsselt</value>
   </data>
   <data name="ToolTip_GithubDocumentationUrl" xml:space="preserve">
-    <value>Dokumentation auf GitHub öffnen.
-
-URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</value>
+    <value>Dokumentation auf GitHub öffnen.</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
     <value>Kunde 1</value>
@@ -2719,12 +2709,6 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   <data name="Accen_Steel" xml:space="preserve">
     <value>Stahl</value>
   </data>
-  <data name="AppTheme_Black" xml:space="preserve">
-    <value>Schwarz</value>
-  </data>
-  <data name="AppTheme_White" xml:space="preserve">
-    <value>Weiß</value>
-  </data>
   <data name="ProfileViewName_General" xml:space="preserve">
     <value>Allgemein</value>
   </data>
@@ -2898,5 +2882,35 @@ URL: https://github.com/BornToBeRoot/NETworkManager/tree/master/Documentation</v
   </data>
   <data name="PrivateKeyFile" xml:space="preserve">
     <value>Private Schlüsseldatei</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Vorschau</value>
+  </data>
+  <data name="PortProfiles" xml:space="preserve">
+    <value>Port-Profile</value>
+  </data>
+  <data name="AddPortProfile" xml:space="preserve">
+    <value>Port-Profil hinzufügen</value>
+  </data>
+  <data name="DeletePortProfile" xml:space="preserve">
+    <value>Port-Profil löschen</value>
+  </data>
+  <data name="EditPortProfile" xml:space="preserve">
+    <value>Port-Profil bearbeiten</value>
+  </data>
+  <data name="DeletePortProfileMessage" xml:space="preserve">
+    <value>Das ausgewählte Port-Profile wird unwiederbringlich gelöscht.</value>
+  </data>
+  <data name="SelectPortProfile" xml:space="preserve">
+    <value>Port-Profil anzeigen</value>
+  </data>
+  <data name="OpenPortProfilesDots" xml:space="preserve">
+    <value>Port-Profil öffnen...</value>
+  </data>
+  <data name="ShowSplashScreenOnStart" xml:space="preserve">
+    <value>Zeige SplashScreen beim Starten</value>
+  </data>
+  <data name="SplashScreen" xml:space="preserve">
+    <value>SplashScreen</value>
   </data>
 </root>

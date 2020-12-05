@@ -17,9 +17,11 @@
     <None Remove="Resources\Flags\hu-HU.png" />
     <None Remove="Resources\Flags\it-IT.png" />
     <None Remove="Resources\Flags\nl-NL.png" />
+    <None Remove="Resources\Flags\pl-PL.png" />
     <None Remove="Resources\Flags\pt-BR.png" />
     <None Remove="Resources\Flags\ru-RU.png" />
     <None Remove="Resources\Flags\zh-CN.png" />
+    <None Remove="Resources\Flags\zh-TW.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
@@ -32,9 +34,11 @@
     <Resource Include="Resources\Flags\hu-HU.png" />
     <Resource Include="Resources\Flags\it-IT.png" />
     <Resource Include="Resources\Flags\nl-NL.png" />
+    <Resource Include="Resources\Flags\pl-PL.png" />
     <Resource Include="Resources\Flags\pt-BR.png" />
     <Resource Include="Resources\Flags\ru-RU.png" />
     <Resource Include="Resources\Flags\zh-CN.png" />
+    <Resource Include="Resources\Flags\zh-TW.png" />
   </ItemGroup>
   
   <ItemGroup>

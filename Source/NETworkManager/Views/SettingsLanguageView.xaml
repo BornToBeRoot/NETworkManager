@@ -59,16 +59,8 @@
                                 <RowDefinition Height="5" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Grid Grid.Column="0" Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="5" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
-                                <TextBlock Grid.Column="2" Text="{Binding NativeName, StringFormat={}({0})}" Style="{StaticResource DefaultTextBlock}" />
-                            </Grid>
-                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Translator}" Style="{StaticResource DefaultTextBlock}" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Name}" FontWeight="Bold" Style="{StaticResource DefaultTextBlock}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding NativeName}" Style="{StaticResource DefaultTextBlock}" />                            
                         </Grid>
                         <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="#badc58" Padding="10,5" VerticalAlignment="Center" HorizontalAlignment="Right" Visibility="{Binding IsOfficial, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
                            <StackPanel Orientation="Horizontal">
