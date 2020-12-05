@@ -29,8 +29,6 @@
   </p> 
   <p> https://borntoberoot.net/NETworkManager/ </p>
   <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/gh-pages/NETworkManager_Preview.gif?raw=true" />
-
-  
 </div>
 
 # Build
@@ -42,5 +40,5 @@ __Optional__
 - [InnoSetup](https://jrsoftware.org/isinfo.php) to create an installer
 
 __Steps__
-1. Download the branch as .zip archiv
+1. Download/Clone the Repo
 2. Run the `.\build.ps1` with PowerShell
