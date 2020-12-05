@@ -49,7 +49,14 @@
                             <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LicenseUrl}" MouseAction="LeftClick" />
                         </TextBlock.InputBindings>
                     </TextBlock>
-                    <TextBlock Text="Developed and maintained by BornToBeRoot" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
+                        <TextBlock Text="Developed and maintained by BornToBeRoot with the help of the " Style="{StaticResource DefaultTextBlock}" />
+                        <TextBlock Text="Community" Style="{StaticResource LinkTextBlock}">
+                            <TextBlock.InputBindings>
+                                <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_Contributors}" MouseAction="LeftClick" />
+                            </TextBlock.InputBindings>
+                        </TextBlock>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
                         <StackPanel.Resources>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
@@ -141,8 +148,8 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                    </StackPanel>
-                </StackPanel>
+                    </StackPanel>                    
+                </StackPanel>                
             </Grid>
             <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Update}" Style="{StaticResource HeaderTextBlock}"/>
             <Grid Grid.Row="2" Margin="0,0,0,20">

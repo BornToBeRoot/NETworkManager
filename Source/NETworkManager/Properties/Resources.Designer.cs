@@ -61,6 +61,15 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/blob/master/Contributors.md.
+        /// </summary>
+        public static string NETworkManager_Contributors {
+            get {
+                return ResourceManager.GetString("NETworkManager_Contributors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NETworkManager.
         /// </summary>
         public static string NETworkManager_GitHub_Repo {
