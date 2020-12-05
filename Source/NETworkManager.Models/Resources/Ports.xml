@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 04/20/2020 00:44:30-->
+Generated 12/05/2020 00:58:20-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -3811,13 +3811,13 @@ Generated 04/20/2020 00:44:30-->
     <Number>376</Number>
     <Protocol>tcp</Protocol>
     <Name>nip</Name>
-    <Description>Amiga Envoy Network Inquiry Proto</Description>
+    <Description>Amiga Envoy Network Inquiry Protocol</Description>
   </Port>
   <Port>
     <Number>376</Number>
     <Protocol>udp</Protocol>
     <Name>nip</Name>
-    <Description>Amiga Envoy Network Inquiry Proto</Description>
+    <Description>Amiga Envoy Network Inquiry Protocol</Description>
   </Port>
   <Port>
     <Number>377</Number>
@@ -25573,6 +25573,18 @@ Generated 04/20/2020 00:44:30-->
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>2378</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>2378</Number>
+    <Protocol>udp</Protocol>
+    <Name>dali</Name>
+    <Description>DALI lighting control</Description>
   </Port>
   <Port>
     <Number>2379</Number>
@@ -49765,6 +49777,18 @@ Generated 04/20/2020 00:44:30-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>4606</Number>
+    <Protocol>tcp</Protocol>
+    <Name>sixid</Name>
+    <Description>Secure ID to IP registration and lookup</Description>
+  </Port>
+  <Port>
+    <Number>4606</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>4621</Number>
     <Protocol>tcp</Protocol>
     <Name>record</Name>
@@ -49780,13 +49804,13 @@ Generated 04/20/2020 00:44:30-->
     <Number>4646</Number>
     <Protocol>tcp</Protocol>
     <Name>dots-signal</Name>
-    <Description>Distributed Denial-of-Service Open Threat Signaling (DOTS) Signal Channel</Description>
+    <Description>DOTS Signal Channel Protocol. The service name is used to construct the SRV service names "_dots-signal._udp" and "_dots-signal._tcp" for discovering DOTS servers used to establish DOTS signal channel.</Description>
   </Port>
   <Port>
     <Number>4646</Number>
     <Protocol>udp</Protocol>
     <Name>dots-signal</Name>
-    <Description>Distributed Denial-of-Service Open Threat Signaling (DOTS) Signal Channel</Description>
+    <Description>DOTS Signal Channel Protocol. The service name is used to construct the SRV service names "_dots-signal._udp" and "_dots-signal._tcp" for discovering DOTS servers used to establish DOTS signal channel.</Description>
   </Port>
   <Port>
     <Number>4658</Number>
@@ -59431,6 +59455,18 @@ Generated 04/20/2020 00:44:30-->
     <Description>Software Update Manager</Description>
   </Port>
   <Port>
+    <Number>6556</Number>
+    <Protocol>tcp</Protocol>
+    <Name>checkmk-agent</Name>
+    <Description>Checkmk Monitoring Agent</Description>
+  </Port>
+  <Port>
+    <Number>6556</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>6558</Number>
     <Protocol>tcp</Protocol>
     <Name>xdsxdm</Name>
@@ -60049,6 +60085,18 @@ Generated 04/20/2020 00:44:30-->
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>6699</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>6699</Number>
+    <Protocol>udp</Protocol>
+    <Name>babel-dtls</Name>
+    <Description>Babel Routing Protocol over DTLS</Description>
   </Port>
   <Port>
     <Number>6701</Number>
@@ -61498,6 +61546,18 @@ Generated 04/20/2020 00:44:30-->
   </Port>
   <Port>
     <Number>7229</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>7234</Number>
+    <Protocol>tcp</Protocol>
+    <Name>asa-gateways</Name>
+    <Description>Traffic forwarding for Okta cloud infra</Description>
+  </Port>
+  <Port>
+    <Number>7234</Number>
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
@@ -63535,6 +63595,18 @@ Generated 04/20/2020 00:44:30-->
     <Protocol>udp</Protocol>
     <Name>ca-audit-ds</Name>
     <Description>CA Audit Distribution Server</Description>
+  </Port>
+  <Port>
+    <Number>8027</Number>
+    <Protocol>tcp</Protocol>
+    <Name>papachi-p2p-srv</Name>
+    <Description>peer tracker and data relay service</Description>
+  </Port>
+  <Port>
+    <Number>8027</Number>
+    <Protocol>udp</Protocol>
+    <Name>papachi-p2p-srv</Name>
+    <Description>peer tracker and data relay service</Description>
   </Port>
   <Port>
     <Number>8032</Number>
@@ -65715,6 +65787,18 @@ Generated 04/20/2020 00:44:30-->
     <Description>JMB-CDS 2</Description>
   </Port>
   <Port>
+    <Number>8908</Number>
+    <Protocol>tcp</Protocol>
+    <Name>dpp</Name>
+    <Description>WFA Device Provisioning Protocol</Description>
+  </Port>
+  <Port>
+    <Number>8908</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>8910</Number>
     <Protocol>tcp</Protocol>
     <Name>manyone-http</Name>
@@ -67333,6 +67417,18 @@ Generated 04/20/2020 00:44:30-->
     <Protocol>udp</Protocol>
     <Name>trispen-sra</Name>
     <Description>Trispen Secure Remote Access</Description>
+  </Port>
+  <Port>
+    <Number>9559</Number>
+    <Protocol>tcp</Protocol>
+    <Name>p4runtime</Name>
+    <Description>P4Runtime gRPC Service</Description>
+  </Port>
+  <Port>
+    <Number>9559</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>9592</Number>
@@ -69273,6 +69369,24 @@ Generated 04/20/2020 00:44:30-->
     <Description>Memory cache service</Description>
   </Port>
   <Port>
+    <Number>11235</Number>
+    <Protocol>tcp</Protocol>
+    <Name>xcompute</Name>
+    <Description>numerical systems messaging</Description>
+  </Port>
+  <Port>
+    <Number>11235</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>11235</Number>
+    <Protocol>sctp</Protocol>
+    <Name>xcompute</Name>
+    <Description>numerical systems messaging</Description>
+  </Port>
+  <Port>
     <Number>11319</Number>
     <Protocol>tcp</Protocol>
     <Name>imip</Name>
@@ -71147,6 +71261,18 @@ Generated 04/20/2020 00:44:30-->
     <Description>AC Cluster</Description>
   </Port>
   <Port>
+    <Number>18516</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>18516</Number>
+    <Protocol>udp</Protocol>
+    <Name>heythings</Name>
+    <Description>HeyThings Device communicate service</Description>
+  </Port>
+  <Port>
     <Number>18634</Number>
     <Protocol>tcp</Protocol>
     <Name>rds-ib</Name>
@@ -71407,6 +71533,18 @@ Generated 04/20/2020 00:44:30-->
   <Port>
     <Number>19788</Number>
     <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>19790</Number>
+    <Protocol>tcp</Protocol>
+    <Name>faircom-db</Name>
+    <Description>FairCom Database</Description>
+  </Port>
+  <Port>
+    <Number>19790</Number>
+    <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
   </Port>
@@ -71979,6 +72117,18 @@ Generated 04/20/2020 00:44:30-->
     <Protocol>udp</Protocol>
     <Name>cis</Name>
     <Description>CompactIS Tunnel</Description>
+  </Port>
+  <Port>
+    <Number>22333</Number>
+    <Protocol>tcp</Protocol>
+    <Name>showcockpit-net</Name>
+    <Description>ShowCockpit Networking</Description>
+  </Port>
+  <Port>
+    <Number>22333</Number>
+    <Protocol>udp</Protocol>
+    <Name>showcockpit-net</Name>
+    <Description>ShowCockpit Networking</Description>
   </Port>
   <Port>
     <Number>22335</Number>
@@ -73139,6 +73289,18 @@ Generated 04/20/2020 00:44:30-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>29000</Number>
+    <Protocol>tcp</Protocol>
+    <Name>saltd-licensing</Name>
+    <Description>Siemens Licensing Server</Description>
+  </Port>
+  <Port>
+    <Number>29000</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>29118</Number>
     <Protocol>tcp</Protocol>
     <Name>record</Name>
@@ -73841,6 +74003,18 @@ Generated 04/20/2020 00:44:30-->
     <Description>SNIP Slave</Description>
   </Port>
   <Port>
+    <Number>33890</Number>
+    <Protocol>tcp</Protocol>
+    <Name>digilent-adept</Name>
+    <Description>Adept IP protocol</Description>
+  </Port>
+  <Port>
+    <Number>33890</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>34249</Number>
     <Protocol>tcp</Protocol>
     <Name>turbonote-2</Name>
@@ -74229,6 +74403,24 @@ Generated 04/20/2020 00:44:30-->
     <Protocol>udp</Protocol>
     <Name>kastenxpipe</Name>
     <Description>KastenX Pipe</Description>
+  </Port>
+  <Port>
+    <Number>37472</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>37472</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>37472</Number>
+    <Protocol>sctp</Protocol>
+    <Name>3gpp-w1ap</Name>
+    <Description>W1 signalling transport</Description>
   </Port>
   <Port>
     <Number>37475</Number>
