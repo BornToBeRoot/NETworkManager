@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Whois servers by domain from IANA
-Generated 04/20/2020 00:44:38-->
+Generated 12/05/2020 23:54:04-->
 <WhoisServers>
   <WhoisServer>
     <TLD>AAA</TLD>
@@ -68,7 +68,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ACO</TLD>
-    <Server>whois.afilias-srs.net</Server>
+    <Server>whois.nic.aco</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ACTOR</TLD>
@@ -146,10 +146,6 @@ Generated 04/20/2020 00:44:38-->
     </Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>AIGO</TLD>
-    <Server>whois.afilias-srs.net</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>AIRBUS</TLD>
     <Server>whois.nic.airbus</Server>
   </WhoisServer>
@@ -205,6 +201,10 @@ Generated 04/20/2020 00:44:38-->
   <WhoisServer>
     <TLD>AM</TLD>
     <Server>whois.amnic.net</Server>
+  </WhoisServer>
+  <WhoisServer>
+    <TLD>AMAZON</TLD>
+    <Server>whois.nic.amazon</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>AMERICANEXPRESS</TLD>
@@ -278,7 +278,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>AQUARELLE</TLD>
-    <Server>whois-aquarelle.nic.fr</Server>
+    <Server>whois.nic.aquarelle</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>AR</TLD>
@@ -372,7 +372,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>AUTO</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.auto</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>AUTOS</TLD>
@@ -858,7 +858,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>CAR</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.car</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>CARAVAN</TLD>
@@ -883,7 +883,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>CARS</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.cars</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>CASA</TLD>
@@ -1546,8 +1546,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>EARTH</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.earth</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>EAT</TLD>
@@ -1638,10 +1637,6 @@ Generated 04/20/2020 00:44:38-->
   <WhoisServer>
     <TLD>ESTATE</TLD>
     <Server>whois.nic.estate</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>ESURANCE</TLD>
-    <Server>whois.afilias-srs.net</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ET</TLD>
@@ -2024,7 +2019,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>GEA</TLD>
-    <Server>whois.afilias-srs.net</Server>
+    <Server>whois.nic.gea</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>GENT</TLD>
@@ -2263,8 +2258,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>HAIR</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.hair</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>HAMBURG</TLD>
@@ -2481,7 +2475,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>IE</TLD>
-    <Server>whois.iedr.ie</Server>
+    <Server>whois.weare.ie</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>IEEE</TLD>
@@ -2565,11 +2559,6 @@ Generated 04/20/2020 00:44:38-->
     <Server>whois.iana.org</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>INTEL</TLD>
-    <Server>
-    </Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>INTERNATIONAL</TLD>
     <Server>whois.nic.international</Server>
   </WhoisServer>
@@ -2647,10 +2636,6 @@ Generated 04/20/2020 00:44:38-->
   <WhoisServer>
     <TLD>JCB</TLD>
     <Server>whois.nic.gmo</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>JCP</TLD>
-    <Server>whois.afilias-srs.net</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>JE</TLD>
@@ -2888,7 +2873,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>LANCASTER</TLD>
-    <Server>whois-lancaster.nic.fr</Server>
+    <Server>whois.nic.lancaster</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>LANCIA</TLD>
@@ -3287,10 +3272,6 @@ Generated 04/20/2020 00:44:38-->
     </Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>METLIFE</TLD>
-    <Server>whois.nic.metlife</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>MG</TLD>
     <Server>whois.nic.mg</Server>
   </WhoisServer>
@@ -3349,12 +3330,11 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>MM</TLD>
-    <Server>
-    </Server>
+    <Server>whois.registry.gov.mm</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>MMA</TLD>
-    <Server>whois-mma.nic.fr</Server>
+    <Server>whois.nic.mma</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>MN</TLD>
@@ -4267,10 +4247,6 @@ Generated 04/20/2020 00:44:38-->
     <Server>whois.nic.ricoh</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>RIGHTATHOME</TLD>
-    <Server>whois.nic.rightathome</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>RIL</TLD>
     <Server>whois.nic.ril</Server>
   </WhoisServer>
@@ -4475,10 +4451,6 @@ Generated 04/20/2020 00:44:38-->
     <Server>whois.nic.scjohnson</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>SCOR</TLD>
-    <Server>whois.nic.scor</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>SCOT</TLD>
     <Server>whois.nic.scot</Server>
   </WhoisServer>
@@ -4605,10 +4577,6 @@ Generated 04/20/2020 00:44:38-->
     <Server>whois.afilias-srs.net</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>SHRIRAM</TLD>
-    <Server>whois.afilias-srs.net</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>SI</TLD>
     <Server>whois.register.si</Server>
   </WhoisServer>
@@ -4681,7 +4649,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SNCF</TLD>
-    <Server>whois-sncf.nic.fr</Server>
+    <Server>whois.nic.sncf</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SO</TLD>
@@ -4728,6 +4696,10 @@ Generated 04/20/2020 00:44:38-->
   <WhoisServer>
     <TLD>SOY</TLD>
     <Server>whois.nic.google</Server>
+  </WhoisServer>
+  <WhoisServer>
+    <TLD>SPA</TLD>
+    <Server>whois.afilias-srs.net</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SPACE</TLD>
@@ -4883,10 +4855,6 @@ Generated 04/20/2020 00:44:38-->
     <Server>whois.nic.sydney</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>SYMANTEC</TLD>
-    <Server>whois.nic.symantec</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>SYSTEMS</TLD>
     <Server>whois.nic.systems</Server>
   </WhoisServer>
@@ -4991,7 +4959,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>TH</TLD>
-    <Server>whois.thains.co.th</Server>
+    <Server>whois.thnic.co.th</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>THD</TLD>
@@ -5104,7 +5072,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>TOTAL</TLD>
-    <Server>whois-total.nic.fr</Server>
+    <Server>whois.nic.total</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>TOURS</TLD>
@@ -5734,6 +5702,10 @@ Generated 04/20/2020 00:44:38-->
     </Server>
   </WhoisServer>
   <WhoisServer>
+    <TLD>XN--CCKWCXETD</TLD>
+    <Server>whois.nic.xn--cckwcxetd</Server>
+  </WhoisServer>
+  <WhoisServer>
     <TLD>XN--CG4BKI</TLD>
     <Server>whois.kr</Server>
   </WhoisServer>
@@ -5882,6 +5854,10 @@ Generated 04/20/2020 00:44:38-->
     <Server>whois.hkirc.hk</Server>
   </WhoisServer>
   <WhoisServer>
+    <TLD>XN--JLQ480N2RG</TLD>
+    <Server>whois.nic.xn--jlq480n2rg</Server>
+  </WhoisServer>
+  <WhoisServer>
     <TLD>XN--JLQ61U9W7B</TLD>
     <Server>whois.nic.xn--jlq61u9w7b</Server>
   </WhoisServer>
@@ -5901,11 +5877,6 @@ Generated 04/20/2020 00:44:38-->
   <WhoisServer>
     <TLD>XN--KPRY57D</TLD>
     <Server>whois.twnic.net.tw</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>XN--KPU716F</TLD>
-    <Server>
-    </Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--KPUT3I</TLD>
@@ -6057,7 +6028,7 @@ Generated 04/20/2020 00:44:38-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--O3CW4H</TLD>
-    <Server>whois.thains.co.th</Server>
+    <Server>whois.thnic.co.th</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--OGBPF8FL</TLD>
@@ -6077,14 +6048,8 @@ Generated 04/20/2020 00:44:38-->
     <Server>whois.tcinet.ru</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>XN--PBT977C</TLD>
-    <Server>
-    </Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>XN--PGBS0DH</TLD>
-    <Server>
-    </Server>
+    <Server>whois.ati.tn</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--PSSY2U</TLD>
