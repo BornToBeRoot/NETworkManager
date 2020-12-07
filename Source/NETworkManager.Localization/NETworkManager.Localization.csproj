@@ -42,7 +42,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="MahApps.Metro" Version="2.4.1" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.3" />
   </ItemGroup>
   
   <ItemGroup>
