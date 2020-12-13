@@ -10,15 +10,27 @@ using NETworkManager.Models.Network;
 
 namespace NETworkManager.Models.Export
 {
+    /// <summary>
+    /// This class will provide methods to export text or objects to files like csv, xml, json or plain text.
+    /// </summary>
     public static partial class ExportManager
     {
         #region Variables
+        /// <summary>
+        /// Default declaration for XML documents.
+        /// </summary>
         private static readonly XDeclaration DefaultXDeclaration = new XDeclaration("1.0", "utf-8", "yes");
         #endregion
 
         #region Methods
 
         #region Export
+        /// <summary>
+        /// Method to export objects from type <see cref="HostInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{HostInfo}"/> to export.</param>
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<HostInfo> collection)
         {
             switch (fileType)
@@ -37,6 +49,12 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        /// <summary>
+        /// Method to export objects from type <see cref="PortInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{PortInfo}"/> to export.</param>
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<PortInfo> collection)
         {
             switch (fileType)
@@ -55,6 +73,12 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        /// <summary>
+        /// Method to export objects from type <see cref="PingInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{PingInfo}"/> to export.</param>
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<PingInfo> collection)
         {
             switch (fileType)
@@ -73,6 +97,12 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        /// <summary>
+        /// Method to export objects from type <see cref="TracerouteHopInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{TracerouteHopInfo}"/> to export.</param>
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<TracerouteHopInfo> collection)
         {
             switch (fileType)
@@ -91,6 +121,12 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        /// <summary>
+        /// Method to export objects from type <see cref="DNSLookupRecordInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{DNSLookupRecordInfo}"/> to export.</param>
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<DNSLookupRecordInfo> collection)
         {
             switch (fileType)
@@ -109,6 +145,12 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        /// <summary>
+        /// Method to export objects from type <see cref="SNMPReceivedInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{SNMPReceivedInfo}"/> to export.</param>
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<SNMPReceivedInfo> collection)
         {
             switch (fileType)
@@ -127,6 +169,12 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        /// <summary>
+        /// Method to export objects from type <see cref="IPNetworkInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{IPNetworkInfo}"/> to export.</param>
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<IPNetworkInfo> collection)
         {
             switch (fileType)
@@ -145,6 +193,12 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        /// <summary>
+        /// Method to export objects from type <see cref="OUIInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{OUIInfo}"/> to export.</param>
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<OUIInfo> collection)
         {
             switch (fileType)
@@ -163,6 +217,12 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        /// <summary>
+        /// Method to export objects from type <see cref="PortLookupInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{PortLookupInfo}"/> to export.</param>
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<PortLookupInfo> collection)
         {
             switch (fileType)
@@ -181,6 +241,12 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        /// <summary>
+        /// Method to export objects from type <see cref="ConnectionInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{ConnectionInfo}"/> to export.</param>
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<ConnectionInfo> collection)
         {
             switch (fileType)
@@ -199,6 +265,12 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        /// <summary>
+        /// Method to export objects from type <see cref="ListenerInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{ListenerInfo}"/> to export.</param>
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<ListenerInfo> collection)
         {
             switch (fileType)
@@ -217,6 +289,12 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        /// <summary>
+        /// Method to export objects from type <see cref="ARPInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{ARPInfo}"/> to export.</param>
         public static void Export(string filePath, ExportFileType fileType, ObservableCollection<ARPInfo> collection)
         {
             switch (fileType)
@@ -235,6 +313,11 @@ namespace NETworkManager.Models.Export
             }
         }
 
+        /// <summary>
+        /// Method to export text to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="content">Text to export.</param>
         public static void Export(string filePath, string content)
         {
             CreateTXT(content, filePath);
