@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Create a feature request
-labels: Feature-Request
+labels: ":rocket: feature-request"
 ---
 
 **Describe your feature request**:
