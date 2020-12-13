@@ -274,7 +274,7 @@ namespace NETworkManager.ViewModels
 
                 SettingsManager.Current.Lookup_Port_ExportFileType = instance.FileType;
                 SettingsManager.Current.Lookup_Port_ExportFilePath = instance.FilePath;
-            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Lookup_Port_ExportFileType, SettingsManager.Current.Lookup_Port_ExportFilePath);
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.CSV, ExportManager.ExportFileType.XML, ExportManager.ExportFileType.JSON }, true, SettingsManager.Current.Lookup_Port_ExportFileType, SettingsManager.Current.Lookup_Port_ExportFilePath);
 
             customDialog.Content = new ExportDialog
             {

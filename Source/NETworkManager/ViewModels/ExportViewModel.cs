@@ -5,16 +5,33 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using NETworkManager.Models.Export;
 using NETworkManager.Localization.Resources;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ExportViewModel : ViewModelBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public ICommand ExportCommand { get; }
 
+        /// <summary>
+        ///
+        /// </summary>
         public ICommand CancelCommand { get; }
 
-        private bool _exportAll;
+        /// <summary>
+        /// 
+        /// </summary>
+        private bool _exportAll = true;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool ExportAll
         {
             get => _exportAll;
@@ -24,6 +41,27 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _exportAll = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private bool _showExportSelected;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool ShowExportSelected
+        {
+            get => _showExportSelected;
+            set
+            {
+                if (value == _showExportSelected)
+                    return;
+
+                _showExportSelected = value;
                 OnPropertyChanged();
             }
         }
@@ -42,21 +80,21 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _textOnly;
-        public bool TextOnly
+        public ExportManager.ExportFileType FileType { get; set; }
+
+        private bool _showCSV;
+        public bool ShowCSV
         {
-            get => _textOnly;
+            get => _showCSV;
             set
             {
-                if (value == _textOnly)
+                if (value == _showCSV)
                     return;
 
-                _textOnly = value;
+                _showCSV = value;
                 OnPropertyChanged();
             }
         }
-
-        public ExportManager.ExportFileType FileType { get; set; }
 
         private bool _useCSV;
         public bool UseCSV
@@ -74,6 +112,20 @@ namespace NETworkManager.ViewModels
                 }
 
                 _useCSV = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _showXML;
+        public bool ShowXML
+        {
+            get => _showXML;
+            set
+            {
+                if (value == _showXML)
+                    return;
+
+                _showXML = value;
                 OnPropertyChanged();
             }
         }
@@ -98,6 +150,21 @@ namespace NETworkManager.ViewModels
             }
         }
 
+
+        private bool _showJSON;
+        public bool ShowJSON
+        {
+            get => _showJSON;
+            set
+            {
+                if (value == _showJSON)
+                    return;
+
+                _showJSON = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _useJSON;
         public bool UseJSON
         {
@@ -114,6 +181,20 @@ namespace NETworkManager.ViewModels
                 }
 
                 _useJSON = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _showTXT;
+        public bool ShowTXT
+        {
+            get => _showTXT;
+            set
+            {
+                if (value == _showTXT)
+                    return;
+
+                _showTXT = value;
                 OnPropertyChanged();
             }
         }
@@ -152,16 +233,24 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportManager.ExportFileType fileType = ExportManager.ExportFileType.CSV, string filePath = "")
+        public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportManager.ExportFileType[] showFilesTypes, bool showExportSelected)
         {
             ExportCommand = new RelayCommand(p => deleteCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            // Default
-            ExportAll = true;
+            ShowCSV = showFilesTypes.Contains(ExportManager.ExportFileType.CSV);
+            ShowXML = showFilesTypes.Contains(ExportManager.ExportFileType.XML);
+            ShowJSON = showFilesTypes.Contains(ExportManager.ExportFileType.JSON);
+            ShowTXT = showFilesTypes.Contains(ExportManager.ExportFileType.TXT);
 
+            ShowExportSelected = showExportSelected;
+        }
+
+        public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportManager.ExportFileType[] showFilesTypes, bool showExportSelected, ExportManager.ExportFileType fileType, string filePath) :
+            this(deleteCommand, cancelHandler, showFilesTypes, showExportSelected)
+        {
             FilePath = filePath;
-            
+
             switch (fileType)
             {
                 case ExportManager.ExportFileType.CSV:
@@ -174,8 +263,7 @@ namespace NETworkManager.ViewModels
                     UseJSON = true;
                     break;
                 case ExportManager.ExportFileType.TXT:
-                    UseTXT = true;
-                    TextOnly = true;
+                    UseTXT = true;                    
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);

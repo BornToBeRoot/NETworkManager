@@ -1,6 +1,7 @@
 ﻿using NETworkManager.ViewModels;
 using System;
 using NETworkManager.Models.Network;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace NETworkManager.Views
 {
@@ -14,7 +15,7 @@ namespace NETworkManager.Views
         {
             InitializeComponent();
 
-            _viewModel = new PingMonitorViewModel(hostId, closeCallback, options);
+            _viewModel = new PingMonitorViewModel(DialogCoordinator.Instance, hostId, closeCallback, options);
 
             DataContext = _viewModel;
 
@@ -24,6 +25,11 @@ namespace NETworkManager.Views
         private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             _viewModel.OnLoaded();
+        }
+
+        public void Export()
+        {
+            _viewModel.Export();
         }
 
         private void Dispatcher_ShutdownStarted(object sender, EventArgs e)

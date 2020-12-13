@@ -9,6 +9,8 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        dialogs:DialogParticipation.Register="{Binding}"        
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PingMonitorViewModel}">
     <UserControl.Resources>
@@ -38,7 +40,7 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding IsReachable}" Value="True" />
-                                <Condition Binding="{Binding IsPingRunning}" Value="True" />
+                                <Condition Binding="{Binding IsRunning}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
                                 <Setter Property="OpacityMask" Value="{StaticResource VisualConnected}" />
@@ -48,7 +50,7 @@
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding IsReachable}" Value="False" />
-                                <Condition Binding="{Binding IsPingRunning}" Value="True" />
+                                <Condition Binding="{Binding IsRunning}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
                                 <Setter Property="OpacityMask" Value="{StaticResource VisualDisconnected}" />
@@ -88,15 +90,15 @@
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.StatusChange}" />
             <TextBlock Grid.Column="2" Grid.Row="4" Text="{Binding StatusTime, StringFormat={}{0:hh}h {0:mm}m {0:ss}s}" Style="{StaticResource BoldTextBlock}" />
             <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.Received}" />
-            <TextBlock Grid.Column="6" Grid.Row="0" Text="{Binding PingsReceived}" />
+            <TextBlock Grid.Column="6" Grid.Row="0" Text="{Binding Received}" />
             <TextBlock Grid.Column="4" Grid.Row="2" Text="{x:Static localization:Strings.Lost}" />
-            <TextBlock Grid.Column="6" Grid.Row="2" Text="{Binding PingsLost}" />
+            <TextBlock Grid.Column="6" Grid.Row="2" Text="{Binding Lost}" />
             <TextBlock Grid.Column="4" Grid.Row="4" Text="{x:Static localization:Strings.PacketLoss}" />
             <TextBlock Grid.Column="6" Grid.Row="4">
                 <TextBlock.Text>
                     <MultiBinding Converter="{StaticResource PercentConverter}" StringFormat="{}{0} %">
-                        <Binding Path="PingsTransmitted" />
-                        <Binding Path="PingsLost" />
+                        <Binding Path="Transmitted" />
+                        <Binding Path="Lost" />
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>            
@@ -143,7 +145,7 @@
                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                     <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding IsPingRunning}" Value="True">
+                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                     <Setter Property="OpacityMask" Value="{StaticResource VisualControlPause}" />
                                     <Setter Property="ToolTip" Value="{x:Static localization:Strings.Pause}" />
                                 </DataTrigger>

@@ -10,18 +10,26 @@ using NETworkManager.Utilities;
 using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
+using System.Collections.Generic;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Views;
+using NETworkManager.Models.Export;
+using System.Collections.ObjectModel;
 
 namespace NETworkManager.ViewModels
 {
     public class PingMonitorViewModel : ViewModelBase
     {
         #region Variables        
+        private readonly IDialogCoordinator _dialogCoordinator;
         private CancellationTokenSource _cancellationTokenSource;
 
         public readonly int HostId;
         private readonly Action<int> _closeCallback;
         private readonly PingMonitorOptions _pingMonitorOptions;
         private bool _firstLoad = true;
+
+        private List<PingInfo> _pingInfoList;
 
         private string _host;
         public string Host
@@ -51,16 +59,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _isPingRunning;
-        public bool IsPingRunning
+        private bool _isRunning;
+        public bool IsRunning
         {
-            get => _isPingRunning;
+            get => _isRunning;
             set
             {
-                if (value == _isPingRunning)
+                if (value == _isRunning)
                     return;
 
-                _isPingRunning = value;
+                _isRunning = value;
                 OnPropertyChanged();
             }
         }
@@ -93,44 +101,44 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int _pingsTransmitted;
-        public int PingsTransmitted
+        private int _transmitted;
+        public int Transmitted
         {
-            get => _pingsTransmitted;
+            get => _transmitted;
             set
             {
-                if (value == _pingsTransmitted)
+                if (value == _transmitted)
                     return;
 
-                _pingsTransmitted = value;
+                _transmitted = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _pingsReceived;
-        public int PingsReceived
+        private int _received;
+        public int Received
         {
-            get => _pingsReceived;
+            get => _received;
             set
             {
-                if (value == _pingsReceived)
+                if (value == _received)
                     return;
 
-                _pingsReceived = value;
+                _received = value;
                 OnPropertyChanged();
             }
         }
 
-        private int _pingsLost;
-        public int PingsLost
+        private int _lost;
+        public int Lost
         {
-            get => _pingsLost;
+            get => _lost;
             set
             {
-                if (value == _pingsLost)
+                if (value == _lost)
                     return;
 
-                _pingsLost = value;
+                _lost = value;
                 OnPropertyChanged();
             }
         }
@@ -161,8 +169,10 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings    
-        public PingMonitorViewModel(int hostId, Action<int> closeCallback, PingMonitorOptions options)
+        public PingMonitorViewModel(IDialogCoordinator instance, int hostId, Action<int> closeCallback, PingMonitorOptions options)
         {
+            _dialogCoordinator = instance;
+
             HostId = hostId;
             _closeCallback = closeCallback;
             _pingMonitorOptions = options;
@@ -203,7 +213,7 @@ namespace NETworkManager.ViewModels
         #region Methods      
         private void Ping()
         {
-            if (IsPingRunning)
+            if (IsRunning)
                 StopPing();
             else
                 StartPing();
@@ -211,13 +221,16 @@ namespace NETworkManager.ViewModels
 
         private void StartPing()
         {
-            IsPingRunning = true;
+            IsRunning = true;
 
-            // Reset the latest results
+            // Reset history
+            _pingInfoList = new List<PingInfo>();
+
+            // Reset the latest results            
             StatusTime = DateTime.Now;
-            PingsTransmitted = 0;
-            PingsReceived = 0;
-            PingsLost = 0;
+            Transmitted = 0;
+            Received = 0;
+            Lost = 0;
 
             // Reset chart
             ResetTimeChart();
@@ -248,7 +261,7 @@ namespace NETworkManager.ViewModels
 
         private void PingFinished()
         {
-            IsPingRunning = false;
+            IsRunning = false;
         }
 
         public void ResetTimeChart()
@@ -268,10 +281,45 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public async void Export()
+        {    
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, new ObservableCollection<PingInfo> (_pingInfoList));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.PingMonitor_ExportFileType = instance.FileType;
+                SettingsManager.Current.PingMonitor_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.CSV, ExportManager.ExportFileType.XML, ExportManager.ExportFileType.JSON }, true, SettingsManager.Current.PingMonitor_ExportFileType, SettingsManager.Current.PingMonitor_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
+        }
+
         public void OnClose()
         {
             // Stop the ping
-            if (IsPingRunning)
+            if (IsRunning)
                 StopPing();
         }
         #endregion
@@ -282,7 +330,7 @@ namespace NETworkManager.ViewModels
             var pingInfo = PingInfo.Parse(e);
 
             // Calculate statistics
-            PingsTransmitted++;
+            Transmitted++;
 
             LvlChartsDefaultInfo timeInfo;
 
@@ -294,7 +342,7 @@ namespace NETworkManager.ViewModels
                     IsReachable = true;
                 }
 
-                PingsReceived++;
+                Received++;
 
                 timeInfo = new LvlChartsDefaultInfo(pingInfo.Timestamp, pingInfo.Time);
             }
@@ -306,7 +354,7 @@ namespace NETworkManager.ViewModels
                     IsReachable = false;
                 }
 
-                PingsLost++;
+                Lost++;
 
                 timeInfo = new LvlChartsDefaultInfo(pingInfo.Timestamp, double.NaN);
             }
@@ -318,6 +366,9 @@ namespace NETworkManager.ViewModels
                 if (Series[0].Values.Count > 59)
                     Series[0].Values.RemoveAt(0);
             }));
+
+            // Add to history
+            _pingInfoList.Add(pingInfo);
         }
 
         private void Ping_UserHasCanceled(object sender, EventArgs e)
