@@ -34,7 +34,9 @@ namespace NETworkManager.Models.Network
 
             foreach (var networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (networkInterface.NetworkInterfaceType != NetworkInterfaceType.Ethernet && networkInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211)
+                // NetworkInterfaceType 53 is proprietary virtual/internal interface
+                // https://docs.microsoft.com/en-us/windows-hardware/drivers/network/ndis-interface-types
+                if (networkInterface.NetworkInterfaceType != NetworkInterfaceType.Ethernet && networkInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 && (int)networkInterface.NetworkInterfaceType != 53)
                     continue;
 
                 var listIPv4Address = new List<IPAddress>();
