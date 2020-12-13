@@ -74,6 +74,9 @@ namespace NETworkManager.Models.Network
 		{
 			Task.Run(() =>
 			{
+				// Get list of dns servers
+				List<IPEndPoint> dnsServers = GetDnsServer();
+
 				// Foreach host
 				foreach (var host in hosts)
 				{
@@ -89,9 +92,9 @@ namespace NETworkManager.Models.Network
 					}
 
 					// Foreach dns server
-					Parallel.ForEach(GetDnsServer(), dnsServer =>
+					Parallel.ForEach(dnsServers, dnsServer =>
 					{
-						LookupClientOptions lookupClientOptions = new LookupClientOptions
+						LookupClientOptions lookupClientOptions = new LookupClientOptions(dnsServer)
 						{
 							UseTcpOnly = UseTCPOnly,
 							UseCache = UseCache,
@@ -99,6 +102,7 @@ namespace NETworkManager.Models.Network
 							Timeout = Timeout,
 							Retries = Retries,
 						};
+
 						LookupClient dnsLookupClient = new LookupClient(lookupClientOptions);
 
 						try
