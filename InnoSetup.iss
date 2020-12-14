@@ -33,9 +33,18 @@ WizardStyle=modern
 WizardSmallImageFile=Images\NETworkManager_Logo_InnoSetup.bmp
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "german"; MessagesFile: "compiler:Languages\German.isl"
-Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "english";    MessagesFile: "compiler:Default.isl"
+Name: "brasilian";  MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
+Name: "czech";      MessagesFile: "compiler:Languages\Czech.isl"
+Name: "dutch";      MessagesFile: "compiler:Languages\Dutch.isl"
+Name: "french";     MessagesFile: "compiler:Languages\French.isl"
+Name: "german";     MessagesFile: "compiler:Languages\German.isl"
+Name: "italian";    MessagesFile: "compiler:Languages\Italian.isl"
+Name: "japanese";   MessagesFile: "compiler:Languages\Japanese.isl"
+Name: "polish";     MessagesFile: "compiler:Languages\Polish.isl"
+Name: "russian";    MessagesFile: "compiler:Languages\Russian.isl"
+Name: "spanish";    MessagesFile: "compiler:Languages\Spanish.isl"
+Name: "turkish";    MessagesFile: "compiler:Languages\Turkish.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
