@@ -312,7 +312,7 @@ namespace NETworkManager.ViewModels
 
                 SettingsManager.Current.Connections_ExportFileType = instance.FileType;
                 SettingsManager.Current.Connections_ExportFilePath = instance.FilePath;
-            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.Connections_ExportFileType, SettingsManager.Current.Connections_ExportFilePath);
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.CSV, ExportManager.ExportFileType.XML, ExportManager.ExportFileType.JSON }, true, SettingsManager.Current.Connections_ExportFileType, SettingsManager.Current.Connections_ExportFilePath);
 
             customDialog.Content = new ExportDialog
             {

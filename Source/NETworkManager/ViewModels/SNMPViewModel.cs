@@ -417,7 +417,7 @@ namespace NETworkManager.ViewModels
 
                 SettingsManager.Current.SNMP_ExportFileType = instance.FileType;
                 SettingsManager.Current.SNMP_ExportFilePath = instance.FilePath;
-            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.SNMP_ExportFileType, SettingsManager.Current.SNMP_ExportFilePath);
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.CSV, ExportManager.ExportFileType.XML, ExportManager.ExportFileType.JSON }, true, SettingsManager.Current.SNMP_ExportFileType, SettingsManager.Current.SNMP_ExportFilePath);
 
             customDialog.Content = new ExportDialog
             {

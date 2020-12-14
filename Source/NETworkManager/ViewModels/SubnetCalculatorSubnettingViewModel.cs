@@ -268,7 +268,7 @@ namespace NETworkManager.ViewModels
 
                 SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType = instance.FileType;
                 SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath = instance.FilePath;
-            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath);
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.CSV, ExportManager.ExportFileType.XML, ExportManager.ExportFileType.JSON }, true, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFileType, SettingsManager.Current.SubnetCalculator_Subnetting_ExportFilePath);
 
             customDialog.Content = new ExportDialog
             {

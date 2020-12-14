@@ -278,6 +278,14 @@ namespace NETworkManager.ViewModels
             Host = "";
         }
 
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private void ExportAction()
+        {
+            if (SelectedHost != null)
+                SelectedHost.Export();
+        }
+
         public ICommand AddHostProfileCommand => new RelayCommand(p => AddHostProfileAction(), AddHostProfile_CanExecute);
 
         private bool AddHostProfile_CanExecute(object obj)
