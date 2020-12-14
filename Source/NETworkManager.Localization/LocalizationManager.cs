@@ -66,9 +66,9 @@ namespace NETworkManager.Localization
             new LocalizationInfo("Dutch", "Nederlands", GetImageUri("nl-NL"), "nl-NL", 37.51),
             new LocalizationInfo("French", "Français", GetImageUri("fr-FR"), "fr-FR", 86.16),
             new LocalizationInfo("Hungarian", "Magyar", GetImageUri("hu-HU"), "hu-HU", 7.24),
-            new LocalizationInfo("Italian", "Italiano", GetImageUri("it-IT"), "it-IT", 30.49),
-            new LocalizationInfo("Polish", "Język polski", GetImageUri("pl-PL"), "pl-PL", 76.44),
-            new LocalizationInfo("Russian", "Русский", GetImageUri("ru-RU"), "ru-RU", 70.88),
+            new LocalizationInfo("Italian", "Italiano", GetImageUri("it-IT"), "it-IT", 100),
+            new LocalizationInfo("Polish", "Język polski", GetImageUri("pl-PL"), "pl-PL", 30.49),
+            new LocalizationInfo("Russian", "Русский", GetImageUri("ru-RU"), "ru-RU", 70.27),
             new LocalizationInfo("Spanish", "Español", GetImageUri("es-ES"), "es-ES", 100)
         };
 
