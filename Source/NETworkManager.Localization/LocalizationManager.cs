@@ -59,15 +59,15 @@ namespace NETworkManager.Localization
             new LocalizationInfo("English", "English", GetImageUri("en-US"), "en-US", 100, true),
             new LocalizationInfo("German", "Deutsch",  GetImageUri("de-DE"), "de-DE", 100, true),
 
-            // Community
-            new LocalizationInfo("Brazilian Portuguese", "português brasileiro", GetImageUri("pt-BR"), "pt-BR", 100),
+            // Community            
             new LocalizationInfo("Chinese (China)", "大陆简体", GetImageUri("zh-CN"), "zh-CN", 67.35),
             new LocalizationInfo("Chinese (Taiwan)", "台灣正體", GetImageUri("zh-TW"), "zh-TW", 84.54),
             new LocalizationInfo("Dutch", "Nederlands", GetImageUri("nl-NL"), "nl-NL", 37.51),
             new LocalizationInfo("French", "Français", GetImageUri("fr-FR"), "fr-FR", 86.16),
             new LocalizationInfo("Hungarian", "Magyar", GetImageUri("hu-HU"), "hu-HU", 7.24),
             new LocalizationInfo("Italian", "Italiano", GetImageUri("it-IT"), "it-IT", 100),
-            new LocalizationInfo("Polish", "Język polski", GetImageUri("pl-PL"), "pl-PL", 30.49),
+            new LocalizationInfo("Polish", "Język polski", GetImageUri("pl-PL"), "pl-PL", 56.89),
+            new LocalizationInfo("Portuguese (Brazilian)", "português brasileiro", GetImageUri("pt-BR"), "pt-BR", 100),
             new LocalizationInfo("Russian", "Русский", GetImageUri("ru-RU"), "ru-RU", 70.27),
             new LocalizationInfo("Spanish", "Español", GetImageUri("es-ES"), "es-ES", 100)
         };
