@@ -31,8 +31,14 @@
   <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/gh-pages/NETworkManager_Preview.gif?raw=true" />
 </div>
 
-# Build
 
+# System Requirements
+
+- Windows 10 / Server (1809 or later)
+- [.NET 5.0 / .NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0) or later
+- [Microsoft Edge (Chromium)](https://www.microsoft.com/de-de/edge)
+
+# Build
 __Requirements__
 - [SDK .NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 
@@ -42,3 +48,26 @@ __Optional__
 __Steps__
 1. Download/Clone the Repo
 2. Run the `.\build.ps1` with PowerShell
+
+# Contribute
+- You found a bug or have a feature request? Feel free to create a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
+- General questions can be discussed in the [GitHub discussions](https://github.com/BornToBeRoot/NETworkManager/discussions).
+- If you contribute to the code, documentation or translation, you can add your name to the [contributors](https://github.com/BornToBeRoot/NETworkManager/blob/master/Contributors.md) list with a pull request.
+
+## Code
+- If you want to fix a bug or implement a new features, let me know in the issues that you are work on it.
+- Fork the repo, do your changes and send me a [pull request](https://github.com/BornToBeRoot/NETworkManager/pulls).
+
+## Documentation
+- The documentation is based on [Just the docs](https://github.com/pmarsceill/just-the-docs), hosted on GitHub Pages and published [here](https://borntoberoot.net/NETworkManager/).
+- You can help improve the documentation by cloning the repo, switch to the [gh-pages](https://github.com/BornToBeRoot/NETworkManager/tree/gh-pages) branch, do your improvements and send me a pull request.
+
+**Translation**
+- Translation is hosted on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager/).
+- If you want to join the language team as translator or reviewer, you need to have a Transifex account and join the team on Transifex.
+- You can request a new language via Transifex (or with a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose)).
+
+# License
+This software is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE).
+
+The licenses for the libraries used in the program can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/master/Source/NETworkManager.Documentation/Licenses).
