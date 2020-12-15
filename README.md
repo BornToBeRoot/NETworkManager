@@ -36,7 +36,7 @@
 
 - Windows 10 / Server (1809 or later)
 - [.NET 5.0 / .NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0) or later
-- [Microsoft Edge (Chromium)](https://www.microsoft.com/de-de/edge)
+- [Microsoft Edge | WebView2 Runtime](https://developer.microsoft.com/de-de/microsoft-edge/webview2/)
 
 # Build
 __Requirements__
