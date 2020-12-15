@@ -53,7 +53,7 @@ namespace NETworkManager
 
         // Indicates a restart message, when settings changed
         private string _cultureCode;
-
+                
         private bool _expandApplicationView;
         public bool ExpandApplicationView
         {
@@ -288,6 +288,9 @@ namespace NETworkManager
 
             // Load / Change appearance
             AppearanceManager.Load();
+
+            // Set title
+            Title = $"NETworkManager {AssemblyManager.Current.Version.Major}.{AssemblyManager.Current.Version.Minor}.{AssemblyManager.Current.Version.Build}";
 
             // NotifyIcon for autostart
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)

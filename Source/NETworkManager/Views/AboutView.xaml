@@ -175,7 +175,7 @@
                     </StackPanel.Style>
                     <Rectangle Width="16" Height="20">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Rocket}"/>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Download}"/>
                         </Rectangle.OpacityMask>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
