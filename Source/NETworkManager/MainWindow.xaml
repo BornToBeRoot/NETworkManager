@@ -13,7 +13,7 @@
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:networkManager="clr-namespace:NETworkManager"
         mc:Ignorable="d"
-        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" MinWidth="1050" MinHeight="700" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
+        Style="{DynamicResource DefaultWindow}" MinWidth="1050" MinHeight="700" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
         d:DataContext="{d:DesignInstance networkManager:MainWindow}">
     <!-- MetroDialogStyles.xaml must be adjusted if MinWidth/MinHeight is changed -->
     <mahAppsControls:MetroWindow.Resources>
@@ -64,7 +64,7 @@
         <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Templates.WindowButtonCommands.Win10}" />
     </mahAppsControls:MetroWindow.WindowButtonCommands>
     <mahAppsControls:MetroWindow.LeftWindowCommands>
-        <mahAppsControls:WindowCommands>
+        <mahAppsControls:WindowCommands ShowLastSeparator="False">
             <StackPanel Orientation="Horizontal">
                 <Grid Background="{DynamicResource MahApps.Brushes.Gray8}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <TextBlock Text="Administrator" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Style="{StaticResource CenterTextBlock}" Margin="10,0"/>
@@ -73,13 +73,13 @@
         </mahAppsControls:WindowCommands>
     </mahAppsControls:MetroWindow.LeftWindowCommands>
     <mahAppsControls:MetroWindow.RightWindowCommands>
-        <mahAppsControls:WindowCommands>
+        <mahAppsControls:WindowCommands ShowLastSeparator="False">
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding OpenWebsiteCommand}" Opacity="1" Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseUrl}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Rocket}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Download}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Text="{x:Static localization:Strings.UpdateAvailable}" Foreground="{DynamicResource MahApps.Brushes.Accent}" VerticalAlignment="Center" Margin="5,0,0,0" />
