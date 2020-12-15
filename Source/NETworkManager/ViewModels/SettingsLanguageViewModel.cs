@@ -79,8 +79,7 @@ namespace NETworkManager.ViewModels
             _isLoading = true;
 
             Languages = CollectionViewSource.GetDefaultView(LocalizationManager.List);
-            Languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.IsOfficial), ListSortDirection.Descending));
-            Languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.PercentTranslated), ListSortDirection.Descending));
+            Languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.IsOfficial), ListSortDirection.Descending));            
             Languages.SortDescriptions.Add(new SortDescription(nameof(LocalizationInfo.Name), ListSortDirection.Ascending));
 
             Languages.Filter = o =>
