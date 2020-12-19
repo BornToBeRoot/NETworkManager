@@ -2410,6 +2410,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download Microsoft Edge WebView2 Runtime.
+        /// </summary>
+        public static string DownloadMicrosoftEdgeWebView2Runtime {
+            get {
+                return ResourceManager.GetString("DownloadMicrosoftEdgeWebView2Runtime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duration.
         /// </summary>
         public static string Duration {
@@ -4033,6 +4042,15 @@ namespace NETworkManager.Localization.Resources {
         public static string MessageSize {
             get {
                 return ResourceManager.GetString("MessageSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft Edge WebView2 Runtime is not available!.
+        /// </summary>
+        public static string MicrosoftEdgeWebView2RuntimeIsNotAvailable {
+            get {
+                return ResourceManager.GetString("MicrosoftEdgeWebView2RuntimeIsNotAvailable", resourceCulture);
             }
         }
         
