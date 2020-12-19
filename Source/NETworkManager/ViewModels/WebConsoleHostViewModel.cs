@@ -16,7 +16,6 @@ using NETworkManager.Models.WebConsole;
 using System.Windows.Threading;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
-using Microsoft.Web.WebView2.Core;
 
 namespace NETworkManager.ViewModels
 {
@@ -30,27 +29,6 @@ namespace NETworkManager.ViewModels
         public ObservableCollection<DragablzTabItem> TabItems { get; }
 
         private readonly bool _isLoading;
-
-        /// <summary>
-        /// Private variable for <see cref="IsRuntimeAvailable"/>.
-        /// </summary>
-        private bool _isRuntimeAvailable;
-
-        /// <summary>
-        /// Variable indicates if the Edge WebView2 runtime is available.
-        /// </summary>
-        public bool IsRuntimeAvailable
-        {
-            get => _isRuntimeAvailable;
-            set
-            {
-                if (value == _isRuntimeAvailable)
-                    return;
-
-                _isRuntimeAvailable = value;
-                OnPropertyChanged();
-            }
-        }
 
         private int _selectedTabIndex;
         public int SelectedTabIndex
@@ -67,6 +45,7 @@ namespace NETworkManager.ViewModels
         }
 
         #region Profiles
+
         public ICollectionView Profiles { get; }
 
         private ProfileInfo _selectedProfile = new ProfileInfo();
@@ -168,16 +147,6 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            try
-            {
-                string version = CoreWebView2Environment.GetAvailableBrowserVersionString();
-                IsRuntimeAvailable = true;
-            }
-            catch (WebView2RuntimeNotFoundException)
-            {
-                IsRuntimeAvailable = false;
-            }
-
             InterTabClient = new DragablzInterTabClient(ApplicationName.WebConsole);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
@@ -238,7 +207,7 @@ namespace NETworkManager.ViewModels
         {
             ((args.DragablzItem.Content as DragablzTabItem)?.View as WebConsoleControl)?.CloseTab();
         }
-
+        
         public ICommand WebConsole_RefreshCommand => new RelayCommand(WebConsole_RefreshAction);
 
         private void WebConsole_RefreshAction(object view)
@@ -316,13 +285,6 @@ namespace NETworkManager.ViewModels
         private static void OpenSettingsAction()
         {
             EventSystem.RedirectToSettings();
-        }
-
-        public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
-
-        private static void OpenWebsiteAction(object url)
-        {
-            ExternalProcessStarter.OpenUrl((string)url);
         }
         #endregion
 

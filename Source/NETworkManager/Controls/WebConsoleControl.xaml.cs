@@ -77,7 +77,7 @@ namespace NETworkManager.Controls
             DataContext = this;
 
             _sessionInfo = info;
-
+            
             Browser2.NavigationStarting += Browser2_NavigationStarting;
             Browser2.NavigationCompleted += Browser2_NavigationCompleted;
             Browser2.WebMessageReceived += Browser2_WebMessageReceived;
@@ -90,7 +90,7 @@ namespace NETworkManager.Controls
             // Connect after the control is drawn and only on the first init
             if (_initialized)
                 return;
-                        
+
             // Set user data folder - Fix #382            
             var webView2Environment = await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
             await Browser2.EnsureCoreWebView2Async(webView2Environment);
