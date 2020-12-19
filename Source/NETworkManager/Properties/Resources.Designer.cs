@@ -61,6 +61,15 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://developer.microsoft.com/en-us/microsoft-edge/webview2/.
+        /// </summary>
+        public static string MicrosoftEdgeWebView2Runtime_DownloadUrl {
+            get {
+                return ResourceManager.GetString("MicrosoftEdgeWebView2Runtime_DownloadUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/blob/master/Contributors.md.
         /// </summary>
         public static string NETworkManager_Contributors {

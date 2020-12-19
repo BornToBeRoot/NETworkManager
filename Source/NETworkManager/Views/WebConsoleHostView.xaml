@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-        
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"        
         xmlns:airspaceFixer="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
+        xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"             
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WebConsoleHostViewModel}">
@@ -26,6 +26,15 @@
     </UserControl.InputBindings>
     <Grid>
         <Grid>
+            <Grid.Style>
+                <Style TargetType="{x:Type Grid}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsRuntimeAvailable}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -412,6 +421,23 @@
                 </Grid>
             </Expander>
         </Grid>
+        <StackPanel VerticalAlignment="Center" Margin="10">
+            <StackPanel.Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsRuntimeAvailable}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <TextBlock Text="{x:Static localization:Strings.MicrosoftEdgeWebView2RuntimeIsNotAvailable}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <TextBlock Text="{x:Static localization:Strings.DownloadMicrosoftEdgeWebView2Runtime}" Style="{StaticResource LinkTextBlock}" Margin="0,0,0,5" HorizontalAlignment="Center">
+                <TextBlock.InputBindings>
+                    <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.MicrosoftEdgeWebView2Runtime_DownloadUrl}" MouseAction="LeftClick" />
+                </TextBlock.InputBindings>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </UserControl>
 

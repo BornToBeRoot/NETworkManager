@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MicrosoftEdgeWebView2Runtime_DownloadUrl" xml:space="preserve">
+    <value>https://developer.microsoft.com/en-us/microsoft-edge/webview2/</value>
+  </data>
   <data name="NETworkManager_Contributors" xml:space="preserve">
     <value>https://github.com/BornToBeRoot/NETworkManager/blob/master/Contributors.md</value>
   </data>
