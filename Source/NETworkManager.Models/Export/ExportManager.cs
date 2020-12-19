@@ -718,7 +718,7 @@ namespace NETworkManager.Models.Export
                 {
                     IPAddress = collection[i].PingInfo.IPAddress.ToString(),
                     collection[i].Hostname,
-                    MACAddress = collection[i].MACAddress.ToString(),
+                    MACAddress = collection[i].MACAddress?.ToString(),
                     collection[i].Vendor,
                     collection[i].PingInfo.Bytes,
                     Time = Ping.TimeToString(collection[i].PingInfo.Status, collection[i].PingInfo.Time, true),
