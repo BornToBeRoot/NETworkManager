@@ -169,13 +169,14 @@
                         </Style>
                     </Grid.Style>
                     <Border Grid.Row="0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,0,1" Background="Transparent">
+
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="43" />
+                                <RowDefinition Height="31" />
                             </Grid.RowDefinitions>
                             <Button Grid.Column="0" Command="{Binding OpenApplicationListCommand}" ToolTip="{x:Static localization:Strings.Search}">
                                 <Button.Style>
@@ -205,9 +206,9 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>
-                                <Rectangle Width="24" Height="24">
+                                <Rectangle Width="16" Height="16">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Magnify}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDoubleRight}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -221,7 +222,7 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
-                            <TextBox x:Name="TextBoxSearch" Grid.Column="0" Grid.Row="0" BorderThickness="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.SearchDots}" mahAppsControls:TextBoxHelper.ClearTextButton="True" Margin="10,0,0,0">
+                            <TextBox x:Name="TextBoxSearch" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" BorderThickness="0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.SearchDots}" mahAppsControls:TextBoxHelper.ClearTextButton="True" Margin="10,0,0,0">
                                 <TextBox.Style>
                                     <Style BasedOn="{StaticResource SearchTextBox}" TargetType="{x:Type TextBox}">
                                         <Setter Property="Visibility" Value="Hidden" />

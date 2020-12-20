@@ -71,7 +71,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{StaticResource MahApps.Brushes.Gray8}"
                             BorderThickness="0,0,0,1">
-                        <Grid Background="Transparent" SnapsToDevicePixels="False" Margin="0,10,0,5">
+                        <Grid Background="Transparent" SnapsToDevicePixels="False" Height="27">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
