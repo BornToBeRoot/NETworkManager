@@ -43,7 +43,7 @@
                         <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold" VerticalAlignment="Center" />
                         <TextBlock Text="{x:Static localization:Strings.Preview}" Style="{StaticResource DefaultTextBlock}" Padding="5" Background="{DynamicResource MahApps.Brushes.Gray8}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPreview, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" VerticalAlignment="Center" Margin="5,0,0,0" />
                     </StackPanel>
-                    <TextBlock Text="{x:Static resources:Resources.NETworkManager_License}" Style="{StaticResource LinkTextBlock}" Margin="0,0,0,5">
+                    <TextBlock Text="{x:Static resources:Resources.NETworkManager_License}" Style="{StaticResource LinkTextBlock}" HorizontalAlignment="Left" Margin="0,0,0,5">
                         <TextBlock.InputBindings>
                             <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LicenseUrl}" MouseAction="LeftClick" />
                         </TextBlock.InputBindings>
