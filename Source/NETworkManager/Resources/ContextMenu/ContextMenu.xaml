@@ -8,12 +8,7 @@
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
-                            <Style.Triggers>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
-                                </Trigger>
-                            </Style.Triggers>
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
@@ -27,12 +22,7 @@
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
-                            <Style.Triggers>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
-                                </Trigger>
-                            </Style.Triggers>
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />                            
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
@@ -46,12 +36,7 @@
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
-                            <Style.Triggers>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
-                                </Trigger>
-                            </Style.Triggers>
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />                           
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
@@ -68,12 +53,7 @@
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
-                            <Style.Triggers>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
-                                </Trigger>
-                            </Style.Triggers>
+                            <Setter Property="Fill" Value="{DynamicResource  MahApps.Brushes.Gray3}" />                           
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
@@ -90,12 +70,7 @@
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
-                            <Style.Triggers>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
-                                </Trigger>
-                            </Style.Triggers>
+                            <Setter Property="Fill" Value="{DynamicResource  MahApps.Brushes.Gray3}" />                       
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
@@ -109,12 +84,7 @@
                 <Rectangle Width="16" Height="16">
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Window.Background}" />
-                            <Style.Triggers>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Control.Disabled}" />
-                                </Trigger>
-                            </Style.Triggers>
+                            <Setter Property="Fill" Value="{DynamicResource  MahApps.Brushes.Gray3}" />                          
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
