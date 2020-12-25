@@ -107,7 +107,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
-                    <RowDefinition Height="*" />                    
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
@@ -115,16 +115,28 @@
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                <TextBox x:Name="TextBoxSearch" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}">
-                    <TextBox.InputBindings>
-                        <KeyBinding Command="{Binding ScanProfileCommand}" Key="Enter" />
-                    </TextBox.InputBindings>
-                </TextBox>
-                    <Rectangle Grid.Column="2" Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
+                    <TextBox x:Name="TextBoxSearch" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}">
+                        <TextBox.InputBindings>
+                            <KeyBinding Command="{Binding ScanProfileCommand}" Key="Enter" />
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <Button Grid.Column="2" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                            </Rectangle.OpacityMask>
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                    </Button>
                 </Grid>
                 <ListBox Grid.Row="2" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                     <ListBox.Resources>
@@ -243,7 +255,7 @@
                     <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
-                                <Setter Property="Command" Value="{Binding AddProfileCommand}" />                                
+                                <Setter Property="Command" Value="{Binding AddProfileCommand}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                         <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
@@ -294,7 +306,7 @@
                             </TextBlock>
                         </Grid>
                     </Button>
-                </Grid>                
+                </Grid>
             </Grid>
         </Expander>
     </Grid>
