@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-        
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"        
         xmlns:airspaceFixer="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
         xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
@@ -50,9 +49,9 @@
                         <dragablz:InterTabController InterTabClient="{Binding InterTabClient}" MoveWindowWithSolitaryTabs="False" x:Name="InterTabController" />
                     </dragablz:TabablzControl.InterTabController>
                     <dragablz:TabablzControl.HeaderSuffixContent>
-                        <Grid HorizontalAlignment="Right" Width="40" Height="44">
+                        <Grid HorizontalAlignment="Right" Width="32" Height="32">
                             <Button Style="{StaticResource CleanButton}" Command="{Binding ConnectCommand}" ToolTip="{x:Static localization:Strings.NewConnectionDots}" Focusable="False">
-                                <Rectangle Width="20" Height="20">
+                                <Rectangle Width="16" Height="16">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
                                     </Rectangle.OpacityMask>
@@ -73,7 +72,7 @@
                     <dragablz:TabablzControl.HeaderItemTemplate>
                         <DataTemplate DataType="controls:DragablzTabItem">
                             <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
-                                <Grid>
+                                <Grid Height="32">
                                     <Grid.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.PowerShell_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
@@ -92,7 +91,7 @@
                                     </Grid.InputBindings>
                                     <StackPanel Orientation="Horizontal">
                                         <Grid ToolTip="{Binding Header}">
-                                            <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
+                                            <TextBlock Text="{Binding Header}" Width="150" Margin="10,0" VerticalAlignment="Center">
                                                 <TextBlock.Style>
                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />

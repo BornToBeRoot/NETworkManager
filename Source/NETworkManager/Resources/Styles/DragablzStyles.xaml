@@ -59,14 +59,14 @@
         <Setter Property="HeaderItemTemplate">
             <Setter.Value>
                 <DataTemplate DataType="networkManagerControls:DragablzTabItem">
-                    <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" Height="32" BorderThickness="0,0,1,0">
-                        <Grid>
+                    <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
+                        <Grid Height="32">
                             <Grid.InputBindings>
                                 <MouseBinding Command="dragablz:TabablzControl.CloseItemCommand" Gesture="MiddleClick" />
                             </Grid.InputBindings>
                             <StackPanel Orientation="Horizontal">
                                 <Grid ToolTip="{Binding Header}">
-                                    <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10,0">
+                                    <TextBlock Text="{Binding Header}" Width="150" Margin="10,0" VerticalAlignment="Center">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />

@@ -12,7 +12,7 @@
         xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         mc:Ignorable="d"
         Title="NETworkManager" Style="{DynamicResource DefaultWindow}" MinWidth="650" MinHeight="500" Height="650" Width="1000" TitleAlignment="Left"
-        d:DataContext="{d:DesignInstance application:DragablzTabHostWindow}">
+        d:DataContext="{d:DesignInstance controls:DragablzTabHostWindow}">
     <mahAppsControls:MetroWindow.WindowButtonCommands>
         <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
     </mahAppsControls:MetroWindow.WindowButtonCommands>
@@ -31,7 +31,7 @@
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <ContentPresenter Content="{Binding View}" d:DataContext="{d:DesignInstance networkManagerControls:DragablzTabItem}" />
+                                <ContentPresenter Content="{Binding View}" d:DataContext="{d:DesignInstance controls:DragablzTabItem}" />
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
@@ -43,7 +43,7 @@
                                     <Setter.Value>
                                         <DataTemplate DataType="controls:DragablzTabItem">
                                             <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
-                                                <Grid>
+                                                <Grid Height="32">
                                                     <Grid.ContextMenu>
                                                         <ContextMenu>
                                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.RemoteDesktop_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
@@ -101,7 +101,7 @@
                                                     </Grid.InputBindings>
                                                     <StackPanel Orientation="Horizontal">
                                                         <Grid ToolTip="{Binding Header}">
-                                                            <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
+                                                            <TextBlock Text="{Binding Header}" Width="150" Margin="10,0" VerticalAlignment="Center" >
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                                         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
@@ -150,7 +150,7 @@
                                     <Setter.Value>
                                         <DataTemplate DataType="controls:DragablzTabItem">
                                             <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
-                                                <Grid>
+                                                <Grid Height="32">
                                                     <Grid.ContextMenu>
                                                         <ContextMenu>
                                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.PowerShell_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
@@ -169,7 +169,7 @@
                                                     </Grid.InputBindings>
                                                     <StackPanel Orientation="Horizontal">
                                                         <Grid ToolTip="{Binding Header}">
-                                                            <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
+                                                            <TextBlock Text="{Binding Header}" Width="150" Margin="10,0" VerticalAlignment="Center">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                                         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
@@ -218,7 +218,7 @@
                                     <Setter.Value>
                                         <DataTemplate DataType="controls:DragablzTabItem">
                                             <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
-                                                <Grid>
+                                                <Grid Height="32">
                                                     <Grid.ContextMenu>
                                                         <ContextMenu>
                                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.PuTTY_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
@@ -247,7 +247,7 @@
                                                     </Grid.InputBindings>
                                                     <StackPanel Orientation="Horizontal">
                                                         <Grid ToolTip="{Binding Header}">
-                                                            <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
+                                                            <TextBlock Text="{Binding Header}" Width="150" Margin="10,0" VerticalAlignment="Center">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                                         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
@@ -296,7 +296,7 @@
                                     <Setter.Value>
                                         <DataTemplate DataType="controls:DragablzTabItem">
                                             <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
-                                                <Grid>
+                                                <Grid Height="32">
                                                     <Grid.ContextMenu>
                                                         <ContextMenu>
                                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.TigerVNC_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
@@ -315,7 +315,7 @@
                                                     </Grid.InputBindings>
                                                     <StackPanel Orientation="Horizontal">
                                                         <Grid ToolTip="{Binding Header}">
-                                                            <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
+                                                            <TextBlock Text="{Binding Header}" Width="150" Margin="10,0" VerticalAlignment="Center">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                                         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
@@ -364,7 +364,7 @@
                                     <Setter.Value>
                                         <DataTemplate DataType="controls:DragablzTabItem">
                                             <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
-                                                <Grid>
+                                                <Grid Height="32">
                                                     <Grid.ContextMenu>
                                                         <ContextMenu>
                                                             <MenuItem Header="{x:Static localization:Strings.Reload}" Command="{Binding Data.WebConsole_ReloadCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
@@ -383,7 +383,7 @@
                                                     </Grid.InputBindings>
                                                     <StackPanel Orientation="Horizontal">
                                                         <Grid ToolTip="{Binding Header}">
-                                                            <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Width="150" Margin="10">
+                                                            <TextBlock Text="{Binding Header}" Width="150" Margin="10,0" VerticalAlignment="Center">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
                                                                         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
