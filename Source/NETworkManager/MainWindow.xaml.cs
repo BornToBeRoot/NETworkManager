@@ -1265,14 +1265,5 @@ namespace NETworkManager
             e.Handled = true;
         }
         #endregion
-
-        #region Window helper
-        // Move the window when the user hold the title...
-        private void HeaderBorder_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                DragMove();
-        }
-        #endregion
     }
 }
