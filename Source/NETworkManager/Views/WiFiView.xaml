@@ -147,11 +147,28 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="10" />
                                     <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Networks}" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,0" />
-                                <CheckBox Grid.Column="4" Content="{x:Static localization:Strings.GHz2dot4}" IsChecked="{Binding Show2dot4GHzNetworks}" />
-                                <CheckBox Grid.Column="6" Content="{x:Static localization:Strings.GHz5}" IsChecked="{Binding Show5GHzNetworks}" />
-                                <TextBox x:Name="TextBoxSearch" Grid.Column="8" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                                </Grid.ColumnDefinitions>                               
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Networks}" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,0" />
+                                <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
+                                    <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
+                                                <TextBlock>
+                                                    <TextBlock.Text>
+                                                        <MultiBinding StringFormat="{}{0} {1}">
+                                                            <Binding Path="Value" />
+                                                            <Binding Path="TimeUnit" Converter="{StaticResource AutoRefreshTimeToStringConverter}" />
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </WrapPanel>
+                                <CheckBox Grid.Column="4" Grid.Row="0" Content="{x:Static localization:Strings.GHz2dot4}" IsChecked="{Binding Show2dot4GHzNetworks}" />
+                                <CheckBox Grid.Column="6" Grid.Row="0" Content="{x:Static localization:Strings.GHz5}" IsChecked="{Binding Show5GHzNetworks}" />
+                                <TextBox x:Name="TextBoxSearch" Grid.Column="8" Grid.Row="0" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
                             </Grid>
                             <ListView Grid.Row="2" Visibility="{Binding IsNetworksLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ScrollViewer.PanningMode="VerticalOnly" ItemsSource="{Binding NetworksView}" SelectedItem="{Binding SelectedNetwork}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
                                 <ListView.Resources>
@@ -355,29 +372,7 @@
                                 <TextBlock Text="{x:Static localization:Strings.SearchingForNetworksDots}" Style="{StaticResource MessageTextBlock}" />
                             </StackPanel>
                             <Grid Grid.Row="4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <WrapPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
-                                    <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
-                                        <ComboBox.ItemTemplate>
-                                            <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
-                                                <TextBlock>
-                                                    <TextBlock.Text>
-                                                        <MultiBinding StringFormat="{}{0} {1}">
-                                                            <Binding Path="Value" />
-                                                            <Binding Path="TimeUnit" Converter="{StaticResource AutoRefreshTimeToStringConverter}" />
-                                                        </MultiBinding>
-                                                    </TextBlock.Text>
-                                                </TextBlock>
-                                            </DataTemplate>
-                                        </ComboBox.ItemTemplate>
-                                    </ComboBox>
-                                </WrapPanel>
-                                <Button Grid.Column="2" Command="{Binding ScanNetworksCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                                <Button Grid.Column="0" Grid.Row="0" Command="{Binding ScanNetworksCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                             <Style.Triggers>
