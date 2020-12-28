@@ -11,7 +11,7 @@
         <converters:LvlChartsHeaderConverter x:Key="LvlChartsHeaderConverter" />
         <converters:LvlChartsPingTimeValueConverter x:Key="LvlChartsPingTimeValueConverter" />
     </UserControl.Resources>
-    <Grid Background="{DynamicResource WhiteColorBrush}"  >
+    <Grid Background="{DynamicResource MahApps.Brushes.Window.Background}">
         <StackPanel Margin="10">
             <TextBlock Style="{StaticResource HeaderTextBlock}">
                 <TextBlock.Text>
