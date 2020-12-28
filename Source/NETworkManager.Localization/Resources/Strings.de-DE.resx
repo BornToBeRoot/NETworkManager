@@ -2913,4 +2913,10 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="SplashScreen" xml:space="preserve">
     <value>SplashScreen</value>
   </data>
+  <data name="DownloadMicrosoftEdgeWebView2Runtime" xml:space="preserve">
+    <value>Microsoft Edge WebView2 Runtime herunterladen</value>
+  </data>
+  <data name="MicrosoftEdgeWebView2RuntimeIsNotAvailable" xml:space="preserve">
+    <value>Microsoft Edge WebView2 Runtime ist nicht verfügbar!</value>
+  </data>
 </root>

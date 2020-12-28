@@ -876,7 +876,7 @@ Verifica se disponi delle autorizzazioni di scrittura.</value>
     <value>Dimensione dello schermo fissa:</value>
   </data>
   <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork del progetto su GitHub</value>
+    <value>Star/fork del progetto su GitHub</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>Trovato</value>
@@ -2934,5 +2934,11 @@ Vedi messaggio errore: "{0}"</value>
   </data>
   <data name="SplashScreen" xml:space="preserve">
     <value>Schermata benvenuto</value>
+  </data>
+  <data name="DownloadMicrosoftEdgeWebView2Runtime" xml:space="preserve">
+    <value>Download runtime Microsoft Edge WebView2</value>
+  </data>
+  <data name="MicrosoftEdgeWebView2RuntimeIsNotAvailable" xml:space="preserve">
+    <value>Runtime Microsoft Edge WebView2 non disponibile!</value>
   </data>
 </root>
