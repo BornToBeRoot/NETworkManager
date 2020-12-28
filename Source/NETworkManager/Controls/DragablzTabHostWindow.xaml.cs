@@ -40,20 +40,6 @@ namespace NETworkManager.Controls
                 OnPropertyChanged();
             }
         }
-
-        private string _applicationTitle;
-        public string ApplicationTitle
-        {
-            get => _applicationTitle;
-            set
-            {
-                if (value == _applicationTitle)
-                    return;
-
-                _applicationTitle = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #region Constructor
@@ -68,7 +54,7 @@ namespace NETworkManager.Controls
 
             InterTabController.Partition = applicationName.ToString();
 
-            ApplicationTitle = ApplicationNameTranslator.GetInstance().Translate(applicationName);
+            Title = $"NETworkManager {AssemblyManager.Current.Version.Major}.{AssemblyManager.Current.Version.Minor}.{AssemblyManager.Current.Version.Build} - {ApplicationNameTranslator.GetInstance().Translate(applicationName)}";
 
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
         }
