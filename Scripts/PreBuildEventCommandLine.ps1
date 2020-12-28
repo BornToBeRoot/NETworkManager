@@ -57,7 +57,7 @@ Write-Host "Using ildasm.exe from: $IldasmPath"
 $MSTSCLibDLLPath = "$OutPath\MSTSCLib.dll"
 $MSTSCLibILPath = "$OutPath\MSTSCLib.il"
 
-Start-Process -FilePath $IldasmPath -ArgumentList "$MSTSCLibDLLPath /out=$MSTSCLibILPath" -Wait -NoNewWindow
+Start-Process -FilePath $IldasmPath -ArgumentList """$MSTSCLibDLLPath"" /out=""$MSTSCLibILPath""" -Wait -NoNewWindow
 
 Write-Host "Replace ""[in] bool& pbArrayKeyUp"" with ""[in] bool[] marshal([+0]) pbArrayKeyUp"""
 (Get-Content -Path $MSTSCLibILPath).Replace("[in] bool& pbArrayKeyUp", "[in] bool[] marshal([+0]) pbArrayKeyUp") | Set-Content -Path $MSTSCLibILPath
@@ -65,7 +65,7 @@ Write-Host "Replace ""[in] bool& pbArrayKeyUp"" with ""[in] bool[] marshal([+0])
 Write-Host "Replace ""[in] int32& plKeyData"" with ""[in] int32[] marshal([+0]) plKeyData"""
 (Get-Content -Path $MSTSCLibILPath).Replace("[in] int32& plKeyData", "[in] int32[] marshal([+0]) plKeyData") | Set-Content -Path $MSTSCLibILPath
 
-Start-Process -FilePath $IlasmPath -ArgumentList "/dll $MSTSCLibILPath /output:$MSTSCLibDllPath" -Wait -NoNewWindow
+Start-Process -FilePath $IlasmPath -ArgumentList "/dll ""$MSTSCLibILPath"" /output:""$MSTSCLibDllPath""" -Wait -NoNewWindow
 
 Remove-Item -Path "$MSTSCLibILPath"
 Remove-Item -Path "$OutPath\MSTSCLib.res"

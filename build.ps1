@@ -12,7 +12,7 @@ if (Test-Path -Path $BuildPath) {
 # Dotnet clean, restore and build
 dotnet clean "$PSScriptRoot\Source\NETworkManager.sln"
 dotnet restore "$PSScriptRoot\Source\NETworkManager.sln"
-dotnet build --configuration Release "$PSScriptRoot\Source\NETworkManager.sln"
+dotnet build --configuration Debug "$PSScriptRoot\Source\NETworkManager.sln"
 
 $ReleasePath = "$PSScriptRoot\Source\NETworkManager\bin\Release\net5.0-windows10.0.17763.0"
 
@@ -45,7 +45,7 @@ Remove-Item -Path "$BuildPath\NETworkManager\IsPortable.settings"
 $InnoSetupCompiler = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
 
 if (Test-Path -Path $InnoSetupCompiler) {
-    Start-Process -FilePath $InnoSetupCompiler -ArgumentList "$PSScriptRoot\InnoSetup.iss" -NoNewWindow -Wait
+    Start-Process -FilePath $InnoSetupCompiler -ArgumentList """$PSScriptRoot\InnoSetup.iss""" -NoNewWindow -Wait
 }
 else {
     Write-Host "InnoSetup not installed or not found. Skip installer build..." -ForegroundColor Yellow
