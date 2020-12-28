@@ -33,7 +33,31 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBox x:Name="TextBoxSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0" />
+                        <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Value" />
+                                                <Binding Path="TimeUnit" Converter="{StaticResource TimeUnitToStringConverter}" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </WrapPanel>
+                    <TextBox x:Name="TextBoxSearch" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                </Grid>
                 <controls:MultiSelectDataGrid x:Name="DataGridConnection" Grid.Row="2" ItemsSource="{Binding ListenerResultsView}" SelectedItem="{Binding SelectedListenerInfo}" SelectedItemsList="{Binding SelectedListenerInfos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultDataGrid}">
                     <controls:MultiSelectDataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
@@ -124,57 +148,37 @@
                         </Style>
                     </mahAppsControls:MetroProgressBar.Style>
                 </mahAppsControls:MetroProgressBar>
-                <Grid Grid.Row="6">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <WrapPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0" />
-                        <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Path="Value" />
-                                                <Binding Path="TimeUnit" Converter="{StaticResource TimeUnitToStringConverter}" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
+                <Grid Grid.Column="0" Grid.Row="6">
+                    <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Command="{Binding RefreshCommand}" HorizontalAlignment="Right">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
                     </WrapPanel>
-                    <Button Grid.Column="2" Command="{Binding RefreshCommand}" VerticalAlignment="Bottom">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
-                            </Grid>
-                        </Button.Content>
-                    </Button>
                 </Grid>
             </Grid>
         </TabItem>

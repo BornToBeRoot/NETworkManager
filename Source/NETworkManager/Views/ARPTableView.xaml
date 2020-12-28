@@ -36,7 +36,31 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBox x:Name="TextBoxSearch" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0" />
+                        <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150" Margin="0,0,10,0">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Value" />
+                                                <Binding Path="TimeUnit" Converter="{StaticResource TimeUnitToStringConverter}" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </WrapPanel>
+                    <TextBox x:Name="TextBoxSearch" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                </Grid>
                 <controls:MultiSelectDataGrid x:Name="DataGridArpTable" Grid.Row="2" ItemsSource="{Binding ARPInfoResultsView}" SelectedItem="{Binding SelectedARPInfo}" SelectedItemsList="{Binding SelectedARPInfos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <controls:MultiSelectDataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
@@ -145,22 +169,7 @@
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <WrapPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0" />
-                        <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150" Margin="0,0,10,0">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Path="Value" />
-                                                <Binding Path="TimeUnit" Converter="{StaticResource TimeUnitToStringConverter}" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
+                    <WrapPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">                        
                         <Button Command="{Binding AddEntryCommand}" Style="{StaticResource ImageWithTextButton}" Margin="0,0,10,0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>

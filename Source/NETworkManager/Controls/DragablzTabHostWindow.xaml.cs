@@ -190,7 +190,7 @@ namespace NETworkManager.Controls
                 catch (Exception ex)
                 {
                     ConfigurationManager.Current.FixAirspace = true;
-                   
+
                     await this.ShowMessageAsync(NETworkManager.Localization.Resources.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", NETworkManager.Localization.Resources.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
 
                     ConfigurationManager.Current.FixAirspace = false;
@@ -264,7 +264,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region WebConsole Commands
-        public ICommand WebConsole_RefreshCommand => new RelayCommand(WebConsole_RefreshAction);
+        public ICommand WebConsole_ReloadCommand => new RelayCommand(WebConsole_RefreshAction);
 
         private void WebConsole_RefreshAction(object view)
         {
@@ -282,14 +282,5 @@ namespace NETworkManager.Controls
         {
         }
         #endregion
-
-        #region Window helper
-        // Move the window when the user hold the title...
-        private void HeaderBorder_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                DragMove();
-        }
-        #endregion 
     }
 }
