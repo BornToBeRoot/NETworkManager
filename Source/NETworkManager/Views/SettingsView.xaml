@@ -13,8 +13,8 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:SettingsViewNameToTranslatedStringConverter x:Key="SettingsViewNameToTranslatedStringConverter" />
         <converters:SettingsViewGroupToTranslatedStringConverter x:Key="SettingsViewGroupToTranslatedStringConverter" />
+        <converters:SettingsViewNameToTranslatedStringConverter x:Key="SettingsViewNameToTranslatedStringConverter" />        
     </UserControl.Resources>
     <Grid>
         <TabControl Style="{StaticResource DefaultTabControl}">
@@ -42,7 +42,7 @@
                                                             <ControlTemplate>
                                                                 <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
                                                                     <Expander.Header>
-                                                                        <TextBlock Text="{Binding (CollectionViewGroup.Name)}" Style="{StaticResource DefaultTextBlock}" Margin="0" Foreground="{DynamicResource MahApps.Brushes.Gray3}"/>
+                                                                        <TextBlock Text="{Binding (CollectionViewGroup.Name), Converter={StaticResource SettingsViewGroupToTranslatedStringConverter}}" Style="{StaticResource DefaultTextBlock}" Margin="0" Foreground="{DynamicResource MahApps.Brushes.Gray3}"/>
                                                                     </Expander.Header>
                                                                     <ItemsPresenter />
                                                                 </Expander>
