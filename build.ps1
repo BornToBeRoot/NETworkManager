@@ -1,4 +1,4 @@
-$Version = "2020.12.1"
+$Version = "2020.12.2"
 $IsPreview = $false
 
 $BuildPath = "$PSScriptRoot\Build"
