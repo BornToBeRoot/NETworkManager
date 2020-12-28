@@ -12,7 +12,7 @@ if (Test-Path -Path $BuildPath) {
 # Dotnet clean, restore and build
 dotnet clean "$PSScriptRoot\Source\NETworkManager.sln"
 dotnet restore "$PSScriptRoot\Source\NETworkManager.sln"
-dotnet build --configuration Debug "$PSScriptRoot\Source\NETworkManager.sln"
+dotnet build --configuration Release "$PSScriptRoot\Source\NETworkManager.sln"
 
 $ReleasePath = "$PSScriptRoot\Source\NETworkManager\bin\Release\net5.0-windows10.0.17763.0"
 
