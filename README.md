@@ -41,6 +41,7 @@
 # Build
 __Requirements__
 - [SDK .NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+- Visual Studio with `.NET desktop development` and `Universal Windows Platform development` installed  
 
 __Optional__
 - [InnoSetup](https://jrsoftware.org/isinfo.php) to create an installer
