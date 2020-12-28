@@ -109,18 +109,18 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
+                <Grid Grid.Column="0" Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="TextBoxSearch" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}">
+                    <TextBox x:Name="TextBoxSearch" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}">
                         <TextBox.InputBindings>
                             <KeyBinding Command="{Binding ScanProfileCommand}" Key="Enter" />
                         </TextBox.InputBindings>
                     </TextBox>
-                    <Button Grid.Column="2" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
+                    <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
                         <Rectangle Width="16" Height="16">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />

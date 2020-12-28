@@ -83,7 +83,7 @@
                                                         </Rectangle.OpacityMask>
                                                     </Rectangle>
                                                 </MenuItem.Icon>
-                                            </MenuItem>                                           
+                                            </MenuItem>
                                         </ContextMenu>
                                     </Grid.ContextMenu>
                                     <Grid.InputBindings>
@@ -187,14 +187,36 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}">
-                        <TextBox.InputBindings>
-                            <KeyBinding Command="{Binding ConnectProfileCommand}" Key="Enter" />
-                        </TextBox.InputBindings>
-                    </TextBox>
+                    <Grid Grid.Column="0" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="TextBoxSearch" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}">
+                            <TextBox.InputBindings>
+                                <KeyBinding Command="{Binding ConnectProfileCommand}" Key="Enter" />
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                    </Grid>
                     <ListBox Grid.Row="2" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                         <ListBox.Resources>
                             <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -322,7 +344,7 @@
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                     <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-                                    
+
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                             <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
@@ -374,59 +396,6 @@
                             </Grid>
                         </Button>
                     </Grid>
-                    <Border Grid.Column="0" Grid.Row="4" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" Margin="-10" BorderThickness="0,1,0,0" Background="Transparent">
-                        <Border.Style>
-                            <Style TargetType="{x:Type Border}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Profiles.Count}" Value="0">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
-                        <Button Height="48" Margin="10,0" Focusable="False">
-                            <Button.Style>
-                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
-                                    <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-                                    
-                                </Style>
-                            </Button.Style>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Grid.Column="0" Width="20" Height="20">
-                                    <Rectangle.Resources>
-                                        <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}"/>
-                                    </Rectangle.Resources>
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}">
-                                            <Setter Property="OpacityMask" Value="{StaticResource VisualPlus}" />
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" TextWrapping="NoWrap" TextTrimming="WordEllipsis">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
-                                            <Setter Property="Text" Value="{x:Static localization:Strings.AddProfileDots}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Grid>
-                        </Button>
-                    </Border>
                 </Grid>
             </Expander>
         </Grid>
