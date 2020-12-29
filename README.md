@@ -70,7 +70,7 @@ __Steps__
 - The documentation is based on [Just the docs](https://github.com/pmarsceill/just-the-docs), hosted on GitHub Pages and published [here](https://borntoberoot.net/NETworkManager/).
 - You can help improve the documentation by cloning the repo, switch to the [gh-pages](https://github.com/BornToBeRoot/NETworkManager/tree/gh-pages) branch, do your improvements and send me a pull request.
 
-**Translation**
+## Translation
 - Translation is hosted on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager/).
 - If you want to join the language team as translator or reviewer, you need to have a Transifex account and join the team on Transifex.
 - You can request a new language via Transifex (or with a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose)).
