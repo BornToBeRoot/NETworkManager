@@ -14,7 +14,7 @@ It contains a remote desktop and PowerShell for managing Windows devices. You ca
 
 There are some more features such as a subnet calculator, a Whois lookup or a database in which you can find MAC address vendors or TCP / UDP ports with a description. It's best to take a look at the program yourself.
 
-<img alt="NETworkManager" src="NETworkManager_Preview.gif" />
+<img alt="NETworkManager" src="Preview.gif" />
 
 <div align="center">   
   <p>   
@@ -52,7 +52,7 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
   </p>       
   <p>
     <a href='https://github.com/BornToBeRoot/NETworkManager' target="_blank"><button type="button" name="button" class="btn">Github :octocat:</button></a>
-    <a href='/Download'><button type="button" name="button" class="btn">Download :package:</button></a>
+    <a href='./Download'><button type="button" name="button" class="btn">Download :package:</button></a>
   </p>
 </div>
 
