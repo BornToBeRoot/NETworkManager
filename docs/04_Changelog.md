@@ -38,7 +38,7 @@ Date: **28.12.2020**
 - WebConsole
   - Fix dependency (require Edge WebView2 runtime instead if Edge Chromium)  / prevent app crash [#404](http://github.com/BornToBeRoot/NETworkManager/issues/404){:target="_blank"} 
 - Context menu icons color fixed [#391](http://github.com/BornToBeRoot/NETworkManager/issues/391){:target="_blank"} 
-- Build script fixed if spaces in path [#384](http://github.com/BornToBeRoot/NETworkManager/issues/384){:target="_blank"} 
+- Build script fixed if there are spaces in path [#384](http://github.com/BornToBeRoot/NETworkManager/issues/384){:target="_blank"} 
 - ToolTip background fixed for LvlCharts [#414](http://github.com/BornToBeRoot/NETworkManager/issues/414){:target="_blank"} 
 - Settings
   - Link color/size in About and Language fixed [#391](http://github.com/BornToBeRoot/NETworkManager/issues/391){:target="_blank"} 
