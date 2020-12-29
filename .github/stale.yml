@@ -6,6 +6,7 @@ daysUntilClose: 7
 exemptLabels:
   - ":beetle: bug"
   - ":rocket: feature-request"
+  - ":book: documentation"
 # Label to use when marking an issue as stale
 staleLabel: ":hammer: wontfix"
 # Comment to post when marking an issue as stale. Set to `false` to disable
