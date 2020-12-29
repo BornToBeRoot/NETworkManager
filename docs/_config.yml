@@ -1,0 +1,21 @@
+title: "NETworkManager"
+description: "A powerful tool for managing networks and troubleshoot network problems!"
+baseurl: "/NETworkManager"
+url: "https://borntoberoot.net"
+remote_theme: "pmarsceill/just-the-docs"
+color_scheme: "custom"
+search_enabled: true
+aux_links:
+  "View on GitHub":
+    - "//github.com/BornToBeRoot/NETworkManager"
+aux_links_new_tab: true
+heading_anchors: true
+back_to_top: true
+back_to_top_text: "Back to top"
+gh_edit_link: true
+gh_edit_link_text: "Edit this page on GitHub."
+gh_edit_repository: "https://github.com/BornToBeRoot/NETworkManager"
+gh_edit_branch: "gh-pages"
+gh_edit_view_mode: "tree"
+plugins:
+  - jemoji
