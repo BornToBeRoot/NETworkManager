@@ -3,22 +3,22 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>NETworkManager</id>
-    <version>2020.5.1</version>
+    <version>2020.12.2</version>
     <owners>BornToBeRoot</owners>
     <title>NETworkManager</title>
     <authors>BornToBeRoot</authors>
-    <projectUrl>https://borntoberoot.github.io/NETworkManager</projectUrl>
+    <projectUrl>https://borntoberoot.net/networkmanager</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/BornToBeRoot/NETworkManager/gh-pages/NETworkManager.svg</iconUrl>
     <licenseUrl>https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/BornToBeRoot/NETworkManager</projectSourceUrl>
-    <docsUrl>https://borntoberoot.github.io/NETworkManager/Documentation/#documentation</docsUrl>
+    <docsUrl>https://borntoberoot.net/NETworkManager/Application</docsUrl>
     <bugTrackerUrl>https://github.com/BornToBeRoot/NETworkManager/issues</bugTrackerUrl>
-    <tags>networkinterface ipscanner portscanner traceroute ping dns whois subnet snmp remotedesktop powershell ssh vnc lldp cdp</tags>
+    <tags>networkinterface ipscanner portscanner traceroute pingmonitor dns whois subnet snmp remotedesktop powershell putty vnc lldp</tags>
     <summary>A powerful tool for managing networks and troubleshoot network problems!</summary>
     <description>A powerful tool for managing networks and troubleshoot network problems!</description>
     <dependencies>
-      <dependency id="dotnetfx" />
+      <dependency id="dotnet-desktopruntime" />      
     </dependencies>    
   </metadata>
   <files>    
