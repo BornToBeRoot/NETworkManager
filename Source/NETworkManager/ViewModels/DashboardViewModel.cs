@@ -10,10 +10,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NETworkManager.Models.Network;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
-using NETworkManager.Localization;
 using NETworkManager.Localization.Translators;
 using Ping = System.Net.NetworkInformation.Ping;
-using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels
 {
