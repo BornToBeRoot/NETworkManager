@@ -18,7 +18,7 @@
       <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=for-the-badge&logo=appveyor&&label=master" />
     </a>   
     <a href="https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE">
-      <img alt="AppVeyor" src="https://img.shields.io/github/license/BornToBeroot/NETworkManager.svg?style=for-the-badge" />
+      <img alt="AppVeyor" src="https://img.shields.io/github/license/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
     </a>     
   </p> 
   <p> 
