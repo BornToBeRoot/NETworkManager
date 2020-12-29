@@ -26,14 +26,16 @@
     <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Issue&template=Bug_report.md">
       <img alt="Transifex" src="https://img.shields.io/badge/github-bug_report-red.svg?style=flat-square" />
     </a>     
-  </p> 
-  <p> https://borntoberoot.net/NETworkManager/ </p>
+  </p>     
+  <p>https://borntoberoot.net/NETworkManager/</p>
   <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/gh-pages/NETworkManager_Preview.gif?raw=true" />
 </div>
 
+# You need more informations?
+
+Maybe you find them here: https://borntoberoot.net/NETworkManager/
 
 # System Requirements
-
 - Windows 10 / Server (1809 or later)
 - [.NET 5.0 / .NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0) or later
 - [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
