@@ -22,7 +22,16 @@ The setup is also available on [Chocolatey](https://chocolatey.org/packages/NETw
 ~# choco install networkmanager
 ```
 
-**System requirements**
+## System requirements
 - Windows 10 / Server (1809 or later)
 - [.NET 5.0 / .NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 - [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
+
+## Silent install
+The setup is created with [InnoSetup](https://jrsoftware.org/isinfo.php) and you can use all available [command line parameters](https://jrsoftware.org/ishelp/index.php?topic=setupcmdline).
+
+This will perform a silent installation and create a desktop icon:
+
+```
+NETworkManager_20xx.xx.x_Setup.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /TASKS="desktopicon" /SP-
+```
