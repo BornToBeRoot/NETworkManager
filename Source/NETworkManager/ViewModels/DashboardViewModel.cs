@@ -490,7 +490,6 @@ namespace NETworkManager.ViewModels
             PublicHostname = "";
 
             #region Host
-
             // 1) Check tcp/ip stack --> Ping to 127.0.0.1
             var hostIPAddress = "127.0.0.1";
 
@@ -584,7 +583,6 @@ namespace NETworkManager.ViewModels
             #endregion
 
             #region Gateway / Router
-
             // 4) Detect gateway ip address
             try
             {
@@ -865,9 +863,7 @@ namespace NETworkManager.ViewModels
         private void AddToHostDetails(ConnectionState state, string message)
         {
             if (!string.IsNullOrEmpty(HostStatus))
-                HostStatus += Environment.NewLine;
-
-            
+                HostStatus += Environment.NewLine;            
 
             HostStatus += $"[{ConnectionStateTranslator.GetInstance().Translate(state.ToString())}] {message}";
         }
