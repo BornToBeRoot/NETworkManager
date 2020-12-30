@@ -18,7 +18,6 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Variables
-        #region WiFiNetwork
         public string BSSID { get; set; }
         public string SSID { get; set; }
         public int ChannelCenterFrequencyInKilohertz { get; set; }
@@ -31,23 +30,6 @@ namespace NETworkManager.Models.Network
         public NetworkEncryptionType EncryptionType { get; set; }
         public TimeSpan BeaconInterval { get; set; }
         public TimeSpan Uptime { get; set; }
-        #endregion
-
-        #region View/Control
-        private bool _expandDetails;
-        public bool ExpandDetails
-        {
-            get => _expandDetails;
-            set
-            {      
-                if (value == _expandDetails)
-                    return;
-
-                _expandDetails = value;
-                OnPropertyChanged();
-            }
-        }
-        #endregion
         #endregion
 
         public WiFiNetworkInfo()

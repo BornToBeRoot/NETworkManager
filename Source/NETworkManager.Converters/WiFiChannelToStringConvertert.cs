@@ -2,18 +2,17 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using Windows.Devices.WiFi;
 
 namespace NETworkManager.Converters
 {
-    public sealed class WiFiPhyKindConverter : IValueConverter
+    public sealed class WiFiChannelToStringConvertert : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is WiFiPhyKind phyKind))
+            if (!(value is int channelCenterFrequencyInKilohertz))
                 return "-/-";
 
-            return $"{WiFi.GetHumandReadablePhyKind(phyKind)} ({phyKind})";
+            return $"Channel {WiFi.GetChannelFromChannelFrequency(channelCenterFrequencyInKilohertz)}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

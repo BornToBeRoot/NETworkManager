@@ -5,16 +5,14 @@ using System.Windows.Data;
 
 namespace NETworkManager.Converters
 {
-    public sealed class WiFiChannelAndDBMConverter : IValueConverter
+    public sealed class WiFiGHzToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is WiFiNetworkInfo info))
+            if (!(value is int channelCenterFrequencyInKilohertz))
                 return "-/-";
 
-            double ghz = WiFi.ConvertChannelFrequencyToGigahertz(info.ChannelCenterFrequencyInKilohertz) > 5 ? 5 : 2.4;
-
-            return $"{ghz} GHz / Channel {WiFi.GetChannelFromChannelFrequency(info.ChannelCenterFrequencyInKilohertz)} ({info.NetworkRssiInDecibelMilliwatts} dBm)";
+            return $"{WiFi.ConvertChannelFrequencyToGigahertz(channelCenterFrequencyInKilohertz)} GHz";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
