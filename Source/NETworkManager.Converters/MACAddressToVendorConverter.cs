@@ -13,7 +13,7 @@ namespace NETworkManager.Converters
             if (!(value is string macAddress))
                 return "-/-";
 
-            return OUILookup.Lookup(macAddress).FirstOrDefault();
+            return OUILookup.Lookup(macAddress).FirstOrDefault()?.Vendor;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
