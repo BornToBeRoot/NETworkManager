@@ -58,5 +58,6 @@ Enabled
 Override the default API to resolve the public IP address. The API should return only a plain text IPv4 address like `xx.xx.xx.xx`.
 
 **Examples** 
+- [api.ipify.org](https://www.ipify.org/){:target="_blank"}
 - [ip4.seeip.org](https://ip4.seeip.org/){:target="_blank"}
 - [api.my-ip.io/ip](https://api.my-ip.io/ip){:target="_blank"}
