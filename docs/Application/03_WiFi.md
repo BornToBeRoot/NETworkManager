@@ -9,10 +9,11 @@ permalink: /Application/WiFi
 
 # WiFi
 
+
 ## WiFi
 
 ![WiFi](03_WiFi.png)
 
-## Channel
+## Channels
 
 ![WiFi_Channel](03_WiFi_Channel.png)
