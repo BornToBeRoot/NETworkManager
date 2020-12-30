@@ -8,7 +8,7 @@ permalink: /Application/WiFi
 ---
 
 # WiFi
-The WiFi shows all available wireless networks with additional details such as channel, signal strength or the type of encryption.
+The WiFi shows all available wireless networks with additional details such as channel, signal strength or the type of encryption used.
 
 Hidden wireless networks are not displayed. 
 
