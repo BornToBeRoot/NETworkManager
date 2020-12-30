@@ -16,7 +16,7 @@ Hidden wireless networks are not displayed.
 
 You can select which wireless network adapter is used to scan for wireless networks. Wireless networks can be filtered by 2.4 Ghz, 5 Ghz and the SSID.
 
-The found wireless networks can be expanded to show more details.
+Due to limitations of the `Windows.Devices.WiFi` API the channel bandwidth cannot be detected.
 
 ![WiFi](03_WiFi.png)
 
