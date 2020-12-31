@@ -2,19 +2,19 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
+using Windows.Networking.Connectivity;
 
 namespace NETworkManager.Converters
 {
-    public sealed class WiFiChannelAndDBMConverter : IValueConverter
+    public sealed class WiFiAuthenticationTypeToHumanReadableStringConverter : IValueConverter
     {
+        /* Translate the name of the accent */
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is WiFiNetworkInfo info))
+            if (!(value is NetworkAuthenticationType type))
                 return "-/-";
-
-            double ghz = WiFi.ConvertChannelFrequencyToGigahertz(info.ChannelCenterFrequencyInKilohertz) > 5 ? 5 : 2.4;
-
-            return $"{ghz} GHz / Channel {WiFi.GetChannelFromChannelFrequency(info.ChannelCenterFrequencyInKilohertz)} ({info.NetworkRssiInDecibelMilliwatts} dBm)";
+            
+            return $"{WiFi.GetHumanReadableNetworkAuthenticationType(type)}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

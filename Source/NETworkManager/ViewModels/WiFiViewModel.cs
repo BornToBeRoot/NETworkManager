@@ -4,6 +4,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -235,6 +236,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _selectedNetwork = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private IList _selectedNetworks = new ArrayList();
+        public IList SelectedNetworks
+        {
+            get => _selectedNetworks;
+            set
+            {
+                if (Equals(value, _selectedNetworks))
+                    return;
+
+                _selectedNetworks = value;
                 OnPropertyChanged();
             }
         }

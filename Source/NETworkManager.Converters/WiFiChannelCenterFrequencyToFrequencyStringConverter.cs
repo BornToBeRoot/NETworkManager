@@ -2,19 +2,17 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using Windows.Networking.Connectivity;
 
 namespace NETworkManager.Converters
 {
-    public sealed class NetworkAuthenticationTypeToHumanReadableStringConverter : IValueConverter
+    public sealed class WiFiChannelCenterFrequencyToFrequencyStringConverter : IValueConverter
     {
-        /* Translate the name of the accent */
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is NetworkAuthenticationType type))
+            if (!(value is int channelCenterFrequencyInKilohertz))
                 return "-/-";
-            
-            return $"{WiFi.GetHumanReadableNetworkAuthenticationType(type)}";
+
+            return $"{WiFi.ConvertChannelFrequencyToGigahertz(channelCenterFrequencyInKilohertz)} GHz";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

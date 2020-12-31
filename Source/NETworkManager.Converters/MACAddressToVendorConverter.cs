@@ -1,19 +1,19 @@
-﻿using NETworkManager.Models.Network;
+﻿using NETworkManager.Models.Lookup;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
-using Windows.Devices.WiFi;
 
 namespace NETworkManager.Converters
 {
-    public sealed class WiFiPhyKindConverter : IValueConverter
+    public sealed class MACAddressToVendorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is WiFiPhyKind phyKind))
+            if (!(value is string macAddress))
                 return "-/-";
 
-            return $"{WiFi.GetHumandReadablePhyKind(phyKind)} ({phyKind})";
+            return OUILookup.Lookup(macAddress).FirstOrDefault()?.Vendor;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
