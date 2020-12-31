@@ -22,8 +22,8 @@ Due to limitations of the `Windows.Devices.WiFi` API the channel bandwidth canno
 
 ## Channels
 
-In the "Channels" view, all SSIDs are displayed graphically, with channel and signal strength. This can be useful to identify overlapping SSIDs that are not from the same access point.
+In the "Channels" view, all wireless networks are displayed graphically, with channel and signal strength. This can be useful to identify overlapping wireless networks that are not from the same access point.
 
-You can move the mouse over the channel to display all SSIDs that occupy this channel.
+You can move the mouse over the channel to display all wireless networks that occupy this channel.
 
 ![WiFi_Channel](03_WiFi_Channel.png)
