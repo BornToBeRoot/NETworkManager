@@ -9,21 +9,19 @@ if (Test-Path -Path $BuildPath) {
     Remove-Item -Path $BuildPath -Recurse -ErrorAction Stop
 }
 
-# Dotnet clean, restore and build
+# Dotnet clean, restore, build and publish
 dotnet clean "$PSScriptRoot\Source\NETworkManager.sln"
 dotnet restore "$PSScriptRoot\Source\NETworkManager.sln"
-dotnet build --configuration Release "$PSScriptRoot\Source\NETworkManager.sln"
-
-$ReleasePath = "$PSScriptRoot\Source\NETworkManager\bin\Release\net5.0-windows10.0.17763.0"
+# dotnet build --configuration Release "$PSScriptRoot\Source\NETworkManager.sln"
+dotnet publish --configuration Release --framework net5.0-windows10.0.17763.0 --runtime win10-x64 --self-contained false --output "$BuildPath\NETworkManager" "$PSScriptRoot\Source\NETworkManager\NETworkManager.csproj" 
 
 # Test if release build is available
-if(-not(Test-Path -Path $ReleasePath))
+if(-not(Test-Path -Path "$BuildPath\NETworkManager\NETworkManager.exe"))
 {
     Write-Error "Could not find dotnet release build. Is .NET SDK 5.0 or later installed?" -ErrorAction Stop
 }
 
-# Copy files
-Copy-Item -Recurse -Path $ReleasePath -Destination "$BuildPath\NETworkManager"
+exit
 
 # Cleanup .pdb files
 Get-ChildItem -Recurse | Where-Object {$_.Name.EndsWith(".pdb")} | Remove-Item
