@@ -24,7 +24,7 @@ The setup is also available on [Chocolatey](https://chocolatey.org/packages/NETw
 
 ## System requirements
 - Windows 10 / Server (1809 or later)
-- [.NET 5.0 / .NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0){:target="_blank"}
+- [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0){:target="_blank"}
 - [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="_blank"}
 
 ## Silent install
