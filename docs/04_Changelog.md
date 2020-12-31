@@ -17,7 +17,7 @@ Date: **28.12.2020**
 
 **System requirements**
 - Windows 10 / Server (1809 or later)
-- [.NET 5.0 / .NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 - [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
 
 ## What's new?
@@ -58,7 +58,7 @@ Date: **14.12.2020**
 
 **System requirements**
 - Windows 10 / Server (1809 or later)
-- [.NET 5.0 / .NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 - [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
 
 ## What's new?
@@ -89,7 +89,7 @@ Note: _If you've installed the preview, uninstall it first!_
 
 **System requirements**
 - Windows 10 / Server (1809 or later)
-- [.NET 5.0 / .NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 - [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
 
 ## What's new? 
@@ -133,7 +133,7 @@ Date: **05.09.2020**
 
 **System requirements**
 - Windows 10 x64
-- [.NET 5.0 / Desktop Runtime 5.0.0-preview.8](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [.NET Desktop Runtime 5.0.0-preview.8](https://dotnet.microsoft.com/download/dotnet/5.0)
 - [Microsoft Edge Canary](https://www.microsoftedgeinsider.com/en-us/download)
 
 **Kown issues**
