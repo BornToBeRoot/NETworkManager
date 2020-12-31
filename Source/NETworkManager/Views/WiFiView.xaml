@@ -26,12 +26,12 @@
         <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:MACAddressToVendorConverter x:Key="MACAddressToVendorConverter" />
-        <converters:NetworkAuthenticationTypeToHumanReadableStringConverter x:Key="NetworkAuthenticationTypeToHumanReadableStringConverter" />
         <converters:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
         <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
-        <converters:WiFiChannelToStringConvertert x:Key="WiFiChannelToStringConvertert" />
-        <converters:WiFiDBMToStringConverter x:Key="WiFiDBMToStringConverter" />
-        <converters:WiFiGHzToStringConverter x:Key="WiFiGHzToStringConverter" />
+        <converters:WiFiAuthenticationTypeToHumanReadableStringConverter x:Key="WiFiAuthenticationTypeToHumanReadableStringConverter" />
+        <converters:WiFiChannelCenterFrequencyToChannelStringConvertert x:Key="WiFiChannelCenterFrequencyToChannelStringConvertert" />
+        <converters:WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter x:Key="WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter" />
+        <converters:WiFiChannelCenterFrequencyToFrequencyStringConverter x:Key="WiFiChannelCenterFrequencyToFrequencyStringConverter" />
         <converters:WiFiPhyKindToStringConverter x:Key="WiFiPhyKindToStringConverter" />
     </UserControl.Resources>
     <Grid>
@@ -179,7 +179,7 @@
                                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                                 </controls2:MultiSelectDataGrid.Resources>
                                 <controls2:MultiSelectDataGrid.Columns>
-                                    <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn SortMemberPath="ChannelCenterFrequencyInKilohertz" >
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Rectangle Grid.Column="0" Width="24" Height="24" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -263,87 +263,21 @@
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="SSID" Binding="{Binding SSID}" SortMemberPath="SSID" MinWidth="150" />
-                                    <DataGridTextColumn Header="" Binding="{Binding AuthenticationType, Converter={StaticResource NetworkAuthenticationTypeToHumanReadableStringConverter}}" SortMemberPath="AuthenticationType" MinWidth="150" />
-                                    <DataGridTextColumn Header="AuthenticationType" Binding="{Binding AuthenticationType}" SortMemberPath="AuthenticationType" MinWidth="150" />
-                                    <DataGridTextColumn Header="EncryptionType" Binding="{Binding EncryptionType}" SortMemberPath="AuthenticationType" MinWidth="150" />
-                                                                     
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.SSID}" Binding="{Binding SSID}" SortMemberPath="SSID" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Security}" Binding="{Binding AuthenticationType, Converter={StaticResource WiFiAuthenticationTypeToHumanReadableStringConverter}}" SortMemberPath="AuthenticationType" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Frequency}" Binding="{Binding ChannelCenterFrequencyInKilohertz, Converter={StaticResource WiFiChannelCenterFrequencyToFrequencyStringConverter}}" SortMemberPath="ChannelCenterFrequencyInKilohertz" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Channel}" Binding="{Binding ChannelCenterFrequencyInKilohertz, Converter={StaticResource WiFiChannelCenterFrequencyToChannelStringConvertert}}" SortMemberPath="ChannelCenterFrequencyInKilohertz" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.SignalStrength}" Binding="{Binding NetworkRssiInDecibelMilliwatts, Converter={StaticResource WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter}}" SortMemberPath="NetworkRssiInDecibelMilliwatts" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Authentication}" Binding="{Binding AuthenticationType}" SortMemberPath="AuthenticationType" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Encryption}" Binding="{Binding EncryptionType}" SortMemberPath="EncryptionType" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding BSSID}" SortMemberPath="BSSID" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}" Binding="{Binding BSSID, Converter={StaticResource MACAddressToVendorConverter}}" SortMemberPath="BSSID" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.PhyKind}" Binding="{Binding PhyKind, Converter={StaticResource WiFiPhyKindToStringConverter}}" SortMemberPath="PhyKind" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.NetworkKind}" Binding="{Binding NetworkKind}" SortMemberPath="NetworkKind" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.BeaconInterval}" Binding="{Binding BeaconInterval, Converter={StaticResource TimeSpanToMillisecondConverter}}" SortMemberPath="BeaconInterval" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Uptime}" Binding="{Binding Uptime, Converter={StaticResource TimeSpanToStringConverter}}" SortMemberPath="Uptime" />
                                 </controls2:MultiSelectDataGrid.Columns>
-                            </controls2:MultiSelectDataGrid>
-                            <!--
-                            <ListView Grid.Row="2" Visibility="{Binding IsNetworksLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ScrollViewer.PanningMode="VerticalOnly" ItemsSource="{Binding NetworksView}" SelectedItem="{Binding SelectedNetwork}" Background="Transparent" BorderThickness="0" SelectionMode="Single">
-                                <ListView.Resources>
-                                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ListViewScrollBar}" />
-                                </ListView.Resources>
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <Grid Grid.Row="0" Margin="10">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="48" />
-                                                    <ColumnDefinition Width="10" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                
-                                                <Grid Grid.Column="2">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition Height="5" />
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition Height="5" />
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition Height="5" />
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition Height="5" />
-                                                        <RowDefinition Height="Auto" />
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=SSID}" Style="{StaticResource HeaderTextBlock}" Margin="0" />
-                                                    <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource DefaultTextBlock}">
-                                                        <TextBlock.Text>
-                                                            <MultiBinding StringFormat="{}{0} ({1}, {2})">
-                                                                <Binding Path="AuthenticationType" Converter="{StaticResource NetworkAuthenticationTypeToHumanReadableStringConverter}"/>
-                                                                <Binding Path="AuthenticationType" />
-                                                                <Binding Path="EncryptionType" />
-                                                            </MultiBinding>
-                                                        </TextBlock.Text>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource DefaultTextBlock}">
-                                                        <TextBlock.Text>
-                                                            <MultiBinding StringFormat="{}{0}, {1} ({2})">
-                                                                <Binding Path="ChannelCenterFrequencyInKilohertz" Converter="{StaticResource WiFiGHzToStringConverter}"/>
-                                                                <Binding Path="ChannelCenterFrequencyInKilohertz" Converter="{StaticResource WiFiChannelToStringConvertert}"/>
-                                                                <Binding Path="NetworkRssiInDecibelMilliwatts" Converter="{StaticResource WiFiDBMToStringConverter}"/>
-                                                            </MultiBinding>
-                                                        </TextBlock.Text>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="0" Grid.Row="6" Style="{StaticResource DefaultTextBlock}">
-                                                        <TextBlock.Text>
-                                                            <MultiBinding StringFormat="{}{0}, {1}">
-                                                                <Binding Path="PhyKind" Converter="{StaticResource WiFiPhyKindToStringConverter}"/>
-                                                                <Binding Path="NetworkKind"/>
-                                                            </MultiBinding>
-                                                        </TextBlock.Text>
-                                                    </TextBlock>
-                                                    <TextBlock Grid.Column="0" Grid.Row="8" Style="{StaticResource DefaultTextBlock}">
-                                                        <TextBlock.Text>
-                                                            <MultiBinding StringFormat="{}{0}, {1}">
-                                                                <Binding Path="BSSID" />
-                                                                <Binding Path="BSSID" Converter="{StaticResource MACAddressToVendorConverter}"/>
-                                                            </MultiBinding>
-                                                        </TextBlock.Text>
-                                                    </TextBlock>
-                                                    
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                            -->
+                            </controls2:MultiSelectDataGrid>                          
                             <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.NoWiFiNetworksFound}">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">

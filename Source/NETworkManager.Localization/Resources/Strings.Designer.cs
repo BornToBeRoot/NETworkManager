@@ -952,15 +952,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Authentication:.
-        /// </summary>
-        public static string AuthenticationColon {
-            get {
-                return ResourceManager.GetString("AuthenticationColon", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Authentication level.
         /// </summary>
         public static string AuthenticationLevel {
@@ -1060,11 +1051,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beacon interval:.
+        ///   Looks up a localized string similar to Beacon interval.
         /// </summary>
-        public static string BeaconIntervalColon {
+        public static string BeaconInterval {
             get {
-                return ResourceManager.GetString("BeaconIntervalColon", resourceCulture);
+                return ResourceManager.GetString("BeaconInterval", resourceCulture);
             }
         }
         
@@ -2581,15 +2572,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Encryption:.
-        /// </summary>
-        public static string EncryptionColon {
-            get {
-                return ResourceManager.GetString("EncryptionColon", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Encryption....
         /// </summary>
         public static string EncryptionDots {
@@ -3074,6 +3056,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Found {
             get {
                 return ResourceManager.GetString("Found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency.
+        /// </summary>
+        public static string Frequency {
+            get {
+                return ResourceManager.GetString("Frequency", resourceCulture);
             }
         }
         
@@ -4199,11 +4190,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Network kind:.
+        ///   Looks up a localized string similar to Network kind.
         /// </summary>
-        public static string NetworkKindColon {
+        public static string NetworkKind {
             get {
-                return ResourceManager.GetString("NetworkKindColon", resourceCulture);
+                return ResourceManager.GetString("NetworkKind", resourceCulture);
             }
         }
         
@@ -4778,11 +4769,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Phy kind:.
+        ///   Looks up a localized string similar to Phy kind.
         /// </summary>
-        public static string PhyKindColon {
+        public static string PhyKind {
             get {
-                return ResourceManager.GetString("PhyKindColon", resourceCulture);
+                return ResourceManager.GetString("PhyKind", resourceCulture);
             }
         }
         
@@ -7129,6 +7120,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SSID.
+        /// </summary>
+        public static string SSID {
+            get {
+                return ResourceManager.GetString("SSID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Star/Fork the Project on GitHub.
         /// </summary>
         public static string StarForkTheProjectOnGitHub {
@@ -7921,11 +7921,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uptime:.
+        ///   Looks up a localized string similar to Uptime.
         /// </summary>
-        public static string UptimeColon {
+        public static string Uptime {
             get {
-                return ResourceManager.GetString("UptimeColon", resourceCulture);
+                return ResourceManager.GetString("Uptime", resourceCulture);
             }
         }
         
