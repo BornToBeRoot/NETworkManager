@@ -21,7 +21,10 @@ if(-not(Test-Path -Path "$BuildPath\NETworkManager\NETworkManager.exe"))
     Write-Error "Could not find dotnet release build. Is .NET SDK 5.0 or later installed?" -ErrorAction Stop
 }
 
-exit
+# Cleanup WebView2Loader.dll (https://github.com/MicrosoftEdge/WebView2Feedback/issues/461)
+Remove-Item "$BuildPath\NETworkManager\arm64" -Recurse
+Remove-Item "$BuildPath\NETworkManager\x64" -Recurse
+Remove-Item "$BuildPath\NETworkManager\x86" -Recurse
 
 # Cleanup .pdb files
 Get-ChildItem -Recurse | Where-Object {$_.Name.EndsWith(".pdb")} | Remove-Item
@@ -31,7 +34,7 @@ if ($IsPreview) {
     New-Item -Path "$BuildPath\NETworkManager" -Name "IsPreview.settings" -ItemType File
 }
 
-# Archiv Build / Sources
+# Archiv Build
 Compress-Archive -Path "$BuildPath\NETworkManager" -DestinationPath "$BuildPath\NETworkManager_$($Version)_Archiv.zip"
 
 # Portable Build
