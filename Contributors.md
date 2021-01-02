@@ -2,10 +2,7 @@
 
 List of all contributors.
 
-## Code
-- BornToBeRoot
-
-## Documentation
+## Code / documentation on GitHub
 - BornToBeRoot
 - UmutComlekci
 - MS-PC
@@ -14,7 +11,7 @@ List of all contributors.
 - Freeman2016
 - EBWeist
 
-## Translators/Reviewers on Transifex
+## Translators / reviewers on Transifex
 
 **English**
 - BornToBeRoot
