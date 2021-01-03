@@ -6,6 +6,28 @@ description: "Changelog and download links of all available versions"
 permalink: /Changelog
 ---
 
+# Version 2021.xx.x [Coming soon]
+Date: **xx.xx.2021**
+
+
+
+**System requirements**
+- Windows 10 / Server x64 (1809 or later)
+- [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
+
+
+## What's new?
+- WiFi view reworked [#428](http://github.com/BornToBeRoot/NETworkManager/issues/428){:target="_blank"} 
+- Language `Slovenian` added [#428](http://github.com/BornToBeRoot/NETworkManager/issues/428){:target="_blank"} (Thanks to Moss_1961)
+
+## Improvements
+- Build size reduced / cleanup output folder [#431](http://github.com/BornToBeRoot/NETworkManager/issues/431){:target="_blank"} 
+- Last selected profile is remebered after app restart [#432](http://github.com/BornToBeRoot/NETworkManager/issues/432){:target="_blank"} 
+
+## Other
+- Language files updated
+
 # Version 2020.12.2
 Date: **28.12.2020**
 
