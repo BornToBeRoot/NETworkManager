@@ -54,5 +54,8 @@ List of all contributors.
 **Russian**
 - laxe24
 
+**Slovenian**
+- Moss_1961
+
 **Spanish**
 - MS_PC
