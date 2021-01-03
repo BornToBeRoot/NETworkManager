@@ -16,10 +16,9 @@ Date: **xx.xx.2021**
 - [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 - [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
 
-
 ## What's new?
 - WiFi view reworked [#428](http://github.com/BornToBeRoot/NETworkManager/issues/428){:target="_blank"} 
-- Language `Slovenian` added [#428](http://github.com/BornToBeRoot/NETworkManager/issues/428){:target="_blank"} (Thanks to Moss_1961)
+- Language `Slovenian` added [#433](http://github.com/BornToBeRoot/NETworkManager/issues/433){:target="_blank"} (Thanks to Moss_1961)
 
 ## Improvements
 - Build size reduced / cleanup output folder [#431](http://github.com/BornToBeRoot/NETworkManager/issues/431){:target="_blank"} 
