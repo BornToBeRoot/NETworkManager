@@ -3,7 +3,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using NETworkManager.Settings;
 
 namespace NETworkManager.Settings
 {

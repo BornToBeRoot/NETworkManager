@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,7 +53,7 @@ namespace NETworkManager.Profiles
         }
 
         public static ObservableCollection<ProfileInfo> Profiles { get; set; } = new ObservableCollection<ProfileInfo>();
-        
+
         public static bool ProfilesChanged { get; set; }
 
         public static event EventHandler<ProfileFileInfoArgs> OnProfileFileChangedEvent;
@@ -69,9 +70,6 @@ namespace NETworkManager.Profiles
             LoadProfileFiles();
 
             Profiles.CollectionChanged += Profiles_CollectionChanged;
-
-            // Load profile
-            Load(ProfileFiles[0]);
         }
 
         #region Profiles locations (default, custom, portable)
@@ -115,7 +113,7 @@ namespace NETworkManager.Profiles
         public static string GetProfilesDefaultFilePath()
         {
             var path = Path.Combine(GetProfilesLocation(), GetProfilesDefaultFileName());
-            
+
             return path;
         }
         #endregion
@@ -333,7 +331,7 @@ namespace NETworkManager.Profiles
                 lock (Profiles)
                     Profiles.Add(profile);
             }));
-        }      
+        }
 
         public static void RemoveProfile(ProfileInfo profile)
         {
