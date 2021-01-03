@@ -388,6 +388,21 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _profiles_LastSelected;
+        public string Profiles_LastSelected
+        {
+            get => _profiles_LastSelected;
+            set
+            {
+                if (value == _profiles_LastSelected)
+                    return;
+
+                _profiles_LastSelected = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Others

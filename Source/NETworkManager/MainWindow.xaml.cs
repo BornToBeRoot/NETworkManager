@@ -46,6 +46,7 @@ namespace NETworkManager
         private StatusWindow statusWindow;
 
         private readonly bool _isLoading;
+        private bool _isProfileLoading;
         private bool isApplicationListLoading;
 
         private bool _isInTray;
@@ -53,7 +54,7 @@ namespace NETworkManager
 
         // Indicates a restart message, when settings changed
         private string _cultureCode;
-                
+
         private bool _expandApplicationView;
         public bool ExpandApplicationView
         {
@@ -267,9 +268,12 @@ namespace NETworkManager
 
                 _selectedProfileFile = value;
 
-                if (value != null && !value.Equals(ProfileManager.LoadedProfileFile))
+                if (!_isProfileLoading && value != null && !value.Equals(ProfileManager.LoadedProfileFile))
+                {
                     ProfileManager.SwitchProfile(value);
-
+                    SettingsManager.Current.Profiles_LastSelected = value.Name;
+                }
+                
                 OnPropertyChanged();
             }
         }
@@ -362,10 +366,21 @@ namespace NETworkManager
             // Load application list, filter, sort, etc.
             LoadApplicationList();
 
-            // Load profiles            
+            // Load profiles    
+            _isProfileLoading = true;
+
             ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
             ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
             ProfileManager.OnProfileFileChangedEvent += ProfileManager_OnProfileFileChangedEvent;
+
+            _isProfileLoading = false;
+
+            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
+
+            /*
+            if (SelectedProfileFile == null)
+                SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
+            */
 
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
@@ -914,7 +929,7 @@ namespace NETworkManager
             ChangeApplicationView(SelectedApplication.Name, true);
         }
         #endregion
-        
+
         #region Handle WndProc messages (Single instance, handle HotKeys)
         private HwndSource _hwndSoure;
 
@@ -1096,7 +1111,7 @@ namespace NETworkManager
         public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
 
         private static void OpenWebsiteAction(object url)
-        {            
+        {
             ExternalProcessStarter.OpenUrl((string)url);
         }
 
