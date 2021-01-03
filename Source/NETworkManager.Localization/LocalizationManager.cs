@@ -57,19 +57,20 @@ namespace NETworkManager.Localization
         {
             // Offical
             new LocalizationInfo("English", "English", GetImageUri("en-US"), "en-US", 100, true),
-            new LocalizationInfo("German", "Deutsch",  GetImageUri("de-DE"), "de-DE", 100, true),
+            new LocalizationInfo("German (Germany)", "Deutsch",  GetImageUri("de-DE"), "de-DE", 100, true),
 
             // Community            
             new LocalizationInfo("Chinese (China)", "大陆简体", GetImageUri("zh-CN"), "zh-CN", 67.21),
             new LocalizationInfo("Chinese (Taiwan)", "台灣正體", GetImageUri("zh-TW"), "zh-TW", 84.36),
-            new LocalizationInfo("Dutch", "Nederlands", GetImageUri("nl-NL"), "nl-NL", 37.43),
-            new LocalizationInfo("French", "Français", GetImageUri("fr-FR"), "fr-FR", 85.98),
-            new LocalizationInfo("Hungarian", "Magyar", GetImageUri("hu-HU"), "hu-HU", 7.23),
-            new LocalizationInfo("Italian", "Italiano", GetImageUri("it-IT"), "it-IT", 100),
-            new LocalizationInfo("Polish", "Język polski", GetImageUri("pl-PL"), "pl-PL", 99.78),
-            new LocalizationInfo("Portuguese (Brazilian)", "português brasileiro", GetImageUri("pt-BR"), "pt-BR", 100),
-            new LocalizationInfo("Russian", "Русский", GetImageUri("ru-RU"), "ru-RU", 70.12),
-            new LocalizationInfo("Spanish", "Español", GetImageUri("es-ES"), "es-ES", 100)
+            new LocalizationInfo("Dutch (Netherlands)", "Nederlands", GetImageUri("nl-NL"), "nl-NL", 37.43),
+            new LocalizationInfo("French (France)", "Français", GetImageUri("fr-FR"), "fr-FR", 85.98),
+            new LocalizationInfo("Hungarian (Hungary)", "Magyar", GetImageUri("hu-HU"), "hu-HU", 7.23),
+            new LocalizationInfo("Italian (Italy)", "Italiano", GetImageUri("it-IT"), "it-IT", 100),
+            new LocalizationInfo("Polish (Poland)", "Język polski", GetImageUri("pl-PL"), "pl-PL", 99.78),
+            new LocalizationInfo("Portuguese (Brazil)", "português brasileiro", GetImageUri("pt-BR"), "pt-BR", 100),
+            new LocalizationInfo("Russian (Russia)", "Русский", GetImageUri("ru-RU"), "ru-RU", 70.12),
+            new LocalizationInfo("Slovenian (Slovenia)", "slovenski jezik", GetImageUri("sl-SI"), "sl-SI", 43.04),
+            new LocalizationInfo("Spanish (Spain)", "Español", GetImageUri("es-ES"), "es-ES", 100)
         };
 
         /// <summary>

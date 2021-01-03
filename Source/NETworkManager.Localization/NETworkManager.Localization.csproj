@@ -21,6 +21,7 @@
     <None Remove="Resources\Flags\pl-PL.png" />
     <None Remove="Resources\Flags\pt-BR.png" />
     <None Remove="Resources\Flags\ru-RU.png" />
+    <None Remove="Resources\Flags\sl-SI.png" />
     <None Remove="Resources\Flags\zh-CN.png" />
     <None Remove="Resources\Flags\zh-TW.png" />
   </ItemGroup>
@@ -38,6 +39,7 @@
     <Resource Include="Resources\Flags\pl-PL.png" />
     <Resource Include="Resources\Flags\pt-BR.png" />
     <Resource Include="Resources\Flags\ru-RU.png" />
+    <Resource Include="Resources\Flags\sl-SI.png" />
     <Resource Include="Resources\Flags\zh-CN.png" />
     <Resource Include="Resources\Flags\zh-TW.png" />
   </ItemGroup>
