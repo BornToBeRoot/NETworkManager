@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows10.0.17763.0</TargetFramework>
+    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
     <CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>
     <RootNamespace>NETworkManager</RootNamespace>
     <AssemblyName>NETworkManager</AssemblyName>
@@ -12,9 +13,10 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Authors>BornToBeRoot</Authors>
     <PackageProjectUrl>https://github.com/BornToBeRoot/NETworkManager</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/BornToBeRoot/NETworkManager/</RepositoryUrl>
+    <RepositoryUrl>https://github.com/BornToBeRoot/NETworkManager</RepositoryUrl>
     <PackageLicenseFile>NETworkManager.txt</PackageLicenseFile>
     <PackageIcon>NETworkManager.ico</PackageIcon>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="NETworkManager.ico" />
@@ -49,11 +51,7 @@
     <Reference Include="MSTSCLib">
       <HintPath>$(TargetDir)\MSTSCLib.dll</HintPath>
     </Reference>
-    <Page Remove="Resources\Styles\WindowStyles.xaml" />
     <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-    <Content Include="Resources\Styles\WindowStyles.xaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />
@@ -86,6 +84,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Resources\Styles\WindowStyles.xaml">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Page>
     <Page Update="Views\PortProfilesDialog.xaml">
       <SubType>Designer</SubType>
     </Page>

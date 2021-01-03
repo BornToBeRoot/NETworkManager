@@ -5,6 +5,7 @@
     <RootNamespace>NETworkManager.Localization</RootNamespace>
     <AssemblyName>NETworkManager.Localization</AssemblyName>
     <TargetFramework>net5.0-windows10.0.17763.0</TargetFramework>
+    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
     <UseWPF>true</UseWPF>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <NoWarn>1701;1702;CA1712</NoWarn>

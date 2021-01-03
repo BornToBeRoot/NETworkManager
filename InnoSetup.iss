@@ -30,6 +30,8 @@ OutputBaseFilename=NETworkManager_{#MyAppVersion}_Setup
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
+ArchitecturesAllowed=x64
+ArchitecturesInstallIn64BitMode=x64
 WizardSmallImageFile=Images\NETworkManager_Logo_InnoSetup.bmp
 
 [Languages]
@@ -47,7 +49,7 @@ Name: "spanish";    MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "turkish";    MessagesFile: "compiler:Languages\Turkish.isl"
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 
 [Files]
 Source: "Build\NETworkManager\NETworkManager.exe"; DestDir: "{app}"; Flags: ignoreversion
