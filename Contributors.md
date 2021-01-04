@@ -55,7 +55,7 @@ List of all contributors.
 - laxe24
 
 **Slovenian**
-- Moss_1961
+- Jadran Rudec
 
 **Spanish**
 - MS_PC
