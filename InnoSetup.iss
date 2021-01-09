@@ -46,6 +46,7 @@ Name: "japanese";   MessagesFile: "compiler:Languages\Japanese.isl"
 Name: "polish";     MessagesFile: "compiler:Languages\Polish.isl"
 Name: "russian";    MessagesFile: "compiler:Languages\Russian.isl"
 Name: "spanish";    MessagesFile: "compiler:Languages\Spanish.isl"
+Name: "slovenian";  MessagesFile: "compiler:Languages\Slovenian.isl"
 Name: "turkish";    MessagesFile: "compiler:Languages\Turkish.isl"
 
 [Tasks]
