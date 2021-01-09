@@ -22,6 +22,7 @@ Community:
 - Polish
 - Portuguese (Brazilian)
 - Russian
+- Slovenian
 - Spanish
 
 
