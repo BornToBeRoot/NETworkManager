@@ -51,7 +51,7 @@
             </MenuItem>
             <MenuItem Header="{x:Static localization:Strings.Close}" Command="{Binding CloseApplicationCommand}">
                 <MenuItem.Icon>
-                    <Rectangle Width="16" Height="16" Fill="{DynamicResource CleanWindowCloseButtonBackgroundBrush}">
+                    <Rectangle Width="16" Height="16" Fill="Red">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=WindowClose}" />
                         </Rectangle.OpacityMask>

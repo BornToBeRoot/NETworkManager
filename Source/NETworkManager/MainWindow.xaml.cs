@@ -1022,7 +1022,7 @@ namespace NETworkManager
             _notifyIcon = new NotifyIcon();
 
             // Get the application icon for the tray
-            using (var iconStream = System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/Resources/Images/NETworkManager.ico"))?.Stream)
+            using (var iconStream = System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/NETworkManager.ico"))?.Stream)
             {
                 if (iconStream != null)
                     _notifyIcon.Icon = new Icon(iconStream);
