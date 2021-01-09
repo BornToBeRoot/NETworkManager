@@ -22,7 +22,7 @@ The setup is also available on [Chocolatey](https://chocolatey.org/packages/NETw
 ~# choco install networkmanager
 ```
 
-_Migrated to x64 (The x86 version has to be uninstalled manually)_
+_Migrated to x64 (The x86 version has to be uninstalled manually)!_
 
 ## System requirements
 - Windows 10 / Server (1809 or later)
