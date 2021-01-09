@@ -24,7 +24,7 @@ _Migrated to x64 (The x86 version has to be uninstalled manually)!_
 
 ## What's new?
 - WiFi view reworked [#428](http://github.com/BornToBeRoot/NETworkManager/issues/428){:target="_blank"} 
-- Language `Slovenian` added [#433](http://github.com/BornToBeRoot/NETworkManager/issues/433){:target="_blank"} (Thanks to Moss_1961)
+- Language `Slovenian` added [#433](http://github.com/BornToBeRoot/NETworkManager/issues/433){:target="_blank"} (Thanks to Jadran Rudec)
 
 ## Improvements
 - Build size reduced / cleanup output folder [#431](http://github.com/BornToBeRoot/NETworkManager/issues/431){:target="_blank"} 
