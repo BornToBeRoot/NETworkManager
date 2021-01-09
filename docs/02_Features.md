@@ -20,7 +20,7 @@ permalink: /Features
 - [PowerShell](Application/PowerShell)
 - [PuTTY](Application/PuTTY) ([requires PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html){:target="_blank"})
 - [TigerVNC](Application/TigerVNC) ([requires TigerVNC](https://tigervnc.org/){:target="_blank"})
-- [Web Console](Application/WebConsole)
+- [Web Console](Application/WebConsole) ([requires Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="_blank"})
 - [SNMP](Application/SNMP) - Get, Walk, Set
 - [Discovery Protocol](Application/DiscoveryProtocol) - LLDP, CDP
 - [Wake on LAN](Application/WakeOnLAN)

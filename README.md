@@ -36,14 +36,11 @@
   <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/master/docs/Preview.gif?raw=true" />
 </div>
 
-# You need more informations?
+# More informations
 
-Maybe you find them here: https://borntoberoot.net/NETworkManager/
-
-# System Requirements
-- Windows 10 / Server (1809 or later)
-- [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0) or later
-- [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
+- [Download](https://borntoberoot.net/NETworkManager/Download)
+- [Changelog](https://borntoberoot.net/NETworkManager/Changelog)
+- [Documentation](https://borntoberoot.net/NETworkManager/Application)
 
 # Build
 __Requirements__
