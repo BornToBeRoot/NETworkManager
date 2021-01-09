@@ -2376,29 +2376,23 @@ $$hostname$$	--&gt;	Nombre del host</value>
   <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
     <value>Informar de un problema o crear una solicitud de función.</value>
   </data>
-  <data name="AuthenticationColon" xml:space="preserve">
-    <value>Autenticación:</value>
-  </data>
-  <data name="BeaconIntervalColon" xml:space="preserve">
-    <value>Intervalo de señal:</value>
+  <data name="BeaconInterval" xml:space="preserve">
+    <value>Intervalo de señal</value>
   </data>
   <data name="Encryption" xml:space="preserve">
     <value>Cifrado</value>
   </data>
-  <data name="EncryptionColon" xml:space="preserve">
-    <value>Cifrado:</value>
-  </data>
   <data name="Infrastructure" xml:space="preserve">
     <value>Infraestructura</value>
   </data>
-  <data name="NetworkKindColon" xml:space="preserve">
-    <value>Tipo de red:</value>
+  <data name="NetworkKind" xml:space="preserve">
+    <value>Tipo de red</value>
   </data>
-  <data name="PhyKindColon" xml:space="preserve">
-    <value>Tipo de PHY:</value>
+  <data name="PhyKind" xml:space="preserve">
+    <value>Tipo de PHY</value>
   </data>
-  <data name="UptimeColon" xml:space="preserve">
-    <value>Tiempo de actividad:</value>
+  <data name="Uptime" xml:space="preserve">
+    <value>Tiempo de actividad</value>
   </data>
   <data name="ShowErrorMessage" xml:space="preserve">
     <value>Mostrar mensaje de error</value>
@@ -2918,5 +2912,11 @@ $$hostname$$	--&gt;	Nombre del host</value>
   </data>
   <data name="MicrosoftEdgeWebView2RuntimeIsNotAvailable" xml:space="preserve">
     <value>¡Microsoft Edge WebView2 Runtime no está disponible!</value>
+  </data>
+  <data name="Frequency" xml:space="preserve">
+    <value>Frecuencia</value>
+  </data>
+  <data name="SSID" xml:space="preserve">
+    <value>SSID</value>
   </data>
 </root>

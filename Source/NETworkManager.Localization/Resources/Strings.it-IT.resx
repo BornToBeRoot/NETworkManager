@@ -2396,29 +2396,23 @@ $$hostname$$	--&gt;	Nome host</value>
   <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
     <value>Segnala un problema o richiedi nuova funzionalità.</value>
   </data>
-  <data name="AuthenticationColon" xml:space="preserve">
-    <value>Autentifica:</value>
-  </data>
-  <data name="BeaconIntervalColon" xml:space="preserve">
-    <value>Intervallo Beacon</value>
+  <data name="BeaconInterval" xml:space="preserve">
+    <value>Beacon interval</value>
   </data>
   <data name="Encryption" xml:space="preserve">
     <value>Criptazione</value>
   </data>
-  <data name="EncryptionColon" xml:space="preserve">
-    <value>Criptazione:</value>
-  </data>
   <data name="Infrastructure" xml:space="preserve">
     <value>Infrastruttura</value>
   </data>
-  <data name="NetworkKindColon" xml:space="preserve">
-    <value>Tipo rete:</value>
+  <data name="NetworkKind" xml:space="preserve">
+    <value>Network kind</value>
   </data>
-  <data name="PhyKindColon" xml:space="preserve">
-    <value>Tipo Phy:</value>
+  <data name="PhyKind" xml:space="preserve">
+    <value>Phy kind</value>
   </data>
-  <data name="UptimeColon" xml:space="preserve">
-    <value>Tempo up:</value>
+  <data name="Uptime" xml:space="preserve">
+    <value>Uptime</value>
   </data>
   <data name="ShowErrorMessage" xml:space="preserve">
     <value>Visualizza messaggio errore</value>
@@ -2940,5 +2934,11 @@ Vedi messaggio errore: "{0}"</value>
   </data>
   <data name="MicrosoftEdgeWebView2RuntimeIsNotAvailable" xml:space="preserve">
     <value>Runtime Microsoft Edge WebView2 non disponibile!</value>
+  </data>
+  <data name="Frequency" xml:space="preserve">
+    <value>Frequency</value>
+  </data>
+  <data name="SSID" xml:space="preserve">
+    <value>SSID</value>
   </data>
 </root>

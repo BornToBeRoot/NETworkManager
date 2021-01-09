@@ -2376,29 +2376,23 @@ $$hostname$$	--&gt;	Nazwa hosta</value>
   <data name="ToolTip_GithubNewIssueUrl" xml:space="preserve">
     <value>Zgłoś błąd lub utwórz propozycję funkcji.</value>
   </data>
-  <data name="AuthenticationColon" xml:space="preserve">
-    <value>Uwierzytelnianie:</value>
-  </data>
-  <data name="BeaconIntervalColon" xml:space="preserve">
-    <value>Interwał beacon'a:</value>
+  <data name="BeaconInterval" xml:space="preserve">
+    <value>Beacon interval</value>
   </data>
   <data name="Encryption" xml:space="preserve">
     <value>Szyfrowanie</value>
   </data>
-  <data name="EncryptionColon" xml:space="preserve">
-    <value>Szyfrowanie:</value>
-  </data>
   <data name="Infrastructure" xml:space="preserve">
     <value>Infrastruktura</value>
   </data>
-  <data name="NetworkKindColon" xml:space="preserve">
-    <value>Rodzaj sieci:</value>
+  <data name="NetworkKind" xml:space="preserve">
+    <value>Network kind</value>
   </data>
-  <data name="PhyKindColon" xml:space="preserve">
-    <value>Rodzaj phy:</value>
+  <data name="PhyKind" xml:space="preserve">
+    <value>Phy kind</value>
   </data>
-  <data name="UptimeColon" xml:space="preserve">
-    <value>Czas pracy:</value>
+  <data name="Uptime" xml:space="preserve">
+    <value>Uptime</value>
   </data>
   <data name="ShowErrorMessage" xml:space="preserve">
     <value>Pokaż komunikat błędu</value>
@@ -2914,9 +2908,15 @@ $$hostname$$	--&gt;	Nazwa hosta</value>
     <value>Ekran powitalny</value>
   </data>
   <data name="DownloadMicrosoftEdgeWebView2Runtime" xml:space="preserve">
-    <value>Download Microsoft Edge WebView2 Runtime</value>
+    <value>Pobierz środowisko uruchomieniowe Microsoft Edge WebView2</value>
   </data>
   <data name="MicrosoftEdgeWebView2RuntimeIsNotAvailable" xml:space="preserve">
-    <value>Microsoft Edge WebView2 Runtime is not available!</value>
+    <value>Środowisko uruchomieniowe Microsoft Edge WebView2 nie jest dostępne!</value>
+  </data>
+  <data name="Frequency" xml:space="preserve">
+    <value>Frequency</value>
+  </data>
+  <data name="SSID" xml:space="preserve">
+    <value>SSID</value>
   </data>
 </root>
