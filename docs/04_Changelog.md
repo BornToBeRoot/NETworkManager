@@ -15,7 +15,7 @@ Date: **09.01.2021**
 |[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.0/NETworkManager_2021.1.0_Portable.zip){:target="_blank"}| `BD6507198CC7EC5974229A58F9CB33F13CE0A33ABC2E20344DB42321C2382977` | 
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.0/NETworkManager_2021.1.0_Archiv.zip){:target="_blank"}| `425517A996CE52BB2ADFF05D02537817C954329402AAE9F05773B36C61997E71` | 
 
-_Migrated to x64 (The x86 version has to be uninstalled manually)_
+_Migrated to x64 (The x86 version has to be uninstalled manually)!_
 
 **System requirements**
 - Windows 10 / Server x64 (1809 or later)
