@@ -24,6 +24,9 @@ Date: **xx.xx.2021**
 - Build size reduced / cleanup output folder [#431](http://github.com/BornToBeRoot/NETworkManager/issues/431){:target="_blank"} 
 - Last selected profile is remebered after app restart [#432](http://github.com/BornToBeRoot/NETworkManager/issues/432){:target="_blank"} 
 
+## Bugfixes
+- App crash fixed if tray icon is used [#435](https://github.com/BornToBeRoot/NETworkManager/issues/435)
+
 ## Other
 - Language files updated
 
