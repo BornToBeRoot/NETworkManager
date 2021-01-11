@@ -9,7 +9,7 @@ $packageArgs = @{
   url           = $url
   softwareName  = 'NETworkManager*'
 
-  checksum      = '425517A996CE52BB2ADFF05D02537817C954329402AAE9F05773B36C61997E71'
+  checksum      = '370FDED539C49E044209CEB6897AD76DD1E947754C0E2742FEED0658229BD3F3'
   checksumType  = 'sha256'
     
   silentArgs   = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /TASKS="desktopicon" /SP-'
