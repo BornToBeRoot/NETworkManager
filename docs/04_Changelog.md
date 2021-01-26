@@ -6,6 +6,19 @@ description: "Changelog and download links of all available versions"
 permalink: /Changelog
 ---
 
+
+# Version 2021.1.2
+Date: **26.01.2021**
+
+| File | Checksum [SHA256] |
+|---|---|
+|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Setup.exe){:target="_blank"}| `600C5F6F57ECE66E87FD9AC5FA8024A2CE7DF156D1FA7D5D17C1809E89CC0548` |
+|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Portable.zip){:target="_blank"}| `C8CFE51FD787D56A7A4DF07EC9A1EF7F043D296E2E2F9EF2CB071D999E9DB3CD` |
+|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Archiv.zip){:target="_blank"}| `5705DEFD5457625B85B3F7FD5FC64A503E231BBFC29B6BF749DB2858B14E53D3` |
+
+## Bugifxes
+- Profiles won't load on start [#444](http://github.com/BornToBeRoot/NETworkManager/issues/444){:target="_blank"} 
+
 # Version 2021.1.0
 Date: **09.01.2021**
 
@@ -15,15 +28,17 @@ Date: **09.01.2021**
 |[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.0/NETworkManager_2021.1.0_Portable.zip){:target="_blank"}| `BD6507198CC7EC5974229A58F9CB33F13CE0A33ABC2E20344DB42321C2382977` | 
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.0/NETworkManager_2021.1.0_Archiv.zip){:target="_blank"}| `425517A996CE52BB2ADFF05D02537817C954329402AAE9F05773B36C61997E71` | 
 
-_Migrated to x64 (The x86 version has to be uninstalled manually)!_
+Note: _Due to the migration to x64 you have to uninstall the x86 version manually in the control panel_
 
-**System requirements**
+**New system requirements**
 - Windows 10 / Server x64 (1809 or later)
 - [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 - [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
 
+
 ## What's new?
 - WiFi view reworked [#428](http://github.com/BornToBeRoot/NETworkManager/issues/428){:target="_blank"} 
+- Migrated to x64
 - Language `Slovenian` added [#433](http://github.com/BornToBeRoot/NETworkManager/issues/433){:target="_blank"} (Thanks to Jadran Rudec)
 
 ## Improvements
@@ -44,11 +59,6 @@ Date: **28.12.2020**
 |[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.2/NETworkManager_2020.12.2_Setup.exe){:target="_blank"}| `4F0EA9AB5969021901AA107A40B0F1C649AB2A39FFC55565DDEF318D983021F9` | 
 |[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.2/NETworkManager_2020.12.2_Portable.zip){:target="_blank"}| `7A26775C906586822AE3585CDD2FC3AD361D359D38AC591012E4CB9F82EEA8BA` | 
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.2/NETworkManager_2020.12.2_Archiv.zip){:target="_blank"}| `6094B2C27A279C004049D0AD083C8A23A57864FBD61616DECD2B75A9C3ABDD95` | 
-
-**System requirements**
-- Windows 10 / Server (1809 or later)
-- [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
-- [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
 
 ## What's new?
 - UI reworked / tab size reduced [#398](http://github.com/BornToBeRoot/NETworkManager/issues/398){:target="_blank"} 
@@ -86,11 +96,6 @@ Date: **14.12.2020**
 |[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.1/NETworkManager_2020.12.1_Portable.zip){:target="_blank"}| `19D04BA6BBFB323F11889115489A299FE534C49AEA533030DF0F5B47AE7A722E` | 
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.1/NETworkManager_2020.12.1_Archiv.zip){:target="_blank"}| `0F7BF030E4C4ADA8B54DF06C52CA5F19A1E3CA854E67A8E667277544A8882509` | 
 
-**System requirements**
-- Windows 10 / Server (1809 or later)
-- [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
-- [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
-
 ## What's new?
 - Ping Monitor
   - Export as CSV, XML, JSON added [#389](http://github.com/BornToBeRoot/NETworkManager/issues/389){:target="_blank"} [#287](http://github.com/BornToBeRoot/NETworkManager/issues/287){:target="_blank"}
@@ -117,7 +122,7 @@ Date: **06.12.2020**
 
 Note: _If you've installed the preview, uninstall it first!_
 
-**System requirements**
+**New system requirements**
 - Windows 10 / Server (1809 or later)
 - [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 - [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
@@ -161,7 +166,7 @@ Date: **05.09.2020**
 |[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.9.0/NETworkManager_2020.9.0_Portable.zip)| `E8B60E677E65959BB11F05884F6EA9EC99F09F24ECE869A240B8361F958B4A66` |
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.9.0/NETworkManager_2020.9.0_Archiv.zip)| `86D13E4C139132BCBA86B6F72ADA4D679C4DD303EA08643D276AE1A5DFD47C47` |
 
-**System requirements**
+**New system requirements**
 - Windows 10 x64
 - [.NET Desktop Runtime 5.0.0-preview.8](https://dotnet.microsoft.com/download/dotnet/5.0)
 - [Microsoft Edge Canary](https://www.microsoftedgeinsider.com/en-us/download)
@@ -341,7 +346,7 @@ Date: **25.12.2019**
 |[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Portable.zip)| `1A5A16A863425D827E1C58D711C337873C4C44B914D44F3FC27E327043597078` |
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Archiv.zip)| `1942EF7B3541782CB83F37ED802E8FF98DD63579F5772D792462EACF82BE7E72` |
 
-⚠️  **SYSTEM REQUIREMENTS** ⚠️ 
+**New system requirements**
 - Windows 10 Build 1809 
 - .NET-Framework 4.7.2
 

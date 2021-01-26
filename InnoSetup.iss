@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "NETworkManager"
-#define MyAppVersion "2021.1.0"
+#define MyAppVersion "2021.1.2"
 #define MyAppPublisher "BornToBeRoot"
 #define MyAppURL "https://github.com/BornToBeRoot/NETworkManager/"
 #define MyAppExeName "NETworkManager.exe"

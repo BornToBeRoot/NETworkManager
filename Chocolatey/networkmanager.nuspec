@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>NETworkManager</id>
-    <version>2021.1.1</version>
+    <version>2021.1.2</version>
     <owners>BornToBeRoot</owners>
     <title>NETworkManager</title>
     <authors>BornToBeRoot</authors>
