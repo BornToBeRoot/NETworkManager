@@ -257,23 +257,24 @@ namespace NETworkManager
             }
         }
 
-        private ProfileFileInfo _selectedProfileFile;
+        private ProfileFileInfo _selectedProfileFile = null;
         public ProfileFileInfo SelectedProfileFile
         {
             get => _selectedProfileFile;
             set
             {
-                if (value == _selectedProfileFile || (value != null && value.Equals(_selectedProfileFile)))
+                if (_isProfileLoading || (value != null && value.Equals(_selectedProfileFile)))
                     return;
 
                 _selectedProfileFile = value;
 
-                if (!_isProfileLoading && value != null && !value.Equals(ProfileManager.LoadedProfileFile))
+                // Switch profile...
+                if (value != null && !value.Equals(ProfileManager.LoadedProfileFile))
                 {
                     ProfileManager.SwitchProfile(value);
                     SettingsManager.Current.Profiles_LastSelected = value.Name;
                 }
-                
+
                 OnPropertyChanged();
             }
         }
@@ -368,19 +369,16 @@ namespace NETworkManager
 
             // Load profiles    
             _isProfileLoading = true;
-
             ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
             ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
             ProfileManager.OnProfileFileChangedEvent += ProfileManager_OnProfileFileChangedEvent;
-
             _isProfileLoading = false;
 
+            // Switch profile
             SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
 
-            /*
             if (SelectedProfileFile == null)
                 SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
-            */
 
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
