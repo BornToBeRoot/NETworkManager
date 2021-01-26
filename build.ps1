@@ -1,4 +1,3 @@
-$Version = "2021.1.0"
 $IsPreview = $false
 
 $BuildPath = "$PSScriptRoot\Build"
@@ -20,6 +19,9 @@ if(-not(Test-Path -Path "$BuildPath\NETworkManager\NETworkManager.exe"))
 {
     Write-Error "Could not find dotnet release build. Is .NET SDK 5.0 or later installed?" -ErrorAction Stop
 }
+
+# Get NETworkManager File Version
+$Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$BuildPath\NETworkManager\NETworkManager.exe").FileVersion
 
 # Cleanup WebView2Loader.dll (https://github.com/MicrosoftEdge/WebView2Feedback/issues/461)
 Remove-Item "$BuildPath\NETworkManager\arm64" -Recurse
