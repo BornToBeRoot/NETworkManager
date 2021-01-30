@@ -6,6 +6,28 @@ description: "Changelog and download links of all available versions"
 permalink: /Changelog
 ---
 
+# Version 2021.x.x [Upcoming release] 
+Date: **xx.xx.2021**
+
+<!--
+| File | Checksum [SHA256] |
+|---|---|
+|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Setup.exe){:target="_blank"}| `600C5F6F57ECE66E87FD9AC5FA8024A2CE7DF156D1FA7D5D17C1809E89CC0548` |
+|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Portable.zip){:target="_blank"}| `C8CFE51FD787D56A7A4DF07EC9A1EF7F043D296E2E2F9EF2CB071D999E9DB3CD` |
+|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Archiv.zip){:target="_blank"}| `5705DEFD5457625B85B3F7FD5FC64A503E231BBFC29B6BF749DB2858B14E53D3` |
+-->
+
+## What's new?
+
+
+## Improvements
+
+
+## Bugfixes
+- Wrong flags `sl-SI` and `zh-TW` fixed [#438](https://github.com/BornToBeRoot/NETworkManager/issues/438)
+
+## Other
+
 
 # Version 2021.1.2
 Date: **26.01.2021**
