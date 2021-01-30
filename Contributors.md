@@ -10,6 +10,7 @@ List of all contributors.
 - bovirus
 - Freeman2016
 - EBWeist
+- mdawsonuk
 
 ## Translators / reviewers on Transifex
 
