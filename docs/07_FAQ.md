@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Frequently Asked Questions
+title: FAQ
 nav_order: 7
 description: "Frequently Asked Questions"
 permalink: /FAQ
