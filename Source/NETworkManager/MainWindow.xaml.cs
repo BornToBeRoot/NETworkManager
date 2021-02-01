@@ -360,6 +360,8 @@ namespace NETworkManager
             {
                 AfterContentRendered();
             }
+
+            System.Diagnostics.Debug.WriteLine("Hello World");
         }
 
         private void AfterContentRendered()
