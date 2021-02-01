@@ -45,7 +45,7 @@
 - [Documentation](https://borntoberoot.net/NETworkManager/Application)
 - [How to contribute or report an issue?](https://github.com/BornToBeRoot/NETworkManager/blob/master/CONTRIBUTING.md)
 - [List of contributors](https://github.com/BornToBeRoot/NETworkManager/blob/master/Contributors.md)
-- [How to report a security vulnerability?](https://github.com/BornToBeRoot/NETworkManager/blob/master/SECURITY.md))
+- [How to report a security vulnerability?](https://github.com/BornToBeRoot/NETworkManager/blob/master/SECURITY.md)
 
 # Build
 __Requirements__
