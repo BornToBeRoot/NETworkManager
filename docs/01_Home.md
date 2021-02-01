@@ -53,7 +53,7 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
   <p>
     <a href='https://github.com/BornToBeRoot/NETworkManager' target="_blank"><button type="button" name="button" class="btn">Github :octocat:</button></a>
     <a href='./Download'><button type="button" name="button" class="btn">Download :package:</button></a>
+    <a href='./Changelog'><button type="button" name="button" class="btn">Changelog :page_with_curl:</button></a>
+    <a href='./Application'><button type="button" name="button" class="btn">Documentation :book:</button></a>
   </p>
 </div>
-
-If you want to contribute to the code/documentation/translation or compile the solution yourself, see the [README](https://github.com/BornToBeRoot/NETworkManager/){:target="_blank"} on GitHub for more information.
