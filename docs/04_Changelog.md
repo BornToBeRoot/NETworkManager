@@ -18,7 +18,7 @@ Date: **xx.xx.2021**
 -->
 
 ## What's new?
-
+- CodeQL for automated code security analysis added
 
 ## Improvements
 
