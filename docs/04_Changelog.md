@@ -19,6 +19,7 @@ Date: **xx.xx.2021**
 
 ## What's new?
 - CodeQL for automated code security analysis added
+- Code of conduct added [#450](https://github.com/BornToBeRoot/NETworkManager/issues/450)
 
 ## Improvements
 
