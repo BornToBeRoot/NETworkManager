@@ -1,8 +1,8 @@
-<div align="center">   
-  <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/master/docs/Preview.gif?raw=true" />
-  
+<div align="center">       
   <h1>NETworkManager</h1>
   <h3>A powerful tool for managing networks and troubleshoot network problems!</h3>
+  
+  <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/master/docs/Preview.gif?raw=true" />
   
   <p>   
     <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
