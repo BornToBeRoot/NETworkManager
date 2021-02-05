@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Code of Conduct
-nav_order: 9
+nav_order: 8
 description: "Code of Conduct"
 permalink: /CodeOfConduct
 ---
