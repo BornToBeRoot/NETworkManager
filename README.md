@@ -50,17 +50,17 @@
 # Build
 __Requirements__
 - [SDK .NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
-- Visual Studio with `.NET desktop development` and `Universal Windows Platform development` installed  
+- Visual Studio with `.NET desktop development` and `Universal Windows Platform development` 
 
 __Optional__
-- [InnoSetup](https://jrsoftware.org/isinfo.php) to create an installer
+- [InnoSetup](https://jrsoftware.org/isinfo.php) (if you want to create an installer)
 
 __Steps__
 1. Clone the Repository
-2. Run the `.\build.ps1` with PowerShell
-
-# License
-NETworkManager is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE). The licenses of the used libraries can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/master/Source/NETworkManager.Documentation/Licenses).
+2. Run the `.\build.ps1` with PowerShell or open the `Source/NETworkManager.sln` in Visual Studio
 
 # Code of Conduct
 This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/master/CODE_OF_CONDUCT.md) defined by the [Contributor Covenant](http://contributor-covenant.org/).
+
+# License
+NETworkManager is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE). The licenses of the used libraries can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/master/Source/NETworkManager.Documentation/Licenses).
