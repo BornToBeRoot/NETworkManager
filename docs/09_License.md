@@ -1,7 +1,7 @@
 ---
 layout: default
 title: License
-nav_order: 8
+nav_order: 9
 description: "License under which the program is published"
 permalink: /License
 ---
