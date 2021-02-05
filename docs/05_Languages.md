@@ -26,4 +26,4 @@ Community:
 - Spanish
 
 
-Help translate on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager){:target="_blank"}.
+Help translate on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager){:target="_blank"}. See also the [contributing guidelines](https://github.com/BornToBeRoot/NETworkManager/blob/master/CONTRIBUTING.md){:target="_blank"} if you want to contribute to the project.

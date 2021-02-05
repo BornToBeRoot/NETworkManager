@@ -1,4 +1,9 @@
-<div align="center">   
+<div align="center">       
+  <h1>NETworkManager</h1>
+  <h3>A powerful tool for managing networks and troubleshoot network problems!</h3>
+  
+  <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/master/docs/Preview.gif?raw=true" />
+  
   <p>   
     <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
       <img alt="All releases" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=for-the-badge&logo=github" />
@@ -31,48 +36,31 @@
     <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Issue&template=Bug_report.md">
       <img alt="Bug report" src="https://img.shields.io/badge/github-bug_report-red.svg?style=for-the-badge&logo=github" />
     </a>     
-  </p>     
-  <p>https://borntoberoot.net/NETworkManager/</p>
-  <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/master/docs/Preview.gif?raw=true" />
+  </p>
 </div>
 
 # More informations
-
 - [Download](https://borntoberoot.net/NETworkManager/Download)
 - [Changelog](https://borntoberoot.net/NETworkManager/Changelog)
 - [Documentation](https://borntoberoot.net/NETworkManager/Application)
+- [How to contribute or report an issue?](https://github.com/BornToBeRoot/NETworkManager/blob/master/CONTRIBUTING.md)
+- [List of contributors](https://github.com/BornToBeRoot/NETworkManager/blob/master/Contributors.md)
+- [How to report a security vulnerability?](https://github.com/BornToBeRoot/NETworkManager/blob/master/SECURITY.md)
 
 # Build
 __Requirements__
 - [SDK .NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
-- Visual Studio with `.NET desktop development` and `Universal Windows Platform development` installed  
+- Visual Studio with `.NET desktop development` and `Universal Windows Platform development` 
 
 __Optional__
-- [InnoSetup](https://jrsoftware.org/isinfo.php) to create an installer
+- [InnoSetup](https://jrsoftware.org/isinfo.php) (if you want to create an installer)
 
 __Steps__
-1. Download/Clone the Repo
-2. Run the `.\build.ps1` with PowerShell
+1. Clone the Repository
+2. Run the `.\build.ps1` with PowerShell or open the `Source/NETworkManager.sln` in Visual Studio
 
-# Contribute
-- You found a bug or have a feature request? Feel free to create a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
-- General questions can be discussed in the [GitHub discussions](https://github.com/BornToBeRoot/NETworkManager/discussions).
-- If you contribute to the code, documentation or translation, you can add your name to the [contributors](https://github.com/BornToBeRoot/NETworkManager/blob/master/Contributors.md) list with a pull request.
-
-## Code
-- If you want to fix a bug or implement a new features, let me know in the issues that you are work on it.
-- Fork the repo, do your changes and send me a [pull request](https://github.com/BornToBeRoot/NETworkManager/pulls).
-
-## Documentation
-- The documentation is based on [Just the docs](https://github.com/pmarsceill/just-the-docs), hosted on GitHub Pages and published [here](https://borntoberoot.net/NETworkManager/).
-- You can help improve the documentation by cloning the repo, switch to the [gh-pages](https://github.com/BornToBeRoot/NETworkManager/tree/gh-pages) branch, do your improvements and send me a pull request.
-
-## Translation
-- Translation is hosted on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager/).
-- If you want to join the language team as translator or reviewer, you need to have a Transifex account and join the team on Transifex.
-- You can request a new language via Transifex (or with a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose)).
+# Code of Conduct
+This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/master/CODE_OF_CONDUCT.md) defined by the [Contributor Covenant](http://contributor-covenant.org/).
 
 # License
-This software is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE).
-
-The licenses for the libraries used in the program can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/master/Source/NETworkManager.Documentation/Licenses).
+NETworkManager is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE). The licenses of the used libraries can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/master/Source/NETworkManager.Documentation/Licenses).
