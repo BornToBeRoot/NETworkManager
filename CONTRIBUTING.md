@@ -10,7 +10,7 @@
 
 ## Documentation
 - The documentation is based on [Just the docs](https://github.com/pmarsceill/just-the-docs), hosted on GitHub Pages and published [here](https://borntoberoot.net/NETworkManager/).
-- You can help improve the documentation by cloning the repo, switch to the [gh-pages](https://github.com/BornToBeRoot/NETworkManager/tree/gh-pages) branch, do your improvements and send me a pull request.
+- Fork the repo, do your changes in the `docs` folder and send me a pull request. You can also click on the `Edit this page on GitHub` in the footer of each documentation page.
 
 ## Translation
 - Translation is hosted on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager/).
