@@ -2919,4 +2919,10 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
   </data>
+  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
+    <value>Profile could not be loaded!</value>
+  </data>
+  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
+    <value>The profile could not be loaded and may be corrupted. If this is unexpected or due to an update, please report this issue on GitHub!</value>
+  </data>
 </root>

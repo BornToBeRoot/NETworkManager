@@ -25,6 +25,7 @@ Date: **xx.xx.2021**
 
 
 ## Bugfixes
+- Prevent app crash if profile is corrupted [#270](https://github.com/BornToBeRoot/NETworkManager/issues/270)
 - Wrong flags `sl-SI` and `zh-TW` fixed [#438](https://github.com/BornToBeRoot/NETworkManager/issues/438)
 - Update link color fixed
 

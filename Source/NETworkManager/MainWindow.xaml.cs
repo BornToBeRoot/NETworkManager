@@ -271,7 +271,7 @@ namespace NETworkManager
                 // Switch profile...
                 if (value != null && !value.Equals(ProfileManager.LoadedProfileFile))
                 {
-                    ProfileManager.SwitchProfile(value);
+                    SwitchProfile(value);
                     SettingsManager.Current.Profiles_LastSelected = value.Name;
                 }
 
@@ -279,7 +279,7 @@ namespace NETworkManager
             }
         }
         #endregion
-
+               
         #region Constructor, window load and close events
         public MainWindow()
         {
@@ -1259,6 +1259,25 @@ namespace NETworkManager
         #endregion
 
         #region Methods
+        private async void SwitchProfile(ProfileFileInfo info)
+        {
+            try
+            {
+                ProfileManager.SwitchProfile(info);
+            }
+            catch
+            {
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                ConfigurationManager.Current.FixAirspace = true;
+
+                await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedAndMayBeCorruptedMessage, MessageDialogStyle.Affirmative, settings);
+
+                ConfigurationManager.Current.FixAirspace = false;
+            }
+        }
+
         private void OpenStatusWindow()
         {
             statusWindow.ShowFromExternal();
