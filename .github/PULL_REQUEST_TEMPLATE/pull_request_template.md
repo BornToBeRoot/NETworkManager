@@ -1,7 +1,6 @@
 Fixes #{Replace this with the issue number}
 
 **Please provide some details about this pull request:**
-
 -
 -
 -
