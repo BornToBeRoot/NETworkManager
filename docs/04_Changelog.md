@@ -19,14 +19,14 @@ Date: **xx.xx.2021**
 
 ## What's new?
 - CodeQL for automated code security analysis added
-- Code of conduct added [#450](https://github.com/BornToBeRoot/NETworkManager/issues/450)
-- Security policy added [#450](https://github.com/BornToBeRoot/NETworkManager/issues/450)
+- Code of conduct, security policy and contributing guidelines added [#450](https://github.com/BornToBeRoot/NETworkManager/issues/450)
 
 ## Improvements
 
 
 ## Bugfixes
 - Wrong flags `sl-SI` and `zh-TW` fixed [#438](https://github.com/BornToBeRoot/NETworkManager/issues/438)
+- Update link color fixed
 
 ## Other
 
