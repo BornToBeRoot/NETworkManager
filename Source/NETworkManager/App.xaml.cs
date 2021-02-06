@@ -8,8 +8,6 @@ using System.Windows;
 using System.Windows.Threading;
 using NETworkManager.Profiles;
 using NETworkManager.Localization;
-using ABI.Windows.Devices.AllJoyn;
-using System.Threading.Tasks;
 
 namespace NETworkManager
 {

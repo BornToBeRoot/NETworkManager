@@ -4985,6 +4985,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile could not be loaded!.
+        /// </summary>
+        public static string ProfileCouldNotBeLoaded {
+            get {
+                return ResourceManager.GetString("ProfileCouldNotBeLoaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The profile could not be loaded and may be corrupted. If this is unexpected or due to an update, please report this issue on GitHub!.
+        /// </summary>
+        public static string ProfileCouldNotBeLoadedAndMayBeCorruptedMessage {
+            get {
+                return ResourceManager.GetString("ProfileCouldNotBeLoadedAndMayBeCorruptedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile name already exists!.
         /// </summary>
         public static string ProfileNameAlreadyExists {
