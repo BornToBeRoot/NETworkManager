@@ -2491,6 +2491,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit group....
+        /// </summary>
+        public static string EditGroupDots {
+            get {
+                return ResourceManager.GetString("EditGroupDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit port profile.
         /// </summary>
         public static string EditPortProfile {

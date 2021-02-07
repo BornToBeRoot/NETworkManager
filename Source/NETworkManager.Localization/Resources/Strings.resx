@@ -2925,4 +2925,7 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
     <value>The profile could not be loaded and may be corrupted. If this is unexpected or due to an update, please report this issue on GitHub!</value>
   </data>
+  <data name="EditGroupDots" xml:space="preserve">
+    <value>Edit group...</value>
+  </data>
 </root>
