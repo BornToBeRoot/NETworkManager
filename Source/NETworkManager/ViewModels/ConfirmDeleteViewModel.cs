@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
-    public class ConfirmRemoveViewModel : ViewModelBase
+    public class ConfirmDeleteViewModel : ViewModelBase
     {
         public ICommand DeleteCommand { get; }
 
@@ -24,7 +24,7 @@ namespace NETworkManager.ViewModels
             }
         }
         
-        public ConfirmRemoveViewModel(Action<ConfirmRemoveViewModel> deleteCommand, Action<ConfirmRemoveViewModel> cancelHandler, string message)
+        public ConfirmDeleteViewModel(Action<ConfirmDeleteViewModel> deleteCommand, Action<ConfirmDeleteViewModel> cancelHandler, string message)
         {
             DeleteCommand = new RelayCommand(p => deleteCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));

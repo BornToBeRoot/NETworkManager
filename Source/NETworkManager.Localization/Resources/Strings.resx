@@ -2457,9 +2457,6 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="EncryptionDots" xml:space="preserve">
     <value>Encryption...</value>
   </data>
-  <data name="RemoveProfileFile" xml:space="preserve">
-    <value>Remove profile file</value>
-  </data>
   <data name="ProfileNameAlreadyExists" xml:space="preserve">
     <value>Profile name already exists!</value>
   </data>
@@ -2924,5 +2921,8 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
     <value>The profile could not be loaded and may be corrupted. If this is unexpected or due to an update, please report this issue on GitHub!</value>
+  </data>
+  <data name="EditGroupDots" xml:space="preserve">
+    <value>Edit group...</value>
   </data>
 </root>

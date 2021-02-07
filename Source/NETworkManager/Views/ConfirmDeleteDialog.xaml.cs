@@ -1,8 +1,8 @@
 ﻿namespace NETworkManager.Views
 {
-    public partial class ConfirmRemoveDialog
+    public partial class ConfirmDeleteDialog
     {
-        public ConfirmRemoveDialog()
+        public ConfirmDeleteDialog()
         {
             InitializeComponent();
         }
