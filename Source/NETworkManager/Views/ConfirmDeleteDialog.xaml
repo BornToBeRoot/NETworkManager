@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ConfirmRemoveViewModel}">
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ConfirmDeleteViewModel}">
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

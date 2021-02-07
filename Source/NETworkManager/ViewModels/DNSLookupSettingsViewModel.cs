@@ -329,7 +329,7 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.DeleteDNSServer
             };
 
-            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            var confirmDeleteViewModel = new ConfirmDeleteViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -339,9 +339,9 @@ namespace NETworkManager.ViewModels
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, Localization.Resources.Strings.DeleteDNSServerMessage);
 
-            customDialog.Content = new ConfirmRemoveDialog
+            customDialog.Content = new ConfirmDeleteDialog
             {
-                DataContext = confirmRemoveViewModel
+                DataContext = confirmDeleteViewModel
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);

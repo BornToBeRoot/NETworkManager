@@ -103,7 +103,7 @@ namespace NETworkManager
                 Title = Localization.Resources.Strings.DeleteProfile
             };
 
-            var confirmRemoveViewModel = new ConfirmRemoveViewModel(async instance =>
+            var confirmDeleteViewModel = new ConfirmDeleteViewModel(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
@@ -115,9 +115,9 @@ namespace NETworkManager
                 viewModel.OnProfileDialogClose();
             }, Localization.Resources.Strings.DeleteProfileMessage);
 
-            customDialog.Content = new ConfirmRemoveDialog
+            customDialog.Content = new ConfirmDeleteDialog
             {
-                DataContext = confirmRemoveViewModel
+                DataContext = confirmDeleteViewModel
             };
 
             viewModel.OnProfileDialogOpen();

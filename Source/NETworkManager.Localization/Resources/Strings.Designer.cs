@@ -6129,15 +6129,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove profile file.
-        /// </summary>
-        public static string RemoveProfileFile {
-            get {
-                return ResourceManager.GetString("RemoveProfileFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Rename.
         /// </summary>
         public static string Rename {

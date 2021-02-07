@@ -229,7 +229,7 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.DeletePortProfile
             };
 
-            var confirmRemoveViewModel = new ConfirmRemoveViewModel(instance =>
+            var confirmDeleteViewModel = new ConfirmDeleteViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -239,9 +239,9 @@ namespace NETworkManager.ViewModels
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, Localization.Resources.Strings.DeletePortProfileMessage);
 
-            customDialog.Content = new ConfirmRemoveDialog
+            customDialog.Content = new ConfirmDeleteDialog
             {
-                DataContext = confirmRemoveViewModel
+                DataContext = confirmDeleteViewModel
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);

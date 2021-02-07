@@ -2457,9 +2457,6 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="EncryptionDots" xml:space="preserve">
     <value>Encryption...</value>
   </data>
-  <data name="RemoveProfileFile" xml:space="preserve">
-    <value>Remove profile file</value>
-  </data>
   <data name="ProfileNameAlreadyExists" xml:space="preserve">
     <value>Profile name already exists!</value>
   </data>
