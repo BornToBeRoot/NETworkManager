@@ -49,6 +49,9 @@ namespace NETworkManager.Settings
         public static double Profile_WidthCollapsed => 40;
         public static double Profile_DefaultWidthExpanded => 250;
         public static double Profile_MaxWidthExpanded => 350;
+        public static int Profile_EncryptionKeySize => 256;
+        public static int Profile_EncryptionBlockSize => 128;
+        public static int Profile_EncryptionIterations => 100000;
 
         // Application: Dashboard
         public static string Dashboard_PublicIPAddressAPI => "https://api.ipify.org";

@@ -1,4 +1,6 @@
-﻿namespace NETworkManager.Profiles
+﻿using System.Security;
+
+namespace NETworkManager.Profiles
 {
     public class ProfileFileInfo
     {
@@ -15,7 +17,7 @@
         /// <summary>
         /// Password to encrypt and decrypt the profile file.
         /// </summary>
-        public string Password { get; set; }
+        public SecureString Password { get; set; }
 
         /// <summary>
         /// Indicates if the password is valid and can be used for encryption or decryption.

@@ -272,6 +272,35 @@ namespace NETworkManager.ViewModels
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
+
+        public ICommand EnableEncryptionCommand => new RelayCommand(p => EnableEncryptionAction());
+
+        private async void EnableEncryptionAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.SetMasterPassword
+            };
+
+            var credentialsSetMasterPasswordViewModel = new CredentialsSetMasterPasswordViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                // ToDo: Add try/catch...
+                ProfileManager.EnableEncryption(SelectedProfileFile, instance.Password);
+
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new CredentialsSetMasterPasswordDialog
+            {
+                DataContext = credentialsSetMasterPasswordViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
         #endregion
 
         #region Methods

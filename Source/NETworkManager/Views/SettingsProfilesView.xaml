@@ -137,7 +137,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.ChangeMasterPasswordDots}" Command="{Binding EditProfileFileCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <MenuItem Header="{x:Static localization:Strings.ChangeMasterPasswordDots}" Command="{Binding ChangeMasterPasswordCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -146,7 +146,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.DisableEncryptionDots}" Command="{Binding EditProfileFileCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <MenuItem Header="{x:Static localization:Strings.DisableEncryptionDots}" Command="{Binding DisableEncryptionCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -169,28 +169,7 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profiles:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
-                <DataGridTemplateColumn Header="{x:Static localization:Strings.IsEncrypted}" Width="Auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                <Rectangle.Resources>
-                                    <VisualBrush x:Key="VisualLockOpen" Stretch="Uniform" Visual="{iconPacks:Material Kind=LockOpenOutline}"/>
-                                    <VisualBrush x:Key="VisualLockClosed" Stretch="Uniform" Visual="{iconPacks:Material Kind=LockOutline}"/>
-                                </Rectangle.Resources>
-                                <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="OpacityMask" Value="{StaticResource VisualLockOpen}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=(profiles:ProfileFileInfo.IsEncrypted)}" Value="True">
-                                                <Setter Property="OpacityMask" Value="{StaticResource VisualLockClosed}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Rectangle.Style>
-                            </Rectangle>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.IsEncrypted}" Binding="{Binding (profiles:ProfileFileInfo.IsEncrypted)}" Width="Auto"  />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditProfileFileCommand}" Key="F2" />

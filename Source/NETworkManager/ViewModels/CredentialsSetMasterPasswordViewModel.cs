@@ -7,11 +7,24 @@ namespace NETworkManager.ViewModels
 {
     public class CredentialsSetMasterPasswordViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Command which is called when the save button is clicked.
+        /// </summary>
         public ICommand SaveCommand { get; }
 
+        /// <summary>
+        /// Command which is called when the cancel button is clicked.
+        /// </summary>
         public ICommand CancelCommand { get; }
 
+        /// <summary>
+        /// Private variable for <see cref="Password"/>.
+        /// </summary>
         private SecureString _password = new SecureString();
+
+        /// <summary>
+        /// Password as secure string.
+        /// </summary>
         public SecureString Password
         {
             get => _password;
@@ -28,7 +41,14 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        /// <summary>
+        /// Private variable for <see cref="PasswordRepeat"/>.
+        /// </summary>
         private SecureString _passwordRepeat = new SecureString();
+
+        /// <summary>
+        /// Repeated password as secure string.
+        /// </summary>
         public SecureString PasswordRepeat
         {
             get => _passwordRepeat;
@@ -45,8 +65,15 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        /// <summary>
+        /// Private variable for <see cref="IsPasswordEmpty"/>.
+        /// </summary>
         private bool _isPasswordEmpty = true;
-        public bool IsPasswordIsEmpty
+
+        /// <summary>
+        /// Indicate if one of the password fields are empty.
+        /// </summary>
+        public bool IsPasswordEmpty
         {
             get => _isPasswordEmpty;
             set
@@ -59,27 +86,42 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _isRepeatPasswordsEqual;
-        public bool IsRepeatPasswordsEqual
+        /// <summary>
+        /// Private variable for <see cref="IsRepeatedPasswordEqual"/>.
+        /// </summary>
+        private bool _isRepeatedPasswordEqual;
+
+        /// <summary>
+        /// Indicate if the <see cref="PasswordRepeat"/> is equal to the <see cref="Password"/>.
+        /// </summary>
+        public bool IsRepeatedPasswordEqual
         {
-            get => _isRepeatPasswordsEqual;
+            get => _isRepeatedPasswordEqual;
             set
             {
-                if (value == _isRepeatPasswordsEqual)
+                if (value == _isRepeatedPasswordEqual)
                     return;
 
-                _isRepeatPasswordsEqual = value;
+                _isRepeatedPasswordEqual = value;
                 OnPropertyChanged();
             }
         }
 
+        /// <summary>
+        /// Check if the passwords are valid and equal.
+        /// </summary>
         private void ValidatePassword()
         {
-            IsPasswordIsEmpty = ((Password == null || Password.Length == 0) || (PasswordRepeat == null || PasswordRepeat.Length == 0));
+            IsPasswordEmpty = ((Password == null || Password.Length == 0) || (PasswordRepeat == null || PasswordRepeat.Length == 0));
 
-            IsRepeatPasswordsEqual = !IsPasswordIsEmpty && SecureStringHelper.ConvertToString(Password).Equals(SecureStringHelper.ConvertToString(PasswordRepeat));
+            IsRepeatedPasswordEqual = !IsPasswordEmpty && SecureStringHelper.ConvertToString(Password).Equals(SecureStringHelper.ConvertToString(PasswordRepeat));
         }
 
+        /// <summary>
+        /// Initalizes a new class <see cref="CredentialsSetMasterPasswordViewModel"/> with <see cref="SaveCommand" /> and <see cref="CancelCommand"/>.
+        /// </summary>
+        /// <param name="saveCommand"><see cref="SaveCommand"/> which is executed on save.</param>
+        /// <param name="cancelHandler"><see cref="CancelCommand"/> which is executed on cancel.</param>
         public CredentialsSetMasterPasswordViewModel(Action<CredentialsSetMasterPasswordViewModel> saveCommand, Action<CredentialsSetMasterPasswordViewModel> cancelHandler)
         {
             SaveCommand = new RelayCommand(p => saveCommand(this));

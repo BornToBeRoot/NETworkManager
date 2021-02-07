@@ -371,7 +371,7 @@ namespace NETworkManager
             _isProfileLoading = true;
             ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
             ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
-            ProfileManager.OnProfileFileChangedEvent += ProfileManager_OnProfileFileChangedEvent;
+            ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
             _isProfileLoading = false;
 
             // Switch profile
@@ -454,12 +454,13 @@ namespace NETworkManager
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ProfileManager_OnProfileFileChangedEvent(object sender, ProfileFileInfoArgs e)
-        {
+        private void ProfileManager_OnLoadedProfileFileChangedEvent(object sender, ProfileFileInfoArgs e)
+        {            
             SelectedProfileFile = null;
 
             SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == e.ProfileFileInfo.Name);
 
+            // Fallback if profile could not be found.
             if (SelectedProfileFile == null)
                 SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
         }
@@ -1263,6 +1264,11 @@ namespace NETworkManager
         {
             try
             {
+                if(info.IsEncrypted)
+                {
+                    Debug.WriteLine($"=======> File {info.Name} is encrypted");
+                }
+
                 ProfileManager.SwitchProfile(info);
             }
             catch
