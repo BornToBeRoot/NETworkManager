@@ -231,7 +231,7 @@ namespace NETworkManager.Profiles
         {
             // Check if the profile is currently in use
             bool switchProfile = false;
-            
+
             if (LoadedProfileFile.Equals(profileFileInfo))
             {
                 Save();
@@ -250,35 +250,66 @@ namespace NETworkManager.Profiles
             var profiles = DeserializeFromFile(profileFileInfo.Path);
 
             // Save the encrypted file
-            byte[] serializedProfiles = SerializeToByteArray(profiles);
-            byte[] encryptedProfiles = CryptoHelper.Encrypt(serializedProfiles, SecureStringHelper.ConvertToString(newProfileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+            byte[] decryptedBytes = SerializeToByteArray(profiles);
+            byte[] encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(newProfileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
 
-            File.WriteAllBytes(newProfileFileInfo.Path, encryptedProfiles);
+            File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
 
             // Remove the old profile and add the new one
             File.Delete(profileFileInfo.Path);
-
+            ProfileFiles.Remove(profileFileInfo);
             ProfileFiles.Add(newProfileFileInfo);
 
             // Switch profile, if it was previously loaded
             if (switchProfile)
             {
-                SwitchProfile(profileFileInfo, false);
+                SwitchProfile(newProfileFileInfo, false);
 
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
-        }
-
-        public static void DisableEncryption()
-        {
-
-
         }
 
         public static void ChangeMasterPassword()
         {
 
         }
+
+        public static void DisableEncryption(ProfileFileInfo profileFileInfo, SecureString password)
+        {
+            // Check if the profile is currently in use
+            bool switchProfile = false;
+
+            if (LoadedProfileFile.Equals(profileFileInfo))
+            {
+                Save();
+
+                switchProfile = true;
+            }
+
+            // Create a new profile info
+            var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name, Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtension));
+
+            // Load and decrypt the profiles from the profile file
+            var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
+            var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+            var profiles = DeserializeFromByteArray(decryptedBytes);
+
+            // Save the decrypted profiles to the profile file
+            SerializeToFile(newProfileFileInfo.Path, profiles);
+
+            // Remove the old profile and add the new one
+            File.Delete(profileFileInfo.Path);
+            ProfileFiles.Remove(profileFileInfo);
+            ProfileFiles.Add(newProfileFileInfo);
+
+            // Switch profile, if it was previously loaded
+            if (switchProfile)
+            {
+                SwitchProfile(newProfileFileInfo, false);
+
+                LoadedProfileFileChanged(LoadedProfileFile);
+            }
+        }        
         #endregion
 
         #region Load, save and switch profile

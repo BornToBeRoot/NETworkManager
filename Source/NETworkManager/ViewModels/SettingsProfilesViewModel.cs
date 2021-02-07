@@ -126,7 +126,7 @@ namespace NETworkManager.ViewModels
             MovingFiles = true;
 
             // Get files from new location and check if there are files with the same name
-            var containsFile = Directory.GetFiles(Location).Where(x => Path.GetExtension(x) == ProfileManager.ProfileFileExtension).Count() > 0;
+            var containsFile = Directory.GetFiles(Location).Where(x => Path.GetExtension(x) == ProfileManager.ProfileFileExtension).Any();
 
             var copyFiles = false;
 
@@ -282,7 +282,7 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.SetMasterPassword
             };
 
-            var credentialsSetMasterPasswordViewModel = new CredentialsSetMasterPasswordViewModel(instance =>
+            var credentialsSetPasswordViewModel = new CredentialsSetPasswordViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -294,13 +294,50 @@ namespace NETworkManager.ViewModels
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             });
 
-            customDialog.Content = new CredentialsSetMasterPasswordDialog
+            customDialog.Content = new CredentialsSetPasswordDialog
             {
-                DataContext = credentialsSetMasterPasswordViewModel
+                DataContext = credentialsSetPasswordViewModel
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
+
+        public ICommand ChangeMasterPasswordCommand => new RelayCommand(p => ChangeMasterPasswordAction());
+
+        private void ChangeMasterPasswordAction()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICommand DisableEncryptionCommand => new RelayCommand(p => DisableEncryptionAction());
+
+        private async void DisableEncryptionAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.MasterPassword
+            };
+
+            var credentialsPasswordViewModel = new CredentialsPasswordViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                // ToDo: Add try/catch...
+                ProfileManager.DisableEncryption(SelectedProfileFile, instance.Password);
+
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new CredentialsPasswordDialog
+            {
+                DataContext = credentialsPasswordViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
         #endregion
 
         #region Methods

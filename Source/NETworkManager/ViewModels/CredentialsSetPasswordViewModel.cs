@@ -5,12 +5,12 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
-    public class CredentialsSetMasterPasswordViewModel : ViewModelBase
+    public class CredentialsSetPasswordViewModel : ViewModelBase
     {
         /// <summary>
-        /// Command which is called when the save button is clicked.
+        /// Command which is called when the OK button is clicked.
         /// </summary>
-        public ICommand SaveCommand { get; }
+        public ICommand OKCommand { get; }
 
         /// <summary>
         /// Command which is called when the cancel button is clicked.
@@ -112,19 +112,19 @@ namespace NETworkManager.ViewModels
         /// </summary>
         private void ValidatePassword()
         {
-            IsPasswordEmpty = ((Password == null || Password.Length == 0) || (PasswordRepeat == null || PasswordRepeat.Length == 0));
+            IsPasswordEmpty = Password == null || Password.Length == 0 || PasswordRepeat == null || PasswordRepeat.Length == 0;
 
             IsRepeatedPasswordEqual = !IsPasswordEmpty && SecureStringHelper.ConvertToString(Password).Equals(SecureStringHelper.ConvertToString(PasswordRepeat));
         }
 
         /// <summary>
-        /// Initalizes a new class <see cref="CredentialsSetMasterPasswordViewModel"/> with <see cref="SaveCommand" /> and <see cref="CancelCommand"/>.
+        /// Initalizes a new class <see cref="CredentialsSetPasswordViewModel"/> with <see cref="OKCommand" /> and <see cref="CancelCommand"/>.
         /// </summary>
-        /// <param name="saveCommand"><see cref="SaveCommand"/> which is executed on save.</param>
-        /// <param name="cancelHandler"><see cref="CancelCommand"/> which is executed on cancel.</param>
-        public CredentialsSetMasterPasswordViewModel(Action<CredentialsSetMasterPasswordViewModel> saveCommand, Action<CredentialsSetMasterPasswordViewModel> cancelHandler)
+        /// <param name="okCommand"><see cref="OKCommand"/> which is executed on OK click.</param>
+        /// <param name="cancelHandler"><see cref="CancelCommand"/> which is executed on cancel click.</param>
+        public CredentialsSetPasswordViewModel(Action<CredentialsSetPasswordViewModel> okCommand, Action<CredentialsSetPasswordViewModel> cancelHandler)
         {
-            SaveCommand = new RelayCommand(p => saveCommand(this));
+            OKCommand = new RelayCommand(p => okCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
         }
     }

@@ -1,8 +1,8 @@
 ﻿namespace NETworkManager.Views
 {
-    public partial class CredentialsSetMasterPasswordDialog
+    public partial class CredentialsPasswordDialog
     {
-        public CredentialsSetMasterPasswordDialog()
+        public CredentialsPasswordDialog()
         {
             InitializeComponent();
         }

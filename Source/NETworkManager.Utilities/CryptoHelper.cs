@@ -9,13 +9,13 @@ namespace NETworkManager.Utilities
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="decryptedBytes"></param>
         /// <param name="password"></param>
         /// <param name="keySize"></param>
         /// <param name="blockSize"></param>
         /// <param name="iterations"></param>
         /// <returns></returns>
-        public static byte[] Encrypt(byte[] text, string password, int keySize, int blockSize, int iterations)
+        public static byte[] Encrypt(byte[] decryptedBytes, string password, int keySize, int blockSize, int iterations)
         {
             var salt = GenerateRandomEntropy(keySize / 8); // Generate salt based
             var iv = GenerateRandomEntropy(blockSize / 8); // Generate iv, has to be the same as the block size
@@ -36,7 +36,7 @@ namespace NETworkManager.Utilities
             using var memoryStream = new MemoryStream();
             using var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
 
-            cryptoStream.Write(text, 0, text.Length);
+            cryptoStream.Write(decryptedBytes, 0, decryptedBytes.Length);
             cryptoStream.FlushFinalBlock();
 
             var cipher = salt;
@@ -52,17 +52,17 @@ namespace NETworkManager.Utilities
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="cipherWithSaltAndIv"></param>
+        /// <param name="encryptedBytesWithSaltAndIV"></param>
         /// <param name="password"></param>
         /// <param name="keySize"></param>
         /// <param name="blockSize"></param>
         /// <param name="iterations"></param>
         /// <returns></returns>
-        public static byte[] Decrypt(byte[] cipherWithSaltAndIv, string password, int keySize, int blockSize, int iterations)
+        public static byte[] Decrypt(byte[] encryptedBytesWithSaltAndIV, string password, int keySize, int blockSize, int iterations)
         {
-            var salt = cipherWithSaltAndIv.Take(keySize / 8).ToArray(); // Take salt bytes
-            var iv = cipherWithSaltAndIv.Skip(keySize / 8).Take(blockSize / 8).ToArray(); // Skip salt bytes, take iv bytes
-            var cipher = cipherWithSaltAndIv.Skip((keySize / 8) + (blockSize / 8)).Take(cipherWithSaltAndIv.Length - ((keySize / 8) + (blockSize / 8))).ToArray(); // Skip salt and iv bytes, take cipher bytes
+            var salt = encryptedBytesWithSaltAndIV.Take(keySize / 8).ToArray(); // Take salt bytes
+            var iv = encryptedBytesWithSaltAndIV.Skip(keySize / 8).Take(blockSize / 8).ToArray(); // Skip salt bytes, take iv bytes
+            var cipher = encryptedBytesWithSaltAndIV.Skip((keySize / 8) + (blockSize / 8)).Take(encryptedBytesWithSaltAndIV.Length - ((keySize / 8) + (blockSize / 8))).ToArray(); // Skip salt and iv bytes, take cipher bytes
 
             using var rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt, iterations);
 
