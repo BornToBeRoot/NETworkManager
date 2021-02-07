@@ -341,13 +341,6 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        public void SaveAndCheckSettings()
-        {
-            // Save everything
-            if (ProfileManager.ProfilesChanged)
-                ProfileManager.Save();
-        }
-
         public void SetLocationPathFromDragDrop(string path)
         {
             Location = path;

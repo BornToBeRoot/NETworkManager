@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -167,7 +166,9 @@ namespace NETworkManager.Profiles
         {
             ProfileFileInfo profileFileInfo = new ProfileFileInfo(profileName, Path.Combine(GetDefaultProfilesLocation(), $"{profileName}{ProfileFileExtension}"));
 
-            Save(profileFileInfo, new List<ProfileInfo>());
+            CheckAndCreateDirectory();
+
+            SerializeToFile(profileFileInfo.Path, new List<ProfileInfo>());
 
             ProfileFiles.Add(profileFileInfo);
         }
@@ -232,10 +233,9 @@ namespace NETworkManager.Profiles
             // Check if the profile is currently in use
             bool switchProfile = false;
 
-            if (LoadedProfileFile.Equals(profileFileInfo))
+            if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
             {
                 Save();
-
                 switchProfile = true;
             }
 
@@ -264,7 +264,6 @@ namespace NETworkManager.Profiles
             if (switchProfile)
             {
                 SwitchProfile(newProfileFileInfo, false);
-
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
         }
@@ -279,10 +278,9 @@ namespace NETworkManager.Profiles
             // Check if the profile is currently in use
             bool switchProfile = false;
 
-            if (LoadedProfileFile.Equals(profileFileInfo))
+            if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
             {
                 Save();
-
                 switchProfile = true;
             }
 
@@ -306,27 +304,36 @@ namespace NETworkManager.Profiles
             if (switchProfile)
             {
                 SwitchProfile(newProfileFileInfo, false);
-
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
-        }        
+        }
         #endregion
 
         #region Load, save and switch profile
         /// <summary>
         /// Method to load profiles based on the infos provided in the <see cref="ProfileFileInfo"/>.
         /// </summary>
-        /// <param name="info"><see cref="ProfileFileInfo"/> to be loaded.</param>
-        private static void Load(ProfileFileInfo info)
+        /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> to be loaded.</param>
+        private static void Load(ProfileFileInfo profileFileInfo)
         {
-            if (File.Exists(info.Path))
+            if (!File.Exists(profileFileInfo.Path))
+                throw new FileNotFoundException($"{profileFileInfo.Path} could not be found!");
+
+            if (profileFileInfo.IsEncrypted)
             {
-                DeserializeFromFile(info.Path).ForEach(AddProfile);
+                var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
+                var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(profileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+
+                DeserializeFromByteArray(decryptedBytes).ForEach(AddProfile);
+            }
+            else
+            {
+                DeserializeFromFile(profileFileInfo.Path).ForEach(AddProfile);
             }
 
             ProfilesChanged = false;
 
-            LoadedProfileFile = info;
+            LoadedProfileFile = profileFileInfo;
         }
 
         /// <summary>
@@ -334,24 +341,26 @@ namespace NETworkManager.Profiles
         /// </summary>
         /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> which is used to save. If empty, the current <see cref="ProfileFileInfo"/> is used.</param>
         /// <param name="profiles">List of <see cref="ProfileInfo"/> to save. If empty, the current loaded profiles are used.</param>
-        public static void Save(ProfileFileInfo profileFileInfo = null, List<ProfileInfo> profiles = null)
+        public static void Save()
         {
-            var location = GetProfilesLocation();
-
-            // Create directory if it does not exists to prevent app crash
-            if (!Directory.Exists(location))
-                Directory.CreateDirectory(location);
-
-            // Get the current loaded profile file
-            if (profileFileInfo == null)
-                profileFileInfo = LoadedProfileFile;
-
-            // Get the current profiles
-            if (profiles == null)
-                profiles = new List<ProfileInfo>(Profiles);
+            CheckAndCreateDirectory();
 
             // Write to an xml file.
-            SerializeToFile(profileFileInfo.Path, profiles);
+            if (LoadedProfileFile.IsEncrypted)
+            {
+                // Only if the password provided earlier was valid...
+                if (LoadedProfileFile.IsPasswordValid)
+                {
+                    byte[] decryptedBytes = SerializeToByteArray(new List<ProfileInfo>(Profiles));
+                    byte[] encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(LoadedProfileFile.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+
+                    File.WriteAllBytes(LoadedProfileFile.Path, encryptedBytes);
+                }
+            }
+            else
+            {
+                SerializeToFile(LoadedProfileFile.Path, new List<ProfileInfo>(Profiles));
+            }
 
             ProfilesChanged = false;
         }
@@ -365,6 +374,15 @@ namespace NETworkManager.Profiles
 
             Load(info);
         }
+
+        private static void CheckAndCreateDirectory()
+        {
+            var location = GetProfilesLocation();
+
+            if (!Directory.Exists(location))
+                Directory.CreateDirectory(location);
+        }
+
         #endregion
 
         #region Deserialize, serialize to file

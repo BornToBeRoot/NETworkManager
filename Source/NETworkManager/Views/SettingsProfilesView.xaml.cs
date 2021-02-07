@@ -31,11 +31,7 @@ namespace NETworkManager.Views
             e.Effects = DragDropEffects.Copy;
             e.Handled = true;
         }
-
-        public void OnVisible()
-        {
-            _viewModel.SaveAndCheckSettings();
-        }
+        
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
             if (sender is ContextMenu menu)

@@ -226,9 +226,6 @@ namespace NETworkManager.ViewModels
                     if (_settingsProfilesView == null)
                         _settingsProfilesView = new SettingsProfilesView();
 
-                    // Save profiles
-                    _settingsProfilesView.OnVisible();
-
                     SettingsContent = _settingsProfilesView;
                     break;
                 case SettingsViewName.Dashboard:
