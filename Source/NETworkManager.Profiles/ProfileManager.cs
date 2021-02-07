@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,19 +19,19 @@ namespace NETworkManager.Profiles
         private static string ProfilesFolderName => "Profiles";
 
         /// <summary>
-        /// Default profile name
+        /// Default profile name.
         /// </summary>
         private static string ProfilesDefaultFileName => "Default";
 
         /// <summary>
-        /// Profile file extension
+        /// Profile file extension.
         /// </summary>
-        public static string ProfilesFileExtension => ".xml";
-
+        public static string ProfileFileExtension => ".xml";
+                
         /// <summary>
-        /// String to identify encrypted profile files
+        /// Profile file extension for encrypted files.
         /// </summary>
-        public static string ProfilesEncryptionIdentifier => ".encrypted";
+        public static string ProfileFileExtensionEncrypted => ".encrypted";
 
         public static string TagIdentifier => "tag=";
 
@@ -107,7 +106,7 @@ namespace NETworkManager.Profiles
         #region FileName, FilePath
         public static string GetProfilesDefaultFileName()
         {
-            return $"{ProfilesDefaultFileName}{ProfilesFileExtension}";
+            return $"{ProfilesDefaultFileName}{ProfileFileExtension}";
         }
 
         public static string GetProfilesDefaultFilePath()
@@ -119,31 +118,34 @@ namespace NETworkManager.Profiles
         #endregion
 
         #region Get profile files, load profile files, refresh profile files  
+        /// <summary>
+        /// Get all files in the folder with the extension <see cref="ProfileFileExtension" /> or <see cref="ProfileFileExtensionEncrypted"/>.
+        /// </summary>
+        /// <param name="location">Path of the profile folder.</param>
+        /// <returns>List of profile files.</returns>
         private static IEnumerable<string> GetProfileFiles(string location)
         {
-            return Directory.GetFiles(location).Where(x => Path.GetExtension(x) == ProfilesFileExtension);
+            return Directory.GetFiles(location).Where(x => (Path.GetExtension(x) == ProfileFileExtension || Path.GetExtension(x) == ProfileFileExtensionEncrypted));
         }
 
+        /// <summary>
+        /// Method to get the list of profile files from file system and detect if the file is encrypted.
+        /// </summary>
         private static void LoadProfileFiles()
         {
             var location = GetProfilesLocation();
 
+            // Folder exists
             if (Directory.Exists(location))
-            {
+            {                
                 foreach (var file in GetProfileFiles(location))
                 {
-                    var isEncryptionEnabled = Path.GetFileNameWithoutExtension(file).EndsWith(ProfilesEncryptionIdentifier);
-
-                    var name = Path.GetFileNameWithoutExtension(file);
-
-                    if (isEncryptionEnabled)
-                        name = name.Substring(0, name.Length - ProfilesEncryptionIdentifier.Length);
-
-                    ProfileFiles.Add(new ProfileFileInfo(name, file, isEncryptionEnabled));
+                    // Gets the filename, path and if the file is encrypted.
+                    ProfileFiles.Add(new ProfileFileInfo(Path.GetFileNameWithoutExtension(file), file, Path.GetFileName(file).EndsWith(ProfileFileExtensionEncrypted)));
                 }
             }
 
-            // Create default
+            // Create default profile
             if (ProfileFiles.Count == 0)
                 ProfileFiles.Add(new ProfileFileInfo(ProfilesDefaultFileName, GetProfilesDefaultFilePath()));
         }
@@ -159,7 +161,7 @@ namespace NETworkManager.Profiles
         #region Add profile file, edit profile file, delete profile file
         public static void AddProfileFile(string profileName)
         {
-            Save(new ProfileFileInfo(profileName, Path.Combine(GetDefaultProfilesLocation(), $"{profileName}{ProfilesFileExtension}")), new List<ProfileInfo>());
+            Save(new ProfileFileInfo(profileName, Path.Combine(GetDefaultProfilesLocation(), $"{profileName}{ProfileFileExtension}")), new List<ProfileInfo>());
 
             RefreshProfileFiles();
 
@@ -179,7 +181,7 @@ namespace NETworkManager.Profiles
                 switchProfile = true;
             }
 
-            ProfileFileInfo newProfileFileInfo = new ProfileFileInfo(newProfileName, Path.Combine(GetProfilesLocation(), profileFileInfo.IsEncryptionEnabled ? $"{newProfileName}{ProfilesEncryptionIdentifier}{ProfilesFileExtension}" : $"{newProfileName}{ProfilesFileExtension}"), profileFileInfo.IsEncryptionEnabled)
+            ProfileFileInfo newProfileFileInfo = new ProfileFileInfo(newProfileName, Path.Combine(GetProfilesLocation(), newProfileName, Path.GetExtension(profileFileInfo.Path)), profileFileInfo.IsEncrypted)
             {
                 Password = profileFileInfo.Password,
             };
@@ -287,6 +289,7 @@ namespace NETworkManager.Profiles
 
         private static void MoveProfiles(string targedLocation)
         {
+            // Save the current profile
             Save();
 
             // Create the directory

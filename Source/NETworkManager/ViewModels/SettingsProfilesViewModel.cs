@@ -126,7 +126,7 @@ namespace NETworkManager.ViewModels
             MovingFiles = true;
 
             // Get files from new location and check if there are files with the same name
-            var containsFile = Directory.GetFiles(Location).Where(x => Path.GetExtension(x) == ProfileManager.ProfilesFileExtension).Count() > 0;
+            var containsFile = Directory.GetFiles(Location).Where(x => Path.GetExtension(x) == ProfileManager.ProfileFileExtension).Count() > 0;
 
             var copyFiles = false;
 

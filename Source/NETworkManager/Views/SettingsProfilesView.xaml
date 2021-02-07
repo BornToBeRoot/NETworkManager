@@ -120,7 +120,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.EncryptionDots}" Visibility="Collapsed">
+                    <MenuItem Header="{x:Static localization:Strings.EncryptionDots}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -128,7 +128,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{x:Static localization:Strings.EnableEncryptionDots}" Command="{Binding EnableEncryptionCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncryptionEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                        <MenuItem Header="{x:Static localization:Strings.EnableEncryptionDots}" Command="{Binding EnableEncryptionCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -137,7 +137,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.ChangeMasterPasswordDots}" Command="{Binding EditProfileFileCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncryptionEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <MenuItem Header="{x:Static localization:Strings.ChangeMasterPasswordDots}" Command="{Binding EditProfileFileCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -146,7 +146,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.DisableEncryptionDots}" Command="{Binding EditProfileFileCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncryptionEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <MenuItem Header="{x:Static localization:Strings.DisableEncryptionDots}" Command="{Binding EditProfileFileCommand}" Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -169,19 +169,19 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profiles:ProfileFileInfo.Name)}" MinWidth="150" Width="Auto" />
-                <DataGridTemplateColumn Header="{x:Static localization:Strings.IsEncrypted}" Width="Auto" Visibility="Collapsed">
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.IsEncrypted}" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.Resources>
-                                    <VisualBrush x:Key="VisualLockOpen" Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=UnlockSolid}"/>
-                                    <VisualBrush x:Key="VisualLockClosed" Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=LockSolid}"/>
+                                    <VisualBrush x:Key="VisualLockOpen" Stretch="Uniform" Visual="{iconPacks:Material Kind=LockOpenOutline}"/>
+                                    <VisualBrush x:Key="VisualLockClosed" Stretch="Uniform" Visual="{iconPacks:Material Kind=LockOutline}"/>
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualLockOpen}" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=(profiles:ProfileFileInfo.IsEncryptionEnabled)}" Value="True">
+                                            <DataTrigger Binding="{Binding Path=(profiles:ProfileFileInfo.IsEncrypted)}" Value="True">
                                                 <Setter Property="OpacityMask" Value="{StaticResource VisualLockClosed}" />
                                             </DataTrigger>
                                         </Style.Triggers>
