@@ -286,9 +286,17 @@ namespace NETworkManager.ViewModels
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                // ToDo: Add try/catch...
-                ProfileManager.EnableEncryption(SelectedProfileFile, instance.Password);
+                try
+                {
+                    ProfileManager.EnableEncryption(SelectedProfileFile, instance.Password);
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.EncryptionError, $"{Localization.Resources.Strings.EncryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
+                }
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -322,8 +330,24 @@ namespace NETworkManager.ViewModels
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                // ToDo: Add try/catch...
-                ProfileManager.DisableEncryption(SelectedProfileFile, instance.Password);
+                try
+                {
+                    ProfileManager.DisableEncryption(SelectedProfileFile, instance.Password);
+                }
+                catch (System.Security.Cryptography.CryptographicException)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.WrongPassword, Localization.Resources.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, settings);
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.DecryptionError, $"{Localization.Resources.Strings.DecryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
+                }
 
             }, async instance =>
             {

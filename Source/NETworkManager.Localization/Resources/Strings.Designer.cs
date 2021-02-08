@@ -1924,6 +1924,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decryption error.
+        /// </summary>
+        public static string DecryptionError {
+            get {
+                return ResourceManager.GetString("DecryptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not decrypt file. You may report this issue on GitHub..
+        /// </summary>
+        public static string DecryptionErrorMessage {
+            get {
+                return ResourceManager.GetString("DecryptionErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default.
         /// </summary>
         public static string Default {
@@ -2586,6 +2604,24 @@ namespace NETworkManager.Localization.Resources {
         public static string EncryptionDots {
             get {
                 return ResourceManager.GetString("EncryptionDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encryption error.
+        /// </summary>
+        public static string EncryptionError {
+            get {
+                return ResourceManager.GetString("EncryptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not encrpyt file. You may report this issue on GitHub..
+        /// </summary>
+        public static string EncryptionErrorMessage {
+            get {
+                return ResourceManager.GetString("EncryptionErrorMessage", resourceCulture);
             }
         }
         

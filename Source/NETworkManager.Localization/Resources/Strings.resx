@@ -2925,4 +2925,16 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Edit group...</value>
   </data>
+  <data name="DecryptionError" xml:space="preserve">
+    <value>Decryption error</value>
+  </data>
+  <data name="DecryptionErrorMessage" xml:space="preserve">
+    <value>Could not decrypt file. You may report this issue on GitHub.</value>
+  </data>
+  <data name="EncryptionError" xml:space="preserve">
+    <value>Encryption error</value>
+  </data>
+  <data name="EncryptionErrorMessage" xml:space="preserve">
+    <value>Could not encrpyt file. You may report this issue on GitHub.</value>
+  </data>
 </root>
