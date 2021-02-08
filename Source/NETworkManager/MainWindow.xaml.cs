@@ -271,7 +271,7 @@ namespace NETworkManager
                 // Switch profile...
                 if (value != null && !value.Equals(ProfileManager.LoadedProfileFile))
                 {
-                    SwitchProfile(value);
+                    CheckEncryptionAndSwitchProfile(value);
                     SettingsManager.Current.Profiles_LastSelected = value.Name;
                 }
 
@@ -279,7 +279,7 @@ namespace NETworkManager
             }
         }
         #endregion
-               
+
         #region Constructor, window load and close events
         public MainWindow()
         {
@@ -455,7 +455,7 @@ namespace NETworkManager
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ProfileManager_OnLoadedProfileFileChangedEvent(object sender, ProfileFileInfoArgs e)
-        {            
+        {
             SelectedProfileFile = null;
 
             SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == e.ProfileFileInfo.Name);
@@ -1260,16 +1260,56 @@ namespace NETworkManager
         #endregion
 
         #region Methods
+        private async void CheckEncryptionAndSwitchProfile(ProfileFileInfo info)
+        {
+            if (info.IsEncrypted)
+            {
+                var customDialog = new CustomDialog
+                {
+                    Title = Localization.Resources.Strings.MasterPassword
+                };
+
+                var credentialsPasswordViewModel = new CredentialsPasswordViewModel(async instance =>
+                {
+                    await this.HideMetroDialogAsync(customDialog);
+
+                    info.Password = instance.Password;
+
+                    SwitchProfile(info);
+                }, async instance =>
+                {
+                    await this.HideMetroDialogAsync(customDialog);
+                });
+
+                customDialog.Content = new CredentialsPasswordDialog
+                {
+                    DataContext = credentialsPasswordViewModel
+                };
+
+                await this.ShowMetroDialogAsync(customDialog);
+            }
+            else
+            {
+                SwitchProfile(info);
+            }
+        }
+
         private async void SwitchProfile(ProfileFileInfo info)
         {
             try
             {
-                if(info.IsEncrypted)
-                {
-                    Debug.WriteLine($"=======> File {info.Name} is encrypted");
-                }
-
                 ProfileManager.SwitchProfile(info);
+            }
+            catch (System.Security.Cryptography.CryptographicException)
+            {
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                ConfigurationManager.Current.FixAirspace = true;
+
+                await this.ShowMessageAsync(Localization.Resources.Strings.WrongPassword, Localization.Resources.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, settings);
+
+                ConfigurationManager.Current.FixAirspace = false;
             }
             catch
             {

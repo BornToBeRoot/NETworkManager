@@ -337,12 +337,13 @@ namespace NETworkManager.Profiles
         }
 
         /// <summary>
-        /// Method to save profiles based on the infos provided in the <see cref="ProfileFileInfo"/>.
+        /// Method to save the currently loaded profiles based on the infos provided in the <see cref="ProfileFileInfo"/>.
         /// </summary>
-        /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> which is used to save. If empty, the current <see cref="ProfileFileInfo"/> is used.</param>
-        /// <param name="profiles">List of <see cref="ProfileInfo"/> to save. If empty, the current loaded profiles are used.</param>
         public static void Save()
         {
+            if (LoadedProfileFile == null)
+                return;
+
             CheckAndCreateDirectory();
 
             // Write to an xml file.

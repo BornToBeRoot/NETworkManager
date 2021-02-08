@@ -282,16 +282,16 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.SetMasterPassword
             };
 
-            var credentialsSetPasswordViewModel = new CredentialsSetPasswordViewModel(instance =>
+            var credentialsSetPasswordViewModel = new CredentialsSetPasswordViewModel(async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 // ToDo: Add try/catch...
                 ProfileManager.EnableEncryption(SelectedProfileFile, instance.Password);
 
-            }, instance =>
+            }, async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             });
 
             customDialog.Content = new CredentialsSetPasswordDialog
@@ -318,16 +318,16 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.MasterPassword
             };
 
-            var credentialsPasswordViewModel = new CredentialsPasswordViewModel(instance =>
+            var credentialsPasswordViewModel = new CredentialsPasswordViewModel(async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 // ToDo: Add try/catch...
                 ProfileManager.DisableEncryption(SelectedProfileFile, instance.Password);
 
-            }, instance =>
+            }, async instance =>
             {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             });
 
             customDialog.Content = new CredentialsPasswordDialog
