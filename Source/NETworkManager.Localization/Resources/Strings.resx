@@ -1250,7 +1250,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Width</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Credentials could not be decrypted with the given password.</value>
+    <value>Could not be decrypted the file with the given password.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>The entered password is wrong.</value>

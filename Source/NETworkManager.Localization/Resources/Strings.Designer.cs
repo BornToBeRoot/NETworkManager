@@ -8344,7 +8344,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Credentials could not be decrypted with the given password..
+        ///   Looks up a localized string similar to Could not be decrypted the file with the given password..
         /// </summary>
         public static string WrongPasswordDecryptionFailedMessage {
             get {
