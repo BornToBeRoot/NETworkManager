@@ -1204,6 +1204,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change master password.
+        /// </summary>
+        public static string ChangeMasterPassword {
+            get {
+                return ResourceManager.GetString("ChangeMasterPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Master Password....
         /// </summary>
         public static string ChangeMasterPasswordDots {
@@ -1812,6 +1821,15 @@ namespace NETworkManager.Localization.Resources {
         public static string CurrentlyUploaded {
             get {
                 return ResourceManager.GetString("CurrentlyUploaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current password.
+        /// </summary>
+        public static string CurrentPassword {
+            get {
+                return ResourceManager.GetString("CurrentPassword", resourceCulture);
             }
         }
         
@@ -4294,6 +4312,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NewConnectionDots {
             get {
                 return ResourceManager.GetString("NewConnectionDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New password.
+        /// </summary>
+        public static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
             }
         }
         

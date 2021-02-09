@@ -312,9 +312,47 @@ namespace NETworkManager.ViewModels
 
         public ICommand ChangeMasterPasswordCommand => new RelayCommand(p => ChangeMasterPasswordAction());
 
-        private void ChangeMasterPasswordAction()
+        private async void ChangeMasterPasswordAction()
         {
-            throw new NotImplementedException();
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.ChangeMasterPassword
+            };
+
+            var credentialsPasswordViewModel = new CredentialsChangePasswordViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ProfileManager.ChangeMasterPassword(SelectedProfileFile, instance.Password, instance.NewPassword);
+                }
+                catch (System.Security.Cryptography.CryptographicException)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.WrongPassword, Localization.Resources.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, settings);
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.DecryptionError, $"{Localization.Resources.Strings.DecryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
+                }
+
+            }, async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new CredentialsChangePasswordDialog
+            {
+                DataContext = credentialsPasswordViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public ICommand DisableEncryptionCommand => new RelayCommand(p => DisableEncryptionAction());

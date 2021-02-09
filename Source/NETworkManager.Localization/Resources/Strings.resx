@@ -2937,4 +2937,13 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="EncryptionErrorMessage" xml:space="preserve">
     <value>Could not encrpyt file. You may report this issue on GitHub.</value>
   </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Current password</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="ChangeMasterPassword" xml:space="preserve">
+    <value>Change master password</value>
+  </data>
 </root>

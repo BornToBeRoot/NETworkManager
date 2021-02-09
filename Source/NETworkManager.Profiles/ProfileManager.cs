@@ -228,6 +228,11 @@ namespace NETworkManager.Profiles
         #endregion
 
         #region Enable encryption, disable encryption, change master password
+        /// <summary>
+        /// Method to enable encryption for a profile file.
+        /// </summary>
+        /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> which should be encrypted.</param>
+        /// <param name="password">Password to encrypt the profile file.</param>
         public static void EnableEncryption(ProfileFileInfo profileFileInfo, SecureString password)
         {
             // Check if the profile is currently in use
@@ -257,8 +262,8 @@ namespace NETworkManager.Profiles
 
             // Remove the old profile and add the new one
             File.Delete(profileFileInfo.Path);
-            ProfileFiles.Remove(profileFileInfo);
-            ProfileFiles.Add(newProfileFileInfo);
+            ProfileFiles.Add(newProfileFileInfo); // First add, then remove, so we can switch
+            ProfileFiles.Remove(profileFileInfo);            
 
             // Switch profile, if it was previously loaded
             if (switchProfile)
@@ -268,11 +273,58 @@ namespace NETworkManager.Profiles
             }
         }
 
-        public static void ChangeMasterPassword()
+        /// <summary>
+        /// Method to change the master password of an encrypted profile file.
+        /// </summary>
+        /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> which should be changed.</param>
+        /// <param name="password">Password to decrypt the profile file.</param>
+        /// <param name="newPassword">Password to encrypt the profile file.</param>
+        public static void ChangeMasterPassword(ProfileFileInfo profileFileInfo, SecureString password, SecureString newPassword)
         {
+            // Check if the profile is currently in use
+            bool switchProfile = false;
 
+            if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
+            {
+                Save();
+                switchProfile = true;
+            }
+
+            // Create a new profile info with the encryption infos
+            var newProfileFileInfo = new ProfileFileInfo(profileFileInfo.Name, Path.ChangeExtension(profileFileInfo.Path, ProfileFileExtensionEncrypted), true)
+            {
+                Password = newPassword,
+                IsPasswordValid = true
+            };
+
+            // Load and decrypt the profiles from the profile file
+            var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
+            var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+            var profiles = DeserializeFromByteArray(decryptedBytes);
+
+            // Save the encrypted file
+            decryptedBytes = SerializeToByteArray(profiles);
+            encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(newProfileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+
+            File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
+
+            // Remove the old profile and add the new one
+            ProfileFiles.Add(newProfileFileInfo); // First add, then remove, so we can switch
+            ProfileFiles.Remove(profileFileInfo);
+            
+            // Switch profile, if it was previously loaded
+            if (switchProfile)
+            {
+                SwitchProfile(newProfileFileInfo, false);
+                LoadedProfileFileChanged(LoadedProfileFile);
+            }
         }
 
+        /// <summary>
+        /// Method to disable encryption for a profile file.
+        /// </summary>
+        /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> which should be decrypted.</param>
+        /// <param name="password">Password to decrypt the profile file.</param>
         public static void DisableEncryption(ProfileFileInfo profileFileInfo, SecureString password)
         {
             // Check if the profile is currently in use
@@ -297,8 +349,8 @@ namespace NETworkManager.Profiles
 
             // Remove the old profile and add the new one
             File.Delete(profileFileInfo.Path);
-            ProfileFiles.Remove(profileFileInfo);
-            ProfileFiles.Add(newProfileFileInfo);
+            ProfileFiles.Add(newProfileFileInfo); // First add, then remove, so we can switch
+            ProfileFiles.Remove(profileFileInfo);            
 
             // Switch profile, if it was previously loaded
             if (switchProfile)
