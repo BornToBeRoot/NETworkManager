@@ -458,7 +458,7 @@ namespace NETworkManager
         {
             SelectedProfileFile = null;
 
-            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == e.ProfileFileInfo.Name);
+            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Equals(e));
 
             // Fallback if profile could not be found.
             if (SelectedProfileFile == null)
