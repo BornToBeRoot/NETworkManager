@@ -10,7 +10,12 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null ? string.Empty : MACAddressHelper.GetDefaultFormat((PhysicalAddress)value);
+            if (!(value is PhysicalAddress physicalAddress))
+                return string.Empty;
+
+            string macAddress = physicalAddress.ToString();
+
+            return string.IsNullOrEmpty(macAddress) ? string.Empty : MACAddressHelper.GetDefaultFormat(macAddress);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
