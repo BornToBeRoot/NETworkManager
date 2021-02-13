@@ -27,6 +27,7 @@ Date: **xx.xx.2021**
 
 ## Bugfixes
 - Prevent app crash if profile is corrupted [#270](https://github.com/BornToBeRoot/NETworkManager/issues/270)
+- App crash fixed if network interfaces from type 53 without a mac address are available on the system [#458](https://github.com/BornToBeRoot/NETworkManager/issues/458)
 - Wrong flags `sl-SI` and `zh-TW` fixed [#438](https://github.com/BornToBeRoot/NETworkManager/issues/438)
 - Update link color fixed
 
