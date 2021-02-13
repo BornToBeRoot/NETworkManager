@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -263,7 +264,7 @@ namespace NETworkManager.Profiles
             // Remove the old profile and add the new one
             File.Delete(profileFileInfo.Path);
             ProfileFiles.Add(newProfileFileInfo); // First add, then remove, so we can switch
-            ProfileFiles.Remove(profileFileInfo);            
+            ProfileFiles.Remove(profileFileInfo);
 
             // Switch profile, if it was previously loaded
             if (switchProfile)
@@ -311,7 +312,7 @@ namespace NETworkManager.Profiles
             // Remove the old profile and add the new one
             ProfileFiles.Add(newProfileFileInfo); // First add, then remove, so we can switch
             ProfileFiles.Remove(profileFileInfo);
-            
+
             // Switch profile, if it was previously loaded
             if (switchProfile)
             {
@@ -350,7 +351,7 @@ namespace NETworkManager.Profiles
             // Remove the old profile and add the new one
             File.Delete(profileFileInfo.Path);
             ProfileFiles.Add(newProfileFileInfo); // First add, then remove, so we can switch
-            ProfileFiles.Remove(profileFileInfo);            
+            ProfileFiles.Remove(profileFileInfo);
 
             // Switch profile, if it was previously loaded
             if (switchProfile)
@@ -368,19 +369,25 @@ namespace NETworkManager.Profiles
         /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> to be loaded.</param>
         private static void Load(ProfileFileInfo profileFileInfo)
         {
-            if (!File.Exists(profileFileInfo.Path))
-                throw new FileNotFoundException($"{profileFileInfo.Path} could not be found!");
-
-            if (profileFileInfo.IsEncrypted)
+            if (File.Exists(profileFileInfo.Path))
             {
-                var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
-                var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(profileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+                if (profileFileInfo.IsEncrypted)
+                {
+                    var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
+                    var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(profileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
 
-                DeserializeFromByteArray(decryptedBytes).ForEach(AddProfile);
+                    DeserializeFromByteArray(decryptedBytes).ForEach(AddProfile);
+                }
+                else
+                {
+                    DeserializeFromFile(profileFileInfo.Path).ForEach(AddProfile);
+                }
             }
             else
             {
-                DeserializeFromFile(profileFileInfo.Path).ForEach(AddProfile);
+                // Don't throw an error if it's the default file.                
+                if (profileFileInfo.Path != GetProfilesDefaultFilePath())
+                    throw new FileNotFoundException($"{profileFileInfo.Path} could not be found!");
             }
 
             ProfilesChanged = false;
