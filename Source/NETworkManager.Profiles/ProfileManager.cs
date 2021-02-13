@@ -58,6 +58,18 @@ namespace NETworkManager.Profiles
         public static ObservableCollection<ProfileInfo> Profiles { get; set; } = new ObservableCollection<ProfileInfo>();
 
         public static bool ProfilesChanged { get; set; }
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// Event is fired if the profile files changed.
+        /// </summary>
+        public static event EventHandler OnProfileFilesChangedEvent;
+
+        private static void ProfileFilesChanged()
+        {
+            OnProfileFilesChangedEvent?.Invoke(null, EventArgs.Empty);
+        }
 
         /// <summary>
         /// Event is fired if a loaded profile file is changed.
@@ -204,7 +216,6 @@ namespace NETworkManager.Profiles
             if (switchProfile)
             {
                 SwitchProfile(newProfileFileInfo, false);
-
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
         }
@@ -218,7 +229,6 @@ namespace NETworkManager.Profiles
             if (LoadedProfileFile.Equals(profileFileInfo))
             {
                 SwitchProfile(ProfileFiles.FirstOrDefault(x => !x.Equals(profileFileInfo)));
-
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
 
@@ -261,10 +271,8 @@ namespace NETworkManager.Profiles
 
             File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
 
-            // Remove the old profile and add the new one
-            File.Delete(profileFileInfo.Path);
-            ProfileFiles.Add(newProfileFileInfo); // First add, then remove, so we can switch
-            ProfileFiles.Remove(profileFileInfo);
+            // Add the new profile
+            ProfileFiles.Add(newProfileFileInfo);            
 
             // Switch profile, if it was previously loaded
             if (switchProfile)
@@ -272,6 +280,10 @@ namespace NETworkManager.Profiles
                 SwitchProfile(newProfileFileInfo, false);
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
+
+            // Remove the old profile file
+            File.Delete(profileFileInfo.Path);
+            ProfileFiles.Remove(profileFileInfo);
         }
 
         /// <summary>
@@ -309,9 +321,9 @@ namespace NETworkManager.Profiles
 
             File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
 
-            // Remove the old profile and add the new one
-            ProfileFiles.Add(newProfileFileInfo); // First add, then remove, so we can switch
-            ProfileFiles.Remove(profileFileInfo);
+            // Add the new profile
+            ProfileFiles.Add(newProfileFileInfo);
+        
 
             // Switch profile, if it was previously loaded
             if (switchProfile)
@@ -319,6 +331,9 @@ namespace NETworkManager.Profiles
                 SwitchProfile(newProfileFileInfo, false);
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
+
+            // Remove the old profile file
+            ProfileFiles.Remove(profileFileInfo);
         }
 
         /// <summary>
@@ -348,10 +363,8 @@ namespace NETworkManager.Profiles
             // Save the decrypted profiles to the profile file
             SerializeToFile(newProfileFileInfo.Path, profiles);
 
-            // Remove the old profile and add the new one
-            File.Delete(profileFileInfo.Path);
-            ProfileFiles.Add(newProfileFileInfo); // First add, then remove, so we can switch
-            ProfileFiles.Remove(profileFileInfo);
+            // Add the new profile
+            ProfileFiles.Add(newProfileFileInfo);
 
             // Switch profile, if it was previously loaded
             if (switchProfile)
@@ -359,6 +372,10 @@ namespace NETworkManager.Profiles
                 SwitchProfile(newProfileFileInfo, false);
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
+
+            // Remove the old profile file
+            File.Delete(profileFileInfo.Path);
+            ProfileFiles.Remove(profileFileInfo);
         }
         #endregion
 
@@ -530,7 +547,6 @@ namespace NETworkManager.Profiles
             //ToDo RefreshProfileFiles();
 
             SwitchProfile(ProfileFiles.FirstOrDefault(x => x.Name == LoadedProfileFile.Name), false);
-
             LoadedProfileFileChanged(LoadedProfileFile);
         }
         #endregion
@@ -549,6 +565,20 @@ namespace NETworkManager.Profiles
         /// <param name="profile"><see cref="ProfileInfo"/> to add.</param>
         public static void AddProfile(ProfileInfo profile)
         {
+            // Get call stack
+            StackTrace stackTrace = new StackTrace();
+
+            var str = profile.Name + ":::";
+
+            // Get calling method name
+            foreach (var frame in stackTrace.GetFrames())
+            {
+                str += $" --> {frame.GetMethod().Name}";
+            }
+
+            Debug.WriteLine(str);
+
+
             // Possible fix for appcrash --> when icollection view is refreshed...
             System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
@@ -612,7 +642,7 @@ namespace NETworkManager.Profiles
         }
         #endregion
 
-        #region Events        
+        #region Collection changed   
         private static void Profiles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             ProfilesChanged = true;
