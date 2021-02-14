@@ -1726,24 +1726,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Credential not found!.
-        /// </summary>
-        public static string CredentialNotFound {
-            get {
-                return ResourceManager.GetString("CredentialNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit the Profile and select a different credential or delete the existing one.
-        /// </summary>
-        public static string CredentialNotFoundMessage {
-            get {
-                return ResourceManager.GetString("CredentialNotFoundMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Credentials.
         /// </summary>
         public static string Credentials {

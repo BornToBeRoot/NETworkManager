@@ -168,9 +168,6 @@
   <data name="CopyProfile" xml:space="preserve">
     <value>Copy profile</value>
   </data>
-  <data name="CredentialNotFound" xml:space="preserve">
-    <value>Credential not found!</value>
-  </data>
   <data name="Credentials" xml:space="preserve">
     <value>Credentials</value>
   </data>
@@ -770,9 +767,6 @@
   </data>
   <data name="Credential" xml:space="preserve">
     <value>Credential</value>
-  </data>
-  <data name="CredentialNotFoundMessage" xml:space="preserve">
-    <value>Edit the Profile and select a different credential or delete the existing one</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
     <value>Profile files are encrypted on disk using Rijndael (AES) with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
