@@ -2949,4 +2949,7 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="UnlockProfile" xml:space="preserve">
     <value>Unlock profile</value>
   </data>
+  <data name="UnlockTheProfileFileMessage" xml:space="preserve">
+    <value>Unlock the profile file to add, change or delete a profile!</value>
+  </data>
 </root>

@@ -7975,6 +7975,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unlock the profile file to add, change or delete a profile!.
+        /// </summary>
+        public static string UnlockTheProfileFileMessage {
+            get {
+                return ResourceManager.GetString("UnlockTheProfileFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Untray / Bring window to front.
         /// </summary>
         public static string UntrayBringWindowToFront {
