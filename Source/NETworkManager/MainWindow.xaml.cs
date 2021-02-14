@@ -274,8 +274,8 @@ namespace NETworkManager
 
                 if (value != null)
                 {
-                    if(!_isProfileUpdating)
-                        CheckEncryptionAndSwitchProfile(value);
+                    if (!_isProfileUpdating)
+                        LoadProfile(value);
 
                     if (SettingsManager.Current.Profiles_LastSelected != value.Name)
                         SettingsManager.Current.Profiles_LastSelected = value.Name;
@@ -925,10 +925,15 @@ namespace NETworkManager
         #endregion
 
         #region Profiles
-        private async void CheckEncryptionAndSwitchProfile(ProfileFileInfo info)
+        private async void LoadProfile(ProfileFileInfo info)
         {
-            if (info.IsEncrypted)
+            if (info.IsEncrypted && !info.IsPasswordValid)
             {
+                /* Debug
+                info.Password = SecureStringHelper.ConvertToSecureString("123");
+                SwitchProfile(info);
+                */
+
                 var customDialog = new CustomDialog
                 {
                     Title = Localization.Resources.Strings.MasterPassword
@@ -936,14 +941,14 @@ namespace NETworkManager
 
                 var credentialsPasswordViewModel = new CredentialsPasswordViewModel(async instance =>
                 {
-                    await this.HideMetroDialogAsync(customDialog);
+                    await this.HideMetroDialogAsync(customDialog).ConfigureAwait(true);
 
                     info.Password = instance.Password;
 
                     SwitchProfile(info);
                 }, async instance =>
                 {
-                    await this.HideMetroDialogAsync(customDialog);
+                    await this.HideMetroDialogAsync(customDialog).ConfigureAwait(false);
                 });
 
                 customDialog.Content = new CredentialsPasswordDialog
@@ -951,7 +956,7 @@ namespace NETworkManager
                     DataContext = credentialsPasswordViewModel
                 };
 
-                await this.ShowMetroDialogAsync(customDialog);
+                await this.ShowMetroDialogAsync(customDialog).ConfigureAwait(false);
             }
             else
             {
@@ -1002,7 +1007,6 @@ namespace NETworkManager
 
             _isProfileUpdating = false;
         }
-
         #endregion
 
 

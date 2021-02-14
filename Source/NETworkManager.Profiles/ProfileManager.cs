@@ -62,16 +62,6 @@ namespace NETworkManager.Profiles
 
         #region Events
         /// <summary>
-        /// Event is fired if the profile files changed.
-        /// </summary>
-        public static event EventHandler OnProfileFilesChangedEvent;
-
-        private static void ProfileFilesChanged()
-        {
-            OnProfileFilesChangedEvent?.Invoke(null, EventArgs.Empty);
-        }
-
-        /// <summary>
         /// Event is fired if a loaded profile file is changed.
         /// </summary>
         public static event EventHandler<ProfileFileInfoArgs> OnLoadedProfileFileChangedEvent;
@@ -272,7 +262,7 @@ namespace NETworkManager.Profiles
             File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
 
             // Add the new profile
-            ProfileFiles.Add(newProfileFileInfo);            
+            ProfileFiles.Add(newProfileFileInfo);
 
             // Switch profile, if it was previously loaded
             if (switchProfile)
@@ -323,7 +313,7 @@ namespace NETworkManager.Profiles
 
             // Add the new profile
             ProfileFiles.Add(newProfileFileInfo);
-        
+
 
             // Switch profile, if it was previously loaded
             if (switchProfile)
@@ -386,6 +376,8 @@ namespace NETworkManager.Profiles
         /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> to be loaded.</param>
         private static void Load(ProfileFileInfo profileFileInfo)
         {
+            bool loadedProfileUpdated = false;
+
             if (File.Exists(profileFileInfo.Path))
             {
                 if (profileFileInfo.IsEncrypted)
@@ -394,6 +386,11 @@ namespace NETworkManager.Profiles
                     var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(profileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
 
                     DeserializeFromByteArray(decryptedBytes).ForEach(AddProfile);
+
+                    // Password is valid
+                    ProfileFiles.FirstOrDefault(x => x.Equals(profileFileInfo)).IsPasswordValid = true;
+                    profileFileInfo.IsPasswordValid = true;
+                    loadedProfileUpdated = true;
                 }
                 else
                 {
@@ -410,6 +407,9 @@ namespace NETworkManager.Profiles
             ProfilesChanged = false;
 
             LoadedProfileFile = profileFileInfo;
+
+            if (loadedProfileUpdated)
+                LoadedProfileFileChanged(LoadedProfileFile);
         }
 
         /// <summary>
@@ -565,20 +565,6 @@ namespace NETworkManager.Profiles
         /// <param name="profile"><see cref="ProfileInfo"/> to add.</param>
         public static void AddProfile(ProfileInfo profile)
         {
-            // Get call stack
-            StackTrace stackTrace = new StackTrace();
-
-            var str = profile.Name + ":::";
-
-            // Get calling method name
-            foreach (var frame in stackTrace.GetFrames())
-            {
-                str += $" --> {frame.GetMethod().Name}";
-            }
-
-            Debug.WriteLine(str);
-
-
             // Possible fix for appcrash --> when icollection view is refreshed...
             System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
