@@ -134,15 +134,19 @@ namespace NETworkManager.Settings
             if (!Directory.Exists(targedLocation))
                 Directory.CreateDirectory(targedLocation);
 
+            var settingsFilePath = GetSettingsFilePath();
+
             // Copy file
-            File.Copy(GetSettingsFilePath(), Path.Combine(targedLocation, GetSettingsFileName()), true);
+            File.Copy(settingsFilePath, Path.Combine(targedLocation, GetSettingsFileName()), true);
 
             // Delete file
-            File.Delete(GetSettingsFilePath());
+            File.Delete(settingsFilePath);
 
-            // Delete folder, if it is empty not the default settings location and does not contain any files or directories
-            if (GetSettingsLocation() != GetDefaultSettingsLocation() && Directory.GetFiles(GetSettingsLocation()).Length == 0 && Directory.GetDirectories(GetSettingsLocation()).Length == 0)
-                Directory.Delete(GetSettingsLocation());
+            var settingsLocation = GetSettingsLocation();
+
+            // Delete folder if it is empty
+            if (Directory.GetFiles(settingsLocation).Length == 0 && Directory.GetDirectories(settingsLocation).Length == 0)
+                Directory.Delete(settingsLocation);
         }
 
         #endregion
