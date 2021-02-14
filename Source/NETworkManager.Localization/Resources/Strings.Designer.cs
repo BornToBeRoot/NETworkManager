@@ -1762,24 +1762,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The credentials are stored encrypted with AES-256 (Rijndael) in a file. The key for the encryption results from a master password (Rfc2898DeriveBytes). The application uses a SecureString for passwords. For some functions, passwords must be converted from a SecureString to plain text, or vice versa..
-        /// </summary>
-        public static string CredentialsEncryptionDisclaimer {
-            get {
-                return ResourceManager.GetString("CredentialsEncryptionDisclaimer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A Credential with this name already exists!.
-        /// </summary>
-        public static string CredentialWithThisNameAlreadyExists {
-            get {
-                return ResourceManager.GetString("CredentialWithThisNameAlreadyExists", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Crimson.
         /// </summary>
         public static string Crimson {
@@ -2262,6 +2244,15 @@ namespace NETworkManager.Localization.Resources {
         public static string DisableEncryptionDots {
             get {
                 return ResourceManager.GetString("DisableEncryptionDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disclaimer.
+        /// </summary>
+        public static string Disclaimer {
+            get {
+                return ResourceManager.GetString("Disclaimer", resourceCulture);
             }
         }
         
@@ -5071,6 +5062,17 @@ namespace NETworkManager.Localization.Resources {
         public static string ProfileCouldNotBeLoadedAndMayBeCorruptedMessage {
             get {
                 return ResourceManager.GetString("ProfileCouldNotBeLoadedAndMayBeCorruptedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile files are encrypted on disk using Rijndael (AES) with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+        ///
+        ///This is a new feature that may still c [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string ProfileEncryptionDisclaimer {
+            get {
+                return ResourceManager.GetString("ProfileEncryptionDisclaimer", resourceCulture);
             }
         }
         

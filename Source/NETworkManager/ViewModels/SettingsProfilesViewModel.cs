@@ -277,37 +277,46 @@ namespace NETworkManager.ViewModels
 
         private async void EnableEncryptionAction()
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.SetMasterPassword
-            };
+            var settings = AppearanceManager.MetroDialog;
 
-            var credentialsSetPasswordViewModel = new CredentialsSetPasswordViewModel(async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+            settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                try
+            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Disclaimer, Localization.Resources.Strings.ProfileEncryptionDisclaimer, MessageDialogStyle.AffirmativeAndNegative) == MessageDialogResult.Affirmative)
+            {
+                var customDialog = new CustomDialog
                 {
-                    ProfileManager.EnableEncryption(SelectedProfileFile, instance.Password);
-                }
-                catch (Exception ex)
+                    Title = Localization.Resources.Strings.SetMasterPassword
+                };
+
+                var credentialsSetPasswordViewModel = new CredentialsSetPasswordViewModel(async instance =>
                 {
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                    await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.EncryptionError, $"{Localization.Resources.Strings.EncryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
-                }
-            }, async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            });
+                    try
+                    {
+                        ProfileManager.EnableEncryption(SelectedProfileFile, instance.Password);
+                    }
+                    catch (Exception ex)
+                    {
+                        var settings = AppearanceManager.MetroDialog;
+                        settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-            customDialog.Content = new CredentialsSetPasswordDialog
-            {
-                DataContext = credentialsSetPasswordViewModel
-            };
+                        await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.EncryptionError, $"{Localization.Resources.Strings.EncryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
+                    }
+                }, async instance =>
+                {
+                    await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                });
 
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+                customDialog.Content = new CredentialsSetPasswordDialog
+                {
+                    DataContext = credentialsSetPasswordViewModel
+                };
+
+                await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            }            
         }
 
         public ICommand ChangeMasterPasswordCommand => new RelayCommand(p => ChangeMasterPasswordAction());

@@ -774,8 +774,10 @@
   <data name="CredentialNotFoundMessage" xml:space="preserve">
     <value>Edit the Profile and select a different credential or delete the existing one</value>
   </data>
-  <data name="CredentialsEncryptionDisclaimer" xml:space="preserve">
-    <value>The credentials are stored encrypted with AES-256 (Rijndael) in a file. The key for the encryption results from a master password (Rfc2898DeriveBytes). The application uses a SecureString for passwords. For some functions, passwords must be converted from a SecureString to plain text, or vice versa.</value>
+  <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
+    <value>Profile files are encrypted on disk using Rijndael (AES) with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+
+This is a new feature that may still contain bugs. Please backup your profile files first before enabling profile file encryption!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Custom</value>
@@ -1770,9 +1772,6 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>A profile with this name already exists!</value>
-  </data>
-  <data name="CredentialWithThisNameAlreadyExists" xml:space="preserve">
-    <value>A Credential with this name already exists!</value>
   </data>
   <data name="PortState_Closed" xml:space="preserve">
     <value>Closed</value>
@@ -2951,5 +2950,8 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
     <value>Unlock the profile file to add, change or delete a profile!</value>
+  </data>
+  <data name="Disclaimer" xml:space="preserve">
+    <value>Disclaimer</value>
   </data>
 </root>
