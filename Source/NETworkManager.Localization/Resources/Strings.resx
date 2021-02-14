@@ -1250,7 +1250,7 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
     <value>Width</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Credentials could not be decrypted with the given password.</value>
+    <value>Could not be decrypted the file with the given password.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>The entered password is wrong.</value>
@@ -2924,5 +2924,29 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Edit group...</value>
+  </data>
+  <data name="DecryptionError" xml:space="preserve">
+    <value>Decryption error</value>
+  </data>
+  <data name="DecryptionErrorMessage" xml:space="preserve">
+    <value>Could not decrypt file. You may report this issue on GitHub.</value>
+  </data>
+  <data name="EncryptionError" xml:space="preserve">
+    <value>Encryption error</value>
+  </data>
+  <data name="EncryptionErrorMessage" xml:space="preserve">
+    <value>Could not encrpyt file. You may report this issue on GitHub.</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Current password</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="ChangeMasterPassword" xml:space="preserve">
+    <value>Change master password</value>
+  </data>
+  <data name="UnlockProfile" xml:space="preserve">
+    <value>Unlock profile</value>
   </data>
 </root>

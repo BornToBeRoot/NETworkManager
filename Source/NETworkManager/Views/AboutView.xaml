@@ -99,7 +99,7 @@
                         <Button ToolTip="{x:Static localization:Strings.ToolTip_GithubDocumentationUrl}" Command="{Binding OpenDocumentationCommand}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24" >
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=BookPerspectiveHelp}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Book}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">

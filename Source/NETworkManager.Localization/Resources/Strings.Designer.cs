@@ -1204,6 +1204,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change master password.
+        /// </summary>
+        public static string ChangeMasterPassword {
+            get {
+                return ResourceManager.GetString("ChangeMasterPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Master Password....
         /// </summary>
         public static string ChangeMasterPasswordDots {
@@ -1816,6 +1825,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current password.
+        /// </summary>
+        public static string CurrentPassword {
+            get {
+                return ResourceManager.GetString("CurrentPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current upload speed.
         /// </summary>
         public static string CurrentUploadSpeed {
@@ -1920,6 +1938,24 @@ namespace NETworkManager.Localization.Resources {
         public static string DecryptAndLoadDots {
             get {
                 return ResourceManager.GetString("DecryptAndLoadDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decryption error.
+        /// </summary>
+        public static string DecryptionError {
+            get {
+                return ResourceManager.GetString("DecryptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not decrypt file. You may report this issue on GitHub..
+        /// </summary>
+        public static string DecryptionErrorMessage {
+            get {
+                return ResourceManager.GetString("DecryptionErrorMessage", resourceCulture);
             }
         }
         
@@ -2586,6 +2622,24 @@ namespace NETworkManager.Localization.Resources {
         public static string EncryptionDots {
             get {
                 return ResourceManager.GetString("EncryptionDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encryption error.
+        /// </summary>
+        public static string EncryptionError {
+            get {
+                return ResourceManager.GetString("EncryptionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not encrpyt file. You may report this issue on GitHub..
+        /// </summary>
+        public static string EncryptionErrorMessage {
+            get {
+                return ResourceManager.GetString("EncryptionErrorMessage", resourceCulture);
             }
         }
         
@@ -4258,6 +4312,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NewConnectionDots {
             get {
                 return ResourceManager.GetString("NewConnectionDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New password.
+        /// </summary>
+        public static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
             }
         }
         
@@ -7903,6 +7966,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unlock profile.
+        /// </summary>
+        public static string UnlockProfile {
+            get {
+                return ResourceManager.GetString("UnlockProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Untray / Bring window to front.
         /// </summary>
         public static string UntrayBringWindowToFront {
@@ -8344,7 +8416,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Credentials could not be decrypted with the given password..
+        ///   Looks up a localized string similar to Could not be decrypted the file with the given password..
         /// </summary>
         public static string WrongPasswordDecryptionFailedMessage {
             get {

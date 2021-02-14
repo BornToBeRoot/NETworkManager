@@ -17,9 +17,9 @@ namespace NETworkManager.Settings
             new SettingsViewInfo(SettingsViewName.Status, new PackIconModern { Kind = PackIconModernKind.Network }, SettingsViewGroup.General),
             new SettingsViewInfo(SettingsViewName.HotKeys, new PackIconOcticons { Kind = PackIconOcticonsKind.Keyboard }, SettingsViewGroup.General),
             new SettingsViewInfo(SettingsViewName.Autostart, new PackIconMaterial { Kind = PackIconMaterialKind.Power }, SettingsViewGroup.General),
-            new SettingsViewInfo(SettingsViewName.Update, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Download }, SettingsViewGroup.General),
-            new SettingsViewInfo(SettingsViewName.Settings, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Cog }, SettingsViewGroup.General),
+            new SettingsViewInfo(SettingsViewName.Update, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Download }, SettingsViewGroup.General),            
             new SettingsViewInfo(SettingsViewName.Profiles, new PackIconMaterial { Kind = PackIconMaterialKind.FormatListBulletedType }, SettingsViewGroup.General),
+            new SettingsViewInfo(SettingsViewName.Settings, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Cog }, SettingsViewGroup.General),
            
             // Applications
             new SettingsViewInfo(SettingsViewName.Dashboard, ApplicationManager.GetIcon(ApplicationName.Dashboard), SettingsViewGroup.Applications),

@@ -2,7 +2,8 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace NETworkManager.Utilities{
+namespace NETworkManager.Utilities
+{
     public static class SecureStringHelper
     {
         public static string ConvertToString(SecureString secureString)

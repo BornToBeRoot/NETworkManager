@@ -85,6 +85,25 @@
                         <TextBlock Text="{x:Static localization:Strings.UpdateAvailable}" Style="{StaticResource LinkTextBlock}"  VerticalAlignment="Center" Margin="5,0,0,0" />
                     </StackPanel>
                 </Button>
+                <Button Command="{Binding UnlockProfileCommand}" Opacity="1" Visibility="{Binding IsProfileFileLocked, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
+                            <Rectangle.Style>
+                                <Style TargetType="Rectangle">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=InterfacePassword}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="{x:Static localization:Strings.UnlockProfile}" Style="{StaticResource LinkTextBlock}"  VerticalAlignment="Center" Margin="5,0" />
+                    </StackPanel>
+                </Button>
                 <ComboBox ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" Foreground="{DynamicResource MahApps.Brushes.Gray5}" Background="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0" />
                 <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}" CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
@@ -97,7 +116,7 @@
                 </Button>
                 <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.ReportAnIssueOrCreateAFeatureRequest}" CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle Width="20" Height="20"  Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">                            
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:JamIcons Kind=BugF}" />
                             </Rectangle.OpacityMask>
@@ -108,7 +127,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=BookPerspectiveHelp}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Book}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </StackPanel>

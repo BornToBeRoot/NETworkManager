@@ -47,6 +47,7 @@ namespace NETworkManager
 
         private readonly bool _isLoading;
         private bool _isProfileLoading;
+        private bool _isProfileUpdating;
         private bool isApplicationListLoading;
 
         private bool _isInTray;
@@ -263,23 +264,42 @@ namespace NETworkManager
             get => _selectedProfileFile;
             set
             {
-                if (_isProfileLoading || (value != null && value.Equals(_selectedProfileFile)))
+                if (_isProfileLoading)
+                    return;
+
+                if (value != null && value.Equals(_selectedProfileFile))
                     return;
 
                 _selectedProfileFile = value;
 
-                // Switch profile...
-                if (value != null && !value.Equals(ProfileManager.LoadedProfileFile))
+                if (value != null)
                 {
-                    SwitchProfile(value);
-                    SettingsManager.Current.Profiles_LastSelected = value.Name;
+                    if (!_isProfileUpdating)
+                        LoadProfile(value);
+
+                    if (SettingsManager.Current.Profiles_LastSelected != value.Name)
+                        SettingsManager.Current.Profiles_LastSelected = value.Name;
                 }
 
                 OnPropertyChanged();
             }
         }
+
+        private bool _isProfileFileLocked;
+        public bool IsProfileFileLocked
+        {
+            get => _isProfileFileLocked;
+            set
+            {
+                if (value == _isProfileFileLocked)
+                    return;
+
+                _isProfileFileLocked = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
-               
+
         #region Constructor, window load and close events
         public MainWindow()
         {
@@ -371,10 +391,10 @@ namespace NETworkManager
             _isProfileLoading = true;
             ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
             ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
-            ProfileManager.OnProfileFileChangedEvent += ProfileManager_OnProfileFileChangedEvent;
             _isProfileLoading = false;
 
-            // Switch profile
+            ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
+
             SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
 
             if (SelectedProfileFile == null)
@@ -447,21 +467,6 @@ namespace NETworkManager
             // Scroll into view
             if (SelectedApplication != null)
                 ListViewApplication.ScrollIntoView(SelectedApplication);
-        }
-
-        /// <summary>
-        /// Update the view when the loaded profile file changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ProfileManager_OnProfileFileChangedEvent(object sender, ProfileFileInfoArgs e)
-        {
-            SelectedProfileFile = null;
-
-            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == e.ProfileFileInfo.Name);
-
-            if (SelectedProfileFile == null)
-                SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
         }
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
@@ -926,7 +931,104 @@ namespace NETworkManager
             // Refresh the view
             ChangeApplicationView(SelectedApplication.Name, true);
         }
+
+        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+
+        }
         #endregion
+
+        #region Profiles
+        private async void LoadProfile(ProfileFileInfo info)
+        {            
+            if (info.IsEncrypted && !info.IsPasswordValid)
+            {
+                /* Debug
+                info.Password = SecureStringHelper.ConvertToSecureString("123");
+                SwitchProfile(info);
+                */
+
+                var customDialog = new CustomDialog
+                {
+                    Title = Localization.Resources.Strings.MasterPassword
+                };
+
+                var credentialsPasswordViewModel = new CredentialsPasswordViewModel(async instance =>
+                {
+                    await this.HideMetroDialogAsync(customDialog).ConfigureAwait(true);
+
+                    info.Password = instance.Password;
+
+                    SwitchProfile(info);
+                }, async instance =>
+                {
+                    await this.HideMetroDialogAsync(customDialog).ConfigureAwait(false);
+
+                    IsProfileFileLocked = true;
+                });
+
+                customDialog.Content = new CredentialsPasswordDialog
+                {
+                    DataContext = credentialsPasswordViewModel
+                };
+
+                await this.ShowMetroDialogAsync(customDialog).ConfigureAwait(false);
+            }
+            else
+            {                
+                SwitchProfile(info);
+            }
+        }
+
+        private async void SwitchProfile(ProfileFileInfo info)
+        {
+            try
+            {
+                ProfileManager.SwitchProfile(info);
+
+                IsProfileFileLocked = false;
+            }
+            catch (System.Security.Cryptography.CryptographicException)
+            {
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                ConfigurationManager.Current.FixAirspace = true;
+
+                await this.ShowMessageAsync(Localization.Resources.Strings.WrongPassword, Localization.Resources.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, settings);
+
+                IsProfileFileLocked = true;
+
+                ConfigurationManager.Current.FixAirspace = false;
+            }
+            catch
+            {
+                var settings = AppearanceManager.MetroDialog;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                ConfigurationManager.Current.FixAirspace = true;
+
+                await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedAndMayBeCorruptedMessage, MessageDialogStyle.Affirmative, settings);
+
+                ConfigurationManager.Current.FixAirspace = false;
+            }
+        }
+
+        /// <summary>
+        /// Update the view when the loaded profile file changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProfileManager_OnLoadedProfileFileChangedEvent(object sender, ProfileFileInfoArgs e)
+        {
+            _isProfileUpdating = true;
+
+            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Equals(e.ProfileFileInfo));
+
+            _isProfileUpdating = false;
+        }
+        #endregion
+
 
         #region Handle WndProc messages (Single instance, handle HotKeys)
         private HwndSource _hwndSoure;
@@ -1134,6 +1236,16 @@ namespace NETworkManager
             TextBoxSearch.Focus();
         }
 
+        public ICommand UnlockProfileCommand
+        {
+            get { return new RelayCommand(p => UnlockProfileAction()); }
+        }
+
+        private void UnlockProfileAction()
+        {
+            LoadProfile(SelectedProfileFile);
+        }
+
         public ICommand OpenSettingsCommand
         {
             get { return new RelayCommand(p => OpenSettingsAction()); }
@@ -1258,36 +1370,10 @@ namespace NETworkManager
         }
         #endregion
 
-        #region Methods
-        private async void SwitchProfile(ProfileFileInfo info)
-        {
-            try
-            {
-                ProfileManager.SwitchProfile(info);
-            }
-            catch
-            {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
-
-                ConfigurationManager.Current.FixAirspace = true;
-
-                await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedAndMayBeCorruptedMessage, MessageDialogStyle.Affirmative, settings);
-
-                ConfigurationManager.Current.FixAirspace = false;
-            }
-        }
-
+        #region Status window
         private void OpenStatusWindow()
         {
             statusWindow.ShowFromExternal();
-        }
-        #endregion
-
-        #region Events
-        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-
         }
         #endregion
 

@@ -126,7 +126,7 @@ namespace NETworkManager.ViewModels
             MovingFiles = true;
 
             // Get files from new location and check if there are files with the same name
-            var containsFile = Directory.GetFiles(Location).Where(x => Path.GetExtension(x) == ProfileManager.ProfilesFileExtension).Count() > 0;
+            var containsFile = Directory.GetFiles(Location).Where(x => Path.GetExtension(x) == ProfileManager.ProfileFileExtension).Any();
 
             var copyFiles = false;
 
@@ -272,16 +272,137 @@ namespace NETworkManager.ViewModels
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
+
+        public ICommand EnableEncryptionCommand => new RelayCommand(p => EnableEncryptionAction());
+
+        private async void EnableEncryptionAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.SetMasterPassword
+            };
+
+            var credentialsSetPasswordViewModel = new CredentialsSetPasswordViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ProfileManager.EnableEncryption(SelectedProfileFile, instance.Password);
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.EncryptionError, $"{Localization.Resources.Strings.EncryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
+                }
+            }, async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new CredentialsSetPasswordDialog
+            {
+                DataContext = credentialsSetPasswordViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand ChangeMasterPasswordCommand => new RelayCommand(p => ChangeMasterPasswordAction());
+
+        private async void ChangeMasterPasswordAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.ChangeMasterPassword
+            };
+
+            var credentialsPasswordViewModel = new CredentialsChangePasswordViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ProfileManager.ChangeMasterPassword(SelectedProfileFile, instance.Password, instance.NewPassword);
+                }
+                catch (System.Security.Cryptography.CryptographicException)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.WrongPassword, Localization.Resources.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, settings);
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.DecryptionError, $"{Localization.Resources.Strings.DecryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
+                }
+
+            }, async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new CredentialsChangePasswordDialog
+            {
+                DataContext = credentialsPasswordViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
+        public ICommand DisableEncryptionCommand => new RelayCommand(p => DisableEncryptionAction());
+
+        private async void DisableEncryptionAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.MasterPassword
+            };
+
+            var credentialsPasswordViewModel = new CredentialsPasswordViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ProfileManager.DisableEncryption(SelectedProfileFile, instance.Password);
+                }
+                catch (System.Security.Cryptography.CryptographicException)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.WrongPassword, Localization.Resources.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, settings);
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.DecryptionError, $"{Localization.Resources.Strings.DecryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
+                }
+
+            }, async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new CredentialsPasswordDialog
+            {
+                DataContext = credentialsPasswordViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
+
         #endregion
 
         #region Methods
-        public void SaveAndCheckSettings()
-        {
-            // Save everything
-            if (ProfileManager.ProfilesChanged)
-                ProfileManager.Save();
-        }
-
         public void SetLocationPathFromDragDrop(string path)
         {
             Location = path;

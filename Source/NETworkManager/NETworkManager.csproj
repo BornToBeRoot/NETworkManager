@@ -87,6 +87,9 @@
     <Page Update="Resources\Styles\WindowStyles.xaml">
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Page>
+    <Page Update="Views\CredentialsChangePasswordDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="Views\PortProfilesDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
