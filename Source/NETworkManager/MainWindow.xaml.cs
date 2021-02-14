@@ -284,6 +284,20 @@ namespace NETworkManager
                 OnPropertyChanged();
             }
         }
+
+        private bool _isProfileFileLocked;
+        public bool IsProfileFileLocked
+        {
+            get => _isProfileFileLocked;
+            set
+            {
+                if (value == _isProfileFileLocked)
+                    return;
+
+                _isProfileFileLocked = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, window load and close events
@@ -366,7 +380,7 @@ namespace NETworkManager
             {
                 AfterContentRendered();
             }
-        }               
+        }
 
         private void AfterContentRendered()
         {
@@ -454,7 +468,7 @@ namespace NETworkManager
             if (SelectedApplication != null)
                 ListViewApplication.ScrollIntoView(SelectedApplication);
         }
-        
+
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {
             // Force restart --> Import, Reset, etc.
@@ -926,7 +940,7 @@ namespace NETworkManager
 
         #region Profiles
         private async void LoadProfile(ProfileFileInfo info)
-        {
+        {            
             if (info.IsEncrypted && !info.IsPasswordValid)
             {
                 /* Debug
@@ -949,6 +963,8 @@ namespace NETworkManager
                 }, async instance =>
                 {
                     await this.HideMetroDialogAsync(customDialog).ConfigureAwait(false);
+
+                    IsProfileFileLocked = true;
                 });
 
                 customDialog.Content = new CredentialsPasswordDialog
@@ -959,7 +975,7 @@ namespace NETworkManager
                 await this.ShowMetroDialogAsync(customDialog).ConfigureAwait(false);
             }
             else
-            {
+            {                
                 SwitchProfile(info);
             }
         }
@@ -969,6 +985,8 @@ namespace NETworkManager
             try
             {
                 ProfileManager.SwitchProfile(info);
+
+                IsProfileFileLocked = false;
             }
             catch (System.Security.Cryptography.CryptographicException)
             {
@@ -978,6 +996,8 @@ namespace NETworkManager
                 ConfigurationManager.Current.FixAirspace = true;
 
                 await this.ShowMessageAsync(Localization.Resources.Strings.WrongPassword, Localization.Resources.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, settings);
+
+                IsProfileFileLocked = true;
 
                 ConfigurationManager.Current.FixAirspace = false;
             }
@@ -1216,6 +1236,16 @@ namespace NETworkManager
             TextBoxSearch.Focus();
         }
 
+        public ICommand UnlockProfileCommand
+        {
+            get { return new RelayCommand(p => UnlockProfileAction()); }
+        }
+
+        private void UnlockProfileAction()
+        {
+            LoadProfile(SelectedProfileFile);
+        }
+
         public ICommand OpenSettingsCommand
         {
             get { return new RelayCommand(p => OpenSettingsAction()); }
@@ -1339,7 +1369,7 @@ namespace NETworkManager
             Search = string.Empty;
         }
         #endregion
-                
+
         #region Status window
         private void OpenStatusWindow()
         {

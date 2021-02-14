@@ -7966,6 +7966,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unlock profile.
+        /// </summary>
+        public static string UnlockProfile {
+            get {
+                return ResourceManager.GetString("UnlockProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Untray / Bring window to front.
         /// </summary>
         public static string UntrayBringWindowToFront {
