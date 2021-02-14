@@ -22,6 +22,11 @@ namespace NETworkManager.Profiles
         public string Path { get; set; }
 
         /// <summary>
+        /// Indicates if the profile file is encrypted.
+        /// </summary>        
+        public bool IsEncrypted { get; set; }
+
+        /// <summary>
         /// Password to encrypt and decrypt the profile file.
         /// </summary>
         public SecureString Password { get; set; }
@@ -30,12 +35,6 @@ namespace NETworkManager.Profiles
         /// Indicates if the password is valid and can be used for encryption or decryption.
         /// </summary>
         public bool IsPasswordValid { get; set; }
-
-        /// <summary>
-        /// Indicates if the profile file is encrypted.
-        /// </summary>        
-        public bool IsEncrypted { get; set; }
-
 
         /// <summary>
         /// Profile file info contains all necessary informations about the profile file and location.

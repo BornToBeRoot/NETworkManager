@@ -25,6 +25,8 @@ namespace NETworkManager.Settings
         public bool ShowSettingsResetNoteOnStartup { get; set; }
         public bool ForceRestart { get; set; }
 
+        public bool SoftRestart { get; set; }
+
         private bool _isDialogOpen;
         public bool FixAirspace
         {

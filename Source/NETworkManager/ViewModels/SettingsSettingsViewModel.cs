@@ -201,7 +201,7 @@ namespace NETworkManager.ViewModels
                 settings.FirstAuxiliaryButtonText = Localization.Resources.Strings.UseOther;
                 settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
 
-                var result = await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Overwrite, Localization.Resources.Strings.OverwriteSettingsInTheDestinationFolder, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
+                var result = await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Overwrite, Localization.Resources.Strings.OverwriteSettingsInDestinationFolderMessage, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
 
                 switch (result)
                 {
@@ -285,7 +285,7 @@ namespace NETworkManager.ViewModels
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure, Localization.Resources.Strings.SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure, Localization.Resources.Strings.SelectedSettingsAreOverwritten + Environment.NewLine + Environment.NewLine + Localization.Resources.Strings.ApplicationWillBeRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
             try
@@ -347,7 +347,7 @@ namespace NETworkManager.ViewModels
             var message = Localization.Resources.Strings.SelectedSettingsAreReset;
 
             message += Environment.NewLine + Environment.NewLine + $"* {Localization.Resources.Strings.TheSettingsLocationIsNotAffected}";
-            message += Environment.NewLine + $"* {Localization.Resources.Strings.ApplicationIsRestartedAfterwards}";
+            message += Environment.NewLine + $"* {Localization.Resources.Strings.ApplicationWillBeRestartedAfterwards}";
 
             if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;

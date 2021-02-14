@@ -14,7 +14,7 @@
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
         dialogs:DialogParticipation.Register="{Binding}"
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsProfilesViewModel}">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsProfilesViewModel}" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <!-- Converter -->
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />

@@ -547,7 +547,7 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (QueryResults)
+                //lock (QueryResults)
                     QueryResults.Add(snmpReceivedInfo);
             }));
         }

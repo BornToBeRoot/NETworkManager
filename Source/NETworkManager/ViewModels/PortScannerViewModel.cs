@@ -584,7 +584,7 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
-                lock (PortScanResult)
+                //lock (PortScanResult)
                     PortScanResult.Add(portInfo);
             }));
         }

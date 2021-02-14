@@ -684,8 +684,8 @@
   <data name="Answers" xml:space="preserve">
     <value>Answers</value>
   </data>
-  <data name="ApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>Application is restarted afterwards</value>
+  <data name="ApplicationWillBeRestartedAfterwards" xml:space="preserve">
+    <value>The application will be restarted afterwards!</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Apply</value>
@@ -993,10 +993,11 @@ Create one...</value>
   <data name="Override" xml:space="preserve">
     <value>override</value>
   </data>
-  <data name="OverwriteSettingsInTheDestinationFolder" xml:space="preserve">
+  <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
     <value>Overwrite settings in the destination folder?
 
-If you click "Move &amp; Restart", the remaining files will be copied and the application will be restarted with the new settings!</value>
+"Overwrite" will overwrite the file in the destination folder.
+"Use other" will use the existing settings file in the destination and restart the application.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
@@ -1097,8 +1098,8 @@ If you click "Move &amp; Restart", the remaining files will be copied and the ap
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Select a screen resolution</value>
   </data>
-  <data name="SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>The selected settings are overwritten and the application is restarted afterwards!</value>
+  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
+    <value>The selected settings are overwritten!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>The selected settings are reset.</value>
@@ -2411,8 +2412,8 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>The application will be restarted...</value>
   </data>
-  <data name="UseOther" xml:space="preserve">
-    <value>Use other</value>
+  <data name="UseOtherFolder" xml:space="preserve">
+    <value>Use other folder</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Could not export file! See error message: "{0}"</value>
@@ -2947,5 +2948,29 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>Disclaimer</value>
+  </data>
+  <data name="Merge" xml:space="preserve">
+    <value>Merge</value>
+  </data>
+  <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
+    <value>The destination folder already contains files. If you click Merge, the current profiles are copied to the folder.</value>
+  </data>
+  <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
+    <value>Overwrite profiles in destination folder?
+
+"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
+"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
+"Use other folder" will use the existing profile files in the destination folder.
+
+The application will be restarted afterwards!</value>
+  </data>
+  <data name="UseOther" xml:space="preserve">
+    <value>Use other</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
+    <value>Profile files will be moved to the selected destination folder.</value>
   </data>
 </root>

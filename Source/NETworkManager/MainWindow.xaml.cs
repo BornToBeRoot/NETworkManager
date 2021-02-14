@@ -27,6 +27,7 @@ using NETworkManager.Localization.Translators;
 using NETworkManager.Update;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
+using System.Windows.Threading;
 
 namespace NETworkManager
 {
@@ -471,12 +472,15 @@ namespace NETworkManager
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {
-            // Force restart --> Import, Reset, etc.
-            if (ConfigurationManager.Current.ForceRestart)
+            // Force restart --> e.g. Import or reset settings
+            // Soft restart --> e.g. change profile path
+            if (!_closeApplication && (ConfigurationManager.Current.ForceRestart || ConfigurationManager.Current.SoftRestart))
             {
-                RestartApplication(false);
+                e.Cancel = true;
 
-                _closeApplication = true;
+                RestartApplication();
+
+                return;
             }
 
             // Hide the application to tray
@@ -943,11 +947,6 @@ namespace NETworkManager
         {            
             if (info.IsEncrypted && !info.IsPasswordValid)
             {
-                /* Debug
-                info.Password = SecureStringHelper.ConvertToSecureString("123");
-                SwitchProfile(info);
-                */
-
                 var customDialog = new CustomDialog
                 {
                     Title = Localization.Resources.Strings.MasterPassword
@@ -1291,7 +1290,7 @@ namespace NETworkManager
             Close();
         }
 
-        public void RestartApplication(bool closeApplication = true, bool asAdmin = false)
+        public void RestartApplication(bool asAdmin = false)
         {
             ProcessStartInfo info = new ProcessStartInfo
             {
@@ -1305,11 +1304,12 @@ namespace NETworkManager
 
             Process.Start(info);
 
-            if (!closeApplication)
-                return;
-
             _closeApplication = true;
-            Close();
+
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                Close();
+            }));
         }
 
         public ICommand ApplicationListMouseEnterCommand
@@ -1321,7 +1321,7 @@ namespace NETworkManager
         {
             IsMouseOverApplicationList = true;
         }
-
+        
         public ICommand ApplicationListMouseLeaveCommand
         {
             get { return new RelayCommand(p => ApplicationListMouseLeaveAction()); }

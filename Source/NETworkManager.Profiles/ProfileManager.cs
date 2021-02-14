@@ -159,12 +159,12 @@ namespace NETworkManager.Profiles
         }
         #endregion
 
-        #region Add profile file, edit profile file, delete profile file
+        #region Create empty profile file, rename profile file, delete profile file
         /// <summary>
         /// Method to add a profile file.
         /// </summary>
         /// <param name="profileName"></param>
-        public static void AddProfileFile(string profileName)
+        public static void CreateEmptyProfileFile(string profileName)
         {
             ProfileFileInfo profileFileInfo = new ProfileFileInfo(profileName, Path.Combine(GetDefaultProfilesLocation(), $"{profileName}{ProfileFileExtension}"));
 
@@ -197,9 +197,7 @@ namespace NETworkManager.Profiles
                 IsPasswordValid = profileFileInfo.IsPasswordValid
             };
 
-            File.Move(profileFileInfo.Path, newProfileFileInfo.Path);
-
-            ProfileFiles.Remove(profileFileInfo);
+            File.Copy(profileFileInfo.Path, newProfileFileInfo.Path);
             ProfileFiles.Add(newProfileFileInfo);
 
             if (switchProfile)
@@ -207,6 +205,9 @@ namespace NETworkManager.Profiles
                 SwitchProfile(newProfileFileInfo, false);
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
+
+            File.Delete(profileFileInfo.Path);
+            ProfileFiles.Remove(profileFileInfo);
         }
 
         /// <summary>
@@ -222,7 +223,6 @@ namespace NETworkManager.Profiles
             }
 
             File.Delete(profileFileInfo.Path);
-
             ProfileFiles.Remove(profileFileInfo);
         }
         #endregion
@@ -446,7 +446,7 @@ namespace NETworkManager.Profiles
             if (saveLoadedProfiles && LoadedProfileFile != null && ProfilesChanged)
                 Save();
 
-            Profiles.Clear();
+            ClearProfile();
 
             Load(info);
         }
@@ -515,12 +515,12 @@ namespace NETworkManager.Profiles
         #endregion               
 
         #region Move profiles
-        public static Task MoveProfilesAsync(string targedLocation)
+        public static Task MoveProfilesAsync(string targedLocation, bool overwrite)
         {
-            return Task.Run(() => MoveProfiles(targedLocation));
+            return Task.Run(() => MoveProfiles(targedLocation, overwrite));
         }
 
-        private static void MoveProfiles(string targedLocation)
+        private static void MoveProfiles(string targedLocation, bool overwrite)
         {
             // Save the current profile
             Save();
@@ -529,24 +529,19 @@ namespace NETworkManager.Profiles
             if (!Directory.Exists(targedLocation))
                 Directory.CreateDirectory(targedLocation);
 
-            var sourceFiles = GetProfileFiles(GetProfilesLocation());
-
             // Copy files
-            foreach (var file in sourceFiles)
-                File.Copy(file, Path.Combine(targedLocation, Path.GetFileName(file)), true);
+            foreach (var profileFile in ProfileFiles)
+                File.Copy(profileFile.Path, Path.Combine(targedLocation, Path.GetFileName(profileFile.Path)), overwrite);             
 
-            // Delete files
-            foreach (var file in sourceFiles)
-                File.Delete(file);
+            // Remove old profile files
+            foreach (var profileFile in ProfileFiles)
+                File.Delete(profileFile.Path);
 
-            // Delete folder, if it is empty not the default profiles location and does not contain any files or directories
-            if (GetProfilesLocation() != GetDefaultProfilesLocation() && Directory.GetFiles(GetProfilesLocation()).Length == 0 && Directory.GetDirectories(GetProfilesLocation()).Length == 0)
-                Directory.Delete(GetProfilesLocation());
+            // Delete folder, if it is empty
+            var profileLocation = GetProfilesLocation();
 
-            //ToDo RefreshProfileFiles();
-
-            SwitchProfile(ProfileFiles.FirstOrDefault(x => x.Name == LoadedProfileFile.Name), false);
-            LoadedProfileFileChanged(LoadedProfileFile);
+            if (Directory.GetFiles(profileLocation).Length == 0 && Directory.GetDirectories(profileLocation).Length == 0)
+                Directory.Delete(profileLocation);
         }
         #endregion
 
@@ -567,8 +562,8 @@ namespace NETworkManager.Profiles
             // Possible fix for appcrash --> when icollection view is refreshed...
             System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (Profiles)
-                    Profiles.Add(profile);
+                //lock (Profiles)
+                Profiles.Add(profile);
             }));
         }
 
@@ -581,8 +576,16 @@ namespace NETworkManager.Profiles
             // Possible fix for appcrash --> when icollection view is refreshed...
             System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (Profiles)
-                    Profiles.Remove(profile);
+                //lock (Profiles)
+                Profiles.Remove(profile);
+            }));
+        }
+
+        public static void ClearProfile()
+        {
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                Profiles.Clear();
             }));
         }
 

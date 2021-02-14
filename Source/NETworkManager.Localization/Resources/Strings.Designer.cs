@@ -619,15 +619,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application is restarted afterwards.
-        /// </summary>
-        public static string ApplicationIsRestartedAfterwards {
-            get {
-                return ResourceManager.GetString("ApplicationIsRestartedAfterwards", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ARP Table.
         /// </summary>
         public static string ApplicationName_ARPTable {
@@ -849,6 +840,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Applications {
             get {
                 return ResourceManager.GetString("Applications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The application will be restarted afterwards!.
+        /// </summary>
+        public static string ApplicationWillBeRestartedAfterwards {
+            get {
+                return ResourceManager.GetString("ApplicationWillBeRestartedAfterwards", resourceCulture);
             }
         }
         
@@ -4064,6 +4064,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merge.
+        /// </summary>
+        public static string Merge {
+            get {
+                return ResourceManager.GetString("Merge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The destination folder already contains files. If you click Merge, the current profiles are copied to the folder..
+        /// </summary>
+        public static string MergeProfileFilesInDestinationFolderMessage {
+            get {
+                return ResourceManager.GetString("MergeProfileFilesInDestinationFolderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Message size.
         /// </summary>
         public static string MessageSize {
@@ -4132,6 +4150,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Model {
             get {
                 return ResourceManager.GetString("Model", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        public static string Move {
+            get {
+                return ResourceManager.GetString("Move", resourceCulture);
             }
         }
         
@@ -4695,6 +4722,21 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overwrite profiles in destination folder?
+        ///
+        ///&quot;Overwrite&quot; will copy the profile files to the destination folder and overwrite existing profile files.
+        ///&quot;Merge&quot; will copy the profile files to the destination folder, but won&apos;t overwrite exitsting profile files.
+        ///&quot;Use other folder&quot; will use the existing profile files in the destination folder.
+        ///
+        ///The application will be restarted afterwards!.
+        /// </summary>
+        public static string OverwriteProfilesInDestinationFolderMessage {
+            get {
+                return ResourceManager.GetString("OverwriteProfilesInDestinationFolderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overwrite?.
         /// </summary>
         public static string OverwriteQuestion {
@@ -4706,11 +4748,12 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Overwrite settings in the destination folder?
         ///
-        ///If you click &quot;Move &amp; Restart&quot;, the remaining files will be copied and the application will be restarted with the new settings!.
+        ///&quot;Overwrite&quot; will overwrite the file in the destination folder.
+        ///&quot;Use other&quot; will use the existing settings file in the destination and restart the application..
         /// </summary>
-        public static string OverwriteSettingsInTheDestinationFolder {
+        public static string OverwriteSettingsInDestinationFolderMessage {
             get {
-                return ResourceManager.GetString("OverwriteSettingsInTheDestinationFolder", resourceCulture);
+                return ResourceManager.GetString("OverwriteSettingsInDestinationFolderMessage", resourceCulture);
             }
         }
         
@@ -5055,6 +5098,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ProfileEncryptionDisclaimer {
             get {
                 return ResourceManager.GetString("ProfileEncryptionDisclaimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile files will be moved to the selected destination folder..
+        /// </summary>
+        public static string ProfileFilesWillBeMovedMessage {
+            get {
+                return ResourceManager.GetString("ProfileFilesWillBeMovedMessage", resourceCulture);
             }
         }
         
@@ -6581,11 +6633,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The selected settings are overwritten and the application is restarted afterwards!.
+        ///   Looks up a localized string similar to The selected settings are overwritten!.
         /// </summary>
-        public static string SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards {
+        public static string SelectedSettingsAreOverwritten {
             get {
-                return ResourceManager.GetString("SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards", resourceCulture);
+                return ResourceManager.GetString("SelectedSettingsAreOverwritten", resourceCulture);
             }
         }
         
@@ -8090,6 +8142,15 @@ namespace NETworkManager.Localization.Resources {
         public static string UseOther {
             get {
                 return ResourceManager.GetString("UseOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use other folder.
+        /// </summary>
+        public static string UseOtherFolder {
+            get {
+                return ResourceManager.GetString("UseOtherFolder", resourceCulture);
             }
         }
         
