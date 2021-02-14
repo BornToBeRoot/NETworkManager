@@ -184,7 +184,7 @@ namespace NETworkManager.Profiles
         {
             bool switchProfile = false;
 
-            if (LoadedProfileFile.Equals(profileFileInfo))
+            if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
             {
                 Save();
 
@@ -215,7 +215,7 @@ namespace NETworkManager.Profiles
         /// <param name="profileFileInfo"></param>
         public static void DeleteProfileFile(ProfileFileInfo profileFileInfo)
         {
-            if (LoadedProfileFile.Equals(profileFileInfo))
+            if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
             {
                 SwitchProfile(ProfileFiles.FirstOrDefault(x => !x.Equals(profileFileInfo)));
                 LoadedProfileFileChanged(LoadedProfileFile);
