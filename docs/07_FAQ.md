@@ -23,18 +23,18 @@ At runtime, passwords are stored as [SecureString](https://docs.microsoft.com/en
 
 ## How to enable profile file encryption?
 
-Open the settings and go to the profile section. Right click on the profile you want to encrypt. Select `Encryption...` > `Enable encryption...` and set your master password.
+Open the settings and go to the profile section. Right click on the profile file you want to encrypt. Select `Encryption...` > `Enable encryption...` and set your master password.
 
 ![ProfileFile_EnableEncryption](ProfileFile_EnableEncryption.gif)
 
 ## How to change the master password of an encrypted profile file?
 
-Open the settings and go to the profile section. Right click on an encrypted profile. Select `Encryption...` > `Change Master Password...` and enter the current master password and a new master password.
+Open the settings and go to the profile section. Right click on an encrypted profile file. Select `Encryption...` > `Change Master Password...` and enter the current master password and a new master password.
 
 ![ProfileFile_EnableEncryption](ProfileFile_ChangeMasterPassword.gif)
 
 ## How to disable profile file encryption?
 
-Open the settings and go to the profile section. Right click on an encrypted profile. Select `Encryption...` > `Disable encryption...` and enter your master password.
+Open the settings and go to the profile section. Right click on an encrypted profile file. Select `Encryption...` > `Disable encryption...` and enter your master password.
 
 ![ProfileFile_DisableEncryption](ProfileFile_DisableEncryption.gif)
