@@ -18,21 +18,23 @@ Date: **xx.xx.2021**
 -->
 
 ## What's new?
-- Profile files can be encrypted with a master password. Backup your profile files `%AppData%\NETworkManager\Profiles` or in `APPLICATIONROOT\Profiles` (portable version) before you use this feature. There may be some issues :) . You can review the changes and code here [#226](https://github.com/BornToBeRoot/NETworkManager/issues/226) [#464](https://github.com/BornToBeRoot/NETworkManager/pull/464)
+- Profile files can be encrypted with a master password. Backup your profile files `%AppData%\NETworkManager\Profiles` or in `APPLICATIONROOT\Profiles` (portable version) before you use this feature. There may be some issues :) More infos in the [FAQ](https://borntoberoot.net/NETworkManager/FAQ). You can review the changes and code here [#226](https://github.com/BornToBeRoot/NETworkManager/issues/226) [#464](https://github.com/BornToBeRoot/NETworkManager/pull/464)
 - CodeQL for automated code security analysis added
 - Code of conduct, security policy and contributing guidelines added [#450](https://github.com/BornToBeRoot/NETworkManager/issues/450)
 
 ## Improvements
-
+- Move profile files reworked / improved [#226](https://github.com/BornToBeRoot/NETworkManager/issues/226) [#472](https://github.com/BornToBeRoot/NETworkManager/issues/472) [#473](https://github.com/BornToBeRoot/NETworkManager/issues/473)
+- Move settings improved [#472](https://github.com/BornToBeRoot/NETworkManager/issues/472) [#473](https://github.com/BornToBeRoot/NETworkManager/issues/473)
 
 ## Bugfixes
 - Prevent app crash if profile is corrupted [#270](https://github.com/BornToBeRoot/NETworkManager/issues/270)
-- App crash fixed if network interfaces from type 53 without a mac address are available on the system [#458](https://github.com/BornToBeRoot/NETworkManager/issues/458)
+- Prevent app crash if network interface (type 53) has no mac address [#458](https://github.com/BornToBeRoot/NETworkManager/issues/458)
 - Wrong flags `sl-SI` and `zh-TW` fixed [#438](https://github.com/BornToBeRoot/NETworkManager/issues/438)
-- Update link color fixed
+- UI improved / Link color fixed
 
 ## Other
-
+- Libaries updated
+- Language files updated
 
 # Version 2021.1.2
 Date: **26.01.2021**
@@ -61,7 +63,6 @@ Note: _Due to the migration to x64 you have to uninstall the x86 version manuall
 - Windows 10 / Server x64 (1809 or later)
 - [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 - [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
-
 
 ## What's new?
 - WiFi view reworked [#428](http://github.com/BornToBeRoot/NETworkManager/issues/428){:target="_blank"} 
