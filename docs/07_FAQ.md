@@ -18,8 +18,7 @@ The project can be build with Visual Studio or with a PowerShell script. More de
 
 ## How does the profile encryption work?
 
-Profile files are encrypted on disk with [Rijndael](https://docs.microsoft.com/en-US/dotnet/api/system.security.cryptography.rijndaelmanaged?view=net-5.0){:target="_blank"} (AES) with a key size of 256 bit and a block size of 128 bit in CBC mode. The encryption key is derived from a master password by using [Rfc2898DeriveBytes](https://docs.microsoft.com/en-US/dotnet/api/system.security.cryptography.rfc2898derivebytes?view=net-5.0){:target="_blank"} (PBKDF2) with 1.000.000 iterations.
-At runtime, passwords are stored as [SecureString](https://docs.microsoft.com/en-US/dotnet/api/system.security.securestring?view=net-5.0){:target="_blank"} once the profile file is loaded. For some features, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+Profile files are encrypted on disk using [Rijndael](https://docs.microsoft.com/en-US/dotnet/api/system.security.cryptography.rijndaelmanaged?view=net-5.0){:target="_blank"} (AES) with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using [Rfc2898DeriveBytes](https://docs.microsoft.com/en-US/dotnet/api/system.security.cryptography.rfc2898derivebytes?view=net-5.0){:target="_blank"} (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as [SecureString](https://docs.microsoft.com/en-US/dotnet/api/system.security.securestring?view=net-5.0){:target="_blank"} once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
 
 ## How to enable profile file encryption?
 

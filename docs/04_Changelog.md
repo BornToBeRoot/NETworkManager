@@ -6,7 +6,7 @@ description: "Changelog and download links of all available versions"
 permalink: /Changelog
 ---
 
-# Version 2021.2.0 [Upcoming release] 
+# Version 2021.2.0.0 [Upcoming release] 
 Date: **xx.xx.2021**
 
 <!--
@@ -18,21 +18,24 @@ Date: **xx.xx.2021**
 -->
 
 ## What's new?
-- Profile files can be encrypted with a master password. Backup your profile files `%AppData%\NETworkManager\Profiles` or in `APPLICATIONROOT\Profiles` (portable version) before you use this feature. There may be some issues :) . You can review the changes and code here [#226](https://github.com/BornToBeRoot/NETworkManager/issues/226) [#464](https://github.com/BornToBeRoot/NETworkManager/pull/464)
+- Profile files can be encrypted with a master password. Backup your profile files `%AppData%\NETworkManager\Profiles` or in `APPLICATIONROOT\Profiles` (portable version) before you use this feature. There may be some issues :) More infos in the [FAQ](https://borntoberoot.net/NETworkManager/FAQ){:target="_blank"}. You can review the changes and code here [#226](https://github.com/BornToBeRoot/NETworkManager/issues/226){:target="_blank"} [#464](https://github.com/BornToBeRoot/NETworkManager/pull/464){:target="_blank"}
 - CodeQL for automated code security analysis added
-- Code of conduct, security policy and contributing guidelines added [#450](https://github.com/BornToBeRoot/NETworkManager/issues/450)
+- Code of conduct, security policy and contributing guidelines added [#450](https://github.com/BornToBeRoot/NETworkManager/issues/450){:target="_blank"}
+- Change version number to `YEAR.MONTH.DAY.PATCH` 
 
 ## Improvements
-
+- Move profile files reworked / improved [#226](https://github.com/BornToBeRoot/NETworkManager/issues/226){:target="_blank"} [#472](https://github.com/BornToBeRoot/NETworkManager/issues/472){:target="_blank"} [#473](https://github.com/BornToBeRoot/NETworkManager/issues/473){:target="_blank"}
+- Move settings improved [#472](https://github.com/BornToBeRoot/NETworkManager/issues/472){:target="_blank"} [#473](https://github.com/BornToBeRoot/NETworkManager/issues/473){:target="_blank"}
 
 ## Bugfixes
-- Prevent app crash if profile is corrupted [#270](https://github.com/BornToBeRoot/NETworkManager/issues/270)
-- App crash fixed if network interfaces from type 53 without a mac address are available on the system [#458](https://github.com/BornToBeRoot/NETworkManager/issues/458)
-- Wrong flags `sl-SI` and `zh-TW` fixed [#438](https://github.com/BornToBeRoot/NETworkManager/issues/438)
-- Update link color fixed
+- Prevent app crash if profile is corrupted [#270](https://github.com/BornToBeRoot/NETworkManager/issues/270){:target="_blank"}
+- Prevent app crash if network interface (type 53) has no mac address [#458](https://github.com/BornToBeRoot/NETworkManager/issues/458){:target="_blank"}
+- Wrong flags `sl-SI` and `zh-TW` fixed [#438](https://github.com/BornToBeRoot/NETworkManager/issues/438){:target="_blank"}
+- UI improved / Link color fixed
 
 ## Other
-
+- Libaries updated
+- Language files updated
 
 # Version 2021.1.2
 Date: **26.01.2021**
@@ -59,9 +62,8 @@ Note: _Due to the migration to x64 you have to uninstall the x86 version manuall
 
 **New system requirements**
 - Windows 10 / Server x64 (1809 or later)
-- [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
-- [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
-
+- [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0){:target="_blank"}
+- [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="_blank"}
 
 ## What's new?
 - WiFi view reworked [#428](http://github.com/BornToBeRoot/NETworkManager/issues/428){:target="_blank"} 
@@ -73,7 +75,7 @@ Note: _Due to the migration to x64 you have to uninstall the x86 version manuall
 - Last selected profile is remebered after app restart [#432](http://github.com/BornToBeRoot/NETworkManager/issues/432){:target="_blank"} 
 
 ## Bugfixes
-- App crash fixed if tray icon is used [#435](https://github.com/BornToBeRoot/NETworkManager/issues/435)
+- App crash fixed if tray icon is used [#435](https://github.com/BornToBeRoot/NETworkManager/issues/435){:target="_blank"}
 
 ## Other
 - Language files updated
@@ -151,8 +153,8 @@ Note: _If you've installed the preview, uninstall it first!_
 
 **New system requirements**
 - Windows 10 / Server (1809 or later)
-- [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0)
-- [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
+- [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0){:target="_blank"}
+- [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="_blank"}
 
 ## What's new? 
 - Migrated to .NET Desktop 5.0
@@ -195,12 +197,12 @@ Date: **05.09.2020**
 
 **New system requirements**
 - Windows 10 x64
-- [.NET Desktop Runtime 5.0.0-preview.8](https://dotnet.microsoft.com/download/dotnet/5.0)
-- [Microsoft Edge Canary](https://www.microsoftedgeinsider.com/en-us/download)
+- [.NET Desktop Runtime 5.0.0-preview.8](https://dotnet.microsoft.com/download/dotnet/5.0){:target="_blank"}
+- [Microsoft Edge Canary](https://www.microsoftedgeinsider.com/en-us/download){:target="_blank"}
 
 **Kown issues**
-- Application crash on fullscreen [#325](http://github.com/BornToBeRoot/NETworkManager/issues/325)
-- [More...](https://github.com/BornToBeRoot/NETworkManager/issues?q=label%3A.NET5.0-feedback+)
+- Application crash on fullscreen [#325](http://github.com/BornToBeRoot/NETworkManager/issues/325){:target="_blank"}
+- [More...](https://github.com/BornToBeRoot/NETworkManager/issues?q=label%3A.NET5.0-feedback+){:target="_blank"}
 
 ## What's new?
 - Migration to ~~.NET Core 3.1~~ .NET 5.0!!! (requires [.NET Desktop Runtime 5.0.0-repview.8](https://dotnet.microsoft.com/download/dotnet/5.0)) [#309](http://github.com/BornToBeRoot/NETworkManager/issues/309){:target="_blank"}

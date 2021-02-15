@@ -104,6 +104,7 @@
         <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
         <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
             <Grid>
+                <Grid Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
@@ -307,6 +308,10 @@
                         </Grid>
                     </Button>
                 </Grid>
+            </Grid>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <TextBlock Text="{x:Static localization:Strings.UnlockTheProfileFileMessage}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+                </StackPanel>
             </Grid>
         </Expander>
     </Grid>

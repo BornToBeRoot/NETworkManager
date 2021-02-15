@@ -354,7 +354,7 @@ namespace NETworkManager.ViewModels
         {
             try
             {
-                (Application.Current.MainWindow as MainWindow).RestartApplication(true, true);
+                (Application.Current.MainWindow as MainWindow).RestartApplication(true);
             }
             catch (Exception ex)
             {

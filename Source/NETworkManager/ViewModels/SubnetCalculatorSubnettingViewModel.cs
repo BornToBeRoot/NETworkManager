@@ -324,7 +324,7 @@ namespace NETworkManager.ViewModels
                 {
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
                     {
-                        lock (SubnetsResult)
+                        //lock (SubnetsResult)
                             SubnetsResult.Add(new IPNetworkInfo(network));
                     }));
                 }

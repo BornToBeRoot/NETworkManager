@@ -434,7 +434,7 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (LookupResults)
+                //lock (LookupResults)
                     LookupResults.Add(dnsLookupRecordInfo);
             }));
         }

@@ -670,7 +670,7 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                lock (Results)
+                //lock (Results)
                     Results.Add(ipScannerHostInfo);
             }));
         }

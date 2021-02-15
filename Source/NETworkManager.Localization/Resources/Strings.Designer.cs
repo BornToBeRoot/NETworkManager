@@ -619,15 +619,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application is restarted afterwards.
-        /// </summary>
-        public static string ApplicationIsRestartedAfterwards {
-            get {
-                return ResourceManager.GetString("ApplicationIsRestartedAfterwards", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ARP Table.
         /// </summary>
         public static string ApplicationName_ARPTable {
@@ -849,6 +840,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Applications {
             get {
                 return ResourceManager.GetString("Applications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The application will be restarted afterwards!.
+        /// </summary>
+        public static string ApplicationWillBeRestartedAfterwards {
+            get {
+                return ResourceManager.GetString("ApplicationWillBeRestartedAfterwards", resourceCulture);
             }
         }
         
@@ -1726,24 +1726,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Credential not found!.
-        /// </summary>
-        public static string CredentialNotFound {
-            get {
-                return ResourceManager.GetString("CredentialNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit the Profile and select a different credential or delete the existing one.
-        /// </summary>
-        public static string CredentialNotFoundMessage {
-            get {
-                return ResourceManager.GetString("CredentialNotFoundMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Credentials.
         /// </summary>
         public static string Credentials {
@@ -1758,24 +1740,6 @@ namespace NETworkManager.Localization.Resources {
         public static string CredentialSecuritySupportProvider {
             get {
                 return ResourceManager.GetString("CredentialSecuritySupportProvider", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The credentials are stored encrypted with AES-256 (Rijndael) in a file. The key for the encryption results from a master password (Rfc2898DeriveBytes). The application uses a SecureString for passwords. For some functions, passwords must be converted from a SecureString to plain text, or vice versa..
-        /// </summary>
-        public static string CredentialsEncryptionDisclaimer {
-            get {
-                return ResourceManager.GetString("CredentialsEncryptionDisclaimer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A Credential with this name already exists!.
-        /// </summary>
-        public static string CredentialWithThisNameAlreadyExists {
-            get {
-                return ResourceManager.GetString("CredentialWithThisNameAlreadyExists", resourceCulture);
             }
         }
         
@@ -2262,6 +2226,15 @@ namespace NETworkManager.Localization.Resources {
         public static string DisableEncryptionDots {
             get {
                 return ResourceManager.GetString("DisableEncryptionDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disclaimer.
+        /// </summary>
+        public static string Disclaimer {
+            get {
+                return ResourceManager.GetString("Disclaimer", resourceCulture);
             }
         }
         
@@ -4091,6 +4064,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merge.
+        /// </summary>
+        public static string Merge {
+            get {
+                return ResourceManager.GetString("Merge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The destination folder already contains files. If you click Merge, the current profiles are copied to the folder..
+        /// </summary>
+        public static string MergeProfileFilesInDestinationFolderMessage {
+            get {
+                return ResourceManager.GetString("MergeProfileFilesInDestinationFolderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Message size.
         /// </summary>
         public static string MessageSize {
@@ -4159,6 +4150,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Model {
             get {
                 return ResourceManager.GetString("Model", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move.
+        /// </summary>
+        public static string Move {
+            get {
+                return ResourceManager.GetString("Move", resourceCulture);
             }
         }
         
@@ -4722,6 +4722,21 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overwrite profiles in destination folder?
+        ///
+        ///&quot;Overwrite&quot; will copy the profile files to the destination folder and overwrite existing profile files.
+        ///&quot;Merge&quot; will copy the profile files to the destination folder, but won&apos;t overwrite exitsting profile files.
+        ///&quot;Use other folder&quot; will use the existing profile files in the destination folder.
+        ///
+        ///The application will be restarted afterwards!.
+        /// </summary>
+        public static string OverwriteProfilesInDestinationFolderMessage {
+            get {
+                return ResourceManager.GetString("OverwriteProfilesInDestinationFolderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overwrite?.
         /// </summary>
         public static string OverwriteQuestion {
@@ -4733,11 +4748,12 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Overwrite settings in the destination folder?
         ///
-        ///If you click &quot;Move &amp; Restart&quot;, the remaining files will be copied and the application will be restarted with the new settings!.
+        ///&quot;Overwrite&quot; will overwrite the file in the destination folder.
+        ///&quot;Use other&quot; will use the existing settings file in the destination and restart the application..
         /// </summary>
-        public static string OverwriteSettingsInTheDestinationFolder {
+        public static string OverwriteSettingsInDestinationFolderMessage {
             get {
-                return ResourceManager.GetString("OverwriteSettingsInTheDestinationFolder", resourceCulture);
+                return ResourceManager.GetString("OverwriteSettingsInDestinationFolderMessage", resourceCulture);
             }
         }
         
@@ -5071,6 +5087,26 @@ namespace NETworkManager.Localization.Resources {
         public static string ProfileCouldNotBeLoadedAndMayBeCorruptedMessage {
             get {
                 return ResourceManager.GetString("ProfileCouldNotBeLoadedAndMayBeCorruptedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile files are encrypted on disk using Rijndael (AES) with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+        ///
+        ///This is a new feature that may still c [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string ProfileEncryptionDisclaimer {
+            get {
+                return ResourceManager.GetString("ProfileEncryptionDisclaimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile files will be moved to the selected destination folder..
+        /// </summary>
+        public static string ProfileFilesWillBeMovedMessage {
+            get {
+                return ResourceManager.GetString("ProfileFilesWillBeMovedMessage", resourceCulture);
             }
         }
         
@@ -6597,11 +6633,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The selected settings are overwritten and the application is restarted afterwards!.
+        ///   Looks up a localized string similar to The selected settings are overwritten!.
         /// </summary>
-        public static string SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards {
+        public static string SelectedSettingsAreOverwritten {
             get {
-                return ResourceManager.GetString("SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards", resourceCulture);
+                return ResourceManager.GetString("SelectedSettingsAreOverwritten", resourceCulture);
             }
         }
         
@@ -7975,6 +8011,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unlock the profile file to add, change or delete a profile!.
+        /// </summary>
+        public static string UnlockTheProfileFileMessage {
+            get {
+                return ResourceManager.GetString("UnlockTheProfileFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Untray / Bring window to front.
         /// </summary>
         public static string UntrayBringWindowToFront {
@@ -8097,6 +8142,15 @@ namespace NETworkManager.Localization.Resources {
         public static string UseOther {
             get {
                 return ResourceManager.GetString("UseOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use other folder.
+        /// </summary>
+        public static string UseOtherFolder {
+            get {
+                return ResourceManager.GetString("UseOtherFolder", resourceCulture);
             }
         }
         

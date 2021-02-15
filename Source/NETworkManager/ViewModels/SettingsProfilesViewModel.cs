@@ -19,6 +19,7 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
 
+        public Action CloseAction { get; set; }
         public bool IsPortable => ConfigurationManager.Current.IsPortable;
 
         private string _location;
@@ -125,39 +126,101 @@ namespace NETworkManager.ViewModels
         {
             MovingFiles = true;
 
-            // Get files from new location and check if there are files with the same name
-            var containsFile = Directory.GetFiles(Location).Where(x => Path.GetExtension(x) == ProfileManager.ProfileFileExtension).Any();
+            // Check if a profile file with the same name is in the new folder
+            var containsDuplicatedFiles = false;
 
-            var copyFiles = false;
+            var files = Directory.GetFiles(Location);
 
-            // Check if settings file exists in new location
-            if (containsFile)
+            var containsOtherFiles = files.Any();
+
+            foreach (var file in files)
+            {
+                var fileName = Path.GetFileName(file);
+
+                foreach (var profileFile in ProfileManager.ProfileFiles)
+                {
+                    if (fileName == Path.GetFileName(profileFile.Path))
+                    {
+                        containsDuplicatedFiles = true;
+                        break;
+                    }
+                }
+
+                if (containsDuplicatedFiles)
+                    break;
+            }
+
+            /*  
+             *  -1  Cancel
+             *  0   Move and overwrite
+             *  1   Move and merge
+             *  2   User other path (don't move)
+             */
+            int decision = -1;
+
+
+            // Ask to overwrite or just set the new location
+            if (containsDuplicatedFiles)
             {
                 var settings = AppearanceManager.MetroDialog;
 
                 settings.AffirmativeButtonText = Localization.Resources.Strings.Overwrite;
                 settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
-                settings.FirstAuxiliaryButtonText = Localization.Resources.Strings.UseOther;
-                settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
-
-                var result = await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Overwrite, Localization.Resources.Strings.OverwriteSettingsInTheDestinationFolder, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
+                settings.FirstAuxiliaryButtonText = Localization.Resources.Strings.Merge;
+                settings.SecondAuxiliaryButtonText = Localization.Resources.Strings.UseOtherFolder;
+                
+                var result = await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Overwrite, Localization.Resources.Strings.OverwriteProfilesInDestinationFolderMessage + Environment.NewLine + Environment.NewLine + Localization.Resources.Strings.ApplicationWillBeRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
 
                 switch (result)
                 {
-                    case MessageDialogResult.Negative:
-                        MovingFiles = false;
-                        return;
                     case MessageDialogResult.Affirmative:
-                        copyFiles = true;
+                        decision = 0;
+                        break;
+                    case MessageDialogResult.FirstAuxiliary:
+                        decision = 1;
+                        break;
+                    case MessageDialogResult.SecondAuxiliary:
+                        decision = 2;
                         break;
                 }
             }
+            else if (containsOtherFiles)
+            {
+                var settings = AppearanceManager.MetroDialog;
 
-            if (copyFiles)
+                settings.AffirmativeButtonText = Localization.Resources.Strings.Merge;
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+                
+                if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Merge, Localization.Resources.Strings.MergeProfileFilesInDestinationFolderMessage + Environment.NewLine + Environment.NewLine + Localization.Resources.Strings.ApplicationWillBeRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, AppearanceManager.MetroDialog) == MessageDialogResult.Affirmative)
+                    decision = 1;
+            }
+            else
+            {
+                var settings = AppearanceManager.MetroDialog;
+
+                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+
+                if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Move, Localization.Resources.Strings.ProfileFilesWillBeMovedMessage + Environment.NewLine + Environment.NewLine + Localization.Resources.Strings.ApplicationWillBeRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, AppearanceManager.MetroDialog) == MessageDialogResult.Affirmative)
+                    decision = 1;
+            }
+
+            // Canceled
+            if (decision == -1)
+            {
+                MovingFiles = false;
+
+                return;
+            }
+
+            // Move (overwrite or merge)
+            if (decision == 0 || decision == 1)
             {
                 try
                 {
-                    await ProfileManager.MoveProfilesAsync(Location);
+                    var overwrite = decision == 0;
+
+                    await ProfileManager.MoveProfilesAsync(Location, overwrite);
 
                     // Show the user some awesome animation to indicate we are working on it :)
                     await Task.Delay(2000);
@@ -171,11 +234,13 @@ namespace NETworkManager.ViewModels
                     await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
             }
-
+                                    
+            // Set new location
             SettingsManager.Current.Profiles_CustomProfilesLocation = Location;
-
-            Location = string.Empty;
-            Location = SettingsManager.Current.Profiles_CustomProfilesLocation;
+                        
+            // Restart the application
+            ConfigurationManager.Current.SoftRestart = true;
+            CloseAction();
 
             MovingFiles = false;
         }
@@ -200,7 +265,7 @@ namespace NETworkManager.ViewModels
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileManager.AddProfileFile(instance.Name);
+                ProfileManager.CreateEmptyProfileFile(instance.Name);
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -277,37 +342,46 @@ namespace NETworkManager.ViewModels
 
         private async void EnableEncryptionAction()
         {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.SetMasterPassword
-            };
+            var settings = AppearanceManager.MetroDialog;
 
-            var credentialsSetPasswordViewModel = new CredentialsSetPasswordViewModel(async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+            settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+            settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                try
+            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Disclaimer, Localization.Resources.Strings.ProfileEncryptionDisclaimer, MessageDialogStyle.AffirmativeAndNegative) == MessageDialogResult.Affirmative)
+            {
+                var customDialog = new CustomDialog
                 {
-                    ProfileManager.EnableEncryption(SelectedProfileFile, instance.Password);
-                }
-                catch (Exception ex)
+                    Title = Localization.Resources.Strings.SetMasterPassword
+                };
+
+                var credentialsSetPasswordViewModel = new CredentialsSetPasswordViewModel(async instance =>
                 {
-                    var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                    await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.EncryptionError, $"{Localization.Resources.Strings.EncryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
-                }
-            }, async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            });
+                    try
+                    {
+                        ProfileManager.EnableEncryption(SelectedProfileFile, instance.Password);
+                    }
+                    catch (Exception ex)
+                    {
+                        var settings = AppearanceManager.MetroDialog;
+                        settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-            customDialog.Content = new CredentialsSetPasswordDialog
-            {
-                DataContext = credentialsSetPasswordViewModel
-            };
+                        await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.EncryptionError, $"{Localization.Resources.Strings.EncryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
+                    }
+                }, async instance =>
+                {
+                    await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                });
 
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+                customDialog.Content = new CredentialsSetPasswordDialog
+                {
+                    DataContext = credentialsSetPasswordViewModel
+                };
+
+                await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            }
         }
 
         public ICommand ChangeMasterPasswordCommand => new RelayCommand(p => ChangeMasterPasswordAction());

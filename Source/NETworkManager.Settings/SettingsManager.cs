@@ -14,8 +14,7 @@ namespace NETworkManager.Settings
         private static string SettingsFileExtension => ".xml";
 
         public static SettingsInfo Current { get; set; }
-
-        //public static bool ForceRestart { get; set; }
+                
         public static bool HotKeysChanged { get; set; }
         #endregion
 
@@ -130,19 +129,26 @@ namespace NETworkManager.Settings
 
         private static void MoveSettings(string targedLocation)
         {
+            // Save the current settings
+            Save();
+
             // Create the dircetory and copy the files to the new location
             if (!Directory.Exists(targedLocation))
                 Directory.CreateDirectory(targedLocation);
 
+            var settingsFilePath = GetSettingsFilePath();
+
             // Copy file
-            File.Copy(GetSettingsFilePath(), Path.Combine(targedLocation, GetSettingsFileName()), true);
+            File.Copy(settingsFilePath, Path.Combine(targedLocation, GetSettingsFileName()), true);
 
             // Delete file
-            File.Delete(GetSettingsFilePath());
+            File.Delete(settingsFilePath);
 
-            // Delete folder, if it is empty not the default settings location and does not contain any files or directories
-            if (GetSettingsLocation() != GetDefaultSettingsLocation() && Directory.GetFiles(GetSettingsLocation()).Length == 0 && Directory.GetDirectories(GetSettingsLocation()).Length == 0)
-                Directory.Delete(GetSettingsLocation());
+            // Delete folder if it is empty
+            var settingsLocation = GetSettingsLocation();
+
+            if (Directory.GetFiles(settingsLocation).Length == 0 && Directory.GetDirectories(settingsLocation).Length == 0)
+                Directory.Delete(settingsLocation);
         }
 
         #endregion
