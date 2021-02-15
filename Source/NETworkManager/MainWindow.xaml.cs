@@ -316,7 +316,7 @@ namespace NETworkManager
             AppearanceManager.Load();
 
             // Set title
-            Title = $"NETworkManager {AssemblyManager.Current.Version.Major}.{AssemblyManager.Current.Version.Minor}.{AssemblyManager.Current.Version.Build}";
+            Title = $"NETworkManager {AssemblyManager.Current.Version}";
 
             // NotifyIcon for autostart
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)

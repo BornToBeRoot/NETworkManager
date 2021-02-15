@@ -14,7 +14,7 @@ namespace NETworkManager.ViewModels
     public class AboutViewModel : ViewModelBase
     {
         #region Variables
-        public string Version => $"{Strings.Version} {AssemblyManager.Current.Version.Major}.{AssemblyManager.Current.Version.Minor}.{AssemblyManager.Current.Version.Build}";
+        public string Version => $"{Strings.Version} {AssemblyManager.Current.Version}";
 
         private bool _isUpdateCheckRunning;
         public bool IsUpdateCheckRunning

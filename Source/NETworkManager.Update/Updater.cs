@@ -68,7 +68,7 @@ namespace NETworkManager.Update
 
                     var latestVersion = new Version(client.Repository.Release.GetLatest(userName, projectName).Result.TagName);
 
-                    // Compare versions (tag=2019.12.0, version=2019.12.0)
+                    // Compare versions (tag=2021.2.15.0, version=2021.2.15.0)
                     if (latestVersion > currentVersion)
                         OnUpdateAvailable(new UpdateAvailableArgs(latestVersion));
                     else

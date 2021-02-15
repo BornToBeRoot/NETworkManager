@@ -21,7 +21,7 @@ Date: **xx.xx.2021**
 - Profile files can be encrypted with a master password. Backup your profile files `%AppData%\NETworkManager\Profiles` or in `APPLICATIONROOT\Profiles` (portable version) before you use this feature. There may be some issues :) More infos in the [FAQ](https://borntoberoot.net/NETworkManager/FAQ){:target="_blank"}. You can review the changes and code here [#226](https://github.com/BornToBeRoot/NETworkManager/issues/226){:target="_blank"} [#464](https://github.com/BornToBeRoot/NETworkManager/pull/464){:target="_blank"}
 - CodeQL for automated code security analysis added
 - Code of conduct, security policy and contributing guidelines added [#450](https://github.com/BornToBeRoot/NETworkManager/issues/450){:target="_blank"}
-- Change version number to `YEAR.MONTH.DAY.PATCH` 
+- Change version number to `YEAR.MONTH.DAY.PATCH` [#474](https://github.com/BornToBeRoot/NETworkManager/issues/474){:target="_blank"}
 
 ## Improvements
 - Move profile files reworked / improved [#226](https://github.com/BornToBeRoot/NETworkManager/issues/226){:target="_blank"} [#472](https://github.com/BornToBeRoot/NETworkManager/issues/472){:target="_blank"} [#473](https://github.com/BornToBeRoot/NETworkManager/issues/473){:target="_blank"}
