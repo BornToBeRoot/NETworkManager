@@ -19,8 +19,7 @@ namespace NETworkManager.Settings
                 ApplicationFullName = Path.Combine(AssemblyManager.Current.Location, AssemblyManager.Current.Name + ".exe"),
                 ApplicationName = AssemblyManager.Current.Name,
                 OSVersion = System.Environment.OSVersion.Version,
-                IsPortable = File.Exists(Path.Combine(AssemblyManager.Current.Location, $"{IsPortableFileName}.{IsPortableExtension}")),
-                IsPreview = File.Exists(Path.Combine(AssemblyManager.Current.Location, "IsPreview.settings"))
+                IsPortable = File.Exists(Path.Combine(AssemblyManager.Current.Location, $"{IsPortableFileName}.{IsPortableExtension}"))
             };
         }
     }

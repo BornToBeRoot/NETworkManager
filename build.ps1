@@ -1,5 +1,3 @@
-$IsPreview = $false
-
 $BuildPath = "$PSScriptRoot\Build"
 
 Set-Location -Path $PSScriptRoot
@@ -7,6 +5,29 @@ Set-Location -Path $PSScriptRoot
 if (Test-Path -Path $BuildPath) {
     Remove-Item -Path $BuildPath -Recurse -ErrorAction Stop
 }
+
+$Date = Get-Date
+$VersionString = "$($Date.Year).$($Date.Month).$($Date.Day).0"
+
+# Set assembly version
+$PatternVersion = '\[assembly: AssemblyVersion\("(.*)"\)\]'
+$PatternFileVersion = '\[assembly: AssemblyFileVersion\("(.*)"\)\]'
+
+$AssemblyFile = "$PSScriptRoot\Source\GlobalAssemblyInfo.cs"
+
+$AssemlbyContent = Get-Content -Path $AssemblyFile -Encoding utf8
+$AssemlbyContent = $AssemlbyContent -replace $PatternVersion,"[assembly: AssemblyVersion(""$($VersionString)"")]"
+$AssemlbyContent = $AssemlbyContent -replace $PatternFileVersion,"[assembly: AssemblyFileVersion(""$($VersionString)"")]"
+$AssemlbyContent | Set-Content -Path $AssemblyFile -Encoding utf8
+
+# Set inno setup version
+$PatternSetupVersion = '#define MyAppVersion "(.*)"'
+
+$InnoSetupFile = "$PSScriptRoot\InnoSetup.iss"
+
+$SetupContent = Get-Content -Path $InnoSetupFile -Encoding utf8
+$SetupContent = $SetupContent -replace $PatternSetupVersion,"#define MyAppVersion ""$($VersionString)"""
+$SetupContent | Set-Content -Path $InnoSetupFile -Encoding utf8
 
 # Dotnet clean, restore, build and publish
 dotnet clean "$PSScriptRoot\Source\NETworkManager.sln"
@@ -30,11 +51,6 @@ Remove-Item "$BuildPath\NETworkManager\x86" -Recurse
 
 # Cleanup .pdb files
 Get-ChildItem -Recurse | Where-Object {$_.Name.EndsWith(".pdb")} | Remove-Item
-
-# Is preview?
-if ($IsPreview) {
-    New-Item -Path "$BuildPath\NETworkManager" -Name "IsPreview.settings" -ItemType File
-}
 
 # Archiv Build
 Compress-Archive -Path "$BuildPath\NETworkManager" -DestinationPath "$BuildPath\NETworkManager_$($Version)_Archiv.zip"
