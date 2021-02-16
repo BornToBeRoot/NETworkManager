@@ -6,6 +6,7 @@ if (Test-Path -Path $BuildPath) {
     Remove-Item -Path $BuildPath -Recurse -ErrorAction Stop
 }
 
+# Set the version based on the current date (e.g. 2021.2.15.0)
 $Date = Get-Date
 $VersionString = "$($Date.Year).$($Date.Month).$($Date.Day).0"
 
