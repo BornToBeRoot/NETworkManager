@@ -71,6 +71,7 @@ else {
     Write-Host "InnoSetup not installed or not found. Skip installer build..." -ForegroundColor Yellow
 }
 
+# SHA256 file hash
 Get-ChildItem -Path $BuildPath | Where-Object {$_.Name.EndsWith(".zip") -or $_.Name.EndsWith(".exe")} | Get-FileHash 
 
 Write-Host "Build finished! All files are here: $BuildPath" -ForegroundColor Green
