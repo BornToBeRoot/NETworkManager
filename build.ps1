@@ -8,7 +8,8 @@ if (Test-Path -Path $BuildPath) {
 
 # Set the version based on the current date (e.g. 2021.2.15.0)
 $Date = Get-Date
-$VersionString = "$($Date.Year).$($Date.Month).$($Date.Day).0"
+$Patch = 0
+$VersionString = "$($Date.Year).$($Date.Month).$($Date.Day).$Patch"
 
 # Set assembly version
 $PatternVersion = '\[assembly: AssemblyVersion\("(.*)"\)\]'
@@ -72,6 +73,9 @@ else {
 }
 
 # SHA256 file hash
-Get-ChildItem -Path $BuildPath | Where-Object {$_.Name.EndsWith(".zip") -or $_.Name.EndsWith(".exe")} | Get-FileHash 
+foreach($hash in Get-ChildItem -Path $BuildPath | Where-Object {$_.Name.EndsWith(".zip") -or $_.Name.EndsWith(".exe")} | Get-FileHash)
+{
+    "$($hash.Algorithm) | $($hash.Hash) | $([System.IO.Path]::GetFileName($hash.Path))" | Out-File -FilePath "$BuildPath\NETworkManager_$($Version)_Hash.txt" -Encoding utf8 -Append
+}
 
 Write-Host "Build finished! All files are here: $BuildPath" -ForegroundColor Green
