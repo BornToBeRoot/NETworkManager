@@ -6,16 +6,14 @@ description: "Changelog and download links of all available versions"
 permalink: /Changelog
 ---
 
-# Version 2021.2.0.0 [Upcoming release] 
-Date: **xx.xx.2021**
+# Version 2021.2.17.0
+Date: **17.02.2021**
 
-<!--
 | File | Checksum [SHA256] |
 |---|---|
-|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Setup.exe){:target="_blank"}| `600C5F6F57ECE66E87FD9AC5FA8024A2CE7DF156D1FA7D5D17C1809E89CC0548` |
-|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Portable.zip){:target="_blank"}| `C8CFE51FD787D56A7A4DF07EC9A1EF7F043D296E2E2F9EF2CB071D999E9DB3CD` |
-|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Archiv.zip){:target="_blank"}| `5705DEFD5457625B85B3F7FD5FC64A503E231BBFC29B6BF749DB2858B14E53D3` |
--->
+|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Setup.exe){:target="_blank"}| `9996197F0F58A7A23F0A78DB7336D4201F98F1C6E8CCD7D02BF97095C5A6DDA8` |
+|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Portable.zip){:target="_blank"}| `4D5AA9CC1A4FCE5AB80060A1009E87FA207D642B7E25A63A4DA38F9F6FD43472` |
+|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Archiv.zip){:target="_blank"}| `5BDD82CA59CC0A635559848CA183C21ED92D4D0C143625F1B367946F033E2A79` |
 
 ## What's new?
 - Profile files can be encrypted with a master password. Backup your profile files `%AppData%\NETworkManager\Profiles` or in `APPLICATIONROOT\Profiles` (portable version) before you use this feature. There may be some issues :) More infos in the [FAQ](https://borntoberoot.net/NETworkManager/FAQ){:target="_blank"}. You can review the changes and code here [#226](https://github.com/BornToBeRoot/NETworkManager/issues/226){:target="_blank"} [#464](https://github.com/BornToBeRoot/NETworkManager/pull/464){:target="_blank"}
