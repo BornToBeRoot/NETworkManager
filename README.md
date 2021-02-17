@@ -56,8 +56,13 @@ __Optional__
 - [InnoSetup](https://jrsoftware.org/isinfo.php) (if you want to create an installer)
 
 __Steps__
-1. Clone the Repository
-2. Run the `.\build.ps1` with PowerShell or open the `Source/NETworkManager.sln` in Visual Studio
+1. Clone or download the repository
+2. Run the `.\build.ps1` script with PowerShell (alternatively open the `Source/NETworkManager.sln` in Visual Studio)
+
+You can also copy & paste this command in your PowerShell console :smile:
+```PowerShell
+git clone https://github.com/BornToBeRoot/NETworkManager; Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; .\NETworkManager\build.ps1
+```
 
 # Code of Conduct
 This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/master/CODE_OF_CONDUCT.md) defined by the [Contributor Covenant](http://contributor-covenant.org/).
