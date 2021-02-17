@@ -168,9 +168,6 @@
   <data name="CopyProfile" xml:space="preserve">
     <value>Copiar perfil</value>
   </data>
-  <data name="CredentialNotFound" xml:space="preserve">
-    <value>¡Credencial no encontrado!</value>
-  </data>
   <data name="Credentials" xml:space="preserve">
     <value>Credenciales</value>
   </data>
@@ -687,8 +684,8 @@
   <data name="Answers" xml:space="preserve">
     <value>Respuestas</value>
   </data>
-  <data name="ApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>La aplicación se reiniciará después</value>
+  <data name="ApplicationWillBeRestartedAfterwards" xml:space="preserve">
+    <value>The application will be restarted afterwards!</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Aplicar</value>
@@ -771,11 +768,10 @@
   <data name="Credential" xml:space="preserve">
     <value>Credencial</value>
   </data>
-  <data name="CredentialNotFoundMessage" xml:space="preserve">
-    <value>Editar el perfil y seleccionar una credencial diferente o eliminar la existente</value>
-  </data>
-  <data name="CredentialsEncryptionDisclaimer" xml:space="preserve">
-    <value>Las credenciales se almacenan cifradas con AES-256 (Rijndael) en un archivo. La clave para el cifrado es el resultado de una contraseña maestra (Rfc2898DeriveBytes). La aplicación utiliza una cadena de seguridad para las contraseñas. Para algunas funciones, las contraseñas deben convertirse de una cadena segura a texto plano, o viceversa.</value>
+  <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
+    <value>Profile files are encrypted on disk using Rijndael (AES) with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+
+This is a new feature that may still contain bugs. Please backup your profile files first before enabling profile file encryption!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Personalizado</value>
@@ -997,10 +993,11 @@ Crear uno...</value>
   <data name="Override" xml:space="preserve">
     <value>anular</value>
   </data>
-  <data name="OverwriteSettingsInTheDestinationFolder" xml:space="preserve">
-    <value>¿Sobrescribir la configuración del directorio de destino?
+  <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
+    <value>Overwrite settings in the destination folder?
 
-¡Si hace clic en "Mover y reiniciar", los archivos restantes se copiarán y la aplicación se reiniciará con la nueva configuración!</value>
+"Overwrite" will overwrite the file in the destination folder.
+"Use other" will use the existing settings file in the destination and restart the application.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Contraseña</value>
@@ -1101,8 +1098,8 @@ Crear uno...</value>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Seleccione una resolución de pantalla</value>
   </data>
-  <data name="SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>¡La configuración seleccionada se sobrescribirá y la aplicación se reiniciará después!</value>
+  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
+    <value>The selected settings are overwritten!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>La configuración seleccionada se restablecerá.</value>
@@ -1250,7 +1247,7 @@ Crear uno...</value>
     <value>Ancho</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Las credenciales no se pueden desencriptar con la contraseña dada.</value>
+    <value>No se pudo descifrar el archivo con la contraseña proporcionada.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>La contraseña introducida no es correcta.</value>
@@ -1770,9 +1767,6 @@ Crear uno...</value>
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>¡Ya existe un perfil con este nombre!</value>
-  </data>
-  <data name="CredentialWithThisNameAlreadyExists" xml:space="preserve">
-    <value>¡Ya existe una credencial con este nombre!</value>
   </data>
   <data name="PortState_Closed" xml:space="preserve">
     <value>Cerrado</value>
@@ -2418,8 +2412,8 @@ $$hostname$$	--&gt;	Nombre del host</value>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>La aplicación se reiniciará...</value>
   </data>
-  <data name="UseOther" xml:space="preserve">
-    <value>Usar otro</value>
+  <data name="UseOtherFolder" xml:space="preserve">
+    <value>Use other folder</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>¡No se pudo exportar el archivo! Ver mensaje de error: "{0}"</value>
@@ -2456,9 +2450,6 @@ $$hostname$$	--&gt;	Nombre del host</value>
   </data>
   <data name="EncryptionDots" xml:space="preserve">
     <value>Cifrado...</value>
-  </data>
-  <data name="RemoveProfileFile" xml:space="preserve">
-    <value>Eliminar archivo de perfil</value>
   </data>
   <data name="ProfileNameAlreadyExists" xml:space="preserve">
     <value>¡El nombre del perfil ya existe!</value>
@@ -2918,5 +2909,68 @@ $$hostname$$	--&gt;	Nombre del host</value>
   </data>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
+  </data>
+  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
+    <value>¡No se pudo cargar el perfil!</value>
+  </data>
+  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
+    <value>No se pudo cargar el perfil y puede estar dañado. Si esto es inesperado o debido a una actualización, ¡por favor informa este problema en GitHub!</value>
+  </data>
+  <data name="EditGroupDots" xml:space="preserve">
+    <value>Editar grupo...</value>
+  </data>
+  <data name="DecryptionError" xml:space="preserve">
+    <value>Error de descifrado</value>
+  </data>
+  <data name="DecryptionErrorMessage" xml:space="preserve">
+    <value>No se pudo descifrar el archivo. Puedes informar este problema en GitHub.</value>
+  </data>
+  <data name="EncryptionError" xml:space="preserve">
+    <value>Error de cifrado</value>
+  </data>
+  <data name="EncryptionErrorMessage" xml:space="preserve">
+    <value>No se pudo cifrar el archivo. Puedes informar este problema en GitHub.</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Contraseña actual</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Nueva contraseña</value>
+  </data>
+  <data name="ChangeMasterPassword" xml:space="preserve">
+    <value>Cambiar contraseña maestra</value>
+  </data>
+  <data name="UnlockProfile" xml:space="preserve">
+    <value>Desbloquear perfil</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage" xml:space="preserve">
+    <value>Unlock the profile file to add, change or delete a profile!</value>
+  </data>
+  <data name="Disclaimer" xml:space="preserve">
+    <value>Disclaimer</value>
+  </data>
+  <data name="Merge" xml:space="preserve">
+    <value>Merge</value>
+  </data>
+  <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
+    <value>The destination folder already contains files. If you click Merge, the current profiles are copied to the folder.</value>
+  </data>
+  <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
+    <value>Overwrite profiles in destination folder?
+
+"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
+"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
+"Use other folder" will use the existing profile files in the destination folder.
+
+The application will be restarted afterwards!</value>
+  </data>
+  <data name="UseOther" xml:space="preserve">
+    <value>Usar otro</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
+    <value>Profile files will be moved to the selected destination folder.</value>
   </data>
 </root>

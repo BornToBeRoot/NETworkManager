@@ -168,9 +168,6 @@
   <data name="CopyProfile" xml:space="preserve">
     <value>Copiar perfil</value>
   </data>
-  <data name="CredentialNotFound" xml:space="preserve">
-    <value>Credencial não encontrada!</value>
-  </data>
   <data name="Credentials" xml:space="preserve">
     <value>Credenciais</value>
   </data>
@@ -687,8 +684,8 @@
   <data name="Answers" xml:space="preserve">
     <value>Respostas</value>
   </data>
-  <data name="ApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>Aplicativo será reiniciado depois</value>
+  <data name="ApplicationWillBeRestartedAfterwards" xml:space="preserve">
+    <value>O aplicativo será reiniciado em seguida!</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Aplicar</value>
@@ -771,11 +768,10 @@
   <data name="Credential" xml:space="preserve">
     <value>Credencial</value>
   </data>
-  <data name="CredentialNotFoundMessage" xml:space="preserve">
-    <value>Edite o Perfil e selecione uma credencial diferente ou exclua a existente</value>
-  </data>
-  <data name="CredentialsEncryptionDisclaimer" xml:space="preserve">
-    <value>As credenciais são armazenadas criptografadas com AES-256 (Rijndael) em um arquivo. A chave para a criptografia resulta de uma senha mestre (Rfc2898DeriveBytes). O aplicativo usa uma SecureString para senhas. Para algumas funções, as senhas devem ser convertidas de uma SecureString para texto sem formatação ou vice-versa.</value>
+  <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
+    <value>Os arquivos de perfil são criptografados em disco usando Rijndael (AES) com um tamanho de chave de 256 bits e um tamanho de bloco de 128 bits no modo CBC. A chave de criptografia é derivada de uma senha mestre usando Rfc2898DeriveBytes (PBKDF2) com 1.000.000 de iterações. No tempo de execução, as senhas são armazenadas como SecureString assim que o arquivo de perfil é carregado. Para algumas funções, a senha deve ser convertida em uma string normal e permanecer sem criptografia na memória até que o coletor de lixo as limpe.
+
+Este é um novo recurso que ainda pode conter bugs. Faça backup de seus arquivos de perfil antes de habilitar a criptografia de arquivo de perfil!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Personalizado</value>
@@ -997,10 +993,11 @@ Crie um...</value>
   <data name="Override" xml:space="preserve">
     <value>sobrepor</value>
   </data>
-  <data name="OverwriteSettingsInTheDestinationFolder" xml:space="preserve">
-    <value>Substituir configurações na pasta de destino?
+  <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
+    <value>Substituir as configurações na pasta de destino?
 
-Se você clicar em "Mover &amp; Reiniciar", os arquivos restantes serão copiados e o aplicativo será reiniciado com as novas configurações!</value>
+"Substituir" substituirá o arquivo na pasta de destino.
+"Usar outro" usará o arquivo de configurações existente no destino e reiniciará o aplicativo.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Senha</value>
@@ -1101,8 +1098,8 @@ Se você clicar em "Mover &amp; Reiniciar", os arquivos restantes serão copiado
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Selecione uma resolução de tela</value>
   </data>
-  <data name="SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>As configurações selecionadas são substituídas e o aplicativo é reiniciado em seguida!</value>
+  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
+    <value>As configurações selecionadas serão substituídas!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>As configurações selecionadas foram redefinidas.</value>
@@ -1250,7 +1247,7 @@ Se você clicar em "Mover &amp; Reiniciar", os arquivos restantes serão copiado
     <value>Largura</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Não foi possível descriptografar as credenciais com a senha fornecida.</value>
+    <value>Não foi possível descriptografar o arquivo com a senha fornecida.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>A senha digitada está errada.</value>
@@ -1770,9 +1767,6 @@ Se você clicar em "Mover &amp; Reiniciar", os arquivos restantes serão copiado
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>Um perfil com este nome já existe!</value>
-  </data>
-  <data name="CredentialWithThisNameAlreadyExists" xml:space="preserve">
-    <value>Uma Credencial com este nome já existe!</value>
   </data>
   <data name="PortState_Closed" xml:space="preserve">
     <value>Fechado</value>
@@ -2418,8 +2412,8 @@ $$hostname$$--&gt;Nome do host</value>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>O aplicativo será reiniciado...</value>
   </data>
-  <data name="UseOther" xml:space="preserve">
-    <value>Usar outro</value>
+  <data name="UseOtherFolder" xml:space="preserve">
+    <value>Usar outra pasta</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Não foi possível exportar o arquivo! Veja a mensagem de erro: "{0}"</value>
@@ -2456,9 +2450,6 @@ $$hostname$$--&gt;Nome do host</value>
   </data>
   <data name="EncryptionDots" xml:space="preserve">
     <value>Criptografia...</value>
-  </data>
-  <data name="RemoveProfileFile" xml:space="preserve">
-    <value>Remover arquivo de perfil</value>
   </data>
   <data name="ProfileNameAlreadyExists" xml:space="preserve">
     <value>O nome de perfil já existe!</value>
@@ -2918,5 +2909,68 @@ $$hostname$$--&gt;Nome do host</value>
   </data>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
+  </data>
+  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
+    <value>O perfil não pôde ser carregado!</value>
+  </data>
+  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
+    <value>O perfil não pôde ser carregado e pode estar corrompido. Se isto for algo inesperado ou devido a uma atualização, reporte este problema no GitHub!</value>
+  </data>
+  <data name="EditGroupDots" xml:space="preserve">
+    <value>Editar grupo...</value>
+  </data>
+  <data name="DecryptionError" xml:space="preserve">
+    <value>Erro de descriptografia</value>
+  </data>
+  <data name="DecryptionErrorMessage" xml:space="preserve">
+    <value>Não foi possível descriptografar este arquivo. Você pode reportar este problema no GitHub.</value>
+  </data>
+  <data name="EncryptionError" xml:space="preserve">
+    <value>Erro de criptografia</value>
+  </data>
+  <data name="EncryptionErrorMessage" xml:space="preserve">
+    <value>Não foi possível criptografar este arquivo. Você pode reportar este problema no GitHub.</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Senha atual</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Nova senha</value>
+  </data>
+  <data name="ChangeMasterPassword" xml:space="preserve">
+    <value>Mudar senha mestre</value>
+  </data>
+  <data name="UnlockProfile" xml:space="preserve">
+    <value>Desbloquear perfil</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage" xml:space="preserve">
+    <value>Desbloqueie o perfil para adicionar, alterar ou excluir um perfil!</value>
+  </data>
+  <data name="Disclaimer" xml:space="preserve">
+    <value>Aviso legal</value>
+  </data>
+  <data name="Merge" xml:space="preserve">
+    <value>Unir</value>
+  </data>
+  <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
+    <value>O arquivo de destino ainda contém arquivos. Se você clicar em Unir, os perfis atuais serão copiados para a pasta.</value>
+  </data>
+  <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
+    <value>Substituir perfis na pasta de destino?
+
+"Substituir" copiará os arquivos de perfil para a pasta de destino e substituirá os arquivos de perfil existentes.
+"Unir" copiará os arquivos de perfil para a pasta de destino, mas não substituirá os arquivos de perfil de saída.
+"Usar outra pasta" usará os arquivos de perfil existentes na pasta de destino.
+
+O aplicativo será reiniciado em seguida!</value>
+  </data>
+  <data name="UseOther" xml:space="preserve">
+    <value>Usar outro</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Mover</value>
+  </data>
+  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
+    <value>Os arquivos do perfil serão movidos para a pasta de destino selecionada.</value>
   </data>
 </root>

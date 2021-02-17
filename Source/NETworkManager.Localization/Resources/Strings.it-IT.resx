@@ -168,9 +168,6 @@
   <data name="CopyProfile" xml:space="preserve">
     <value>Copia profilo</value>
   </data>
-  <data name="CredentialNotFound" xml:space="preserve">
-    <value>Credenziali non trovate</value>
-  </data>
   <data name="Credentials" xml:space="preserve">
     <value>Credenziali</value>
   </data>
@@ -550,7 +547,7 @@
     <value>Indirizzo fisico</value>
   </data>
   <data name="PreferredProtocolWhenResolvingHostname" xml:space="preserve">
-    <value>Protocollo preferito per la risoluzione del nome host:</value>
+    <value>Protocollo predefinito per risoluzione nome host:</value>
   </data>
   <data name="PrimaryDNSServer" xml:space="preserve">
     <value>Server DNS primario</value>
@@ -559,7 +556,7 @@
     <value>Ricevuti / Persi</value>
   </data>
   <data name="ResolveHostname" xml:space="preserve">
-    <value>Risolvi il nome host</value>
+    <value>Risolvi nome host</value>
   </data>
   <data name="RestartRequired" xml:space="preserve">
     <value>Necessario riavvio</value>
@@ -687,8 +684,8 @@
   <data name="Answers" xml:space="preserve">
     <value>Risposte</value>
   </data>
-  <data name="ApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>L'applicazione verrà riavviata in seguito</value>
+  <data name="ApplicationWillBeRestartedAfterwards" xml:space="preserve">
+    <value>Successivamente l'applicazione verrà riavviata!</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Applica</value>
@@ -724,7 +721,7 @@
     <value>Il blocco maiuscole è abilitato!</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>Controlla se ci sono aggiornamenti all'avvio</value>
+    <value>Controllo aggiornamenti all'avvio</value>
   </data>
   <data name="Class" xml:space="preserve">
     <value>Classe</value>
@@ -766,19 +763,20 @@
     <value>Copia...</value>
   </data>
   <data name="CouldNotResolveHostnameFor" xml:space="preserve">
-    <value>Impossibile risolvere il nome host per: "{0}"</value>
+    <value>Impossibile risolvere nome host per: "{0}"
+</value>
   </data>
   <data name="Credential" xml:space="preserve">
     <value>Credenziali</value>
   </data>
-  <data name="CredentialNotFoundMessage" xml:space="preserve">
-    <value>Modifica il profilo e seleziona un'altra credenziale o elimina quella esistente</value>
-  </data>
-  <data name="CredentialsEncryptionDisclaimer" xml:space="preserve">
-    <value>Le credenziali sono salvate e crittografate con AES-256 (Rijndael) in un file. 
-La chiave per la crittografia deriva da una password principale (Rfc2898DeriveBytes). 
-L'applicazione utilizza un SecureString per le password. 
-Per alcune funzioni, le password devono essere convertite da SecureString in semplice testo o viceversa.</value>
+  <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
+    <value>I file del profilo vengono crittografati su disco usando Rijndael (AES) con una dimensione della chiave di 256 bit e una dimensione del blocco di 128 bit in modalità CBC. 
+La chiave di crittografia è derivata da una password principale usando Rfc2898DeriveBytes (PBKDF2) con 1.000.000 di iterazioni. 
+In fase di esecuzione, le password vengono archiviate come SecureString una volta caricato il file del profilo. 
+Per alcune funzioni, la password deve essere convertita in una stringa normale e rimane non crittografata in memoria finché il Garbage Collector non le pulisce.
+
+Questa è una nuova funzionalità che potrebbe ancora contenere bug.
+Esegui il backup dei file del profilo prima di abilitare la crittografia dei file del profilo!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Personalizza</value>
@@ -956,7 +954,7 @@ Controlla i parametri!</value>
   </data>
   <data name="NoProfilesFoundCreateOne" xml:space="preserve">
     <value>Nessun profilo trovato.
-Creane uno...</value>
+Crea nuovo profilo...</value>
   </data>
   <data name="NothingFound" xml:space="preserve">
     <value>Non è stato trovato nulla!</value>
@@ -1008,10 +1006,11 @@ Controlla i parametri!</value>
   <data name="Override" xml:space="preserve">
     <value>sostituisci</value>
   </data>
-  <data name="OverwriteSettingsInTheDestinationFolder" xml:space="preserve">
-    <value>Vuoi sovrascrivere le impostazioni nella cartella destinazione?
+  <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
+    <value>Vuoi sovrascrivere le impostazioni nella cartella di destinazione?
 
-Se selezioni "Sposta e riavvia", i file rimanenti verranno copiati e l'applicazione verrà riavviata con le nuove impostazioni!</value>
+'Sovrascrivi' sovrascriverà il file nella cartella di destinazione.
+'Usa altro' userà il file delle impostazioni esistente nella destinazione e riavvierà l'applicazione.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
@@ -1112,8 +1111,8 @@ Se selezioni "Sposta e riavvia", i file rimanenti verranno copiati e l'applicazi
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Seleziona una risoluzione dello schermo</value>
   </data>
-  <data name="SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>Le impostazioni selezionate verranno sovrascritte e successivamente verrà riavviata l'applicazione!</value>
+  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
+    <value>Le seguenti impostazioni verranno sovrascritte!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>Le impostazioni selezionate sono state ripristinate.</value>
@@ -1125,7 +1124,7 @@ Se selezioni "Sposta e riavvia", i file rimanenti verranno copiati e l'applicazi
     <value>Seleziona le impostazioni da importare:</value>
   </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
-    <value>Questo ripristinerà tutte le impostazioni!</value>
+    <value>Selezionando questo verranno ripristinate tutte le impostazioni!</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>Seriale</value>
@@ -1159,7 +1158,7 @@ Tutte le impostazioni sono state ripristinate (i file di profilo non sono intere
     <value>Visualizza solo i tipi di interrogazione più comuni</value>
   </data>
   <data name="ShowScanResultForAllIPAddresses" xml:space="preserve">
-    <value>Visualizza i risultati delal scansione per tutti gli indirizzi IP</value>
+    <value>Visualizza risultati scansione per tutti gli indirizzi IP</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
     <value>Visualizza statistiche</value>
@@ -1231,7 +1230,7 @@ Tutte le impostazioni sono state ripristinate (i file di profilo non sono intere
     <value>Usa la dimensione della visualizzazione attuale come dimensione dello schermo</value>
   </data>
   <data name="UseCustomDNSServer" xml:space="preserve">
-    <value>Usa un server DNS personalizzato</value>
+    <value>Usa server DNS personalizzato</value>
   </data>
   <data name="UseCustomDNSSuffix" xml:space="preserve">
     <value>Usa suffisso DNS personalizzato</value>
@@ -1261,7 +1260,7 @@ Tutte le impostazioni sono state ripristinate (i file di profilo non sono intere
     <value>Larghezza</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Non è stato possibile decriptare le credenziali con la password fornita.</value>
+    <value>Impossibile decriptare il file con la password fornita.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>La password inserita non è corretta.</value>
@@ -1288,7 +1287,7 @@ Tutte le impostazioni sono state ripristinate (i file di profilo non sono intere
     <value>Controlla</value>
   </data>
   <data name="CheckForUpdates" xml:space="preserve">
-    <value>Controlla se ci sono aggiornamenti</value>
+    <value>Controlla aggiornamenti</value>
   </data>
   <data name="Closed" xml:space="preserve">
     <value>Chiuso</value>
@@ -1350,7 +1349,7 @@ Cerca per tag con "tag = xxx".</value>
     <value>Ora/e</value>
   </data>
   <data name="LocationOfTheImport" xml:space="preserve">
-    <value>Percorso file importazione ...</value>
+    <value>Percorso/nome file da importare file importazione...</value>
   </data>
   <data name="TimeUnit_Minute" xml:space="preserve">
     <value>Minuto/i</value>
@@ -1786,9 +1785,6 @@ Il nome di dominio della parte di autenticazione potrebbe essere errato, il domi
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>Esiste già un profilo con questo nome!</value>
   </data>
-  <data name="CredentialWithThisNameAlreadyExists" xml:space="preserve">
-    <value>Esiste già una credenziale con questo nome!</value>
-  </data>
   <data name="PortState_Closed" xml:space="preserve">
     <value>Chiuso</value>
   </data>
@@ -1868,7 +1864,7 @@ Il nome di dominio della parte di autenticazione potrebbe essere errato, il domi
     <value>Connessione in corso...</value>
   </data>
   <data name="ResolveMACAddressAndVendor" xml:space="preserve">
-    <value>Risolve l'indirizzo MAC e il fornitore</value>
+    <value>Risolvi indirizzo MAC e fornitore</value>
   </data>
   <data name="Note" xml:space="preserve">
     <value>Nota</value>
@@ -2277,7 +2273,7 @@ $$hostname$$	--&gt;	Nome host</value>
     <value>Riavvia</value>
   </data>
   <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
-    <value>Impossibile risolvere l'indirizzo IP per il nome host!</value>
+    <value>Impossibile risolvere l'indirizzo IP nome host!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
@@ -2397,7 +2393,7 @@ $$hostname$$	--&gt;	Nome host</value>
     <value>Segnala un problema o richiedi nuova funzionalità.</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
-    <value>Beacon interval</value>
+    <value>Intervallo Beacon</value>
   </data>
   <data name="Encryption" xml:space="preserve">
     <value>Criptazione</value>
@@ -2406,13 +2402,13 @@ $$hostname$$	--&gt;	Nome host</value>
     <value>Infrastruttura</value>
   </data>
   <data name="NetworkKind" xml:space="preserve">
-    <value>Network kind</value>
+    <value>Tipo rete</value>
   </data>
   <data name="PhyKind" xml:space="preserve">
-    <value>Phy kind</value>
+    <value>Tipo PHY</value>
   </data>
   <data name="Uptime" xml:space="preserve">
-    <value>Uptime</value>
+    <value>Tempo attività</value>
   </data>
   <data name="ShowErrorMessage" xml:space="preserve">
     <value>Visualizza messaggio errore</value>
@@ -2438,8 +2434,8 @@ $$hostname$$	--&gt;	Nome host</value>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>L'applicazione verrà riavviata...</value>
   </data>
-  <data name="UseOther" xml:space="preserve">
-    <value>Usa altri</value>
+  <data name="UseOtherFolder" xml:space="preserve">
+    <value>Usa altra cartella</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Impossibile esportare il file!
@@ -2478,9 +2474,6 @@ Vedi messaggio errore: "{0}"</value>
   </data>
   <data name="EncryptionDots" xml:space="preserve">
     <value>Criptazione...</value>
-  </data>
-  <data name="RemoveProfileFile" xml:space="preserve">
-    <value>Rimuovi file profilo</value>
   </data>
   <data name="ProfileNameAlreadyExists" xml:space="preserve">
     <value>Esiste già un profilo con lo stesso nome!</value>
@@ -2840,7 +2833,7 @@ Vedi messaggio errore: "{0}"</value>
     <value>Traceroute</value>
   </data>
   <data name="SettingsViewName_Update" xml:space="preserve">
-    <value>Aggiorna</value>
+    <value>Aggiorna programma</value>
   </data>
   <data name="SettingsViewName_WakeOnLAN" xml:space="preserve">
     <value>Wake on LAN</value>
@@ -2936,9 +2929,77 @@ Vedi messaggio errore: "{0}"</value>
     <value>Runtime Microsoft Edge WebView2 non disponibile!</value>
   </data>
   <data name="Frequency" xml:space="preserve">
-    <value>Frequency</value>
+    <value>Frequenza</value>
   </data>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
+  </data>
+  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
+    <value>Il profilo non può essere caricato!</value>
+  </data>
+  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
+    <value>Il profilo non può esser caricato e potrebbe essere danneggiato. 
+Se questo non era previsto o è avvenuto a causa di un aggiornamento segnala il problema su GitHub!</value>
+  </data>
+  <data name="EditGroupDots" xml:space="preserve">
+    <value>Modifica gruppo...</value>
+  </data>
+  <data name="DecryptionError" xml:space="preserve">
+    <value>Errore decriptazione</value>
+  </data>
+  <data name="DecryptionErrorMessage" xml:space="preserve">
+    <value>Impossibile decriptare il file. 
+Segnala questo problema su Github.</value>
+  </data>
+  <data name="EncryptionError" xml:space="preserve">
+    <value>Errore criptazione</value>
+  </data>
+  <data name="EncryptionErrorMessage" xml:space="preserve">
+    <value>Impossibile criptare il file. 
+Segnala questo problema su Github.</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Password attuale</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Nuova password</value>
+  </data>
+  <data name="ChangeMasterPassword" xml:space="preserve">
+    <value>Modifica password principale</value>
+  </data>
+  <data name="UnlockProfile" xml:space="preserve">
+    <value>Sblocca profilo</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage" xml:space="preserve">
+    <value>Sblocca il profilo per aggiungere,modificare o eliminare il profilo </value>
+  </data>
+  <data name="Disclaimer" xml:space="preserve">
+    <value>Disconoscimento</value>
+  </data>
+  <data name="Merge" xml:space="preserve">
+    <value>Unisci</value>
+  </data>
+  <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
+    <value>La cartella destinazione contiene già dei file. 
+Se selezioni 'Unisci', i profili attuali verranno copiati nella cartella.</value>
+  </data>
+  <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
+    <value>Vuoi sovrascrivere i profili nella cartella destinazione?
+
+'Sovrascrivi' copierà i file del profilo nella cartella destinazione e sovrascriverà i file del profilo esistenti.
+'Unisci' copierà i file del profilo nella cartella di destinazione, ma non sovrascriverà i file del profilo di uscita.
+'Usa altra cartella' userà i file del profilo esistenti nella cartella di destinazione.
+
+Quindi l'applicazione verrà riavviata!
+</value>
+  </data>
+  <data name="UseOther" xml:space="preserve">
+    <value>Usa altri</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Sposta</value>
+  </data>
+  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
+    <value>I file del profilo verranno spostati nella cartella destinazione selezionata.</value>
   </data>
 </root>

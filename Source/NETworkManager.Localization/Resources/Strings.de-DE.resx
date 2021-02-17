@@ -168,9 +168,6 @@
   <data name="CopyProfile" xml:space="preserve">
     <value>Profil kopieren</value>
   </data>
-  <data name="CredentialNotFound" xml:space="preserve">
-    <value>Anmeldeinformation nicht gefunden!</value>
-  </data>
   <data name="Credentials" xml:space="preserve">
     <value>Anmeldeinformationen</value>
   </data>
@@ -687,8 +684,8 @@
   <data name="Answers" xml:space="preserve">
     <value>Antworten</value>
   </data>
-  <data name="ApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>Die Anwendung wird anschließend neu gestartet</value>
+  <data name="ApplicationWillBeRestartedAfterwards" xml:space="preserve">
+    <value>Die Anwendung wird anschließend neu gestartet!</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Anwenden</value>
@@ -771,11 +768,10 @@
   <data name="Credential" xml:space="preserve">
     <value>Anmeldeinformation</value>
   </data>
-  <data name="CredentialNotFoundMessage" xml:space="preserve">
-    <value>Die Anmeldeinformation wurde gelöscht. Bearbeiten Sie die Sitzung und wählen Sie eine andere Anmeldeinformation oder löschen die vorhandene.</value>
-  </data>
-  <data name="CredentialsEncryptionDisclaimer" xml:space="preserve">
-    <value>Die Anmeldeinformationen werden verschlüsselt mit AES-256 (Rijndael) in einer Datei gespeichert. Der Schlüssel für die Verschlüsselung ergibt sich aus einem Master-Passwort (Rfc2898DeriveBytes). In der Anwendung wird ein SecureString für Passwörter verwendet. Für einige Funktionen müssen Kennwörter von einem SecureString in Klartext konvertiert werden oder umgekehrt.</value>
+  <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
+    <value>Profildateien werden auf der Festplatte mit Rijndael (AES) mit einer Schlüsselgröße von 256 Bit und einer Blockgröße von 128 Bit im CBC-Modus verschlüsselt. Der Verschlüsselungsschlüssel wird aus einem Master-Passwort mit Rfc2898DeriveBytes (PBKDF2) mit 1.000.000 Iterationen abgeleitet. Zur Laufzeit werden die Passwörter als SecureString gespeichert, sobald die Profildatei geladen ist. Bei einigen Funktionen muss das Kennwort in einen normalen String konvertiert werden und verbleibt unverschlüsselt im Speicher, bis der Garbage Collector sie aufräumt.
+
+Dies ist eine neue Funktion und könnte Bugs enthalten. Bitte sichern Sie zuerst Ihre Profildateien, bevor Sie die Profildateiverschlüsselung aktivieren!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Benutzerdefiniert</value>
@@ -997,10 +993,11 @@ Erstelle eins...</value>
   <data name="Override" xml:space="preserve">
     <value>überschreiben</value>
   </data>
-  <data name="OverwriteSettingsInTheDestinationFolder" xml:space="preserve">
+  <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
     <value>Einstellungen im Zielordner überschreiben?
 
-Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Dateien kopiert und die Anwendung danach mit den neuen Einstellungen neu gestartet!</value>
+Mit "Überschreiben" wird die Datei im Zielordner überschrieben.
+"Andere verwenden" verwendet die vorhandene Einstellungsdatei im Zielordner und startet die Anwendung neu.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Passwort</value>
@@ -1101,8 +1098,8 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Wählen Sie eine Bildschirmauflösung</value>
   </data>
-  <data name="SelectedSettingsAreOverwrittenAndApplicationIsRestartedAfterwards" xml:space="preserve">
-    <value>Die gewählten Einstellungen werden überschrieben und die Anwendung anschließend neu gestartet!</value>
+  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
+    <value>Die gewählten Einstellungen werden überschrieben!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>Die ausgewählten Einstellungen werden zurückgesetzt.</value>
@@ -1250,7 +1247,7 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
     <value>Breite</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Anmeldeinformationen konnten mit dem angegebenen Passwort nicht entschlüsselt werden.</value>
+    <value>Die Datei konnte mit dem angegebenen Passwort nicht entschlüsselt werden.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>Das eingegebene Passwort ist falsch.</value>
@@ -1770,9 +1767,6 @@ Wenn Sie auf "Verschieben &amp; neu starten" klicken, werden die restlichen Date
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>Ein Profil mit diesem Namen existiert bereits!</value>
-  </data>
-  <data name="CredentialWithThisNameAlreadyExists" xml:space="preserve">
-    <value>Eine Anmeldeinformation mit diesem Namen existiert bereits!</value>
   </data>
   <data name="PortState_Closed" xml:space="preserve">
     <value>Geschlossen</value>
@@ -2418,8 +2412,8 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>Die Anwendung wird neu gestartet...</value>
   </data>
-  <data name="UseOther" xml:space="preserve">
-    <value>Anderen Verwenden</value>
+  <data name="UseOtherFolder" xml:space="preserve">
+    <value>Anderen Ordner verwenden</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Datei konnte nicht exportiert werden! Siehe Fehlermeldung: "{0}"</value>
@@ -2456,9 +2450,6 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="EncryptionDots" xml:space="preserve">
     <value>Verschlüsselung...</value>
-  </data>
-  <data name="RemoveProfileFile" xml:space="preserve">
-    <value>Profildatei löschen</value>
   </data>
   <data name="ProfileNameAlreadyExists" xml:space="preserve">
     <value>Profilname existiert bereits!</value>
@@ -2918,5 +2909,70 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="SSID" xml:space="preserve">
     <value>SSID</value>
+  </data>
+  <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
+    <value>Profil konnte nicht geladen werden!
+
+</value>
+  </data>
+  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
+    <value>Das Profil konnte nicht geladen werden und ist möglicherweise beschädigt. Wenn dies unerwartet ist oder auf ein Update zurückzuführen ist, melden Sie dieses Problem bitte auf GitHub!</value>
+  </data>
+  <data name="EditGroupDots" xml:space="preserve">
+    <value>Gruppe bearbeiten...</value>
+  </data>
+  <data name="DecryptionError" xml:space="preserve">
+    <value>Entschlüsselungsfehler</value>
+  </data>
+  <data name="DecryptionErrorMessage" xml:space="preserve">
+    <value>Die Datei konnte nicht entschlüsselt werden. Sie können dieses Problem auf GitHub melden.</value>
+  </data>
+  <data name="EncryptionError" xml:space="preserve">
+    <value>Verschlüsselungsfehler</value>
+  </data>
+  <data name="EncryptionErrorMessage" xml:space="preserve">
+    <value>Die Datei konnte nicht verschlüsselt werden. Sie können dieses Problem auf GitHub melden.</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Aktuelles Passwort</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Neues Passwort</value>
+  </data>
+  <data name="ChangeMasterPassword" xml:space="preserve">
+    <value>Master-Kennwort ändern</value>
+  </data>
+  <data name="UnlockProfile" xml:space="preserve">
+    <value>Profil entsperren</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage" xml:space="preserve">
+    <value>Entsperren Sie die Profildatei, um ein Profil hinzuzufügen, zu ändern oder zu löschen!</value>
+  </data>
+  <data name="Disclaimer" xml:space="preserve">
+    <value>Disclaimer</value>
+  </data>
+  <data name="Merge" xml:space="preserve">
+    <value>Zusammenführen</value>
+  </data>
+  <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
+    <value>Der Zielordner enthält bereits Dateien. Wenn Sie auf Zusammenführen klicken, werden die aktuellen Profile in den Ordner kopiert.</value>
+  </data>
+  <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
+    <value>Profile im Zielordner überschreiben?
+
+"Überschreiben" kopiert die Profildateien in den Zielordner und überschreibt vorhandene Profildateien.
+"Zusammenführen" kopiert die Profildateien in den Zielordner, überschreibt aber nicht die vorhandenen Profildateien.
+"Anderen Ordner verwenden" verwendet die vorhandenen Profildateien im Zielordner.
+
+Die Anwendung wird anschließend neu gestartet!</value>
+  </data>
+  <data name="UseOther" xml:space="preserve">
+    <value>Anderen Verwenden</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Verschieben</value>
+  </data>
+  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
+    <value>Die Profildateien werden in den ausgewählten Zielordner verschoben.</value>
   </data>
 </root>
