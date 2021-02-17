@@ -44,7 +44,7 @@ Date: **26.01.2021**
 |[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Portable.zip){:target="_blank"}| `C8CFE51FD787D56A7A4DF07EC9A1EF7F043D296E2E2F9EF2CB071D999E9DB3CD` |
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Archiv.zip){:target="_blank"}| `5705DEFD5457625B85B3F7FD5FC64A503E231BBFC29B6BF749DB2858B14E53D3` |
 
-## Bugifxes
+## Bugfixes
 - Profiles won't load on start [#444](http://github.com/BornToBeRoot/NETworkManager/issues/444){:target="_blank"} 
 
 # Version 2021.1.0
