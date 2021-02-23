@@ -145,6 +145,7 @@
                 </DataGrid.GroupStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profiles:ProfileInfo.Name)}" SortMemberPath="Name" MinWidth="250" />
+                    <DataGridTextColumn Header="{x:Static localization:Strings.Host}" Binding="{Binding (profiles:ProfileInfo.Host)}" SortMemberPath="Host" MinWidth="250" />
                     <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.NetworkInterface}" Binding="{Binding (profiles:ProfileInfo.NetworkInterface_Enabled)}" SortMemberPath="NetworkInterface_Enabled" />
                     <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.IPScanner}" Binding="{Binding (profiles:ProfileInfo.IPScanner_Enabled)}" SortMemberPath="IPScanner_Enabled" />
                     <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.PortScanner}" Binding="{Binding (profiles:ProfileInfo.PortScanner_Enabled)}" SortMemberPath="PortScanner_Enabled" />

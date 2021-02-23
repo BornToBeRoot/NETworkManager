@@ -6,6 +6,29 @@ description: "Changelog and download links of all available versions"
 permalink: /Changelog
 ---
 
+# Version 2021.x.x.0 [next release]
+Date: **xx.xx.2021**
+
+<!--
+| File | Checksum [SHA256] |
+|---|---|
+|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Setup.exe){:target="_blank"}| `5BDD82CA59CC0A635559848CA183C21ED92D4D0C143625F1B367946F033E2A79` |
+|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Portable.zip){:target="_blank"}| `4D5AA9CC1A4FCE5AB80060A1009E87FA207D642B7E25A63A4DA38F9F6FD43472` |
+|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Archiv.zip){:target="_blank"}| `9996197F0F58A7A23F0A78DB7336D4201F98F1C6E8CCD7D02BF97095C5A6DDA8` |
+-->
+
+## What's new?
+
+
+## Improvements
+- Host added to profiles view 
+
+## Bugfixes
+
+
+## Other
+
+
 # Version 2021.2.17.0
 Date: **17.02.2021**
 
