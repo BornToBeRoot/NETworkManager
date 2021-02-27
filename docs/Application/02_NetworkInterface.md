@@ -8,16 +8,51 @@ permalink: /Application/NetworkInterface
 ---
 
 # Network Interface
-
-The **Network Interface** tool detects all network adapters of the computer with the most important information (such as IP addresses, DNS servers, etc.). Connected network cards can be configured using profiles.
+The tool **Network Interface** detects all network adapter of the computer with the most important information (like IP addresses, DNS servers etc.). The bandwidth of the connected network adapter can be monitored and the configuration can be changed via profiles.
 
 ## Information
+In the Information view, you can see all the important details of the selected network adapter such as the configured IP addresses, DNS servers, MAC address, and more. If information such as IPv6 configuration is not available, it is hidden in the view.
 
 ![NetworkInterface_Information](02_NetworkInterface_Information.png)
 
 ## Bandwidth
+The bandwith of the selected network adapter is monitored as long as the tool **Network Interface** is selected. If you switch to another tool, the monitoring is paused and will be reset once you switch back again.
+
+You can see the current download and upload speed in Bit/s (B/s). Depending on the bandwith you are using its automatically adjusting to KBit/s (KB/s), MBit/s (MB/s) or GBit/s (GB/s). It also displays since when the bandwidth is measured and how much has been downloaded and uploaded since then.
+
 ![NetworkInterface_Bandwidth](02_NetworkInterface_Bandwidth.png)
 
 ## Configure
 
+In the configuration view you can change the configuration of the selected network adapter. To change the settings, the network adapter must be connected. The options you can set correspond to the network adapter properties `Internetprotokoll, Version 4 (TCP/IPv4) Properties` in the `Control Panel > Network and Internet > Network Connections`. These are explained in the [profiles section](#profile).
+
+The **Add IPv4-address...** button will open a dialog where you can enter an additional IPv4 address and a subnetmask. If you click the the **Add** button, it willbe assigned to the selected network adapter.
+
 ![NetworkInterface_Configure](02_NetworkInterface_Configure.png)
+
+## Profile
+
+![NetworkInterface_Configure](02_NetworkInterface_Profile.png)
+
+### Obtain an IP address automatically
+
+
+
+### Use the following IP address:
+
+**IPv4 address**
+
+
+**Subnetmask or CIDR**
+
+
+**Default-Gateway**
+
+### Obtain DNS server address automatically
+
+### Use the following DNS server addresses:
+
+**Primary DNS server**
+
+
+**Secondary DNS server**
