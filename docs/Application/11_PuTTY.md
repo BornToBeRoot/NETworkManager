@@ -11,3 +11,7 @@ permalink: /Application/PuTTY
 # PuTTY
 
 ![PuTTY](11_PuTTY.png)
+
+## Profile
+
+## Settings

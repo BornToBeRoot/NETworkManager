@@ -10,3 +10,7 @@ permalink: /Application/IPScanner
 # IP Scanner
 
 ![IPScanner](04_IPScanner.png)
+
+## Profile
+
+## Settings

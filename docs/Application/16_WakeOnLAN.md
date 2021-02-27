@@ -10,3 +10,7 @@ permalink: /Application/WakeOnLAN
 # Wake on LAN
 
 ![WakeOnLAN](16_WakeOnLAN.png)
+
+## Profile
+
+## Settings

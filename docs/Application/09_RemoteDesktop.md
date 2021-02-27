@@ -11,3 +11,7 @@ permalink: /Application/RemoteDesktop
 # Remote Desktop
 
 ![RemoteDesktop](09_RemoteDesktop.png)
+
+## Profile
+
+## Settings

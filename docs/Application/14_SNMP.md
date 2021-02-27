@@ -11,19 +11,5 @@ permalink: /Application/SNMP
 
 ![SNMP](14_SNMP.png)
 
-## v2c
-
-### Walk
-
-## v3
-
-### Set
-
-
-
-### Get
-
-
-
-### Walk
+## Settings
 

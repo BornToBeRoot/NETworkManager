@@ -11,3 +11,7 @@ permalink: /Application/PowerShell
 # PowerShell
 
 ![PowerShell](10_PowerShell.png)
+
+## Profile
+
+## Settings

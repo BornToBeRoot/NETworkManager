@@ -10,3 +10,7 @@ permalink: /Application/PingMonitor
 # Ping Monitor
 
 ![PingMonitor](06_PingMonitor.png)
+
+## Profile
+
+## Settings
