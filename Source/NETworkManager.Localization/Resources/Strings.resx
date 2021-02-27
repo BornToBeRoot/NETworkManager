@@ -2976,4 +2976,7 @@ The application will be restarted afterwards!</value>
   <data name="LastScanAtX" xml:space="preserve">
     <value>Last scan at {0}</value>
   </data>
+  <data name="HiddenNetwork" xml:space="preserve">
+    <value>Hidden Network</value>
+  </data>
 </root>

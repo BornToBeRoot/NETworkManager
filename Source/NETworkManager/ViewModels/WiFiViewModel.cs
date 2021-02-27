@@ -444,6 +444,10 @@ namespace NETworkManager.ViewModels
 
             foreach (var network in networks)
             {
+                // Identify hidden networks
+                if (string.IsNullOrEmpty(network.SSID))
+                    network.SSID = Localization.Resources.Strings.HiddenNetwork;
+
                 Networks.Add(network);
 
                 if (WiFi.ConvertChannelFrequencyToGigahertz(network.ChannelCenterFrequencyInKilohertz) < 5) // 2.4 GHz
