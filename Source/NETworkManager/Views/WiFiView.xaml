@@ -152,24 +152,7 @@
                                     <ColumnDefinition Width="10" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Networks}" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,0" />
-                                <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                    <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
-                                    <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
-                                        <ComboBox.ItemTemplate>
-                                            <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
-                                                <TextBlock>
-                                                    <TextBlock.Text>
-                                                        <MultiBinding StringFormat="{}{0} {1}">
-                                                            <Binding Path="Value" />
-                                                            <Binding Path="TimeUnit" Converter="{StaticResource AutoRefreshTimeToStringConverter}" />
-                                                        </MultiBinding>
-                                                    </TextBlock.Text>
-                                                </TextBlock>
-                                            </DataTemplate>
-                                        </ComboBox.ItemTemplate>
-                                    </ComboBox>
-                                </WrapPanel>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Networks}" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,0" />                                
                                 <CheckBox Grid.Column="4" Grid.Row="0" Content="{x:Static localization:Strings.GHz2dot4}" IsChecked="{Binding Show2dot4GHzNetworks}" />
                                 <CheckBox Grid.Column="6" Grid.Row="0" Content="{x:Static localization:Strings.GHz5}" IsChecked="{Binding Show5GHzNetworks}" />
                                 <TextBox x:Name="TextBoxSearch" Grid.Column="8" Grid.Row="0" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
@@ -301,7 +284,35 @@
                                 <TextBlock Text="{x:Static localization:Strings.SearchingForNetworksDots}" Style="{StaticResource MessageTextBlock}" />
                             </StackPanel>
                             <Grid Grid.Row="4">
-                                <Button Grid.Column="0" Grid.Row="0" Command="{Binding ScanNetworksCommand}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorPulseStyle}" Visibility="{Binding IsBackgroundSearchRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Width="24" Height="24" VerticalAlignment="Center" SpeedRatio="1" Margin="0,0,10,0" />
+                                    <TextBlock Style="{StaticResource AccentTextBlock}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" VerticalAlignment="Center" />
+                                </WrapPanel>
+                                <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
+                                    <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
+                                                <TextBlock>
+                                                    <TextBlock.Text>
+                                                        <MultiBinding StringFormat="{}{0} {1}">
+                                                            <Binding Path="Value" />
+                                                            <Binding Path="TimeUnit" Converter="{StaticResource AutoRefreshTimeToStringConverter}" />
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </WrapPanel>
+                                <Button Grid.Column="4" Grid.Row="0" Command="{Binding ScanNetworksCommand}">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                             <Style.Triggers>
@@ -330,7 +341,6 @@
                                     </Button.Content>
                                 </Button>
                             </Grid>
-
                         </Grid>
                     </Grid>
                     <!-- Reload Adapter -->
@@ -369,6 +379,8 @@
                             <RowDefinition Height="20" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.GHz2dot4}" Style="{StaticResource HeaderTextBlock}" />
                         <liveChart:CartesianChart Grid.Row="1" Series="{Binding Radio1Series}" LegendLocation="Bottom" DisableAnimations="True">
@@ -454,6 +466,65 @@
                                 </liveChart:Axis>
                             </liveChart:CartesianChart.AxisY>
                         </liveChart:CartesianChart>
+
+                        <Grid Grid.Row="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorPulseStyle}" Visibility="{Binding IsBackgroundSearchRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Width="24" Height="24" VerticalAlignment="Center" SpeedRatio="1" Margin="0,0,10,0" />
+                                <TextBlock Style="{StaticResource AccentTextBlock}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" VerticalAlignment="Center" />
+                            </WrapPanel>
+                            <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
+                                <ComboBox ItemsSource="{Binding AutoRefreshTimes}" SelectedItem="{Binding SelectedAutoRefreshTime}" MinWidth="150">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0} {1}">
+                                                        <Binding Path="Value" />
+                                                        <Binding Path="TimeUnit" Converter="{StaticResource AutoRefreshTimeToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </WrapPanel>
+                            <Button Grid.Column="4" Grid.Row="0" Command="{Binding ScanNetworksCommand}">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsNetworksLoading}" Value="True">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding AutoRefresh}" Value="True">
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
                     </Grid>
                     <!-- Reload Adapter -->
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Adapters.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
@@ -480,7 +551,6 @@
                         </StackPanel>
                     </StackPanel>
                     <!-- SDK.Contracts not found -->
-
                 </Grid>
             </TabItem>
         </TabControl>

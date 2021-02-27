@@ -21,6 +21,8 @@ Date: **xx.xx.2021**
 
 
 ## Improvements
+- WiFi - Refresh network in background when button is clicked or autorefresh is enabled [#445](https://github.com/BornToBeRoot/NETworkManager/issues/445){:target="_blank"}
+- WiFi > Channel - Add refresh and autorefresh button/checkbox [#486](https://github.com/BornToBeRoot/NETworkManager/issues/486){:target="_blank"}
 - Host added to profiles view 
 
 ## Bugfixes

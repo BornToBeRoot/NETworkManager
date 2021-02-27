@@ -3794,6 +3794,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last scan at {0}.
+        /// </summary>
+        public static string LastScanAtX {
+            get {
+                return ResourceManager.GetString("LastScanAtX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last usable IP address.
         /// </summary>
         public static string LastUsableIPAddress {

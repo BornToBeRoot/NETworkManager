@@ -260,6 +260,47 @@ namespace NETworkManager.ViewModels
         public string[] Radio2Labels { get; set; } = new string[] { " ", " ", "36", "40", "44", "48", "52", "56", "60", "64", "", "", "", "", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136", "140", "144", "149", "153", "157", "161", "165", " ", " " };
         public Func<double, string> FormatterdBm { get; set; } = value => $"- {100 - value} dBm"; // Reverse y-axis 0 to -100
 
+        private bool _displayStatusMessage;
+        public bool DisplayStatusMessage
+        {
+            get => _displayStatusMessage;
+            set
+            {
+                if (value == _displayStatusMessage)
+                    return;
+
+                _displayStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isBackgroundSearchRunning;
+        public bool IsBackgroundSearchRunning
+        {
+            get => _isBackgroundSearchRunning;
+            set
+            {
+                if (value == _isBackgroundSearchRunning)
+                    return;
+
+                _isBackgroundSearchRunning = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                if (value == _statusMessage)
+                    return;
+
+                _statusMessage = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, load settings
@@ -326,7 +367,7 @@ namespace NETworkManager.ViewModels
 
         private async void ScanNetworksAction()
         {
-            await ScanNetworks(SelectedAdapter.WiFiAdapter);
+            await ScanNetworks(SelectedAdapter.WiFiAdapter, true);
         }
         #endregion
 
@@ -381,16 +422,25 @@ namespace NETworkManager.ViewModels
             IsAdaptersLoading = false;
         }
 
-        private async Task ScanNetworks(WiFiAdapter adapter)
+        private async Task ScanNetworks(WiFiAdapter adapter, bool fromBackground = false)
         {
-            IsNetworksLoading = true;
+            if (fromBackground)
+            {
+                StatusMessage = Localization.Resources.Strings.SearchingForNetworksDots;
+                IsBackgroundSearchRunning = true;
+            }
+            else
+            {
+                DisplayStatusMessage = false;
+                IsNetworksLoading = true;
+            }
+
+            IEnumerable<WiFiNetworkInfo> networks = await WiFi.GetNetworksAsync(adapter);
 
             Networks.Clear();
 
             Radio1Series.Clear();
             Radio2Series.Clear();
-
-            IEnumerable<WiFiNetworkInfo> networks = await WiFi.GetNetworksAsync(adapter);
 
             foreach (var network in networks)
             {
@@ -402,7 +452,13 @@ namespace NETworkManager.ViewModels
                     AddNetworkToRadio2Chart(network);
             }
 
-            IsNetworksLoading = false;
+            DisplayStatusMessage = true;
+            StatusMessage = string.Format(Localization.Resources.Strings.LastScanAtX, DateTime.Now.ToLongTimeString());
+
+            if (fromBackground)
+                IsBackgroundSearchRunning = false;
+            else
+                IsNetworksLoading = false;
         }
 
         private ChartValues<double> GetDefaultChartValues(WiFi.Radio radio)
@@ -510,7 +566,7 @@ namespace NETworkManager.ViewModels
             _autoRefreshTimer.Stop();
 
             // Scan networks
-            await ScanNetworks(SelectedAdapter.WiFiAdapter);
+            await ScanNetworks(SelectedAdapter.WiFiAdapter, true);
 
             // Restart timer...
             _autoRefreshTimer.Start();
