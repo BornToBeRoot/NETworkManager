@@ -24,7 +24,7 @@ You can see the current download and upload speed in Bit/s (B/s). Depending on t
 
 ## Configure
 
-In the configuration view you can change the configuration of the selected network adapter. To change the settings, the network adapter must be connected. The options you can set correspond to the network adapter properties `Internetprotokoll, Version 4 (TCP/IPv4) Properties` in the `Control Panel > Network and Internet > Network Connections`. These are explained in the [profiles section](#profile).
+In the configuration view you can change the configuration of the selected network adapter. To change the settings, the network adapter must be connected. The options you can set correspond to the network adapter properties `Internetprotokoll, Version 4 (TCP/IPv4) Properties` in the `Control Panel > Network and Internet > Network Connections`. These are explained in the [profiles section](#profile). Clicking the **Apply** button will launch an elevated PowerShell to configure the network adapter.
 
 The **Add IPv4-address...** button will open a dialog where you can enter an additional IPv4 address and a subnetmask. If you click the the **Add** button, it willbe assigned to the selected network adapter.
 
