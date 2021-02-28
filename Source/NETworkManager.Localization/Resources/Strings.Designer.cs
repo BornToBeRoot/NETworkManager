@@ -3380,6 +3380,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hidden Network.
+        /// </summary>
+        public static string HiddenNetwork {
+            get {
+                return ResourceManager.GetString("HiddenNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hide.
         /// </summary>
         public static string Hide {
@@ -3790,6 +3799,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last scan at {0}.
+        /// </summary>
+        public static string LastScanAtX {
+            get {
+                return ResourceManager.GetString("LastScanAtX", resourceCulture);
             }
         }
         

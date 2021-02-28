@@ -21,10 +21,13 @@ Date: **xx.xx.2021**
 
 
 ## Improvements
+- WiFi - Refresh network in background when button is clicked or autorefresh is enabled [#445](https://github.com/BornToBeRoot/NETworkManager/issues/445){:target="_blank"}
+- WiFi - Display the SSID from hidden networks as "Hidden Network". This is the same way Windows displays them. [#487](https://github.com/BornToBeRoot/NETworkManager/issues/487){:target="_blank"}
+- WiFi > Channel - Add refresh and autorefresh button/checkbox [#486](https://github.com/BornToBeRoot/NETworkManager/issues/486){:target="_blank"}
 - Host added to profiles view 
 
 ## Bugfixes
-
+- Network Interface - Disable `Add IPv4 address...` button if network adapter is not connected [#484](https://github.com/BornToBeRoot/NETworkManager/issues/484){:target="_blank"}
 
 ## Other
 
