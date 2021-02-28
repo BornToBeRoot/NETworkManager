@@ -27,7 +27,7 @@ Date: **xx.xx.2021**
 - Host added to profiles view 
 
 ## Bugfixes
-
+- Network Interface - Disable `Add IPv4 address...` button if network adapter is not connected [#484](https://github.com/BornToBeRoot/NETworkManager/issues/484){:target="_blank"}
 
 ## Other
 
