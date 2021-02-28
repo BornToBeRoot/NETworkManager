@@ -796,7 +796,19 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <WrapPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" >
-                                <Button Command="{Binding AddIPv4AddressCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}">
+                                <Button Command="{Binding AddIPv4AddressCommand}">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding CanConfigure}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsConfigurationRunning}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>                                                
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                     <Button.Content>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -842,10 +854,12 @@
                                                         <Binding Path="ConfigEnableDynamicDNS" />
                                                         <Binding Path="ConfigEnableStaticDNS" />
                                                         <Binding ElementName="TextBoxConfigPrimaryDNSServer" Path="(Validation.HasError)" />
-                                                        <Binding ElementName="TextBoxConfigSecondaryDNSServer" Path="(Validation.HasError)" />
-                                                        <Binding Path="CanConfigure" />
+                                                        <Binding ElementName="TextBoxConfigSecondaryDNSServer" Path="(Validation.HasError)" />                                                        
                                                     </MultiBinding>
                                                 </DataTrigger.Binding>
+                                                <Setter Property="IsEnabled" Value="False" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding CanConfigure}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding IsConfigurationRunning}" Value="True">
