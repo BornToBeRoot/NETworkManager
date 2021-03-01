@@ -795,10 +795,10 @@ Dies ist eine neue Funktion und könnte Bugs enthalten. Bitte sichern Sie zuerst
     <value>Standard-Port:</value>
   </data>
   <data name="RloginPort" xml:space="preserve">
-    <value>Rlogin Port</value>
+    <value>Rlogin port</value>
   </data>
   <data name="SSHPort" xml:space="preserve">
-    <value>SSH Port</value>
+    <value>SSH port</value>
   </data>
   <data name="TelnetPort" xml:space="preserve">
     <value>Telnet Port</value>
@@ -2974,5 +2974,11 @@ Die Anwendung wird anschließend neu gestartet!</value>
   </data>
   <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
     <value>Die Profildateien werden in den ausgewählten Zielordner verschoben.</value>
+  </data>
+  <data name="LastScanAtX" xml:space="preserve">
+    <value>Letzter Scan um {0}</value>
+  </data>
+  <data name="HiddenNetwork" xml:space="preserve">
+    <value>Verstecktes Netzwerk</value>
   </data>
 </root>
