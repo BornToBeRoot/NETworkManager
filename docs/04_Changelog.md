@@ -30,6 +30,8 @@ Date: **xx.xx.2021**
 - Network Interface - Disable `Add IPv4 address...` button if network adapter is not connected [#484](https://github.com/BornToBeRoot/NETworkManager/issues/484){:target="_blank"}
 
 ## Other
+- Transifex Github integration added
+- Language files updated
 
 
 # Version 2021.2.17.0
