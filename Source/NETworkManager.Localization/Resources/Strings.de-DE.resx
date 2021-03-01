@@ -2976,9 +2976,9 @@ Die Anwendung wird anschließend neu gestartet!</value>
     <value>Die Profildateien werden in den ausgewählten Zielordner verschoben.</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
-    <value>Last scan at {0}</value>
+    <value>Letzter Scan um {0}</value>
   </data>
   <data name="HiddenNetwork" xml:space="preserve">
-    <value>Hidden Network</value>
+    <value>Verstecktes Netzwerk</value>
   </data>
 </root>
