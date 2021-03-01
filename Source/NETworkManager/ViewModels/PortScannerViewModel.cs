@@ -185,16 +185,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
+        private bool _isStatusMessageDisplayed;
+        public bool IsStatusMessageDisplayed
         {
-            get => _displayStatusMessage;
+            get => _isStatusMessageDisplayed;
             set
             {
-                if (value == _displayStatusMessage)
+                if (value == _isStatusMessageDisplayed)
                     return;
 
-                _displayStatusMessage = value;
+                _isStatusMessageDisplayed = value;
                 OnPropertyChanged();
             }
         }
@@ -379,7 +379,7 @@ namespace NETworkManager.ViewModels
         {
             _isLoading = true;
 
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
             StatusMessage = string.Empty;
 
             IsScanRunning = true;
@@ -555,7 +555,7 @@ namespace NETworkManager.ViewModels
         private void UserHasCanceled(object sender, EventArgs e)
         {
             StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
-            DisplayStatusMessage = true;
+            IsStatusMessageDisplayed = true;
 
             ScanFinished();
         }
@@ -568,7 +568,7 @@ namespace NETworkManager.ViewModels
         private void DnsResolveFailed(AggregateException e)
         {
             StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
-            DisplayStatusMessage = true;
+            IsStatusMessageDisplayed = true;
 
             ScanFinished();
         }

@@ -56,16 +56,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
+        private bool _isStatusMessageDisplayed;
+        public bool IsStatusMessageDisplayed
         {
-            get => _displayStatusMessage;
+            get => _isStatusMessageDisplayed;
             set
             {
-                if (value == _displayStatusMessage)
+                if (value == _isStatusMessageDisplayed)
                     return;
 
-                _displayStatusMessage = value;
+                _isStatusMessageDisplayed = value;
                 OnPropertyChanged();
             }
         }
@@ -345,7 +345,7 @@ namespace NETworkManager.ViewModels
         public async void AddHost(string host)
         {
             IsWorking = true;
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
 
             _hostId++;
 
@@ -369,7 +369,7 @@ namespace NETworkManager.ViewModels
             else
             {
                 StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, host);
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
             }
 
             IsWorking = false;

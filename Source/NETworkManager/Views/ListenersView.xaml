@@ -136,7 +136,7 @@
                         <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:ListenerInfo.Port)}" SortMemberPath="Port" MinWidth="100" />
                     </controls:MultiSelectDataGrid.Columns>
                 </controls:MultiSelectDataGrid>
-                <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+                <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
                 <mahAppsControls:MetroProgressBar Grid.Row="4" Margin="0,10,0,0" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True">
                     <mahAppsControls:MetroProgressBar.Style>
                         <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">

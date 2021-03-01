@@ -152,16 +152,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
+        private bool _isStatusMessageDisplayed;
+        public bool IsStatusMessageDisplayed
         {
-            get => _displayStatusMessage;
+            get => _isStatusMessageDisplayed;
             set
             {
-                if (value == _displayStatusMessage)
+                if (value == _isStatusMessageDisplayed)
                     return;
 
-                _displayStatusMessage = value;
+                _isStatusMessageDisplayed = value;
                 OnPropertyChanged();
             }
         }
@@ -238,7 +238,7 @@ namespace NETworkManager.ViewModels
 
         private async void RefreshAction()
         {
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
 
             await Refresh();
         }
@@ -252,7 +252,7 @@ namespace NETworkManager.ViewModels
 
         private async void DeleteTableAction()
         {
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
 
             try
             {
@@ -267,7 +267,7 @@ namespace NETworkManager.ViewModels
             catch (Exception ex)
             {
                 StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
             }
         }
 
@@ -277,7 +277,7 @@ namespace NETworkManager.ViewModels
 
         private async void DeleteEntryAction()
         {
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
 
             try
             {
@@ -292,7 +292,7 @@ namespace NETworkManager.ViewModels
             catch (Exception ex)
             {
                 StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
             }
         }
 
@@ -302,7 +302,7 @@ namespace NETworkManager.ViewModels
 
         private async void AddEntryAction()
         {
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
 
             var customDialog = new CustomDialog
             {
@@ -326,7 +326,7 @@ namespace NETworkManager.ViewModels
                 catch (Exception ex)
                 {
                     StatusMessage = ex.Message;
-                    DisplayStatusMessage = true;
+                    IsStatusMessageDisplayed = true;
                 }
             }, instance =>
             {
@@ -464,7 +464,7 @@ namespace NETworkManager.ViewModels
         private void ArpTable_UserHasCanceled(object sender, EventArgs e)
         {
             StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
-            DisplayStatusMessage = true;
+            IsStatusMessageDisplayed = true;
         }
 
         private async void AutoRefreshTimer_Tick(object sender, EventArgs e)

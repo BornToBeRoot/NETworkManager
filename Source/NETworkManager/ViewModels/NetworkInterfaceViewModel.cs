@@ -73,16 +73,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
+        private bool _isStatusMessageDisplayed;
+        public bool IsStatusMessageDisplayed
         {
-            get => _displayStatusMessage;
+            get => _isStatusMessageDisplayed;
             set
             {
-                if (value == _displayStatusMessage)
+                if (value == _isStatusMessageDisplayed)
                     return;
 
-                _displayStatusMessage = value;
+                _isStatusMessageDisplayed = value;
                 OnPropertyChanged();
             }
         }
@@ -712,7 +712,7 @@ namespace NETworkManager.ViewModels
         private async void FlushDNSAction()
         {
             IsConfigurationRunning = true;
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
 
             await Models.Network.NetworkInterface.FlushDnsAsync();
 
@@ -827,7 +827,7 @@ namespace NETworkManager.ViewModels
         public async void ApplyConfiguration()
         {
             IsConfigurationRunning = true;
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
 
             var subnetmask = ConfigSubnetmaskOrCidr;
 
@@ -871,7 +871,7 @@ namespace NETworkManager.ViewModels
             catch (Exception ex)
             {
                 StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
             }
             finally
             {
@@ -882,7 +882,7 @@ namespace NETworkManager.ViewModels
         public async void AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
         {
             IsConfigurationRunning = true;
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
 
             var subnetmask = subnetmaskOrCidr;
 
@@ -906,7 +906,7 @@ namespace NETworkManager.ViewModels
             catch (Exception ex)
             {
                 StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
             }
             finally
             {
@@ -917,7 +917,7 @@ namespace NETworkManager.ViewModels
         public async void ApplyProfileConfig()
         {
             IsConfigurationRunning = true;
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
 
             var subnetmask = SelectedProfile.NetworkInterface_SubnetmaskOrCidr;
 
@@ -966,7 +966,7 @@ namespace NETworkManager.ViewModels
             catch (Exception ex)
             {
                 StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
             }
             finally
             {
@@ -1148,7 +1148,7 @@ namespace NETworkManager.ViewModels
         private void NetworkInterface_UserHasCanceled(object sender, EventArgs e)
         {
             StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
-            DisplayStatusMessage = true;
+            IsStatusMessageDisplayed = true;
         }
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

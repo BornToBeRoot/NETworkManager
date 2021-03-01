@@ -195,16 +195,16 @@ namespace NETworkManager.ViewModels
             }
         }
                 
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
+        private bool _isStatusMessageDisplayed;
+        public bool IsStatusMessageDisplayed
         {
-            get => _displayStatusMessage;
+            get => _isStatusMessageDisplayed;
             set
             {
-                if (value == _displayStatusMessage)
+                if (value == _isStatusMessageDisplayed)
                     return;
 
-                _displayStatusMessage = value;
+                _isStatusMessageDisplayed = value;
                 OnPropertyChanged();
             }
         }
@@ -369,7 +369,7 @@ namespace NETworkManager.ViewModels
             if (FirstRun)
                 FirstRun = false;
 
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
             StatusMessage = string.Empty;
 
             DiscoveryPackageReceived = false;
@@ -433,7 +433,7 @@ namespace NETworkManager.ViewModels
 
             StatusMessage += e.Message;
 
-            DisplayStatusMessage = true;
+            IsStatusMessageDisplayed = true;
         }
 
         private void _discoveryProtocol_ErrorReceived(object sender, DiscoveryProtocolErrorArgs e)
@@ -443,7 +443,7 @@ namespace NETworkManager.ViewModels
 
             StatusMessage += e.Message;
 
-            DisplayStatusMessage = true;
+            IsStatusMessageDisplayed = true;
         }
 
         private void _discoveryProtocol_Complete(object sender, EventArgs e)

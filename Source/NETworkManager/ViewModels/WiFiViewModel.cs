@@ -260,16 +260,16 @@ namespace NETworkManager.ViewModels
         public string[] Radio2Labels { get; set; } = new string[] { " ", " ", "36", "40", "44", "48", "52", "56", "60", "64", "", "", "", "", "100", "104", "108", "112", "116", "120", "124", "128", "132", "136", "140", "144", "149", "153", "157", "161", "165", " ", " " };
         public Func<double, string> FormatterdBm { get; set; } = value => $"- {100 - value} dBm"; // Reverse y-axis 0 to -100
 
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
+        private bool _isStatusMessageDisplayed;
+        public bool IsStatusMessageDisplayed
         {
-            get => _displayStatusMessage;
+            get => _isStatusMessageDisplayed;
             set
             {
-                if (value == _displayStatusMessage)
+                if (value == _isStatusMessageDisplayed)
                     return;
 
-                _displayStatusMessage = value;
+                _isStatusMessageDisplayed = value;
                 OnPropertyChanged();
             }
         }
@@ -431,7 +431,7 @@ namespace NETworkManager.ViewModels
             }
             else
             {
-                DisplayStatusMessage = false;
+                IsStatusMessageDisplayed = false;
                 IsNetworksLoading = true;
             }
 
@@ -456,7 +456,7 @@ namespace NETworkManager.ViewModels
                     AddNetworkToRadio2Chart(network);
             }
 
-            DisplayStatusMessage = true;
+            IsStatusMessageDisplayed = true;
             StatusMessage = string.Format(Localization.Resources.Strings.LastScanAtX, DateTime.Now.ToLongTimeString());
 
             if (fromBackground)

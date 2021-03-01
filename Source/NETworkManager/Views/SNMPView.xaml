@@ -456,7 +456,7 @@
                 </Style>
             </mahAppsControls:MetroProgressBar.Style>
         </mahAppsControls:MetroProgressBar>
-        <TextBlock Grid.Row="6" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource MahApps.Brushes.Accent}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" Margin="0,10,0,0" Style="{StaticResource DefaultTextBlock}"/>
+        <TextBlock Grid.Row="6" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource MahApps.Brushes.Accent}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" Margin="0,10,0,0" Style="{StaticResource DefaultTextBlock}"/>
         <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="0">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">

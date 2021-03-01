@@ -288,16 +288,16 @@ namespace NETworkManager.ViewModels
         }
 
 
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
+        private bool _isStatusMessageDisplayed;
+        public bool IsStatusMessageDisplayed
         {
-            get => _displayStatusMessage;
+            get => _isStatusMessageDisplayed;
             set
             {
-                if (value == _displayStatusMessage)
+                if (value == _isStatusMessageDisplayed)
                     return;
 
-                _displayStatusMessage = value;
+                _isStatusMessageDisplayed = value;
                 OnPropertyChanged();
             }
         }
@@ -431,7 +431,7 @@ namespace NETworkManager.ViewModels
         #region Methods
         private async void Work()
         {
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
             IsWorking = true;
 
             QueryResults.Clear();
@@ -458,7 +458,7 @@ namespace NETworkManager.ViewModels
                 Finished();
 
                 StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host);
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
 
                 return;
             }
@@ -555,7 +555,7 @@ namespace NETworkManager.ViewModels
         private void Snmp_TimeoutReached(object sender, EventArgs e)
         {
             StatusMessage = Localization.Resources.Strings.TimeoutOnSNMPQuery;
-            DisplayStatusMessage = true;
+            IsStatusMessageDisplayed = true;
 
             Finished();
         }
@@ -564,7 +564,7 @@ namespace NETworkManager.ViewModels
         {
             StatusMessage = Mode == SNMPMode.Set ? Localization.Resources.Strings.ErrorInResponseCheckIfYouHaveWritePermissions : Localization.Resources.Strings.ErrorInResponse;
 
-            DisplayStatusMessage = true;
+            IsStatusMessageDisplayed = true;
 
             Finished();
         }
@@ -572,7 +572,7 @@ namespace NETworkManager.ViewModels
         private void Snmp_UserHasCanceled(object sender, EventArgs e)
         {
             StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
-            DisplayStatusMessage = true;
+            IsStatusMessageDisplayed = true;
 
             Finished();
         }
@@ -582,7 +582,7 @@ namespace NETworkManager.ViewModels
             if (Mode == SNMPMode.Set)
             {
                 StatusMessage = Localization.Resources.Strings.DataHasBeenUpdated;
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
             }
 
             Finished();
