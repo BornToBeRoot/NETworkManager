@@ -381,6 +381,15 @@
   <data name="Broadcast" xml:space="preserve">
     <value>Transmissão</value>
   </data>
+  <data name="Buffer" xml:space="preserve">
+    <value>Buffer</value>
+  </data>
+  <data name="Bytes" xml:space="preserve">
+    <value>Bytes</value>
+  </data>
+  <data name="CIDR" xml:space="preserve">
+    <value>CIDR</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Fechar</value>
   </data>
@@ -2681,5 +2690,11 @@ O aplicativo será reiniciado em seguida!</value>
   </data>
   <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
     <value>Os arquivos do perfil serão movidos para a pasta de destino selecionada.</value>
+  </data>
+  <data name="LastScanAtX" xml:space="preserve">
+    <value>Last scan at {0}</value>
+  </data>
+  <data name="HiddenNetwork" xml:space="preserve">
+    <value>Hidden Network</value>
   </data>
 </root>
