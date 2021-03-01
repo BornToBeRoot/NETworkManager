@@ -795,13 +795,13 @@ Dies ist eine neue Funktion und könnte Bugs enthalten. Bitte sichern Sie zuerst
     <value>Standard-Port:</value>
   </data>
   <data name="RloginPort" xml:space="preserve">
-    <value>Rlogin Port</value>
+    <value>Rlogin port</value>
   </data>
   <data name="SSHPort" xml:space="preserve">
-    <value>SSH Port</value>
+    <value>SSH port</value>
   </data>
   <data name="TelnetPort" xml:space="preserve">
-    <value>Telnet Port</value>
+    <value>Telnet port</value>
   </data>
   <data name="DeleteCredentialMessage" xml:space="preserve">
     <value>Die ausgewählte Anmeldeinformation wird unwiederbringlich gelöscht.</value>
@@ -1066,7 +1066,7 @@ Mit "Überschreiben" wird die Datei im Zielordner überschrieben.
     <value>Remote IP-Adresse</value>
   </data>
   <data name="RemotePort" xml:space="preserve">
-    <value>Remote Port</value>
+    <value>Remote port</value>
   </data>
   <data name="Repeat" xml:space="preserve">
     <value>Wiederholen</value>
@@ -1904,10 +1904,10 @@ Mit "Überschreiben" wird die Datei im Zielordner überschrieben.
     <value>IPv4-Adresse hinzufügen</value>
   </data>
   <data name="HostThreads" xml:space="preserve">
-    <value>Host Threads</value>
+    <value>Host threads</value>
   </data>
   <data name="PortThreads" xml:space="preserve">
-    <value>Port Threads</value>
+    <value>Port threads</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -2812,7 +2812,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Update</value>
   </data>
   <data name="SettingsViewName_WakeOnLAN" xml:space="preserve">
-    <value>Wake on LAN</value>
+    <value>Wake On LAN</value>
   </data>
   <data name="SettingsViewName_Whois" xml:space="preserve">
     <value>Whois</value>
