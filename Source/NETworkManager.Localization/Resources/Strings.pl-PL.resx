@@ -2812,7 +2812,7 @@ $$hostname$$	--&gt;	Nazwa hosta</value>
     <value>Aktualizuj</value>
   </data>
   <data name="SettingsViewName_WakeOnLAN" xml:space="preserve">
-    <value>Wake on LAN</value>
+    <value>Wake On LAN</value>
   </data>
   <data name="SettingsViewName_Whois" xml:space="preserve">
     <value>Whois</value>
