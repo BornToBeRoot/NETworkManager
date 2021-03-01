@@ -268,7 +268,7 @@
     <value>Localisation</value>
   </data>
   <data name="Lookup" xml:space="preserve">
-    <value>Lookup</value>
+    <value>Chercher</value>
   </data>
   <data name="MACAddress" xml:space="preserve">
     <value>Adresse MAC</value>
@@ -685,7 +685,7 @@
     <value>Réponses</value>
   </data>
   <data name="ApplicationWillBeRestartedAfterwards" xml:space="preserve">
-    <value>The application will be restarted afterwards!</value>
+    <value>L'application sera redémarrée par la suite!</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Appliquer</value>
@@ -769,9 +769,9 @@
     <value>Accréditation</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Profile files are encrypted on disk using Rijndael (AES) with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+    <value>Les fichiers de profil sont chiffrés sur disque à l'aide de Rijndael (AES) avec une taille de clé de 256 bits et une taille de bloc de 128 bits en mode CBC. La clé de chiffrement est dérivée d'un mot de passe principal à l'aide de Rfc2898DeriveBytes (PBKDF2) avec 1 000 000 d'itérations. Au moment de l'exécution, les mots de passe sont stockés sous SecureString une fois le fichier de profil chargé. Pour certaines fonctions, le mot de passe doit être converti en une chaîne normale et reste non chiffré en mémoire jusqu'à ce que le garbage collector les nettoie. 
 
-This is a new feature that may still contain bugs. Please backup your profile files first before enabling profile file encryption!</value>
+C'est une nouvelle fonctionnalité qui peut encore contenir des bugs. Veuillez d'abord sauvegarder vos fichiers de profil avant d'activer le cryptage des fichiers de profil! </value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Personnalisée</value>
@@ -994,10 +994,10 @@ Créez-en un…</value>
     <value>passer outre</value>
   </data>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite settings in the destination folder?
+    <value>Écraser les paramètres dans le dossier de destination?
 
-"Overwrite" will overwrite the file in the destination folder.
-"Use other" will use the existing settings file in the destination and restart the application.</value>
+"Écraser" écrasera le fichier dans le dossier de destination.
+"Utiliser autre" utilisera le fichier de paramètres existant dans la destination et redémarrera l'application.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Mots de passe</value>
@@ -1099,7 +1099,7 @@ Créez-en un…</value>
     <value>Sélectionnez une résolution d'écran</value>
   </data>
   <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>The selected settings are overwritten!</value>
+    <value>Les paramètres sélectionnés sont écrasés!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>Les paramètres sélectionnés sont réinitialisés.</value>
@@ -1247,7 +1247,7 @@ Créez-en un…</value>
     <value>Largeur</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Could not be decrypted the file with the given password.</value>
+    <value>Impossible de décrypter le fichier avec mot de passe indiqué.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>Le mot de passe saisi est incorrect.</value>
@@ -1466,13 +1466,13 @@ Créez-en un…</value>
     <value>Cobalt</value>
   </data>
   <data name="Crimson" xml:space="preserve">
-    <value>Crimson</value>
+    <value>Cramoisi</value>
   </data>
   <data name="Cyan" xml:space="preserve">
     <value>Cyan</value>
   </data>
   <data name="Emerald" xml:space="preserve">
-    <value>Emeraude</value>
+    <value>Émeraude</value>
   </data>
   <data name="EnterOneOrMoreValidIPAddresses" xml:space="preserve">
     <value>Entrez une ou plusieurs adresses IP valides!</value>
@@ -2413,7 +2413,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>L'application sera relancée…</value>
   </data>
   <data name="UseOtherFolder" xml:space="preserve">
-    <value>Use other folder</value>
+    <value>Utiliser un autre dossier</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Impossible d'exporter fichier! Voir message d'erreur: "{0}"</value>
@@ -2422,7 +2422,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Fichier exporté vers "{0}"!</value>
   </data>
   <data name="ClouldNotImportFileSeeErrorMessageXX" xml:space="preserve">
-    <value>Impossible d'importer le fichier! Voir le message d'erreur: "{0} "</value>
+    <value>Impossible d'importer fichier! Voir message d'erreur: "{0} "</value>
   </data>
   <data name="LocationCannotBeChangedInThePortableVersion" xml:space="preserve">
     <value>Emplacement ne peut pas être changé en version portable!</value>
@@ -2524,7 +2524,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>LLDP / CDP</value>
   </data>
   <data name="XXSecondsRemainingDots" xml:space="preserve">
-    <value>1 {0} secondes restantes...</value>
+    <value>{0} secondes restantes...</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Aide</value>
@@ -2704,7 +2704,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>En-têtes HTTP</value>
   </data>
   <data name="ProfileViewName_IP Scanner" xml:space="preserve">
-    <value>IP Scanner</value>
+    <value>Scanner IP</value>
   </data>
   <data name="ProfileViewName_NetworkInterface" xml:space="preserve">
     <value>Interface réseau</value>
@@ -2770,7 +2770,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>En-têtes HTTP</value>
   </data>
   <data name="SettingsViewName_IPScanner" xml:space="preserve">
-    <value>IP Scanner</value>
+    <value>Scanner IP</value>
   </data>
   <data name="SettingsViewName_Language" xml:space="preserve">
     <value>Langage</value>
@@ -2911,72 +2911,72 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>SSID</value>
   </data>
   <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
-    <value>Profile could not be loaded!</value>
+    <value>Profil n'a pas pu être chargé!</value>
   </data>
   <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
-    <value>The profile could not be loaded and may be corrupted. If this is unexpected or due to an update, please report this issue on GitHub!</value>
+    <value>Profil n'a pas pu être chargé et est peut-être corrompu. Si cela est inattendu ou dû à une mise à jour, veuillez signaler ce problème sur GitHub! </value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
-    <value>Edit group...</value>
+    <value>Éditer le groupe...</value>
   </data>
   <data name="DecryptionError" xml:space="preserve">
-    <value>Decryption error</value>
+    <value>Erreur de décryptage</value>
   </data>
   <data name="DecryptionErrorMessage" xml:space="preserve">
-    <value>Could not decrypt file. You may report this issue on GitHub.</value>
+    <value>Impossible de décrypter fichier. Reportez ce problème sur GitHub.</value>
   </data>
   <data name="EncryptionError" xml:space="preserve">
-    <value>Encryption error</value>
+    <value>Erreur de cryptage</value>
   </data>
   <data name="EncryptionErrorMessage" xml:space="preserve">
-    <value>Could not encrpyt file. You may report this issue on GitHub.</value>
+    <value>Impossible de crypter le fichier. Reportez ce problème sur GitHub.</value>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
-    <value>Current password</value>
+    <value>Mot de passe actuel</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>New password</value>
+    <value>Nouveau mot de passe</value>
   </data>
   <data name="ChangeMasterPassword" xml:space="preserve">
-    <value>Change master password</value>
+    <value>Changer mot de passe principal</value>
   </data>
   <data name="UnlockProfile" xml:space="preserve">
-    <value>Unlock profile</value>
+    <value>Déverrouiller le profil</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Unlock the profile file to add, change or delete a profile!</value>
+    <value>Déverrouillez fichier de profil pour ajouter, modifier ou supprimer un profil! </value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
-    <value>Disclaimer</value>
+    <value>Clause de non-responsabilité</value>
   </data>
   <data name="Merge" xml:space="preserve">
-    <value>Merge</value>
+    <value>Fusionner</value>
   </data>
   <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
-    <value>The destination folder already contains files. If you click Merge, the current profiles are copied to the folder.</value>
+    <value>Le dossier de destination contient déjà des fichiers. Si vous cliquez sur Fusionner, les profils actuels sont copiés dans le dossier.</value>
   </data>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite profiles in destination folder?
+    <value>Écraser profils dans dossier de destination?
 
-"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
-"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
-"Use other folder" will use the existing profile files in the destination folder.
+"Écraser" copiera les fichiers de profil dans dossier de destination et écrasera fichiers de profil existants.
+"Fusionner" copiera fichiers de profil dans dossier de destination, mais n'écrasera pas fichiers de profil sortants.
+"Utiliser un autre dossier" utilisera fichiers de profil existants dans dossier de destination.
 
-The application will be restarted afterwards!</value>
+L'application sera redémarrée par la suite!</value>
   </data>
   <data name="UseOther" xml:space="preserve">
-    <value>Utiliser d'autres</value>
+    <value>Utiliser autre</value>
   </data>
   <data name="Move" xml:space="preserve">
-    <value>Move</value>
+    <value>Déplacer</value>
   </data>
   <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
-    <value>Profile files will be moved to the selected destination folder.</value>
+    <value>Les fichiers de profil seront déplacés vers dossier de destination sélectionné.</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
-    <value>Last scan at {0}</value>
+    <value>Dernier scan à {0}</value>
   </data>
   <data name="HiddenNetwork" xml:space="preserve">
-    <value>Hidden Network</value>
+    <value>Réseau masqué</value>
   </data>
 </root>
