@@ -2256,7 +2256,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Could not resolve ip address for hostname!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
-    <value>CTRL+ALT+DEL</value>
+    <value>Ctrl+Alt+Del</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
     <value>键盘快捷键</value>
