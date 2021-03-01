@@ -685,7 +685,7 @@
     <value>Respuestas</value>
   </data>
   <data name="ApplicationWillBeRestartedAfterwards" xml:space="preserve">
-    <value>The application will be restarted afterwards!</value>
+    <value>¡La aplicación se reiniciará después!</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Aplicar</value>
@@ -769,9 +769,9 @@
     <value>Credencial</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Profile files are encrypted on disk using Rijndael (AES) with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+    <value>Los archivos de perfil se cifran en el disco mediante Rijndael (AES) con un tamaño de clave de 256 bits y un tamaño de bloque de 128 bits en modo CBC. La clave de cifrado se deriva de una contraseña maestra que utiliza Rfc2898DeriveBytes (PBKDF2) con 1.000.000 de iteraciones. En tiempo de ejecución, las contraseñas se almacenan como SecureString una vez que se carga el archivo de perfil. Para algunas funciones, la contraseña debe convertirse en una cadena normal y permanecerá sin cifrar en la memoria hasta que el recolector de basura las limpie.
 
-This is a new feature that may still contain bugs. Please backup your profile files first before enabling profile file encryption!</value>
+Esta es una característica nueva que aún puede contener errores. ¡Haga una copia de seguridad de sus archivos de perfil antes de habilitar el cifrado de archivos de perfil!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Personalizado</value>
@@ -994,10 +994,10 @@ Crear uno...</value>
     <value>anular</value>
   </data>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite settings in the destination folder?
+    <value>¿Sobrescribir la configuración en la carpeta de destino?
 
-"Overwrite" will overwrite the file in the destination folder.
-"Use other" will use the existing settings file in the destination and restart the application.</value>
+"Sobrescribir" sobrescribirá el archivo en la carpeta de destino.
+"Usar otro" usará el archivo de configuración existente en el destino y reiniciará la aplicación.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Contraseña</value>
@@ -1099,7 +1099,7 @@ Crear uno...</value>
     <value>Seleccione una resolución de pantalla</value>
   </data>
   <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>The selected settings are overwritten!</value>
+    <value>¡Los ajustes seleccionados se sobrescriben!</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>La configuración seleccionada se restablecerá.</value>
@@ -2413,7 +2413,7 @@ $$hostname$$	--&gt;	Nombre del host</value>
     <value>La aplicación se reiniciará...</value>
   </data>
   <data name="UseOtherFolder" xml:space="preserve">
-    <value>Use other folder</value>
+    <value>Usar otra carpeta</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>¡No se pudo exportar el archivo! Ver mensaje de error: "{0}"</value>
@@ -2944,39 +2944,39 @@ $$hostname$$	--&gt;	Nombre del host</value>
     <value>Desbloquear perfil</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Unlock the profile file to add, change or delete a profile!</value>
+    <value>¡Desbloquee el archivo de perfil para agregar, cambiar o eliminar un perfil!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
-    <value>Disclaimer</value>
+    <value>Descargo de responsabilidad</value>
   </data>
   <data name="Merge" xml:space="preserve">
-    <value>Merge</value>
+    <value>Fusionar</value>
   </data>
   <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
-    <value>The destination folder already contains files. If you click Merge, the current profiles are copied to the folder.</value>
+    <value>La carpeta de destino ya contiene archivos. Si hace clic en Fusionar, los perfiles actuales se copiaran a la carpeta.</value>
   </data>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite profiles in destination folder?
+    <value>¿Sobrescribir perfiles en la carpeta de destino?
 
-"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
-"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
-"Use other folder" will use the existing profile files in the destination folder.
+"Sobrescribir" copiará los archivos de perfil en la carpeta de destino y sobrescribirá los archivos de perfil existentes.
+"Fusionar" copiará los archivos de perfil en la carpeta de destino, pero no sobrescribirá los archivos de perfil de salida.
+"Usar otra carpeta" usará los archivos de perfil existentes en la carpeta de destino.
 
-The application will be restarted afterwards!</value>
+¡La aplicación se reiniciará después!</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Usar otro</value>
   </data>
   <data name="Move" xml:space="preserve">
-    <value>Move</value>
+    <value>Mover</value>
   </data>
   <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
-    <value>Profile files will be moved to the selected destination folder.</value>
+    <value>Los archivos de perfil se moverán a la carpeta de destino seleccionada.</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
-    <value>Last scan at {0}</value>
+    <value>Último escaneo {0}</value>
   </data>
   <data name="HiddenNetwork" xml:space="preserve">
-    <value>Hidden Network</value>
+    <value>Red oculta</value>
   </data>
 </root>
