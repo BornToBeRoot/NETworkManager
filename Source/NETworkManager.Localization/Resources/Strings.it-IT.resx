@@ -1364,13 +1364,13 @@ Cerca per tag con "tag = xxx".</value>
     <value>(non modificato)</value>
   </data>
   <data name="Off" xml:space="preserve">
-    <value>OFF</value>
+    <value>Off</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="On" xml:space="preserve">
-    <value>ON</value>
+    <value>On</value>
   </data>
   <data name="OpenLocation" xml:space="preserve">
     <value>Apri percorso</value>
@@ -2836,7 +2836,7 @@ Vedi messaggio errore: "{0}"</value>
     <value>Aggiorna programma</value>
   </data>
   <data name="SettingsViewName_WakeOnLAN" xml:space="preserve">
-    <value>Wake on LAN</value>
+    <value>Wake On LAN</value>
   </data>
   <data name="SettingsViewName_Whois" xml:space="preserve">
     <value>Whois</value>
