@@ -2975,4 +2975,10 @@ Die Anwendung wird anschließend neu gestartet!</value>
   <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
     <value>Die Profildateien werden in den ausgewählten Zielordner verschoben.</value>
   </data>
+  <data name="LastScanAtX" xml:space="preserve">
+    <value>Letzter Scan um {0}</value>
+  </data>
+  <data name="HiddenNetwork" xml:space="preserve">
+    <value>Verstecktes Netzwerk</value>
+  </data>
 </root>
