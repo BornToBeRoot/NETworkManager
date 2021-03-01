@@ -1199,6 +1199,9 @@ Créez-en un…</value>
   <data name="Off" xml:space="preserve">
     <value>Éteint</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="On" xml:space="preserve">
     <value>Allumé</value>
   </data>
@@ -2544,5 +2547,17 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Utiliser d'autres</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
+    <value>Profile files will be moved to the selected destination folder.</value>
+  </data>
+  <data name="LastScanAtX" xml:space="preserve">
+    <value>Last scan at {0}</value>
+  </data>
+  <data name="HiddenNetwork" xml:space="preserve">
+    <value>Hidden Network</value>
   </data>
 </root>
