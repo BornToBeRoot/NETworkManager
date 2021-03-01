@@ -2040,7 +2040,7 @@ URL: https://api.ipify.org/</value>
     <value>Ошибка</value>
   </data>
   <data name="ConnectionState_OK" xml:space="preserve">
-    <value>Ok</value>
+    <value>OK</value>
   </data>
   <data name="ConnectionState_Warning" xml:space="preserve">
     <value>Предупреждение</value>
