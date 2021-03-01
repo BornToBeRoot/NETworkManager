@@ -427,7 +427,7 @@
     <value>Buffer</value>
   </data>
   <data name="Bytes" xml:space="preserve">
-    <value>bytes</value>
+    <value>Bytes</value>
   </data>
   <data name="CIDR" xml:space="preserve">
     <value>CIDR</value>
@@ -2974,9 +2974,9 @@ O aplicativo será reiniciado em seguida!</value>
     <value>Os arquivos do perfil serão movidos para a pasta de destino selecionada.</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
-    <value>Última verificação às {0}</value>
+    <value>Last scan at {0}</value>
   </data>
   <data name="HiddenNetwork" xml:space="preserve">
-    <value>Rede Oculta</value>
+    <value>Hidden Network</value>
   </data>
 </root>
