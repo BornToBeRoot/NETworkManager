@@ -122,16 +122,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
+        private bool _isStatusMessageDisplayed;
+        public bool IsStatusMessageDisplayed
         {
-            get => _displayStatusMessage;
+            get => _isStatusMessageDisplayed;
             set
             {
-                if (value == _displayStatusMessage)
+                if (value == _isStatusMessageDisplayed)
                     return;
 
-                _displayStatusMessage = value;
+                _isStatusMessageDisplayed = value;
                 OnPropertyChanged();
             }
         }
@@ -373,7 +373,7 @@ namespace NETworkManager.ViewModels
         #region Methods
         private async void WakeUp(WakeOnLANInfo info)
         {
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
             IsSending = true;
 
             try
@@ -383,12 +383,12 @@ namespace NETworkManager.ViewModels
                 await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the send command)
 
                 StatusMessage = Localization.Resources.Strings.MagicPacketSentMessage;
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
             }
             catch (Exception ex)
             {
                 StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
             }
             finally
             {

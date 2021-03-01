@@ -140,7 +140,7 @@
                             </Style>
                         </mahAppsControls:MetroProgressBar.Style>
                     </mahAppsControls:MetroProgressBar>
-                    <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+                    <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
                 </Grid>
                 <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
                 <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">

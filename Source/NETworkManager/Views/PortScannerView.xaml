@@ -193,7 +193,7 @@
                     </TextBlock.Text>
                 </TextBlock>
             </StackPanel>
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+            <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
         <!-- 

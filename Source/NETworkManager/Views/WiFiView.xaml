@@ -293,7 +293,7 @@
                                 </Grid.ColumnDefinitions>
                                 <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorPulseStyle}" Visibility="{Binding IsBackgroundSearchRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Width="24" Height="24" VerticalAlignment="Center" SpeedRatio="1" Margin="0,0,10,0" />
-                                    <TextBlock Style="{StaticResource AccentTextBlock}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" VerticalAlignment="Center" />
+                                    <TextBlock Style="{StaticResource AccentTextBlock}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" VerticalAlignment="Center" />
                                 </WrapPanel>
                                 <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
                                     <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>
@@ -477,7 +477,7 @@
                             </Grid.ColumnDefinitions>
                             <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorPulseStyle}" Visibility="{Binding IsBackgroundSearchRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Width="24" Height="24" VerticalAlignment="Center" SpeedRatio="1" Margin="0,0,10,0" />
-                                <TextBlock Style="{StaticResource AccentTextBlock}" Visibility="{Binding DisplayStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" VerticalAlignment="Center" />
+                                <TextBlock Style="{StaticResource AccentTextBlock}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{Binding StatusMessage}" VerticalAlignment="Center" />
                             </WrapPanel>
                             <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
                                 <CheckBox IsChecked="{Binding AutoRefresh}" Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}" Margin="0,0,10,0"/>

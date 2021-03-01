@@ -132,16 +132,16 @@ namespace NETworkManager.ViewModels
         }
 
 
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
+        private bool _isStatusMessageDisplayed;
+        public bool IsStatusMessageDisplayed
         {
-            get => _displayStatusMessage;
+            get => _isStatusMessageDisplayed;
             set
             {
-                if (value == _displayStatusMessage)
+                if (value == _isStatusMessageDisplayed)
                     return;
 
-                _displayStatusMessage = value;
+                _isStatusMessageDisplayed = value;
                 OnPropertyChanged();
             }
         }
@@ -282,7 +282,7 @@ namespace NETworkManager.ViewModels
         #region Methods
         private async void Calculate()
         {
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
             IsCalculationRunning = true;
 
             SubnetsResult.Clear();

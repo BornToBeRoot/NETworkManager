@@ -71,16 +71,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
+        private bool _isStatusMessageDisplayed;
+        public bool IsStatusMessageDisplayed
         {
-            get => _displayStatusMessage;
+            get => _isStatusMessageDisplayed;
             set
             {
-                if (value == _displayStatusMessage)
+                if (value == _isStatusMessageDisplayed)
                     return;
 
-                _displayStatusMessage = value;
+                _isStatusMessageDisplayed = value;
                 OnPropertyChanged();
             }
         }
@@ -189,7 +189,7 @@ namespace NETworkManager.ViewModels
         #region Methods
         private async void Query()
         {
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
             IsWhoisRunning = true;
 
             WhoisResult = null;
@@ -212,7 +212,7 @@ namespace NETworkManager.ViewModels
                 if (string.IsNullOrEmpty(whoisServer))
                 {
                     StatusMessage = string.Format(Strings.WhoisServerNotFoundForTheDomain, Domain);
-                    DisplayStatusMessage = true;
+                    IsStatusMessageDisplayed = true;
                 }
                 else
                 {
@@ -224,7 +224,7 @@ namespace NETworkManager.ViewModels
             catch (Exception ex)
             {
                 StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
             }
 
             IsWhoisRunning = false;

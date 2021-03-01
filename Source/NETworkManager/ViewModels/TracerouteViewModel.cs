@@ -125,16 +125,16 @@ namespace NETworkManager.ViewModels
 
         public bool ResolveHostname => SettingsManager.Current.Traceroute_ResolveHostname;
 
-        private bool _displayStatusMessage;
-        public bool DisplayStatusMessage
+        private bool _isStatusMessageDisplayed;
+        public bool IsStatusMessageDisplayed
         {
-            get => _displayStatusMessage;
+            get => _isStatusMessageDisplayed;
             set
             {
-                if (value == _displayStatusMessage)
+                if (value == _isStatusMessageDisplayed)
                     return;
 
-                _displayStatusMessage = value;
+                _isStatusMessageDisplayed = value;
                 OnPropertyChanged();
             }
         }
@@ -296,7 +296,7 @@ namespace NETworkManager.ViewModels
 
         private async void StartTrace()
         {
-            DisplayStatusMessage = false;
+            IsStatusMessageDisplayed = false;
             IsTraceRunning = true;
 
             TraceResults.Clear();
@@ -325,7 +325,7 @@ namespace NETworkManager.ViewModels
                 TracerouteFinished();
 
                 StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host);
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
 
                 return;
             }
@@ -356,7 +356,7 @@ namespace NETworkManager.ViewModels
                 TracerouteFinished();
 
                 StatusMessage = ex.Message;
-                DisplayStatusMessage = true;
+                IsStatusMessageDisplayed = true;
             }
         }
 
@@ -444,7 +444,7 @@ namespace NETworkManager.ViewModels
             TracerouteFinished();
 
             StatusMessage = string.Format(Localization.Resources.Strings.MaximumNumberOfHopsReached, e.Hops);
-            DisplayStatusMessage = true;
+            IsStatusMessageDisplayed = true;
         }
 
         private void Traceroute_UserHasCanceled(object sender, EventArgs e)
@@ -452,7 +452,7 @@ namespace NETworkManager.ViewModels
             UserHasCanceled();
 
             StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
-            DisplayStatusMessage = true;
+            IsStatusMessageDisplayed = true;
         }
 
         private void Traceroute_TraceComplete(object sender, EventArgs e)
