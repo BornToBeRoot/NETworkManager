@@ -2973,4 +2973,10 @@ O aplicativo será reiniciado em seguida!</value>
   <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
     <value>Os arquivos do perfil serão movidos para a pasta de destino selecionada.</value>
   </data>
+  <data name="LastScanAtX" xml:space="preserve">
+    <value>Última verificação às {0}</value>
+  </data>
+  <data name="HiddenNetwork" xml:space="preserve">
+    <value>Rede Oculta</value>
+  </data>
 </root>
