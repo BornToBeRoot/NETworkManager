@@ -687,7 +687,7 @@
     <value>Odgovori</value>
   </data>
   <data name="ApplicationWillBeRestartedAfterwards" xml:space="preserve">
-    <value>The application will be restarted afterwards!</value>
+    <value>Aplikacija se bo nato znova zagnala! </value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Uporabi</value>
@@ -771,9 +771,9 @@
     <value>Poverilnica</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Profile files are encrypted on disk using Rijndael (AES) with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+    <value>Datoteke profila so šifrirane na disku z uporabo Rijndael (AES) z velikostjo ključa 256 bitov in velikostjo bloka 128 bitov v načinu CBC. Šifrirni ključ je izpeljan iz glavnega gesla z uporabo Rfc2898DeriveBytes (PBKDF2) s 1.000.000 ponovitvami. Ko je datoteka profila naložena, se med izvajanjem gesla shranijo kot SecureString. Za nekatere funkcije je treba geslo pretvoriti v običajni niz in ostane nešifrirano v pomnilniku, dokler jih zbiralnik smeti ne očisti. 
 
-This is a new feature that may still contain bugs. Please backup your profile files first before enabling profile file encryption!</value>
+To je nova funkcija, ki lahko še vedno vsebuje napake. Najprej varnostno kopirajte datoteke profila, preden omogočite šifriranje datotek profila! </value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Po meri</value>
@@ -996,10 +996,10 @@ Ustvarite enega...</value>
     <value>preglasi</value>
   </data>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite settings in the destination folder?
+    <value>Prepišem nastavitve v ciljni mapi? 
 
-"Overwrite" will overwrite the file in the destination folder.
-"Use other" will use the existing settings file in the destination and restart the application.</value>
+"Prepiši" bo prepisal datoteko v ciljni mapi. 
+"Uporabi drugo" bo uporabilo obstoječo datoteko z nastavitvami na cilju in znova zagnalo aplikacijo. </value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Geslo</value>
@@ -1101,7 +1101,7 @@ Ustvarite enega...</value>
     <value>Izberite ločljivost zaslona</value>
   </data>
   <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>The selected settings are overwritten!</value>
+    <value>Izbrane nastavitve so prepisane! </value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>Izbrane nastavitve so ponastavljene.</value>
@@ -1248,7 +1248,7 @@ Ustvarite enega...</value>
     <value>Širina</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Could not be decrypted the file with the given password.</value>
+    <value>Datoteke ni bilo mogoče dešifrirati z navedenim geslom. </value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>Vneseno geslo je napačno.</value>
@@ -1716,13 +1716,13 @@ Ustvarite enega...</value>
     <value>Zaprto</value>
   </data>
   <data name="TcpState_CloseWait" xml:space="preserve">
-    <value>CloseWait</value>
+    <value>Zapri Počakaj </value>
   </data>
   <data name="TcpState_Closing" xml:space="preserve">
     <value>Zapiranje</value>
   </data>
   <data name="TcpState_DeleteTcb" xml:space="preserve">
-    <value>DeleteTcb</value>
+    <value>Izbriši Tcb</value>
   </data>
   <data name="TcpState_Established" xml:space="preserve">
     <value>Vzpostavljena</value>
@@ -1734,19 +1734,19 @@ Ustvarite enega...</value>
     <value>FinWait2</value>
   </data>
   <data name="TcpState_LastAck" xml:space="preserve">
-    <value>LastAck</value>
+    <value>Zadnja akcija</value>
   </data>
   <data name="TcpState_Listen" xml:space="preserve">
     <value>Poslušaj</value>
   </data>
   <data name="TcpState_SynReceived" xml:space="preserve">
-    <value>SynReceived</value>
+    <value>Sinkr. prejeto</value>
   </data>
   <data name="TcpState_SynSent" xml:space="preserve">
-    <value>SynSent</value>
+    <value>Sinkr. poslano</value>
   </data>
   <data name="TcpState_TimeWait" xml:space="preserve">
-    <value>TimeWait</value>
+    <value>Čakalni čas</value>
   </data>
   <data name="TcpState_Unknown" xml:space="preserve">
     <value>Neznano</value>
@@ -2412,7 +2412,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Program se bo znova zagnal...</value>
   </data>
   <data name="UseOtherFolder" xml:space="preserve">
-    <value>Use other folder</value>
+    <value>Uporabi drugo mapo</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Ni bilo mogoče izvoziti datoteke! Glejte sporočilo o napaki: "{0}"</value>
@@ -2910,72 +2910,72 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>SSID</value>
   </data>
   <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
-    <value>Profile could not be loaded!</value>
+    <value>Profila ni bilo mogoče naložiti! </value>
   </data>
   <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
-    <value>The profile could not be loaded and may be corrupted. If this is unexpected or due to an update, please report this issue on GitHub!</value>
+    <value>Profila ni bilo mogoče naložiti in je morda poškodovan. Če je to nepričakovano ali je posledica posodobitve, prijavite to težavo na GitHubu! </value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
-    <value>Edit group...</value>
+    <value>Uredi skupino...</value>
   </data>
   <data name="DecryptionError" xml:space="preserve">
-    <value>Decryption error</value>
+    <value>Napaka pri dešifriranju</value>
   </data>
   <data name="DecryptionErrorMessage" xml:space="preserve">
-    <value>Could not decrypt file. You may report this issue on GitHub.</value>
+    <value>Datoteke ni bilo mogoče dešifrirati. To težavo lahko prijavite na GitHubu. </value>
   </data>
   <data name="EncryptionError" xml:space="preserve">
-    <value>Encryption error</value>
+    <value>Napaka pri šifriranju.</value>
   </data>
   <data name="EncryptionErrorMessage" xml:space="preserve">
-    <value>Could not encrpyt file. You may report this issue on GitHub.</value>
+    <value>Datoteke ni bilo mogoče šifrirati. To težavo lahko prijavite na GitHubu. </value>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
-    <value>Current password</value>
+    <value>Trenutno geslo</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>New password</value>
+    <value>Novo gslo</value>
   </data>
   <data name="ChangeMasterPassword" xml:space="preserve">
-    <value>Change master password</value>
+    <value>Spremeni glavno geslo...</value>
   </data>
   <data name="UnlockProfile" xml:space="preserve">
-    <value>Unlock profile</value>
+    <value>Odkleni profil</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Unlock the profile file to add, change or delete a profile!</value>
+    <value>Odklenite datoteko profila, če želite dodati, spremeniti ali izbrisati profil! </value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
-    <value>Disclaimer</value>
+    <value>Izjava o omejitvi odgovornosti </value>
   </data>
   <data name="Merge" xml:space="preserve">
-    <value>Merge</value>
+    <value>Združi</value>
   </data>
   <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
-    <value>The destination folder already contains files. If you click Merge, the current profiles are copied to the folder.</value>
+    <value>Ciljna mapa že vsebuje datoteke. Če kliknete 'Združi', se trenutni profili kopirajo v mapo. </value>
   </data>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite profiles in destination folder?
+    <value>Prepišem profile v ciljni mapi? 
 
-"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
-"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
-"Use other folder" will use the existing profile files in the destination folder.
+"Prepiši" bo datoteke profila kopiralo v ciljno mapo in prepisalo obstoječe datoteke profila. 
+"Združi" bo datoteke profila kopiralo v ciljno mapo, ne bo pa prepisalo datotek profila za izhod. 
+"Uporabi drugo mapo" bo uporabilo obstoječe datoteke profila v ciljni mapi. 
 
-The application will be restarted afterwards!</value>
+Aplikacija se bo nato znova zagnala! </value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Uporabi drugo</value>
   </data>
   <data name="Move" xml:space="preserve">
-    <value>Move</value>
+    <value>Premakni</value>
   </data>
   <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
-    <value>Profile files will be moved to the selected destination folder.</value>
+    <value>Datoteke profila bodo premaknjene v izbrano ciljno mapo. </value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
-    <value>Last scan at {0}</value>
+    <value>Zadnji pregled ob {0}</value>
   </data>
   <data name="HiddenNetwork" xml:space="preserve">
-    <value>Hidden Network</value>
+    <value>Skrito omrežje</value>
   </data>
 </root>
