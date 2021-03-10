@@ -1,6 +1,6 @@
 title: "NETworkManager"
 description: "A powerful tool for managing networks and troubleshoot network problems!"
-baseurl: "/NETworkManager"
+baseurl: "/Projects/NETworkManager"
 url: "https://borntoberoot.net"
 remote_theme: "pmarsceill/just-the-docs"
 color_scheme: "custom"
