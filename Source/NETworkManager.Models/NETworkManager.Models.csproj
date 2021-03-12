@@ -28,7 +28,7 @@
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.3.0" />
 		<PackageReference Include="MahApps.Metro" Version="2.4.4" />
 		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
-		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.1.2" />		
+		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.1.3" />		
 		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.774.44" />		
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.1.3" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
