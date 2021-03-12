@@ -4,7 +4,7 @@ title: Remote Desktop
 parent: Application
 nav_order: 9
 description: ""
-permalink: /Application/RemoteDesktop
+permalink: /Documentation/Application/RemoteDesktop
 ---
 
 

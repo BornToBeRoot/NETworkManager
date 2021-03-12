@@ -4,7 +4,7 @@ title: Wake on LAN
 parent: Application
 nav_order: 16
 description: ""
-permalink: /Application/WakeOnLAN
+permalink: /Documentation/Application/WakeOnLAN
 ---
 
 # Wake on LAN

@@ -4,7 +4,7 @@ title: Ping Monitor
 parent: Application
 nav_order: 6
 description: ""
-permalink: /Application/PingMonitor
+permalink: /Documentation/Application/PingMonitor
 ---
 
 # Ping Monitor

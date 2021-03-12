@@ -4,7 +4,7 @@ title: SNMP
 parent: Application
 nav_order: 14
 description: ""
-permalink: /Application/SNMP
+permalink: /Documentation/Application/SNMP
 ---
 
 # SNMP

@@ -4,7 +4,7 @@ title: Lookup
 parent: Application
 nav_order: 19
 description: ""
-permalink: /Application/Lookup
+permalink: /Documentation/Application/Lookup
 ---
 
 # Lookup

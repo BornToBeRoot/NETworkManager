@@ -4,7 +4,7 @@ title: Dashboard
 parent: Application
 nav_order: 1
 description: ""
-permalink: /Application/Dashboard
+permalink: /Documentation/Application/Dashboard
 ---
 
 # Dashboard

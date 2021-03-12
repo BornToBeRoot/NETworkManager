@@ -4,7 +4,7 @@ title: Subnet Calculator
 parent: Application
 nav_order: 18
 description: ""
-permalink: /Application/SubnetCalculator
+permalink: /Documentation/Application/SubnetCalculator
 ---
 
 # Subnet Calculator

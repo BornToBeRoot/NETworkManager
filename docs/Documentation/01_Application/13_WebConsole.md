@@ -4,7 +4,7 @@ title: WebConsole
 parent: Application
 nav_order: 13
 description: ""
-permalink: /Application/WebConsole
+permalink: /Documentation/Application/WebConsole
 ---
 
 # Web Console

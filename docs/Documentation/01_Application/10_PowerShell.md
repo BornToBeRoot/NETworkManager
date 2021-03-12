@@ -4,7 +4,7 @@ title: PowerShell
 parent: Application
 nav_order: 10
 description: ""
-permalink: /Application/PowerShell
+permalink: /Documentation/Application/PowerShell
 ---
 
 

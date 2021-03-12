@@ -4,7 +4,7 @@ title: Changelog - Version 1.x
 parent: Archiv
 nav_order: 1
 description: "Changelog and download links of all 1.x versions"
-permalink: /Archiv/Changelog-v1
+permalink: /Documentation/Legacy/Changelog-v1
 ---
 
 # Version 1.11.0.0

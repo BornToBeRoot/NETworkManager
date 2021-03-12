@@ -4,7 +4,7 @@ title: TigerVNC
 parent: Application
 nav_order: 12
 description: ""
-permalink: /Application/TigerVNC
+permalink: /Documentation/Application/TigerVNC
 ---
 
 

@@ -4,7 +4,7 @@ title: PuTTY
 parent: Application
 nav_order: 11
 description: ""
-permalink: /Application/PuTTY
+permalink: /Documentation/Application/PuTTY
 ---
 
 

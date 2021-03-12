@@ -4,7 +4,7 @@ title: Traceroute
 parent: Application
 nav_order: 7
 description: ""
-permalink: /Application/Traceroute
+permalink: /Documentation/Application/Traceroute
 ---
 
 # Traceroute

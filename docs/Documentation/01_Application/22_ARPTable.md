@@ -4,7 +4,7 @@ title: ARP Table
 parent: Application
 nav_order: 22
 description: ""
-permalink: /Application/ARPTable
+permalink: /Documentation/Application/ARPTable
 ---
 # ARP Table
 

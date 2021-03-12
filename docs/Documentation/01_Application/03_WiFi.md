@@ -4,7 +4,7 @@ title: WiFi
 parent: Application
 nav_order: 3
 description: ""
-permalink: /Application/WiFi
+permalink: /Documentation/Application/WiFi
 ---
 
 # WiFi

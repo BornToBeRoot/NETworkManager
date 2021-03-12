@@ -4,7 +4,7 @@ title: Listeners
 parent: Application
 nav_order: 21
 description: ""
-permalink: /Application/Listeners
+permalink: /Documentation/Application/Listeners
 ---
 
 # Listeners

@@ -4,7 +4,7 @@ title: Network Interface
 parent: Application
 nav_order: 2
 description: ""
-permalink: /Application/NetworkInterface
+permalink: /Documentation/Application/NetworkInterface
 ---
 
 # Network Interface
