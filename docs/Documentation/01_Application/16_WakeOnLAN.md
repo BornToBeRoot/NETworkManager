@@ -2,6 +2,7 @@
 layout: default
 title: Wake on LAN
 parent: Application
+grand_parent: Documentation
 nav_order: 16
 description: ""
 permalink: /Documentation/Application/WakeOnLAN

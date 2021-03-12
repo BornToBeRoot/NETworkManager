@@ -2,6 +2,7 @@
 layout: default
 title: Changelog - Version 1.x
 parent: Archiv
+grand_parent: Documentation
 nav_order: 1
 description: "Changelog and download links of all 1.x versions"
 permalink: /Documentation/Legacy/Changelog-v1

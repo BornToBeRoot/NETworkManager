@@ -2,6 +2,7 @@
 layout: default
 title: Dashboard
 parent: Application
+grand_parent: Documentation
 nav_order: 1
 description: ""
 permalink: /Documentation/Application/Dashboard

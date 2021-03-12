@@ -2,6 +2,7 @@
 layout: default
 title: Network Interface
 parent: Application
+grand_parent: Documentation
 nav_order: 2
 description: ""
 permalink: /Documentation/Application/NetworkInterface

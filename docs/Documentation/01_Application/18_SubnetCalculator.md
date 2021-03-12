@@ -2,6 +2,7 @@
 layout: default
 title: Subnet Calculator
 parent: Application
+grand_parent: Documentation
 nav_order: 18
 description: ""
 permalink: /Documentation/Application/SubnetCalculator
