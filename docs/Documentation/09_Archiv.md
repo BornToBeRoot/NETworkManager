@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Archiv
-parent: 
+parent: Documentation
 has_children: true
 nav_order: 99
 description: "Contains all archived pages."
