@@ -10,7 +10,7 @@ permalink: /Features
 
 - [Dashboard](Documentation/Application/Dashboard)
 - [Network Interface](Documentation/Application/NetworkInterface) - Information, Bandwidth, Configure
-- [WLAN](Documentation/Application/WLAN) - Networks, Channels
+- [WiFi](Documentation/Application/WiFi) - Networks, Channels
 - [IP Scanner](Documentation/Application/IPScanner)
 - [Port Scanner](Documentation/Application/PortScanner)
 - [Ping Monitor](Documentation/Application/PingMonitor)
