@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -461,56 +462,94 @@ namespace NETworkManager.Profiles
 
         #endregion
 
-        #region Deserialize, serialize to file
-        private static List<ProfileInfo> DeserializeFromFile(string filePath)
+        #region Serialize
+               private static void SerializeToFile(string filePath, List<ProfileInfo> profiles)
         {
-            var profiles = new List<ProfileInfo>();
+            List<ProfileInfoSerializable> profilesSerializable = new List<ProfileInfoSerializable>();
 
-            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
+            string password = string.Empty;
 
-            using (var fileStream = new FileStream(filePath, FileMode.Open))
+            foreach (ProfileInfo profile in profiles)
             {
-                ((List<ProfileInfo>)xmlSerializer.Deserialize(fileStream)).ForEach(x => profiles.Add(x));
+                if (profile.RemoteDesktop_Password != null)
+                    password = SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password);
+
+                profilesSerializable.Add(new ProfileInfoSerializable(profile)
+                {
+                    RemoteDesktop_Password = password
+                });
             }
-
-            return profiles;
-        }
-
-        private static void SerializeToFile(string filePath, List<ProfileInfo> profiles)
-        {
-            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
+                        
+            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfoSerializable>));
 
             using var fileStream = new FileStream(filePath, FileMode.Create);
 
-            xmlSerializer.Serialize(fileStream, profiles);
-        }
-        #endregion
-
-        #region Deserialize, serialize to byte[]
-        private static List<ProfileInfo> DeserializeFromByteArray(byte[] xml)
-        {
-            var profiles = new List<ProfileInfo>();
-
-            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
-
-            using var memoryStream = new MemoryStream(xml);
-
-            ((List<ProfileInfo>)xmlSerializer.Deserialize(memoryStream)).ForEach(x => profiles.Add(x));
-
-            return profiles;
+            xmlSerializer.Serialize(fileStream, profilesSerializable);
         }
 
         private static byte[] SerializeToByteArray(List<ProfileInfo> profiles)
         {
-            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfo>));
+            List<ProfileInfoSerializable> profilesSerializable = new List<ProfileInfoSerializable>();
+
+            string password = string.Empty;
+
+            foreach (ProfileInfo profile in profiles)
+            {
+                if (profile.RemoteDesktop_Password != null)
+                    password = SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password);
+
+                profilesSerializable.Add(new ProfileInfoSerializable(profile)
+                {
+                    RemoteDesktop_Password = password
+                });
+            }
+
+            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfoSerializable>));
 
             using var memoryStream = new MemoryStream();
 
             using var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8);
 
-            xmlSerializer.Serialize(streamWriter, profiles);
+            xmlSerializer.Serialize(streamWriter, profilesSerializable);
 
             return memoryStream.ToArray();
+        }
+        #endregion
+
+        #region Deserialize
+        private static List<ProfileInfo> DeserializeFromFile(string filePath)
+        {
+            var profiles = new List<ProfileInfo>();
+
+            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfoSerializable>));
+
+            using (var fileStream = new FileStream(filePath, FileMode.Open))
+            {
+                ((List<ProfileInfoSerializable>)xmlSerializer.Deserialize(fileStream)).ForEach(x => profiles.Add(new ProfileInfo(x)
+                {
+                    // Convert passwort to secure string
+                    RemoteDesktop_Password = !string.IsNullOrEmpty(x.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(x.RemoteDesktop_Password) : null
+                }));
+            }
+
+            return profiles;
+        }
+
+        private static List<ProfileInfo> DeserializeFromByteArray(byte[] xml)
+        {
+            var profiles = new List<ProfileInfo>();
+
+            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfoSerializable>));
+
+            using var memoryStream = new MemoryStream(xml);
+
+            ((List<ProfileInfoSerializable>)xmlSerializer.Deserialize(memoryStream)).ForEach(x => profiles.Add(new ProfileInfo(x)
+            {
+                // Convert passwort to secure string
+                RemoteDesktop_Password = !string.IsNullOrEmpty(x.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(x.RemoteDesktop_Password) : null
+            }));
+
+            return profiles;
         }
         #endregion               
 
@@ -531,7 +570,7 @@ namespace NETworkManager.Profiles
 
             // Copy files
             foreach (var profileFile in ProfileFiles)
-                File.Copy(profileFile.Path, Path.Combine(targedLocation, Path.GetFileName(profileFile.Path)), overwrite);             
+                File.Copy(profileFile.Path, Path.Combine(targedLocation, Path.GetFileName(profileFile.Path)), overwrite);
 
             // Remove old profile files
             foreach (var profileFile in ProfileFiles)

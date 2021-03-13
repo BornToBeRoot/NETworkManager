@@ -197,6 +197,8 @@ namespace NETworkManager
                 RemoteDesktop_Enabled = instance.RemoteDesktop_Enabled,
                 RemoteDesktop_InheritHost = instance.RemoteDesktop_InheritHost,
                 RemoteDesktop_Host = instance.RemoteDesktop_InheritHost ? instance.Host?.Trim() : instance.RemoteDesktop_Host?.Trim(),
+                RemoteDesktop_Username = instance.RemoteDesktop_Username,
+                RemoteDesktop_Password = instance.RemoteDesktop_Password,
                 RemoteDesktop_OverrideDisplay = instance.RemoteDesktop_OverrideDisplay,
                 RemoteDesktop_AdjustScreenAutomatically = instance.RemoteDesktop_AdjustScreenAutomatically,
                 RemoteDesktop_UseCurrentViewSize = instance.RemoteDesktop_UseCurrentViewSize,

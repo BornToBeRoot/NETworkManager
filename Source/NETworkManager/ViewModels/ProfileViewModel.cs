@@ -12,6 +12,7 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
 using NETworkManager.Models.PuTTY;
+using System.Security;
 
 namespace NETworkManager.ViewModels
 {
@@ -555,6 +556,38 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_Host = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _remoteDesktop_Username;
+        public string RemoteDesktop_Username
+        {
+            get => _remoteDesktop_Username;
+            set
+            {
+                if (value == _remoteDesktop_Username)
+                    return;
+
+                _remoteDesktop_Username = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private SecureString _remoteDesktop_Password;
+
+        /// <summary>
+        /// RemoteDesktop password as secure string.
+        /// </summary>
+        public SecureString RemoteDesktop_Password
+        {
+            get => _remoteDesktop_Password;
+            set
+            {
+                if (value == _remoteDesktop_Password)
+                    return;
+
+                _remoteDesktop_Password = value;
                 OnPropertyChanged();
             }
         }
@@ -2075,6 +2108,8 @@ namespace NETworkManager.ViewModels
             RemoteDesktop_Enabled = profileInfo.RemoteDesktop_Enabled;
             RemoteDesktop_InheritHost = profileInfo.RemoteDesktop_InheritHost;
             RemoteDesktop_Host = profileInfo.RemoteDesktop_Host;
+            RemoteDesktop_Username = profileInfo.RemoteDesktop_Username;
+            RemoteDesktop_Password = profileInfo.RemoteDesktop_Password;
             RemoteDesktop_OverrideDisplay = profileInfo.RemoteDesktop_OverrideDisplay;
             RemoteDesktop_AdjustScreenAutomatically = profileInfo.RemoteDesktop_AdjustScreenAutomatically;
             RemoteDesktop_UseCurrentViewSize = profileInfo.RemoteDesktop_UseCurrentViewSize;
