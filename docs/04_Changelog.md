@@ -6,19 +6,37 @@ description: "Changelog and download links of all available versions"
 permalink: /Changelog
 ---
 
-# Version 2021.x.x.0 [next release]
+<!--
+# Version 2021.x.xx.0 [next release]
 Date: **xx.xx.2021**
 
-<!--
 | File | Checksum [SHA256] |
 |---|---|
 |[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Setup.exe){:target="_blank"}| `5BDD82CA59CC0A635559848CA183C21ED92D4D0C143625F1B367946F033E2A79` |
 |[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Portable.zip){:target="_blank"}| `4D5AA9CC1A4FCE5AB80060A1009E87FA207D642B7E25A63A4DA38F9F6FD43472` |
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Archiv.zip){:target="_blank"}| `9996197F0F58A7A23F0A78DB7336D4201F98F1C6E8CCD7D02BF97095C5A6DDA8` |
--->
 
 ## What's new?
 
+## Improvements
+
+## Bugfixes
+
+## Other
+
+-->
+
+# Version 2021.3.14.0
+Date: **14.03.2021**
+
+| File | Checksum [SHA256] |
+|---|---|
+|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.14.0/NETworkManager_2021.3.14.0_Setup.exe){:target="_blank"}| `B87F9E4AC704F0FF55A7A41DEA27D9A47CA160D64179A6F1FC3638A1DAFEAD2B` |
+|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.14.0/NETworkManager_2021.3.14.0_Portable.zip){:target="_blank"}| `92B362B50ACC2685235DEB4002C75C6005FA2978E2B3F25B297854504A8E22F7` |
+|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.14.0/NETworkManager_2021.3.14.0_Archiv.zip){:target="_blank"}| `451A24B0AC8C2E63A15F5370EC2FC11E3957086BA272BDD17B00EB1D03E8E342` |
+
+## What's new?
+- Bugfixes & improvements only
 
 ## Improvements
 - WiFi - Refresh network in background when button is clicked or autorefresh is enabled [#445](https://github.com/BornToBeRoot/NETworkManager/issues/445){:target="_blank"}
