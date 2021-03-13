@@ -27,13 +27,14 @@ Date: **xx.xx.2021**
 - Host added to profiles view 
 
 ## Bugfixes
+- Documentation restructured [#568](https://github.com/BornToBeRoot/NETworkManager/issues/568){:target="_blank"}
 - Network Interface - Disable `Add IPv4 address...` button if network adapter is not connected [#484](https://github.com/BornToBeRoot/NETworkManager/issues/484){:target="_blank"}
+- Dialog button style fixed and button order changed [#328](https://github.com/BornToBeRoot/NETworkManager/issues/328){:target="_blank"}
 
 ## Other
 - Code refactored [#485](https://github.com/BornToBeRoot/NETworkManager/issues/485){:target="_blank"}
 - Transifex Github integration added
 - Language files updated
-
 
 # Version 2021.2.17.0
 Date: **17.02.2021**
