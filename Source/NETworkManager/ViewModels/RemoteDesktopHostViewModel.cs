@@ -16,6 +16,7 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
 using NETworkManager.Models;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -354,7 +355,7 @@ namespace NETworkManager.ViewModels
 
         #region Methods
         // Connect via Dialog
-        private async void Connect(string host = null)
+        private async Task Connect(string host = null)
         {
             var customDialog = new CustomDialog
             {
@@ -412,7 +413,7 @@ namespace NETworkManager.ViewModels
         }
 
         // Connect via Profile with Credentials
-        private async void ConnectProfileAs()
+        private async Task ConnectProfileAs()
         {
             var profileInfo = SelectedProfile;
 

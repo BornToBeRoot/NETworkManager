@@ -214,7 +214,7 @@ namespace NETworkManager.ViewModels
             Run();
         }
 
-        private async void Run()
+        private async Task Run()
         {
             await Refresh();
 
@@ -236,7 +236,7 @@ namespace NETworkManager.ViewModels
             return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
-        private async void RefreshAction()
+        private async Task RefreshAction()
         {
             IsStatusMessageDisplayed = false;
 
@@ -250,7 +250,7 @@ namespace NETworkManager.ViewModels
             return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
-        private async void DeleteTableAction()
+        private async Task DeleteTableAction()
         {
             IsStatusMessageDisplayed = false;
 
@@ -275,7 +275,7 @@ namespace NETworkManager.ViewModels
 
         private bool DeleteEntry_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        private async void DeleteEntryAction()
+        private async Task DeleteEntryAction()
         {
             IsStatusMessageDisplayed = false;
 
@@ -300,7 +300,7 @@ namespace NETworkManager.ViewModels
 
         private bool AddEntry_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        private async void AddEntryAction()
+        private async Task AddEntryAction()
         {
             IsStatusMessageDisplayed = false;
 
@@ -364,7 +364,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
-        private async void ExportAction()
+        private async Task ExportAction()
         {
             var customDialog = new CustomDialog
             {

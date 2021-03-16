@@ -15,6 +15,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
 using NETworkManager.Models.Export;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -281,7 +282,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public async void Export()
+        public async Task Export()
         {    
             var customDialog = new CustomDialog
             {

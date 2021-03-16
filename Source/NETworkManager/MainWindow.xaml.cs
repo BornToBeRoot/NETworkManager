@@ -28,6 +28,7 @@ using NETworkManager.Update;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Windows.Threading;
+using System.Threading.Tasks;
 
 namespace NETworkManager
 {
@@ -881,7 +882,7 @@ namespace NETworkManager
             OpenSettings();
         }
 
-        private async void CloseSettings()
+        private async Task CloseSettings()
         {
             ShowSettingsView = false;
 
@@ -943,7 +944,7 @@ namespace NETworkManager
         #endregion
 
         #region Profiles
-        private async void LoadProfile(ProfileFileInfo info)
+        private async Task LoadProfile(ProfileFileInfo info)
         {            
             if (info.IsEncrypted && !info.IsPasswordValid)
             {
@@ -979,7 +980,7 @@ namespace NETworkManager
             }
         }
 
-        private async void SwitchProfile(ProfileFileInfo info)
+        private async Task SwitchProfile(ProfileFileInfo info)
         {
             try
             {

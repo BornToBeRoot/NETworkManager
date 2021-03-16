@@ -20,6 +20,7 @@ using NETworkManager.Controls;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using NETworkManager.Localization.Translators;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -350,7 +351,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void OpenPortProfileSelection()
+        private async Task OpenPortProfileSelection()
         {
             var customDialog = new CustomDialog
             {
@@ -375,7 +376,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        private async void StartScan()
+        private async Task StartScan()
         {
             _isLoading = true;
 
@@ -472,7 +473,7 @@ namespace NETworkManager.ViewModels
             IsScanRunning = false;
         }
 
-        private async void Export()
+        private async Task Export()
         {
             var customDialog = new CustomDialog
             {

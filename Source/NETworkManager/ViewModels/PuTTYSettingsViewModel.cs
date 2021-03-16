@@ -8,6 +8,7 @@ using System.Windows.Input;
 using NETworkManager.Models.PuTTY;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -466,7 +467,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void Configure()
+        private async Task Configure()
         {
             try
             {

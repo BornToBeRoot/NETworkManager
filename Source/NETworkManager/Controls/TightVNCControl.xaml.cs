@@ -118,7 +118,7 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Methods       
-        private async void Connect()
+        private async Task Connect()
         {
             IsConnecting = true;
 

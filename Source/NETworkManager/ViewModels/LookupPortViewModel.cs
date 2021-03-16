@@ -14,6 +14,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -139,7 +140,7 @@ namespace NETworkManager.ViewModels
 
         private bool PortLookup_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !PortOrServiceHasError;
 
-        private async void PortLookupAction()
+        private async Task PortLookupAction()
         {
             IsLookupRunning = true;
 
@@ -249,7 +250,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
-        private async void ExportAction()
+        private async Task ExportAction()
         {
             var customDialog = new CustomDialog
             {

@@ -21,6 +21,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -294,7 +295,7 @@ namespace NETworkManager.ViewModels
             _cancellationTokenSource.Cancel();
         }
 
-        private async void StartTrace()
+        private async Task StartTrace()
         {
             IsStatusMessageDisplayed = false;
             IsTraceRunning = true;
@@ -372,7 +373,7 @@ namespace NETworkManager.ViewModels
             IsTraceRunning = false;
         }
 
-        private async void Export()
+        private async Task Export()
         {
             var customDialog = new CustomDialog
             {
