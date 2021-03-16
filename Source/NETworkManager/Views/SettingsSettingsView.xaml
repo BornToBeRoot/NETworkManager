@@ -129,12 +129,12 @@
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Export}" />
         <StackPanel Margin="0,0,0,20">
-            <Button Content="{x:Static localization:Strings.Export}" Command="{Binding ExportSettingsCommand}" IsEnabled="{Binding SettingsExists}" HorizontalAlignment="Left"  />
+            <Button Content="{x:Static localization:Strings.Export}" Command="{Binding ExportSettingsCommand}" IsEnabled="{Binding SettingsExists}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left"  />
             <TextBlock Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding ExportStatusMessage}" Visibility="{Binding DisplayExportStatusMessage, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
         </StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Reset}" />
         <TextBlock Style="{StaticResource DefaultTextBlock}" Text="{x:Static localization:Strings.ThisWillResetAllSettings}" Margin="0,0,0,10" />
-        <Button Content="{x:Static localization:Strings.Reset}" Command="{Binding ResetSettingsCommand}" IsEnabled="{Binding SettingsExists}" HorizontalAlignment="Left" />
+        <Button Content="{x:Static localization:Strings.Reset}" Command="{Binding ResetSettingsCommand}" IsEnabled="{Binding SettingsExists}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" />
     </StackPanel>
 </UserControl>
 
