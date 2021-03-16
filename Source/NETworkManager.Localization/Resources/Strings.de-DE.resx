@@ -2425,7 +2425,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Datei konnte nicht importiert werden! Siehe Fehlermeldung: "{0}"</value>
   </data>
   <data name="LocationCannotBeChangedInThePortableVersion" xml:space="preserve">
-    <value>Standort kann in portabler Version nicht geändert werden!</value>
+    <value>Speicherort kann in portabler Version nicht geändert werden!</value>
   </data>
   <data name="IsEncrypted" xml:space="preserve">
     <value>Ist Verschlüsselt</value>
