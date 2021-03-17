@@ -14,7 +14,8 @@ namespace NETworkManager
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.AddProfile
+                Title = Localization.Resources.Strings.AddProfile,
+                Style = (Style)Application.Current.FindResource("ProfileMetroDialog")
             };
 
             var profileViewModel = new ProfileViewModel(async instance =>
@@ -43,7 +44,8 @@ namespace NETworkManager
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.EditProfile
+                Title = Localization.Resources.Strings.EditProfile,
+                Style = (Style)Application.Current.FindResource("ProfileMetroDialog")
             };
 
             var profileViewModel = new ProfileViewModel(async instance =>
@@ -73,7 +75,8 @@ namespace NETworkManager
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.CopyProfile
+                Title = Localization.Resources.Strings.CopyProfile,
+                Style = (Style)Application.Current.FindResource("ProfileMetroDialog")
             };
 
             var profileViewModel = new ProfileViewModel(async instance =>

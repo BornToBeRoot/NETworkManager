@@ -21,6 +21,7 @@ Date: **xx.xx.2021**
 ## Improvements
 
 ## Bugfixes
+- Profile dialog height fixed [#594](https://github.com/BornToBeRoot/NETworkManager/issues/594){:target="_blank"}
 - Design of some buttons fixed [#591](https://github.com/BornToBeRoot/NETworkManager/issues/591){:target="_blank"}
 
 ## Other
