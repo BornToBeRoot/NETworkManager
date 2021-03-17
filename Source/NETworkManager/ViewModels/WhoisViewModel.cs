@@ -14,6 +14,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Views;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -150,7 +151,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
-        private async void ExportAction()
+        private async Task ExportAction()
         {
             var customDialog = new CustomDialog
             {
@@ -187,7 +188,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void Query()
+        private async Task Query()
         {
             IsStatusMessageDisplayed = false;
             IsWhoisRunning = true;

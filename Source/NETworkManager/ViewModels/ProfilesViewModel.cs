@@ -11,6 +11,7 @@ using System.Collections;
 using System.Windows.Threading;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -157,7 +158,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        public async void AddProfile()
+        public async Task AddProfile()
         {
             var customDialog = new CustomDialog
             {
@@ -182,7 +183,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public async void EditProfile()
+        public async Task EditProfile()
         {
             var customDialog = new CustomDialog
             {
@@ -209,7 +210,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public async void CopyAsProfile()
+        public async Task CopyAsProfile()
         {
             var customDialog = new CustomDialog
             {
@@ -234,7 +235,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public async void DeleteProfile()
+        public async Task DeleteProfile()
         {
             var customDialog = new CustomDialog
             {
@@ -262,7 +263,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public async void EditGroup(object group)
+        public async Task EditGroup(object group)
         {
             var customDialog = new CustomDialog
             {
@@ -291,7 +292,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ResetProfilesCommand => new RelayCommand(p => ResetProfilesAction());
 
-        private async void ResetProfilesAction()
+        private async Task ResetProfilesAction()
         {
             var customDialog = new CustomDialog
             {

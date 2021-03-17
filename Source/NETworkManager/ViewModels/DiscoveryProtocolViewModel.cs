@@ -284,7 +284,7 @@ namespace NETworkManager.ViewModels
             _isLoading = false;
         }
 
-        private async void LoadNetworkInterfaces()
+        private async Task LoadNetworkInterfaces()
         {
             IsNetworkInterfaceLoading = true;
 
@@ -315,7 +315,7 @@ namespace NETworkManager.ViewModels
 
         private bool ReloadNetworkInterfaces_CanExecute(object obj) => !IsNetworkInterfaceLoading && Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        private async void ReloadNetworkInterfacesAction()
+        private async Task ReloadNetworkInterfacesAction()
         {
             IsNetworkInterfaceLoading = true;
 
@@ -336,7 +336,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand OpenNetworkConnectionsCommand => new RelayCommand(p => OpenNetworkConnectionsAction());
 
-        public async void OpenNetworkConnectionsAction()
+        public async Task OpenNetworkConnectionsAction()
         {
             try
             {
@@ -350,7 +350,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand RestartAsAdminCommand => new RelayCommand(p => RestartAsAdminAction());
 
-        public async void RestartAsAdminAction()
+        public async Task RestartAsAdminAction()
         {
             try
             {
@@ -364,7 +364,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand CaptureCommand => new RelayCommand(p => CaptureAction());
 
-        public async void CaptureAction()
+        public async Task CaptureAction()
         {
             if (FirstRun)
                 FirstRun = false;

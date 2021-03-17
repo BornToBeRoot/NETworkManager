@@ -371,7 +371,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void WakeUp(WakeOnLANInfo info)
+        private async Task WakeUp(WakeOnLANInfo info)
         {
             IsStatusMessageDisplayed = false;
             IsSending = true;

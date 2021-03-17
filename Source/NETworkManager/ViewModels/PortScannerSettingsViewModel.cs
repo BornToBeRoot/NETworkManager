@@ -6,6 +6,7 @@ using NETworkManager.Utilities;
 using System.Windows.Input;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Views;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -143,7 +144,7 @@ namespace NETworkManager.ViewModels
             ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname;
         }
         #endregion
-        
+
         #region ICommand & Actions
         public ICommand AddPortProfileCommand => new RelayCommand(p => AddPortProfileAction());
 
@@ -167,11 +168,9 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        
-        #region Methods
-        
 
-        public async void AddPortProfile()
+        #region Methods       
+        public async Task AddPortProfile()
         {
             var customDialog = new CustomDialog
             {
@@ -196,7 +195,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public async void EditPortProfile()
+        public async Task EditPortProfile()
         {
             var customDialog = new CustomDialog
             {
@@ -222,7 +221,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public async void DeletePortProfile()
+        public async Task DeletePortProfile()
         {
             var customDialog = new CustomDialog
             {

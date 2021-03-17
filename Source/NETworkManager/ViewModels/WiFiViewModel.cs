@@ -365,14 +365,14 @@ namespace NETworkManager.ViewModels
 
         private bool ScanNetworks_CanExecute(object obj) => !IsAdaptersLoading && !IsNetworksLoading;
 
-        private async void ScanNetworksAction()
+        private async Task ScanNetworksAction()
         {
             await ScanNetworks(SelectedAdapter.WiFiAdapter, true);
         }
         #endregion
 
         #region Methods
-        private async void LoadAdapters()
+        private async Task LoadAdapters()
         {
             IsAdaptersLoading = true;
 
@@ -396,7 +396,7 @@ namespace NETworkManager.ViewModels
             IsAdaptersLoading = false;
         }
 
-        private async void ReloadAdapter()
+        private async Task ReloadAdapter()
         {
             IsAdaptersLoading = true;
 

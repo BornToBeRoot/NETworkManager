@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using Microsoft.Web.WebView2.Core;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -327,7 +328,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void Connect()
+        private async Task Connect()
         {
             var customDialog = new CustomDialog
             {

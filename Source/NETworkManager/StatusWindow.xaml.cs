@@ -151,7 +151,7 @@ namespace NETworkManager
         #endregion
 
         #region Methods
-        private async void Refresh(bool startTimer = false)
+        private async Task Refresh(bool startTimer = false)
         {
             IsRefreshing = true;
 

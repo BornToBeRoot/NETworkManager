@@ -26,6 +26,7 @@ using NETworkManager.Localization;
 using NETworkManager.Localization.Translators;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -325,7 +326,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand AddProfileSelectedHostCommand => new RelayCommand(p => AddProfileSelectedHostAction());
 
-        private async void AddProfileSelectedHostAction()
+        private async Task AddProfileSelectedHostAction()
         {
             ProfileInfo profileInfo = new ProfileInfo()
             {
@@ -429,7 +430,7 @@ namespace NETworkManager.ViewModels
                 StartScan();
         }
 
-        private async void StartScan()
+        private async Task StartScan()
         {
             IsStatusMessageDisplayed = false;
             IsScanRunning = true;
@@ -535,7 +536,7 @@ namespace NETworkManager.ViewModels
             IsScanRunning = false;
         }
 
-        private async void DetectIPRange()
+        private async Task DetectIPRange()
         {
             IsSubnetDetectionRunning = true;
 
@@ -573,7 +574,7 @@ namespace NETworkManager.ViewModels
             IsSubnetDetectionRunning = false;
         }
 
-        private async void CustomCommand(object guid)
+        private async Task CustomCommand(object guid)
         {
             if (guid is Guid id)
             {
@@ -619,7 +620,7 @@ namespace NETworkManager.ViewModels
             list.ForEach(x => SettingsManager.Current.IPScanner_HostsHistory.Add(x));
         }
 
-        private async void Export()
+        private async Task Export()
         {
             var customDialog = new CustomDialog
             {

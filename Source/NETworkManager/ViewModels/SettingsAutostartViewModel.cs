@@ -83,7 +83,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void EnableDisableAutostart(bool enable)
+        private async Task EnableDisableAutostart(bool enable)
         {
             ConfiguringAutostart = true;
 

@@ -5,6 +5,7 @@ using NETworkManager.Utilities;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
@@ -110,7 +111,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void Configure()
+        private async Task Configure()
         {
             try
             {

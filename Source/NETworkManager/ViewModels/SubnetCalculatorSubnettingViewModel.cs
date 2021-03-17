@@ -243,7 +243,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
-        private async void ExportAction()
+        private async Task ExportAction()
         {
             var customDialog = new CustomDialog
             {
@@ -280,7 +280,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void Calculate()
+        private async Task Calculate()
         {
             IsStatusMessageDisplayed = false;
             IsCalculationRunning = true;
