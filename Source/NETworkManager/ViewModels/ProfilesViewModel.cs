@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NETworkManager.ViewModels
 {

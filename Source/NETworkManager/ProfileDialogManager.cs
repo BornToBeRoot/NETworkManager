@@ -3,6 +3,7 @@ using NETworkManager.Profiles;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NETworkManager
 {
