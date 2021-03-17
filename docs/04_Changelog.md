@@ -23,6 +23,7 @@ Date: **xx.xx.2021**
 ## Bugfixes
 - Profile dialog height fixed [#594](https://github.com/BornToBeRoot/NETworkManager/issues/594){:target="_blank"}
 - Dialog button FontSize fixed [MahApps/MahApps.Metro#594](https://github.com/MahApps/MahApps.Metro/issues/4069){:target="_blank"}
+- ContextMenu sub menu border brush fixed [#324](https://github.com/BornToBeRoot/NETworkManager/issues/324){:target="_blank"}
 - Design of some buttons fixed [#591](https://github.com/BornToBeRoot/NETworkManager/issues/591){:target="_blank"}
 
 ## Other
