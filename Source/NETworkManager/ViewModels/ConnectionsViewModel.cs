@@ -214,7 +214,7 @@ namespace NETworkManager.ViewModels
             Run();
         }
 
-        private async void Run()
+        private async Task Run()
         {
             await Refresh();
 
@@ -236,7 +236,7 @@ namespace NETworkManager.ViewModels
             return Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
         }
 
-        private async void RefreshAction()
+        private async Task RefreshAction()
         {
             IsStatusMessageDisplayed = false;
 
@@ -287,7 +287,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
-        private async void ExportAction()
+        private async Task ExportAction()
         {
             var customDialog = new CustomDialog
             {

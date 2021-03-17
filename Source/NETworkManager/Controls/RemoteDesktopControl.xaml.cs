@@ -446,7 +446,7 @@ namespace NETworkManager.Controls
                 InitiateReconnection();
         }
 
-        private async void InitiateReconnection()
+        private async Task InitiateReconnection()
         {
             IsReconnecting = true;
 

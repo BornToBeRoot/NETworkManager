@@ -10,7 +10,7 @@ namespace NETworkManager
     {
 
         #region Add profile, Edit profile, CopyAs profile, Delete profile, Edit group
-        public static async void ShowAddProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator)
+        public static async Task ShowAddProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator)
         {
             var customDialog = new CustomDialog
             {
@@ -40,7 +40,7 @@ namespace NETworkManager
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
-        public static async void ShowEditProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
+        public static async Task ShowEditProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
         {
             var customDialog = new CustomDialog
             {
@@ -71,7 +71,7 @@ namespace NETworkManager
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
-        public static async void ShowCopyAsProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
+        public static async Task ShowCopyAsProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
         {
             var customDialog = new CustomDialog
             {
@@ -100,7 +100,7 @@ namespace NETworkManager
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
-        public static async void ShowDeleteProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
+        public static async Task ShowDeleteProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
         {
             var customDialog = new CustomDialog
             {
@@ -128,7 +128,7 @@ namespace NETworkManager
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
-        public static async void ShowEditGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, string group)
+        public static async Task ShowEditGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, string group)
         {
             var customDialog = new CustomDialog
             {

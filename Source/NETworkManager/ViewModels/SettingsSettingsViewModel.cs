@@ -185,7 +185,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ChangeLocationCommand => new RelayCommand(p => ChangeLocationAction());
 
-        private async void ChangeLocationAction()
+        private async Task ChangeLocationAction()
         {
             MovingFiles = true;
 
@@ -276,7 +276,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ImportSettingsCommand => new RelayCommand(p => ImportSettingsAction());
 
-        private async void ImportSettingsAction()
+        private async Task ImportSettingsAction()
         {
             var settings = AppearanceManager.MetroDialog;
 
@@ -335,7 +335,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ResetSettingsCommand => new RelayCommand(p => ResetSettingsAction());
 
-        public async void ResetSettingsAction()
+        public async Task ResetSettingsAction()
         {
             var settings = AppearanceManager.MetroDialog;
 

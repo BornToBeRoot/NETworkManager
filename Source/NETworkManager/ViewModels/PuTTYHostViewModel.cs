@@ -18,6 +18,7 @@ using NETworkManager.Profiles;
 using System.Windows.Threading;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -351,7 +352,7 @@ namespace NETworkManager.ViewModels
             IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) && File.Exists(SettingsManager.Current.PuTTY_ApplicationFilePath);
         }
 
-        private async void Connect(string host = null)
+        private async Task Connect(string host = null)
         {
             var customDialog = new CustomDialog
             {
