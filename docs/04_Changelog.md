@@ -24,6 +24,8 @@ Date: **xx.xx.2021**
 - Design of some buttons fixed [#591](https://github.com/BornToBeRoot/NETworkManager/issues/591){:target="_blank"}
 
 ## Other
+- Code refactored / cleanup
+  - async void with async task replaced [#383](https://github.com/BornToBeRoot/NETworkManager/issues/383){:target="_blank"}
 
 -->
 
