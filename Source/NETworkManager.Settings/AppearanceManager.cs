@@ -12,7 +12,7 @@ namespace NETworkManager.Settings
     /// Class provides static variables and methods to change the theme and accent of the application.
     /// </summary>
     public static class AppearanceManager
-    {               
+    {
         /// <summary>
         /// List who contains all MahApps.Metro themes.
         /// </summary>
@@ -47,10 +47,13 @@ namespace NETworkManager.Settings
 
             MetroDialog.CustomResourceDictionary = new ResourceDictionary
             {
-                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute)
+                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute),
             };
-        }
 
+            MetroDialog.DialogButtonFontSize = 14;
+            MetroDialog.DialogMessageFontSize = 14;
+        }
+       
         /// <summary>
         /// Change the appearance based on the user settings. This method should be called once, when starting the application.
         /// </summary>

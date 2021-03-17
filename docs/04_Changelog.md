@@ -2,7 +2,7 @@
 layout: default
 title: Changelog
 nav_order: 4
-description: "Changelog and download links of all available versions"
+description: "Changelog and download links of all available versions."
 permalink: /Changelog
 ---
 
@@ -22,6 +22,7 @@ Date: **xx.xx.2021**
 
 ## Bugfixes
 - Profile dialog height fixed [#594](https://github.com/BornToBeRoot/NETworkManager/issues/594){:target="_blank"}
+- Dialog button FontSize fixed [MahApps/MahApps.Metro#594](https://github.com/MahApps/MahApps.Metro/issues/4069){:target="_blank"}
 - Design of some buttons fixed [#591](https://github.com/BornToBeRoot/NETworkManager/issues/591){:target="_blank"}
 
 ## Other
