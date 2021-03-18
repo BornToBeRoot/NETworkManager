@@ -13,9 +13,9 @@ Date: **14.03.2021**
 
 | File | Checksum [SHA256] |
 |---|---|
-|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Setup.exe){:target="_blank"}| `B87F9E4AC704F0FF55A7A41DEA27D9A47CA160D64179A6F1FC3638A1DAFEAD2B` |
-|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Portable.zip){:target="_blank"}| `92B362B50ACC2685235DEB4002C75C6005FA2978E2B3F25B297854504A8E22F7` |
-|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Archiv.zip){:target="_blank"}| `451A24B0AC8C2E63A15F5370EC2FC11E3957086BA272BDD17B00EB1D03E8E342` |
+|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.14.0/NETworkManager_2021.3.14.0_Setup.exe){:target="_blank"}| `B87F9E4AC704F0FF55A7A41DEA27D9A47CA160D64179A6F1FC3638A1DAFEAD2B` |
+|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.14.0/NETworkManager_2021.3.14.0_Portable.zip){:target="_blank"}| `92B362B50ACC2685235DEB4002C75C6005FA2978E2B3F25B297854504A8E22F7` |
+|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.14.0/NETworkManager_2021.3.14.0_Archiv.zip){:target="_blank"}| `451A24B0AC8C2E63A15F5370EC2FC11E3957086BA272BDD17B00EB1D03E8E342` |
 
 The setup is also available on [Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"} and can be installed with:
 ```
