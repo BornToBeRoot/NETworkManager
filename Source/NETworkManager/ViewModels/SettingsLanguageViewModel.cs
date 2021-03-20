@@ -115,14 +115,7 @@ namespace NETworkManager.ViewModels
         private void ClearSearchAction()
         {
             Search = string.Empty;
-        }
-
-        public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
-
-        private static void OpenWebsiteAction(object url)
-        {
-            ExternalProcessStarter.OpenUrl((string)url);            
-        }
+        }                
         #endregion
     }
 }

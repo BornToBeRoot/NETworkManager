@@ -28,11 +28,6 @@ namespace NETworkManager.Localization
         public string Code { get; set; }
 
         /// <summary>
-        /// Percentage of how many strings are translated.
-        /// </summary>
-        public double PercentTranslated { get; set; }
-
-        /// <summary>
         /// Indicates whether the language has been translated by the maintainer or the community 
         /// </summary>
         public bool IsOfficial { get; set; }
@@ -61,15 +56,13 @@ namespace NETworkManager.Localization
         /// <param name="nativeName"><see cref="NativeName"/>.</param>
         /// <param name="flagUri"><see cref="FlagUri"/>.</param>
         /// <param name="code"><see cref="Code"/>.</param>
-        /// <param name="percentTranslated"><see cref="PercentTranslated"/>.</param>
         /// <param name="isOfficial"><see cref="IsOfficial"/>.</param>
-        public LocalizationInfo(string name, string nativeName, Uri flagUri, string code, double percentTranslated, bool isOfficial = false)
+        public LocalizationInfo(string name, string nativeName, Uri flagUri, string code, bool isOfficial = false)
         {
             Name = name;
             NativeName = nativeName;
             FlagUri = flagUri;            
             Code = code;
-            PercentTranslated = percentTranslated;
             IsOfficial = isOfficial;
         }
     }

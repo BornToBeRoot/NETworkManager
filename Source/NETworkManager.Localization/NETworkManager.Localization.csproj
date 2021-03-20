@@ -17,6 +17,7 @@
     <None Remove="Resources\Flags\fr-FR.png" />
     <None Remove="Resources\Flags\hu-HU.png" />
     <None Remove="Resources\Flags\it-IT.png" />
+    <None Remove="Resources\Flags\ko-KR.png" />
     <None Remove="Resources\Flags\nl-NL.png" />
     <None Remove="Resources\Flags\pl-PL.png" />
     <None Remove="Resources\Flags\pt-BR.png" />
@@ -35,6 +36,7 @@
     <Resource Include="Resources\Flags\fr-FR.png" />
     <Resource Include="Resources\Flags\hu-HU.png" />
     <Resource Include="Resources\Flags\it-IT.png" />
+    <Resource Include="Resources\Flags\ko-KR.png" />
     <Resource Include="Resources\Flags\nl-NL.png" />
     <Resource Include="Resources\Flags\pl-PL.png" />
     <Resource Include="Resources\Flags\pt-BR.png" />

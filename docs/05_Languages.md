@@ -19,6 +19,7 @@ Community:
 - French
 - Hungarian
 - Italy
+- Korean
 - Polish
 - Portuguese (Brazilian)
 - Russian

@@ -2127,9 +2127,6 @@ is disabled!</value>
   <data name="Official" xml:space="preserve">
     <value>Official</value>
   </data>
-  <data name="HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Help translate on transifex</value>
-  </data>
   <data name="NetworkConnectionType" xml:space="preserve">
     <value>Network connection type</value>
   </data>
