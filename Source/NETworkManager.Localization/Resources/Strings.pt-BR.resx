@@ -2127,9 +2127,6 @@ público está desabilitada!</value>
   <data name="Official" xml:space="preserve">
     <value>Oficial</value>
   </data>
-  <data name="HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Ajude a traduzir no Transifex</value>
-  </data>
   <data name="NetworkConnectionType" xml:space="preserve">
     <value>Tipo de conexão de rede</value>
   </data>
