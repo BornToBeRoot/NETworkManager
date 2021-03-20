@@ -2126,9 +2126,6 @@ je onemogočeno!</value>
   <data name="Official" xml:space="preserve">
     <value>Uradno</value>
   </data>
-  <data name="HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Pomagajte prevesti na Transifexu</value>
-  </data>
   <data name="NetworkConnectionType" xml:space="preserve">
     <value>Vrsta omrežne povezave</value>
   </data>
