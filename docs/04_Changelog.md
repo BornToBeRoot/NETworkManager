@@ -17,6 +17,7 @@ Date: **xx.xx.2021**
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Archiv.zip){:target="_blank"}| `9996197F0F58A7A23F0A78DB7336D4201F98F1C6E8CCD7D02BF97095C5A6DDA8` |
 
 ## What's new?
+- Korean language added [#584](https://github.com/BornToBeRoot/NETworkManager/issues/584){:target="_blank"}
 
 ## Improvements
 
@@ -29,7 +30,7 @@ Date: **xx.xx.2021**
 ## Other
 - Code refactored / cleanup
   - async void with async task replaced [#383](https://github.com/BornToBeRoot/NETworkManager/issues/383){:target="_blank"}
-
+- Percent completed in the settings\language removed, because the statistics are broken and hard to maintain because of the transifex github integration [#584](https://github.com/BornToBeRoot/NETworkManager/issues/584){:target="_blank"}
 -->
 
 # Version 2021.3.14.0

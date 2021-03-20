@@ -3362,15 +3362,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Help translate on transifex.
-        /// </summary>
-        public static string HelpTranslateOnTransifex {
-            get {
-                return ResourceManager.GetString("HelpTranslateOnTransifex", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Hidden applications.
         /// </summary>
         public static string HiddenApplications {
