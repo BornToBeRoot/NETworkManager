@@ -2129,9 +2129,6 @@ URL: https://api.github.com/</value>
   <data name="Official" xml:space="preserve">
     <value>Official</value>
   </data>
-  <data name="HelpTranslateOnTransifex" xml:space="preserve">
-    <value>帮助我们在Transifex上翻译</value>
-  </data>
   <data name="NetworkConnectionType" xml:space="preserve">
     <value>网络连接类型</value>
   </data>
