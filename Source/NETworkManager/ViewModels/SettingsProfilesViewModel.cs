@@ -122,7 +122,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ChangeLocationCommand => new RelayCommand(p => ChangeLocationAction());
 
-        private async void ChangeLocationAction()
+        private async Task ChangeLocationAction()
         {
             MovingFiles = true;
 
@@ -254,7 +254,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand AddProfileFileCommand => new RelayCommand(p => AddProfileFileAction());
 
-        private async void AddProfileFileAction()
+        private async Task AddProfileFileAction()
         {
             var customDialog = new CustomDialog
             {
@@ -281,7 +281,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand EditProfileFileCommand => new RelayCommand(p => EditProfileFileAction());
 
-        private async void EditProfileFileAction()
+        private async Task EditProfileFileAction()
         {
             var customDialog = new CustomDialog
             {
@@ -313,7 +313,7 @@ namespace NETworkManager.ViewModels
             return ProfileFiles.Cast<ProfileFileInfo>().Count() > 1;
         }
 
-        private async void DeleteProfileFileAction()
+        private async Task DeleteProfileFileAction()
         {
             var customDialog = new CustomDialog
             {
@@ -340,7 +340,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand EnableEncryptionCommand => new RelayCommand(p => EnableEncryptionAction());
 
-        private async void EnableEncryptionAction()
+        private async Task EnableEncryptionAction()
         {
             var settings = AppearanceManager.MetroDialog;
 
@@ -386,7 +386,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ChangeMasterPasswordCommand => new RelayCommand(p => ChangeMasterPasswordAction());
 
-        private async void ChangeMasterPasswordAction()
+        private async Task ChangeMasterPasswordAction()
         {
             var customDialog = new CustomDialog
             {
@@ -431,7 +431,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand DisableEncryptionCommand => new RelayCommand(p => DisableEncryptionAction());
 
-        private async void DisableEncryptionAction()
+        private async Task DisableEncryptionAction()
         {
             var customDialog = new CustomDialog
             {

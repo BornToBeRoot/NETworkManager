@@ -18,6 +18,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using DnsClient;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -294,7 +295,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
-        private async void ExportAction()
+        private async Task ExportAction()
         {
             var customDialog = new CustomDialog
             {

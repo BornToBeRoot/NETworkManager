@@ -581,7 +581,7 @@ namespace NETworkManager.ViewModels
         public Func<double, string> FormatterSpeed { get; set; }
         public SeriesCollection Series { get; set; }
 
-        private async void LoadNetworkInterfaces()
+        private async Task LoadNetworkInterfaces()
         {
             IsNetworkInterfaceLoading = true;
 
@@ -613,7 +613,7 @@ namespace NETworkManager.ViewModels
 
         private bool ReloadNetworkInterfaces_CanExecute(object obj) => !IsNetworkInterfaceLoading && Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        private async void ReloadNetworkInterfacesAction()
+        private async Task ReloadNetworkInterfacesAction()
         {
             IsNetworkInterfaceLoading = true;
 
@@ -636,7 +636,7 @@ namespace NETworkManager.ViewModels
 
         private bool OpenNetworkConnections_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        public async void OpenNetworkConnectionsAction()
+        public async Task OpenNetworkConnectionsAction()
         {
             try
             {
@@ -709,7 +709,7 @@ namespace NETworkManager.ViewModels
 
         private bool FlushDNS_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        private async void FlushDNSAction()
+        private async Task FlushDNSAction()
         {
             IsConfigurationRunning = true;
             IsStatusMessageDisplayed = false;
@@ -730,7 +730,7 @@ namespace NETworkManager.ViewModels
 
         private bool ReleaseRenew_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        private async void ReleaseRenewAction()
+        private async Task ReleaseRenewAction()
         {
             IsConfigurationRunning = true;
 
@@ -743,7 +743,7 @@ namespace NETworkManager.ViewModels
 
         private bool Release_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        private async void ReleaseAction()
+        private async Task ReleaseAction()
         {
             IsConfigurationRunning = true;
 
@@ -756,7 +756,7 @@ namespace NETworkManager.ViewModels
 
         private bool Renew_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        private async void RenewAction()
+        private async Task RenewAction()
         {
             IsConfigurationRunning = true;
 
@@ -769,7 +769,7 @@ namespace NETworkManager.ViewModels
 
         private bool AddIPv4Address_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        private async void AddIPv4AddressAction()
+        private async Task AddIPv4AddressAction()
         {
             var customDialog = new CustomDialog
             {
@@ -824,7 +824,7 @@ namespace NETworkManager.ViewModels
                 ConfigSecondaryDNSServer = dnsServers.Count > 1 ? dnsServers[1].ToString() : string.Empty;
             }
         }
-        public async void ApplyConfiguration()
+        public async Task ApplyConfiguration()
         {
             IsConfigurationRunning = true;
             IsStatusMessageDisplayed = false;
@@ -879,7 +879,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public async void AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
+        public async Task AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
         {
             IsConfigurationRunning = true;
             IsStatusMessageDisplayed = false;
@@ -914,7 +914,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public async void ApplyProfileConfig()
+        public async Task ApplyProfileConfig()
         {
             IsConfigurationRunning = true;
             IsStatusMessageDisplayed = false;

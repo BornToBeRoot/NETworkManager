@@ -1,7 +1,9 @@
 ﻿using ControlzEx.Theming;
 using MahApps.Metro.Controls.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media;
 
 namespace NETworkManager.Settings
@@ -12,11 +14,6 @@ namespace NETworkManager.Settings
     public static class AppearanceManager
     {
         /// <summary>
-        /// Containes the default settings for a new <see cref="BaseMetroDialog"/> 
-        /// </summary>
-        public static MetroDialogSettings MetroDialog = new MetroDialogSettings();
-        
-        /// <summary>
         /// List who contains all MahApps.Metro themes.
         /// </summary>
         public static List<ThemeColorInfo> Themes { get; set; }
@@ -25,6 +22,11 @@ namespace NETworkManager.Settings
         /// List who contains all MahApps.Metro accents.
         /// </summary>
         public static List<AccentColorInfo> Accents { get; set; }
+
+        /// <summary>
+        /// Containes the default settings for a new <see cref="BaseMetroDialog"/> 
+        /// </summary>
+        public static MetroDialogSettings MetroDialog = new MetroDialogSettings();
 
         /// <summary>
         /// Load the MahApps.Metro themes and accents when needed.
@@ -42,8 +44,16 @@ namespace NETworkManager.Settings
                 .OrderBy(x => x.Key)
                 .Select(x => new AccentColorInfo { Name = x.Key, Color = x.First().ShowcaseBrush })
                 .ToList();
-        }
 
+            MetroDialog.CustomResourceDictionary = new ResourceDictionary
+            {
+                Source = new Uri("NETworkManager;component/Resources/Styles/MetroDialogStyles.xaml", UriKind.RelativeOrAbsolute),
+            };
+
+            MetroDialog.DialogButtonFontSize = 14;
+            MetroDialog.DialogMessageFontSize = 14;
+        }
+       
         /// <summary>
         /// Change the appearance based on the user settings. This method should be called once, when starting the application.
         /// </summary>

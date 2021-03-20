@@ -13,6 +13,7 @@ using NETworkManager.Views;
 using System.Net;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -342,7 +343,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        public async void AddHost(string host)
+        public async Task AddHost(string host)
         {
             IsWorking = true;
             IsStatusMessageDisplayed = false;

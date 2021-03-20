@@ -9,6 +9,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Network;
 using NETworkManager.Views;
 using DnsClient;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -270,8 +271,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-
-        public async void AddDNSServer()
+        public async Task AddDNSServer()
         {
             var customDialog = new CustomDialog
             {
@@ -296,7 +296,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public async void EditDNSServer()
+        public async Task EditDNSServer()
         {
             var customDialog = new CustomDialog
             {
@@ -322,7 +322,7 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public async void DeleteDNSServer()
+        public async Task DeleteDNSServer()
         {
             var customDialog = new CustomDialog
             {                

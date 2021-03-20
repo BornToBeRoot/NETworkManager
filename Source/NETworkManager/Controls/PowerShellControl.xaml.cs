@@ -117,14 +117,14 @@ namespace NETworkManager.Controls
         #endregion
 
         #region Methods       
-        private async void Connect()
+        private async Task Connect()
         {
             IsConnecting = true;
 
             var info = new ProcessStartInfo
             {
                 FileName = _sessionInfo.ApplicationFilePath,
-                Arguments = Models.PowerShell.PowerShell.BuildCommandLine(_sessionInfo)
+                Arguments = PowerShell.BuildCommandLine(_sessionInfo)
             };
 
             try

@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Input;
 using NETworkManager.Models.PowerShell;
-using NETworkManager.Settings;
+using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
@@ -152,7 +152,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private async void Configure()
+        private async Task Configure()
         {
             try
             {

@@ -46,11 +46,6 @@ if(-not(Test-Path -Path "$BuildPath\NETworkManager\NETworkManager.exe"))
 # Get NETworkManager File Version
 $Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$BuildPath\NETworkManager\NETworkManager.exe").FileVersion
 
-# Cleanup WebView2Loader.dll (https://github.com/MicrosoftEdge/WebView2Feedback/issues/461)
-Remove-Item "$BuildPath\NETworkManager\arm64" -Recurse
-Remove-Item "$BuildPath\NETworkManager\x64" -Recurse
-Remove-Item "$BuildPath\NETworkManager\x86" -Recurse
-
 # Cleanup .pdb files
 Get-ChildItem -Recurse | Where-Object {$_.Name.EndsWith(".pdb")} | Remove-Item
 

@@ -35,7 +35,7 @@ SolidCompression=yes
 WizardStyle=modern
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
-WizardSmallImageFile=Images\NETworkManager_Logo_InnoSetup.bmp
+WizardSmallImageFile=Images\NETworkManager_InnoSetup.bmp
 
 [Languages]
 Name: "english";    MessagesFile: "compiler:Default.isl"

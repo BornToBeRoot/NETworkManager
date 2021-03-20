@@ -7,7 +7,6 @@ permalink: /Features
 ---
 
 # Features
-
 - [Dashboard](Documentation/Application/Dashboard)
 - [Network Interface](Documentation/Application/NetworkInterface) - Information, Bandwidth, Configure
 - [WiFi](Documentation/Application/WiFi) - Networks, Channels
