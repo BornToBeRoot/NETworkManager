@@ -2149,9 +2149,6 @@ Prova un altro servizio o usa quello predefinito...</value>
   <data name="Official" xml:space="preserve">
     <value>Ufficiale</value>
   </data>
-  <data name="HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Aiutaci nella traduzione su Transiflex</value>
-  </data>
   <data name="NetworkConnectionType" xml:space="preserve">
     <value>Tipo di connessione di rete</value>
   </data>
