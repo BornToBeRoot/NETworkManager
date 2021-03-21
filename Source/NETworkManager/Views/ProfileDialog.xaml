@@ -769,7 +769,15 @@
                                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.UseCredentials}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="4" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_UseCredentials}" />
                                     <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Username}" />
-                                    <TextBox Grid.Column="2" Grid.Row="6" x:Name="TextBoxRemoteDesktopUsername" Text="{Binding RemoteDesktop_Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding RemoteDesktop_UseCredentials}" Style="{StaticResource DefaultTextBox}" />
+                                    <TextBox Grid.Column="2" Grid.Row="6" x:Name="TextBoxRemoteDesktopUsername" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding RemoteDesktop_UseCredentials}" Style="{StaticResource DefaultTextBox}">
+                                        <TextBox.Text>
+                                            <Binding Path="RemoteDesktop_Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
                                     <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Password}" />
                                     <PasswordBox Grid.Column="2" Grid.Row="8" x:Name="PasswordBoxRemoteDesktopPassword" IsEnabled="{Binding RemoteDesktop_UseCredentials}">
                                         <PasswordBox.Style>
@@ -1574,6 +1582,26 @@
                                     <Condition Binding="{Binding RemoteDesktop_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding RemoteDesktop_InheritHost}" Value="False"/>
                                     <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopHost, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding RemoteDesktop_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding RemoteDesktop_UseCredentials}" Value="True" />
+                                    <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopUsername, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding RemoteDesktop_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding RemoteDesktop_UseCredentials}" Value="True" />
+                                    <Condition Binding="{Binding RemoteDesktop_IsPasswordEmpty}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
