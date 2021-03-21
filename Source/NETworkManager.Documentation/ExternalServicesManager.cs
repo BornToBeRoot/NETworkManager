@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NETworkManager.Localization;
 
 namespace NETworkManager.Documentation
 {

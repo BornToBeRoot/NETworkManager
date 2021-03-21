@@ -6345,6 +6345,42 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A collection of all country flags in SVG.
+        /// </summary>
+        public static string ResourceManager_Flag_Description {
+            get {
+                return ResourceManager.GetString("ResourceManager_Flag_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Top-Level-Domains from {0}, which is used to query whois servers of the TLD from {1} via port 43.
+        /// </summary>
+        public static string ResourceManager_ListTLD_Description {
+            get {
+                return ResourceManager.GetString("ResourceManager_ListTLD_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sanitized IEEE OUI Data from {0}..
+        /// </summary>
+        public static string ResourceManager_OUI_Description {
+            get {
+                return ResourceManager.GetString("ResourceManager_OUI_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Name and Transport Protocol Port Number Registry from {0}..
+        /// </summary>
+        public static string ResourceManager_ServiceNamePortNumber_Description {
+            get {
+                return ResourceManager.GetString("ResourceManager_ServiceNamePortNumber_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resources.
         /// </summary>
         public static string Resources {

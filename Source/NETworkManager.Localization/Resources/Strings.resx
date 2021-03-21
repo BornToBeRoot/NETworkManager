@@ -2976,4 +2976,16 @@ The application will be restarted afterwards!</value>
   <data name="HiddenNetwork" xml:space="preserve">
     <value>Hidden Network</value>
   </data>
+  <data name="ResourceManager_Flag_Description" xml:space="preserve">
+    <value>A collection of all country flags in SVG</value>
+  </data>
+  <data name="ResourceManager_ListTLD_Description" xml:space="preserve">
+    <value>List of Top-Level-Domains from {0}, which is used to query whois servers of the TLD from {1} via port 43</value>
+  </data>
+  <data name="ResourceManager_OUI_Description" xml:space="preserve">
+    <value>Sanitized IEEE OUI Data from {0}.</value>
+  </data>
+  <data name="ResourceManager_ServiceNamePortNumber_Description" xml:space="preserve">
+    <value>Service Name and Transport Protocol Port Number Registry from {0}.</value>
+  </data>
 </root>
