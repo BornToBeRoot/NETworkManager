@@ -17,19 +17,23 @@ Date: **xx.xx.2021**
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Archiv.zip){:target="_blank"}| `9996197F0F58A7A23F0A78DB7336D4201F98F1C6E8CCD7D02BF97095C5A6DDA8` |
 
 ## What's new?
+- Korean language added [#584](https://github.com/BornToBeRoot/NETworkManager/issues/584){:target="_blank"}
 
 ## Improvements
+- SNMP Community/Priv/Auth text boxes replaced with password boxes [#128](https://github.com/BornToBeRoot/NETworkManager/issues/128){:target="_blank"}
 
 ## Bugfixes
 - Profile dialog height fixed [#594](https://github.com/BornToBeRoot/NETworkManager/issues/594){:target="_blank"}
 - Dialog button FontSize fixed [MahApps/MahApps.Metro#594](https://github.com/MahApps/MahApps.Metro/issues/4069){:target="_blank"}
 - ContextMenu sub menu border brush fixed [#324](https://github.com/BornToBeRoot/NETworkManager/issues/324){:target="_blank"}
 - Design of some buttons fixed [#591](https://github.com/BornToBeRoot/NETworkManager/issues/591){:target="_blank"}
+- SNMP v3 priv min length removed due to a change in the lib [#128](https://github.com/BornToBeRoot/NETworkManager/issues/128){:target="_blank"}
+- More string in the about view added to the translation strings [#440](https://github.com/BornToBeRoot/NETworkManager/issues/440){:target="_blank"}
 
 ## Other
 - Code refactored / cleanup
   - async void with async task replaced [#383](https://github.com/BornToBeRoot/NETworkManager/issues/383){:target="_blank"}
-
+- Percent completed in the settings\language removed, because the statistics are broken and hard to maintain because of the transifex github integration [#584](https://github.com/BornToBeRoot/NETworkManager/issues/584){:target="_blank"}
 -->
 
 # Version 2021.3.14.0

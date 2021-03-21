@@ -2127,9 +2127,6 @@ URL: https://api.ipify.org/</value>
   <data name="Official" xml:space="preserve">
     <value>官方</value>
   </data>
-  <data name="HelpTranslateOnTransifex" xml:space="preserve">
-    <value>在 transifex 上幫助翻譯</value>
-  </data>
   <data name="NetworkConnectionType" xml:space="preserve">
     <value>網路連線類型</value>
   </data>

@@ -2176,6 +2176,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Developed and maintained by {0} with the help of the.
+        /// </summary>
+        public static string DevelopedAndMaintainedByX {
+            get {
+                return ResourceManager.GetString("DevelopedAndMaintainedByX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Device.
         /// </summary>
         public static string Device {
@@ -2950,6 +2959,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A Simple Public IP Address API.
+        /// </summary>
+        public static string ExternalService_ipify_Description {
+            get {
+                return ResourceManager.GetString("ExternalService_ipify_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to External services.
         /// </summary>
         public static string ExternalServices {
@@ -3358,15 +3376,6 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_Tags {
             get {
                 return ResourceManager.GetString("HelpMessage_Tags", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Help translate on transifex.
-        /// </summary>
-        public static string HelpTranslateOnTransifex {
-            get {
-                return ResourceManager.GetString("HelpTranslateOnTransifex", resourceCulture);
             }
         }
         
@@ -3830,11 +3839,209 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AirspacePanel fixes all Airspace issues with WPF-hosted Winforms..
+        /// </summary>
+        public static string Library_AirspaceFixer_Description {
+            get {
+                return ResourceManager.GetString("Library_AirspaceFixer_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shared Controlz for WPF and ... more.
+        /// </summary>
+        public static string Library_ControlzEx_Description {
+            get {
+                return ResourceManager.GetString("Library_ControlzEx_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C#/WinRT provides packaged WinRT projection support for the C# language..
+        /// </summary>
+        public static string Library_CsWinRT_Description {
+            get {
+                return ResourceManager.GetString("Library_CsWinRT_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups.
+        /// </summary>
+        public static string Library_DnsClientNET_Description {
+            get {
+                return ResourceManager.GetString("Library_DnsClientNET_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dragable and tearable tab control for WPF.
+        /// </summary>
+        public static string Library_Dragablz_Description {
+            get {
+                return ResourceManager.GetString("Library_Dragablz_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C# library take care of complex network, IP, IPv4, IPv6, netmask, CIDR, subnet, subnetting, supernet, and supernetting calculation for .NET developers..
+        /// </summary>
+        public static string Library_IPNetwork_Description {
+            get {
+                return ResourceManager.GetString("Library_IPNetwork_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Simple, flexible, interactive &amp; powerful charts, maps and gauges for .Net.
+        /// </summary>
+        public static string Library_LiveCharts_Description {
+            get {
+                return ResourceManager.GetString("Library_LiveCharts_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A collection of loading indicators for WPF.
+        /// </summary>
+        public static string Library_LoadingIndicatorsWPF_Description {
+            get {
+                return ResourceManager.GetString("Library_LoadingIndicatorsWPF_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A toolkit for creating Metro / Modern UI styled WPF apps..
+        /// </summary>
+        public static string Library_MahAppsMetro_Description {
+            get {
+                return ResourceManager.GetString("Library_MahAppsMetro_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some awesome icons for WPF and UWP all together....
+        /// </summary>
+        public static string Library_MahAppsMetroIconPacks_Description {
+            get {
+                return ResourceManager.GetString("Library_MahAppsMetroIconPacks_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Json.NET is a popular high-performance JSON framework for .NET.
+        /// </summary>
+        public static string Library_NewtonsoftJson_Description {
+            get {
+                return ResourceManager.GetString("Library_NewtonsoftJson_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A GitHub API client library for .NET.
+        /// </summary>
+        public static string Library_Octokit_Description {
+            get {
+                return ResourceManager.GetString("Library_Octokit_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Runtime for hosting PowerShell.
+        /// </summary>
+        public static string Library_PowerShellSDK_Description {
+            get {
+                return ResourceManager.GetString("Library_PowerShellSDK_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Capture and parse CDP and LLDP packets on local or remote computers.
+        /// </summary>
+        public static string Library_PSDicoveryProtocol_Description {
+            get {
+                return ResourceManager.GetString("Library_PSDicoveryProtocol_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sharp SNMP Library - Open Source SNMP for .NET and Mono.
+        /// </summary>
+        public static string Library_SharpSNMP_Description {
+            get {
+                return ResourceManager.GetString("Library_SharpSNMP_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The WebView2 control enables you to embed web technologies (HTML, CSS, and JavaScript) in your native applications powered by Microsoft Edge (Chromium)..
+        /// </summary>
+        public static string Library_WebView2_Description {
+            get {
+                return ResourceManager.GetString("Library_WebView2_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Easily add interactivity to your apps using XAML Behaviors for WPF..
+        /// </summary>
+        public static string Library_XamlBehaviorsWpf_Description {
+            get {
+                return ResourceManager.GetString("Library_XamlBehaviorsWpf_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to License.
         /// </summary>
         public static string License {
             get {
                 return ResourceManager.GetString("License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apache License 2.0.
+        /// </summary>
+        public static string License_ApacheLicense2dot0 {
+            get {
+                return ResourceManager.GetString("License_ApacheLicense2dot0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BSD-2-Clause.
+        /// </summary>
+        public static string License_BDS2Clause {
+            get {
+                return ResourceManager.GetString("License_BDS2Clause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft WebView2 License.
+        /// </summary>
+        public static string License_MicrosoftWebView2License {
+            get {
+                return ResourceManager.GetString("License_MicrosoftWebView2License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MIT License.
+        /// </summary>
+        public static string License_MITLicense {
+            get {
+                return ResourceManager.GetString("License_MITLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlicense.
+        /// </summary>
+        public static string License_Unlicense {
+            get {
+                return ResourceManager.GetString("License_Unlicense", resourceCulture);
             }
         }
         
@@ -6350,6 +6557,42 @@ namespace NETworkManager.Localization.Resources {
         public static string ResolvePTR {
             get {
                 return ResourceManager.GetString("ResolvePTR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A collection of all country flags in SVG.
+        /// </summary>
+        public static string Resource_Flag_Description {
+            get {
+                return ResourceManager.GetString("Resource_Flag_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of Top-Level-Domains from iana.org, which is used to query whois servers of the TLD from whois.iana.org via port 43.
+        /// </summary>
+        public static string Resource_ListTLD_Description {
+            get {
+                return ResourceManager.GetString("Resource_ListTLD_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sanitized IEEE OUI Data from linuxnet.ca..
+        /// </summary>
+        public static string Resource_OUI_Description {
+            get {
+                return ResourceManager.GetString("Resource_OUI_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Name and Transport Protocol Port Number Registry from iana.org..
+        /// </summary>
+        public static string Resource_ServiceNamePortNumber_Description {
+            get {
+                return ResourceManager.GetString("Resource_ServiceNamePortNumber_Description", resourceCulture);
             }
         }
         
