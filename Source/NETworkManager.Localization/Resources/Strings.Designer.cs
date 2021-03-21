@@ -3974,6 +3974,42 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apache License 2.0.
+        /// </summary>
+        public static string License_ApacheLicense2dot0 {
+            get {
+                return ResourceManager.GetString("License_ApacheLicense2dot0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BSD-2-Clause.
+        /// </summary>
+        public static string License_BDS2Clause {
+            get {
+                return ResourceManager.GetString("License_BDS2Clause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MIT License.
+        /// </summary>
+        public static string License_MITLicense {
+            get {
+                return ResourceManager.GetString("License_MITLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlicense.
+        /// </summary>
+        public static string License_Unlicense {
+            get {
+                return ResourceManager.GetString("License_Unlicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lime.
         /// </summary>
         public static string Lime {
@@ -6498,7 +6534,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List of Top-Level-Domains from {0}, which is used to query whois servers of the TLD from {1} via port 43.
+        ///   Looks up a localized string similar to List of Top-Level-Domains from iana.org, which is used to query whois servers of the TLD from whois.iana.org via port 43.
         /// </summary>
         public static string Resource_ListTLD_Description {
             get {
@@ -6507,7 +6543,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sanitized IEEE OUI Data from {0}..
+        ///   Looks up a localized string similar to Sanitized IEEE OUI Data from linuxnet.ca..
         /// </summary>
         public static string Resource_OUI_Description {
             get {
@@ -6516,7 +6552,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Service Name and Transport Protocol Port Number Registry from {0}..
+        ///   Looks up a localized string similar to Service Name and Transport Protocol Port Number Registry from iana.org..
         /// </summary>
         public static string Resource_ServiceNamePortNumber_Description {
             get {

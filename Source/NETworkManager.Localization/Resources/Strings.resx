@@ -3028,12 +3028,24 @@ The application will be restarted afterwards!</value>
     <value>A collection of all country flags in SVG</value>
   </data>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
-    <value>List of Top-Level-Domains from {0}, which is used to query whois servers of the TLD from {1} via port 43</value>
+    <value>List of Top-Level-Domains from iana.org, which is used to query whois servers of the TLD from whois.iana.org via port 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Sanitized IEEE OUI Data from {0}.</value>
+    <value>Sanitized IEEE OUI Data from linuxnet.ca.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
-    <value>Service Name and Transport Protocol Port Number Registry from {0}.</value>
+    <value>Service Name and Transport Protocol Port Number Registry from iana.org.</value>
+  </data>
+  <data name="License_ApacheLicense2dot0" xml:space="preserve">
+    <value>Apache License 2.0</value>
+  </data>
+  <data name="License_BDS2Clause" xml:space="preserve">
+    <value>BSD-2-Clause</value>
+  </data>
+  <data name="License_MITLicense" xml:space="preserve">
+    <value>MIT License</value>
+  </data>
+  <data name="License_Unlicense" xml:space="preserve">
+    <value>Unlicense</value>
   </data>
 </root>
