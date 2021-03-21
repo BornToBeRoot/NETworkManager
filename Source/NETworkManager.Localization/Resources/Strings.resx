@@ -2976,16 +2976,61 @@ The application will be restarted afterwards!</value>
   <data name="HiddenNetwork" xml:space="preserve">
     <value>Hidden Network</value>
   </data>
-  <data name="ResourceManager_Flag_Description" xml:space="preserve">
+  <data name="Library_AirspaceFixer_Description" xml:space="preserve">
+    <value>AirspacePanel fixes all Airspace issues with WPF-hosted Winforms.</value>
+  </data>
+  <data name="Library_ControlzEx_Description" xml:space="preserve">
+    <value>Shared Controlz for WPF and ... more</value>
+  </data>
+  <data name="Library_DnsClientNET_Description" xml:space="preserve">
+    <value>DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups</value>
+  </data>
+  <data name="Library_Dragablz_Description" xml:space="preserve">
+    <value>Dragable and tearable tab control for WPF</value>
+  </data>
+  <data name="Library_IPNetwork_Description" xml:space="preserve">
+    <value>C# library take care of complex network, IP, IPv4, IPv6, netmask, CIDR, subnet, subnetting, supernet, and supernetting calculation for .NET developers.</value>
+  </data>
+  <data name="Library_LiveChartsWPF_Description" xml:space="preserve">
+    <value>Simple, flexible, interactive &amp; powerful charts, maps and gauges for .Net</value>
+  </data>
+  <data name="Library_LiveCharts_Description" xml:space="preserve">
+    <value>Simple, flexible, interactive &amp; powerful charts, maps and gauges for .Net</value>
+  </data>
+  <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
+    <value>A collection of loading indicators for WPF</value>
+  </data>
+  <data name="Library_MahAppsMetroIconPacks_Description" xml:space="preserve">
+    <value>Some awesome icons for WPF and UWP all together...</value>
+  </data>
+  <data name="Library_MahAppsMetro_Description" xml:space="preserve">
+    <value>A toolkit for creating Metro / Modern UI styled WPF apps.</value>
+  </data>
+  <data name="Library_NewtonsoftJson_Description" xml:space="preserve">
+    <value>Json.NET is a popular high-performance JSON framework for .NET</value>
+  </data>
+  <data name="Library_Octokit_Description" xml:space="preserve">
+    <value>A GitHub API client library for .NET</value>
+  </data>
+  <data name="Library_PSDicoveryProtocol_Description" xml:space="preserve">
+    <value>Capture and parse CDP and LLDP packets on local or remote computers</value>
+  </data>
+  <data name="Library_SharpSNMP_Description" xml:space="preserve">
+    <value>Sharp SNMP Library - Open Source SNMP for .NET and Mono</value>
+  </data>
+  <data name="Resource_Flag_Description" xml:space="preserve">
     <value>A collection of all country flags in SVG</value>
   </data>
-  <data name="ResourceManager_ListTLD_Description" xml:space="preserve">
+  <data name="Resource_ListTLD_Description" xml:space="preserve">
     <value>List of Top-Level-Domains from {0}, which is used to query whois servers of the TLD from {1} via port 43</value>
   </data>
-  <data name="ResourceManager_OUI_Description" xml:space="preserve">
+  <data name="Resource_OUI_Description" xml:space="preserve">
     <value>Sanitized IEEE OUI Data from {0}.</value>
   </data>
-  <data name="ResourceManager_ServiceNamePortNumber_Description" xml:space="preserve">
+  <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Service Name and Transport Protocol Port Number Registry from {0}.</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
   </data>
 </root>
