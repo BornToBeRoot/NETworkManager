@@ -28,6 +28,7 @@ Date: **xx.xx.2021**
 - ContextMenu sub menu border brush fixed [#324](https://github.com/BornToBeRoot/NETworkManager/issues/324){:target="_blank"}
 - Design of some buttons fixed [#591](https://github.com/BornToBeRoot/NETworkManager/issues/591){:target="_blank"}
 - SNMP v3 priv min length removed due to a change in the lib [#128](https://github.com/BornToBeRoot/NETworkManager/issues/128){:target="_blank"}
+- More string in the about view added to the translation strings [#440](https://github.com/BornToBeRoot/NETworkManager/issues/440){:target="_blank"}
 
 ## Other
 - Code refactored / cleanup

@@ -46,8 +46,8 @@
                         </TextBlock.InputBindings>
                     </TextBlock>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
-                        <TextBlock Text="Developed and maintained by BornToBeRoot with the help of the " Style="{StaticResource DefaultTextBlock}" />
-                        <TextBlock Text="Community" Style="{StaticResource LinkTextBlock}">
+                        <TextBlock Text="{Binding DevelopedByText}" Style="{StaticResource DefaultTextBlock}" />
+                        <TextBlock Text="{x:Static localization:Strings.Community}" Style="{StaticResource LinkTextBlock}">
                             <TextBlock.InputBindings>
                                 <MouseBinding Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_Contributors}" MouseAction="LeftClick" />
                             </TextBlock.InputBindings>
