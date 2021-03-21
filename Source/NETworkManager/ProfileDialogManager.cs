@@ -2,6 +2,7 @@
 using NETworkManager.Profiles;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
+using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -203,8 +204,8 @@ namespace NETworkManager
                 RemoteDesktop_InheritHost = instance.RemoteDesktop_InheritHost,
                 RemoteDesktop_Host = instance.RemoteDesktop_InheritHost ? instance.Host?.Trim() : instance.RemoteDesktop_Host?.Trim(),
                 RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,
-                RemoteDesktop_Username = instance.RemoteDesktop_Username,
-                RemoteDesktop_Password = instance.RemoteDesktop_Password,
+                RemoteDesktop_Username = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Username : string.Empty, // Remove sensitive info on disable
+                RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Password : new SecureString(), // Remove sensitive info on disable
                 RemoteDesktop_OverrideDisplay = instance.RemoteDesktop_OverrideDisplay,
                 RemoteDesktop_AdjustScreenAutomatically = instance.RemoteDesktop_AdjustScreenAutomatically,
                 RemoteDesktop_UseCurrentViewSize = instance.RemoteDesktop_UseCurrentViewSize,

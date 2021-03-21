@@ -588,6 +588,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _remoteDesktop_IsPasswordEmpty = true; // Initial it's empty
+        public bool RemoteDesktop_IsPasswordEmpty
+        {
+            get => _remoteDesktop_IsPasswordEmpty;
+            set
+            {
+                if (value == _remoteDesktop_IsPasswordEmpty)
+                    return;
+
+                _remoteDesktop_IsPasswordEmpty = value;
+                OnPropertyChanged();
+            }
+        }
+
         private SecureString _remoteDesktop_Password;
 
         /// <summary>
@@ -601,7 +615,27 @@ namespace NETworkManager.ViewModels
                 if (value == _remoteDesktop_Password)
                     return;
 
+                // Validate the password string
+                if (value == null)
+                    RemoteDesktop_IsPasswordEmpty = true;
+                else
+                    RemoteDesktop_IsPasswordEmpty = string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+
                 _remoteDesktop_Password = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_PasswordChanged;
+        public bool RemoteDesktop_PasswordChanged
+        {
+            get => _remoteDesktop_PasswordChanged;
+            set
+            {
+                if (value == _remoteDesktop_PasswordChanged)
+                    return;
+
+                _remoteDesktop_PasswordChanged = value;
                 OnPropertyChanged();
             }
         }
@@ -2281,6 +2315,12 @@ namespace NETworkManager.ViewModels
             }
 
             IsResolveHostnameRunning = false;
+        }
+
+        public ICommand RemoteDesktopPasswordChangedCommand => new RelayCommand(p => RemoteDesktopPasswordChangedAction());
+        private void RemoteDesktopPasswordChangedAction()
+        {
+            RemoteDesktop_PasswordChanged = true;
         }
         #endregion
 

@@ -766,19 +766,33 @@
                                             </Style>
                                         </TextBox.Style>
                                     </TextBox>
-
-                                    
                                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.UseCredentials}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="4" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_UseCredentials}" />
-
-
                                     <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Username}" />
                                     <TextBox Grid.Column="2" Grid.Row="6" x:Name="TextBoxRemoteDesktopUsername" Text="{Binding RemoteDesktop_Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding RemoteDesktop_UseCredentials}" Style="{StaticResource DefaultTextBox}" />
                                     <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Password}" />
-                                    <PasswordBox Grid.Column="2" Grid.Row="8" x:Name="PasswordBoxRemoteDesktopPassword" IsEnabled="{Binding RemoteDesktop_UseCredentials}" Style="{StaticResource DefaultPasswordBox}" >
+                                    <PasswordBox Grid.Column="2" Grid.Row="8" x:Name="PasswordBoxRemoteDesktopPassword" IsEnabled="{Binding RemoteDesktop_UseCredentials}">
+                                        <PasswordBox.Style>
+                                            <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
+                                                <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:Strings.NotChanged}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RemoteDesktop_PasswordChanged}" Value="true">
+                                                        <Setter Property="mah:TextBoxHelper.Watermark" Value="" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding RemoteDesktop_IsPasswordEmpty}" Value="true">
+                                                        <Setter Property="mah:TextBoxHelper.Watermark" Value="" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </PasswordBox.Style>                                        
                                         <interactivity:Interaction.Behaviors>
                                             <wpfHelpers:PasswordBoxBindingBehavior Password="{Binding RemoteDesktop_Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         </interactivity:Interaction.Behaviors>
+                                        <interactivity:Interaction.Triggers>
+                                            <interactivity:EventTrigger EventName="PasswordChanged">
+                                                <interactivity:InvokeCommandAction Command="{Binding RemoteDesktopPasswordChangedCommand}" />
+                                            </interactivity:EventTrigger>
+                                        </interactivity:Interaction.Triggers>
                                     </PasswordBox>                                  
                                     <TextBlock Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
                                     <Separator Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
