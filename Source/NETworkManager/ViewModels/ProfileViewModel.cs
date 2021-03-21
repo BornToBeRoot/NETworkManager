@@ -20,6 +20,9 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly bool _isLoading;
+
+        public bool IsProfileFileEncrypted => ProfileManager.LoadedProfileFile.IsEncrypted;
+
         public ICollectionView ProfileViews { get; }
 
         #region General

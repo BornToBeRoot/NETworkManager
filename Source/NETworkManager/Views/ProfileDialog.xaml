@@ -793,7 +793,12 @@
                                                 <interactivity:InvokeCommandAction Command="{Binding RemoteDesktopPasswordChangedCommand}" />
                                             </interactivity:EventTrigger>
                                         </interactivity:Interaction.Triggers>
-                                    </PasswordBox>                                  
+                                    </PasswordBox>
+                                    <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="8" ToolTip="{x:Static localization:Strings.WarningMessage_ProfileFileNotEncryptedStoringPasswords}" Visibility="{Binding IsProfileFileEncrypted, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource WarnImageRectangle}" Margin="10,0,0,0">
+                                        <Rectangle.Resources>
+                                            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                        </Rectangle.Resources>
+                                    </Rectangle>                                   
                                     <TextBlock Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
                                     <Separator Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
                                     <CheckBox Grid.Column="0" Grid.Row="14" VerticalAlignment="Top" Content="{x:Static localization:Strings.Display}" IsChecked="{Binding RemoteDesktop_OverrideDisplay}" Style="{StaticResource DefaultCheckBox}" />
