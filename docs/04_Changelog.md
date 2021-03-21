@@ -21,6 +21,7 @@ Date: **xx.xx.2021**
 
 ## Improvements
 - SNMP Community/Priv/Auth text boxes replaced with password boxes [#128](https://github.com/BornToBeRoot/NETworkManager/issues/128){:target="_blank"}
+- Min window size set to 1280x798 to display profile dialog correct [#378](https://github.com/BornToBeRoot/NETworkManager/issues/378){:target="_blank"} 
 
 ## Bugfixes
 - Profile dialog height fixed [#594](https://github.com/BornToBeRoot/NETworkManager/issues/594){:target="_blank"}
