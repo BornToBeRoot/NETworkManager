@@ -20,12 +20,14 @@ Date: **xx.xx.2021**
 - Korean language added [#584](https://github.com/BornToBeRoot/NETworkManager/issues/584){:target="_blank"}
 
 ## Improvements
+- SNMP Community/Priv/Auth text boxes replaced with password boxes [#128](https://github.com/BornToBeRoot/NETworkManager/issues/128){:target="_blank"}
 
 ## Bugfixes
 - Profile dialog height fixed [#594](https://github.com/BornToBeRoot/NETworkManager/issues/594){:target="_blank"}
 - Dialog button FontSize fixed [MahApps/MahApps.Metro#594](https://github.com/MahApps/MahApps.Metro/issues/4069){:target="_blank"}
 - ContextMenu sub menu border brush fixed [#324](https://github.com/BornToBeRoot/NETworkManager/issues/324){:target="_blank"}
 - Design of some buttons fixed [#591](https://github.com/BornToBeRoot/NETworkManager/issues/591){:target="_blank"}
+- SNMP v3 priv min length removed due to a change in the lib [#128](https://github.com/BornToBeRoot/NETworkManager/issues/128){:target="_blank"}
 
 ## Other
 - Code refactored / cleanup

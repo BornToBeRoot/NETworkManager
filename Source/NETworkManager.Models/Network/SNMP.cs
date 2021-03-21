@@ -1,9 +1,11 @@
 ﻿using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
+using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Security;
 using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network
@@ -53,13 +55,13 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
-        public void GetV1V2CAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid)
+        public void GetV1V2CAsync(SNMPVersion version, IPAddress ipAddress, SecureString community, string oid)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    foreach (var result in Messenger.Get(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, Port), new OctetString(community), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, Timeout))
+                    foreach (var result in Messenger.Get(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, Port), new OctetString(SecureStringHelper.ConvertToString(community)), new List<Variable> { new Variable(new ObjectIdentifier(oid)) }, Timeout))
                         OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
 
                     OnComplete();
@@ -75,7 +77,7 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void WalkV1V2CAsync(SNMPVersion version, IPAddress ipAddress, string community, string oid, WalkMode walkMode)
+        public void WalkV1V2CAsync(SNMPVersion version, IPAddress ipAddress, SecureString community, string oid, WalkMode walkMode)
         {
             Task.Run(() =>
             {
@@ -83,7 +85,7 @@ namespace NETworkManager.Models.Network
                 {
                     IList<Variable> results = new List<Variable>();
 
-                    Messenger.Walk(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, Port), new OctetString(community), new ObjectIdentifier(oid), results, Timeout, walkMode);
+                    Messenger.Walk(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, Port), new OctetString(SecureStringHelper.ConvertToString(community)), new ObjectIdentifier(oid), results, Timeout, walkMode);
 
                     foreach (var result in results)
                         OnReceived(new SNMPReceivedArgs(result.Id, result.Data));
@@ -101,13 +103,13 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void SetV1V2CAsync(SNMPVersion version, IPAddress ipAddress, string communtiy, string oid, string data)
+        public void SetV1V2CAsync(SNMPVersion version, IPAddress ipAddress, SecureString communtiy, string oid, string data)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    Messenger.Set(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, Port), new OctetString(communtiy), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, Timeout);
+                    Messenger.Set(version == SNMPVersion.V1 ? VersionCode.V1 : VersionCode.V2, new IPEndPoint(ipAddress, Port), new OctetString(SecureStringHelper.ConvertToString(communtiy)), new List<Variable> { new Variable(new ObjectIdentifier(oid), new OctetString(data)) }, Timeout);
 
                     OnComplete();
                 }
@@ -122,7 +124,7 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void Getv3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv)
+        public void Getv3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, SecureString auth, SNMPV3PrivacyProvider privProvider, SecureString priv)
         {
             Task.Run(() =>
             {
@@ -139,11 +141,11 @@ namespace NETworkManager.Models.Network
                     switch (security)
                     {
                         case SNMPV3Security.AuthPriv:
-                            privacy = GetPrivacy(authProvider, auth, privProvider, priv);
+                            privacy = GetPrivacy(authProvider, SecureStringHelper.ConvertToString(auth), privProvider, SecureStringHelper.ConvertToString(priv));
                             break;
                         // noAuthNoPriv
                         case SNMPV3Security.AuthNoPriv:
-                            privacy = GetPrivacy(authProvider, auth);
+                            privacy = GetPrivacy(authProvider, SecureStringHelper.ConvertToString(auth));
                             break;
                         default:
                             privacy = GetPrivacy();
@@ -170,7 +172,7 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void WalkV3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv, WalkMode walkMode)
+        public void WalkV3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, SecureString auth, SNMPV3PrivacyProvider privProvider, SecureString priv, WalkMode walkMode)
         {
             Task.Run(() =>
             {
@@ -187,11 +189,11 @@ namespace NETworkManager.Models.Network
                     switch (security)
                     {
                         case SNMPV3Security.AuthPriv:
-                            privacy = GetPrivacy(authProvider, auth, privProvider, priv);
+                            privacy = GetPrivacy(authProvider, SecureStringHelper.ConvertToString(auth), privProvider, SecureStringHelper.ConvertToString(priv));
                             break;
                         // noAuthNoPriv
                         case SNMPV3Security.AuthNoPriv:
-                            privacy = GetPrivacy(authProvider, auth);
+                            privacy = GetPrivacy(authProvider, SecureStringHelper.ConvertToString(auth));
                             break;
                         default:
                             privacy = GetPrivacy();
@@ -218,7 +220,7 @@ namespace NETworkManager.Models.Network
             });
         }
 
-        public void SetV3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, string auth, SNMPV3PrivacyProvider privProvider, string priv, string data)
+        public void SetV3Async(IPAddress ipAddress, string oid, SNMPV3Security security, string username, SNMPV3AuthenticationProvider authProvider, SecureString auth, SNMPV3PrivacyProvider privProvider, SecureString priv, string data)
         {
             Task.Run(() =>
             {
@@ -235,11 +237,11 @@ namespace NETworkManager.Models.Network
                     switch (security)
                     {
                         case SNMPV3Security.AuthPriv:
-                            privacy = GetPrivacy(authProvider, auth, privProvider, priv);
+                            privacy = GetPrivacy(authProvider, SecureStringHelper.ConvertToString(auth), privProvider, SecureStringHelper.ConvertToString(priv));
                             break;
                         // noAuthNoPriv
                         case SNMPV3Security.AuthNoPriv:
-                            privacy = GetPrivacy(authProvider, auth);
+                            privacy = GetPrivacy(authProvider, SecureStringHelper.ConvertToString(auth));
                             break;
                         default:
                             privacy = GetPrivacy();

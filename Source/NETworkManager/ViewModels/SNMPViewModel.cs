@@ -6,10 +6,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -21,6 +19,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
+using System.Security;
 
 namespace NETworkManager.ViewModels
 {
@@ -122,14 +121,34 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _community;
-        public string Community
+        private bool _isCommunityEmpty = true; // Initial it's empty
+        public bool IsCommunityEmpty
+        {
+            get => _isCommunityEmpty;
+            set
+            {
+                if (value == _isCommunityEmpty)
+                    return;
+
+                _isCommunityEmpty = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private SecureString _community;
+        public SecureString Community
         {
             get => _community;
             set
             {
                 if (value == _community)
                     return;
+
+                // Validate the community string
+                if (value == null)
+                    IsCommunityEmpty = true;
+                else
+                    IsCommunityEmpty = string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
                 _community = value;
                 OnPropertyChanged();
@@ -169,14 +188,34 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _auth;
-        public string Auth
+        private bool _isAuthEmpty = true; // Initial it's empty
+        public bool IsAuthEmpty
+        {
+            get => _isAuthEmpty;
+            set
+            {
+                if (value == _isAuthEmpty)
+                    return;
+
+                _isAuthEmpty = value;
+                OnPropertyChanged();
+            }
+        }
+    
+        private SecureString _auth;
+        public SecureString Auth
         {
             get => _auth;
             set
             {
                 if (value == _auth)
                     return;
+
+                // Validate the auth string
+                if (value == null)
+                    IsAuthEmpty = true;
+                else
+                    IsAuthEmpty = string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
                 _auth = value;
                 OnPropertyChanged();
@@ -202,14 +241,34 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _priv;
-        public string Priv
+        private bool _isPrivEmpty = true; // Initial it's empty
+        public bool IsPrivEmpty
+        {
+            get => _isPrivEmpty;
+            set
+            {
+                if (value == _isPrivEmpty)
+                    return;
+
+                _isPrivEmpty = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private SecureString _priv;
+        public SecureString Priv
         {
             get => _priv;
             set
             {
                 if (value == _priv)
                     return;
+
+                // Validate the auth string
+                if (value == null)
+                    IsPrivEmpty = true;
+                else
+                    IsPrivEmpty = string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
                 _priv = value;
                 OnPropertyChanged();
@@ -323,7 +382,7 @@ namespace NETworkManager.ViewModels
             _isLoading = true;
 
             _dialogCoordinator = instance;
-            
+
             TabId = tabId;
             Host = host;
 
@@ -454,7 +513,7 @@ namespace NETworkManager.ViewModels
             }
 
             if (ipAddress == null)
-            {                
+            {
                 Finished();
 
                 StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host);
@@ -548,7 +607,7 @@ namespace NETworkManager.ViewModels
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 //lock (QueryResults)
-                    QueryResults.Add(snmpReceivedInfo);
+                QueryResults.Add(snmpReceivedInfo);
             }));
         }
 
