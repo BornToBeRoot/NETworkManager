@@ -15,6 +15,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         public string Version => $"{Strings.Version} {AssemblyManager.Current.Version}";
+        public string DevelopedByText => string.Format(Strings.DevelopedAndMaintainedByX + " ", Properties.Resources.NETworkManager_GitHub_User);
 
         private bool _isUpdateCheckRunning;
         public bool IsUpdateCheckRunning

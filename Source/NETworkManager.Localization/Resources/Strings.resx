@@ -2976,6 +2976,12 @@ The application will be restarted afterwards!</value>
   <data name="HiddenNetwork" xml:space="preserve">
     <value>Hidden Network</value>
   </data>
+  <data name="DevelopedAndMaintainedByX" xml:space="preserve">
+    <value>Developed and maintained by {0} with the help of the</value>
+  </data>
+  <data name="ExternalService_ipify_Description" xml:space="preserve">
+    <value>A Simple Public IP Address API</value>
+  </data>
   <data name="Library_AirspaceFixer_Description" xml:space="preserve">
     <value>AirspacePanel fixes all Airspace issues with WPF-hosted Winforms.</value>
   </data>
@@ -3029,8 +3035,5 @@ The application will be restarted afterwards!</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Service Name and Transport Protocol Port Number Registry from {0}.</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value />
   </data>
 </root>

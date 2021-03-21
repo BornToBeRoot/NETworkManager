@@ -2176,6 +2176,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Developed and maintained by {0} with the help of the.
+        /// </summary>
+        public static string DevelopedAndMaintainedByX {
+            get {
+                return ResourceManager.GetString("DevelopedAndMaintainedByX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Device.
         /// </summary>
         public static string Device {
@@ -2950,7 +2959,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to A Simple Public IP Address API.
         /// </summary>
         public static string ExternalService_ipify_Description {
             get {
