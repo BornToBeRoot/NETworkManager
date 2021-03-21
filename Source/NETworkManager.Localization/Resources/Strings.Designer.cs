@@ -2950,6 +2950,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ExternalService_ipify_Description {
+            get {
+                return ResourceManager.GetString("ExternalService_ipify_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to External services.
         /// </summary>
         public static string ExternalServices {
@@ -7512,15 +7521,6 @@ namespace NETworkManager.Localization.Resources {
         public static string Steel {
             get {
                 return ResourceManager.GetString("Steel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
