@@ -560,6 +560,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _remoteDesktop_UseCredentials;
+        public bool RemoteDesktop_UseCredentials
+        {
+            get => _remoteDesktop_UseCredentials;
+            set
+            {
+                if (value == _remoteDesktop_UseCredentials)
+                    return;
+
+                _remoteDesktop_UseCredentials = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _remoteDesktop_Username;
         public string RemoteDesktop_Username
         {
@@ -2108,6 +2122,7 @@ namespace NETworkManager.ViewModels
             RemoteDesktop_Enabled = profileInfo.RemoteDesktop_Enabled;
             RemoteDesktop_InheritHost = profileInfo.RemoteDesktop_InheritHost;
             RemoteDesktop_Host = profileInfo.RemoteDesktop_Host;
+            RemoteDesktop_UseCredentials = profileInfo.RemoteDesktop_UseCredentials;
             RemoteDesktop_Username = profileInfo.RemoteDesktop_Username;
             RemoteDesktop_Password = profileInfo.RemoteDesktop_Password;
             RemoteDesktop_OverrideDisplay = profileInfo.RemoteDesktop_OverrideDisplay;

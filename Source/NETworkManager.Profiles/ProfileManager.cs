@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -463,7 +462,7 @@ namespace NETworkManager.Profiles
         #endregion
 
         #region Serialize
-               private static void SerializeToFile(string filePath, List<ProfileInfo> profiles)
+        private static void SerializeToFile(string filePath, List<ProfileInfo> profiles)
         {
             List<ProfileInfoSerializable> profilesSerializable = new List<ProfileInfoSerializable>();
 
@@ -479,7 +478,7 @@ namespace NETworkManager.Profiles
                     RemoteDesktop_Password = password
                 });
             }
-                        
+
             var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfoSerializable>));
 
             using var fileStream = new FileStream(filePath, FileMode.Create);

@@ -10,6 +10,7 @@ namespace NETworkManager.Profiles
     /// <summary>
     /// Class represents a profile.
     /// </summary>
+    [XmlType("ProfileInfoLegacy")] // XML --> Deprecated because of #378   
     public class ProfileInfo
     {
         /// <summary>
@@ -66,9 +67,11 @@ namespace NETworkManager.Profiles
         public bool RemoteDesktop_InheritHost { get; set; } = true;
         public string RemoteDesktop_Host { get; set; }
 
+        public bool RemoteDesktop_UseCredentials { get; set; }
+
         public string RemoteDesktop_Username { get; set; }
 
-        [XmlIgnoreAttribute]
+        [XmlIgnore]
         public SecureString RemoteDesktop_Password { get; set; }
         public bool RemoteDesktop_OverrideDisplay { get; set; }
         public bool RemoteDesktop_AdjustScreenAutomatically { get; set; }
@@ -226,6 +229,7 @@ namespace NETworkManager.Profiles
             RemoteDesktop_Enabled = profile.RemoteDesktop_Enabled;
             RemoteDesktop_InheritHost = profile.RemoteDesktop_InheritHost;
             RemoteDesktop_Host = profile.RemoteDesktop_Host;
+            RemoteDesktop_UseCredentials = profile.RemoteDesktop_UseCredentials;
             RemoteDesktop_Username = profile.RemoteDesktop_Username;
             RemoteDesktop_Password = profile.RemoteDesktop_Password;
             RemoteDesktop_OverrideDisplay = profile.RemoteDesktop_OverrideDisplay;

@@ -769,13 +769,13 @@
 
                                     
                                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.UseCredentials}" />
-                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="4" OffContent="" OnContent="" IsOn="{Binding UseCredentials}" />
+                                    <mah:ToggleSwitch Grid.Column="2" Grid.Row="4" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_UseCredentials}" />
 
 
                                     <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Username}" />
-                                    <TextBox Grid.Column="2" Grid.Row="6" x:Name="TextBoxRemoteDesktopUsername" Text="{Binding RemoteDesktop_Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" Style="{StaticResource DefaultTextBox}" />
+                                    <TextBox Grid.Column="2" Grid.Row="6" x:Name="TextBoxRemoteDesktopUsername" Text="{Binding RemoteDesktop_Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding RemoteDesktop_UseCredentials}" Style="{StaticResource DefaultTextBox}" />
                                     <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Password}" />
-                                    <PasswordBox Grid.Column="2" Grid.Row="8" x:Name="PasswordBoxRemoteDesktopPassword" Style="{StaticResource DefaultPasswordBox}" >
+                                    <PasswordBox Grid.Column="2" Grid.Row="8" x:Name="PasswordBoxRemoteDesktopPassword" IsEnabled="{Binding RemoteDesktop_UseCredentials}" Style="{StaticResource DefaultPasswordBox}" >
                                         <interactivity:Interaction.Behaviors>
                                             <wpfHelpers:PasswordBoxBindingBehavior Password="{Binding RemoteDesktop_Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         </interactivity:Interaction.Behaviors>

@@ -1,8 +1,14 @@
-﻿namespace NETworkManager.Profiles
+﻿using System.Xml.Serialization;
+
+namespace NETworkManager.Profiles
 {
+    [XmlType("ProfileInfo")] // XML --> Has to mapped because of #378   
     public class ProfileInfoSerializable : ProfileInfo
     {
-        public string RemoteDesktop_Password { get; set; }
+        /// <summary>
+        /// Override the default remote desktop password to make it serializable.
+        /// </summary>
+        public new string RemoteDesktop_Password { get; set; }
 
         public ProfileInfoSerializable()
         {
