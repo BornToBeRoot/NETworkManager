@@ -2997,9 +2997,6 @@ The application will be restarted afterwards!</value>
   <data name="Library_IPNetwork_Description" xml:space="preserve">
     <value>C# library take care of complex network, IP, IPv4, IPv6, netmask, CIDR, subnet, subnetting, supernet, and supernetting calculation for .NET developers.</value>
   </data>
-  <data name="Library_LiveChartsWPF_Description" xml:space="preserve">
-    <value>Simple, flexible, interactive &amp; powerful charts, maps and gauges for .Net</value>
-  </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
     <value>Simple, flexible, interactive &amp; powerful charts, maps and gauges for .Net</value>
   </data>
@@ -3047,5 +3044,20 @@ The application will be restarted afterwards!</value>
   </data>
   <data name="License_Unlicense" xml:space="preserve">
     <value>Unlicense</value>
+  </data>
+  <data name="Library_CsWinRT_Description" xml:space="preserve">
+    <value>C#/WinRT provides packaged WinRT projection support for the C# language.</value>
+  </data>
+  <data name="Library_PowerShellSDK_Description" xml:space="preserve">
+    <value>Runtime for hosting PowerShell</value>
+  </data>
+  <data name="Library_WebView2_Description" xml:space="preserve">
+    <value>The WebView2 control enables you to embed web technologies (HTML, CSS, and JavaScript) in your native applications powered by Microsoft Edge (Chromium).</value>
+  </data>
+  <data name="Library_XamlBehaviorsWpf_Description" xml:space="preserve">
+    <value>Easily add interactivity to your apps using XAML Behaviors for WPF.</value>
+  </data>
+  <data name="License_MicrosoftWebView2License" xml:space="preserve">
+    <value>Microsoft WebView2 License</value>
   </data>
 </root>

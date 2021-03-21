@@ -12,6 +12,10 @@
     <DocumentationFile>bin\Debug\NETworkManager.Documentation.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Licenses\Microsoft.PowerShell.SDK.txt" />
+    <None Remove="Licenses\Microsoft.Web.WebView2.txt" />
+    <None Remove="Licenses\Microsoft.Windows.CsWinRT.txt" />
+    <None Remove="Licenses\Microsoft.Xaml.Behaviors.Wpf.txt" />
     <None Remove="Licenses\PSDiscoveryProtocol.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -41,9 +45,6 @@
     <Content Include="Licenses\LiveCharts.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Licenses\LiveCharts.Wpf.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Licenses\LoadingIndicators.WPF.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -51,6 +52,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Licenses\MahApps.Metro.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Licenses\Microsoft.Web.WebView2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Licenses\Microsoft.Windows.CsWinRT.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Licenses\Microsoft.Xaml.Behaviors.Wpf.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Licenses\NETworkManager.txt">
@@ -66,6 +76,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Licenses\SharpSnmpLib.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Licenses\Microsoft.PowerShell.SDK.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

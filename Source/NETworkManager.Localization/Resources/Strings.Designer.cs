@@ -3857,6 +3857,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to C#/WinRT provides packaged WinRT projection support for the C# language..
+        /// </summary>
+        public static string Library_CsWinRT_Description {
+            get {
+                return ResourceManager.GetString("Library_CsWinRT_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups.
         /// </summary>
         public static string Library_DnsClientNET_Description {
@@ -3889,15 +3898,6 @@ namespace NETworkManager.Localization.Resources {
         public static string Library_LiveCharts_Description {
             get {
                 return ResourceManager.GetString("Library_LiveCharts_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Simple, flexible, interactive &amp; powerful charts, maps and gauges for .Net.
-        /// </summary>
-        public static string Library_LiveChartsWPF_Description {
-            get {
-                return ResourceManager.GetString("Library_LiveChartsWPF_Description", resourceCulture);
             }
         }
         
@@ -3947,6 +3947,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Runtime for hosting PowerShell.
+        /// </summary>
+        public static string Library_PowerShellSDK_Description {
+            get {
+                return ResourceManager.GetString("Library_PowerShellSDK_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Capture and parse CDP and LLDP packets on local or remote computers.
         /// </summary>
         public static string Library_PSDicoveryProtocol_Description {
@@ -3961,6 +3970,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Library_SharpSNMP_Description {
             get {
                 return ResourceManager.GetString("Library_SharpSNMP_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The WebView2 control enables you to embed web technologies (HTML, CSS, and JavaScript) in your native applications powered by Microsoft Edge (Chromium)..
+        /// </summary>
+        public static string Library_WebView2_Description {
+            get {
+                return ResourceManager.GetString("Library_WebView2_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Easily add interactivity to your apps using XAML Behaviors for WPF..
+        /// </summary>
+        public static string Library_XamlBehaviorsWpf_Description {
+            get {
+                return ResourceManager.GetString("Library_XamlBehaviorsWpf_Description", resourceCulture);
             }
         }
         
@@ -3988,6 +4015,15 @@ namespace NETworkManager.Localization.Resources {
         public static string License_BDS2Clause {
             get {
                 return ResourceManager.GetString("License_BDS2Clause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft WebView2 License.
+        /// </summary>
+        public static string License_MicrosoftWebView2License {
+            get {
+                return ResourceManager.GetString("License_MicrosoftWebView2License", resourceCulture);
             }
         }
         

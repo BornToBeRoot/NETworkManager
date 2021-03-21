@@ -36,7 +36,7 @@
     <PackageReference Include="Dragablz" Version="0.0.3.223" />
     <PackageReference Include="IPNetwork2" Version="2.5.290" />
     <PackageReference Include="Lextm.SharpSnmpLib" Version="12.3.0" />
-    <PackageReference Include="LiveCharts.Wpf.NetCore3" Version="0.9.7" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
     <PackageReference Include="MahApps.Metro" Version="2.4.4" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
