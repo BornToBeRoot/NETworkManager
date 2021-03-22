@@ -121,7 +121,7 @@
     <value>정보</value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>Accent</value>
+    <value>강조</value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
     <value>자격 증명 추가</value>
@@ -1211,304 +1211,304 @@
     <value>URL</value>
   </data>
   <data name="UseCredentials" xml:space="preserve">
-    <value>Use credentials</value>
+    <value>자격 증명 사용</value>
   </data>
   <data name="UseCurrentViewSize" xml:space="preserve">
-    <value>Use the current view size as the screen size</value>
+    <value>현재 보기 크기를 화면 크기로 사용</value>
   </data>
   <data name="UseCustomDNSServer" xml:space="preserve">
-    <value>Use custom DNS server</value>
+    <value>사용자 지정 DNS 서버 사용</value>
   </data>
   <data name="UseCustomDNSSuffix" xml:space="preserve">
-    <value>Use custom DNS suffix</value>
+    <value>사용자 지정 DNS 접미사 사용</value>
   </data>
   <data name="UseResolverCache" xml:space="preserve">
-    <value>Use resolver cache</value>
+    <value>해결사 캐시 사용</value>
   </data>
   <data name="UserInterfaceLocked" xml:space="preserve">
-    <value>User interface locked!</value>
+    <value>사용자 인터페이스가 잠겼습니다!</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Username</value>
+    <value>사용자 이름</value>
   </data>
   <data name="Vendor" xml:space="preserve">
-    <value>Vendor</value>
+    <value>공급 업체</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Version</value>
+    <value>버전</value>
   </data>
   <data name="VersionxxIsAvailable" xml:space="preserve">
-    <value>Version {0} is available!</value>
+    <value>{0}버전을 사용할 수 있습니다!</value>
   </data>
   <data name="WalkMode" xml:space="preserve">
-    <value>Walk mode</value>
+    <value>걷기 모드</value>
   </data>
   <data name="Width" xml:space="preserve">
-    <value>Width</value>
+    <value>너비</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Could not be decrypted the file with the given password.</value>
+    <value>지정된 암호로 파일의 암호를 해독할 수 없습니다.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
-    <value>The entered password is wrong.</value>
+    <value>입력한 암호가 잘못되었습니다.</value>
   </data>
   <data name="AddDots" xml:space="preserve">
-    <value>Add...</value>
+    <value>추가...</value>
   </data>
   <data name="AddEntryDots" xml:space="preserve">
-    <value>Add entry...</value>
+    <value>항목 추가...</value>
   </data>
   <data name="Calculate" xml:space="preserve">
-    <value>Calculate</value>
+    <value>계산</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>취소</value>
   </data>
   <data name="Change" xml:space="preserve">
-    <value>Change</value>
+    <value>변경</value>
   </data>
   <data name="ChangeMasterPasswordDots" xml:space="preserve">
-    <value>Change Master Password...</value>
+    <value>마스터 암호 변경...</value>
   </data>
   <data name="Check" xml:space="preserve">
-    <value>Check</value>
+    <value>확인</value>
   </data>
   <data name="CheckForUpdates" xml:space="preserve">
-    <value>Check for updates</value>
+    <value>업데이트 확인</value>
   </data>
   <data name="Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>닫힘</value>
   </data>
   <data name="Continue" xml:space="preserve">
-    <value>Continue</value>
+    <value>계속</value>
   </data>
   <data name="CustomColon" xml:space="preserve">
-    <value>Custom:</value>
+    <value>사용자 지정:</value>
   </data>
   <data name="Cut" xml:space="preserve">
-    <value>Cut</value>
+    <value>잘라내기</value>
   </data>
   <data name="DecryptAndLoadDots" xml:space="preserve">
-    <value>Decrypt and load...</value>
+    <value>암호 해독 및 불러오기...</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>삭제</value>
   </data>
   <data name="DeleteTable" xml:space="preserve">
-    <value>Delete table</value>
+    <value>테이블 삭제</value>
   </data>
   <data name="EnterLocationDots" xml:space="preserve">
-    <value>Enter location...</value>
+    <value>위치 입력...</value>
   </data>
   <data name="Everything" xml:space="preserve">
-    <value>Everything</value>
+    <value>모든 것</value>
   </data>
   <data name="FilterDots" xml:space="preserve">
-    <value>Filter...</value>
+    <value>필터...</value>
   </data>
   <data name="FlushDNSCache" xml:space="preserve">
-    <value>Flush DNS cache</value>
+    <value>DNS 캐시 플러시</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
-    <value>Decrypt and load your credentials to select them.</value>
+    <value>자격 증명을 해독하고 불러와서 선택합니다.</value>
   </data>
   <data name="HelpMessage_ParameterHelp" xml:space="preserve">
-    <value>Displays this dialog.</value>
+    <value>이 대화 상자를 표시합니다.</value>
   </data>
   <data name="HelpMessage_ParameterResetSettings" xml:space="preserve">
-    <value>Resets all application settings.</value>
+    <value>모든 응용 프로그램 설정을 재설정합니다.</value>
   </data>
   <data name="HelpMessage_PasswordNotDisplayedCanBeOverwritten" xml:space="preserve">
-    <value>The password is not displayed when editing, but can be overwritten.</value>
+    <value>편집할 때 암호는 표시되지 않지만 덮어쓸 수 있습니다.</value>
   </data>
   <data name="HelpMessage_RDPAuthenticationLevel" xml:space="preserve">
-    <value>[0] If server authentication fails, connect to the computer without warning.
-[1] If server authentication fails, do not establish a connection.
-[2] If server authentication fails, show a warning and allow me to connect or refuse the connection.
-[3] No authentication requirement is specified.</value>
+    <value>[0] 서버 인증이 실패하면 경고 없이 컴퓨터에 연결합니다.
+[1] 서버 인증에 실패하면 연결을 설정하지 마십시오.
+[2] 서버 인증에 실패하면 경고를 표시하고 연결 또는 연결을 거부하도록 허용합니다.
+[3] 인증 요구사항이 지정되지 않았습니다.</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
-    <value>Tags help you organize profiles/Profiles by topics/projects. Multiple tags can be used with ";" be separated. Search by tags with "tag=xxx".</value>
+    <value>태그는 프로필/ 항목별 프로필/프로젝트를 구성하는데 도움이됩니다. 다중 태크는";"로 구분해서 사용할 수 있습니다. "tag=xxx"를 사용하여 태그로 검색합니다.</value>
   </data>
   <data name="TimeUnit_Hour" xml:space="preserve">
-    <value>Hour(s)</value>
+    <value>시</value>
   </data>
   <data name="LocationOfTheImport" xml:space="preserve">
-    <value>Location of the import file...</value>
+    <value>가져오기 파일 의 위치...</value>
   </data>
   <data name="TimeUnit_Minute" xml:space="preserve">
-    <value>Minute(s)</value>
+    <value>분</value>
   </data>
   <data name="MoveAndRestart" xml:space="preserve">
-    <value>Move &amp; Restart</value>
+    <value>이동 및 재시작</value>
   </data>
   <data name="NetworkConnectionsDots" xml:space="preserve">
-    <value>Network connections....</value>
+    <value>네트워크 연결....</value>
   </data>
   <data name="NotChanged" xml:space="preserve">
-    <value>(not changed)</value>
+    <value>(변경되지 않음)</value>
   </data>
   <data name="Off" xml:space="preserve">
-    <value>Off</value>
+    <value>꺼짐</value>
   </data>
   <data name="OK" xml:space="preserve">
-    <value>OK</value>
+    <value>확인</value>
   </data>
   <data name="On" xml:space="preserve">
-    <value>On</value>
+    <value>켜짐</value>
   </data>
   <data name="OpenLocation" xml:space="preserve">
-    <value>Open location</value>
+    <value>위치 열기</value>
   </data>
   <data name="OpenSettings" xml:space="preserve">
-    <value>Open settings</value>
+    <value>설정 열기</value>
   </data>
   <data name="Overwrite" xml:space="preserve">
-    <value>Overwrite</value>
+    <value>덮어쓰기</value>
   </data>
   <data name="Paste" xml:space="preserve">
-    <value>Paste</value>
+    <value>붙여넣기</value>
   </data>
   <data name="PuTTYLocationDots" xml:space="preserve">
     <value>C:\Program Files\PuTTY\putty.exe</value>
   </data>
   <data name="Reconnect" xml:space="preserve">
-    <value>Reconnect</value>
+    <value>다시 연결</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>새로 고침</value>
   </data>
   <data name="RestartNow" xml:space="preserve">
-    <value>Restart now</value>
+    <value>지금 다시 시작</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>저장</value>
   </data>
   <data name="SearchDots" xml:space="preserve">
-    <value>Search...</value>
+    <value>검색...</value>
   </data>
   <data name="TimeUnit_Second" xml:space="preserve">
-    <value>Second(s)</value>
+    <value>초</value>
   </data>
   <data name="Send" xml:space="preserve">
-    <value>Send</value>
+    <value>보내기</value>
   </data>
   <data name="SetMasterPasswordDots" xml:space="preserve">
-    <value>Set Master Password...</value>
+    <value>마스터 암호 설정...</value>
   </data>
   <data name="ShowLocalLicenses" xml:space="preserve">
-    <value>Show local licenses</value>
+    <value>로컬 라이센스 표시</value>
   </data>
   <data name="SubnetCalculator" xml:space="preserve">
-    <value>Subnet Calculator</value>
+    <value>서브넷 계산기</value>
   </data>
   <data name="Validate" xml:space="preserve">
-    <value>Validate</value>
+    <value>확인</value>
   </data>
   <data name="Connections" xml:space="preserve">
-    <value>Connections</value>
+    <value>연결</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>Enter a valid ip range!</value>
+    <value>유효한 IP 범위를 입력하십시오!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
-    <value>Enter a valid IPv4 address!</value>
+    <value>유효한 IPv4 주소를 입력하십시오!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Enter a valid MAC address (like 00:F1:23:AB:F2:35)!</value>
+    <value>유효한 MAC 주소를 입력하십시오 (00:F1:23:AB:F2:35 같은)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
-    <value>Enter a valid port (1 - 65535)!</value>
+    <value>유효한 포트를 입력하십시오 (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Enter a valid subnetmask (like 255.255.255.0)!</value>
+    <value>유효한 서브넷 마스크를 입력하십시오 (255.255.255.0 같은)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Enter a valid subnetmask or CIDR (like 255.255.255.0 or /24)!</value>
+    <value>CIDR의 유효한 서브넷 마스크를 입력하십시오 (255.255.255.0 또는 /24 같은)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
-    <value>Field cannot be empty!</value>
+    <value>필드는 비어있을 수 없습니다!</value>
   </data>
   <data name="FileDoesNotExist" xml:space="preserve">
-    <value>File does not exists!</value>
+    <value>파일이 없습니다!</value>
   </data>
   <data name="FolderDoesNotExist" xml:space="preserve">
-    <value>Folder does not exists!</value>
+    <value>폴더가 없습니다!</value>
   </data>
   <data name="Listeners" xml:space="preserve">
-    <value>Listeners</value>
+    <value>청취자</value>
   </data>
   <data name="Amber" xml:space="preserve">
-    <value>Amber</value>
+    <value>황색</value>
   </data>
   <data name="Appearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>모양</value>
   </data>
   <data name="Applications" xml:space="preserve">
-    <value>Applications</value>
+    <value>응용 프로그램</value>
   </data>
   <data name="Theme_Dark" xml:space="preserve">
-    <value>Dark</value>
+    <value>어두운</value>
   </data>
   <data name="Theme_Light" xml:space="preserve">
-    <value>Light</value>
+    <value>밝은</value>
   </data>
   <data name="Black" xml:space="preserve">
-    <value>Black</value>
+    <value>검정</value>
   </data>
   <data name="Blue" xml:space="preserve">
-    <value>Blue</value>
+    <value>파랑</value>
   </data>
   <data name="Brown" xml:space="preserve">
-    <value>Brown</value>
+    <value>갈색</value>
   </data>
   <data name="Cobalt" xml:space="preserve">
-    <value>Cobalt</value>
+    <value>진청록</value>
   </data>
   <data name="Crimson" xml:space="preserve">
-    <value>Crimson</value>
+    <value>진홍</value>
   </data>
   <data name="Cyan" xml:space="preserve">
-    <value>Cyan</value>
+    <value>청록</value>
   </data>
   <data name="Emerald" xml:space="preserve">
-    <value>Emerald</value>
+    <value>에메랄드</value>
   </data>
   <data name="EnterOneOrMoreValidIPAddresses" xml:space="preserve">
-    <value>Enter one or more valid IP addresses!</value>
+    <value>하나 이상의 유효한 IP 주소를 입력하십시오!</value>
   </data>
   <data name="EnterValidBaud" xml:space="preserve">
-    <value>Enter a valid baud!</value>
+    <value>유효한 보우드를 입력하십시오!</value>
   </data>
   <data name="EnterValidHosts" xml:space="preserve">
-    <value>Enter valid hosts (multiple hosts can not end with ";")!</value>
+    <value>유효한 호스트를 입력하십시오 (여러 호스트는 ";"로 끝날 수 없습니다)!</value>
   </data>
   <data name="EnterValidIPAddress" xml:space="preserve">
-    <value>Enter a valid IP address!</value>
+    <value>유효한 IP 주소를 입력하십시오!</value>
   </data>
   <data name="EnterValidNumber" xml:space="preserve">
-    <value>Enter a valid number!</value>
+    <value>유효한 번호를 입력하십시오!</value>
   </data>
   <data name="EnterValidOID" xml:space="preserve">
-    <value>Enter a valid OID!</value>
+    <value>유효한 OID를 입력하십시오!</value>
   </data>
   <data name="EnterValidPortOrPortRange" xml:space="preserve">
-    <value>Enter a valid port and/or port range (1 - 65535)!</value>
+    <value>유효한 포트 및/또는 포트 범위를 입력하십시오 (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Enter a valid subnet (like 192.168.178.133/26)!</value>
+    <value>유효한 서브넷을 입력하십시오 (192.168.178.133/26 같은)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Enter a valid website (like https://example.com/index.html)</value>
+    <value>유효한 웹 사이트를 입력하십시오 (https://example.com/index.html 같은)</value>
   </data>
   <data name="Green" xml:space="preserve">
-    <value>Green</value>
+    <value>녹색</value>
   </data>
   <data name="ImportExport" xml:space="preserve">
     <value>가져오기 / 내보내기</value>
   </data>
   <data name="Indigo" xml:space="preserve">
-    <value>Indigo</value>
+    <value>남색</value>
   </data>
   <data name="IPStatus_DestinationHostUnreachable" xml:space="preserve">
     <value>대상 호스트에 연결할 수 없습니다.</value>
@@ -1532,16 +1532,16 @@
     <value>키는 8자 이상이어야 합니다!</value>
   </data>
   <data name="Lime" xml:space="preserve">
-    <value>Lime</value>
+    <value>라임</value>
   </data>
   <data name="Magenta" xml:space="preserve">
-    <value>Magenta</value>
+    <value>자홍</value>
   </data>
   <data name="Mauve" xml:space="preserve">
-    <value>Mauve</value>
+    <value>연보라</value>
   </data>
   <data name="Olive" xml:space="preserve">
-    <value>Olive</value>
+    <value>올리브</value>
   </data>
   <data name="OnlyNumbersCanBeEntered" xml:space="preserve">
     <value>숫자만 입력할 수 있습니다!</value>
@@ -1700,22 +1700,22 @@
     <value>Windows 소켓 전송 호출에 실패했습니다.</value>
   </data>
   <data name="Sienna" xml:space="preserve">
-    <value>Sienna</value>
+    <value>황갈색</value>
   </data>
   <data name="SpacesAreNotAllowed" xml:space="preserve">
     <value>공백은 허용되지 않습니다!</value>
   </data>
   <data name="Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>철색</value>
   </data>
   <data name="Taupe" xml:space="preserve">
-    <value>Taupe</value>
+    <value>회갈색</value>
   </data>
   <data name="TcpState_Closed" xml:space="preserve">
-    <value>Closed</value>
+    <value>닫힘</value>
   </data>
   <data name="TcpState_CloseWait" xml:space="preserve">
-    <value>CloseWait</value>
+    <value>대기 종료</value>
   </data>
   <data name="TcpState_Closing" xml:space="preserve">
     <value>폐쇄</value>
@@ -1751,16 +1751,16 @@
     <value>알 수 없음</value>
   </data>
   <data name="Teal" xml:space="preserve">
-    <value>Teal</value>
+    <value>청록색</value>
   </data>
   <data name="Violet" xml:space="preserve">
-    <value>Violet</value>
+    <value>보라</value>
   </data>
   <data name="White" xml:space="preserve">
-    <value>White</value>
+    <value>흰색</value>
   </data>
   <data name="Yellow" xml:space="preserve">
-    <value>Yellow</value>
+    <value>노랑</value>
   </data>
   <data name="EnterValidValueBetween25and100" xml:space="preserve">
     <value>25에서 100 사이의 올바른 값을 입력하십시오!</value>
@@ -2052,59 +2052,59 @@ URL: https://api.ipify.org/</value>
     <value>로컬 IP 주소를 검색할 수 없습니다!</value>
   </data>
   <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>Could not get public ip address via WebRequest (http/https) from "{0}"! Check your network connection (firewall, proxy, etc.).</value>
+    <value>"{0}"에서 WebRequest(http/https)를 통해 공용 IP 주소를 가져올 수 없습니다! 네트워크 연결(방화벽, 프록시 등)을 확인합니다.</value>
   </data>
   <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
-    <value>No A dns records resolved for "{0}"!</value>
+    <value>"{0}"에 대해 해결된 A dns 레코드가 없습니다!</value>
   </data>
   <data name="NoPTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
-    <value>No PTR dns record resolved for "{0}"!</value>
+    <value>"{0}"에 대해 해결된 PTR dns 레코드가 없습니다!</value>
   </data>
   <data name="XADNSRecordsResolvedForXXXMessage" xml:space="preserve">
-    <value>"{0}" A dns records resolved for "{1}"!</value>
+    <value>"{0}" A dns 레코드가 "{1}에 의해 해결되었습니다!"</value>
   </data>
   <data name="PTRDNSRecordResolvedForXXXMessage" xml:space="preserve">
-    <value>PTR dns record resolved for "{0}"!</value>
+    <value>"{0}"에 대한 PTR dns 레코드가 해결되었습니다!!</value>
   </data>
   <data name="GotXXXAsPublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>Got "{0}" as public ip address from "{1}"!</value>
+    <value>"{0}" 공용 ip 주소를 "{1}"에서 받았습니다!</value>
   </data>
   <data name="ResolvedXXXAsHostnameForIPAddressXXXMessage" xml:space="preserve">
-    <value>Resolved "{0}" as hostname for ip address "{1}"!</value>
+    <value>"{0}" 이 "{1}"의 호스트 이름으로 해결되었습니다!</value>
   </data>
   <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
-    <value>Public IP address check
-is disabled!</value>
+    <value>공용 IP 주소 검사
+비활성화되었습니다!</value>
   </data>
   <data name="TCPIPStackIsAvailableMessage" xml:space="preserve">
-    <value>TCP/IP stack is available. "{0}" is reachable via ICMP!</value>
+    <value>TCP/IP 스택을 사용할 수 있습니다. ICMP를 통해 "{0}" 에 연결할 수 있습니다!</value>
   </data>
   <data name="TCPIPStackIsNotAvailableMessage" xml:space="preserve">
-    <value>TCP/IP stack is not available... "{0}" is not reachable via ICMP!</value>
+    <value>TCP/IP 스택을 사용할 수 없습니다... ICMP를 통해 "{0}" 에 연결할 수 없습니다!</value>
   </data>
   <data name="XXXDetectedAsGatewayIPAddress" xml:space="preserve">
-    <value>"{0}" detected as gateway ip address!</value>
+    <value>"{0}" 이 게이트웨이 IP 주소로 검색되었습니다!</value>
   </data>
   <data name="XXXDetectedAsLocalIPAddressMessage" xml:space="preserve">
-    <value>"{0}" detected as local ip address!</value>
+    <value>"{0}" 이 로컬 IP 주소로 검색되었습니다!</value>
   </data>
   <data name="XXXIsNotReachableViaICMPMessage" xml:space="preserve">
-    <value>"{0}" is not reachable via ICMP!</value>
+    <value>ICMP를 통해 "{0}" 에 연결할 수 없습니다!</value>
   </data>
   <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
-    <value>"{0}" is reachable via ICMP!</value>
+    <value>ICMP를 통해 "{0}" 에 연결할 수 있습니다!</value>
   </data>
   <data name="UseCustomAPI" xml:space="preserve">
-    <value>Use custom API</value>
+    <value>사용자 지정 API 사용</value>
   </data>
   <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IP address as response.</value>
+    <value>http 또는 https를 통해 연결할 수 있는 웹 서비스에 대한 URL이며 응답으로 IP 주소를 반환합니다.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>Could not parse public ip address from "{0}"! Try another service or use the default... </value>
+    <value>"{0}"에서 공용 IP 주소를 구문 분석할 수 없습니다! 다른 서비스를 시도하거나 기본값을 사용합니다... </value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
-    <value>Could not connect to "{0}"!</value>
+    <value>"{0}"에 연결할 수 없습니다!</value>
   </data>
   <data name="PublicDNSTestDomain" xml:space="preserve">
     <value>공용 DNS 테스트 도메인</value>
@@ -2126,9 +2126,6 @@ is disabled!</value>
   </data>
   <data name="Official" xml:space="preserve">
     <value>공식</value>
-  </data>
-  <data name="HelpTranslateOnTransifex" xml:space="preserve">
-    <value>transifex에서 번역하는데 도움이 됩니다</value>
   </data>
   <data name="NetworkConnectionType" xml:space="preserve">
     <value>네트워크 연결 유형</value>
@@ -2293,7 +2290,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>네트워크 변경시 상태 창 표시</value>
   </data>
   <data name="TimeInSecondsHowLongTheWindowShouldBeDisplayed" xml:space="preserve">
-    <value>Time in seconds how long the window should be displayed</value>
+    <value>창을 표시해야 하는 초 단위 시간 </value>
   </data>
   <data name="WiFi" xml:space="preserve">
     <value>WiFi</value>
@@ -2524,7 +2521,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>LLDP / CDP</value>
   </data>
   <data name="XXSecondsRemainingDots" xml:space="preserve">
-    <value>{0} 초 남음...</value>
+    <value>{0}초 남음...</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>도움말</value>
@@ -2548,7 +2545,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>브라우저</value>
   </data>
   <data name="WebViewControlCertificateIsInvalidMessage" xml:space="preserve">
-    <value>WebView 컨트롤 (Microsoft Edge)은 잘못된 인증서가 있는 웹 사이트에 연결할 수 없습니다!</value>
+    <value>WebView 제어 (Microsoft Edge)는 잘못된 인증서가 있는 웹 사이트에 연결할 수 없습니다!</value>
   </data>
   <data name="MicrosoftWindowsSDKContractsIsNotAvailable" xml:space="preserve">
     <value>이 기능에 대해서는 Microsoft.Windows.SDK.Contracts가 필요하지만 이 시스템에서는 사용할 수 없습니다 (예: Windows 서버에서).</value>
@@ -2626,73 +2623,73 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>WiFi</value>
   </data>
   <data name="Accent_Amber" xml:space="preserve">
-    <value>Amber</value>
+    <value>황색</value>
   </data>
   <data name="Accent_Black" xml:space="preserve">
-    <value>Black</value>
+    <value>검정</value>
   </data>
   <data name="Accent_Blue" xml:space="preserve">
-    <value>Blue</value>
+    <value>파랑</value>
   </data>
   <data name="Accent_Brown" xml:space="preserve">
-    <value>Brown</value>
+    <value>갈색</value>
   </data>
   <data name="Accent_Cobalt" xml:space="preserve">
-    <value>Cobalt</value>
+    <value>진청록</value>
   </data>
   <data name="Accent_Crimson" xml:space="preserve">
-    <value>Crimson</value>
+    <value>진홍색</value>
   </data>
   <data name="Accent_Cyan" xml:space="preserve">
-    <value>Cyan</value>
+    <value>청록</value>
   </data>
   <data name="Accent_Emerald" xml:space="preserve">
-    <value>Emerald</value>
+    <value>에메랄드</value>
   </data>
   <data name="Accent_Green" xml:space="preserve">
-    <value>Green</value>
+    <value>녹색</value>
   </data>
   <data name="Accent_Indigo" xml:space="preserve">
-    <value>Indigo</value>
+    <value>남색</value>
   </data>
   <data name="Accent_Lime" xml:space="preserve">
-    <value>Lime</value>
+    <value>라임</value>
   </data>
   <data name="Accent_Magenta" xml:space="preserve">
-    <value>Magenta</value>
+    <value>자홍</value>
   </data>
   <data name="Accent_Mauve" xml:space="preserve">
-    <value>Mauve</value>
+    <value>연보라</value>
   </data>
   <data name="Accent_Olive" xml:space="preserve">
-    <value>Olive</value>
+    <value>올리브</value>
   </data>
   <data name="Accent_Orange" xml:space="preserve">
-    <value>Orange</value>
+    <value>주황</value>
   </data>
   <data name="Accent_Purple" xml:space="preserve">
-    <value>Purple</value>
+    <value>보라</value>
   </data>
   <data name="Accent_Red" xml:space="preserve">
-    <value>Red</value>
+    <value>빨강</value>
   </data>
   <data name="Accent_Sienna" xml:space="preserve">
-    <value>Sienna</value>
+    <value>황갈색</value>
   </data>
   <data name="Accent_Taupe" xml:space="preserve">
-    <value>Taupe</value>
+    <value>회갈색</value>
   </data>
   <data name="Accent_Teal" xml:space="preserve">
-    <value>Teal</value>
+    <value>청록색</value>
   </data>
   <data name="Accent_Violet" xml:space="preserve">
-    <value>Pink</value>
+    <value>분홍</value>
   </data>
   <data name="Accent_Yellow" xml:space="preserve">
-    <value>Yellow</value>
+    <value>노랑</value>
   </data>
   <data name="Accen_Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>철색</value>
   </data>
   <data name="ProfileViewName_General" xml:space="preserve">
     <value>일반</value>
@@ -2978,5 +2975,89 @@ $$hostname$$	--&gt;	호스트이름</value>
   </data>
   <data name="HiddenNetwork" xml:space="preserve">
     <value>숨겨진 네트워크</value>
+  </data>
+  <data name="DevelopedAndMaintainedByX" xml:space="preserve">
+    <value>{0}의 도움으로 개발 및 유지 관리</value>
+  </data>
+  <data name="ExternalService_ipify_Description" xml:space="preserve">
+    <value>간단한 공용 IP 주소 API</value>
+  </data>
+  <data name="Library_AirspaceFixer_Description" xml:space="preserve">
+    <value>AirSpacePanel WPF 호스팅 WinForms의 모든 영공 문제를 해결합니다.</value>
+  </data>
+  <data name="Library_ControlzEx_Description" xml:space="preserve">
+    <value>WPF 등에 대한 공유 제어 및 ... 기타</value>
+  </data>
+  <data name="Library_DnsClientNET_Description" xml:space="preserve">
+    <value>DnsClient.NET은 DNS 조회를 수행하기 위해 .NET Framework에 대한 간단하면서도 매우 강력하고 높은 공연식 오픈 소스 라이브러리입니다</value>
+  </data>
+  <data name="Library_Dragablz_Description" xml:space="preserve">
+    <value>WPF를 위한 드래그 가능 및 찢어진 탭 제어</value>
+  </data>
+  <data name="Library_IPNetwork_Description" xml:space="preserve">
+    <value>C# 라이브러리는 복잡한 네트워크, IP, IPv4, IPv6, NetMask, CIDR, 서브넷, 서브넷, 슈퍼넷 및 .NET 개발자를 위한 슈퍼넷팅 계산을 처리합니다.</value>
+  </data>
+  <data name="Library_LiveCharts_Description" xml:space="preserve">
+    <value>간편하고 유연하며 대화형 강력한 .Net용 차트, 지도 및 게이지</value>
+  </data>
+  <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
+    <value>WPF에 대한 부하 지시기 모음</value>
+  </data>
+  <data name="Library_MahAppsMetroIconPacks_Description" xml:space="preserve">
+    <value>WPF와 UWP를 위한 멋진 아이콘들...</value>
+  </data>
+  <data name="Library_MahAppsMetro_Description" xml:space="preserve">
+    <value>메트로 / 현대적인 UI 스타일의 WPF 앱을 만드는 툴킷입니다.</value>
+  </data>
+  <data name="Library_NewtonsoftJson_Description" xml:space="preserve">
+    <value>Json.NET는 널리 사용되는 .NET용 고성능 JSON 프레임워크입니다</value>
+  </data>
+  <data name="Library_Octokit_Description" xml:space="preserve">
+    <value>.NET용 GitHub API 클라이언트 라이브러리</value>
+  </data>
+  <data name="Library_PSDicoveryProtocol_Description" xml:space="preserve">
+    <value>로컬 또는 원격 시스템에서 CDP 및 LLDP 패킷 캡처 및 구문 분석</value>
+  </data>
+  <data name="Library_SharpSNMP_Description" xml:space="preserve">
+    <value>Sharp SNMP 라이브러리 - .NET 및 Mono용 오픈 소스 SNMP</value>
+  </data>
+  <data name="Resource_Flag_Description" xml:space="preserve">
+    <value>SVG의 모든 국가 깃발 모음</value>
+  </data>
+  <data name="Resource_ListTLD_Description" xml:space="preserve">
+    <value>포트 43을 통해 whois.iana.org에서 TLD의 서버를 쿼리하는 데 사용되는 iana.org의 최상위 도메인 목록</value>
+  </data>
+  <data name="Resource_OUI_Description" xml:space="preserve">
+    <value>linuxnet.ca에서 IEEE OUI 데이터를 삭제했습니다.</value>
+  </data>
+  <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
+    <value>iana.org의 서비스 이름 및 전송 프로토콜 포트 번호 레지스트리</value>
+  </data>
+  <data name="License_ApacheLicense2dot0" xml:space="preserve">
+    <value>Apache 라이센스 2.0</value>
+  </data>
+  <data name="License_BDS2Clause" xml:space="preserve">
+    <value>BSD-2-조항</value>
+  </data>
+  <data name="License_MITLicense" xml:space="preserve">
+    <value>MIT 라이센스</value>
+  </data>
+  <data name="License_Unlicense" xml:space="preserve">
+    <value>라이센스 취소</value>
+  </data>
+  <data name="Library_CsWinRT_Description" xml:space="preserve">
+    <value>C#/WinRT는 C# 언어에 대한 패키지 WinRT 예상 지원을 제공합니다.</value>
+  </data>
+  <data name="Library_PowerShellSDK_Description" xml:space="preserve">
+    <value>PowerShell 호스팅을 위한 런타임</value>
+  </data>
+  <data name="Library_WebView2_Description" xml:space="preserve">
+    <value>WebView2 컨트롤을 사용하면 Microsoft Edge(Chromium)에서 제공하는 기본 응용 프로그램에 웹 기술 (HTML, CSS 및 JavaScript)을 포함할 수 있습니다.</value>
+  </data>
+  <data name="Library_XamlBehaviorsWpf_Description" xml:space="preserve">
+    <value>WPF의 XAML 동작을 사용하여 앱에 상호 작용을 쉽게 추가할 수 있습니다.</value>
+  </data>
+  <data name="License_MicrosoftWebView2License" xml:space="preserve">
+    <value>Microsoft WebView2 라이센스</value>
   </data>
 </root>
