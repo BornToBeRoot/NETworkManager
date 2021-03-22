@@ -60,3 +60,6 @@ List of all contributors.
 
 **Spanish**
 - MS_PC
+
+**Korean**
+- VenusGirl_비너스걸
