@@ -12,6 +12,7 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
 using NETworkManager.Models.PuTTY;
+using System.Security;
 
 namespace NETworkManager.ViewModels
 {
@@ -19,6 +20,9 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         private readonly bool _isLoading;
+
+        public bool IsProfileFileEncrypted => ProfileManager.LoadedProfileFile.IsEncrypted;
+
         public ICollectionView ProfileViews { get; }
 
         #region General
@@ -555,6 +559,86 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _remoteDesktop_Host = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_UseCredentials;
+        public bool RemoteDesktop_UseCredentials
+        {
+            get => _remoteDesktop_UseCredentials;
+            set
+            {
+                if (value == _remoteDesktop_UseCredentials)
+                    return;
+
+                _remoteDesktop_UseCredentials = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _remoteDesktop_Username;
+        public string RemoteDesktop_Username
+        {
+            get => _remoteDesktop_Username;
+            set
+            {
+                if (value == _remoteDesktop_Username)
+                    return;
+
+                _remoteDesktop_Username = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_IsPasswordEmpty = true; // Initial it's empty
+        public bool RemoteDesktop_IsPasswordEmpty
+        {
+            get => _remoteDesktop_IsPasswordEmpty;
+            set
+            {
+                if (value == _remoteDesktop_IsPasswordEmpty)
+                    return;
+
+                _remoteDesktop_IsPasswordEmpty = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private SecureString _remoteDesktop_Password;
+
+        /// <summary>
+        /// RemoteDesktop password as secure string.
+        /// </summary>
+        public SecureString RemoteDesktop_Password
+        {
+            get => _remoteDesktop_Password;
+            set
+            {
+                if (value == _remoteDesktop_Password)
+                    return;
+
+                // Validate the password string
+                if (value == null)
+                    RemoteDesktop_IsPasswordEmpty = true;
+                else
+                    RemoteDesktop_IsPasswordEmpty = string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+
+                _remoteDesktop_Password = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _remoteDesktop_PasswordChanged;
+        public bool RemoteDesktop_PasswordChanged
+        {
+            get => _remoteDesktop_PasswordChanged;
+            set
+            {
+                if (value == _remoteDesktop_PasswordChanged)
+                    return;
+
+                _remoteDesktop_PasswordChanged = value;
                 OnPropertyChanged();
             }
         }
@@ -2075,6 +2159,9 @@ namespace NETworkManager.ViewModels
             RemoteDesktop_Enabled = profileInfo.RemoteDesktop_Enabled;
             RemoteDesktop_InheritHost = profileInfo.RemoteDesktop_InheritHost;
             RemoteDesktop_Host = profileInfo.RemoteDesktop_Host;
+            RemoteDesktop_UseCredentials = profileInfo.RemoteDesktop_UseCredentials;
+            RemoteDesktop_Username = profileInfo.RemoteDesktop_Username;
+            RemoteDesktop_Password = profileInfo.RemoteDesktop_Password;
             RemoteDesktop_OverrideDisplay = profileInfo.RemoteDesktop_OverrideDisplay;
             RemoteDesktop_AdjustScreenAutomatically = profileInfo.RemoteDesktop_AdjustScreenAutomatically;
             RemoteDesktop_UseCurrentViewSize = profileInfo.RemoteDesktop_UseCurrentViewSize;
@@ -2231,6 +2318,12 @@ namespace NETworkManager.ViewModels
             }
 
             IsResolveHostnameRunning = false;
+        }
+
+        public ICommand RemoteDesktopPasswordChangedCommand => new RelayCommand(p => RemoteDesktopPasswordChangedAction());
+        private void RemoteDesktopPasswordChangedAction()
+        {
+            RemoteDesktop_PasswordChanged = true;
         }
         #endregion
 

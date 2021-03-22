@@ -17,10 +17,12 @@ Date: **xx.xx.2021**
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Archiv.zip){:target="_blank"}| `9996197F0F58A7A23F0A78DB7336D4201F98F1C6E8CCD7D02BF97095C5A6DDA8` |
 
 ## What's new?
+- Credentials for remote desktop can be stored in the profile. You should encrypt the profile file in the Settings>Profile with a master password and create a backup of your profile files. [#378](https://github.com/BornToBeRoot/NETworkManager/issues/378){:target="_blank"}
 - Korean language added [#584](https://github.com/BornToBeRoot/NETworkManager/issues/584){:target="_blank"}
 
 ## Improvements
 - SNMP Community/Priv/Auth text boxes replaced with password boxes [#128](https://github.com/BornToBeRoot/NETworkManager/issues/128){:target="_blank"}
+- Min window size set to 1280x798 to display profile dialog correct [#378](https://github.com/BornToBeRoot/NETworkManager/issues/378){:target="_blank"} 
 
 ## Bugfixes
 - Profile dialog height fixed [#594](https://github.com/BornToBeRoot/NETworkManager/issues/594){:target="_blank"}

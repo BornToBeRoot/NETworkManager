@@ -13,7 +13,7 @@
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:networkManager="clr-namespace:NETworkManager"
         mc:Ignorable="d"
-        Style="{DynamicResource DefaultWindow}" MinWidth="1050" MinHeight="700" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
+        Style="{DynamicResource DefaultWindow}" MinWidth="1280" MinHeight="768" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
         d:DataContext="{d:DesignInstance networkManager:MainWindow}">
     <!-- MetroDialogStyles.xaml must be adjusted if MinWidth/MinHeight is changed -->
     <mahAppsControls:MetroWindow.Resources>

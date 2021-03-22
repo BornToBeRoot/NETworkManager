@@ -8614,6 +8614,17 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The current profile file is not encrypted and passwords will stored unencrypted on disk! 
+        ///
+        ///Enable profile file encryption in Settings&gt;Profile to store credentials securely..
+        /// </summary>
+        public static string WarningMessage_ProfileFileNotEncryptedStoringPasswords {
+            get {
+                return ResourceManager.GetString("WarningMessage_ProfileFileNotEncryptedStoringPasswords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Web Console.
         /// </summary>
         public static string WebConsole {

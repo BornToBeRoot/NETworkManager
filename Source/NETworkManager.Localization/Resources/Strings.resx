@@ -3060,4 +3060,9 @@ The application will be restarted afterwards!</value>
   <data name="License_MicrosoftWebView2License" xml:space="preserve">
     <value>Microsoft WebView2 License</value>
   </data>
+  <data name="WarningMessage_ProfileFileNotEncryptedStoringPasswords" xml:space="preserve">
+    <value>The current profile file is not encrypted and passwords will stored unencrypted on disk! 
+
+Enable profile file encryption in Settings&gt;Profile to store credentials securely.</value>
+  </data>
 </root>

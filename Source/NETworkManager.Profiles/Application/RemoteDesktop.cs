@@ -55,6 +55,15 @@ namespace NETworkManager.Models.RemoteDesktopTMP
                 VisualStyles = profileInfo != null && profileInfo.RemoteDesktop_OverrideVisualStyles ? profileInfo.RemoteDesktop_VisualStyles : SettingsManager.Current.RemoteDesktop_VisualStyles,
             };
 
+            // Set credentials
+            if(profileInfo.RemoteDesktop_UseCredentials)
+            {
+                info.CustomCredentials = true;
+
+                info.Username = profileInfo.RemoteDesktop_Username;
+                info.Password = profileInfo.RemoteDesktop_Password;
+            }
+
             return info;
         }
 
