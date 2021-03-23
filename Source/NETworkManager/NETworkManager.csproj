@@ -44,7 +44,7 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.774.44" />    
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.1.4" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <Reference Include="AxMSTSCLib">
       <HintPath>$(TargetDir)\AxMSTSCLib.dll</HintPath>
     </Reference>
