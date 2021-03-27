@@ -1000,8 +1000,8 @@ namespace NETworkManager
                 IsProfileFileLocked = true;
 
                 ConfigurationManager.Current.FixAirspace = false;
-            }
-            catch
+            }            
+            catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
@@ -1011,7 +1011,7 @@ namespace NETworkManager
                 await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedAndMayBeCorruptedMessage, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
-            }
+            }         
         }
 
         /// <summary>

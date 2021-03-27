@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
-    <Style x:Key="DefaultWindow" TargetType="{x:Type mahAppsControls:MetroWindow}" BasedOn="{StaticResource MahApps.Styles.MetroWindow.Clean}" >
+    <Style x:Key="DefaultWindow" TargetType="{x:Type mahAppsControls:MetroWindow}" BasedOn="{StaticResource MahApps.Styles.MetroWindow.Clean}">
         <Setter Property="TitleCharacterCasing" Value="Normal" />
         <Setter Property="GlowBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="NonActiveGlowBrush" Value="Transparent" />

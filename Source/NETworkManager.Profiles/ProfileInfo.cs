@@ -2,12 +2,15 @@
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
+using System.Security;
+using System.Xml.Serialization;
 
 namespace NETworkManager.Profiles
 {
     /// <summary>
     /// Class represents a profile.
     /// </summary>
+    [XmlType("ProfileInfoLegacy")] // XML --> Deprecated because of #378   
     public class ProfileInfo
     {
         /// <summary>
@@ -63,6 +66,13 @@ namespace NETworkManager.Profiles
         public bool RemoteDesktop_Enabled { get; set; }
         public bool RemoteDesktop_InheritHost { get; set; } = true;
         public string RemoteDesktop_Host { get; set; }
+
+        public bool RemoteDesktop_UseCredentials { get; set; }
+
+        public string RemoteDesktop_Username { get; set; }
+
+        [XmlIgnore]
+        public SecureString RemoteDesktop_Password { get; set; }
         public bool RemoteDesktop_OverrideDisplay { get; set; }
         public bool RemoteDesktop_AdjustScreenAutomatically { get; set; }
         public bool RemoteDesktop_UseCurrentViewSize { get; set; }
@@ -148,7 +158,7 @@ namespace NETworkManager.Profiles
         public string PuTTY_LogFileName { get; set; } = GlobalStaticConfiguration.PuTTY_LogFileName;
         public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
         public string PuTTY_AdditionalCommandLine { get; set; }
-        
+
         public bool TigerVNC_Enabled { get; set; }
         public bool TigerVNC_InheritHost { get; set; } = true;
         public string TigerVNC_Host { get; set; }
@@ -174,6 +184,158 @@ namespace NETworkManager.Profiles
         public ProfileInfo()
         {
 
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the<see cref="ProfileInfo"/> class with properties.
+        /// </summary>
+        public ProfileInfo(ProfileInfo profile)
+        {
+            Name = profile.Name;
+            Host = profile.Host;
+            Group = profile.Group;
+            Tags = profile.Tags;
+
+            NetworkInterface_Enabled = profile.NetworkInterface_Enabled;
+            NetworkInterface_EnableStaticIPAddress = profile.NetworkInterface_EnableStaticIPAddress;
+            NetworkInterface_IPAddress = profile.NetworkInterface_IPAddress;
+            NetworkInterface_SubnetmaskOrCidr = profile.NetworkInterface_SubnetmaskOrCidr;
+            NetworkInterface_Gateway = profile.NetworkInterface_Gateway;
+            NetworkInterface_EnableStaticDNS = profile.NetworkInterface_EnableStaticDNS;
+            NetworkInterface_PrimaryDNSServer = profile.NetworkInterface_PrimaryDNSServer;
+            NetworkInterface_SecondaryDNSServer = profile.NetworkInterface_SecondaryDNSServer;
+
+            IPScanner_Enabled = profile.IPScanner_Enabled;
+            IPScanner_InheritHost = profile.IPScanner_InheritHost;
+            IPScanner_HostOrIPRange = profile.IPScanner_HostOrIPRange;
+
+            PortScanner_Enabled = profile.PortScanner_Enabled;
+            PortScanner_InheritHost = profile.PortScanner_InheritHost;
+            PortScanner_Host = profile.PortScanner_Host;
+            PortScanner_Ports = profile.PortScanner_Ports;
+
+            PingMonitor_Enabled = profile.PingMonitor_Enabled;
+            PingMonitor_InheritHost = profile.PingMonitor_InheritHost;
+            PingMonitor_Host = profile.PingMonitor_Host;
+
+            Traceroute_Enabled = profile.Traceroute_Enabled;
+            Traceroute_InheritHost = profile.Traceroute_InheritHost;
+            Traceroute_Host = profile.Traceroute_Host;
+
+            DNSLookup_Enabled = profile.DNSLookup_Enabled;
+            DNSLookup_InheritHost = profile.DNSLookup_InheritHost;
+            DNSLookup_Host = profile.DNSLookup_Host;
+
+            RemoteDesktop_Enabled = profile.RemoteDesktop_Enabled;
+            RemoteDesktop_InheritHost = profile.RemoteDesktop_InheritHost;
+            RemoteDesktop_Host = profile.RemoteDesktop_Host;
+            RemoteDesktop_UseCredentials = profile.RemoteDesktop_UseCredentials;
+            RemoteDesktop_Username = profile.RemoteDesktop_Username;
+            RemoteDesktop_Password = profile.RemoteDesktop_Password;
+            RemoteDesktop_OverrideDisplay = profile.RemoteDesktop_OverrideDisplay;
+            RemoteDesktop_AdjustScreenAutomatically = profile.RemoteDesktop_AdjustScreenAutomatically;
+            RemoteDesktop_UseCurrentViewSize = profile.RemoteDesktop_UseCurrentViewSize;
+            RemoteDesktop_UseFixedScreenSize = profile.RemoteDesktop_UseFixedScreenSize;
+            RemoteDesktop_ScreenWidth = profile.RemoteDesktop_ScreenWidth;
+            RemoteDesktop_ScreenHeight = profile.RemoteDesktop_ScreenHeight;
+            RemoteDesktop_UseCustomScreenSize = profile.RemoteDesktop_UseCustomScreenSize;
+            RemoteDesktop_CustomScreenWidth = profile.RemoteDesktop_CustomScreenWidth;
+            RemoteDesktop_CustomScreenHeight = profile.RemoteDesktop_CustomScreenHeight;
+            RemoteDesktop_OverrideColorDepth = profile.RemoteDesktop_OverrideColorDepth;
+            RemoteDesktop_ColorDepth = profile.RemoteDesktop_ColorDepth;
+            RemoteDesktop_OverridePort = profile.RemoteDesktop_OverridePort;
+            RemoteDesktop_Port  = profile.RemoteDesktop_Port;
+            RemoteDesktop_OverrideCredSspSupport = profile.RemoteDesktop_OverrideCredSspSupport;
+            RemoteDesktop_EnableCredSspSupport = profile.RemoteDesktop_EnableCredSspSupport;
+            RemoteDesktop_OverrideAuthenticationLevel = profile.RemoteDesktop_OverrideAuthenticationLevel;
+            RemoteDesktop_AuthenticationLevel = profile.RemoteDesktop_AuthenticationLevel;
+            RemoteDesktop_OverrideAudioRedirectionMode = profile.RemoteDesktop_OverrideAudioRedirectionMode;
+            RemoteDesktop_AudioRedirectionMode = profile.RemoteDesktop_AudioRedirectionMode;
+            RemoteDesktop_OverrideAudioCaptureRedirectionMode = profile.RemoteDesktop_OverrideAudioCaptureRedirectionMode;
+            RemoteDesktop_AudioCaptureRedirectionMode = profile.RemoteDesktop_AudioCaptureRedirectionMode;
+            RemoteDesktop_OverrideApplyWindowsKeyCombinations = profile.RemoteDesktop_OverrideApplyWindowsKeyCombinations;
+            RemoteDesktop_KeyboardHookMode = profile.RemoteDesktop_KeyboardHookMode;
+            RemoteDesktop_OverrideRedirectClipboard = profile.RemoteDesktop_OverrideRedirectClipboard;
+            RemoteDesktop_RedirectClipboard = profile.RemoteDesktop_RedirectClipboard;
+            RemoteDesktop_OverrideRedirectDevices = profile.RemoteDesktop_OverrideRedirectDevices;
+            RemoteDesktop_RedirectDevices = profile.RemoteDesktop_RedirectDevices;
+            RemoteDesktop_OverrideRedirectDrives = profile.RemoteDesktop_OverrideRedirectDrives;
+            RemoteDesktop_RedirectDrives = profile.RemoteDesktop_RedirectDrives;
+            RemoteDesktop_OverrideRedirectPorts = profile.RemoteDesktop_OverrideRedirectPorts;
+            RemoteDesktop_RedirectPorts = profile.RemoteDesktop_RedirectPorts;
+            RemoteDesktop_OverrideRedirectSmartcards = profile.RemoteDesktop_OverrideRedirectSmartcards;
+            RemoteDesktop_RedirectSmartCards = profile.RemoteDesktop_RedirectSmartCards;
+            RemoteDesktop_OverrideRedirectPrinters = profile.RemoteDesktop_OverrideRedirectPrinters;
+            RemoteDesktop_RedirectPrinters = profile.RemoteDesktop_RedirectPrinters;
+            RemoteDesktop_OverridePersistentBitmapCaching = profile.RemoteDesktop_OverridePersistentBitmapCaching;
+            RemoteDesktop_PersistentBitmapCaching = profile.RemoteDesktop_PersistentBitmapCaching;
+            RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped = profile.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+            RemoteDesktop_ReconnectIfTheConnectionIsDropped = profile.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
+            RemoteDesktop_OverrideNetworkConnectionType = profile.RemoteDesktop_OverrideNetworkConnectionType;
+            RemoteDesktop_NetworkConnectionType = profile.RemoteDesktop_NetworkConnectionType;
+            RemoteDesktop_OverrideDesktopBackground = profile.RemoteDesktop_OverrideDesktopBackground;
+            RemoteDesktop_DesktopBackground = profile.RemoteDesktop_DesktopBackground;
+            RemoteDesktop_OverrideFontSmoothing = profile.RemoteDesktop_OverrideFontSmoothing;
+            RemoteDesktop_FontSmoothing = profile.RemoteDesktop_FontSmoothing;
+            RemoteDesktop_OverrideDesktopComposition = profile.RemoteDesktop_OverrideDesktopComposition;
+            RemoteDesktop_DesktopComposition = profile.RemoteDesktop_DesktopComposition;
+            RemoteDesktop_OverrideShowWindowContentsWhileDragging = profile.RemoteDesktop_OverrideShowWindowContentsWhileDragging;
+            RemoteDesktop_ShowWindowContentsWhileDragging = profile.RemoteDesktop_ShowWindowContentsWhileDragging;
+            RemoteDesktop_OverrideMenuAndWindowAnimation = profile.RemoteDesktop_OverrideMenuAndWindowAnimation;
+            RemoteDesktop_MenuAndWindowAnimation = profile.RemoteDesktop_MenuAndWindowAnimation;
+            RemoteDesktop_OverrideVisualStyles = profile.RemoteDesktop_OverrideVisualStyles;
+            RemoteDesktop_VisualStyles = profile.RemoteDesktop_VisualStyles;
+
+            PowerShell_Enabled = profile.PowerShell_Enabled;
+            PowerShell_EnableRemoteConsole = profile.PowerShell_EnableRemoteConsole;
+            PowerShell_InheritHost = profile.PowerShell_InheritHost;
+            PowerShell_Host = profile.PowerShell_Host;
+            PowerShell_OverrideAdditionalCommandLine = profile.PowerShell_OverrideAdditionalCommandLine;
+            PowerShell_AdditionalCommandLine = profile.PowerShell_AdditionalCommandLine;
+            PowerShell_OverrideExecutionPolicy = profile.PowerShell_OverrideExecutionPolicy;
+            PowerShell_ExecutionPolicy = profile.PowerShell_ExecutionPolicy;
+
+            PuTTY_Enabled = profile.PuTTY_Enabled;
+            PuTTY_ConnectionMode = profile.PuTTY_ConnectionMode;
+            PuTTY_InheritHost = profile.PuTTY_InheritHost;
+            PuTTY_HostOrSerialLine = profile.PuTTY_HostOrSerialLine;
+            PuTTY_OverridePortOrBaud = profile.PuTTY_OverridePortOrBaud;
+            PuTTY_PortOrBaud = profile.PuTTY_PortOrBaud;
+            PuTTY_OverrideUsername = profile.PuTTY_OverrideUsername;
+            PuTTY_Username = profile.PuTTY_Username;
+            PuTTY_OverridePrivateKeyFile = profile.PuTTY_OverridePrivateKeyFile;
+            PuTTY_PrivateKeyFile = profile.PuTTY_PrivateKeyFile;
+            PuTTY_OverrideProfile = profile.PuTTY_OverrideProfile;
+            PuTTY_Profile = profile.PuTTY_Profile;
+            PuTTY_OverrideEnableLog = profile.PuTTY_OverrideEnableLog;
+            PuTTY_EnableLog = profile.PuTTY_EnableLog;
+            PuTTY_OverrideLogMode = profile.PuTTY_OverrideLogMode;
+            PuTTY_LogMode = profile.PuTTY_LogMode;
+            PuTTY_OverrideLogPath = profile.PuTTY_OverrideLogPath;
+            PuTTY_LogPath = profile.PuTTY_LogPath;
+            PuTTY_OverrideLogFileName = profile.PuTTY_OverrideLogFileName;
+            PuTTY_LogFileName = profile.PuTTY_LogFileName;
+            PuTTY_OverrideAdditionalCommandLine = profile.PuTTY_OverrideAdditionalCommandLine;
+            PuTTY_AdditionalCommandLine = profile.PuTTY_AdditionalCommandLine;
+
+            TigerVNC_Enabled = profile.TigerVNC_Enabled;
+            TigerVNC_InheritHost = profile.TigerVNC_InheritHost;
+            TigerVNC_Host = profile.TigerVNC_Host;
+            TigerVNC_OverridePort = profile.TigerVNC_OverridePort;
+            TigerVNC_Port = profile.TigerVNC_Port;
+
+            WebConsole_Enabled = profile.WebConsole_Enabled;
+            WebConsole_Url = profile.WebConsole_Url;
+
+            WakeOnLAN_Enabled = profile.WakeOnLAN_Enabled;
+            WakeOnLAN_MACAddress = profile.WakeOnLAN_MACAddress;
+            WakeOnLAN_Broadcast = profile.WakeOnLAN_Broadcast;
+            WakeOnLAN_OverridePort = profile.WakeOnLAN_OverridePort;
+            WakeOnLAN_Port = profile.WakeOnLAN_Port;
+
+            Whois_Enabled = profile.Whois_Enabled;
+            Whois_InheritHost = profile.Whois_InheritHost;
+            Whois_Domain = profile.Whois_Domain;
         }
     }
 }

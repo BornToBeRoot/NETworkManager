@@ -12,6 +12,8 @@
              xmlns:controls="clr-namespace:NETworkManager.Controls"
              xmlns:controls2="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:loadingIndicators="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
     <UserControl.InputBindings>
@@ -152,7 +154,7 @@
                                     <ColumnDefinition Width="10" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Networks}" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,0" />                                
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Networks}" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,0" />
                                 <CheckBox Grid.Column="4" Grid.Row="0" Content="{x:Static localization:Strings.GHz2dot4}" IsChecked="{Binding Show2dot4GHzNetworks}" />
                                 <CheckBox Grid.Column="6" Grid.Row="0" Content="{x:Static localization:Strings.GHz5}" IsChecked="{Binding Show5GHzNetworks}" />
                                 <TextBox x:Name="TextBoxSearch" Grid.Column="8" Grid.Row="0" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
@@ -160,7 +162,39 @@
                             <controls2:MultiSelectDataGrid Grid.Row="2" Visibility="{Binding IsNetworksLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding NetworksView}" SelectedItem="{Binding SelectedNetwork}" SelectedItemsList="{Binding SelectedNetworks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <controls2:MultiSelectDataGrid.Resources>
                                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                                    <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                        <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                                            <MenuItem.Icon>
+                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                    <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                        <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                                            <MenuItem.Icon>
+                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
                                 </controls2:MultiSelectDataGrid.Resources>
+                                <controls2:MultiSelectDataGrid.RowStyle>
+                                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
+                                                <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </controls2:MultiSelectDataGrid.RowStyle>
                                 <controls2:MultiSelectDataGrid.Columns>
                                     <DataGridTemplateColumn SortMemberPath="ChannelCenterFrequencyInKilohertz" >
                                         <DataGridTemplateColumn.CellTemplate>
@@ -259,8 +293,8 @@
                                     <DataGridTextColumn Header="{x:Static localization:Strings.NetworkKind}" Binding="{Binding NetworkKind}" SortMemberPath="NetworkKind" />
                                     <DataGridTextColumn Header="{x:Static localization:Strings.BeaconInterval}" Binding="{Binding BeaconInterval, Converter={StaticResource TimeSpanToMillisecondConverter}}" SortMemberPath="BeaconInterval" />
                                     <DataGridTextColumn Header="{x:Static localization:Strings.Uptime}" Binding="{Binding Uptime, Converter={StaticResource TimeSpanToStringConverter}}" SortMemberPath="Uptime" />
-                                </controls2:MultiSelectDataGrid.Columns>
-                            </controls2:MultiSelectDataGrid>                          
+                                </controls2:MultiSelectDataGrid.Columns>                             
+                            </controls2:MultiSelectDataGrid>
                             <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.NoWiFiNetworksFound}">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">

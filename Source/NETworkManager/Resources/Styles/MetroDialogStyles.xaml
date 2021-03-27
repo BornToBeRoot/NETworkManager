@@ -25,10 +25,9 @@
                         <ContentPresenter Grid.Row="0" AutomationProperties.Name="Dialog top" Content="{TemplateBinding DialogTop}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid Grid.Row="1" >
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10*" />
-                                <ColumnDefinition Width="80*" MaxWidth="840" />
-                                <!-- Adjust MaxHeight if Window.xaml MinWidth has changed -> 80% -->
-                                <ColumnDefinition Width="10*" />
+                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="90*" MaxWidth="1280" />
+                                <ColumnDefinition Width="5*" />
                             </Grid.ColumnDefinitions>
                             <!--  Content area  -->
                             <Grid Grid.Column="1" Margin="{TemplateBinding Padding}">

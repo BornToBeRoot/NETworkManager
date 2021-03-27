@@ -63,6 +63,7 @@ namespace NETworkManager.Settings
         public static bool WiFi_Show2dot4GHzNetworks => true;
         public static bool WiFi_Show5GHzNetworks => true;
         public static AutoRefreshTimeInfo WiFi_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
+        public static ExportManager.ExportFileType WiFi_ExportFileType => ExportManager.ExportFileType.CSV;
 
         // Application: IP Scanner
         public static int IPScanner_Threads => 256;
