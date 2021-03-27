@@ -2908,9 +2908,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>SSID</value>
   </data>
   <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
-    <value>Profil konnte nicht geladen werden!
-
-</value>
+    <value>Profil konnte nicht geladen werden!</value>
   </data>
   <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
     <value>Das Profil konnte nicht geladen werden und ist möglicherweise beschädigt. Wenn dies unerwartet ist oder auf ein Update zurückzuführen ist, melden Sie dieses Problem bitte auf GitHub!</value>
@@ -2977,5 +2975,94 @@ Die Anwendung wird anschließend neu gestartet!</value>
   </data>
   <data name="HiddenNetwork" xml:space="preserve">
     <value>Verstecktes Netzwerk</value>
+  </data>
+  <data name="DevelopedAndMaintainedByX" xml:space="preserve">
+    <value>Entwickelt und gepflegt von {0} mit Hilfe der</value>
+  </data>
+  <data name="ExternalService_ipify_Description" xml:space="preserve">
+    <value>Eine einfache API für öffentliche IP-Adressen</value>
+  </data>
+  <data name="Library_AirspaceFixer_Description" xml:space="preserve">
+    <value>AirspacePanel behebt alle Airspace-Probleme mit WPF-gehosteten Winforms.</value>
+  </data>
+  <data name="Library_ControlzEx_Description" xml:space="preserve">
+    <value>Shared Controlz für WPF und ... mehr</value>
+  </data>
+  <data name="Library_DnsClientNET_Description" xml:space="preserve">
+    <value>DnsClient.NET ist eine einfache, aber sehr leistungsfähige und hochperformante Open-Source-Bibliothek für das .NET Framework, um DNS-Lookups durchzuführen</value>
+  </data>
+  <data name="Library_Dragablz_Description" xml:space="preserve">
+    <value>Dragable und Tearable Tab Control für WPF</value>
+  </data>
+  <data name="Library_IPNetwork_Description" xml:space="preserve">
+    <value>Die C#-Bibliothek kümmert sich um komplexe Netzwerk-, IP-, IPv4-, IPv6-, Netzmasken-, CIDR-, Subnetz-, Subnetz-, Supernetz- und Supernetzberechnungen für .NET-Entwickler.</value>
+  </data>
+  <data name="Library_LiveCharts_Description" xml:space="preserve">
+    <value>Einfache, flexible, interaktive und leistungsstarke Diagramme, Karten und Messgeräte für .NET</value>
+  </data>
+  <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
+    <value>Eine Sammlung von Ladeindikatoren für WPF</value>
+  </data>
+  <data name="Library_MahAppsMetroIconPacks_Description" xml:space="preserve">
+    <value>Einige fantastische Icons für WPF und UWP alle zusammen...</value>
+  </data>
+  <data name="Library_MahAppsMetro_Description" xml:space="preserve">
+    <value>Ein Toolkit zum Erstellen von WPF-Apps im Metro/Modern UI-Stil.</value>
+  </data>
+  <data name="Library_NewtonsoftJson_Description" xml:space="preserve">
+    <value>Json.NET ist ein beliebtes Hochleistungs-JSON-Framework für .NET</value>
+  </data>
+  <data name="Library_Octokit_Description" xml:space="preserve">
+    <value>Eine GitHub-API-Client-Bibliothek für .NET</value>
+  </data>
+  <data name="Library_PSDicoveryProtocol_Description" xml:space="preserve">
+    <value>Erfassen und Analysieren von CDP- und LLDP-Paketen auf lokalen oder entfernten Computern</value>
+  </data>
+  <data name="Library_SharpSNMP_Description" xml:space="preserve">
+    <value>Sharp SNMP Library - Open Source SNMP für .NET und Mono</value>
+  </data>
+  <data name="Resource_Flag_Description" xml:space="preserve">
+    <value>Eine Sammlung aller Länderflaggen in SVG</value>
+  </data>
+  <data name="Resource_ListTLD_Description" xml:space="preserve">
+    <value>Liste der Top-Level-Domains von iana.org, die zur Abfrage von whois-Servern der TLD von whois.iana.org über Port 43 verwendet wird</value>
+  </data>
+  <data name="Resource_OUI_Description" xml:space="preserve">
+    <value>Bereinigte IEEE OUI-Daten von linuxnet.ca.</value>
+  </data>
+  <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
+    <value>Service Name and Transport Protocol Port Number Registry von iana.org.</value>
+  </data>
+  <data name="License_ApacheLicense2dot0" xml:space="preserve">
+    <value>Apache Lizenz 2.0</value>
+  </data>
+  <data name="License_BDS2Clause" xml:space="preserve">
+    <value>BSD-2-Clause</value>
+  </data>
+  <data name="License_MITLicense" xml:space="preserve">
+    <value>MIT-Lizenz</value>
+  </data>
+  <data name="License_Unlicense" xml:space="preserve">
+    <value>Unlizenziert</value>
+  </data>
+  <data name="Library_CsWinRT_Description" xml:space="preserve">
+    <value>C#/WinRT bietet Unterstützung für die gepackte WinRT-Projektion für die C#-Sprache.</value>
+  </data>
+  <data name="Library_PowerShellSDK_Description" xml:space="preserve">
+    <value>Laufzeit für das Hosting von PowerShell</value>
+  </data>
+  <data name="Library_WebView2_Description" xml:space="preserve">
+    <value>Mit dem WebView2-Steuerelement können Sie Webtechnologien (HTML, CSS und JavaScript) in Ihre nativen Anwendungen einbetten, die von Microsoft Edge (Chromium) betrieben werden.</value>
+  </data>
+  <data name="Library_XamlBehaviorsWpf_Description" xml:space="preserve">
+    <value>Fügen Sie Ihren Anwendungen mit XAML Behaviors für WPF auf einfache Weise Interaktivität hinzu.</value>
+  </data>
+  <data name="License_MicrosoftWebView2License" xml:space="preserve">
+    <value>Microsoft WebView2 Lizenz</value>
+  </data>
+  <data name="WarningMessage_ProfileFileNotEncryptedStoringPasswords" xml:space="preserve">
+    <value>Die aktuelle Profildatei ist nicht verschlüsselt und Passwörter werden unverschlüsselt auf der Festplatte gespeichert! 
+
+Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile, um die Anmeldeinformationen sicher zu speichern.</value>
   </data>
 </root>
