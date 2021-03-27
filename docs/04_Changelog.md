@@ -17,12 +17,13 @@ Date: **xx.xx.2021**
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Archiv.zip){:target="_blank"}| `9996197F0F58A7A23F0A78DB7336D4201F98F1C6E8CCD7D02BF97095C5A6DDA8` |
 
 ## What's new?
-- Credentials for remote desktop can be stored in the profile. You should encrypt the profile file in the Settings>Profile with a master password and create a backup of your profile files. [#378](https://github.com/BornToBeRoot/NETworkManager/issues/378){:target="_blank"}
-- Korean language added [#584](https://github.com/BornToBeRoot/NETworkManager/issues/584){:target="_blank"}
+- Remote Desktop - Credentials can be stored in the profile. You should encrypt the profile file in the Settings>Profile with a master password and create a backup of your profile files. [#378](https://github.com/BornToBeRoot/NETworkManager/issues/378){:target="_blank"}
+- WiFi - export as CSV, XML or JSON added [#429](https://github.com/BornToBeRoot/NETworkManager/issues/429){:target="_blank"}
+- Language Korean (ko-KR) added [#584](https://github.com/BornToBeRoot/NETworkManager/issues/584){:target="_blank"}
 
 ## Improvements
-- SNMP Community/Priv/Auth text boxes replaced with password boxes [#128](https://github.com/BornToBeRoot/NETworkManager/issues/128){:target="_blank"}
-- Min window size set to 1280x798 to display profile dialog correct [#378](https://github.com/BornToBeRoot/NETworkManager/issues/378){:target="_blank"} 
+- SNMP - Community/Priv/Auth text boxes replaced with password boxes [#128](https://github.com/BornToBeRoot/NETworkManager/issues/128){:target="_blank"}
+- Minimum window size set to 1280x798 to display the profile dialog correct [#378](https://github.com/BornToBeRoot/NETworkManager/issues/378){:target="_blank"} 
 
 ## Bugfixes
 - Profile dialog height fixed [#594](https://github.com/BornToBeRoot/NETworkManager/issues/594){:target="_blank"}
@@ -35,7 +36,7 @@ Date: **xx.xx.2021**
 ## Other
 - Code refactored / cleanup
   - async void with async task replaced [#383](https://github.com/BornToBeRoot/NETworkManager/issues/383){:target="_blank"}
-- Percent completed in the settings\language removed, because the statistics are broken and hard to maintain because of the transifex github integration [#584](https://github.com/BornToBeRoot/NETworkManager/issues/584){:target="_blank"}
+- Percent completed in the settings\language removed, because the statistics are broken and hard to maintain since the transifex github integration was added [#584](https://github.com/BornToBeRoot/NETworkManager/issues/584){:target="_blank"}
 -->
 
 # Version 2021.3.14.0

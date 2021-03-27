@@ -637,6 +637,36 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
+
+        private string _wiFi_ExportFilePath;
+        public string WiFi_ExportFilePath
+        {
+            get => _wiFi_ExportFilePath;
+            set
+            {
+                if (value == _wiFi_ExportFilePath)
+                    return;
+
+                _wiFi_ExportFilePath = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _wiFi_ExportFileType = GlobalStaticConfiguration.WiFi_ExportFileType;
+        public ExportManager.ExportFileType WiFi_ExportFileType
+        {
+            get => _wiFi_ExportFileType;
+            set
+            {
+                if (value == _wiFi_ExportFileType)
+                    return;
+
+                _wiFi_ExportFileType = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region IPScanner        

@@ -26,6 +26,30 @@ namespace NETworkManager.Models.Export
 
         #region Export
         /// <summary>
+        /// Method to export objects from type <see cref="WiFiNetworkInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{WiFiNetworkInfo}"/> to export.</param>
+        public static void Export(string filePath, ExportFileType fileType, ObservableCollection<WiFiNetworkInfo> collection)
+        {
+            switch (fileType)
+            {
+                case ExportFileType.CSV:
+                    CreateCSV(collection, filePath);
+                    break;
+                case ExportFileType.XML:
+                    CreateXML(collection, filePath);
+                    break;
+                case ExportFileType.JSON:
+                    CreateJSON(collection, filePath);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
+            }
+        }
+
+        /// <summary>
         /// Method to export objects from type <see cref="HostInfo"/> to a file.
         /// </summary>
         /// <param name="filePath">Path to the export file.</param>
@@ -325,6 +349,18 @@ namespace NETworkManager.Models.Export
         #endregion
 
         #region CreateCSV
+        private static void CreateCSV(IEnumerable<WiFiNetworkInfo> collection, string filePath)
+        {
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"{nameof(WiFiNetworkInfo.BSSID)},{nameof(WiFiNetworkInfo.SSID)},{nameof(WiFiNetworkInfo.ChannelCenterFrequencyInKilohertz)},{nameof(WiFiNetworkInfo.SignalBars)},{nameof(WiFiNetworkInfo.IsWiFiDirect)},{nameof(WiFiNetworkInfo.NetworkRssiInDecibelMilliwatts)},{nameof(WiFiNetworkInfo.PhyKind)},{nameof(WiFiNetworkInfo.NetworkKind)},{nameof(WiFiNetworkInfo.AuthenticationType)},{nameof(WiFiNetworkInfo.EncryptionType)},{nameof(WiFiNetworkInfo.BeaconInterval)}.{nameof(WiFiNetworkInfo.Uptime)}");
+
+            foreach (var info in collection)
+                stringBuilder.AppendLine($"{info.BSSID},{info.SSID},{info.ChannelCenterFrequencyInKilohertz},{info.SignalBars},{info.IsWiFiDirect},{info.NetworkRssiInDecibelMilliwatts},{info.PhyKind},{info.NetworkKind},{info.AuthenticationType},{info.EncryptionType},{info.BeaconInterval},{info.Uptime}");
+
+            System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        }
+
         private static void CreateCSV(IEnumerable<HostInfo> collection, string filePath)
         {
             var stringBuilder = new StringBuilder();
@@ -471,6 +507,32 @@ namespace NETworkManager.Models.Export
         #endregion
 
         #region CreateXML
+        public static void CreateXML(IEnumerable<WiFiNetworkInfo> collection, string filePath)
+        {
+            var document = new XDocument(DefaultXDeclaration,
+
+                new XElement(ApplicationName.IPScanner.ToString(),
+                    new XElement(nameof(HostInfo) + "s",
+
+                    from info in collection
+                    select
+                        new XElement(nameof(HostInfo),
+                            new XElement(nameof(WiFiNetworkInfo.BSSID), info.BSSID),
+                            new XElement(nameof(WiFiNetworkInfo.SSID), info.SSID),
+                            new XElement(nameof(WiFiNetworkInfo.ChannelCenterFrequencyInKilohertz), info.ChannelCenterFrequencyInKilohertz),
+                            new XElement(nameof(WiFiNetworkInfo.SignalBars), info.SignalBars),
+                            new XElement(nameof(WiFiNetworkInfo.IsWiFiDirect), info.IsWiFiDirect),
+                            new XElement(nameof(WiFiNetworkInfo.NetworkRssiInDecibelMilliwatts), info.NetworkRssiInDecibelMilliwatts),
+                            new XElement(nameof(WiFiNetworkInfo.PhyKind), info.PhyKind),
+                            new XElement(nameof(WiFiNetworkInfo.NetworkKind), info.NetworkKind),
+                            new XElement(nameof(WiFiNetworkInfo.AuthenticationType), info.AuthenticationType),
+                            new XElement(nameof(WiFiNetworkInfo.EncryptionType), info.EncryptionType),
+                            new XElement(nameof(WiFiNetworkInfo.BeaconInterval), info.BeaconInterval),
+                            new XElement(nameof(WiFiNetworkInfo.Uptime), info.Uptime)))));
+
+            document.Save(filePath);
+        }
+
         public static void CreateXML(IEnumerable<HostInfo> collection, string filePath)
         {
             var document = new XDocument(DefaultXDeclaration,
@@ -708,6 +770,32 @@ namespace NETworkManager.Models.Export
 
         #region CreateJSON
         // This might be a horror to maintain, but i have no other idea...
+        public static void CreateJSON(ObservableCollection<WiFiNetworkInfo> collection, string filePath)
+        {
+            var jsonData = new object[collection.Count];
+
+            for (var i = 0; i < collection.Count; i++)
+            {
+                jsonData[i] = new
+                {
+                    collection[i].BSSID,
+                    collection[i].SSID,
+                    ChannelCenterFrequencyInKilohertz = collection[i].SSID.ToString(),
+                    SignalBars = collection[i].SignalBars.ToString(),
+                    IsWiFiDirect = collection[i].IsWiFiDirect.ToString(),
+                    NetworkRssiInDecibelMilliwatts = collection[i].NetworkRssiInDecibelMilliwatts.ToString(),
+                    PhyKind = collection[i].PhyKind.ToString(),
+                    NetworkKind = collection[i].NetworkKind.ToString(),
+                    AuthenticationType = collection[i].AuthenticationType.ToString(),
+                    EncryptionType = collection[i].EncryptionType.ToString(),
+                    BeaconInterval = collection[i].BeaconInterval.ToString(),
+                    Uptime = collection[i].Uptime.ToString()
+                };
+            }
+
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        }
+
         public static void CreateJSON(ObservableCollection<HostInfo> collection, string filePath)
         {
             var jsonData = new object[collection.Count];
@@ -967,7 +1055,6 @@ namespace NETworkManager.Models.Export
                     return string.Empty;
             }
         }
-
-#endregion
+        #endregion
     }
 }
