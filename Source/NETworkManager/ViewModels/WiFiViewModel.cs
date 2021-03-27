@@ -1,8 +1,11 @@
 ﻿using LiveCharts;
 using LiveCharts.Wpf;
+using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Views;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,6 +24,8 @@ namespace NETworkManager.ViewModels
     public class WiFiViewModel : ViewModelBase
     {
         #region  Variables 
+        private readonly IDialogCoordinator _dialogCoordinator;
+
         private readonly bool _isLoading;
         private readonly DispatcherTimer _autoRefreshTimer = new DispatcherTimer();
         private bool _isTimerPaused;
@@ -304,9 +309,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Constructor, load settings
-        public WiFiViewModel()
+        public WiFiViewModel(IDialogCoordinator instance)
         {
             _isLoading = true;
+
+            _dialogCoordinator = instance;
 
             // Result view + search
             NetworksView = CollectionViewSource.GetDefaultView(Networks);
@@ -368,6 +375,13 @@ namespace NETworkManager.ViewModels
         private async Task ScanNetworksAction()
         {
             await ScanNetworks(SelectedAdapter.WiFiAdapter, true);
+        }
+
+        public ICommand ExportCommand => new RelayCommand(p => ExportAction());
+
+        private void ExportAction()
+        {
+            Export();
         }
         #endregion
 
@@ -549,6 +563,41 @@ namespace NETworkManager.ViewModels
 
             _autoRefreshTimer.Start();
             _isTimerPaused = false;
+        }
+
+        private async Task Export()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.Export
+            };
+
+            var exportViewModel = new ExportViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                try
+                {
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Networks : new ObservableCollection<WiFiNetworkInfo>(SelectedNetworks.Cast<WiFiNetworkInfo>().ToArray()));
+                }
+                catch (Exception ex)
+                {
+                    var settings = AppearanceManager.MetroDialog;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
+                }
+
+                SettingsManager.Current.WiFi_ExportFileType = instance.FileType;
+                SettingsManager.Current.WiFi_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.CSV, ExportManager.ExportFileType.XML, ExportManager.ExportFileType.JSON }, true, SettingsManager.Current.WiFi_ExportFileType, SettingsManager.Current.WiFi_ExportFilePath);
+
+            customDialog.Content = new ExportDialog
+            {
+                DataContext = exportViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public void OnViewVisible()
