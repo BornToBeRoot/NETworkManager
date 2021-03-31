@@ -3090,8 +3090,8 @@ Quindi l'applicazione verrà riavviata!
     <value>Licenza Microsoft WebView2</value>
   </data>
   <data name="WarningMessage_ProfileFileNotEncryptedStoringPasswords" xml:space="preserve">
-    <value>The current profile file is not encrypted and passwords will stored unencrypted on disk! 
+    <value>Il file del profilo attuale non è crittografato e le password verranno archiviate su disco non crittografate!
 
-Enable profile file encryption in Settings&gt;Profile to store credentials securely.</value>
+Per archiviare le credenziali in modo sicuro abilita la crittografia del file del profilo in Impostazioni -&gt; Profilo .</value>
   </data>
 </root>
