@@ -2976,4 +2976,93 @@ L'application sera redémarrée par la suite!</value>
   <data name="HiddenNetwork" xml:space="preserve">
     <value>Réseau masqué</value>
   </data>
+  <data name="DevelopedAndMaintainedByX" xml:space="preserve">
+    <value>Développé et maintenu par {0} avec l'aide du</value>
+  </data>
+  <data name="ExternalService_ipify_Description" xml:space="preserve">
+    <value>Une API simple adresse IP publique</value>
+  </data>
+  <data name="Library_AirspaceFixer_Description" xml:space="preserve">
+    <value>AirspacePanel corrige tous les problèmes d'espace aérien avec les Winforms hébergés par WPF.</value>
+  </data>
+  <data name="Library_ControlzEx_Description" xml:space="preserve">
+    <value>Contrôles partagés pour WPF et ... plus</value>
+  </data>
+  <data name="Library_DnsClientNET_Description" xml:space="preserve">
+    <value>DnsClient.NET est une bibliothèque open source simple mais très puissante et hautement performante pour le .NET Framework pour effectuer des recherches DNS</value>
+  </data>
+  <data name="Library_Dragablz_Description" xml:space="preserve">
+    <value>Contrôle d'onglet déplaçable et déchirable pour WPF</value>
+  </data>
+  <data name="Library_IPNetwork_Description" xml:space="preserve">
+    <value>La bibliothèque C# prend en charge les calculs complexes de réseau, IP, IPv4, IPv6, masque de réseau, CIDR, sous-réseau, sous-réseau, sur-réseau et sur-réseau pour les développeurs .NET.</value>
+  </data>
+  <data name="Library_LiveCharts_Description" xml:space="preserve">
+    <value>Graphiques, cartes et jauges simples, flexibles, interactifs et puissants pour .Net</value>
+  </data>
+  <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
+    <value>Une collection d'indicateurs de chargement pour WPF</value>
+  </data>
+  <data name="Library_MahAppsMetroIconPacks_Description" xml:space="preserve">
+    <value>Quelques icônes impressionnantes pour WPF et UWP tous ensemble...</value>
+  </data>
+  <data name="Library_MahAppsMetro_Description" xml:space="preserve">
+    <value>Boîte à outils pour créer des applications WPF de style Metro / Modern UI.</value>
+  </data>
+  <data name="Library_NewtonsoftJson_Description" xml:space="preserve">
+    <value>Json.NET est un framework JSON haute performance populaire pour .NET</value>
+  </data>
+  <data name="Library_Octokit_Description" xml:space="preserve">
+    <value>Une bibliothèque cliente d'API GitHub pour .NET</value>
+  </data>
+  <data name="Library_PSDicoveryProtocol_Description" xml:space="preserve">
+    <value>Capturez et analysez les paquets CDP et LLDP sur des ordinateurs locaux ou distants</value>
+  </data>
+  <data name="Library_SharpSNMP_Description" xml:space="preserve">
+    <value>Bibliothèque SNMP Sharp - SNMP Open Source pour .NET et Mono</value>
+  </data>
+  <data name="Resource_Flag_Description" xml:space="preserve">
+    <value>Une collection de tous les drapeaux de pays en SVG</value>
+  </data>
+  <data name="Resource_ListTLD_Description" xml:space="preserve">
+    <value>Liste des domaines de premier niveau de iana.org, qui est utilisée pour interroger les serveurs whois du TLD à partir de whois.iana.org via le port 43</value>
+  </data>
+  <data name="Resource_OUI_Description" xml:space="preserve">
+    <value>Données IEEE OUI désinfectées de linuxnet.ca.</value>
+  </data>
+  <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
+    <value>Registre des noms de service et des numéros de port du protocole de transport sur iana.org.</value>
+  </data>
+  <data name="License_ApacheLicense2dot0" xml:space="preserve">
+    <value>Licence Apache 2.0</value>
+  </data>
+  <data name="License_BDS2Clause" xml:space="preserve">
+    <value>Clause BSD-2</value>
+  </data>
+  <data name="License_MITLicense" xml:space="preserve">
+    <value>Licence MIT</value>
+  </data>
+  <data name="License_Unlicense" xml:space="preserve">
+    <value>Sans licence</value>
+  </data>
+  <data name="Library_CsWinRT_Description" xml:space="preserve">
+    <value>C#/WinRT fournit une prise en charge de la projection WinRT packagée pour le langage C#.</value>
+  </data>
+  <data name="Library_PowerShellSDK_Description" xml:space="preserve">
+    <value>Runtime pour l'hébergement de PowerShell</value>
+  </data>
+  <data name="Library_WebView2_Description" xml:space="preserve">
+    <value>Le contrôle WebView2 vous permet d'intégrer des technologies Web (HTML, CSS et JavaScript) dans vos applications natives optimisées par Microsoft Edge (Chromium).</value>
+  </data>
+  <data name="Library_XamlBehaviorsWpf_Description" xml:space="preserve">
+    <value>Ajoutez facilement de l'interactivité à vos applications à l'aide des comportements XAML pour WPF.</value>
+  </data>
+  <data name="License_MicrosoftWebView2License" xml:space="preserve">
+    <value>Licence Microsoft WebView2</value>
+  </data>
+  <data name="WarningMessage_ProfileFileNotEncryptedStoringPasswords" xml:space="preserve">
+    <value>Le fichier de profil actuel n'est pas chiffré et les mots de passe seront stockés non chiffrés sur le disque ! 
+
+Activez le cryptage des fichiers de profil dans Paramètres&gt; Profil pour stocker les infos d'identification en toute sécurité.</value>
+  </data>
 </root>
