@@ -583,7 +583,7 @@
     <value>속도</value>
   </data>
   <data name="StartMinimizedInTray" xml:space="preserve">
-    <value>트레이에서 최소화된 시작</value>
+    <value>트레이에서 최소화로 시작</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
     <value>Windows와 시작 (현재 사용자)</value>
@@ -2590,7 +2590,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>포트 스캐너</value>
   </data>
   <data name="ApplicationName_PowerShell" xml:space="preserve">
-    <value>파워셸</value>
+    <value>PowerShell</value>
   </data>
   <data name="ApplicationName_PuTTY" xml:space="preserve">
     <value>PuTTY</value>
@@ -2716,7 +2716,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>포트 스캐너</value>
   </data>
   <data name="ProfileViewName_PowerShell" xml:space="preserve">
-    <value>파워셀</value>
+    <value>PowerShell</value>
   </data>
   <data name="ProfileViewName_PuTTY" xml:space="preserve">
     <value>PuTTY</value>
@@ -2779,7 +2779,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>포트 스캐너</value>
   </data>
   <data name="SettingsViewName_PowerShell" xml:space="preserve">
-    <value>파워셸</value>
+    <value>PowerShell</value>
   </data>
   <data name="SettingsViewName_Profiles" xml:space="preserve">
     <value>프로필</value>
@@ -3061,8 +3061,8 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>Microsoft WebView2 라이센스</value>
   </data>
   <data name="WarningMessage_ProfileFileNotEncryptedStoringPasswords" xml:space="preserve">
-    <value>The current profile file is not encrypted and passwords will stored unencrypted on disk! 
+    <value>현재 프로파일 파일은 암호화되지 않고 암호가 디스크에 암호화되지 않은 상태로 저장됩니다!
 
-Enable profile file encryption in Settings&gt;Profile to store credentials securely.</value>
+설정&gt; 프로파일에서 프로파일 파일 암호화를 사용하여 자격 증명을 안전하게 저장하십시오.</value>
   </data>
 </root>
