@@ -4,19 +4,14 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
 {
-    public partial class DashboardView
+    public partial class NetworkConnectionView
     {
-        private readonly DashboardViewModel _viewModel = new DashboardViewModel();
+        private readonly NetworkConnectionViewModel _viewModel = new NetworkConnectionViewModel();
 
-        private NetworkConnectionView _networkConnectiondView;
-
-        public DashboardView()
+        public NetworkConnectionView()
         {
             InitializeComponent();
             DataContext = _viewModel;
-
-            _networkConnectiondView = new NetworkConnectionView();
-            ContentControlNetworkConnection.Content = _networkConnectiondView;
         }
 
         public void OnViewHide()
