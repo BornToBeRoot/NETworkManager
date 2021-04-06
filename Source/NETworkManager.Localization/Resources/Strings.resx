@@ -3065,4 +3065,10 @@ The application will be restarted afterwards!</value>
 
 Enable profile file encryption in Settings&gt;Profile to store credentials securely.</value>
   </data>
+  <data name="ICMPv4" xml:space="preserve">
+    <value>ICMPv4</value>
+  </data>
+  <data name="ICMPv6" xml:space="preserve">
+    <value>ICMPv6</value>
+  </data>
 </root>

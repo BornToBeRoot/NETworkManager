@@ -1,17 +1,8 @@
 ﻿using MahApps.Metro.Controls;
-using NETworkManager.Models.Network;
-using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -29,6 +20,7 @@ namespace NETworkManager
         #endregion
 
         #region Variables
+        private MainWindow _mainWindow;
         private NetworkConnectionView _networkConnectionView;
         #endregion
 
@@ -38,22 +30,51 @@ namespace NETworkManager
             InitializeComponent();
             DataContext = this;
 
+            _mainWindow = mainWindow;
+
             _networkConnectionView = new NetworkConnectionView();
             ContentControlNetworkConnection.Content = _networkConnectionView;
-        
         }
         #endregion
 
         #region ICommands & Actions
+        public ICommand ReloadCommand => new RelayCommand(p => ReloadAction());
+
+        private void ReloadAction()
+        {
+            Reload();
+        }
+
+        public ICommand ShowMainWindowCommand => new RelayCommand(p => ShowMainWindowAction());
+        
+        private void ShowMainWindowAction()
+        {
+            Hide();
+
+            if (_mainWindow.ShowWindowCommand.CanExecute(null))
+                _mainWindow.ShowWindowCommand.Execute(null);
+        }
+
+        public ICommand CloseCommand => new RelayCommand(p => CloseAction());
+
+        private void CloseAction()
+        {
+            Hide();
+        }
 
         #endregion
 
         #region Methods
+        private void Reload()
+        {
+            _networkConnectionView.Reload();
+        }
+
         public void ShowFromExternal()
         {
             ShowWindow();
-
-            //Refresh();
+            
+            Reload();
         }
 
         private void ShowWindow()
@@ -71,14 +92,12 @@ namespace NETworkManager
         #endregion
 
         #region Events
-
-        #endregion
-
         private void MetroWindow_Closing(object sender, CancelEventArgs e)
         {
             e.Cancel = true;
 
             Hide();
         }
+        #endregion                
     }
 }

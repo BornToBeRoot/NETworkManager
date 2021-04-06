@@ -29,6 +29,7 @@ using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Windows.Threading;
 using System.Threading.Tasks;
+using System.Net.NetworkInformation;
 
 namespace NETworkManager
 {
@@ -45,12 +46,12 @@ namespace NETworkManager
 
         #region Variables        
         private NotifyIcon _notifyIcon;
-        private StatusWindow statusWindow;
+        private StatusWindow _statusWindow;
 
         private readonly bool _isLoading;
         private bool _isProfileLoading;
         private bool _isProfileUpdating;
-        private bool isApplicationListLoading;
+        private bool _isApplicationListLoading;
 
         private bool _isInTray;
         private bool _closeApplication;
@@ -149,7 +150,7 @@ namespace NETworkManager
             get => _selectedApplication;
             set
             {
-                if (isApplicationListLoading)
+                if (_isApplicationListLoading)
                     return;
 
                 if (Equals(value, _selectedApplication))
@@ -407,7 +408,11 @@ namespace NETworkManager
                 HideWindowToTray();
 
             // Init status window
-            statusWindow = new StatusWindow(this);
+            _statusWindow = new StatusWindow(this);
+
+            // Detect if network address or status changed...
+            NetworkChange.NetworkAvailabilityChanged += (sender, args) => OnNetworkHasChanged();
+            NetworkChange.NetworkAddressChanged += (sender, args) => OnNetworkHasChanged();
 
             // Search for updates... 
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
@@ -416,7 +421,7 @@ namespace NETworkManager
 
         private void LoadApplicationList()
         {
-            isApplicationListLoading = true;
+            _isApplicationListLoading = true;
 
             // Create a new list if empty
             if (SettingsManager.Current.General_ApplicationList.Count == 0)
@@ -461,7 +466,7 @@ namespace NETworkManager
 
             SettingsManager.Current.General_ApplicationList.CollectionChanged += (sender, args) => Applications.Refresh();
 
-            isApplicationListLoading = false;
+            _isApplicationListLoading = false;
 
             // Select the application
             SelectedApplication = Applications.SourceCollection.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != ApplicationName.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
@@ -945,7 +950,7 @@ namespace NETworkManager
 
         #region Profiles
         private async Task LoadProfile(ProfileFileInfo info)
-        {            
+        {
             if (info.IsEncrypted && !info.IsPasswordValid)
             {
                 var customDialog = new CustomDialog
@@ -975,7 +980,7 @@ namespace NETworkManager
                 await this.ShowMetroDialogAsync(customDialog).ConfigureAwait(false);
             }
             else
-            {                
+            {
                 SwitchProfile(info);
             }
         }
@@ -1000,7 +1005,7 @@ namespace NETworkManager
                 IsProfileFileLocked = true;
 
                 ConfigurationManager.Current.FixAirspace = false;
-            }            
+            }
             catch (Exception ex)
             {
                 var settings = AppearanceManager.MetroDialog;
@@ -1011,7 +1016,7 @@ namespace NETworkManager
                 await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedAndMayBeCorruptedMessage, MessageDialogStyle.Affirmative, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
-            }         
+            }
         }
 
         /// <summary>
@@ -1322,7 +1327,7 @@ namespace NETworkManager
         {
             IsMouseOverApplicationList = true;
         }
-        
+
         public ICommand ApplicationListMouseLeaveCommand
         {
             get { return new RelayCommand(p => ApplicationListMouseLeaveAction()); }
@@ -1374,7 +1379,18 @@ namespace NETworkManager
         #region Status window
         private void OpenStatusWindow()
         {
-            statusWindow.ShowFromExternal();
+            _statusWindow.ShowFromExternal();
+        }
+
+        private void OnNetworkHasChanged()
+        {
+            if (!SettingsManager.Current.Status_ShowWindowOnNetworkChange)
+                return;
+
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                OpenStatusWindow();
+            }));
         }
         #endregion
 

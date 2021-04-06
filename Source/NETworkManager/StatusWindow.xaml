@@ -11,7 +11,7 @@
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
-        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" Height="300" Width="750" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" ShowMinButton="False" ShowMaxRestoreButton="False" Closing="MetroWindow_Closing">
+        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" Height="300" Width="750" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" ShowMinButton="False" ShowMaxRestoreButton="False" ShowCloseButton="False" ShowTitleBar="False" Closing="MetroWindow_Closing" >
     <mahAppsControls:MetroWindow.Resources>
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
@@ -19,6 +19,18 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
     </mahAppsControls:MetroWindow.Resources>
     <Grid Margin="10">
-        <ContentControl x:Name="ContentControlNetworkConnection" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ContentControl x:Name="ContentControlNetworkConnection" Grid.Row="0" />
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="{x:Static localization:Strings.Reload}" Command="{Binding ReloadCommand}" Style="{StaticResource DefaultButton}" Margin="0,0,10,0" />
+                <Button Content="{x:Static localization:Strings.Show}" Command="{Binding ShowMainWindowCommand}" Style="{StaticResource DefaultButton}" Margin="0,0,10,0" />
+                <Button Content="{x:Static localization:Strings.Close}" Command="{Binding CloseCommand}" Style="{StaticResource DefaultButton}" />
+            </StackPanel>            
+        </Grid>        
     </Grid>
 </mahAppsControls:MetroWindow>

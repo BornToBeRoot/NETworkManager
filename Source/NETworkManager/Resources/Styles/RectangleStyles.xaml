@@ -101,7 +101,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+ 
     <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
    <!-- <Style x:Key="HelpRectangle" TargetType="{x:Type Rectangle}">
         <Style.Resources>

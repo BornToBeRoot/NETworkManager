@@ -167,7 +167,7 @@ namespace NETworkManager.Models.Network
 
         public static IPAddress DetectLocalIPAddressBasedOnRouting(IPAddress remoteIPAddress)
         {
-            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
+            using (var socket = new Socket(remoteIPAddress.AddressFamily == AddressFamily.InterNetwork ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp))
             {
                 // return null on error...
                 try

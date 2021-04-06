@@ -5,6 +5,7 @@
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              mc:Ignorable="d"
@@ -49,6 +50,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -59,13 +62,31 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Rectangle Grid.Column="0" Grid.Row="0" Width="16" Height="16" Style="{StaticResource CheckRectangle}" />
-                        <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding ComputerIPv4}" Style="{StaticResource DefaultTextBlock}" />
-                        <Rectangle Grid.Column="0" Grid.Row="2" Width="16" Height="16" Style="{StaticResource AlertRectangle}" />
-                        <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding ComputerIPv6}" Style="{StaticResource DefaultTextBlock}" />
-                        <Rectangle Grid.Column="0" Grid.Row="4" Width="16" Height="16" Style="{StaticResource ErrorRectangle}" />
-                        <TextBlock Grid.Column="2" Grid.Row="4" Text="{Binding ComputerDNS}" Style="{StaticResource DefaultTextBlock}" />
+                        <mah:ProgressRing Grid.Column="0" Grid.Row="0" Height="16" Width="16" IsActive="{Binding IsComputerLoopbackIPv4Checking}"/>
+                        <Rectangle Grid.Column="0" Grid.Row="0" Width="16" Height="16" Style="{Binding ComputerLoopbackIPv4State, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsComputerLoopbackIPv4Checking, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="2" Grid.Row="0" Text="{x:Static localization:Strings.ICMPv4}" Style="{StaticResource DefaultTextBlock}" />
+                        <TextBlock Grid.Column="4" Grid.Row="0" Text="{Binding ComputerLoopbackIPv4}" Style="{StaticResource BoldTextBlock}" />
+                        <mah:ProgressRing Grid.Column="0" Grid.Row="2" Height="16" Width="16" IsActive="{Binding IsComputerIPv4Checking}"/>
+                        <Rectangle Grid.Column="0" Grid.Row="2" Width="16" Height="16" Style="{Binding ComputerIPv4State, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsComputerIPv4Checking, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="2" Grid.Row="2" Text="{x:Static localization:Strings.IPv4}" Style="{StaticResource DefaultTextBlock}" />
+                        <TextBlock Grid.Column="4" Grid.Row="2" Text="{Binding ComputerIPv4}" Style="{StaticResource BoldTextBlock}" />
+                        <mah:ProgressRing Grid.Column="0" Grid.Row="4" Height="16" Width="16" IsActive="{Binding IsComputerLoopbackIPv6Checking}"/>
+                        <Rectangle Grid.Column="0" Grid.Row="4" Width="16" Height="16" Style="{Binding ComputerLoopbackIPv6State, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsComputerLoopbackIPv6Checking, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="2" Grid.Row="4" Text="{x:Static localization:Strings.ICMPv6}" Style="{StaticResource DefaultTextBlock}" />
+                        <TextBlock Grid.Column="4" Grid.Row="4" Text="{Binding ComputerLoopbackIPv6}" Style="{StaticResource BoldTextBlock}" />
+                        <mah:ProgressRing Grid.Column="0" Grid.Row="6" Height="16" Width="16" IsActive="{Binding IsComputerIPv6Checking}"/>
+                        <Rectangle Grid.Column="0" Grid.Row="6" Width="16" Height="16" Style="{Binding ComputerIPv6State, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsComputerIPv6Checking, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="2" Grid.Row="6" Text="{x:Static localization:Strings.IPv6}" Style="{StaticResource DefaultTextBlock}" />
+                        <TextBlock Grid.Column="4" Grid.Row="6" Text="{Binding ComputerIPv6}" Style="{StaticResource BoldTextBlock}" />
+                        <mah:ProgressRing Grid.Column="0" Grid.Row="8" Height="16" Width="16" IsActive="{Binding IsComputerDNSChecking}"/>
+                        <Rectangle Grid.Column="0" Grid.Row="8" Width="16" Height="16" Style="{Binding ComputerDNSState, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}" Visibility="{Binding IsComputerDNSChecking, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                        <TextBlock Grid.Column="2" Grid.Row="8" Text="{x:Static localization:Strings.DNS}" Style="{StaticResource DefaultTextBlock}" />
+                        <TextBlock Grid.Column="4" Grid.Row="8" Text="{Binding ComputerDNS}" Style="{StaticResource BoldTextBlock}" />
                     </Grid>
                 </Grid>
             </Grid>

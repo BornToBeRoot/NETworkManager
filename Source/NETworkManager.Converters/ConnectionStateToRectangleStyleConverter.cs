@@ -16,7 +16,6 @@ namespace NETworkManager.Converters
                 {
                     case ConnectionState.None:
                         break;
-                        //return Application.Current.Resources["HelpRectangle"] as Style;
                     case ConnectionState.OK:
                         return Application.Current.Resources["CheckRectangle"] as Style;
                     case ConnectionState.Warning:

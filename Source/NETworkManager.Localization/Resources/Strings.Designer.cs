@@ -3506,6 +3506,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ICMPv4.
+        /// </summary>
+        public static string ICMPv4 {
+            get {
+                return ResourceManager.GetString("ICMPv4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ICMPv6.
+        /// </summary>
+        public static string ICMPv6 {
+            get {
+                return ResourceManager.GetString("ICMPv6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID.
         /// </summary>
         public static string ID {
