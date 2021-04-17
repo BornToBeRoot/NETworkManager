@@ -11,8 +11,8 @@ namespace NETworkManager.ViewModels
     public class DashboardViewModel : ViewModelBase
     {
         #region  Variables 
-        public ICollectionView Profiles { get; }
-        private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
+        //public ICollectionView Profiles { get; }
+        //private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
 
         private string _search;
         public string Search
@@ -25,7 +25,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                StartDelayedSearch();
+                //StartDelayedSearch();
 
                 OnPropertyChanged();
             }
@@ -51,6 +51,7 @@ namespace NETworkManager.ViewModels
 
         public DashboardViewModel()
         {
+            /*
             Profiles = new CollectionViewSource
             {
                 Source = ProfileManager.Profiles
@@ -76,6 +77,7 @@ namespace NETworkManager.ViewModels
 
             _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+            */
 
             LoadSettings();
         }
@@ -91,6 +93,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
+        /*
         private void StartDelayedSearch()
         {
             if (!IsSearching)
@@ -114,6 +117,7 @@ namespace NETworkManager.ViewModels
 
             IsSearching = false;
         }
+        */
 
         public void OnViewVisible()
         {
@@ -125,17 +129,21 @@ namespace NETworkManager.ViewModels
 
         }
 
+        /*
         public void RefreshProfiles()
         {
             Profiles.Refresh();
         }
+        */
         #endregion
 
         #region Events
+        /*
         private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
         {
             StopDelayedSearch();
         }
+        */
         #endregion
     }
 }

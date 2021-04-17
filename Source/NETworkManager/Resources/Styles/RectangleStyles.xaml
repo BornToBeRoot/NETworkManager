@@ -103,7 +103,8 @@
     </Style>
  
     <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
-   <!-- <Style x:Key="HelpRectangle" TargetType="{x:Type Rectangle}">
+    <!--
+    <Style x:Key="HelpRectangle" TargetType="{x:Type Rectangle}">
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
@@ -113,8 +114,21 @@
                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=HelpCircleOutline}"/>
             </Setter.Value>
         </Setter>
-    </Style> -->
-
+    </Style>
+    -->
+    
+    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+    <Style x:Key="InfoRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationOutline}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
     <Style x:Key="HiddenRectangle" TargetType="{x:Type Rectangle}">

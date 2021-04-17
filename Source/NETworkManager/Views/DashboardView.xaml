@@ -28,13 +28,14 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <ContentControl x:Name="ContentControlNetworkConnection" Grid.Column="0" />
+                <!--
                 <Grid Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <TextBox Grid.Row="0" VerticalAlignment="Center" Width="250" Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                    </Grid.RowDefinitions>                    
+                    <TextBox Grid.Row="0" VerticalAlignment="Center" Width="250" Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />                    
                     <ListView Grid.Row="2" ItemsSource="{Binding Profiles}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -63,7 +64,8 @@
                     </ListView>
                     <mah:ProgressRing Grid.Row="2" Height="50" Width="50" IsActive="{Binding IsSearching}"/>
                 </Grid>
-            </Grid>
+                -->
+            </Grid>                
         </TabItem>
     </TabControl>
 </UserControl>
