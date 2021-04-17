@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using NETworkManager.ViewModels;
 
@@ -22,6 +21,11 @@ namespace NETworkManager.Views
         }
 
         public void Reload()
+        {
+            _viewModel.CheckConnection();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             _viewModel.CheckConnection();
         }
