@@ -22,6 +22,8 @@ namespace NETworkManager.Converters
                         return Application.Current.Resources["AlertRectangle"] as Style;
                     case ConnectionState.Critical:
                         return Application.Current.Resources["ErrorRectangle"] as Style;
+                    case ConnectionState.Info:
+                        return Application.Current.Resources["InfoRectangle"] as Style;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
