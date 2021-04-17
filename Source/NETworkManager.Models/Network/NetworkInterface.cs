@@ -193,14 +193,24 @@ namespace NETworkManager.Models.Network
         {
             foreach (var networkInterface in GetNetworkInterfaces())
             {
-                if (networkInterface.IPv4Address.Contains(localIPAddress))
+                if (localIPAddress.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    return networkInterface.IPv4Gateway.FirstOrDefault();
-                }
 
-                if (networkInterface.IPv6Address.Contains(localIPAddress))
+                    if (networkInterface.IPv4Address.Contains(localIPAddress))
+                    {
+                        return networkInterface.IPv4Gateway.FirstOrDefault();
+                    }
+                }
+                else if (localIPAddress.AddressFamily == AddressFamily.InterNetworkV6)
                 {
-                    return networkInterface.IPv4Gateway.FirstOrDefault();
+                    if (networkInterface.IPv6Address.Contains(localIPAddress))
+                    {
+                        return networkInterface.IPv6Gateway.FirstOrDefault();
+                    }
+                }
+                else
+                {
+                    throw new Exception("IPv4 or IPv6 address is required to detect the gateway.");
                 }
             }
 
