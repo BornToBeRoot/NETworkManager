@@ -65,9 +65,10 @@
     </mahAppsControls:MetroWindow.WindowButtonCommands>
     <mahAppsControls:MetroWindow.LeftWindowCommands>
         <mahAppsControls:WindowCommands ShowLastSeparator="False">
-            <StackPanel Orientation="Horizontal">
+            <!-- Fix some design issues with margin -2 and -1 -->
+            <StackPanel Orientation="Horizontal" Margin="-2,-1,0,0">
                 <Grid Background="{DynamicResource MahApps.Brushes.Gray8}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                    <TextBlock Text="Administrator" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Style="{StaticResource CenterTextBlock}" Margin="10,0"/>
+                    <TextBlock Text="Administrator" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Style="{StaticResource CenterTextBlock}" Margin="10,0" />
                 </Grid>              
             </StackPanel>
         </mahAppsControls:WindowCommands>
