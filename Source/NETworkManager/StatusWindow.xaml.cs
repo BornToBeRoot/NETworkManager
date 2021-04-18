@@ -46,7 +46,7 @@ namespace NETworkManager
         }
 
         public ICommand ShowMainWindowCommand => new RelayCommand(p => ShowMainWindowAction());
-        
+
         private void ShowMainWindowAction()
         {
             Hide();
@@ -70,14 +70,11 @@ namespace NETworkManager
             _networkConnectionView.Reload();
         }
 
-        public void ShowFromExternal()
-        {
-            ShowWindow();
-            
-            Reload();
-        }
-
-        private void ShowWindow()
+        /// <summary>
+        /// Show the window on the screen.
+        /// </summary>
+        /// <param name="activate">Focus the window (will automatically hide if the focus is lost).</param>
+        public void ShowWindow(bool activate)
         {
             // Show on primary screen in left/bottom corner
             // ToDo: User setting...
@@ -86,18 +83,28 @@ namespace NETworkManager
 
             Show();
 
-            // ToDo: User setting...
+            if (activate)
+                Activate();
+
             Topmost = true;
         }
         #endregion
 
         #region Events
+        private void MetroWindow_Deactivated(object sender, System.EventArgs e)
+        {
+            Hide();
+        }
+
         private void MetroWindow_Closing(object sender, CancelEventArgs e)
         {
             e.Cancel = true;
 
             Hide();
         }
-        #endregion                
+
+        #endregion
+
+
     }
 }

@@ -11,7 +11,7 @@
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
-        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" Height="350" Width="950" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" ShowMinButton="False" ShowMaxRestoreButton="False" ShowCloseButton="False" ShowTitleBar="False" Closing="MetroWindow_Closing" >
+        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" Deactivated="MetroWindow_Deactivated" Height="280" Width="950" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" ShowMinButton="False" ShowMaxRestoreButton="False" ShowCloseButton="False" ShowTitleBar="False" Closing="MetroWindow_Closing" >
     <mahAppsControls:MetroWindow.Resources>
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />

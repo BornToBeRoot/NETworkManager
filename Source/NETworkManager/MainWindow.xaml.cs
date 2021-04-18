@@ -1210,7 +1210,7 @@ namespace NETworkManager
 
         private void OpenStatusWindowAction()
         {
-            OpenStatusWindow();
+            OpenStatusWindow(true);
         }
 
         public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
@@ -1377,9 +1377,9 @@ namespace NETworkManager
         #endregion
 
         #region Status window
-        private void OpenStatusWindow()
+        private void OpenStatusWindow(bool activate)
         {
-            _statusWindow.ShowFromExternal();
+            _statusWindow.ShowWindow(activate);
         }
 
         private void OnNetworkHasChanged()
@@ -1388,8 +1388,8 @@ namespace NETworkManager
                 return;
 
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                OpenStatusWindow();
+            {                
+                OpenStatusWindow(false);
             }));
         }
         #endregion
