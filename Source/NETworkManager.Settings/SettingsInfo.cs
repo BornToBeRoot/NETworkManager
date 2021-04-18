@@ -18,7 +18,6 @@ using static NETworkManager.Models.Network.SNMP;
 
 namespace NETworkManager.Settings
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class SettingsInfo : INotifyPropertyChanged
     {
         #region Events
@@ -424,52 +423,37 @@ namespace NETworkManager.Settings
         #endregion
 
         #region Dashboard
-        private string _dashboard_PublicICMPTestIPAddress = GlobalStaticConfiguration.Dashboard_PublicICMPTestIPAddress;
-        public string Dashboard_PublicICMPTestIPAddress
+        private string _dashboard_PublicIPv4Address = GlobalStaticConfiguration.Dashboard_PublicIPv4Address;
+        public string Dashboard_PublicIPv4Address
         {
-            get => _dashboard_PublicICMPTestIPAddress;
+            get => _dashboard_PublicIPv4Address;
             set
             {
-                if (value == _dashboard_PublicICMPTestIPAddress)
+                if (value == _dashboard_PublicIPv4Address)
                     return;
 
-                _dashboard_PublicICMPTestIPAddress = value;
+                _dashboard_PublicIPv4Address = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private string _dashboard_PublicDNSTestDomain = GlobalStaticConfiguration.Dashboard_PublicDNSTestDomain;
-        public string Dashboard_PublicDNSTestDomain
+        private string _dashboard_PublicIPv6Address = GlobalStaticConfiguration.Dashboard_PublicIPv6Address;
+        public string Dashboard_PublicIPv6Address
         {
-            get => _dashboard_PublicDNSTestDomain;
+            get => _dashboard_PublicIPv6Address;
             set
             {
-                if (value == _dashboard_PublicDNSTestDomain)
+                if (value == _dashboard_PublicIPv6Address)
                     return;
 
-                _dashboard_PublicDNSTestDomain = value;
+                _dashboard_PublicIPv6Address = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private string _dashboard_PublicDNSTestIPAddress = GlobalStaticConfiguration.Dashboard_PublicDNSTestIPAddress;
-        public string Dashboard_PublicDNSTestIPAddress
-        {
-            get => _dashboard_PublicDNSTestIPAddress;
-            set
-            {
-                if (value == _dashboard_PublicDNSTestIPAddress)
-                    return;
-
-                _dashboard_PublicDNSTestIPAddress = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _dashboard_CheckPublicIPAddress = true;
+        private bool _dashboard_CheckPublicIPAddress = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
         public bool Dashboard_CheckPublicIPAddress
         {
             get => _dashboard_CheckPublicIPAddress;
@@ -484,31 +468,61 @@ namespace NETworkManager.Settings
             }
         }
 
-        private bool _dashboard_UseCustomPublicIPAddressAPI;
-        public bool Dashboard_UseCustomPublicIPAddressAPI
+        private bool _dashboard_UseCustomPublicIPv4AddressAPI;
+        public bool Dashboard_UseCustomPublicIPv4AddressAPI
         {
-            get => _dashboard_UseCustomPublicIPAddressAPI;
+            get => _dashboard_UseCustomPublicIPv4AddressAPI;
             set
             {
-                if (value == _dashboard_UseCustomPublicIPAddressAPI)
+                if (value == _dashboard_UseCustomPublicIPv4AddressAPI)
                     return;
 
-                _dashboard_UseCustomPublicIPAddressAPI = value;
+                _dashboard_UseCustomPublicIPv4AddressAPI = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private string _dashboard_CustomPublicIPAddressAPI;
-        public string Dashboard_CustomPublicIPAddressAPI
+        private string _dashboard_CustomPublicIPv4AddressAPI;
+        public string Dashboard_CustomPublicIPv4AddressAPI
         {
-            get => _dashboard_CustomPublicIPAddressAPI;
+            get => _dashboard_CustomPublicIPv4AddressAPI;
             set
             {
-                if (value == _dashboard_CustomPublicIPAddressAPI)
+                if (value == _dashboard_CustomPublicIPv4AddressAPI)
                     return;
 
-                _dashboard_CustomPublicIPAddressAPI = value;
+                _dashboard_CustomPublicIPv4AddressAPI = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _dashboard_UseCustomPublicIPv6AddressAPI;
+        public bool Dashboard_UseCustomPublicIPv6AddressAPI
+        {
+            get => _dashboard_UseCustomPublicIPv6AddressAPI;
+            set
+            {
+                if (value == _dashboard_UseCustomPublicIPv6AddressAPI)
+                    return;
+
+                _dashboard_UseCustomPublicIPv6AddressAPI = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _dashboard_CustomPublicIPv6AddressAPI;
+        public string Dashboard_CustomPublicIPv6AddressAPI
+        {
+            get => _dashboard_CustomPublicIPv6AddressAPI;
+            set
+            {
+                if (value == _dashboard_CustomPublicIPv6AddressAPI)
+                    return;
+
+                _dashboard_CustomPublicIPv6AddressAPI = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

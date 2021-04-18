@@ -286,6 +286,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 2606:4700:4700::1111.
+        /// </summary>
+        public static string ExampleIPv6Address {
+            get {
+                return ResourceManager.GetString("ExampleIPv6Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 00:F1:21:AB:0B:35.
         /// </summary>
         public static string ExampleMACAddress {
@@ -405,9 +414,18 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to https://api.ipify.org.
         /// </summary>
-        public static string ExamplePublicIPAddressAPI {
+        public static string ExamplePublicIPv4AddressAPI {
             get {
-                return ResourceManager.GetString("ExamplePublicIPAddressAPI", resourceCulture);
+                return ResourceManager.GetString("ExamplePublicIPv4AddressAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://api6.ipify.org.
+        /// </summary>
+        public static string ExamplePublicIPv6AddressAPI {
+            get {
+                return ResourceManager.GetString("ExamplePublicIPv6AddressAPI", resourceCulture);
             }
         }
         

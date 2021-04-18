@@ -1998,7 +1998,7 @@ URL: https://api.github.com/</value>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
     <value>The public IP address is determined via ipify.org.
 
-URL: https://api.ipify.org/</value>
+URL: https://api.ipify.org and https://api6.ipify.org</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
@@ -2094,8 +2094,8 @@ is disabled!</value>
   <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
     <value>"{0}" is reachable via ICMP!</value>
   </data>
-  <data name="UseCustomAPI" xml:space="preserve">
-    <value>Use custom API</value>
+  <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
+    <value>Use custom IPv4 address API</value>
   </data>
   <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
     <value>URL to a web service that can be reached via http or https and returns an IP address as response.</value>
@@ -2105,15 +2105,6 @@ is disabled!</value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
     <value>Could not connect to "{0}"!</value>
-  </data>
-  <data name="PublicDNSTestDomain" xml:space="preserve">
-    <value>Public DNS test domain</value>
-  </data>
-  <data name="PublicDNSTestIPAddress" xml:space="preserve">
-    <value>Public DNS test IP address</value>
-  </data>
-  <data name="PublicICMPTestIPAddress" xml:space="preserve">
-    <value>Public ICMP test IP address</value>
   </data>
   <data name="IPv4ProtocolAvailable" xml:space="preserve">
     <value>IPv4 protocol available</value>
@@ -2204,15 +2195,6 @@ is disabled!</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
     <value>Play on this computer</value>
-  </data>
-  <data name="HelpMessage_PublicDNSTestDomain" xml:space="preserve">
-    <value>Domain to test dns server settings (Domain must resolve A or AAAA record).</value>
-  </data>
-  <data name="HelpMessage_PublicDNSTestIPAddress" xml:space="preserve">
-    <value>IP address to test dns server settings (IP address must resolve PTR record).</value>
-  </data>
-  <data name="HelpMessage_PublicICMPTestIPAddress" xml:space="preserve">
-    <value>IP address to test connection via ping (ICMP).</value>
   </data>
   <data name="Gateway" xml:space="preserve">
     <value>Gateway</value>
@@ -3070,5 +3052,26 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   </data>
   <data name="ICMPv6" xml:space="preserve">
     <value>ICMPv6</value>
+  </data>
+  <data name="CheckIsDisabled" xml:space="preserve">
+    <value>Check is disabled!</value>
+  </data>
+  <data name="EnterValidIPv6Address" xml:space="preserve">
+    <value>Enter a valid IPv6 address!</value>
+  </data>
+  <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
+    <value>Public accessible IPv4 address.</value>
+  </data>
+  <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
+    <value>Public accessible IPv6 address.</value>
+  </data>
+  <data name="PublicIPv4Address" xml:space="preserve">
+    <value>Public IPv4 address</value>
+  </data>
+  <data name="PublicIPv6Address" xml:space="preserve">
+    <value>Public IPv6 address</value>
+  </data>
+  <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
+    <value>Use custom IPv6 address API</value>
   </data>
 </root>

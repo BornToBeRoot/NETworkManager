@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.Network;
+﻿using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
@@ -483,7 +484,7 @@ namespace NETworkManager.ViewModels
                 // Detect local IPv4 address
                 try
                 {
-                    ComputerIPv4 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicICMPTestIPAddress)).ToString();
+                    ComputerIPv4 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address)).ToString();
                     ComputerIPv4State = string.IsNullOrEmpty(ComputerIPv4) ? ConnectionState.Critical : ConnectionState.OK;
                 }
                 catch (Exception)
@@ -497,7 +498,7 @@ namespace NETworkManager.ViewModels
                 // Detect local IPv6 address
                 try
                 {
-                    ComputerIPv6 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse("2606:4700:4700::1111")).ToString();
+                    ComputerIPv6 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address)).ToString();
                     ComputerIPv6State = string.IsNullOrEmpty(ComputerIPv6) ? ConnectionState.Critical : ConnectionState.OK;
                 }
                 catch (Exception)
@@ -546,7 +547,7 @@ namespace NETworkManager.ViewModels
                 // Detect local IPv4 address
                 try
                 {
-                    var computerIPv4 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicICMPTestIPAddress));
+                    var computerIPv4 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
                     RouterIPv4 = Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddress(computerIPv4).ToString();
 
                     RouterIPv4State = ConnectionState.OK;
@@ -562,7 +563,7 @@ namespace NETworkManager.ViewModels
                 // Detect router IPv6 and if it is reachable
                 try
                 {
-                    var computerIPv6 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse("2606:4700:4700::1111"));
+                    var computerIPv6 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
                     RouterIPv6 = Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddress(computerIPv6).ToString();
 
                     RouterIPv6State = ConnectionState.OK;
@@ -609,74 +610,76 @@ namespace NETworkManager.ViewModels
                     InternetDNS = "";
                     InternetDNSState = ConnectionState.None;
 
-                    // Detect public IPv4 and if it is reachable
-                    if (SettingsManager.Current.Dashboard_CheckPublicIPAddress)
+                    // If public IP address check is disabled
+                    if (!SettingsManager.Current.Dashboard_CheckPublicIPAddress)
                     {
-                        var publicIPv4AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPAddressAPI ? SettingsManager.Current.Dashboard_CustomPublicIPAddressAPI : GlobalStaticConfiguration.Dashboard_PublicIPAddressAPI;
+                        InternetIPv4 = Strings.CheckIsDisabled;
+                        InternetIPv4State = ConnectionState.Info;
+                        IsInternetIPv4Checking = false;
 
-                        try
+                        InternetIPv6 = Strings.CheckIsDisabled;
+                        InternetIPv6State = ConnectionState.Info;
+                        IsInternetIPv6Checking = false;
+
+                        InternetDNS = Strings.CheckIsDisabled;
+                        InternetDNSState = ConnectionState.Info;
+                        IsInternetDNSChecking = false;
+
+                        return;
+                    }
+
+                    // Detect public IPv4 and if it is reachable
+                    var publicIPv4AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI ? SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI : GlobalStaticConfiguration.Dashboard_PublicIPv4AddressAPI;
+
+                    try
+                    {
+                        var webClient = new WebClient();
+                        var result = webClient.DownloadString(publicIPv4AddressAPI);
+                        var match = Regex.Match(result, RegexHelper.IPv4AddressExctractRegex);
+
+                        if (match.Success)
                         {
-                            var webClient = new WebClient();
-                            var result = webClient.DownloadString(publicIPv4AddressAPI);
-                            var match = Regex.Match(result, RegexHelper.IPv4AddressExctractRegex);
-
-                            if (match.Success)
-                            {
-                                InternetIPv4 = match.Value;
-                                InternetIPv4State = ConnectionState.OK;
-                            }
-                            else
-                            {
-                                InternetIPv4 = "-/-";
-                                InternetIPv4State = ConnectionState.Critical;
-                            }
+                            InternetIPv4 = match.Value;
+                            InternetIPv4State = ConnectionState.OK;
                         }
-                        catch
+                        else
                         {
                             InternetIPv4 = "-/-";
                             InternetIPv4State = ConnectionState.Critical;
                         }
                     }
-                    else
+                    catch
                     {
-                        InternetIPv4 = "Check is disabled";
-                        InternetIPv4State = ConnectionState.Info;
+                        InternetIPv4 = "-/-";
+                        InternetIPv4State = ConnectionState.Critical;
                     }
 
                     IsInternetIPv4Checking = false;
 
                     // Detect public IPv6 and if it is reachable
-                    if (SettingsManager.Current.Dashboard_CheckPublicIPAddress)
+                    var publicIPv6AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI ? SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI : GlobalStaticConfiguration.Dashboard_PublicIPv6AddressAPI;
+
+                    try
                     {
-                        var publicIPv6AddressAPI = "https://api6.ipify.org"; // SettingsManager.Current.Dashboard_UseCustomPublicIPAddressAPI ? SettingsManager.Current.Dashboard_CustomPublicIPAddressAPI : GlobalStaticConfiguration.Dashboard_PublicIPAddressAPI;
+                        var webClient = new WebClient();
+                        var result = webClient.DownloadString(publicIPv6AddressAPI);
+                        var match = Regex.Match(result, RegexHelper.IPv6AddressExctractRegex);
 
-                        try
+                        if (match.Success)
                         {
-                            var webClient = new WebClient();
-                            var result = webClient.DownloadString(publicIPv6AddressAPI);
-                            var match = Regex.Match(result, RegexHelper.IPv6AddressExctractRegex);
-
-                            if (match.Success)
-                            {
-                                InternetIPv6 = match.Value;
-                                InternetIPv6State = ConnectionState.OK;
-                            }
-                            else
-                            {
-                                InternetIPv6 = "-/-";
-                                InternetIPv6State = ConnectionState.Critical;
-                            }
+                            InternetIPv6 = match.Value;
+                            InternetIPv6State = ConnectionState.OK;
                         }
-                        catch
+                        else
                         {
                             InternetIPv6 = "-/-";
                             InternetIPv6State = ConnectionState.Critical;
                         }
                     }
-                    else
+                    catch
                     {
-                        InternetIPv6 = "Check is disabled";
-                        InternetIPv6State = ConnectionState.Info;
+                        InternetIPv6 = "-/-";
+                        InternetIPv6State = ConnectionState.Critical;
                     }
 
                     IsInternetIPv6Checking = false;
