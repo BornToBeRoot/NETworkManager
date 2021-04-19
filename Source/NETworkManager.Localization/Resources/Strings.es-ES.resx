@@ -121,88 +121,88 @@
     <value>Acerca de</value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>Tono</value>
+    <value>Tono </value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
-    <value>Añadir credencial</value>
+    <value>Añadir credencial </value>
   </data>
   <data name="AddEntry" xml:space="preserve">
-    <value>Añadir entrada</value>
+    <value>Añadir entrada </value>
   </data>
   <data name="AddProfile" xml:space="preserve">
-    <value>Añadir perfil</value>
+    <value>Añadir perfil </value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
-    <value>¿Estás seguro?</value>
+    <value>¿Estás seguro? </value>
   </data>
   <data name="ARP" xml:space="preserve">
-    <value>ARP</value>
+    <value>ARP </value>
   </data>
   <data name="ARPTable" xml:space="preserve">
-    <value>Tabla ARP</value>
+    <value>Tabla ARP </value>
   </data>
   <data name="Authentication" xml:space="preserve">
-    <value>Autenticación</value>
+    <value>Autenticación </value>
   </data>
   <data name="Autostart" xml:space="preserve">
-    <value>Inicio automático</value>
+    <value>Inicio automático </value>
   </data>
   <data name="Calculator" xml:space="preserve">
-    <value>Calculadora</value>
+    <value>Calculadora </value>
   </data>
   <data name="CommandLineArguments" xml:space="preserve">
-    <value>Argumentos de línea de comandos</value>
+    <value>Argumentos de línea de comandos </value>
   </data>
   <data name="Configure" xml:space="preserve">
-    <value>Configurar</value>
+    <value>Configurar </value>
   </data>
   <data name="Confirm" xml:space="preserve">
-    <value>Confirmar</value>
+    <value>Confirmar </value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>Conectar</value>
+    <value>Conectar </value>
   </data>
   <data name="ConnectAs" xml:space="preserve">
-    <value>Conectar como</value>
+    <value>Conectar como </value>
   </data>
   <data name="CopyProfile" xml:space="preserve">
-    <value>Copiar perfil</value>
+    <value>Copiar perfil </value>
   </data>
   <data name="Credentials" xml:space="preserve">
-    <value>Credenciales</value>
+    <value>Credenciales </value>
   </data>
   <data name="Data" xml:space="preserve">
-    <value>Datos</value>
+    <value>Datos </value>
   </data>
   <data name="DefaultApplication" xml:space="preserve">
-    <value>Aplicación predeterminada</value>
+    <value>Aplicación predeterminada </value>
   </data>
   <data name="DeleteCredentials" xml:space="preserve">
-    <value>Eliminar credencial</value>
+    <value>Eliminar credencial </value>
   </data>
   <data name="DeleteProfile" xml:space="preserve">
-    <value>Eliminar perfil</value>
+    <value>Eliminar perfil </value>
   </data>
   <data name="Destination" xml:space="preserve">
-    <value>Destino</value>
+    <value>Destino </value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value>Detalles</value>
+    <value>Detalles </value>
   </data>
   <data name="Disconnected" xml:space="preserve">
-    <value>Desconectado</value>
+    <value>Desconectado </value>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Visualizar</value>
+    <value>Visualizar </value>
   </data>
   <data name="DNS" xml:space="preserve">
-    <value>DNS</value>
+    <value>DNS </value>
   </data>
   <data name="DNSLookup" xml:space="preserve">
-    <value>Búsqueda DNS</value>
+    <value>Búsqueda DNS </value>
   </data>
   <data name="DontFragment" xml:space="preserve">
-    <value>No fragmentar</value>
+    <value>No fragmentar </value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>Editar credencial</value>
