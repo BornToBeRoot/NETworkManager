@@ -187,22 +187,22 @@
     <value>Destino</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value>Detalles</value>
+    <value>Detalles </value>
   </data>
   <data name="Disconnected" xml:space="preserve">
-    <value>Desconectado</value>
+    <value>Desconectado </value>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Visualizar</value>
+    <value>Visualizar </value>
   </data>
   <data name="DNS" xml:space="preserve">
-    <value>DNS</value>
+    <value>DNS </value>
   </data>
   <data name="DNSLookup" xml:space="preserve">
-    <value>Búsqueda DNS</value>
+    <value>Búsqueda DNS </value>
   </data>
   <data name="DontFragment" xml:space="preserve">
-    <value>No fragmentar</value>
+    <value>No fragmentar </value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>Editar credencial</value>
