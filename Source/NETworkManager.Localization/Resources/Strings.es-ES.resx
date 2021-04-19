@@ -118,25 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>Acerca de</value>
+    <value>Acerca de </value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>Tono</value>
+    <value>Tono </value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
-    <value>Añadir credencial</value>
+    <value>Añadir credencial </value>
   </data>
   <data name="AddEntry" xml:space="preserve">
-    <value>Añadir entrada</value>
+    <value>Añadir entrada </value>
   </data>
   <data name="AddProfile" xml:space="preserve">
-    <value>Añadir perfil</value>
+    <value>Añadir perfil </value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
-    <value>¿Estás seguro?</value>
+    <value>¿Estás seguro? </value>
   </data>
   <data name="ARP" xml:space="preserve">
-    <value>ARP</value>
+    <value>ARP </value>
   </data>
   <data name="ARPTable" xml:space="preserve">
     <value>Tabla ARP</value>
