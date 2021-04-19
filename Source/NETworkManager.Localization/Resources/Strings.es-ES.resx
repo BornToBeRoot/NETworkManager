@@ -118,49 +118,49 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>Acerca de</value>
+    <value>Acerca de </value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>Tono</value>
+    <value>Tono </value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
-    <value>Añadir credencial</value>
+    <value>Añadir credencial </value>
   </data>
   <data name="AddEntry" xml:space="preserve">
-    <value>Añadir entrada</value>
+    <value>Añadir entrada </value>
   </data>
   <data name="AddProfile" xml:space="preserve">
-    <value>Añadir perfil</value>
+    <value>Añadir perfil </value>
   </data>
   <data name="AreYouSure" xml:space="preserve">
-    <value>¿Estás seguro?</value>
+    <value>¿Estás seguro? </value>
   </data>
   <data name="ARP" xml:space="preserve">
-    <value>ARP</value>
+    <value>ARP </value>
   </data>
   <data name="ARPTable" xml:space="preserve">
-    <value>Tabla ARP</value>
+    <value>Tabla ARP </value>
   </data>
   <data name="Authentication" xml:space="preserve">
-    <value>Autenticación</value>
+    <value>Autenticación </value>
   </data>
   <data name="Autostart" xml:space="preserve">
-    <value>Inicio automático</value>
+    <value>Inicio automático </value>
   </data>
   <data name="Calculator" xml:space="preserve">
-    <value>Calculadora</value>
+    <value>Calculadora </value>
   </data>
   <data name="CommandLineArguments" xml:space="preserve">
-    <value>Argumentos de línea de comandos</value>
+    <value>Argumentos de línea de comandos </value>
   </data>
   <data name="Configure" xml:space="preserve">
-    <value>Configurar</value>
+    <value>Configurar </value>
   </data>
   <data name="Confirm" xml:space="preserve">
-    <value>Confirmar</value>
+    <value>Confirmar </value>
   </data>
   <data name="Connect" xml:space="preserve">
-    <value>Conectar</value>
+    <value>Conectar </value>
   </data>
   <data name="ConnectAs" xml:space="preserve">
     <value>Conectar como</value>
