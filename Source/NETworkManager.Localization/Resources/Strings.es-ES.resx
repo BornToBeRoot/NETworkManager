@@ -199,10 +199,10 @@
     <value>DNS</value>
   </data>
   <data name="DNSLookup" xml:space="preserve">
-    <value>Búsqueda DNS</value>
+    <value>Búsqueda DNS </value>
   </data>
   <data name="DontFragment" xml:space="preserve">
-    <value>No fragmentar</value>
+    <value>No fragmentar </value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>Editar credencial</value>
