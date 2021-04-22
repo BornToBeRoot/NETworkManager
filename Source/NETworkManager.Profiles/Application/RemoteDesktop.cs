@@ -1,5 +1,4 @@
-﻿using NETworkManager.Profiles;
-using NETworkManager.Models.RemoteDesktop;
+﻿using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 
 namespace NETworkManager.Profiles.Application
