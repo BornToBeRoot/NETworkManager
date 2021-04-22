@@ -23,7 +23,7 @@ Date: **xx.xx.2021**
 
 
 ## Bugfixes
-
+- App crash fixed when Remote Desktop is opened from a differnet view [#767](https://github.com/BornToBeRoot/NETworkManager/issues/767){:target="_blank"}
 
 ## Other
 
