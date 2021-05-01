@@ -41,6 +41,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        /*
         private bool _isNetworkInteraceLoading;
         public bool IsNetworkInterfaceLoading
         {
@@ -90,6 +91,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+        */
 
         private List<Protocol> _protocols = new List<Protocol>();
         public List<Protocol> Protocols
@@ -153,6 +155,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        /*
         private bool _canCapture;
         public bool CanCapture
         {
@@ -166,6 +169,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+        */
 
         private bool _isCapturing;
         public bool IsCapturing
@@ -259,11 +263,11 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            LoadNetworkInterfaces();
+            //LoadNetworkInterfaces();
 
             // Detect if network address or status changed...
-            NetworkChange.NetworkAvailabilityChanged += (sender, args) => ReloadNetworkInterfacesAction();
-            NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfacesAction();
+            //NetworkChange.NetworkAvailabilityChanged += (sender, args) => ReloadNetworkInterfacesAction();
+            //NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfacesAction();
             
             _discoveryProtocol.PackageReceived += _discoveryProtocol_PackageReceived;
             _discoveryProtocol.ErrorReceived += _discoveryProtocol_ErrorReceived;
@@ -284,6 +288,7 @@ namespace NETworkManager.ViewModels
             _isLoading = false;
         }
 
+        /*
         private async Task LoadNetworkInterfaces()
         {
             IsNetworkInterfaceLoading = true;
@@ -300,10 +305,11 @@ namespace NETworkManager.ViewModels
 
             IsNetworkInterfaceLoading = false;
         }
+        */
 
         private void LoadSettings()
         {
-            Protocols = System.Enum.GetValues(typeof(Protocol)).Cast<Protocol>().OrderBy(x => x.ToString()).ToList();
+            Protocols = Enum.GetValues(typeof(Protocol)).Cast<Protocol>().OrderBy(x => x.ToString()).ToList();
             SelectedProtocol = Protocols.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Protocol);
             Durations = new List<int>() { 15, 30, 60, 90, 120 };
             SelectedDuration = Durations.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Duration);
@@ -311,6 +317,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
+        /*
         public ICommand ReloadNetworkInterfacesCommand => new RelayCommand(p => ReloadNetworkInterfacesAction(), ReloadNetworkInterfaces_CanExecute);
 
         private bool ReloadNetworkInterfaces_CanExecute(object obj) => !IsNetworkInterfaceLoading && Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
@@ -333,7 +340,9 @@ namespace NETworkManager.ViewModels
 
             IsNetworkInterfaceLoading = false;
         }
+        */
 
+        /*
         public ICommand OpenNetworkConnectionsCommand => new RelayCommand(p => OpenNetworkConnectionsAction());
 
         public async Task OpenNetworkConnectionsAction()
@@ -347,6 +356,7 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
             }
         }
+        */
 
         public ICommand RestartAsAdminCommand => new RelayCommand(p => RestartAsAdminAction());
 
@@ -386,7 +396,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                _discoveryProtocol.CaptureAsync(SelectedNetworkInterface.Name, duration, SelectedProtocol);
+                _discoveryProtocol.CaptureAsync(duration, SelectedProtocol);
             }
             catch (Exception ex)
             {

@@ -8,42 +8,52 @@
         /// <summary>
         /// 
         /// </summary>
-        public string Device { get; private set; }
+        public string Device { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Port { get; private set; }
+        public string Port { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Model { get; private set; }
+        public string Model { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string VLAN { get; private set; }
+        public string VLAN { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string IPAddress { get; private set; }
+        public string IPAddress { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Protocol { get; private set; }
+        public string Protocol { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Time { get; private set; }
+        public string TimeToLive { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Management { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ChassisId { get; set; }
 
         /// <summary>
         /// 
@@ -63,8 +73,10 @@
         /// <param name="vlan"></param>
         /// <param name="ipAddress"></param>
         /// <param name="protocol"></param>
-        /// <param name="time"></param>
-        public DiscoveryProtocolPackageArgs(string device, string port, string description, string model, string vlan, string ipAddress, string protocol, string time)
+        /// <param name="timeToLive"></param>
+        /// <param name="management"></param>
+        /// <param name="chassisId"></param>
+        public DiscoveryProtocolPackageArgs(string device, string port, string description, string model, string vlan, string ipAddress, string protocol, string timeToLive, string management, string chassisId)
         {
             Device = device;
             Port = port;
@@ -73,7 +85,9 @@
             VLAN = vlan;
             IPAddress = ipAddress;
             Protocol = protocol;
-            Time = time;
+            TimeToLive = timeToLive;
+            Management = management;
+            ChassisId = chassisId;
         }
     }
 }

@@ -1240,6 +1240,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chassis Id.
+        /// </summary>
+        public static string ChassisId {
+            get {
+                return ResourceManager.GetString("ChassisId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check.
         /// </summary>
         public static string Check {
@@ -4222,6 +4231,15 @@ namespace NETworkManager.Localization.Resources {
         public static string MagicPacketSentMessage {
             get {
                 return ResourceManager.GetString("MagicPacketSentMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Management.
+        /// </summary>
+        public static string Management {
+            get {
+                return ResourceManager.GetString("Management", resourceCulture);
             }
         }
         
@@ -7606,6 +7624,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subnet.
         /// </summary>
         public static string Subnet {
@@ -8088,6 +8115,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Timestamp {
             get {
                 return ResourceManager.GetString("Timestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time to live.
+        /// </summary>
+        public static string TimeToLive {
+            get {
+                return ResourceManager.GetString("TimeToLive", resourceCulture);
             }
         }
         

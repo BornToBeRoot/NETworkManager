@@ -3065,4 +3065,16 @@ The application will be restarted afterwards!</value>
 
 Enable profile file encryption in Settings&gt;Profile to store credentials securely.</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TimeToLive" xml:space="preserve">
+    <value>Time to live</value>
+  </data>
+  <data name="ChassisId" xml:space="preserve">
+    <value>Chassis Id</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Management</value>
+  </data>
 </root>

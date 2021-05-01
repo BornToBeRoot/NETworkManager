@@ -5,6 +5,7 @@ using System.Reflection;
 using System.IO;
 using System;
 using System.Text;
+using System.Collections.Generic;
 
 namespace NETworkManager.Models.Network
 {
@@ -16,7 +17,7 @@ namespace NETworkManager.Models.Network
         /// <summary>
         /// Holds the PowerShell script which is loaded when the class is initialized.
         /// </summary>
-        private readonly string DiscoveryScript = string.Empty;
+        private readonly string PSDiscoveryProtocolModule = string.Empty;
 
         /// <summary>
         /// Is triggerd when a network package with a discovery protocol is received.
@@ -79,21 +80,20 @@ namespace NETworkManager.Models.Network
         /// </summary>
         public DiscoveryProtocol()
         {
-            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("NETworkManager.Models.Resources.DiscoveryProtocol.ps1");
-            
+            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("NETworkManager.Models.Resources.PSDiscoveryProtocol.psm1");
+
             using StreamReader reader = new StreamReader(stream);
-            
-            DiscoveryScript = reader.ReadToEnd();
+
+            PSDiscoveryProtocolModule = reader.ReadToEnd();
         }
 
         #region Methods
         /// <summary>
-        /// Captures the network packets on the passed network adapter asynchronously for a certain period of time and filters the packets according to the protocol.
+        /// Captures the network packets on the network adapter asynchronously for a certain period of time and filters the packets according to the protocol.
         /// </summary>
-        /// <param name="netAdapter">Network adapter as <see cref="string"/> like "Ethernet" or "WLAN".</param>
         /// <param name="duration">Duration in seconds.</param>
         /// <param name="protocol"><see cref="Protocol"/> to filter on.</param>
-        public void CaptureAsync(string netAdapter, int duration, Protocol protocol)
+        public void CaptureAsync(int duration, Protocol protocol)
         {
             Task.Run(() =>
             {
@@ -101,9 +101,9 @@ namespace NETworkManager.Models.Network
                 {
 
                     powerShell.AddScript("Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process");
-                    powerShell.AddScript("Import-Module netadapter");
-                    powerShell.AddScript(DiscoveryScript);
-                    powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -NetAdapter \"{netAdapter}\" -Duration {duration}" + (protocol != Protocol.LLDP_CDP ? $" -Type {protocol}" : "") + "| Get-DiscoveryProtocolData");
+                    powerShell.AddScript("Import-Module NetAdapter");
+                    powerShell.AddScript(PSDiscoveryProtocolModule);
+                    powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -Duration {duration}" + (protocol != Protocol.LLDP_CDP ? $" -Type {protocol}" : "") + " -Force | Get-DiscoveryProtocolData");
 
                     Collection<PSObject> PSOutput = powerShell.Invoke();
 
@@ -138,8 +138,32 @@ namespace NETworkManager.Models.Network
 
                     foreach (PSObject outputItem in PSOutput)
                     {
-                        if (outputItem != null)
-                            OnPackageReceived(new DiscoveryProtocolPackageArgs(outputItem.Properties["Device"]?.Value.ToString(), outputItem.Properties["Port"]?.Value.ToString(), outputItem.Properties["Description"]?.Value.ToString(), outputItem.Properties["Model"]?.Value.ToString(), outputItem.Properties["VLAN"]?.Value.ToString(), outputItem.Properties["IPAddress"]?.Value.ToString(), outputItem.Properties["Type"]?.Value.ToString(), outputItem.Properties["TimeCreated"]?.Value.ToString()));
+                        if (outputItem == null)
+                            continue;
+
+                        List<string> ipAddresses = new List<string>();
+
+                        if (outputItem.Properties["IPAddress"] != null)
+                        {
+                            foreach (var ipAddress in outputItem.Properties["IPAddress"].Value as List<string>)
+                            {
+                                ipAddresses.Add(ipAddress);
+                            }
+                        }
+
+                        OnPackageReceived(new DiscoveryProtocolPackageArgs()
+                        {
+                            Device = outputItem.Properties["Device"]?.Value.ToString(),
+                            Port = outputItem.Properties["Port"]?.Value.ToString(),
+                            Description = outputItem.Properties["Description"]?.Value.ToString(),
+                            Model = outputItem.Properties["Model"]?.Value.ToString(),
+                            IPAddress = string.Join("; ", ipAddresses),
+                            VLAN = outputItem.Properties["VLAN"]?.Value.ToString(),
+                            Protocol = outputItem.Properties["Type"]?.Value.ToString(),
+                            TimeToLive = outputItem.Properties["TimeToLive"]?.Value.ToString(),
+                            Management = outputItem.Properties["Management"]?.Value.ToString(),
+                            ChassisId = outputItem.Properties["ChassisId"]?.Value.ToString()
+                        });
                     }
                 }
 
