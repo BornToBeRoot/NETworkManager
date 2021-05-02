@@ -20,9 +20,12 @@ Date: **xx.xx.2021**
 
 
 ## Improvements
-
+- Update Discovery Protocol script and add other values [#772](https://github.com/BornToBeRoot/NETworkManager/issues/772){:target="_blank"}
 
 ## Bugfixes
+- Fix app crash on Discovery Protocol view [#707](https://github.com/BornToBeRoot/NETworkManager/issues/707){:target="_blank"}
+- Fix values in Discovery Protocol [#772](https://github.com/BornToBeRoot/NETworkManager/issues/772){:target="_blank"}
+- Fix NetEventSession (if session is opened / crashed) in Discovery Protocol [#241](https://github.com/BornToBeRoot/NETworkManager/issues/241){:target="_blank"}
 - App crash fixed when Remote Desktop is opened from a differnet view [#767](https://github.com/BornToBeRoot/NETworkManager/issues/767){:target="_blank"}
 
 ## Other
