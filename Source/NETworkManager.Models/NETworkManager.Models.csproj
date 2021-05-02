@@ -11,16 +11,16 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Remove="Resources\DiscoveryProtocol.ps1" />
 		<None Remove="Resources\OUI.xml" />
 		<None Remove="Resources\Ports.xml" />
+		<None Remove="Resources\PSDiscoveryProtocol.psm1" />
 		<None Remove="Resources\WhoisServers.xml" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
 	</ItemGroup>
 	<ItemGroup>
-		<EmbeddedResource Include="Resources\DiscoveryProtocol.ps1" />
+		<EmbeddedResource Include="Resources\PSDiscoveryProtocol.psm1" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="DnsClient" Version="1.4.0" />
