@@ -3094,4 +3094,16 @@ Quindi l'applicazione verrà riavviata!
 
 Per archiviare le credenziali in modo sicuro abilita la crittografia del file del profilo in Impostazioni -&gt; Profilo .</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value/>
+  </data>
+  <data name="TimeToLive" xml:space="preserve">
+    <value>TTL (Time To Live)</value>
+  </data>
+  <data name="ChassisId" xml:space="preserve">
+    <value>ID telaio</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Gestione</value>
+  </data>
 </root>
