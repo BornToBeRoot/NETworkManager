@@ -151,6 +151,16 @@ namespace NETworkManager.Models.Network
                             }
                         }
 
+                        List<string> managements = new List<string>();
+
+                        if (outputItem.Properties["Management"] != null)
+                        {
+                            foreach (var management in outputItem.Properties["Management"].Value as List<string>)
+                            {
+                                managements.Add(management);
+                            }
+                        }
+
                         OnPackageReceived(new DiscoveryProtocolPackageArgs()
                         {
                             Device = outputItem.Properties["Device"]?.Value.ToString(),
@@ -161,7 +171,7 @@ namespace NETworkManager.Models.Network
                             VLAN = outputItem.Properties["VLAN"]?.Value.ToString(),
                             Protocol = outputItem.Properties["Type"]?.Value.ToString(),
                             TimeToLive = outputItem.Properties["TimeToLive"]?.Value.ToString(),
-                            Management = outputItem.Properties["Management"]?.Value.ToString(),
+                            Management = string.Join("; ", managements),
                             ChassisId = outputItem.Properties["ChassisId"]?.Value.ToString()
                         });
                     }
