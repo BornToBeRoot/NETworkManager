@@ -371,7 +371,7 @@ namespace NETworkManager.ViewModels
                 AddHostToHistory(instance.Host);
 
                 // Create new session info with default settings
-                var sessionInfo = Models.RemoteDesktopTMP.RemoteDesktop.CreateSessionInfo();
+                var sessionInfo = NETworkManager.Profiles.Application.RemoteDesktop.CreateSessionInfo();
 
                 sessionInfo.Hostname = instance.Host;
 
@@ -407,7 +407,7 @@ namespace NETworkManager.ViewModels
         {
             var profileInfo = SelectedProfile;
 
-            var sessionInfo = Models.RemoteDesktopTMP.RemoteDesktop.CreateSessionInfo(profileInfo);
+            var sessionInfo = NETworkManager.Profiles.Application.RemoteDesktop.CreateSessionInfo(profileInfo);
 
             Connect(sessionInfo, profileInfo.Name);
         }
@@ -417,7 +417,7 @@ namespace NETworkManager.ViewModels
         {
             var profileInfo = SelectedProfile;
 
-            var sessionInfo = Models.RemoteDesktopTMP.RemoteDesktop.CreateSessionInfo(profileInfo);
+            var sessionInfo = NETworkManager.Profiles.Application.RemoteDesktop.CreateSessionInfo(profileInfo);
 
             var customDialog = new CustomDialog
             {

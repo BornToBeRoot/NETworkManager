@@ -17,6 +17,31 @@ Date: **xx.xx.2021**
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Archiv.zip){:target="_blank"}| `9996197F0F58A7A23F0A78DB7336D4201F98F1C6E8CCD7D02BF97095C5A6DDA8` |
 
 ## What's new?
+
+
+## Improvements
+- Update Discovery Protocol script and add other values [#772](https://github.com/BornToBeRoot/NETworkManager/issues/772){:target="_blank"}
+
+## Bugfixes
+- Fix app crash on Discovery Protocol view [#707](https://github.com/BornToBeRoot/NETworkManager/issues/707){:target="_blank"}
+- Fix values in Discovery Protocol [#772](https://github.com/BornToBeRoot/NETworkManager/issues/772){:target="_blank"}
+- Fix NetEventSession (if session is opened / crashed) in Discovery Protocol [#241](https://github.com/BornToBeRoot/NETworkManager/issues/241){:target="_blank"}
+- App crash fixed when Remote Desktop is opened from a differnet view [#767](https://github.com/BornToBeRoot/NETworkManager/issues/767){:target="_blank"}
+
+## Other
+
+-->
+
+# 2021.3.28.0
+Date: **28.03.2021**
+
+| File | Checksum [SHA256] |
+|---|---|
+|[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Setup.exe){:target="_blank"}| `3153DE224DA69511331C07B89CF4738914BDBE9AFEE59C5BD289E657449CCC43` |
+|[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Portable.zip){:target="_blank"}| `D295B260F56416792E455AED6069ECA545F36A80B192BFE04D2D2B9D64598855` |
+|[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Archiv.zip){:target="_blank"}| `6C5E003DC820B75B2B7C1381F2AE2F0D3AEF13EE84F67AE6EFBC235342B94490` |
+
+## What's new?
 - Remote Desktop - Credentials can be stored in the profile. You should encrypt the profile file in the Settings>Profile with a master password and create a backup of your profile files. [#378](https://github.com/BornToBeRoot/NETworkManager/issues/378){:target="_blank"}
 - WiFi - export as CSV, XML or JSON added [#429](https://github.com/BornToBeRoot/NETworkManager/issues/429){:target="_blank"}
 - Language Korean (ko-KR) added [#584](https://github.com/BornToBeRoot/NETworkManager/issues/584){:target="_blank"}
@@ -37,9 +62,8 @@ Date: **xx.xx.2021**
 - Code refactored / cleanup
   - async void with async task replaced [#383](https://github.com/BornToBeRoot/NETworkManager/issues/383){:target="_blank"}
 - Percent completed in the settings\language removed, because the statistics are broken and hard to maintain since the transifex github integration was added [#584](https://github.com/BornToBeRoot/NETworkManager/issues/584){:target="_blank"}
--->
 
-# Version 2021.3.14.0
+# 2021.3.14.0
 Date: **14.03.2021**
 
 | File | Checksum [SHA256] |
@@ -67,7 +91,7 @@ Date: **14.03.2021**
 - Transifex Github integration added
 - Language files updated
 
-# Version 2021.2.17.0
+# 2021.2.17.0
 Date: **17.02.2021**
 
 | File | Checksum [SHA256] |
@@ -96,7 +120,7 @@ Date: **17.02.2021**
 - Libaries updated
 - Language files updated
 
-# Version 2021.1.2
+# 2021.1.2
 Date: **26.01.2021**
 
 | File | Checksum [SHA256] |
@@ -139,7 +163,7 @@ Note: _Due to the migration to x64 you have to uninstall the x86 version manuall
 ## Other
 - Language files updated
 
-# Version 2020.12.2
+# 2020.12.2
 Date: **28.12.2020**
 
 | File | Checksum [SHA256] |
@@ -175,7 +199,7 @@ Date: **28.12.2020**
 ## Other
 - Language files updated
 
-# Version 2020.12.1
+# 2020.12.1
 Date: **14.12.2020**
 
 | File | Checksum [SHA256] |
@@ -199,7 +223,7 @@ Date: **14.12.2020**
   - Custom dns resolver fixed [#390](http://github.com/BornToBeRoot/NETworkManager/issues/390){:target="_blank"} 
 
 
-# Version 2020.12.0
+# 2020.12.0
 Date: **06.12.2020**
 
 | File | Checksum [SHA256] |
@@ -245,7 +269,7 @@ Note: _If you've installed the preview, uninstall it first!_
 - Settings > Language
   - Contributors moved to `.md` file in GitHub repo. Link added to Settings > About.
 
-# Version 2020.9.0 [Preview]
+# 2020.9.0 [Preview]
 Date: **05.09.2020**
 
 | File | Checksum [SHA256]
@@ -279,7 +303,7 @@ Date: **05.09.2020**
 ## Other
   - Libraries updated
 
-# Version 2020.5.1
+# 2020.5.1
 Date: **12.05.2020**
 
 | File | Checksum [SHA256]
@@ -294,7 +318,7 @@ Date: **12.05.2020**
 - Connections
   - View fixed
   
-# Version 2020.5.0
+# 2020.5.0
 Date: **11.05.2020**
 
 | File | Checksum [SHA256]
@@ -349,7 +373,7 @@ Date: **11.05.2020**
   - Language files updated
     - Hungarian added
 
-# Version 2020.4.0
+# 2020.4.0
 Date: **21.04.2020**
 
 | File | Checksum [SHA256]
@@ -381,7 +405,7 @@ Date: **21.04.2020**
   - Resources (OUI, Ports, Whois) updated
   - Code cleanup [#261](http://github.com/BornToBeRoot/NETworkManager/issues/261){:target="_blank"}, [#262](http://github.com/BornToBeRoot/NETworkManager/issues/262){:target="_blank"}
 
-# Version 2020.1.0
+# 2020.1.0
 Date: **26.01.2020**
 
 | File | Checksum [SHA256]
@@ -425,7 +449,7 @@ Date: **26.01.2020**
   - Libraries updated
   - Language files updated
 
-# Version 2019.12.0
+# 2019.12.0
 Date: **25.12.2019**
 
 | File | Checksum [SHA256]

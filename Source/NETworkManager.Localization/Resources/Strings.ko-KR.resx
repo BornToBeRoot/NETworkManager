@@ -583,7 +583,7 @@
     <value>속도</value>
   </data>
   <data name="StartMinimizedInTray" xml:space="preserve">
-    <value>트레이에서 최소화된 시작</value>
+    <value>트레이에서 최소화로 시작</value>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
     <value>Windows와 시작 (현재 사용자)</value>
@@ -1111,7 +1111,7 @@
     <value>가져올 설정을 선택:</value>
   </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
-    <value>그러면 모든 설정이 재설정됩니다!</value>
+    <value>이렇게 하면 모든 설정이 재설정됩니다!</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>직렬</value>
@@ -1328,7 +1328,7 @@
 [3] 인증 요구사항이 지정되지 않았습니다.</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
-    <value>태그는 프로필/ 항목별 프로필/프로젝트를 구성하는데 도움이됩니다. 다중 태크는";"로 구분해서 사용할 수 있습니다. "tag=xxx"를 사용하여 태그로 검색합니다.</value>
+    <value>태그는 프로필/ 항목별 프로필/프로젝트를 구성하는데 도움이 됩니다. 다중 태크는";"로 구분해서 사용할 수 있습니다. "tag=xxx"를 사용하여 태그로 검색합니다.</value>
   </data>
   <data name="TimeUnit_Hour" xml:space="preserve">
     <value>시</value>
@@ -1940,7 +1940,7 @@
     <value>숨기기</value>
   </data>
   <data name="TotalBytesReceived" xml:space="preserve">
-    <value>받은 총 바이트 수</value>
+    <value>수신한 총 바이트 수</value>
   </data>
   <data name="TotalBytesSent" xml:space="preserve">
     <value>보낸 총 바이트 수</value>
@@ -2016,7 +2016,7 @@ URL: https://api.ipify.org/</value>
     <value>Transifex에서 프로젝트 번역을 도와줍니다.</value>
   </data>
   <data name="ToolTip_TwitterContactUrl" xml:space="preserve">
-    <value>Twitter로 연락하세요.</value>
+    <value>Twitter로 연락합니다.</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>연결</value>
@@ -2152,7 +2152,7 @@ URL: https://api.ipify.org/</value>
     <value>영구 비트맵 캐싱</value>
   </data>
   <data name="ReconnectIfTheConnectionIsDropped" xml:space="preserve">
-    <value>연결이 끊긴 경우 다시 연결하십시오</value>
+    <value>연결이 끊긴 경우 다시 연결</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_BroadbandHigh" xml:space="preserve">
     <value>고속 광대역(2Mbps - 10Mbps)</value>
@@ -2503,7 +2503,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>LLDP 또는 CDP 정보를 보려면 네트워크 패킷을 캡처하십시오!</value>
   </data>
   <data name="NoDiscoveryProtocolPackagesReceived" xml:space="preserve">
-    <value>받은 검색 프로토콜 패키지가 없습니다!</value>
+    <value>수신한 검색 프로토콜 패키지가 없습니다!</value>
   </data>
   <data name="CapturingNetworkPackagesDots" xml:space="preserve">
     <value>네트워크 패키지 캡처 중...</value>
@@ -2590,7 +2590,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>포트 스캐너</value>
   </data>
   <data name="ApplicationName_PowerShell" xml:space="preserve">
-    <value>파워셸</value>
+    <value>PowerShell</value>
   </data>
   <data name="ApplicationName_PuTTY" xml:space="preserve">
     <value>PuTTY</value>
@@ -2716,7 +2716,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>포트 스캐너</value>
   </data>
   <data name="ProfileViewName_PowerShell" xml:space="preserve">
-    <value>파워셀</value>
+    <value>PowerShell</value>
   </data>
   <data name="ProfileViewName_PuTTY" xml:space="preserve">
     <value>PuTTY</value>
@@ -2779,7 +2779,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>포트 스캐너</value>
   </data>
   <data name="SettingsViewName_PowerShell" xml:space="preserve">
-    <value>파워셸</value>
+    <value>PowerShell</value>
   </data>
   <data name="SettingsViewName_Profiles" xml:space="preserve">
     <value>프로필</value>
@@ -2989,7 +2989,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>WPF 등에 대한 공유 제어 및 ... 기타</value>
   </data>
   <data name="Library_DnsClientNET_Description" xml:space="preserve">
-    <value>DnsClient.NET은 DNS 조회를 수행하기 위해 .NET Framework에 대한 간단하면서도 매우 강력하고 높은 공연식 오픈 소스 라이브러리입니다</value>
+    <value>DnsClient.NET는 단순하지만 매우 강력하고 .NET Framework에서 DNS 검색을 수행할 수 있는 고성능 오픈 소스 라이브러리</value>
   </data>
   <data name="Library_Dragablz_Description" xml:space="preserve">
     <value>WPF를 위한 드래그 가능 및 찢어진 탭 제어</value>
@@ -3052,12 +3052,17 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>PowerShell 호스팅을 위한 런타임</value>
   </data>
   <data name="Library_WebView2_Description" xml:space="preserve">
-    <value>WebView2 컨트롤을 사용하면 Microsoft Edge(Chromium)에서 제공하는 기본 응용 프로그램에 웹 기술 (HTML, CSS 및 JavaScript)을 포함할 수 있습니다.</value>
+    <value>WebView2 컨트롤을 사용하면 Microsoft Edge (Chromium)에서 제공하는 기본 응용 프로그램에 웹 기술 (HTML, CSS 및 JavaScript)을 포함할 수 있습니다.</value>
   </data>
   <data name="Library_XamlBehaviorsWpf_Description" xml:space="preserve">
     <value>WPF의 XAML 동작을 사용하여 앱에 상호 작용을 쉽게 추가할 수 있습니다.</value>
   </data>
   <data name="License_MicrosoftWebView2License" xml:space="preserve">
     <value>Microsoft WebView2 라이센스</value>
+  </data>
+  <data name="WarningMessage_ProfileFileNotEncryptedStoringPasswords" xml:space="preserve">
+    <value>현재 프로파일 파일은 암호화되지 않고 암호가 디스크에 암호화되지 않은 상태로 저장됩니다!
+
+설정&gt; 프로파일에서 프로파일 파일 암호화를 사용하여 자격 증명을 안전하게 저장하십시오.</value>
   </data>
 </root>
