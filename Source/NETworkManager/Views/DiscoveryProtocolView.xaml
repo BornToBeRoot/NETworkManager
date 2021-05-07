@@ -228,28 +228,31 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <GridSplitter Grid.Column="1" Grid.RowSpan="9" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                                <GridSplitter Grid.Column="1" Grid.RowSpan="12" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Device}" />
                                 <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding DiscoveryPackage.Device, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Port}" />
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding DiscoveryPackage.Port, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Description}" />
-                                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding DiscoveryPackage.Description, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Model}" />
-                                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding DiscoveryPackage.Model, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.VLAN}" />
-                                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DiscoveryPackage.VLAN, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.IPAddress}" />
-                                <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DiscoveryPackage.IPAddress, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Management}" />
-                                <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DiscoveryPackage.Management, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.ChassisId}" />
-                                <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding DiscoveryPackage.ChassisId, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Protocol}" />
-                                <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding DiscoveryPackage.Protocol, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.TimeToLive}" />
-                                <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding DiscoveryPackage.TimeToLive, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />                                
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.DeviceDescription}" />
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding DiscoveryPackage.DeviceDescription, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Port}" />
+                                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding DiscoveryPackage.Port, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.PortDescription}" />
+                                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding DiscoveryPackage.PortDescription, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Model}" />
+                                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DiscoveryPackage.Model, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.VLAN}" />
+                                <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DiscoveryPackage.VLAN, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.IPAddress}" />
+                                <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DiscoveryPackage.IPAddress, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Management}" />
+                                <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding DiscoveryPackage.Management, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.ChassisId}" />
+                                <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding DiscoveryPackage.ChassisId, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.Protocol}" />
+                                <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding DiscoveryPackage.Protocol, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.TimeToLive}" />
+                                <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DiscoveryPackage.TimeToLive, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />                                
                             </Grid>
                         </ScrollViewer>
                         <TextBlock Grid.Row="6" Text="{x:Static localization:Strings.CaptureNetworkPacketsToViewLLDPorCDPInformation}" >

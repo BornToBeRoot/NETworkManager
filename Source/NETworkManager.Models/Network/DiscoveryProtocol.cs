@@ -164,8 +164,9 @@ namespace NETworkManager.Models.Network
                         OnPackageReceived(new DiscoveryProtocolPackageArgs()
                         {
                             Device = outputItem.Properties["Device"]?.Value.ToString(),
+                            DeviceDescription = outputItem.Properties["SystemDescription"]?.Value.ToString(),
                             Port = outputItem.Properties["Port"]?.Value.ToString(),
-                            Description = outputItem.Properties["Description"]?.Value.ToString(),
+                            PortDescription = outputItem.Properties["PortDescription"]?.Value.ToString(),
                             Model = outputItem.Properties["Model"]?.Value.ToString(),
                             IPAddress = string.Join("; ", ipAddresses),
                             VLAN = outputItem.Properties["VLAN"]?.Value.ToString(),

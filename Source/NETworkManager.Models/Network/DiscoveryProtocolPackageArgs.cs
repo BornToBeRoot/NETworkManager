@@ -13,12 +13,17 @@
         /// <summary>
         /// 
         /// </summary>
+        public string DeviceDescription { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Port { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Description { get; set; }
+        public string PortDescription { get; set; }
 
         /// <summary>
         /// 
@@ -67,8 +72,9 @@
         /// 
         /// </summary>
         /// <param name="device"></param>
+        /// <param name="deviceDescription"></param>
         /// <param name="port"></param>
-        /// <param name="description"></param>
+        /// <param name="portDescription"></param>
         /// <param name="model"></param>
         /// <param name="vlan"></param>
         /// <param name="ipAddress"></param>
@@ -76,11 +82,12 @@
         /// <param name="timeToLive"></param>
         /// <param name="management"></param>
         /// <param name="chassisId"></param>
-        public DiscoveryProtocolPackageArgs(string device, string port, string description, string model, string vlan, string ipAddress, string protocol, string timeToLive, string management, string chassisId)
+        public DiscoveryProtocolPackageArgs(string device, string deviceDescription, string port, string portDescription, string model, string vlan, string ipAddress, string protocol, string timeToLive, string management, string chassisId)
         {
             Device = device;
+            DeviceDescription = deviceDescription;
             Port = port;
-            Description = description;
+            PortDescription = portDescription;
             Model = model;
             VLAN = vlan;
             IPAddress = ipAddress;
