@@ -3077,4 +3077,10 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="Management" xml:space="preserve">
     <value>Management</value>
   </data>
+  <data name="DeviceDescription" xml:space="preserve">
+    <value>Device description</value>
+  </data>
+  <data name="PortDescription" xml:space="preserve">
+    <value>Port description</value>
+  </data>
 </root>

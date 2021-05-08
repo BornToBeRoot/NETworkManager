@@ -3,8 +3,9 @@
     public class DiscoveryProtocolPackageInfo
     {
         public string Device { get; private set; }
+        public string DeviceDescription { get; private set; }
         public string Port { get; private set; }
-        public string Description { get; private set; }
+        public string PortDescription { get; private set; }
         public string Model { get; private set; }
         public string VLAN { get; private set; }
         public string IPAddress { get; private set; }
@@ -18,11 +19,12 @@
 
         }
 
-        public DiscoveryProtocolPackageInfo(string device, string port, string description, string model, string vlan, string ipAdress, string protocol, string timeToLive, string management, string chassisId)
+        public DiscoveryProtocolPackageInfo(string device, string deviceDescription, string port, string portDescription, string model, string vlan, string ipAdress, string protocol, string timeToLive, string management, string chassisId)
         {
             Device = device;
+            DeviceDescription = deviceDescription;
             Port = port;
-            Description = description;
+            PortDescription = portDescription;
             Model = model;
             VLAN = vlan;
             IPAddress = ipAdress;
@@ -34,7 +36,7 @@
 
         public static DiscoveryProtocolPackageInfo Parse(DiscoveryProtocolPackageArgs e)
         {
-            return new DiscoveryProtocolPackageInfo(e.Device, e.Port, e.Description, e.Model, e.VLAN, e.IPAddress, e.Protocol, e.TimeToLive, e.Management, e.ChassisId);
+            return new DiscoveryProtocolPackageInfo(e.Device, e.DeviceDescription, e.Port, e.PortDescription, e.Model, e.VLAN, e.IPAddress, e.Protocol, e.TimeToLive, e.Management, e.ChassisId);
         }
     }
 }
