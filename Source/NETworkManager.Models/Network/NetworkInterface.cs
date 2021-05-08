@@ -167,7 +167,7 @@ namespace NETworkManager.Models.Network
 
         public static IPAddress DetectLocalIPAddressBasedOnRouting(IPAddress remoteIPAddress)
         {
-            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
+            using (var socket = new Socket(remoteIPAddress.AddressFamily == AddressFamily.InterNetwork ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp))
             {
                 // return null on error...
                 try
@@ -193,14 +193,24 @@ namespace NETworkManager.Models.Network
         {
             foreach (var networkInterface in GetNetworkInterfaces())
             {
-                if (networkInterface.IPv4Address.Contains(localIPAddress))
+                if (localIPAddress.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    return networkInterface.IPv4Gateway.FirstOrDefault();
-                }
 
-                if (networkInterface.IPv6Address.Contains(localIPAddress))
+                    if (networkInterface.IPv4Address.Contains(localIPAddress))
+                    {
+                        return networkInterface.IPv4Gateway.FirstOrDefault();
+                    }
+                }
+                else if (localIPAddress.AddressFamily == AddressFamily.InterNetworkV6)
                 {
-                    return networkInterface.IPv4Gateway.FirstOrDefault();
+                    if (networkInterface.IPv6Address.Contains(localIPAddress))
+                    {
+                        return networkInterface.IPv6Gateway.FirstOrDefault();
+                    }
+                }
+                else
+                {
+                    throw new Exception("IPv4 or IPv6 address is required to detect the gateway.");
                 }
             }
 

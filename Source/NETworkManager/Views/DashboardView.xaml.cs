@@ -8,10 +8,15 @@ namespace NETworkManager.Views
     {
         private readonly DashboardViewModel _viewModel = new DashboardViewModel();
 
+        private NetworkConnectionView _networkConnectiondView;
+
         public DashboardView()
         {
             InitializeComponent();
             DataContext = _viewModel;
+
+            _networkConnectiondView = new NetworkConnectionView();
+            ContentControlNetworkConnection.Content = _networkConnectiondView;
         }
 
         public void OnViewHide()

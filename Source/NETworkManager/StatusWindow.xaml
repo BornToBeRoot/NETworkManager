@@ -11,7 +11,7 @@
         xmlns:networkManager="clr-namespace:NETworkManager"
         xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
-        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" Height="300" Width="250" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" ShowMinButton="False" ShowMaxRestoreButton="False" Closing="StatusWindow_Closing">
+        Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Style="{DynamicResource DefaultWindow}" Deactivated="MetroWindow_Deactivated" Height="280" Width="950" ShowInTaskbar="False" ResizeMode="NoResize" IsWindowDraggable="False" ShowMinButton="False" ShowMaxRestoreButton="False" ShowCloseButton="False" ShowTitleBar="False" Closing="MetroWindow_Closing" >
     <mahAppsControls:MetroWindow.Resources>
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
@@ -19,91 +19,18 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
     </mahAppsControls:MetroWindow.Resources>
     <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="10" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <StackPanel VerticalAlignment="Center" Grid.Row="0" Visibility="{Binding IsRefreshing, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <loadingIndicators:LoadingIndicator IsActive="True" Style="{DynamicResource LoadingIndicatorArcsStyle}" SpeedRatio="1" Margin="0,0,0,10"/>
-            <TextBlock Text="{x:Static localization:Strings.DetectingNetworkDots}" Style="{StaticResource MessageTextBlock}" />
-        </StackPanel>
-        <StackPanel Grid.Row="0">
-            <StackPanel.Style>
-                <Style TargetType="{x:Type StackPanel}">
-                    <Setter Property="Visibility" Value="Hidden" />
-                    <Style.Triggers>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding IsRefreshing}" Value="False" />
-                                <Condition Binding="{Binding IsNetworkAvailable}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.Setters>
-                                <Setter Property="Visibility" Value="Visible" />
-                            </MultiDataTrigger.Setters>
-                        </MultiDataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </StackPanel.Style>
-            <TextBlock Text="{x:Static localization:Strings.Network}" Style="{StaticResource HeaderTextBlock}" />
-            <Grid>
-                <Grid.Resources>
-                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                        <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
-                        <Setter Property="TextWrapping" Value="NoWrap" />
-                    </Style>
-                </Grid.Resources>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.IPAddress}" />
-                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding NetworkInterfaceInfo.IPv4Address, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Subnetmask}" />
-                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding NetworkInterfaceInfo.Subnetmask, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Gateway}" />
-                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding NetworkInterfaceInfo.IPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Speed}" />
-                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding NetworkInterfaceInfo.Speed, Converter={StaticResource Bytes1000ToSpeedConverter}}" />
-            </Grid>
-        </StackPanel>
-        <StackPanel VerticalAlignment="Center" Grid.Row="0">
-            <StackPanel.Style>
-                <Style TargetType="{x:Type StackPanel}">
-                    <Setter Property="Visibility" Value="Hidden" />
-                    <Style.Triggers>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding IsRefreshing}" Value="False" />
-                                <Condition Binding="{Binding IsNetworkAvailable}" Value="False" />
-                            </MultiDataTrigger.Conditions>
-                            <MultiDataTrigger.Setters>
-                                <Setter Property="Visibility" Value="Visible" />
-                            </MultiDataTrigger.Setters>
-                        </MultiDataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </StackPanel.Style>
-            <Rectangle Grid.Column="0" Grid.Row="2" Width="48" Height="48" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                <Rectangle.OpacityMask>
-                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
-                </Rectangle.OpacityMask>
-            </Rectangle>
-            <TextBlock Text="{x:Static localization:Strings.NetworkUnavailable}" Style="{StaticResource MessageTextBlock}" />
-        </StackPanel>
-        <StackPanel Grid.Row="2" Margin="0,0,0,10" Visibility="{Binding IsCountdownRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <TextBlock Text="{Binding CountdownText}" Foreground="{DynamicResource MahApps.Brushes.Gray5}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10"/>
-            <mahAppsControls:MetroProgressBar Value="{Binding CountdownValue}" Minimum="0" Maximum="10" Foreground="{DynamicResource MahApps.Brushes.Accent}" />
-        </StackPanel>
-        <Button Grid.Row="3" Content="{x:Static localization:Strings.Show}" Command="{Binding OpenMainWindowCommand}" Style="{StaticResource DefaultButton}" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ContentControl x:Name="ContentControlNetworkConnection" Grid.Row="0" />
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="{x:Static localization:Strings.Reload}" Command="{Binding ReloadCommand}" Style="{StaticResource DefaultButton}" Margin="0,0,10,0" />
+                <Button Content="{x:Static localization:Strings.Show}" Command="{Binding ShowMainWindowCommand}" Style="{StaticResource DefaultButton}" Margin="0,0,10,0" />
+                <Button Content="{x:Static localization:Strings.Close}" Command="{Binding CloseCommand}" Style="{StaticResource DefaultButton}" />
+            </StackPanel>            
+        </Grid>        
     </Grid>
 </mahAppsControls:MetroWindow>

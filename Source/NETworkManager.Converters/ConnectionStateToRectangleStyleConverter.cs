@@ -16,13 +16,14 @@ namespace NETworkManager.Converters
                 {
                     case ConnectionState.None:
                         break;
-                        //return Application.Current.Resources["HelpRectangle"] as Style;
                     case ConnectionState.OK:
                         return Application.Current.Resources["CheckRectangle"] as Style;
                     case ConnectionState.Warning:
                         return Application.Current.Resources["AlertRectangle"] as Style;
                     case ConnectionState.Critical:
                         return Application.Current.Resources["ErrorRectangle"] as Style;
+                    case ConnectionState.Info:
+                        return Application.Current.Resources["InfoRectangle"] as Style;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

@@ -273,7 +273,7 @@
   <data name="XML" xml:space="preserve">
     <value>XML</value>
   </data>
-  <data name="ExamplePublicIPAddressAPI" xml:space="preserve">
+  <data name="ExamplePublicIPv4AddressAPI" xml:space="preserve">
     <value>https://api.ipify.org</value>
   </data>
   <data name="IExploreExe" xml:space="preserve">
@@ -290,5 +290,11 @@
   </data>
   <data name="ExamplePorts" xml:space="preserve">
     <value>22; 80; 443</value>
+  </data>
+  <data name="ExampleIPv6Address" xml:space="preserve">
+    <value>2606:4700:4700::1111</value>
+  </data>
+  <data name="ExamplePublicIPv6AddressAPI" xml:space="preserve">
+    <value>https://api6.ipify.org</value>
   </data>
 </root>

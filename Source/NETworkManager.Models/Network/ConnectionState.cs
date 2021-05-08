@@ -23,6 +23,11 @@
         /// <summary>
         /// Connection is critical.
         /// </summary>
-        Critical
+        Critical,
+
+        /// <summary>
+        /// Informations.
+        /// </summary>
+        Info
     }
 }

@@ -7,53 +7,36 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
-        private string _publicICMPTestIPAddress;
-        public string PublicICMPTestIPAddress
+        private string _publicIPv4Address;
+        public string PublicIPv4Address
         {
-            get => _publicICMPTestIPAddress;
+            get => _publicIPv4Address;
             set
             {
-                if (value == _publicICMPTestIPAddress)
+                if (value == _publicIPv4Address)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Dashboard_PublicICMPTestIPAddress = value;
+                    SettingsManager.Current.Dashboard_PublicIPv4Address = value;
 
-                _publicICMPTestIPAddress = value;
+                _publicIPv4Address = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _publicDNSTestDomain;
-        public string PublicDNSTestDomain
+        private string _publicIPv6Address;
+        public string PublicIPv6Address
         {
-            get => _publicDNSTestDomain;
+            get => _publicIPv6Address;
             set
             {
-                if (value == _publicDNSTestDomain)
+                if (value == _publicIPv6Address)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Dashboard_PublicDNSTestDomain = value;
+                    SettingsManager.Current.Dashboard_PublicIPv6Address = value;
 
-                _publicDNSTestDomain = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _publicDNSTestIPAddress;
-        public string PublicDNSTestIPAddress
-        {
-            get => _publicDNSTestIPAddress;
-            set
-            {
-                if (value == _publicDNSTestIPAddress)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.Dashboard_PublicDNSTestIPAddress = value;
-
-                _publicDNSTestIPAddress = value;
+                _publicIPv6Address = value;
                 OnPropertyChanged();
             }
         }
@@ -75,36 +58,70 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _usePublicIPAddressCustomAPI;
-        public bool UsePublicIPAddressCustomAPI
+        private bool _usePublicIPv4AddressCustomAPI;
+        public bool UsePublicIPv4AddressCustomAPI
         {
-            get => _usePublicIPAddressCustomAPI;
+            get => _usePublicIPv4AddressCustomAPI;
             set
             {
-                if (value == _usePublicIPAddressCustomAPI)
+                if (value == _usePublicIPv4AddressCustomAPI)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Dashboard_UseCustomPublicIPAddressAPI = value;
+                    SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI = value;
 
-                _usePublicIPAddressCustomAPI = value;
+                _usePublicIPv4AddressCustomAPI = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _customPublicIPAddressAPI;
-        public string CustomPublicIPAddressAPI
+        private string _customPublicIPv4AddressAPI;
+        public string CustomPublicIPv4AddressAPI
         {
-            get => _customPublicIPAddressAPI;
+            get => _customPublicIPv4AddressAPI;
             set
             {
-                if (value == _customPublicIPAddressAPI)
+                if (value == _customPublicIPv4AddressAPI)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Dashboard_CustomPublicIPAddressAPI = value;
+                    SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI = value;
 
-                _customPublicIPAddressAPI = value;
+                _customPublicIPv4AddressAPI = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _usePublicIPv6AddressCustomAPI;
+        public bool UsePublicIPv6AddressCustomAPI
+        {
+            get => _usePublicIPv6AddressCustomAPI;
+            set
+            {
+                if (value == _usePublicIPv6AddressCustomAPI)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI = value;
+
+                _usePublicIPv6AddressCustomAPI = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _customPublicIPv6AddressAPI;
+        public string CustomPublicIPv6AddressAPI
+        {
+            get => _customPublicIPv6AddressAPI;
+            set
+            {
+                if (value == _customPublicIPv6AddressAPI)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI = value;
+
+                _customPublicIPv6AddressAPI = value;
                 OnPropertyChanged();
             }
         }
@@ -122,12 +139,13 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            PublicICMPTestIPAddress = SettingsManager.Current.Dashboard_PublicICMPTestIPAddress;
-            PublicDNSTestDomain = SettingsManager.Current.Dashboard_PublicDNSTestDomain;
-            PublicDNSTestIPAddress = SettingsManager.Current.Dashboard_PublicDNSTestIPAddress;
+            PublicIPv4Address = SettingsManager.Current.Dashboard_PublicIPv4Address;
+            PublicIPv6Address = SettingsManager.Current.Dashboard_PublicIPv6Address;
             CheckPublicIPAddress = SettingsManager.Current.Dashboard_CheckPublicIPAddress;
-            UsePublicIPAddressCustomAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPAddressAPI;
-            CustomPublicIPAddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPAddressAPI;
+            UsePublicIPv4AddressCustomAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI;
+            CustomPublicIPv4AddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI;
+            UsePublicIPv6AddressCustomAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI;
+            CustomPublicIPv6AddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI;
         }
         #endregion
     }

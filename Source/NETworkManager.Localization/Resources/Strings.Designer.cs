@@ -1276,6 +1276,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check is disabled!.
+        /// </summary>
+        public static string CheckIsDisabled {
+            get {
+                return ResourceManager.GetString("CheckIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check your network adapter configuration (dns) and if your dns server is configured correctly..
         /// </summary>
         public static string CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage {
@@ -2770,6 +2779,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a valid IPv6 address!.
+        /// </summary>
+        public static string EnterValidIPv6Address {
+            get {
+                return ResourceManager.GetString("EnterValidIPv6Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a valid MAC address (like 00:F1:23:AB:F2:35)!.
         /// </summary>
         public static string EnterValidMACAddress {
@@ -3275,7 +3293,7 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The public IP address is determined via ipify.org.
         ///
-        ///URL: https://api.ipify.org/.
+        ///URL: https://api.ipify.org and https://api6.ipify.org.
         /// </summary>
         public static string HelpMessage_CheckPublicIPAddress {
             get {
@@ -3350,29 +3368,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Domain to test dns server settings (Domain must resolve A or AAAA record)..
+        ///   Looks up a localized string similar to Public accessible IPv4 address..
         /// </summary>
-        public static string HelpMessage_PublicDNSTestDomain {
+        public static string HelpMessage_PublicIPv4Address {
             get {
-                return ResourceManager.GetString("HelpMessage_PublicDNSTestDomain", resourceCulture);
+                return ResourceManager.GetString("HelpMessage_PublicIPv4Address", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IP address to test dns server settings (IP address must resolve PTR record)..
+        ///   Looks up a localized string similar to Public accessible IPv6 address..
         /// </summary>
-        public static string HelpMessage_PublicDNSTestIPAddress {
+        public static string HelpMessage_PublicIPv6Address {
             get {
-                return ResourceManager.GetString("HelpMessage_PublicDNSTestIPAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IP address to test connection via ping (ICMP)..
-        /// </summary>
-        public static string HelpMessage_PublicICMPTestIPAddress {
-            get {
-                return ResourceManager.GetString("HelpMessage_PublicICMPTestIPAddress", resourceCulture);
+                return ResourceManager.GetString("HelpMessage_PublicIPv6Address", resourceCulture);
             }
         }
         
@@ -3520,6 +3529,24 @@ namespace NETworkManager.Localization.Resources {
         public static string HTTPHeaders {
             get {
                 return ResourceManager.GetString("HTTPHeaders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ICMPv4.
+        /// </summary>
+        public static string ICMPv4 {
+            get {
+                return ResourceManager.GetString("ICMPv4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ICMPv6.
+        /// </summary>
+        public static string ICMPv6 {
+            get {
+                return ResourceManager.GetString("ICMPv6", resourceCulture);
             }
         }
         
@@ -5579,39 +5606,30 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Public DNS test domain.
-        /// </summary>
-        public static string PublicDNSTestDomain {
-            get {
-                return ResourceManager.GetString("PublicDNSTestDomain", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Public DNS test IP address.
-        /// </summary>
-        public static string PublicDNSTestIPAddress {
-            get {
-                return ResourceManager.GetString("PublicDNSTestIPAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Public ICMP test IP address.
-        /// </summary>
-        public static string PublicICMPTestIPAddress {
-            get {
-                return ResourceManager.GetString("PublicICMPTestIPAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Public IP address check
         ///is disabled!.
         /// </summary>
         public static string PublicIPAddressCheckIsDisabled {
             get {
                 return ResourceManager.GetString("PublicIPAddressCheckIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public IPv4 address.
+        /// </summary>
+        public static string PublicIPv4Address {
+            get {
+                return ResourceManager.GetString("PublicIPv4Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public IPv6 address.
+        /// </summary>
+        public static string PublicIPv6Address {
+            get {
+                return ResourceManager.GetString("PublicIPv6Address", resourceCulture);
             }
         }
         
@@ -8416,15 +8434,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use custom API.
-        /// </summary>
-        public static string UseCustomAPI {
-            get {
-                return ResourceManager.GetString("UseCustomAPI", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Use custom DNS server.
         /// </summary>
         public static string UseCustomDNSServer {
@@ -8439,6 +8448,24 @@ namespace NETworkManager.Localization.Resources {
         public static string UseCustomDNSSuffix {
             get {
                 return ResourceManager.GetString("UseCustomDNSSuffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use custom IPv4 address API.
+        /// </summary>
+        public static string UseCustomIPv4AddressAPI {
+            get {
+                return ResourceManager.GetString("UseCustomIPv4AddressAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use custom IPv6 address API.
+        /// </summary>
+        public static string UseCustomIPv6AddressAPI {
+            get {
+                return ResourceManager.GetString("UseCustomIPv6AddressAPI", resourceCulture);
             }
         }
         

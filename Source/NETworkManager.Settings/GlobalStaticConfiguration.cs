@@ -54,10 +54,11 @@ namespace NETworkManager.Settings
         public static int Profile_EncryptionIterations => 1000000;
 
         // Application: Dashboard
-        public static string Dashboard_PublicIPAddressAPI => "https://api.ipify.org";
-        public static string Dashboard_PublicICMPTestIPAddress => "1.1.1.1";
-        public static string Dashboard_PublicDNSTestDomain => "one.one.one.one";
-        public static string Dashboard_PublicDNSTestIPAddress => "1.1.1.1";
+        public static string Dashboard_PublicIPv4Address => "1.1.1.1";
+        public static string Dashboard_PublicIPv6Address => "2606:4700:4700::1111";
+        public static bool Dashboard_CheckPublicIPAddress => true;
+        public static string Dashboard_PublicIPv4AddressAPI => "https://api.ipify.org";
+        public static string Dashboard_PublicIPv6AddressAPI => "https://api6.ipify.org";
 
         // Application: WiFi
         public static bool WiFi_Show2dot4GHzNetworks => true;
@@ -138,7 +139,7 @@ namespace NETworkManager.Settings
         public static int TigerVNC_DefaultVNCPort => 5900;
 
         // WebConsole
-        public static string WebConsole_Cache => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyManager.Current.Name, "WebConsole_Cache"); 
+        public static string WebConsole_Cache => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyManager.Current.Name, "WebConsole_Cache");
 
         // Application: SNMP
         public static WalkMode SNMP_WalkMode => WalkMode.WithinSubtree;
