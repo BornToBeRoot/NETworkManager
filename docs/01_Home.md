@@ -6,54 +6,16 @@ description: "A powerful tool for managing networks and troubleshoot network pro
 permalink: /
 ---
 
-# Welcome
+# What is NETworkManager
 
-NETworkManager is a powerful tool for managing networks and troubleshoot network problems! You can view and configure network interfaces, scan for wifi networks, capture lldp or cdp packages, perform an IP or port scan, ping your hosts, and troubleshoot your connection using traceroute or a DNS lookup.
+NETworkManager is a powerful tool for managing networks and troubleshoot network problems! It includes a variety of tools such as an IP scanner, WiFi analyzer, PuTTY/RemoteDesktop with tabs or an LLDP/CDP capture (and many [more](./Feature)) in a unified user interface. 
 
-It contains a remote desktop and PowerShell for managing Windows devices. You can use PuTTY, TigerVNC or the web console to administrate Linux or other devices (e.g. switches). And best of all... everything has tabs and you can create a profile for each of your hosts that can be used across all features. The profile files can be stored encrypted on disk and protected with a master password to provide an additional layer of security.
+The code is open source and available on [GitHub](https://github.com/BornToBeRoot/NETworkManager){:target="_blank"} published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE){:target="_blank"}. This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/master/CODE_OF_CONDUCT.md){:target="_blank"} defined by the [Contributor Covenant](http://contributor-covenant.org/){:target="_blank"}.
 
-There are some more features such as a subnet calculator, a Whois lookup or a database in which you can find MAC address vendors or TCP / UDP ports with a description. The best way is to download the tool and try it yourself!
-
-<img alt="NETworkManager" src="Preview.gif" />
-
-<div align="center">   
-  <p>   
-    <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
-      <img alt="All releases" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=for-the-badge&logo=github" />
-    </a>    
-    <a href="https://github.com/BornToBeroot/NETworkManager/releases/latest" target="_blank">
-      <img alt="Latest release" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/latest/total.svg?style=for-the-badge&logo=github" />
-    </a>    
-    <a href="https://github.com/BornToBeroot/NETworkManager/stargazers" target="_blank">
-      <img alt="GitHub stars" src="https://img.shields.io/github/stars/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
-    </a>    
-    <a href="https://github.com/BornToBeroot/NETworkManager/network" target="_blank">       
-      <img alt="GitHub forks" src="https://img.shields.io/github/forks/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
-    </a>     
-  </p> 
-  <p> 
-    <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
-      <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=for-the-badge&logo=appveyor&&label=master" />
-    </a>   
-    <a href="https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE">
-      <img alt="AppVeyor" src="https://img.shields.io/github/license/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
-    </a>     
-  </p> 
-  <p> 
-    <a href="https://transifex.com/BornToBeRoot/NETworkManager/">
-      <img alt="Transifex" src="https://img.shields.io/badge/transifex-translate-green.svg?style=for-the-badge" />
-    </a>   
-    <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Feature-Request&template=Feature_request.md">
-      <img alt="Feature request" src="https://img.shields.io/badge/github-feature_request-green.svg?style=for-the-badge&logo=github" />
-    </a>       
-    <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Issue&template=Bug_report.md">
-      <img alt="Bug report" src="https://img.shields.io/badge/github-bug_report-red.svg?style=for-the-badge&logo=github" />
-    </a>     
-  </p>       
+<div align="center">
+  <img alt="NETworkManager" src="Preview.gif" />
   <p>
-    <a href='https://github.com/BornToBeRoot/NETworkManager' target="_blank"><button type="button" name="button" class="btn">Github :octocat:</button></a>
-    <a href='./Download'><button type="button" name="button" class="btn">Download :package:</button></a>
-    <a href='./Changelog'><button type="button" name="button" class="btn">Changelog :page_with_curl:</button></a>
-    <a href='./Application'><button type="button" name="button" class="btn">Documentation :book:</button></a>
+    <a href='https://github.com/BornToBeRoot/NETworkManager' target="_blank"><button type="button" name="button" class="btn">:octocat: Github</button></a>
+    <a href='./Download'><button type="button" name="button" class="btn">:package: Download</button></a>    
   </p>
 </div>

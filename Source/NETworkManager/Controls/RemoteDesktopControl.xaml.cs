@@ -420,7 +420,7 @@ namespace NETworkManager.Controls
                 case 8711:
                     return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrSmartcardCardBlocked;
                 default:
-                    return string.Empty;
+                    return "Disconnect reason code " + reason + " not found in resources!" + Environment.NewLine + "(You can report this on GitHub)";
             }
         }
         #endregion

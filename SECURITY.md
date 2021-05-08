@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Only the current version (master) is supproted.
+Only the current version (master) is supported.
 
 ## Reporting a Vulnerability
 

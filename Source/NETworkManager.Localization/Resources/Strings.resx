@@ -3074,4 +3074,19 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
     <value>Use custom IPv6 address API</value>
   </data>
+  <data name="TimeToLive" xml:space="preserve">
+    <value>Time to live</value>    
+  </data>
+  <data name="ChassisId" xml:space="preserve">
+    <value>Chassis Id</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Management</value>
+  </data>
+  <data name="DeviceDescription" xml:space="preserve">
+    <value>Device description</value>
+  </data>
+  <data name="PortDescription" xml:space="preserve">
+    <value>Port description</value>
+  </data>
 </root>

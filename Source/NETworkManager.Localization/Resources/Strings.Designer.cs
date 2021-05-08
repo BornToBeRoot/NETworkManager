@@ -1240,6 +1240,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chassis Id.
+        /// </summary>
+        public static string ChassisId {
+            get {
+                return ResourceManager.GetString("ChassisId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check.
         /// </summary>
         public static string Check {
@@ -2199,6 +2208,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Device {
             get {
                 return ResourceManager.GetString("Device", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Device description.
+        /// </summary>
+        public static string DeviceDescription {
+            get {
+                return ResourceManager.GetString("DeviceDescription", resourceCulture);
             }
         }
         
@@ -4253,6 +4271,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Management.
+        /// </summary>
+        public static string Management {
+            get {
+                return ResourceManager.GetString("Management", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Master Password.
         /// </summary>
         public static string MasterPassword {
@@ -5168,6 +5195,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Portable {
             get {
                 return ResourceManager.GetString("Portable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port description.
+        /// </summary>
+        public static string PortDescription {
+            get {
+                return ResourceManager.GetString("PortDescription", resourceCulture);
             }
         }
         
@@ -7624,6 +7660,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subnet.
         /// </summary>
         public static string Subnet {
@@ -8106,6 +8151,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Timestamp {
             get {
                 return ResourceManager.GetString("Timestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time to live.
+        /// </summary>
+        public static string TimeToLive {
+            get {
+                return ResourceManager.GetString("TimeToLive", resourceCulture);
             }
         }
         

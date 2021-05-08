@@ -13,7 +13,9 @@
         dialog:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DiscoveryProtocolViewModel}">
     <UserControl.InputBindings>
+        <!--
         <KeyBinding Key="F5" Command="{Binding ReloadNetworkInterfacesCommand}" />
+        -->        
     </UserControl.InputBindings>
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -28,7 +30,10 @@
         <TabItem Header="{x:Static localization:Strings.DiscoveryProtocol}">
             <Grid Margin="10" >
                 <Grid Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <!--
                     <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
+                    -->
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -38,6 +43,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
+                        <!--
                         <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Interface}" />
                         <Grid Grid.Row="1" Margin="0,0,0,20">
                             <Grid.ColumnDefinitions>
@@ -123,6 +129,7 @@
                                 </Rectangle>
                             </Button>
                         </Grid>
+                        -->
                         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Capture}" />
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
@@ -150,12 +157,16 @@
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                                         <Style.Triggers>
+                                            <!--
                                             <DataTrigger Binding="{Binding IsNetworkInterfaceLoading}" Value="True">
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
+                                            -->
+                                            <!--
                                             <DataTrigger Binding="{Binding CanCapture}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
+                                            -->
                                             <DataTrigger Binding="{Binding IsCapturing}" Value="True">
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
@@ -215,24 +226,33 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <GridSplitter Grid.Column="1" Grid.RowSpan="9" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                                <GridSplitter Grid.Column="1" Grid.RowSpan="12" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Device}" />
-                                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding DiscoveryPackage.Device, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Port}" />
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding DiscoveryPackage.Port, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Description}" />
-                                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding DiscoveryPackage.Description, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Model}" />
-                                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding DiscoveryPackage.Model, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.VLAN}" />
-                                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DiscoveryPackage.VLAN, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.IPAddress}" />
-                                <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DiscoveryPackage.IPAddress, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Protocol}" />
-                                <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DiscoveryPackage.Protocol, Converter={StaticResource NullOrEmptyToStringConverter}}" />
-                                <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Time}" />
-                                <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding DiscoveryPackage.Time, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding DiscoveryPackage.Device, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.DeviceDescription}" />
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding DiscoveryPackage.DeviceDescription, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Port}" />
+                                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding DiscoveryPackage.Port, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.PortDescription}" />
+                                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding DiscoveryPackage.PortDescription, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Model}" />
+                                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding DiscoveryPackage.Model, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.VLAN}" />
+                                <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding DiscoveryPackage.VLAN, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.IPAddress}" />
+                                <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding DiscoveryPackage.IPAddress, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Management}" />
+                                <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding DiscoveryPackage.Management, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.ChassisId}" />
+                                <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding DiscoveryPackage.ChassisId, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.Protocol}" />
+                                <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding DiscoveryPackage.Protocol, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.TimeToLive}" />
+                                <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DiscoveryPackage.TimeToLive, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />                                
                             </Grid>
                         </ScrollViewer>
                         <TextBlock Grid.Row="6" Text="{x:Static localization:Strings.CaptureNetworkPacketsToViewLLDPorCDPInformation}" >
@@ -272,6 +292,7 @@
                             <TextBlock Text="{Binding TimeRemainingMessage}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource MahApps.Brushes.Gray3}" HorizontalAlignment="Center" />                            
                         </StackPanel>
                     </Grid>
+                    <!--
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
                         <StackPanel.Style>
                             <Style TargetType="{x:Type StackPanel}">
@@ -301,7 +322,9 @@
                             </Button.Content>
                         </Button>
                     </StackPanel>
+                    -->
                 </Grid>
+                
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                     <TextBlock Text="{x:Static localization:Strings.NetworkPacketsCaptureAdminMessage}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
                     <Button Command="{Binding RestartAsAdminCommand}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
