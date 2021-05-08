@@ -9,3 +9,72 @@ permalink: /Documentation/CommandLine/CommandLineArguments
 ---
 
 # Command line arguments
+
+## Public
+
+### --help
+Displays the help dialog.
+
+**Syntax**
+```
+NETworkManager.exe --help
+```
+
+### --reset-settings
+Resets all application settings.
+
+**Syntax**
+```
+NETworkManager.exe --reset-settings
+```
+
+### --application:
+Start a specific application on startup.
+
+**Syntax**
+```
+NETworkManager.exe --application:PingMonitor
+```
+
+**Possible values:**
+  - `Dashboard`
+  - `NetworkInterface`
+  - `WiFi`
+  - `IPScanner`
+  - `PortScanner`
+  - `PingMonitor`
+  - `Traceroute`
+  - `DNSLookup`
+  - `RemoteDesktop`
+  - `PowerShell`
+  - `PuTTY`
+  - `TigerVNC`
+  - `WebConsole`
+  - `SNMP`
+  - `DiscoveryProtocol`
+  - `WakeOnLAN`
+  - `Whois`
+  - `SubnetCalculator`
+  - `Lookup`
+  - `Connections`
+  - `Listeners`
+  - `ARPTable`
+
+## Internal
+
+### --autostart
+Indicates whether the application was started by autostart.
+
+**Syntax**
+```
+NETworkManager.exe --autostart
+```
+
+
+## --restart-pid:
+Passed when the application is restarted to wait for the old process to end.
+
+**Syntax**
+```
+NETworkManager.exe --restart-pid:35674
+```
