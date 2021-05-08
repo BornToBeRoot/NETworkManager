@@ -30,5 +30,4 @@ permalink: /Features
 - [Listeners](Documentation/Application/Listeners)
 - [ARP Table](Documentation/Application/ARPTable)
 
-
 Hosts can be stored in profiles, which can be used across all features. Individual settings such as the path to an SSH key can be stored here to override the global settings. The profile files can be stored encrypted on disk and protected with a master password to provide an additional layer of security.

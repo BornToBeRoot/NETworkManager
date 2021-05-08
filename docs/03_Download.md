@@ -11,7 +11,7 @@ permalink: /Download
 Version: **2021.3.28.0** <br>
 Date: **28.03.2021**
 
-| File | Checksum [SHA256] |
+| Download | Checksum [SHA256] |
 |---|---|
 | <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn">Setup</button></a> | `3153DE224DA69511331C07B89CF4738914BDBE9AFEE59C5BD289E657449CCC43` |
 | <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn">Portable</button></a> | `D295B260F56416792E455AED6069ECA545F36A80B192BFE04D2D2B9D64598855` |
