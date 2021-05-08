@@ -2093,8 +2093,8 @@ URL: https://api.ipify.org/</value>
   <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
     <value>"{0}" je dosažitelné přes ICMP!</value>
   </data>
-  <data name="UseCustomAPI" xml:space="preserve">
-    <value>Použij vlastní API</value>
+  <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
+    <value>Use custom IPv4 address API</value>
   </data>
   <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
     <value>URL webové služby dosažitelné přes http nebo https, která jako odpověď vrátí IP adresu.</value>
@@ -2104,15 +2104,6 @@ URL: https://api.ipify.org/</value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
     <value>Nelze se spojit s "{0}"!</value>
-  </data>
-  <data name="PublicDNSTestDomain" xml:space="preserve">
-    <value>Veřejná doména testu DNS</value>
-  </data>
-  <data name="PublicDNSTestIPAddress" xml:space="preserve">
-    <value>Veřejná IP adresa testu DNS</value>
-  </data>
-  <data name="PublicICMPTestIPAddress" xml:space="preserve">
-    <value>Veřejná IP adresa testu ICMP</value>
   </data>
   <data name="IPv4ProtocolAvailable" xml:space="preserve">
     <value>Protokol IPv4 dostupný</value>
@@ -2203,15 +2194,6 @@ URL: https://api.ipify.org/</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
     <value>Přehrát na tomto počítači</value>
-  </data>
-  <data name="HelpMessage_PublicDNSTestDomain" xml:space="preserve">
-    <value>Doména pro test nastavení DNS (doména musí přeložit záznam A nebo AAAA).</value>
-  </data>
-  <data name="HelpMessage_PublicDNSTestIPAddress" xml:space="preserve">
-    <value>IP adresa pro test nastavení DNS (IP adresa musí být přeložena na záznam PTR).</value>
-  </data>
-  <data name="HelpMessage_PublicICMPTestIPAddress" xml:space="preserve">
-    <value>IP adresa pro test připojení pomocí ping (ICMP)</value>
   </data>
   <data name="Gateway" xml:space="preserve">
     <value>Brána</value>
@@ -3064,5 +3046,47 @@ Poté bude aplikace restartována!</value>
 
 Povolte šifrování souboru profilu v Nastavení&gt;
 Pověření v profilu budou bezpečnější.</value>
+  </data>
+  <data name="ICMPv4" xml:space="preserve">
+    <value>ICMPv4</value>
+  </data>
+  <data name="ICMPv6" xml:space="preserve">
+    <value>ICMPv6</value>
+  </data>
+  <data name="CheckIsDisabled" xml:space="preserve">
+    <value>Check is disabled!</value>
+  </data>
+  <data name="EnterValidIPv6Address" xml:space="preserve">
+    <value>Enter a valid IPv6 address!</value>
+  </data>
+  <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
+    <value>Public accessible IPv4 address.</value>
+  </data>
+  <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
+    <value>Public accessible IPv6 address.</value>
+  </data>
+  <data name="PublicIPv4Address" xml:space="preserve">
+    <value>Public IPv4 address</value>
+  </data>
+  <data name="PublicIPv6Address" xml:space="preserve">
+    <value>Public IPv6 address</value>
+  </data>
+  <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
+    <value>Use custom IPv6 address API</value>
+  </data>
+  <data name="TimeToLive" xml:space="preserve">
+    <value>Time to live</value>    
+  </data>
+  <data name="ChassisId" xml:space="preserve">
+    <value>Chassis Id</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Management</value>
+  </data>
+  <data name="DeviceDescription" xml:space="preserve">
+    <value>Device description</value>
+  </data>
+  <data name="PortDescription" xml:space="preserve">
+    <value>Port description</value>
   </data>
 </root>
