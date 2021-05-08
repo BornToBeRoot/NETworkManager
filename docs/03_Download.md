@@ -14,8 +14,8 @@ Date: **28.03.2021**
 | File | Checksum [SHA256] |
 |---|---|
 | <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn">:cd: Setup</button></a> | `3153DE224DA69511331C07B89CF4738914BDBE9AFEE59C5BD289E657449CCC43` |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn">Portable</button></a> |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Archiv.zip' target='_blank'><button type="button" name="button" class="btn">Archiv</button></a> | `6C5E003DC820B75B2B7C1381F2AE2F0D3AEF13EE84F67AE6EFBC235342B94490` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn">:package: Portable</button></a> |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Archiv.zip' target='_blank'><button type="button" name="button" class="btn">:package: Archiv</button></a> | `6C5E003DC820B75B2B7C1381F2AE2F0D3AEF13EE84F67AE6EFBC235342B94490` |
 
 The setup is also available on [Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"} and can be installed with:
 ```
