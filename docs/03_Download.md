@@ -22,8 +22,6 @@ The setup is also available on [Chocolatey](https://chocolatey.org/packages/NETw
 ~# choco install networkmanager
 ```
 
-_If you had version 2020.12.2 or earlier installed, you have to uninstall the x86 version manually in the control panel!_
-
 ## System requirements
 - Windows 10 / Server x64 (1809 or later)
 - [.NET Desktop Runtime 5.0.0](https://dotnet.microsoft.com/download/dotnet/5.0){:target="_blank"} or later
