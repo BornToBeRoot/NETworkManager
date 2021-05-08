@@ -5,10 +5,12 @@ using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
@@ -448,25 +450,66 @@ namespace NETworkManager.ViewModels
             CheckConnectionAsync().ConfigureAwait(false);
         }
 
+        CancellationTokenSource tokenSource;
+        CancellationToken ct;
+
         private async Task CheckConnectionAsync()
         {
+            // already in queue
+            if (tokenSource != null && tokenSource.IsCancellationRequested)
+            {
+                //Debug.WriteLine("Already canceled...");
+                return;
+            }
+
+            // Cancel if running
+            if (IsChecking)
+            {
+                tokenSource.Cancel();
+                //Debug.WriteLine("Try to cancel...");
+
+                while (IsChecking)
+                {
+                    //Debug.WriteLine("Waiting for cancel..");
+                    await Task.Delay(500);
+                }
+            }
+
+            // Start check
+            //Debug.WriteLine("Starting a check...");
             IsChecking = true;
+            
+            tokenSource = new CancellationTokenSource();
+            ct = tokenSource.Token;
 
-            await Task.Run(async () =>
-             {
-                 List<Task> tasks = new List<Task>();
+            try
+            {
+                await Task.Run(async () =>
+                 {
+                     List<Task> tasks = new List<Task>
+                     {
+                         CheckConnectionComputerAsync(ct),
+                         CheckConnectionRouterAsync(ct),
+                         CheckConnectionInternetAsync(ct)
+                     };
 
-                 tasks.Add(CheckConnectionComputerAsync());
-                 tasks.Add(CheckConnectionRouterAsync());
-                 tasks.Add(CheckConnectionInternetAsync());
+                     await Task.WhenAll(tasks);
+                 }, tokenSource.Token);
 
-                 await Task.WhenAll(tasks);
-             });
-
-            IsChecking = false;
+                //Debug.WriteLine("Check finished...");
+            }
+            catch (OperationCanceledException)
+            {
+                //Debug.WriteLine("Check canceled...");
+            }
+            finally
+            {
+                tokenSource.Dispose();
+                IsChecking = false;
+            }
         }
 
-        private Task CheckConnectionComputerAsync()
+        private Task CheckConnectionComputerAsync(CancellationToken ct)
         {
             return Task.Run(() =>
             {
@@ -484,7 +527,12 @@ namespace NETworkManager.ViewModels
                 // Detect local IPv4 address
                 try
                 {
-                    ComputerIPv4 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address)).ToString();
+                    string computerIPv4 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address)).ToString();
+
+                    if (ct.IsCancellationRequested)
+                        ct.ThrowIfCancellationRequested();
+
+                    ComputerIPv4 = computerIPv4;
                     ComputerIPv4State = string.IsNullOrEmpty(ComputerIPv4) ? ConnectionState.Critical : ConnectionState.OK;
                 }
                 catch (Exception)
@@ -498,7 +546,12 @@ namespace NETworkManager.ViewModels
                 // Detect local IPv6 address
                 try
                 {
-                    ComputerIPv6 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address)).ToString();
+                    string computerIPv6 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address)).ToString();
+
+                    if (ct.IsCancellationRequested)
+                        ct.ThrowIfCancellationRequested();
+
+                    ComputerIPv6 = computerIPv6;
                     ComputerIPv6State = string.IsNullOrEmpty(ComputerIPv6) ? ConnectionState.Critical : ConnectionState.OK;
                 }
                 catch (Exception)
@@ -510,11 +563,16 @@ namespace NETworkManager.ViewModels
                 IsComputerIPv6Checking = false;
 
                 // Get local dns entry
-                if (!string.IsNullOrEmpty(ComputerIPv4))
+                if (!string.IsNullOrEmpty(ComputerIPv4) || !string.IsNullOrEmpty(ComputerIPv6))
                 {
                     try
                     {
-                        ComputerDNS = Dns.GetHostEntry(ComputerIPv4).HostName;
+                        string computerDNS = string.IsNullOrEmpty(ComputerIPv4) ? Dns.GetHostEntry(ComputerIPv6).HostName : Dns.GetHostEntry(ComputerIPv4).HostName;
+
+                        if (ct.IsCancellationRequested)
+                            ct.ThrowIfCancellationRequested();
+
+                        ComputerDNS = computerDNS;
                         ComputerDNSState = ConnectionState.OK;
                     }
                     catch (SocketException)
@@ -528,7 +586,7 @@ namespace NETworkManager.ViewModels
             });
         }
 
-        private Task CheckConnectionRouterAsync()
+        private Task CheckConnectionRouterAsync(CancellationToken ct)
         {
             return Task.Run(() =>
             {
@@ -544,12 +602,15 @@ namespace NETworkManager.ViewModels
                 RouterDNSState = ConnectionState.None;
 
                 // Detect router IPv4 and if it is reachable
-                // Detect local IPv4 address
                 try
                 {
-                    var computerIPv4 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
-                    RouterIPv4 = Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddress(computerIPv4).ToString();
+                    IPAddress computerIPv4 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address));
+                    string routerIPv4 = Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddress(computerIPv4).ToString();
 
+                    if (ct.IsCancellationRequested)
+                        ct.ThrowIfCancellationRequested();
+
+                    RouterIPv4 = routerIPv4;
                     RouterIPv4State = ConnectionState.OK;
                 }
                 catch (Exception)
@@ -564,8 +625,12 @@ namespace NETworkManager.ViewModels
                 try
                 {
                     var computerIPv6 = Models.Network.NetworkInterface.DetectLocalIPAddressBasedOnRouting(IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address));
-                    RouterIPv6 = Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddress(computerIPv6).ToString();
+                    string routerIPv6 = Models.Network.NetworkInterface.DetectGatewayBasedOnLocalIPAddress(computerIPv6).ToString();
 
+                    if (ct.IsCancellationRequested)
+                        ct.ThrowIfCancellationRequested();
+
+                    RouterIPv6 = routerIPv6;
                     RouterIPv6State = ConnectionState.OK;
                 }
                 catch (Exception)
@@ -577,11 +642,16 @@ namespace NETworkManager.ViewModels
                 IsRouterIPv6Checking = false;
 
                 // Detect router dns
-                if (!string.IsNullOrEmpty(RouterIPv4))
+                if (!string.IsNullOrEmpty(RouterIPv4) || !string.IsNullOrEmpty(RouterIPv6))
                 {
                     try
                     {
-                        RouterDNS = Dns.GetHostEntry(RouterIPv4).HostName;
+                        string routerDNS = string.IsNullOrEmpty(RouterIPv4) ? Dns.GetHostEntry(RouterIPv6).HostName : Dns.GetHostEntry(RouterIPv4).HostName;
+
+                        if (ct.IsCancellationRequested)
+                            ct.ThrowIfCancellationRequested();
+
+                        RouterDNS = routerDNS;
                         RouterDNSState = ConnectionState.OK;
                     }
                     catch (SocketException)
@@ -595,7 +665,7 @@ namespace NETworkManager.ViewModels
             });
         }
 
-        private Task CheckConnectionInternetAsync()
+        private Task CheckConnectionInternetAsync(CancellationToken ct)
         {
             return Task.Run(() =>
                 {
@@ -635,6 +705,10 @@ namespace NETworkManager.ViewModels
                     {
                         var webClient = new WebClient();
                         var result = webClient.DownloadString(publicIPv4AddressAPI);
+
+                        if (ct.IsCancellationRequested)
+                            ct.ThrowIfCancellationRequested();
+
                         var match = Regex.Match(result, RegexHelper.IPv4AddressExctractRegex);
 
                         if (match.Success)
@@ -663,6 +737,10 @@ namespace NETworkManager.ViewModels
                     {
                         var webClient = new WebClient();
                         var result = webClient.DownloadString(publicIPv6AddressAPI);
+
+                        if (ct.IsCancellationRequested)
+                            ct.ThrowIfCancellationRequested();
+
                         var match = Regex.Match(result, RegexHelper.IPv6AddressExctractRegex);
 
                         if (match.Success)
@@ -685,11 +763,16 @@ namespace NETworkManager.ViewModels
                     IsInternetIPv6Checking = false;
 
                     // Detect public dns
-                    if (!string.IsNullOrEmpty(InternetIPv4))
+                    if (!string.IsNullOrEmpty(InternetIPv4) || !string.IsNullOrEmpty(InternetIPv6))
                     {
                         try
                         {
-                            InternetDNS = Dns.GetHostEntry(InternetIPv4).HostName;
+                            string internetDNS = string.IsNullOrEmpty(InternetIPv4) ? Dns.GetHostEntry(InternetIPv6).HostName : Dns.GetHostEntry(InternetIPv4).HostName;
+
+                            if (ct.IsCancellationRequested)
+                                ct.ThrowIfCancellationRequested();
+
+                            InternetDNS = internetDNS;
                             InternetDNSState = ConnectionState.OK;
                         }
                         catch (SocketException)
