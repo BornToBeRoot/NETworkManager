@@ -13,6 +13,7 @@ Date: **28.03.2021**
 
 | File | Checksum [SHA256] |
 |---|---|
+|<a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn">Documentation :book:</button></a> | Test |
 |[:package: Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Setup.exe){:target="_blank"}| `3153DE224DA69511331C07B89CF4738914BDBE9AFEE59C5BD289E657449CCC43` |
 |[:package: Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Portable.zip){:target="_blank"}| `D295B260F56416792E455AED6069ECA545F36A80B192BFE04D2D2B9D64598855` |
 |[:package: Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Archiv.zip){:target="_blank"}| `6C5E003DC820B75B2B7C1381F2AE2F0D3AEF13EE84F67AE6EFBC235342B94490` |
