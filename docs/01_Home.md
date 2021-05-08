@@ -57,9 +57,9 @@ There are some more features such as a subnet calculator, a Whois lookup or a da
     </a>     
   </p>       
   <p>
-    <a href='https://github.com/BornToBeRoot/NETworkManager' target="_blank"><button type="button" name="button" class="btn">Github :octocat:</button></a>
-    <a href='./Download'><button type="button" name="button" class="btn">Download :package:</button></a>
-    <a href='./Changelog'><button type="button" name="button" class="btn">Changelog :page_with_curl:</button></a>
-    <a href='./Documentation'><button type="button" name="button" class="btn">Documentation :book:</button></a>
+    <a href='https://github.com/BornToBeRoot/NETworkManager' target="_blank"><button type="button" name="button" class="btn">:octocat: Github</button></a>
+    <a href='./Download'><button type="button" name="button" class="btn">:package: Download</button></a>
+    <a href='./Changelog'><button type="button" name="button" class="btn">:page_with_curl: Changelog</button></a>
+    <a href='./Documentation'><button type="button" name="button" class="btn">:book: Documentation</button></a>
   </p>
 </div>
