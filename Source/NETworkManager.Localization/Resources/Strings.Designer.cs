@@ -2203,6 +2203,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Device description.
+        /// </summary>
+        public static string DeviceDescription {
+            get {
+                return ResourceManager.GetString("DeviceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DHCP enabled.
         /// </summary>
         public static string DHCPEnabled {
@@ -5159,6 +5168,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Portable {
             get {
                 return ResourceManager.GetString("Portable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port description.
+        /// </summary>
+        public static string PortDescription {
+            get {
+                return ResourceManager.GetString("PortDescription", resourceCulture);
             }
         }
         
