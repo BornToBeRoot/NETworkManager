@@ -3106,4 +3106,10 @@ Per archiviare le credenziali in modo sicuro abilita la crittografia del file de
   <data name="Management" xml:space="preserve">
     <value>Gestione</value>
   </data>
+  <data name="DeviceDescription" xml:space="preserve">
+    <value>Descrizione dispositivo</value>
+  </data>
+  <data name="PortDescription" xml:space="preserve">
+    <value>Descrizione porta</value>
+  </data>
 </root>
