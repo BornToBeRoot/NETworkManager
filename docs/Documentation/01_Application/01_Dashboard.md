@@ -32,7 +32,7 @@ A public IPv6 address that is reachable via ICMP.
 ```
 
 ### Check public IP address
-Enables or disables the resolution of the public IP address via [api.ipify.org](https://www.ipify.org/){:target="_blank"} and [api6.ipify.org](https://www.ipify.org/){:target="_blank"}.
+Enables or disables the resolution of the public IP address via [`api.ipify.org`](https://www.ipify.org/){:target="_blank"} and [`api6.ipify.org`](https://www.ipify.org/){:target="_blank"}.
 
 **Default** 
 ```
@@ -47,7 +47,7 @@ Override the default IPv4 address API to resolve the public IP address. The API 
 Disabled
 ``` 
 
-**Examples Values:** 
+**Examples Values** 
 - [`api.ipify.org`](https://api.ipify.org/){:target="_blank"}
 - [`ip4.seeip.org`](https://ip4.seeip.org/){:target="_blank"}
 - [`api.my-ip.io/ip`](https://api.my-ip.io/ip){:target="_blank"}

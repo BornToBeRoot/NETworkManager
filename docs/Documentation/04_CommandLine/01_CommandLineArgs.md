@@ -32,7 +32,7 @@ NETworkManager.exe --reset-settings
 ### `--application:`
 Start a specific application on startup.
 
-**Possible values:**
+**Possible values**
   - `Dashboard`
   - `NetworkInterface`
   - `WiFi`
@@ -55,6 +55,11 @@ Start a specific application on startup.
   - `Connections`
   - `Listeners`
   - `ARPTable`
+
+**Default**
+```
+None
+```
 
 **Example**
 ```
