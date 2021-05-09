@@ -11,27 +11,28 @@ permalink: /Documentation/CommandLine/CommandLineArguments
 # Command line arguments
 
 ## Public
+Publicly available command line arguments.
 
-### --help
+### `--help`
 Displays the help dialog.
 
-**Syntax**
+**Example**
 ```
 NETworkManager.exe --help
 ```
 
-### --reset-settings
+### `--reset-settings`
 Resets all application settings.
 
-**Syntax**
+**Example**
 ```
 NETworkManager.exe --reset-settings
 ```
 
-### --application:
+### `--application:`
 Start a specific application on startup.
 
-**Syntax**
+**Example**
 ```
 NETworkManager.exe --application:PingMonitor
 ```
@@ -61,20 +62,20 @@ NETworkManager.exe --application:PingMonitor
   - `ARPTable`
 
 ## Internal
+Internally used command line arguments.
 
-### --autostart
+### `--autostart`
 Indicates whether the application was started by autostart.
 
-**Syntax**
+**Example**
 ```
 NETworkManager.exe --autostart
 ```
 
-
-## --restart-pid:
+## `--restart-pid:`
 Passed when the application is restarted to wait for the old process to end.
 
-**Syntax**
+**Example**
 ```
 NETworkManager.exe --restart-pid:35674
 ```
