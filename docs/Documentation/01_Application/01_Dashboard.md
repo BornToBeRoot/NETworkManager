@@ -18,22 +18,34 @@ The dashboard checks automatically and whenever the status of the local network 
 ### Public IPv4 address
 A public IPv4 address that is reachable via ICMP.
 
-**Default:** `1.1.1.1`
+**Default** 
+```
+1.1.1.1
+```
 
 ### Public IPv6 address
 A public IPv6 address that is reachable via ICMP.
 
-**Default:** `2606:4700:4700::1111`
+**Default** 
+```
+2606:4700:4700::1111
+```
 
 ### Check public IP address
 Enables or disables the resolution of the public IP address via [api.ipify.org](https://www.ipify.org/){:target="_blank"} and [api6.ipify.org](https://www.ipify.org/){:target="_blank"}.
 
-**Default:** `Enabled`
+**Default** 
+```
+Enabled
+```
 
 ### Use custom IPv4 address API
 Override the default IPv4 address API to resolve the public IP address. The API should return only a plain text IPv4 address like `xx.xx.xx.xx`.
 
-**Default:** `Disabled` 
+**Default** 
+```
+Disabled
+``` 
 
 **Examples Values:** 
 - [`api.ipify.org`](https://api.ipify.org/){:target="_blank"}
@@ -43,7 +55,10 @@ Override the default IPv4 address API to resolve the public IP address. The API 
 ### Use custom IPv6 address API
 Override the default IPv6 address API to resolve the public IP address. The API should return only a plain text IPv6 address like `xxxx:xx:xxx::xx`.
 
-**Default:** `Disabled` 
+**Default** 
+```
+Disabled
+```
 
 **Examples Values** 
 - [`api6.ipify.org`](https://api6.ipify.org/){:target="_blank"}

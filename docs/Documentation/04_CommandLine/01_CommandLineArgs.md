@@ -32,11 +32,6 @@ NETworkManager.exe --reset-settings
 ### `--application:`
 Start a specific application on startup.
 
-**Example**
-```
-NETworkManager.exe --application:PingMonitor
-```
-
 **Possible values:**
   - `Dashboard`
   - `NetworkInterface`
@@ -61,6 +56,11 @@ NETworkManager.exe --application:PingMonitor
   - `Listeners`
   - `ARPTable`
 
+**Example**
+```
+NETworkManager.exe --application:PingMonitor
+```
+
 ## Internal
 Internally used command line arguments.
 
@@ -72,7 +72,7 @@ Indicates whether the application was started by autostart.
 NETworkManager.exe --autostart
 ```
 
-## `--restart-pid:`
+### `--restart-pid:`
 Passed when the application is restarted to wait for the old process to end.
 
 **Example**
