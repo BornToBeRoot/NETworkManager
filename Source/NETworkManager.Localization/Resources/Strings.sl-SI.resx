@@ -2094,7 +2094,7 @@ je onemogočeno!</value>
     <value>"{0}" je dosegljiv prek ICMP!</value>
   </data>
   <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
-    <value>Use custom IPv4 address API</value>
+    <value>Uporabi API poljubnega naslova IPv4</value>
   </data>
   <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
     <value>URL naslov do spletne storitve, ki je lahko dosegljiva prek http ali https in kot odgovor vrne naslov IP.</value>
@@ -3053,39 +3053,39 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>ICMPv6</value>
   </data>
   <data name="CheckIsDisabled" xml:space="preserve">
-    <value>Check is disabled!</value>
+    <value>Preverjanje je onemogočeno!</value>
   </data>
   <data name="EnterValidIPv6Address" xml:space="preserve">
-    <value>Enter a valid IPv6 address!</value>
+    <value>Vnesite veljaven naslov IPv6!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Public accessible IPv4 address.</value>
+    <value>Javno dostopen naslov IPv4.</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Public accessible IPv6 address.</value>
+    <value>Javno dostopen naslov IPv6. </value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
-    <value>Public IPv4 address</value>
+    <value>Javni naslov IPv4.</value>
   </data>
   <data name="PublicIPv6Address" xml:space="preserve">
-    <value>Public IPv6 address</value>
+    <value>Javni naslov IPv6.</value>
   </data>
   <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
-    <value>Use custom IPv6 address API</value>
+    <value>Uporabi API poljubnega naslova IPv6</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Time to live</value>    
+    <value>Čas za življenje - TTL</value>    
   </data>
   <data name="ChassisId" xml:space="preserve">
-    <value>Chassis Id</value>
+    <value>ID šasije</value>
   </data>
   <data name="Management" xml:space="preserve">
-    <value>Management</value>
+    <value>Upravljanje</value>
   </data>
   <data name="DeviceDescription" xml:space="preserve">
-    <value>Device description</value>
+    <value>Opis naprave</value>
   </data>
   <data name="PortDescription" xml:space="preserve">
-    <value>Port description</value>
+    <value>Opis vrat</value>
   </data>
 </root>
