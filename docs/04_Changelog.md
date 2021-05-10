@@ -6,21 +6,20 @@ description: "Changelog and download links of all available versions."
 permalink: /Changelog
 ---
 
-<!--
-# Version 2021.x.xx.0 [next release]
-Date: **xx.xx.2021**
+# Version 2021.5.9.0
+Date: **09.05.2021**
 
 | File | Checksum [SHA256] |
 |---|---|
-|[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Setup.exe){:target="_blank"}| `5BDD82CA59CC0A635559848CA183C21ED92D4D0C143625F1B367946F033E2A79` |
-|[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Portable.zip){:target="_blank"}| `4D5AA9CC1A4FCE5AB80060A1009E87FA207D642B7E25A63A4DA38F9F6FD43472` |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Archiv.zip){:target="_blank"}| `9996197F0F58A7A23F0A78DB7336D4201F98F1C6E8CCD7D02BF97095C5A6DDA8` |
+|[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Setup.exe){:target="_blank"}| `1D44A5A07975A8364DE742E061E0D72B3DD1CC03E02F4D87103A0767E3C7F7A2` |
+|[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Portable.zip){:target="_blank"}| `ED3DC6DFC111A3261DC6BF3F3D2820E0A1FF96ECF48A3C7DFBF3454A39694848` |
+|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Archiv.zip){:target="_blank"}| `DD0B800EA55B97BA0A6B3A5884D62FCE2C4E74EAB1CCE01163823EBD30DC9B4E` |
 
 ## What's new?
-
+- Dashboard and Status window redesigned and IPv6 added [#463](https://github.com/BornToBeRoot/NETworkManager/issues/463){:target="_blank"}
 
 ## Improvements
-- Update Discovery Protocol script and add other values [#772](https://github.com/BornToBeRoot/NETworkManager/issues/772){:target="_blank"}
+- Discovery Protocol script updated and more values added [#772](https://github.com/BornToBeRoot/NETworkManager/issues/772){:target="_blank"}
 
 ## Bugfixes
 - Fix app crash on Discovery Protocol view [#707](https://github.com/BornToBeRoot/NETworkManager/issues/707){:target="_blank"}
@@ -29,8 +28,8 @@ Date: **xx.xx.2021**
 - App crash fixed when Remote Desktop is opened from a differnet view [#767](https://github.com/BornToBeRoot/NETworkManager/issues/767){:target="_blank"}
 
 ## Other
-
--->
+- Language files updated
+- Dependencies updated
 
 # 2021.3.28.0
 Date: **28.03.2021**
