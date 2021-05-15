@@ -3089,4 +3089,37 @@ Habilita el cifrado de archivos de perfil en Configuración &gt; Perfil para alm
   <data name="PortDescription" xml:space="preserve">
     <value>Descripción del puerto</value>
   </data>
+  <data name="EnterValidIPv6Address" xml:space="preserve">
+    <value>Enter a valid IPv6 address!</value>
+  </data>
+  <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
+    <value>Public accessible IPv4 address.</value>
+  </data>
+  <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
+    <value>Public accessible IPv6 address.</value>
+  </data>
+  <data name="PublicIPv4Address" xml:space="preserve">
+    <value>Public IPv4 address</value>
+  </data>
+  <data name="PublicIPv6Address" xml:space="preserve">
+    <value>Public IPv6 address</value>
+  </data>
+  <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
+    <value>Use custom IPv6 address API</value>
+  </data>
+  <data name="TimeToLive" xml:space="preserve">
+    <value>Time to live</value>    
+  </data>
+  <data name="ChassisId" xml:space="preserve">
+    <value>Chassis Id</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Management</value>
+  </data>
+  <data name="DeviceDescription" xml:space="preserve">
+    <value>Device description</value>
+  </data>
+  <data name="PortDescription" xml:space="preserve">
+    <value>Port description</value>
+  </data>
 </root>
