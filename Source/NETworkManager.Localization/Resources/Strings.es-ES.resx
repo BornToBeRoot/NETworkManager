@@ -771,7 +771,7 @@
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
     <value>Los archivos de perfil se cifran en el disco mediante Rijndael (AES) con un tamaño de clave de 256 bits y un tamaño de bloque de 128 bits en modo CBC. La clave de cifrado se deriva de una contraseña maestra que utiliza Rfc2898DeriveBytes (PBKDF2) con 1.000.000 de iteraciones. En tiempo de ejecución, las contraseñas se almacenan como SecureString una vez que se carga el archivo de perfil. Para algunas funciones, la contraseña debe convertirse en una cadena normal y permanecerá sin cifrar en la memoria hasta que el recolector de basura las limpie.
 
-Esta es una característica nueva que aún puede contener errores. ¡Haga una copia de seguridad de sus archivos de perfil antes de habilitar el cifrado de archivos de perfil!</value>
+Esta es una característica nueva que aún puede contener errores. ¡Haz una copia de seguridad de tus archivos de perfil antes de habilitar el cifrado de archivos de perfil!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Personalizado</value>
@@ -843,19 +843,19 @@ Esta es una característica nueva que aún puede contener errores. ¡Haga una co
     <value>Fecha/hora de finalización</value>
   </data>
   <data name="EnterASubnetToCalculateIt" xml:space="preserve">
-    <value>Ingrese una subred para calcularla...</value>
+    <value>Ingresa una subred para calcularla...</value>
   </data>
   <data name="EnterSubnetAndANewSubnetmaskToCreateSubnets" xml:space="preserve">
-    <value>Ingrese la subred y una nueva máscara de subred para crear subredes...</value>
+    <value>Ingresa la subred y una nueva máscara de subred para crear subredes...</value>
   </data>
   <data name="ErrorCheckingApiGithubComVerifyYourNetworkConnection" xml:space="preserve">
-    <value>No se pudo conectar con 'api.github.com', ¡compruebe su conexión de red!</value>
+    <value>No se pudo conectar con 'api.github.com', ¡comprueba tu conexión de red!</value>
   </data>
   <data name="ErrorInResponse" xml:space="preserve">
     <value>¡Error en respuesta!</value>
   </data>
   <data name="ErrorInResponseCheckIfYouHaveWritePermissions" xml:space="preserve">
-    <value>¡Error en respuesta! Compruebe si tiene permisos de escritura.</value>
+    <value>¡Error en respuesta! Comprueba si tienes permisos de escritura.</value>
   </data>
   <data name="Expand" xml:space="preserve">
     <value>Desplegar</value>
@@ -927,19 +927,19 @@ Esta es una característica nueva que aún puede contener errores. ¡Haga una co
     <value>Múltiples instancias</value>
   </data>
   <data name="NetworkLocationCannotBeReachedMessage" xml:space="preserve">
-    <value>No se puede localizar la dirección de red. Compruebe si el equipo está conectado a la red. Para obtener información acerca de la solución de problemas de red, consulte la Ayuda de Windows.</value>
+    <value>No se puede localizar la dirección de red. Comprueba si el equipo está conectado a la red. Para obtener información acerca de la solución de problemas de red, consulta la Ayuda de Windows.</value>
   </data>
   <data name="NewConnectionDots" xml:space="preserve">
     <value>Nueva conexión...</value>
   </data>
   <data name="NoDNSRecordFoundCheckYourInputAndSettings" xml:space="preserve">
-    <value>¡No se encontró registro DNS para "{0}"! Compruebe sus datos y la configuración.</value>
+    <value>¡No se encontró registro DNS para "{0}"! Comprueba tus datos y la configuración.</value>
   </data>
   <data name="NoEnabledNetworkAdaptersFound" xml:space="preserve">
     <value>¡No se encontraron adaptadores de red habilitados!</value>
   </data>
   <data name="NoPortsFoundCheckYourInput" xml:space="preserve">
-    <value>No se encontraron puertos. ¡Compruebe sus datos!</value>
+    <value>No se encontraron puertos. ¡Comprueba tus datos!</value>
   </data>
   <data name="NoProfilesFoundCreateOne" xml:space="preserve">
     <value>¡No se han encontrado perfiles!
@@ -949,7 +949,7 @@ Crear uno...</value>
     <value>¡No se encontró nada!</value>
   </data>
   <data name="NothingToDoCheckYourInput" xml:space="preserve">
-    <value>Nada que hacer. ¡Compruebe sus datos!</value>
+    <value>Nada que hacer. ¡Comprueba tus datos!</value>
   </data>
   <data name="NoUpdateAvailable" xml:space="preserve">
     <value>¡Actualización no disponible!</value>
@@ -958,7 +958,7 @@ Crear uno...</value>
     <value>No se encontró ningún archivo válido para importar.</value>
   </data>
   <data name="NoVendorFoundCheckYourInput" xml:space="preserve">
-    <value>Ningún proveedor encontrado. ¡Compruebe sus datos!</value>
+    <value>Ningún proveedor encontrado. ¡Comprueba tus datos!</value>
   </data>
   <data name="NumberOfErrorsAfterWhichIsCanceled" xml:space="preserve">
     <value>Número de errores después de los cuales se cancela:</value>
@@ -1409,22 +1409,22 @@ Crear uno...</value>
     <value>Conexiones</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>¡Ingrese un rango IP válido!</value>
+    <value>¡Ingresa un rango IP válido!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
-    <value>¡Ingrese una dirección IPv4 válida!</value>
+    <value>¡Ingresa una dirección IPv4 válida!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>¡Ingrese una dirección MAC válida (como 00:F1:23:AB:F2:35)!</value>
+    <value>¡Ingresa una dirección MAC válida (como 00:F1:23:AB:F2:35)!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
-    <value>¡Ingrese un puerto válido (1 - 65535)!</value>
+    <value>¡Ingresa un puerto válido (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>¡Ingrese una máscara de subred válida (como 255.255.255.0)!</value>
+    <value>¡Ingresa una máscara de subred válida (como 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>¡Ingrese una máscara de subred o CIDR válida (como 255.255.255.0 o /24)!</value>
+    <value>¡Ingresa una máscara de subred o CIDR válida (como 255.255.255.0 o /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>¡El campo no puede estar vacío!</value>
@@ -1475,31 +1475,31 @@ Crear uno...</value>
     <value>Esmeralda</value>
   </data>
   <data name="EnterOneOrMoreValidIPAddresses" xml:space="preserve">
-    <value>¡Ingrese una o más direcciones IP válidas!</value>
+    <value>¡Ingresa una o más direcciones IP válidas!</value>
   </data>
   <data name="EnterValidBaud" xml:space="preserve">
-    <value>¡Ingrese un baud válido!</value>
+    <value>¡Ingresa un baud válido!</value>
   </data>
   <data name="EnterValidHosts" xml:space="preserve">
-    <value>¡Ingrese hosts válidos (múltiples hosts no pueden terminar con ";")!</value>
+    <value>¡Ingresa hosts válidos (múltiples hosts no pueden terminar con ";")!</value>
   </data>
   <data name="EnterValidIPAddress" xml:space="preserve">
-    <value>¡Ingrese una dirección IP válida!</value>
+    <value>¡Ingresa una dirección IP válida!</value>
   </data>
   <data name="EnterValidNumber" xml:space="preserve">
-    <value>¡Ingrese un número válido!</value>
+    <value>¡Ingresa un número válido!</value>
   </data>
   <data name="EnterValidOID" xml:space="preserve">
-    <value>¡Ingrese un OID válido!</value>
+    <value>¡Ingresa un OID válido!</value>
   </data>
   <data name="EnterValidPortOrPortRange" xml:space="preserve">
-    <value>¡Ingrese un puerto válido y/o un rango de puertos (1 - 65535)!</value>
+    <value>¡Ingresa un puerto válido y/o un rango de puertos (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>¡Ingrese una subred válida (como 192.168.178.133/26)!</value>
+    <value>¡Ingresa una subred válida (como 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Ingrese un sitio web válida (como https://ejemplo.com/index.html)</value>
+    <value>Ingresa un sitio web válida (como https://ejemplo.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>Verde</value>
@@ -1763,7 +1763,7 @@ Crear uno...</value>
     <value>Amarillo</value>
   </data>
   <data name="EnterValidValueBetween25and100" xml:space="preserve">
-    <value>¡Ingrese un valor válido entre 25 y 100!</value>
+    <value>¡Ingresa un valor válido entre 25 y 100!</value>
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>¡Ya existe un perfil con este nombre!</value>
@@ -1793,7 +1793,7 @@ Crear uno...</value>
     <value>Añadir una pestaña para consultar whois...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>¡Ingrese un dominio válido (como "ejemplo.com")!</value>
+    <value>¡Ingresa un dominio válido (como "ejemplo.com")!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>El servidor Whois no encuentró el dominio: "{0}"</value>
@@ -1868,7 +1868,7 @@ Crear uno...</value>
     <value>Archivo</value>
   </data>
   <data name="EnterValidFilePath" xml:space="preserve">
-    <value>¡Ingrese una ruta de archivo válida!</value>
+    <value>¡Ingresa una ruta de archivo válida!</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>Todo</value>
@@ -1889,7 +1889,7 @@ Crear uno...</value>
     <value>Resaltar tiempos de espera</value>
   </data>
   <data name="EnterSubnetsToCreateAWideSubnet" xml:space="preserve">
-    <value>Ingrese subredes para crear una subred amplia...</value>
+    <value>Ingresa subredes para crear una subred amplia...</value>
   </data>
   <data name="WideSubnet" xml:space="preserve">
     <value>Subred amplia</value>
@@ -1974,7 +1974,7 @@ Cambiar este valor requiere el reinicio de la aplicación para que tenga efecto.
     <value>Ejecutar trabajo en segundo plano cada x-minutos</value>
   </data>
   <data name="YourSystemOSIsIncompatibleWithTheLatestRelease" xml:space="preserve">
-    <value>¡Su sistema operativo no es compatible con la última versión!</value>
+    <value>¡Tu sistema operativo no es compatible con la última versión!</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Panel de control</value>
@@ -2031,10 +2031,10 @@ URL: https://api.ipify.org/</value>
     <value>Internet</value>
   </data>
   <data name="CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage" xml:space="preserve">
-    <value>Compruebe la configuración de su adaptador de red (DNS) y si su servidor DNS está configurado correctamente.</value>
+    <value>Comprueba la configuración de tu adaptador de red (DNS) y si tu servidor DNS está configurado correctamente.</value>
   </data>
   <data name="CheckNetworkAdapterConfigurationAndNetworkConnectionMessage" xml:space="preserve">
-    <value>Compruebe la configuración de su adaptador de red (DHCP, IP estático) y si está conectado a una red.</value>
+    <value>Comprueba la configuración de tu adaptador de red (DHCP, IP estático) y si está conectado a una red.</value>
   </data>
   <data name="ConnectionState_Error" xml:space="preserve">
     <value>Error</value>
@@ -2052,7 +2052,7 @@ URL: https://api.ipify.org/</value>
     <value>¡No se pudo detectar la dirección IP local!</value>
   </data>
   <data name="CouldNotGetPublicIPAddressFromXXXMessage" xml:space="preserve">
-    <value>¡No se pudo obtener la dirección IP pública a través de WebRequest (http/https) desde "{0}"! Compruebe su conexión de red (firewall, proxy, etc.).</value>
+    <value>¡No se pudo obtener la dirección IP pública a través de WebRequest (http/https) desde "{0}"! Comprueba tu conexión de red (firewall, proxy, etc.).</value>
   </data>
   <data name="NoADNSRecordsResolvedForXXXMessage" xml:space="preserve">
     <value>¡No hay registros DNS tipo A resueltos para "{0}"!</value>
@@ -2095,7 +2095,7 @@ está deshabilitada!</value>
     <value>¡"{0}"  es accesible a través de ICMP!</value>
   </data>
   <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
-    <value>Use custom IPv4 address API</value>
+    <value>Usar la API de dirección IPv4 personalizada</value>
   </data>
   <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
     <value>URL para un servicio web al que se puede acceder a través de http o https y que devuelve una dirección IP como respuesta.</value>
@@ -2830,7 +2830,7 @@ $$hostname$$	--&gt;	Nombre del host</value>
     <value>SSH y registro sin procesar</value>
   </data>
   <data name="EnterValidFileName" xml:space="preserve">
-    <value>¡Ingrese un nombre de archivo válido!</value>
+    <value>¡Ingresa un nombre de archivo válido!</value>
   </data>
   <data name="Lost" xml:space="preserve">
     <value>Perdido</value>
@@ -3054,7 +3054,40 @@ Habilita el cifrado de archivos de perfil en Configuración &gt; Perfil para alm
     <value>ICMPv6</value>
   </data>
   <data name="CheckIsDisabled" xml:space="preserve">
-    <value>Check is disabled!</value>
+    <value>¡La comprobación está deshabilitada!</value>
+  </data>
+  <data name="EnterValidIPv6Address" xml:space="preserve">
+    <value>¡Ingresa una dirección IPv6 válida!</value>
+  </data>
+  <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
+    <value>Dirección IPv4 de acceso público.</value>
+  </data>
+  <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
+    <value>Dirección IPv6 de acceso público.</value>
+  </data>
+  <data name="PublicIPv4Address" xml:space="preserve">
+    <value>Dirección IPv4 pública</value>
+  </data>
+  <data name="PublicIPv6Address" xml:space="preserve">
+    <value>Dirección IPv6 pública</value>
+  </data>
+  <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
+    <value>Usar la API de dirección IPv6 personalizada</value>
+  </data>
+  <data name="TimeToLive" xml:space="preserve">
+    <value>Tiempo de vida</value>    
+  </data>
+  <data name="ChassisId" xml:space="preserve">
+    <value>Chassis ID</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Administración</value>
+  </data>
+  <data name="DeviceDescription" xml:space="preserve">
+    <value>Descripción del dispositivo</value>
+  </data>
+  <data name="PortDescription" xml:space="preserve">
+    <value>Descripción del puerto</value>
   </data>
   <data name="EnterValidIPv6Address" xml:space="preserve">
     <value>Enter a valid IPv6 address!</value>
