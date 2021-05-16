@@ -776,7 +776,7 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.AddIPv4Address
             };
 
-            var networkInterfaceAddIPAddressViewModel = new NetworkInterfaceAddIPAddressViewModel(async instance =>
+            var IPAddressAndSubnetmaskViewModel = new IPAddressAndSubnetmaskViewModel(async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -786,14 +786,43 @@ namespace NETworkManager.ViewModels
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             });
 
-            customDialog.Content = new NetworkInterfaceAddIPAddressDialog
+            customDialog.Content = new IPAddressAndSubnetmaskDialog
             {
-                DataContext = networkInterfaceAddIPAddressViewModel
+                DataContext = IPAddressAndSubnetmaskViewModel                
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
+
+        public ICommand RemoveIPv4AddressCommand => new RelayCommand(p => RemoveIPv4AddressAction(), RemoveIPv4Address_CanExecute);
+
+        private bool RemoveIPv4Address_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+
+        private async Task RemoveIPv4AddressAction()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.RemoveIPv4Address
+            };
+
+            var ipAddressViewModel = new IPAddressViewModel(async instance =>
+            {
+                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                RemoveIPv4Address(instance.IPAddress);
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new IPAddressDialog
+            {
+                DataContext = ipAddressViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+        }
         #endregion
 
         #region Methods
@@ -900,6 +929,34 @@ namespace NETworkManager.ViewModels
             try
             {
                 await Models.Network.NetworkInterface.AddIPAddressToNetworkInterfaceAsync(config);
+
+                ReloadNetworkInterfacesAction();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = ex.Message;
+                IsStatusMessageDisplayed = true;
+            }
+            finally
+            {
+                IsConfigurationRunning = false;
+            }
+        }
+
+        public async Task RemoveIPv4Address(string ipAddress)
+        {
+            IsConfigurationRunning = true;
+            IsStatusMessageDisplayed = false;
+
+            var config = new NetworkInterfaceConfig
+            {
+                Name = SelectedNetworkInterface.Name,
+                IPAddress = ipAddress
+            };
+
+            try
+            {
+                await Models.Network.NetworkInterface.RemoveIPAddressFromNetworkInterfaceAsync(config);
 
                 ReloadNetworkInterfacesAction();
             }

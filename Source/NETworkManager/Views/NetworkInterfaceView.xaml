@@ -796,34 +796,42 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <WrapPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" >
-                                <Button Command="{Binding AddIPv4AddressCommand}">
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding CanConfigure}" Value="False">
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding IsConfigurationRunning}" Value="True">
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </DataTrigger>                                                
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                    <Button.Content>
+                                <mah:DropDownButton Style="{StaticResource ImageDropDrownButton}"  >
+                                    <mah:DropDownButton.Content>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle Width="20" Height="20" Margin="10,4,0,4" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                 <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListAddBelow}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ExpansionCardVariant}" />
                                                 </Rectangle.OpacityMask>
                                             </Rectangle>
-                                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddIPv4AddressDots}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AdditionalConfigDots}" FontSize="14" Margin="10,4" TextAlignment="Center"/>
                                         </Grid>
-                                    </Button.Content>
-                                </Button>
+                                    </mah:DropDownButton.Content>
+                                    <mah:DropDownButton.Items>
+                                        <MenuItem Header="{x:Static localization:Strings.AddIPv4AddressDots}" Command="{Binding AddIPv4AddressCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                            <MenuItem.Icon>
+                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListAddBelow}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="{x:Static localization:Strings.RemoveIPv4AddressDots}" Command="{Binding RemoveIPv4AddressCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                            <MenuItem.Icon>
+                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListDelete}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                            </MenuItem.Icon>
+                                        </MenuItem>                                       
+                                    </mah:DropDownButton.Items>
+                                </mah:DropDownButton>
                             </WrapPanel>
                             <Button Grid.Column="2" Command="{Binding ApplyConfigurationCommand}" VerticalAlignment="Bottom">
                                 <Button.Content>

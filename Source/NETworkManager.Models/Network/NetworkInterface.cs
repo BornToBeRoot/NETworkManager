@@ -295,6 +295,18 @@ namespace NETworkManager.Models.Network
 
             PowerShellHelper.ExecuteCommand(command, true);
         }
+
+        public static Task RemoveIPAddressFromNetworkInterfaceAsync(NetworkInterfaceConfig config)
+        {
+            return Task.Run(() => RemoveIPAddressFromNetworkInterface(config));
+        }
+
+        public static void RemoveIPAddressFromNetworkInterface(NetworkInterfaceConfig config)
+        {
+            var command = @"netsh interface ipv4 delete address '" + config.Name + @"' " + config.IPAddress;
+
+            PowerShellHelper.ExecuteCommand(command, true);
+        }
         #endregion
 
         #region Enum

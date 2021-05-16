@@ -3075,7 +3075,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Use custom IPv6 address API</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Time to live</value>    
+    <value>Time to live</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
     <value>Chassis Id</value>
@@ -3088,5 +3088,14 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   </data>
   <data name="PortDescription" xml:space="preserve">
     <value>Port description</value>
+  </data>
+  <data name="RemoveIPv4Address" xml:space="preserve">
+    <value>Remove IPv4 address</value>
+  </data>
+  <data name="AdditionalConfigDots" xml:space="preserve">
+    <value>Additional config...</value>
+  </data>
+  <data name="RemoveIPv4AddressDots" xml:space="preserve">
+    <value>Remove IPv4 address...</value>
   </data>
 </root>
