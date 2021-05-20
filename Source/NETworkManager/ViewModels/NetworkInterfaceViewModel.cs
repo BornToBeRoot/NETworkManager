@@ -835,8 +835,8 @@ namespace NETworkManager.ViewModels
             else
             {
                 ConfigEnableStaticIPAddress = true;
-                ConfigIPAddress = info.IPv4Address.FirstOrDefault()?.ToString();
-                ConfigSubnetmaskOrCidr = info.Subnetmask != null ? info.Subnetmask.FirstOrDefault()?.ToString() : string.Empty;
+                ConfigIPAddress = info.IPv4Address.FirstOrDefault()?.Item1.ToString();
+                ConfigSubnetmaskOrCidr = info.IPv4Address.FirstOrDefault()?.Item2.ToString();
                 ConfigGateway = info.IPv4Gateway?.Any() == true ? info.IPv4Gateway.FirstOrDefault()?.ToString() : string.Empty;
             }
 

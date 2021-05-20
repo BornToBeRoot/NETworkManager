@@ -39,8 +39,7 @@ namespace NETworkManager.Models.Network
                 if (networkInterface.NetworkInterfaceType != NetworkInterfaceType.Ethernet && networkInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 && (int)networkInterface.NetworkInterfaceType != 53)
                     continue;
 
-                var listIPv4Address = new List<IPAddress>();
-                var listSubnetmask = new List<IPAddress>();
+                var listIPv4Address = new List<Tuple<IPAddress, IPAddress>>();
                 var listIPv6AddressLinkLocal = new List<IPAddress>();
                 var listIPv6Address = new List<IPAddress>();
 
@@ -54,8 +53,8 @@ namespace NETworkManager.Models.Network
                     switch (unicastIPAddrInfo.Address.AddressFamily)
                     {
                         case AddressFamily.InterNetwork:
-                            listIPv4Address.Add(unicastIPAddrInfo.Address);
-                            listSubnetmask.Add(unicastIPAddrInfo.IPv4Mask);
+
+                            listIPv4Address.Add(new Tuple<IPAddress, IPAddress>(unicastIPAddrInfo.Address, unicastIPAddrInfo.IPv4Mask));
                             dhcpLeaseExpires = (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressPreferredLifetime)).ToLocalTime();
                             dhcpLeaseObtained = (DateTime.UtcNow + TimeSpan.FromSeconds(unicastIPAddrInfo.AddressValidLifetime) - TimeSpan.FromSeconds(unicastIPAddrInfo.DhcpLeaseLifetime)).ToLocalTime();
                             break;
@@ -141,7 +140,6 @@ namespace NETworkManager.Models.Network
                     Speed = networkInterface.Speed,
                     IPv4ProtocolAvailable = ipv4ProtocolAvailable,
                     IPv4Address = listIPv4Address.ToArray(),
-                    Subnetmask = listSubnetmask.ToArray(),
                     IPv4Gateway = listIPv4Gateway.ToArray(),
                     DhcpEnabled = ipv4Properties != null && ipv4Properties.IsDhcpEnabled,
                     DhcpServer = listDhcpServer.ToArray(),
@@ -195,8 +193,7 @@ namespace NETworkManager.Models.Network
             {
                 if (localIPAddress.AddressFamily == AddressFamily.InterNetwork)
                 {
-
-                    if (networkInterface.IPv4Address.Contains(localIPAddress))
+                    if (networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIPAddress)))
                     {
                         return networkInterface.IPv4Gateway.FirstOrDefault();
                     }
