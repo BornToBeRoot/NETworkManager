@@ -1,8 +1,8 @@
 ﻿namespace NETworkManager.Views
 {
-    public partial class NetworkInterfaceAddIPAddressDialog
+    public partial class IPAddressAndSubnetmaskDialog
     {
-        public NetworkInterfaceAddIPAddressDialog()
+        public IPAddressAndSubnetmaskDialog()
         {
             InitializeComponent();
         }

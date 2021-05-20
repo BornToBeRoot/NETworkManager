@@ -475,6 +475,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Additional config....
+        /// </summary>
+        public static string AdditionalConfigDots {
+            get {
+                return ResourceManager.GetString("AdditionalConfigDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Additionals.
         /// </summary>
         public static string Additionals {
@@ -6507,6 +6516,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove IPv4 address.
+        /// </summary>
+        public static string RemoveIPv4Address {
+            get {
+                return ResourceManager.GetString("RemoveIPv4Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove IPv4 address....
+        /// </summary>
+        public static string RemoveIPv4AddressDots {
+            get {
+                return ResourceManager.GetString("RemoveIPv4AddressDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rename.
         /// </summary>
         public static string Rename {
@@ -7656,15 +7683,6 @@ namespace NETworkManager.Localization.Resources {
         public static string Steel {
             get {
                 return ResourceManager.GetString("Steel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
