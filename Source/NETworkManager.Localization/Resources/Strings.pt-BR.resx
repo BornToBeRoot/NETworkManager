@@ -3075,7 +3075,7 @@ Habilite a criptografia do arquivo de perfil em Configurações &gt; Perfil para
     <value>Usar API de endereço IPv6 personalizado</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>TTL</value>    
+    <value>TTL</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
     <value>Chassis ID</value>
@@ -3088,5 +3088,14 @@ Habilite a criptografia do arquivo de perfil em Configurações &gt; Perfil para
   </data>
   <data name="PortDescription" xml:space="preserve">
     <value>Descrição da porta</value>
+  </data>
+  <data name="RemoveIPv4Address" xml:space="preserve">
+    <value>Remover endereço IPv4</value>
+  </data>
+  <data name="AdditionalConfigDots" xml:space="preserve">
+    <value>Configuração adicional...</value>
+  </data>
+  <data name="RemoveIPv4AddressDots" xml:space="preserve">
+    <value>Remover endereço IPv4...</value>
   </data>
 </root>
