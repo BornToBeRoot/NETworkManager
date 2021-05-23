@@ -6,6 +6,11 @@ description: "Changelog and download links of all available versions."
 permalink: /Changelog
 ---
 
+<!--
+## What's new?
+- Network Interface - Remove IPv4 address added [#212](https://github.com/BornToBeRoot/NETworkManager/issues/212){:target="_blank"}
+-->
+
 # Version 2021.5.9.0
 Date: **09.05.2021**
 
