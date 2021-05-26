@@ -244,7 +244,7 @@
     <value>Informacija</value>
   </data>
   <data name="Interface" xml:space="preserve">
-    <value>Vmesnik</value>
+    <value>Kartica</value>
   </data>
   <data name="IPScanner" xml:space="preserve">
     <value>Pregledovalnik IP</value>
@@ -283,7 +283,7 @@
     <value>Omrežje</value>
   </data>
   <data name="NetworkInterface" xml:space="preserve">
-    <value>Omrežni vmesnik</value>
+    <value>Omrežna kartica</value>
   </data>
   <data name="NewTab" xml:space="preserve">
     <value>Nov zavihek</value>
@@ -1500,7 +1500,7 @@ Ustvarite enega...</value>
     <value>Vnesite veljavno podomrežje (kot 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Vnesite veljavno spletno stran (kot https://primer.com.index.html)</value>
+    <value>Vnesite veljavno spletno stran (kot https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>Zelena</value>
@@ -2958,67 +2958,67 @@ Aplikacija se bo nato znova zagnala! </value>
     <value>Skrito omrežje</value>
   </data>
   <data name="DevelopedAndMaintainedByX" xml:space="preserve">
-    <value>Developed and maintained by {0} with the help of the</value>
+    <value>Razvil in vzdrževal {0}  s pomočjo </value>
   </data>
   <data name="ExternalService_ipify_Description" xml:space="preserve">
-    <value>A Simple Public IP Address API</value>
+    <value>Preprost API za javni naslov IP</value>
   </data>
   <data name="Library_AirspaceFixer_Description" xml:space="preserve">
-    <value>AirspacePanel fixes all Airspace issues with WPF-hosted Winforms.</value>
+    <value>AirspacePanel odpravlja vse težave Airspace z Winformi, ki jih gosti WPF.</value>
   </data>
   <data name="Library_ControlzEx_Description" xml:space="preserve">
-    <value>Shared Controlz for WPF and ... more</value>
+    <value>Skupna raba Controlz za WPF in ... več</value>
   </data>
   <data name="Library_DnsClientNET_Description" xml:space="preserve">
-    <value>DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups</value>
+    <value>DnsClient.NET je preprosta, a zelo zmogljiva odprtokodna knjižnica .NET Framework za iskanje DNS. </value>
   </data>
   <data name="Library_Dragablz_Description" xml:space="preserve">
-    <value>Dragable and tearable tab control for WPF</value>
+    <value>Vlečljiv in nadzorljiv zavihek kontrol za WPF </value>
   </data>
   <data name="Library_IPNetwork_Description" xml:space="preserve">
-    <value>C# library take care of complex network, IP, IPv4, IPv6, netmask, CIDR, subnet, subnetting, supernet, and supernetting calculation for .NET developers.</value>
+    <value>Knjižnica C# skrbi za zapletene izračune omrežja, IP, IPv4, IPv6, mrežne maske, CIDR, podomrežja, podomrežja, supermreže in supermreže za razvijalce .NET.</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Simple, flexible, interactive &amp; powerful charts, maps and gauges for .Net</value>
+    <value>Preprosti, prilagodljivi, interaktivni in zmogljivi grafikoni, zemljevidi in merilniki za .Net</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
-    <value>A collection of loading indicators for WPF</value>
+    <value>Zbirka kazalnikov obremenitve za WPF</value>
   </data>
   <data name="Library_MahAppsMetroIconPacks_Description" xml:space="preserve">
-    <value>Some awesome icons for WPF and UWP all together...</value>
+    <value>Nekaj čudovitih ikon za WPF in UWP skupaj...</value>
   </data>
   <data name="Library_MahAppsMetro_Description" xml:space="preserve">
-    <value>A toolkit for creating Metro / Modern UI styled WPF apps.</value>
+    <value>Nabor orodij za ustvarjanje aplikacij WPF v slogu Metro/Modern UI. </value>
   </data>
   <data name="Library_NewtonsoftJson_Description" xml:space="preserve">
-    <value>Json.NET is a popular high-performance JSON framework for .NET</value>
+    <value>Json.NET je priljubljeno visoko zmogljivo ogrodje JSON za .NET</value>
   </data>
   <data name="Library_Octokit_Description" xml:space="preserve">
-    <value>A GitHub API client library for .NET</value>
+    <value>Odjemalska knjižnica API-ja GitHub za .NET</value>
   </data>
   <data name="Library_PSDicoveryProtocol_Description" xml:space="preserve">
-    <value>Capture and parse CDP and LLDP packets on local or remote computers</value>
+    <value>Zajemi in razčlenitea paketov CDP in LLDP na lokalnih ali oddaljenih računalnikih</value>
   </data>
   <data name="Library_SharpSNMP_Description" xml:space="preserve">
-    <value>Sharp SNMP Library - Open Source SNMP for .NET and Mono</value>
+    <value>Sharp SNMP knjižnica - odprtokodni SNMP za .NET in Mono</value>
   </data>
   <data name="Resource_Flag_Description" xml:space="preserve">
-    <value>A collection of all country flags in SVG</value>
+    <value>Zbirka zastav vseh držav v formatu SVG </value>
   </data>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
-    <value>List of Top-Level-Domains from iana.org, which is used to query whois servers of the TLD from whois.iana.org via port 43</value>
+    <value>Seznam domen najvišje ravni s spletne strani iana.org, ki se uporablja za poizvedovanje o Whois strežnikih TLD od whois.iana.org prek vrat 43 </value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Sanitized IEEE OUI Data from linuxnet.ca.</value>
+    <value>Sanitizirani podatki IEEE OUI z linuxnet.ca.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
-    <value>Service Name and Transport Protocol Port Number Registry from iana.org.</value>
+    <value>Ime storitve in register številk vrat prometnega protokola z iana.org.</value>
   </data>
   <data name="License_ApacheLicense2dot0" xml:space="preserve">
-    <value>Apache License 2.0</value>
+    <value>Licenca Apache 2.0</value>
   </data>
   <data name="License_BDS2Clause" xml:space="preserve">
-    <value>BSD-2-Clause</value>
+    <value>Klavzula BSD-2</value>
   </data>
   <data name="License_MITLicense" xml:space="preserve">
     <value>MIT License</value>
@@ -3074,7 +3074,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Uporabi API poljubnega naslova IPv6</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Čas za življenje - TTL</value>    
+    <value>Čas za življenje - TTL</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
     <value>ID šasije</value>
@@ -3087,5 +3087,14 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   </data>
   <data name="PortDescription" xml:space="preserve">
     <value>Opis vrat</value>
+  </data>
+  <data name="RemoveIPv4Address" xml:space="preserve">
+    <value>Odstrani naslov IPv4</value>
+  </data>
+  <data name="AdditionalConfigDots" xml:space="preserve">
+    <value>Dodatne nastavitve...</value>
+  </data>
+  <data name="RemoveIPv4AddressDots" xml:space="preserve">
+    <value>Odstrani naslov IPv4...</value>
   </data>
 </root>
