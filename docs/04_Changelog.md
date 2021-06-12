@@ -20,7 +20,7 @@ Date: **09.05.2021**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Setup.exe){:target="_blank"}| `1D44A5A07975A8364DE742E061E0D72B3DD1CC03E02F4D87103A0767E3C7F7A2` |
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Portable.zip){:target="_blank"}| `ED3DC6DFC111A3261DC6BF3F3D2820E0A1FF96ECF48A3C7DFBF3454A39694848` |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Archiv.zip){:target="_blank"}| `DD0B800EA55B97BA0A6B3A5884D62FCE2C4E74EAB1CCE01163823EBD30DC9B4E` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Archive.zip){:target="_blank"}| `DD0B800EA55B97BA0A6B3A5884D62FCE2C4E74EAB1CCE01163823EBD30DC9B4E` |
 
 ## What's new?
 - Dashboard and Status window redesigned and IPv6 added [#463](https://github.com/BornToBeRoot/NETworkManager/issues/463){:target="_blank"}
@@ -45,7 +45,7 @@ Date: **28.03.2021**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Setup.exe){:target="_blank"}| `3153DE224DA69511331C07B89CF4738914BDBE9AFEE59C5BD289E657449CCC43` |
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Portable.zip){:target="_blank"}| `D295B260F56416792E455AED6069ECA545F36A80B192BFE04D2D2B9D64598855` |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Archiv.zip){:target="_blank"}| `6C5E003DC820B75B2B7C1381F2AE2F0D3AEF13EE84F67AE6EFBC235342B94490` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Archive.zip){:target="_blank"}| `6C5E003DC820B75B2B7C1381F2AE2F0D3AEF13EE84F67AE6EFBC235342B94490` |
 
 ## What's new?
 - Remote Desktop - Credentials can be stored in the profile. You should encrypt the profile file in the Settings>Profile with a master password and create a backup of your profile files. [#378](https://github.com/BornToBeRoot/NETworkManager/issues/378){:target="_blank"}
@@ -76,7 +76,7 @@ Date: **14.03.2021**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.14.0/NETworkManager_2021.3.14.0_Setup.exe){:target="_blank"}| `B87F9E4AC704F0FF55A7A41DEA27D9A47CA160D64179A6F1FC3638A1DAFEAD2B` |
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.14.0/NETworkManager_2021.3.14.0_Portable.zip){:target="_blank"}| `92B362B50ACC2685235DEB4002C75C6005FA2978E2B3F25B297854504A8E22F7` |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.14.0/NETworkManager_2021.3.14.0_Archiv.zip){:target="_blank"}| `451A24B0AC8C2E63A15F5370EC2FC11E3957086BA272BDD17B00EB1D03E8E342` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.14.0/NETworkManager_2021.3.14.0_Archive.zip){:target="_blank"}| `451A24B0AC8C2E63A15F5370EC2FC11E3957086BA272BDD17B00EB1D03E8E342` |
 
 ## What's new?
 - Bugfixes & improvements only
@@ -104,7 +104,7 @@ Date: **17.02.2021**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Setup.exe){:target="_blank"}| `5BDD82CA59CC0A635559848CA183C21ED92D4D0C143625F1B367946F033E2A79` |
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Portable.zip){:target="_blank"}| `4D5AA9CC1A4FCE5AB80060A1009E87FA207D642B7E25A63A4DA38F9F6FD43472` |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Archiv.zip){:target="_blank"}| `9996197F0F58A7A23F0A78DB7336D4201F98F1C6E8CCD7D02BF97095C5A6DDA8` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.2.17.0/NETworkManager_2021.2.17.0_Archive.zip){:target="_blank"}| `9996197F0F58A7A23F0A78DB7336D4201F98F1C6E8CCD7D02BF97095C5A6DDA8` |
 
 ## What's new?
 - Profile files can be encrypted with a master password. Backup your profile files `%AppData%\NETworkManager\Profiles` or in `APPLICATIONROOT\Profiles` (portable version) before you use this feature. There may be some issues :) More infos in the [FAQ](https://borntoberoot.net/NETworkManager/FAQ){:target="_blank"}. You can review the changes and code here [#226](https://github.com/BornToBeRoot/NETworkManager/issues/226){:target="_blank"} [#464](https://github.com/BornToBeRoot/NETworkManager/pull/464){:target="_blank"}
@@ -133,7 +133,7 @@ Date: **26.01.2021**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Setup.exe){:target="_blank"}| `600C5F6F57ECE66E87FD9AC5FA8024A2CE7DF156D1FA7D5D17C1809E89CC0548` |
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Portable.zip){:target="_blank"}| `C8CFE51FD787D56A7A4DF07EC9A1EF7F043D296E2E2F9EF2CB071D999E9DB3CD` |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Archiv.zip){:target="_blank"}| `5705DEFD5457625B85B3F7FD5FC64A503E231BBFC29B6BF749DB2858B14E53D3` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.2/NETworkManager_2021.1.2_Archive.zip){:target="_blank"}| `5705DEFD5457625B85B3F7FD5FC64A503E231BBFC29B6BF749DB2858B14E53D3` |
 
 ## Bugfixes
 - Profiles won't load on start [#444](http://github.com/BornToBeRoot/NETworkManager/issues/444){:target="_blank"} 
@@ -145,7 +145,7 @@ Date: **09.01.2021**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.0/NETworkManager_2021.1.0_Setup.exe){:target="_blank"}| `370FDED539C49E044209CEB6897AD76DD1E947754C0E2742FEED0658229BD3F3` | 
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.0/NETworkManager_2021.1.0_Portable.zip){:target="_blank"}| `BD6507198CC7EC5974229A58F9CB33F13CE0A33ABC2E20344DB42321C2382977` | 
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.0/NETworkManager_2021.1.0_Archiv.zip){:target="_blank"}| `425517A996CE52BB2ADFF05D02537817C954329402AAE9F05773B36C61997E71` | 
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.1.0/NETworkManager_2021.1.0_Archive.zip){:target="_blank"}| `425517A996CE52BB2ADFF05D02537817C954329402AAE9F05773B36C61997E71` | 
 
 Note: _Due to the migration to x64 you have to uninstall the x86 version manually in the control panel_
 
@@ -176,7 +176,7 @@ Date: **28.12.2020**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.2/NETworkManager_2020.12.2_Setup.exe){:target="_blank"}| `4F0EA9AB5969021901AA107A40B0F1C649AB2A39FFC55565DDEF318D983021F9` | 
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.2/NETworkManager_2020.12.2_Portable.zip){:target="_blank"}| `7A26775C906586822AE3585CDD2FC3AD361D359D38AC591012E4CB9F82EEA8BA` | 
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.2/NETworkManager_2020.12.2_Archiv.zip){:target="_blank"}| `6094B2C27A279C004049D0AD083C8A23A57864FBD61616DECD2B75A9C3ABDD95` | 
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.2/NETworkManager_2020.12.2_Archive.zip){:target="_blank"}| `6094B2C27A279C004049D0AD083C8A23A57864FBD61616DECD2B75A9C3ABDD95` | 
 
 ## What's new?
 - UI reworked / tab size reduced [#398](http://github.com/BornToBeRoot/NETworkManager/issues/398){:target="_blank"} 
@@ -212,7 +212,7 @@ Date: **14.12.2020**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.1/NETworkManager_2020.12.1_Setup.exe){:target="_blank"}| `0A84BEF75A65DD457A2CDA64CDE00B3BF380D8D94D6BDB50EBC0869E31F5D2D9` | 
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.1/NETworkManager_2020.12.1_Portable.zip){:target="_blank"}| `19D04BA6BBFB323F11889115489A299FE534C49AEA533030DF0F5B47AE7A722E` | 
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.1/NETworkManager_2020.12.1_Archiv.zip){:target="_blank"}| `0F7BF030E4C4ADA8B54DF06C52CA5F19A1E3CA854E67A8E667277544A8882509` | 
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.1/NETworkManager_2020.12.1_Archive.zip){:target="_blank"}| `0F7BF030E4C4ADA8B54DF06C52CA5F19A1E3CA854E67A8E667277544A8882509` | 
 
 ## What's new?
 - Ping Monitor
@@ -236,7 +236,7 @@ Date: **06.12.2020**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.0/NETworkManager_2020.12.0_Setup.exe){:target="_blank"}| `07B238ADC7B865AB3EB7F7C395674EB2A6C95ADCD4724317941EAB895D3E064D` | 
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.0/NETworkManager_2020.12.0_Portable.zip){:target="_blank"}| `191F5A1C7E7DC59EE4B7CB17546564F69339D2963B7EC782FBE48F35C4B10C00` | 
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.0/NETworkManager_2020.12.0_Archiv.zip){:target="_blank"}| `0038524849EAD33A3BAA8B493A424B0416D360E54DB52E931557219C30AAE955` | 
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.12.0/NETworkManager_2020.12.0_Archive.zip){:target="_blank"}| `0038524849EAD33A3BAA8B493A424B0416D360E54DB52E931557219C30AAE955` | 
 
 Note: _If you've installed the preview, uninstall it first!_
 
@@ -282,7 +282,7 @@ Date: **05.09.2020**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.9.0/NETworkManager_2020.9.0_Setup.exe)| `0EC8C1371C4D62947AE0DC70DBAA91FE105CACECD32DF4A4451C95F71D085014` |
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.9.0/NETworkManager_2020.9.0_Portable.zip)| `E8B60E677E65959BB11F05884F6EA9EC99F09F24ECE869A240B8361F958B4A66` |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.9.0/NETworkManager_2020.9.0_Archiv.zip)| `86D13E4C139132BCBA86B6F72ADA4D679C4DD303EA08643D276AE1A5DFD47C47` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.9.0/NETworkManager_2020.9.0_Archive.zip)| `86D13E4C139132BCBA86B6F72ADA4D679C4DD303EA08643D276AE1A5DFD47C47` |
 
 **New system requirements**
 - Windows 10 x64
@@ -316,7 +316,7 @@ Date: **12.05.2020**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.1/NETworkManager_2020.5.1_Setup.exe)| `EC5324009FABF9025A91352C542523B03AC0F55B4090A0E41721AED852A9F968` |
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.1/NETworkManager_2020.5.1_Portable.zip)| `FCC6962C65CDC0ED5137ACDFD23DE97801A1ED74557426BE8AD68F6DBFD366B6` |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.1/NETworkManager_2020.5.1_Archiv.zip)| `E0D10A9CA0E7DAE15C85AE58BB1350E139E8EF6B96D147B40B680AFEB6ED8E85` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.1/NETworkManager_2020.5.1_Archive.zip)| `E0D10A9CA0E7DAE15C85AE58BB1350E139E8EF6B96D147B40B680AFEB6ED8E85` |
 
 ## Bugfixes
 - Subnet Calculator
@@ -331,7 +331,7 @@ Date: **11.05.2020**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.0/NETworkManager_2020.5.0_Setup.exe)| `B49C7C6B269F3A1B89D7F654CBEA791D4B882CD21A4D77006D5D7DFF1AA300C4` |
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.0/NETworkManager_2020.5.0_Portable.zip)| `A2684C73BBBFA2AE7AE3D59A024AA5247B64DE3C002C22B6F7AA4BEA3AC9B5CE` |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.0/NETworkManager_2020.5.0_Archiv.zip)| `9AACB3B1F0AF7D529606068E3B052C85693C9C97CB8CEBF6D4E181A29FAD06E6` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.5.0/NETworkManager_2020.5.0_Archive.zip)| `9AACB3B1F0AF7D529606068E3B052C85693C9C97CB8CEBF6D4E181A29FAD06E6` |
 
 ## What's new?
 - Ping view removed [#272](http://github.com/BornToBeRoot/NETworkManager/issues/272){:target="_blank"}
@@ -386,7 +386,7 @@ Date: **21.04.2020**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.4.0/NETworkManager_2020.4.0_Setup.exe)| `6AA9E156ABEB79BB07574C7C076F53FE0630D69E5680A83E8E1D175E4C75E20A` |
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.4.0/NETworkManager_2020.4.0_Portable.zip)| `36FDC504ECD9BA7E7334131909F81CE36FB91E7FB267DA53B077F95C697B4751` |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.4.0/NETworkManager_2020.4.0_Archiv.zip)| `468099D5B9E8862AA6024290BD1FD375FD3A2CE9E7E4FE94AA0DDB97687E81CC` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.4.0/NETworkManager_2020.4.0_Archive.zip)| `468099D5B9E8862AA6024290BD1FD375FD3A2CE9E7E4FE94AA0DDB97687E81CC` |
 
 ## What's new?
 - Code has been refactored and improved to simplify future developments.
@@ -418,7 +418,7 @@ Date: **26.01.2020**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Setup.exe)| `A7BD0182269F012701D56285141A66279F41145F748539C7233C3129BE3765CB` |
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Portable.zip)| `BEA66D1B8E1DE820B6077FD1F98ABDF5BDD4D7CD0477FC27941EFED326DCCEAD` |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archiv.zip)| `497C6DEFAD22B074B0E8D0E43948545128503512434C096D221D2978B1344F91` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2020.1.0/NETworkManager_2020.1.0_Archive.zip)| `497C6DEFAD22B074B0E8D0E43948545128503512434C096D221D2978B1344F91` |
 
 ## What's new?
 - Discovery Protocol - Capture LLDP and/or CDP network packages and display informations like Port, Description, VLAN, etc. [#196](http://github.com/BornToBeRoot/NETworkManager/issues/196){:target="_blank"}
@@ -462,7 +462,7 @@ Date: **25.12.2019**
 |---|---|
 |[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Setup.exe)| `C615367946A818B4E67632FA99937723B4006385D86F62F52842709DC35CBA1F` |
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Portable.zip)| `1A5A16A863425D827E1C58D711C337873C4C44B914D44F3FC27E327043597078` |
-|[Archiv](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Archiv.zip)| `1942EF7B3541782CB83F37ED802E8FF98DD63579F5772D792462EACF82BE7E72` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2019.12.0/NETworkManager_2019.12.0_Archive.zip)| `1942EF7B3541782CB83F37ED802E8FF98DD63579F5772D792462EACF82BE7E72` |
 
 **New system requirements**
 - Windows 10 Build 1809 
@@ -551,4 +551,4 @@ Date: **25.12.2019**
 
 ---
 
-You can find the changelog for version 1.x [here]({{ '/Archiv/Changelog-v1#version-11100' | prepend: site.baseurl }}).
+You can find the changelog for version 1.x [here]({{ '/Archive/Changelog-v1#version-11100' | prepend: site.baseurl }}).
