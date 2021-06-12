@@ -11,6 +11,7 @@ permalink: /Changelog
 - Dashbaord - Regex for IPv4 fixed  [#841](https://github.com/BornToBeRoot/NETworkManager/issues/841){:target="_blank"}
 - Network Interface - Remove IPv4 address added [#212](https://github.com/BornToBeRoot/NETworkManager/issues/212){:target="_blank"}
 - IP Scanner - Custom commands fixed [2e53b292f1dca7808fed509aa9ac39e009a3030f](https://github.com/BornToBeRoot/NETworkManager/commit/2e53b292f1dca7808fed509aa9ac39e009a3030f){:target="_blank"}
+- NETworkManager is now available on WinGet `winget install BornToBeRoot.NETworkManager`
 -->
 
 # Version 2021.5.9.0
