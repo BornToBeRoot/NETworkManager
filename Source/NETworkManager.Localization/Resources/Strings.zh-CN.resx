@@ -2184,7 +2184,7 @@ URL: https://api.github.com/</value>
     <value>远程音频录制</value>
   </data>
   <data name="RemoteDesktopAudioCaptureRedirectionMode_DoNotRecord" xml:space="preserve">
-    <value>Do not record</value>
+    <value>不要记录</value>
   </data>
   <data name="RemoteDesktopAudioCaptureRedirectionMode_RecordFromThisComputer" xml:space="preserve">
     <value>Record from this computer</value>
@@ -2220,7 +2220,7 @@ URL: https://api.github.com/</value>
     <value>程序</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
-    <value>The selected custom command will be deleted permanently.</value>
+    <value>所选自定义命令将被永久删除。</value>
   </data>
   <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
     <value>The following variables are available:
@@ -2232,7 +2232,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>重启</value>
   </data>
   <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
-    <value>Could not resolve ip address for hostname!</value>
+    <value>无法解析主机名的ip地址!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
@@ -2508,7 +2508,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>{0} seconds remaining...</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value>Help</value>
+    <value>帮助</value>
   </data>
   <data name="HelpMessage_ParameterApplication" xml:space="preserve">
     <value>Application that is displayed at startup.</value>
@@ -2520,7 +2520,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Value</value>
   </data>
   <data name="WebConsole" xml:space="preserve">
-    <value>Web Console</value>
+    <value>Web 控制台</value>
   </data>
   <data name="Reload" xml:space="preserve">
     <value>Reload</value>
@@ -2535,10 +2535,10 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Microsoft.Windows.SDK.Contracts is required for this feature but not available on this system (e.g. on Windows Server).</value>
   </data>
   <data name="ApplicationName_ARPTable" xml:space="preserve">
-    <value>ARP Table</value>
+    <value>ARP 列表</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
-    <value>Connections</value>
+    <value>连接</value>
   </data>
   <data name="ApplicationName_Dashboard" xml:space="preserve">
     <value>Dashboard</value>
@@ -2547,13 +2547,13 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Discovery Protocol</value>
   </data>
   <data name="ApplicationName_DNSLookup" xml:space="preserve">
-    <value>DNS Lookup</value>
+    <value>DNS 查找</value>
   </data>
   <data name="ApplicationName_HTTPHeaders" xml:space="preserve">
     <value>HTTP Headers</value>
   </data>
   <data name="ApplicationName_IPScanner" xml:space="preserve">
-    <value>IP Scanner</value>
+    <value>IP 扫描器</value>
   </data>
   <data name="ApplicationName_Listeners" xml:space="preserve">
     <value>Listeners</value>
@@ -2562,16 +2562,16 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Lookup</value>
   </data>
   <data name="ApplicationName_NetworkInterface" xml:space="preserve">
-    <value>Network Interface</value>
+    <value>网络界面</value>
   </data>
   <data name="ApplicationName_Ping" xml:space="preserve">
     <value>Ping</value>
   </data>
   <data name="ApplicationName_PingMonitor" xml:space="preserve">
-    <value>Ping Monitor</value>
+    <value>Ping 监控</value>
   </data>
   <data name="ApplicationName_PortScanner" xml:space="preserve">
-    <value>Port Scanner</value>
+    <value>端口扫描器</value>
   </data>
   <data name="ApplicationName_PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -2580,7 +2580,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>PuTTY</value>
   </data>
   <data name="ApplicationName_RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
+    <value>远程桌面</value>
   </data>
   <data name="ApplicationName_SNMP" xml:space="preserve">
     <value>SNMP</value>
@@ -2598,10 +2598,10 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Wake on LAN</value>
   </data>
   <data name="ApplicationName_WebConsole" xml:space="preserve">
-    <value>Web Console</value>
+    <value>Web 控制台</value>
   </data>
   <data name="ApplicationName_Whois" xml:space="preserve">
-    <value>Whois</value>
+    <value>域名查询</value>
   </data>
   <data name="ApplicationName_WiFi" xml:space="preserve">
     <value>WiFi</value>
@@ -2679,13 +2679,13 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>General</value>
   </data>
   <data name="ProfileViewName_DNSLookup" xml:space="preserve">
-    <value>DNS Lookup</value>
+    <value>DNS 查找</value>
   </data>
   <data name="ProfileViewName_HTTPHeaders" xml:space="preserve">
     <value>HTTP Headers</value>
   </data>
   <data name="ProfileViewName_IP Scanner" xml:space="preserve">
-    <value>IP Scanner</value>
+    <value>IP 扫描器</value>
   </data>
   <data name="ProfileViewName_NetworkInterface" xml:space="preserve">
     <value>Network Interface</value>
@@ -2718,7 +2718,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Wake on LAN</value>
   </data>
   <data name="ProfileViewName_WebConsole" xml:space="preserve">
-    <value>Web Console</value>
+    <value>Web 控制台</value>
   </data>
   <data name="ProfileViewName_Whois" xml:space="preserve">
     <value>Whois</value>
@@ -3077,7 +3077,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Use custom IPv6 address API</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Time to live</value>    
+    <value>Time to live</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
     <value>Chassis Id</value>
@@ -3090,5 +3090,14 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   </data>
   <data name="PortDescription" xml:space="preserve">
     <value>Port description</value>
+  </data>
+  <data name="RemoveIPv4Address" xml:space="preserve">
+    <value>删除IPv4地址</value>
+  </data>
+  <data name="AdditionalConfigDots" xml:space="preserve">
+    <value>额外的配置</value>
+  </data>
+  <data name="RemoveIPv4AddressDots" xml:space="preserve">
+    <value>删除IPv4地址</value>
   </data>
 </root>
