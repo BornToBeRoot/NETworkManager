@@ -17,7 +17,7 @@ Date: **09.05.2021**
 | <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn">Portable</button></a> | `ED3DC6DFC111A3261DC6BF3F3D2820E0A1FF96ECF48A3C7DFBF3454A39694848` |
 | <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Archiv.zip' target='_blank'><button type="button" name="button" class="btn">Archive</button></a> | `DD0B800EA55B97BA0A6B3A5884D62FCE2C4E74EAB1CCE01163823EBD30DC9B4E` |
 
-The setup is also available on [Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"} and [WinGet]():
+The setup is also available on [Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"} and [WinGet](https://github.com/microsoft/winget-pkgs/tree/master/manifests/b/BornToBeRoot/NETworkManager/){:target="_blank"}:
 ```
 ~# choco install networkmanager
 or
