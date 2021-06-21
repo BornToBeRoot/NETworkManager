@@ -3098,4 +3098,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="RemoveIPv4AddressDots" xml:space="preserve">
     <value>Remove IPv4 address...</value>
   </data>
+  <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
+    <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
+  </data>
 </root>

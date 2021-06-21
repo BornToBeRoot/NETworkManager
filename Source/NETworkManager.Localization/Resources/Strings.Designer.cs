@@ -6408,6 +6408,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Windows Sockets send call failed..
         /// </summary>
         public static string RemoteDesktopDisconnectReason_WinsockSendFailed {
