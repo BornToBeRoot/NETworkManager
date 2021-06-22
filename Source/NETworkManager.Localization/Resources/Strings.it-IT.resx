@@ -3127,4 +3127,8 @@ Per archiviare le credenziali in modo sicuro abilita la crittografia del file de
   <data name="RemoveIPv4AddressDots" xml:space="preserve">
     <value>Rimuovi indirizzo IPv4...</value>
   </data>
+  <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
+    <value>La sessione remota è terminata perché è stato raggiunto il limite di tempo di accesso totale. 
+Questo limite è impostato dall'amministratore del server o dai criteri di rete.</value>
+  </data>
 </root>
