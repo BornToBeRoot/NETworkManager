@@ -1,0 +1,24 @@
+pull_request_rules:
+  - name: automatic merge for Dependabot pull requests
+    conditions:
+      - author=dependabot[bot]
+      - check-success=Analyze (csharp)
+      - check-success=CodeQL
+      - check-success=continuous-integration/appveyor/pr
+    actions:
+      merge:
+        method: merge
+  - name: automatic merge for Transifex pull requests
+    conditions:
+      - author=transifex-integration[bot]
+      - check-success=continuous-integration/appveyor/pr
+    actions:
+      merge:
+        method: merge
+  - name: automatic merge for ImgBot pull requests
+    conditions:
+      - author=imgbot[bot]
+      - check-success=continuous-integration/appveyor/pr
+    actions:
+      merge:
+        method: merge
