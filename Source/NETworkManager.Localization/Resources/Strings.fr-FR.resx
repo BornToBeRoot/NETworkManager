@@ -3075,7 +3075,7 @@ Activez le cryptage des fichiers de profil dans Paramètres&gt; Profil pour stoc
     <value>Utilisez API d'adresse IPv6 personnalisée</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Temps de vivre</value>    
+    <value>Temps de vivre</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
     <value>Id châssis</value>
@@ -3088,5 +3088,17 @@ Activez le cryptage des fichiers de profil dans Paramètres&gt; Profil pour stoc
   </data>
   <data name="PortDescription" xml:space="preserve">
     <value>Description du port</value>
+  </data>
+  <data name="RemoveIPv4Address" xml:space="preserve">
+    <value>Remove IPv4 address</value>
+  </data>
+  <data name="AdditionalConfigDots" xml:space="preserve">
+    <value>Additional config...</value>
+  </data>
+  <data name="RemoveIPv4AddressDots" xml:space="preserve">
+    <value>Remove IPv4 address...</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
+    <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
   </data>
 </root>
