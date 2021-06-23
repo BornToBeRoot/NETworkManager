@@ -3075,7 +3075,7 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
     <value>Benutzerdefinierte IPv6-Adress-API verwenden</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Time to live</value>    
+    <value>Time to live</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
     <value>Chassis-Id</value>
