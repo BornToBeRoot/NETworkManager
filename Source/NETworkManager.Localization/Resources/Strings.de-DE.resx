@@ -3089,4 +3089,16 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
   <data name="PortDescription" xml:space="preserve">
     <value>Portbeschreibung</value>
   </data>
+  <data name="RemoveIPv4Address" xml:space="preserve">
+    <value>IPv4-Adresse entfernen</value>
+  </data>
+  <data name="AdditionalConfigDots" xml:space="preserve">
+    <value>Zusätzliche Konfig...</value>
+  </data>
+  <data name="RemoveIPv4AddressDots" xml:space="preserve">
+    <value>IPv4-Adresse entfernen...</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
+    <value>Die Remote-Sitzung wurde beendet, weil das Gesamtanmeldezeitlimit erreicht wurde. Dieses Limit wird vom Serveradministrator oder durch Netzwerkrichtlinien festgelegt.</value>
+  </data>
 </root>
