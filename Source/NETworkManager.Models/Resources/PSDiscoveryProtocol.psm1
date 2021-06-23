@@ -188,7 +188,7 @@ function Invoke-DiscoveryProtocolCapture {
 
                 try {
                     $CimSession = @{
-                            CimSession = New-CimSession -ComputerName $Computer -ErrorAction Stop
+                        CimSession = New-CimSession -ComputerName $Computer -ErrorAction Stop
                     }
                 } catch {
                     Write-Warning "Unable to create CimSession. Please make sure WinRM and PSRemoting is enabled on $Computer."
@@ -197,7 +197,6 @@ function Invoke-DiscoveryProtocolCapture {
 
                 $PSSession = @{
                     Session = New-PSSession -ComputerName $Computer
-
                 }
             }
 
@@ -252,7 +251,7 @@ function Invoke-DiscoveryProtocolCapture {
                     LinkLayerAddress = $LinkLayerAddress
                 }
 
-                Add-NetEventPacketCaptureProvider @PacketCaptureParams | Out-Null
+                Add-NetEventPacketCaptureProvider @PacketCaptureParams @CimSession | Out-Null
                 Add-NetEventNetworkAdapter -Name $Adapter.Name -PromiscuousMode $True @CimSession | Out-Null
 
                 Start-NetEventSession -Name $SessionName @CimSession
