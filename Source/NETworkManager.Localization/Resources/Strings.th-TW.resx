@@ -2094,8 +2094,8 @@ URL: https://api.ipify.org/</value>
   <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
     <value>"{0}" is reachable via ICMP!</value>
   </data>
-  <data name="UseCustomAPI" xml:space="preserve">
-    <value>使用自訂 API</value>
+  <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
+    <value>Use custom IPv4 address API</value>
   </data>
   <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
     <value>URL to a web service that can be reached via http or https and returns an IP address as response.</value>
@@ -2105,15 +2105,6 @@ URL: https://api.ipify.org/</value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
     <value>無法連線到 "{0}"!</value>
-  </data>
-  <data name="PublicDNSTestDomain" xml:space="preserve">
-    <value>公用 DNS 測試網域</value>
-  </data>
-  <data name="PublicDNSTestIPAddress" xml:space="preserve">
-    <value>公用 DNS 測試 IP 位址</value>
-  </data>
-  <data name="PublicICMPTestIPAddress" xml:space="preserve">
-    <value>公用 ICMP 測試 IP 位址</value>
   </data>
   <data name="IPv4ProtocolAvailable" xml:space="preserve">
     <value>IPv4 通訊協定可用</value>
@@ -2204,15 +2195,6 @@ URL: https://api.ipify.org/</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
     <value>在這部電腦上播放</value>
-  </data>
-  <data name="HelpMessage_PublicDNSTestDomain" xml:space="preserve">
-    <value>Domain to test dns server settings (Domain must resolve A or AAAA record).</value>
-  </data>
-  <data name="HelpMessage_PublicDNSTestIPAddress" xml:space="preserve">
-    <value>IP address to test dns server settings (IP address must resolve PTR record).</value>
-  </data>
-  <data name="HelpMessage_PublicICMPTestIPAddress" xml:space="preserve">
-    <value>IP address to test connection via ping (ICMP).</value>
   </data>
   <data name="Gateway" xml:space="preserve">
     <value>閘道</value>
@@ -3064,5 +3046,47 @@ The application will be restarted afterwards!</value>
     <value>The current profile file is not encrypted and passwords will stored unencrypted on disk! 
 
 Enable profile file encryption in Settings&gt;Profile to store credentials securely.</value>
+  </data>
+  <data name="ICMPv4" xml:space="preserve">
+    <value>ICMPv4</value>
+  </data>
+  <data name="ICMPv6" xml:space="preserve">
+    <value>ICMPv6</value>
+  </data>
+  <data name="CheckIsDisabled" xml:space="preserve">
+    <value>Check is disabled!</value>
+  </data>
+  <data name="EnterValidIPv6Address" xml:space="preserve">
+    <value>Enter a valid IPv6 address!</value>
+  </data>
+  <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
+    <value>Public accessible IPv4 address.</value>
+  </data>
+  <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
+    <value>Public accessible IPv6 address.</value>
+  </data>
+  <data name="PublicIPv4Address" xml:space="preserve">
+    <value>Public IPv4 address</value>
+  </data>
+  <data name="PublicIPv6Address" xml:space="preserve">
+    <value>Public IPv6 address</value>
+  </data>
+  <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
+    <value>Use custom IPv6 address API</value>
+  </data>
+  <data name="TimeToLive" xml:space="preserve">
+    <value>Time to live</value>    
+  </data>
+  <data name="ChassisId" xml:space="preserve">
+    <value>Chassis Id</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Management</value>
+  </data>
+  <data name="DeviceDescription" xml:space="preserve">
+    <value>Device description</value>
+  </data>
+  <data name="PortDescription" xml:space="preserve">
+    <value>Port description</value>
   </data>
 </root>
