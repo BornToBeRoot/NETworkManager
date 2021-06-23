@@ -2094,8 +2094,8 @@ ist deaktiviert!</value>
   <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
     <value>{0} ist erreichbar über ICMP!</value>
   </data>
-  <data name="UseCustomAPI" xml:space="preserve">
-    <value>Verwende benutzerdefinierte API</value>
+  <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
+    <value>Benutzerdefinierte IPv4-Adressen-API verwenden</value>
   </data>
   <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
     <value>URL zu einem Webdienst, der über http oder https erreichbar ist und eine IP-Adresse als Antwort zurückgibt.</value>
@@ -2105,15 +2105,6 @@ ist deaktiviert!</value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
     <value>Verbindung zu "{0}" konnte nicht hergestellt werden!</value>
-  </data>
-  <data name="PublicDNSTestDomain" xml:space="preserve">
-    <value>Öffentliche DNS Test Domain</value>
-  </data>
-  <data name="PublicDNSTestIPAddress" xml:space="preserve">
-    <value>Öffentliche DNS Test IP-Adresse</value>
-  </data>
-  <data name="PublicICMPTestIPAddress" xml:space="preserve">
-    <value>Öffentliche ICMP Test IP-Adresse</value>
   </data>
   <data name="IPv4ProtocolAvailable" xml:space="preserve">
     <value>IPv4-Protokoll ist verfügbar</value>
@@ -2204,15 +2195,6 @@ ist deaktiviert!</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
     <value>Auf diesem Computer wiedergeben</value>
-  </data>
-  <data name="HelpMessage_PublicDNSTestDomain" xml:space="preserve">
-    <value>Domain zum Testen der DNS-Servereinstellungen (Domain muss einen A- oder AAAA-Record auflösen).</value>
-  </data>
-  <data name="HelpMessage_PublicDNSTestIPAddress" xml:space="preserve">
-    <value>IP-Adresse zum Testen der DNS-Servereinstellungen (IP-Adresse muss einen PTR-Record auflösen).</value>
-  </data>
-  <data name="HelpMessage_PublicICMPTestIPAddress" xml:space="preserve">
-    <value>IP-Adresse zum Testen der Verbindung über Ping (ICMP).</value>
   </data>
   <data name="Gateway" xml:space="preserve">
     <value>Gateway</value>
@@ -3064,5 +3046,59 @@ Die Anwendung wird anschließend neu gestartet!</value>
     <value>Die aktuelle Profildatei ist nicht verschlüsselt und Passwörter werden unverschlüsselt auf der Festplatte gespeichert! 
 
 Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile, um die Anmeldeinformationen sicher zu speichern.</value>
+  </data>
+  <data name="ICMPv4" xml:space="preserve">
+    <value>ICMPv4</value>
+  </data>
+  <data name="ICMPv6" xml:space="preserve">
+    <value>ICMPv6</value>
+  </data>
+  <data name="CheckIsDisabled" xml:space="preserve">
+    <value>Check ist deaktiviert!</value>
+  </data>
+  <data name="EnterValidIPv6Address" xml:space="preserve">
+    <value>Geben Sie eine gültige IPv6-Adresse ein!</value>
+  </data>
+  <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
+    <value>Öffentlich verfügbare IPv4-Adresse.</value>
+  </data>
+  <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
+    <value>Öffentlich verfügbare IPv6-Adresse.</value>
+  </data>
+  <data name="PublicIPv4Address" xml:space="preserve">
+    <value>Öffentliche IPv4-Adresse</value>
+  </data>
+  <data name="PublicIPv6Address" xml:space="preserve">
+    <value>Öffentliche IPv6-Adresse</value>
+  </data>
+  <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
+    <value>Benutzerdefinierte IPv6-Adress-API verwenden</value>
+  </data>
+  <data name="TimeToLive" xml:space="preserve">
+    <value>Time to live</value>    
+  </data>
+  <data name="ChassisId" xml:space="preserve">
+    <value>Chassis-Id</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Management</value>
+  </data>
+  <data name="DeviceDescription" xml:space="preserve">
+    <value>Gerätebeschreibung</value>
+  </data>
+  <data name="PortDescription" xml:space="preserve">
+    <value>Portbeschreibung</value>
+  </data>
+  <data name="RemoveIPv4Address" xml:space="preserve">
+    <value>IPv4-Adresse entfernen</value>
+  </data>
+  <data name="AdditionalConfigDots" xml:space="preserve">
+    <value>Zusätzliche Konfig...</value>
+  </data>
+  <data name="RemoveIPv4AddressDots" xml:space="preserve">
+    <value>IPv4-Adresse entfernen...</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
+    <value>Die Remote-Sitzung wurde beendet, weil das Gesamtanmeldezeitlimit erreicht wurde. Dieses Limit wird vom Serveradministrator oder durch Netzwerkrichtlinien festgelegt.</value>
   </data>
 </root>

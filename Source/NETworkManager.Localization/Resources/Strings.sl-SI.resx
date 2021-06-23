@@ -2093,8 +2093,8 @@ je onemogočeno!</value>
   <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
     <value>"{0}" je dosegljiv prek ICMP!</value>
   </data>
-  <data name="UseCustomAPI" xml:space="preserve">
-    <value>Uporabi API po meri</value>
+  <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
+    <value>Uporabi API poljubnega naslova IPv4</value>
   </data>
   <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
     <value>URL naslov do spletne storitve, ki je lahko dosegljiva prek http ali https in kot odgovor vrne naslov IP.</value>
@@ -2104,15 +2104,6 @@ je onemogočeno!</value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
     <value>Ni bilo mogoče vzpostaviti povezave z "{0}"!</value>
-  </data>
-  <data name="PublicDNSTestDomain" xml:space="preserve">
-    <value>Javna preizkusna domena DNS</value>
-  </data>
-  <data name="PublicDNSTestIPAddress" xml:space="preserve">
-    <value>Javni naslov IP za preskus DNS</value>
-  </data>
-  <data name="PublicICMPTestIPAddress" xml:space="preserve">
-    <value>Javni naslov IP za preskus ICMP</value>
   </data>
   <data name="IPv4ProtocolAvailable" xml:space="preserve">
     <value>Razpoložljivi protokol IPv4</value>
@@ -2203,15 +2194,6 @@ je onemogočeno!</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
     <value>Predvajaj na tem računalniku</value>
-  </data>
-  <data name="HelpMessage_PublicDNSTestDomain" xml:space="preserve">
-    <value>Domena za preizkus nastavitev strežnika DNS (domena mora razrešiti zapis A ali AAAA).</value>
-  </data>
-  <data name="HelpMessage_PublicDNSTestIPAddress" xml:space="preserve">
-    <value>Naslov IP za preizkus nastavitev strežnika DNSs (naslov IP mora razrešiti zapis PTR).</value>
-  </data>
-  <data name="HelpMessage_PublicICMPTestIPAddress" xml:space="preserve">
-    <value>Naslov IP za preizkus povezave prek pinga (ICMP).</value>
   </data>
   <data name="Gateway" xml:space="preserve">
     <value>Prehod</value>
@@ -3063,5 +3045,56 @@ Aplikacija se bo nato znova zagnala! </value>
     <value>The current profile file is not encrypted and passwords will stored unencrypted on disk! 
 
 Enable profile file encryption in Settings&gt;Profile to store credentials securely.</value>
+  </data>
+  <data name="ICMPv4" xml:space="preserve">
+    <value>ICMPv4</value>
+  </data>
+  <data name="ICMPv6" xml:space="preserve">
+    <value>ICMPv6</value>
+  </data>
+  <data name="CheckIsDisabled" xml:space="preserve">
+    <value>Preverjanje je onemogočeno!</value>
+  </data>
+  <data name="EnterValidIPv6Address" xml:space="preserve">
+    <value>Vnesite veljaven naslov IPv6!</value>
+  </data>
+  <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
+    <value>Javno dostopen naslov IPv4.</value>
+  </data>
+  <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
+    <value>Javno dostopen naslov IPv6. </value>
+  </data>
+  <data name="PublicIPv4Address" xml:space="preserve">
+    <value>Javni naslov IPv4.</value>
+  </data>
+  <data name="PublicIPv6Address" xml:space="preserve">
+    <value>Javni naslov IPv6.</value>
+  </data>
+  <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
+    <value>Uporabi API poljubnega naslova IPv6</value>
+  </data>
+  <data name="TimeToLive" xml:space="preserve">
+    <value>Čas za življenje - TTL</value>
+  </data>
+  <data name="ChassisId" xml:space="preserve">
+    <value>ID šasije</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Upravljanje</value>
+  </data>
+  <data name="DeviceDescription" xml:space="preserve">
+    <value>Opis naprave</value>
+  </data>
+  <data name="PortDescription" xml:space="preserve">
+    <value>Opis vrat</value>
+  </data>
+  <data name="RemoveIPv4Address" xml:space="preserve">
+    <value>Odstrani naslov IPv4</value>
+  </data>
+  <data name="AdditionalConfigDots" xml:space="preserve">
+    <value>Dodatne nastavitve...</value>
+  </data>
+  <data name="RemoveIPv4AddressDots" xml:space="preserve">
+    <value>Odstrani naslov IPv4...</value>
   </data>
 </root>
