@@ -86,7 +86,7 @@ namespace NETworkManager.ViewModels
                     if (!_isLoading)
                         SettingsManager.Current.WiFi_InterfaceId = value.NetworkInterfaceInfo.Id;
 
-                    ScanNetworks(value.WiFiAdapter);
+                    Scan(value.WiFiAdapter);
                 }
 
                 _selectedAdapters = value;
@@ -374,7 +374,7 @@ namespace NETworkManager.ViewModels
 
         private async Task ScanNetworksAction()
         {
-            await ScanNetworks(SelectedAdapter.WiFiAdapter, true);
+            await Scan(SelectedAdapter.WiFiAdapter, true);
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -436,7 +436,7 @@ namespace NETworkManager.ViewModels
             IsAdaptersLoading = false;
         }
 
-        private async Task ScanNetworks(WiFiAdapter adapter, bool fromBackground = false)
+        private async Task Scan(WiFiAdapter adapter, bool fromBackground = false)
         {
             if (fromBackground)
             {
@@ -565,6 +565,11 @@ namespace NETworkManager.ViewModels
             _isTimerPaused = false;
         }
 
+        private async Task Connect()
+        {
+
+        }
+
         private async Task Export()
         {
             var customDialog = new CustomDialog
@@ -619,7 +624,7 @@ namespace NETworkManager.ViewModels
             _autoRefreshTimer.Stop();
 
             // Scan networks
-            await ScanNetworks(SelectedAdapter.WiFiAdapter, true);
+            await Scan(SelectedAdapter.WiFiAdapter, true);
 
             // Restart timer...
             _autoRefreshTimer.Start();

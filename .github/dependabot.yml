@@ -4,19 +4,7 @@ updates:
   directory: "/Source"
   schedule:
     interval: daily
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 25
   target-branch: master
-  reviewers:
-  - BornToBeRoot
   labels:
   - ":heavy_check_mark: dependencies"
-  ignore:
-  - dependency-name: ControlzEx
-    versions:
-    - "> 3.0.2.4"
-  - dependency-name: Microsoft.Windows.SDK.Contracts
-    versions:
-    - "> 10.0.17763.1000"
-  - dependency-name: IPNetwork2
-    versions:
-    - 2.5.283

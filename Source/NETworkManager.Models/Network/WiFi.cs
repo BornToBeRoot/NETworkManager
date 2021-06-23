@@ -64,129 +64,89 @@ namespace NETworkManager.Models.Network
 
         public static int GetChannelFromChannelFrequency(int kilohertz)
         {
-            int channel = -1;
-
             switch (ConvertChannelFrequencyToGigahertz(kilohertz))
             {
                 // 2.4 GHz
                 case 2.412:
-                    channel = 1;
-                    break;
+                    return 1;
                 case 2.417:
-                    channel = 2;
-                    break;
+                    return 2;
                 case 2.422:
-                    channel = 3;
-                    break;
+                    return 3;
                 case 2.427:
-                    channel = 4;
-                    break;
+                    return 4;
                 case 2.432:
-                    channel = 5;
-                    break;
+                    return 5;
                 case 2.437:
-                    channel = 6;
-                    break;
+                    return 6;
                 case 2.442:
-                    channel = 7;
-                    break;
+                    return 7;
                 case 2.447:
-                    channel = 8;
-                    break;
+                    return 8;
                 case 2.452:
-                    channel = 9;
-                    break;
+                    return 9;
                 case 2.457:
-                    channel = 10;
-                    break;
+                    return 10;
                 case 2.462:
-                    channel = 11;
-                    break;
+                    return 11;
                 case 2.467:
-                    channel = 12;
-                    break;
+                    return 12;
                 case 2.472:
-                    channel = 13;
-                    break;
+                    return 13;
                 // 5 GHz
                 case 5.180:
-                    channel = 36;
-                    break;
+                    return 36;
                 case 5.200:
-                    channel = 40;
-                    break;
+                    return 40;
                 case 5.220:
-                    channel = 44;
-                    break;
+                    return 44;
                 case 5.240:
-                    channel = 48;
-                    break;
+                    return 48;
                 case 5.260:
-                    channel = 52;
-                    break;
+                    return 52;
                 case 5.280:
-                    channel = 56;
-                    break;
+                    return 56;
                 case 5.300:
-                    channel = 60;
-                    break;
+                    return 60;
                 case 5.320:
-                    channel = 64;
-                    break;
+                    return 64;
                 case 5.500:
-                    channel = 100;
-                    break;
+                    return 100;
                 case 5.520:
-                    channel = 104;
-                    break;
+                    return 104;
                 case 5.540:
-                    channel = 108;
-                    break;
+                    return 108;
                 case 5.560:
-                    channel = 112;
-                    break;
+                    return 112;
                 case 5.580:
-                    channel = 116;
-                    break;
+                    return 116;
                 case 5.600:
-                    channel = 120;
-                    break;
+                    return 120;
                 case 5.620:
-                    channel = 124;
-                    break;
+                    return 124;
                 case 5.640:
-                    channel = 128;
-                    break;
+                    return 128;
                 case 5.660:
-                    channel = 132;
-                    break;
+                    return 132;
                 case 5.680:
-                    channel = 136;
-                    break;
+                    return 136;
                 case 5.700:
-                    channel = 140;
-                    break;
+                    return 140;
                 case 5.720:
-                    channel = 144;
-                    break;
+                    return 144;
                 case 5.745:
-                    channel = 149;
-                    break;
+                    return 149;
                 case 5.765:
-                    channel = 153;
-                    break;
+                    return 153;
                 case 5.785:
-                    channel = 157;
-                    break;
+                    return 157;
                 case 5.805:
-                    channel = 161;
-                    break;
+                    return 161;
                 case 5.825:
-                    channel = 165;
-                    break;
+                    return 165;
             }
 
-            return channel;
+            return -1;
         }
 
         public static double ConvertChannelFrequencyToGigahertz(int kilohertz)
@@ -210,79 +170,58 @@ namespace NETworkManager.Models.Network
 
         public static string GetHumanReadableNetworkAuthenticationType(NetworkAuthenticationType networkAuthenticationType)
         {
-            string type = "-/-";
-
             switch (networkAuthenticationType)
             {
                 case NetworkAuthenticationType.Open80211:
-                    type = "Open";
-                    break;
+                    return "Open";
                 case NetworkAuthenticationType.Rsna:
-                    type = "WPA2 Enterprise";
-                    break;
+                    return "WPA2 Enterprise";
                 case NetworkAuthenticationType.RsnaPsk:
-                    type = "WPA2 PSK";
-                    break;
+                    return "WPA2 PSK";
                 case NetworkAuthenticationType.Wpa:
-                    type = "WPA Enterprise";
-                    break;
+                    return "WPA Enterprise";
                 case NetworkAuthenticationType.WpaNone:
-                    type = "WPA None";
-                    break;
+                    return "WPA None";
                 case NetworkAuthenticationType.WpaPsk:
-                    type = "WPA PSK";
-                    break;
+                    return "WPA PSK";
                 case NetworkAuthenticationType.SharedKey80211:
-                    type = "WEP";
-                    break;
+                    return "WEP";
                 case NetworkAuthenticationType.Ihv:
-                    type = "IHV";
-                    break;
+                    return "IHV";
                 case NetworkAuthenticationType.Unknown:
-                    type = "Unkown";
-                    break;
+                    return "Unkown";
                 case NetworkAuthenticationType.None:
-                    type = "-/-";
-                    break;
+                    return "-/-";
             }
 
-            return type;
+            return "-/-";
         }
 
         public static string GetHumandReadablePhyKind(WiFiPhyKind phyKind)
         {
-            string kind = "-/-";
-
             switch (phyKind)
             {
                 case WiFiPhyKind.Dsss:
                 case WiFiPhyKind.Fhss:
-                    kind = "802.11";
-                    break;
+                    return "802.11";
                 case WiFiPhyKind.Ofdm:
-                    kind = "802.11a";
-                    break;
+                    return "802.11a";
                 case WiFiPhyKind.Hrdsss:
-                    kind = "802.11b";
-                    break;
+                    return "802.11b";
                 case WiFiPhyKind.Erp:
-                    kind = "802.11g";
+                    return "802.11g";
                     break;
                 case WiFiPhyKind.HT:
-                    kind = "802.11n";
-                    break;
+                    return "802.11n";
                 case WiFiPhyKind.Dmg:
-                    kind = "802.11ad";
-                    break;
+                    return "802.11ad";
                 case WiFiPhyKind.Vht:
-                    kind = "802.11ac";
-                    break;
+                    return "802.11ac";
                 case WiFiPhyKind.HE:
-                    kind = "802.11ax";
-                    break;
+                    return "802.11ax";
             }
 
-            return kind;
+            return "-/-";
         }
 
         public enum Radio

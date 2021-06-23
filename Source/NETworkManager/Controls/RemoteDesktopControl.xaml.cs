@@ -196,7 +196,7 @@ namespace NETworkManager.Controls
 
             // Audio
             RdpClient.AdvancedSettings9.AudioRedirectionMode = (uint)_rdpSessionInfo.AudioRedirectionMode;
-            RdpClient.AdvancedSettings9.AudioCaptureRedirectionMode = _rdpSessionInfo.AudioCaptureRedirectionMode == 0 ? true : false;
+            RdpClient.AdvancedSettings9.AudioCaptureRedirectionMode = _rdpSessionInfo.AudioCaptureRedirectionMode == 0;
 
             // Performance
             RdpClient.AdvancedSettings9.BitmapPeristence = _rdpSessionInfo.PersistentBitmapCaching ? 1 : 0;
@@ -333,6 +333,8 @@ namespace NETworkManager.Controls
                     return Localization.Resources.Strings.RemoteDesktopDisconnectReason_RemoteByUser;
                 case 3:
                     return Localization.Resources.Strings.RemoteDesktopDisconnectReason_ByServer;
+                case 4:
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached;
                 case 260:
                     return Localization.Resources.Strings.RemoteDesktopDisconnectReason_DNSLookupFailed;
                 case 262:
