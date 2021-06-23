@@ -550,11 +550,11 @@ namespace NETworkManager.ViewModels
                 // Get subnetmask, based on ip address
                 foreach (var networkInterface in await NetworkInterface.GetNetworkInterfacesAsync())
                 {
-                    if (networkInterface.IPv4Address.Contains(localIP))
+                    if (networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIP)))
                     {
                         subnetmaskDetected = true;
 
-                        Hosts = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.Subnetmask.First())}";
+                        Hosts = $"{localIP}/{Subnetmask.ConvertSubnetmaskToCidr(networkInterface.IPv4Address.First().Item2)}";
 
                         // Fix: If the user clears the textbox and then clicks again on the button, the textbox remains empty...
                         OnPropertyChanged(nameof(Hosts));

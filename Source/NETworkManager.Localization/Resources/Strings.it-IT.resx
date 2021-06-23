@@ -3104,7 +3104,7 @@ Per archiviare le credenziali in modo sicuro abilita la crittografia del file de
     <value>Usa API indirizzo IPv6 personalizzato</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Time To Live</value>    
+    <value>Time To Live</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
     <value>ID telaio</value>
@@ -3117,5 +3117,18 @@ Per archiviare le credenziali in modo sicuro abilita la crittografia del file de
   </data>
   <data name="PortDescription" xml:space="preserve">
     <value>Descrizione porta</value>
+  </data>
+  <data name="RemoveIPv4Address" xml:space="preserve">
+    <value>Rimuovi indirizzo IPv4</value>
+  </data>
+  <data name="AdditionalConfigDots" xml:space="preserve">
+    <value>Impostazioni aggiuntive...</value>
+  </data>
+  <data name="RemoveIPv4AddressDots" xml:space="preserve">
+    <value>Rimuovi indirizzo IPv4...</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
+    <value>La sessione remota è terminata perché è stato raggiunto il limite di tempo di accesso totale. 
+Questo limite è impostato dall'amministratore del server o dai criteri di rete.</value>
   </data>
 </root>

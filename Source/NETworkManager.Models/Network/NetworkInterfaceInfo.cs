@@ -5,7 +5,6 @@ using System.Net.NetworkInformation;
 
 namespace NETworkManager.Models.Network
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class NetworkInterfaceInfo
     {
         public string Id { get; set; }
@@ -17,8 +16,7 @@ namespace NETworkManager.Models.Network
         public bool IsOperational { get; set; }
         public long Speed { get; set; }
         public bool IPv4ProtocolAvailable { get; set; }
-        public IPAddress[] IPv4Address { get; set; }
-        public IPAddress[] Subnetmask { get; set; }
+        public Tuple<IPAddress, IPAddress>[] IPv4Address {get;set;}
         public IPAddress[] IPv4Gateway { get; set; }
         public bool DhcpEnabled { get; set; }
         public IPAddress[] DhcpServer { get; set; }

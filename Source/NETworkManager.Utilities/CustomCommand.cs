@@ -26,10 +26,16 @@ namespace NETworkManager.Utilities
         /// <param name="info"><see cref="CustomCommandInfo"/> which is executed.</param>
         public static void Run(CustomCommandInfo info)
         {
-            if (string.IsNullOrEmpty(info.Arguments))
-                Process.Start(info.FilePath);
-            else
-                Process.Start(info.FilePath, info.Arguments);
+            var processStartInfo = new ProcessStartInfo()
+            {
+                FileName = info.FilePath,
+                UseShellExecute = true
+            };
+
+            if (!string.IsNullOrEmpty(info.Arguments))
+                processStartInfo.Arguments = info.Arguments;
+
+            Process.Start(processStartInfo);
         }
     }
 }
