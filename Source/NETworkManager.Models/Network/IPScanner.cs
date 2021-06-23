@@ -172,7 +172,7 @@ namespace NETworkManager.Models.Network
 								 // Check if it is the local mac
 								 if (macAddress == null)
 								 {
-									 var networkInferfaceInfo = NetworkInterface.GetNetworkInterfaces().FirstOrDefault(p => p.IPv4Address.Contains(ipAddress));
+									 var networkInferfaceInfo = NetworkInterface.GetNetworkInterfaces().FirstOrDefault(p => p.IPv4Address.Any(x => x.Item1.Equals(ipAddress)));
 
 									 if (networkInferfaceInfo != null)
 										 macAddress = networkInferfaceInfo.PhysicalAddress;

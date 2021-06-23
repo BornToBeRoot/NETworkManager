@@ -21,10 +21,11 @@ List of all contributors.
 - BornToBeRoot
 
 **Chinese (China)**
-- Bonelol
+- Bonelol 
 - ccstorm
 - dockernes
 - pedoc
+- pu2287643
 
 **Chinese (Taiwan)**
 - echoapus

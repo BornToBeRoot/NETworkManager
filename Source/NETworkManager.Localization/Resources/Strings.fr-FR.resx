@@ -2094,8 +2094,8 @@ est désactivée!</value>
   <data name="XXXIsReachableViaICMPMessage" xml:space="preserve">
     <value>"{0}" est accessible via ICMP!</value>
   </data>
-  <data name="UseCustomAPI" xml:space="preserve">
-    <value>Utiliser l'API personnalisée</value>
+  <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
+    <value>Utiliser API d'adresse IPv4 personnalisée</value>
   </data>
   <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
     <value>URL vers un service Web accessible via http ou https et renvoie une adresse IP en réponse.</value>
@@ -2105,15 +2105,6 @@ est désactivée!</value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
     <value>N'a pas pu se connecter à "{0}"!</value>
-  </data>
-  <data name="PublicDNSTestDomain" xml:space="preserve">
-    <value>Domaine de test DNS public</value>
-  </data>
-  <data name="PublicDNSTestIPAddress" xml:space="preserve">
-    <value>Adresse IP de test DNS public</value>
-  </data>
-  <data name="PublicICMPTestIPAddress" xml:space="preserve">
-    <value>Adresse IP publique pour test ICMP</value>
   </data>
   <data name="IPv4ProtocolAvailable" xml:space="preserve">
     <value>Protocole IPv4 disponible</value>
@@ -2204,15 +2195,6 @@ est désactivée!</value>
   </data>
   <data name="RemoteDesktopAudioRedirectionMode_PlayOnThisComputer" xml:space="preserve">
     <value>Jouer sur cet ordinateur</value>
-  </data>
-  <data name="HelpMessage_PublicDNSTestDomain" xml:space="preserve">
-    <value>Domaine pour tester les paramètres du serveur DNS (le domaine doit résoudre l'enregistrement A ou AAAA).</value>
-  </data>
-  <data name="HelpMessage_PublicDNSTestIPAddress" xml:space="preserve">
-    <value>Adresse IP pour tester les paramètres du serveur dns (l'adresse IP doit résoudre l'enregistrement PTR).</value>
-  </data>
-  <data name="HelpMessage_PublicICMPTestIPAddress" xml:space="preserve">
-    <value>Adresse IP pour tester la connexion par ping (ICMP).</value>
   </data>
   <data name="Gateway" xml:space="preserve">
     <value>Passerelle</value>
@@ -3064,5 +3046,47 @@ L'application sera redémarrée par la suite!</value>
     <value>Le fichier de profil actuel n'est pas chiffré et les mots de passe seront stockés non chiffrés sur le disque ! 
 
 Activez le cryptage des fichiers de profil dans Paramètres&gt; Profil pour stocker les infos d'identification en toute sécurité.</value>
+  </data>
+  <data name="ICMPv4" xml:space="preserve">
+    <value>ICMPv4</value>
+  </data>
+  <data name="ICMPv6" xml:space="preserve">
+    <value>ICMPv6</value>
+  </data>
+  <data name="CheckIsDisabled" xml:space="preserve">
+    <value>La vérification est désactivée!</value>
+  </data>
+  <data name="EnterValidIPv6Address" xml:space="preserve">
+    <value>Entrez une adresse IPv6 valide!</value>
+  </data>
+  <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
+    <value>Adresse IPv4 accessible au public.</value>
+  </data>
+  <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
+    <value>Adresse IPv6 accessible au public.</value>
+  </data>
+  <data name="PublicIPv4Address" xml:space="preserve">
+    <value>Adresse IPv4 publique</value>
+  </data>
+  <data name="PublicIPv6Address" xml:space="preserve">
+    <value>Adresse IPv6 publique</value>
+  </data>
+  <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
+    <value>Utilisez API d'adresse IPv6 personnalisée</value>
+  </data>
+  <data name="TimeToLive" xml:space="preserve">
+    <value>Temps de vivre</value>    
+  </data>
+  <data name="ChassisId" xml:space="preserve">
+    <value>Id châssis</value>
+  </data>
+  <data name="Management" xml:space="preserve">
+    <value>Gestion</value>
+  </data>
+  <data name="DeviceDescription" xml:space="preserve">
+    <value>Description du périphérique</value>
+  </data>
+  <data name="PortDescription" xml:space="preserve">
+    <value>Description du port</value>
   </data>
 </root>

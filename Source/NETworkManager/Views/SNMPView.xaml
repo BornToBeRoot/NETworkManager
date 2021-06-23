@@ -426,7 +426,7 @@
                 </Grid>
             </Button.Content>
         </Button>
-        <mahAppsControls:MetroProgressBar Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True" Margin="0,10,0,0">
+        <mahAppsControls:MetroProgressBar Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True" Margin="0,10,0,0">
             <mahAppsControls:MetroProgressBar.Style>
                 <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}" >
                     <Setter Property="Visibility" Value="Collapsed" />

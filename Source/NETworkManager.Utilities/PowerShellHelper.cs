@@ -17,13 +17,12 @@ namespace NETworkManager.Utilities
             if (asAdmin)
                 info.Verb = "runas";
 
-            using (var process = new Process())
-            {
-                process.StartInfo = info;
+            using var process = new Process();
 
-                process.Start();
-                process.WaitForExit();
-            }
+            process.StartInfo = info;
+
+            process.Start();
+            process.WaitForExit();
         }
     }
 }

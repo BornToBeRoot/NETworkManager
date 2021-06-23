@@ -8,18 +8,22 @@ permalink: /Download
 
 # Download
 
-Version: **2021.3.28.0** <br>
-Date: **28.03.2021**
+Version: **2021.5.9.0** <br>
+Date: **09.05.2021**
 
 | Download | Checksum [SHA256] |
 |---|---|
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn">Setup</button></a> | `3153DE224DA69511331C07B89CF4738914BDBE9AFEE59C5BD289E657449CCC43` |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn">Portable</button></a> | `D295B260F56416792E455AED6069ECA545F36A80B192BFE04D2D2B9D64598855` |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.3.28.0/NETworkManager_2021.3.28.0_Archiv.zip' target='_blank'><button type="button" name="button" class="btn">Archiv</button></a> | `6C5E003DC820B75B2B7C1381F2AE2F0D3AEF13EE84F67AE6EFBC235342B94490` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn">Setup</button></a> | `1D44A5A07975A8364DE742E061E0D72B3DD1CC03E02F4D87103A0767E3C7F7A2` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn">Portable</button></a> | `ED3DC6DFC111A3261DC6BF3F3D2820E0A1FF96ECF48A3C7DFBF3454A39694848` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Archiv.zip' target='_blank'><button type="button" name="button" class="btn">Archive</button></a> | `DD0B800EA55B97BA0A6B3A5884D62FCE2C4E74EAB1CCE01163823EBD30DC9B4E` |
 
-The setup is also available on [Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"} and can be installed with:
+
+The setup is also available on [Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"} and [WinGet](https://github.com/microsoft/winget-pkgs/tree/master/manifests/b/BornToBeRoot/NETworkManager/){:target="_blank"}:
+
 ```
 ~# choco install networkmanager
+or
+~# winget install BornToBeRoot.NETworkManager
 ```
 
 ## System requirements
