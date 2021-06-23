@@ -30,6 +30,7 @@
         <converters:BandwidthBytesToSpeedConverter x:Key="BandwidthBytesToSpeedConverter" />
         <converters:BandwidthBytesWithSizeConverter x:Key="BandwidthBytesWithSizeConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
+        <converters:IPAddressSubnetmaskTupleArrayToStringConverter x:Key="IPAddressSubnetmaskTupleArrayToStringConverter" />
         <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
@@ -190,33 +191,31 @@
                             <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.IPv4ProtocolAvailable}" />
                             <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}" />
                             <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.IPv4Address}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding SelectedNetworkInterface.IPv4Address, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Subnetmask}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"  />
-                            <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding SelectedNetworkInterface.Subnetmask, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.IPv4DefaultGateway}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding SelectedNetworkInterface.IPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.DHCPEnabled}" />
-                            <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="11" Text="{x:Static localization:Strings.DHCPServer}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding SelectedNetworkInterface.DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.DHCPLeaseObtained}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding SelectedNetworkInterface.DhcpLeaseObtained}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="13" Text="{x:Static localization:Strings.DHCPLeaseExpires}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="13" Text="{Binding SelectedNetworkInterface.DhcpLeaseExpires}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="14" Text="{x:Static localization:Strings.IPv6ProtocolAvailable}" />
-                            <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="15" Text="{x:Static localization:Strings.IPv6AddressLinkLocal}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"  />
-                            <TextBox Grid.Column="2" Grid.Row="15" Text="{Binding SelectedNetworkInterface.IPv6AddressLinkLocal, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="16" Text="{x:Static localization:Strings.IPv6Address}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding SelectedNetworkInterface.IPv6Address, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="17" Text="{x:Static localization:Strings.IPv6DefaultGateway}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="17" Text="{Binding SelectedNetworkInterface.IPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="18" Text="{x:Static localization:Strings.DNSAutoconfiguration}" />
-                            <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding SelectedNetworkInterface.DNSAutoconfigurationEnabled, Converter={StaticResource BooleanToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="19" Text="{x:Static localization:Strings.DNSSuffix}" />
-                            <TextBox Grid.Column="2" Grid.Row="19" Text="{Binding SelectedNetworkInterface.DNSSuffix}" />
-                            <TextBlock Grid.Column="0" Grid.Row="20" Text="{x:Static localization:Strings.DNSServers}" />
-                            <TextBox Grid.Column="2" Grid.Row="20" Text="{Binding SelectedNetworkInterface.DNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
+                            <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding SelectedNetworkInterface.IPv4Address, Converter={StaticResource IPAddressSubnetmaskTupleArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.IPv4DefaultGateway}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding SelectedNetworkInterface.IPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.DHCPEnabled}" />
+                            <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToStringConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.DHCPServer}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding SelectedNetworkInterface.DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="11" Text="{x:Static localization:Strings.DHCPLeaseObtained}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding SelectedNetworkInterface.DhcpLeaseObtained}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.DHCPLeaseExpires}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding SelectedNetworkInterface.DhcpLeaseExpires}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="13" Text="{x:Static localization:Strings.IPv6ProtocolAvailable}" />
+                            <TextBox Grid.Column="2" Grid.Row="13" Text="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="14" Text="{x:Static localization:Strings.IPv6AddressLinkLocal}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"  />
+                            <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding SelectedNetworkInterface.IPv6AddressLinkLocal, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="15" Text="{x:Static localization:Strings.IPv6Address}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBox Grid.Column="2" Grid.Row="15" Text="{Binding SelectedNetworkInterface.IPv6Address, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="16" Text="{x:Static localization:Strings.IPv6DefaultGateway}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding SelectedNetworkInterface.IPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="17" Text="{x:Static localization:Strings.DNSAutoconfiguration}" />
+                            <TextBox Grid.Column="2" Grid.Row="17" Text="{Binding SelectedNetworkInterface.DNSAutoconfigurationEnabled, Converter={StaticResource BooleanToStringConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="18" Text="{x:Static localization:Strings.DNSSuffix}" />
+                            <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding SelectedNetworkInterface.DNSSuffix}" />
+                            <TextBlock Grid.Column="0" Grid.Row="19" Text="{x:Static localization:Strings.DNSServers}" />
+                            <TextBox Grid.Column="2" Grid.Row="19" Text="{Binding SelectedNetworkInterface.DNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
                         </Grid>
                     </ScrollViewer>
                     <mahAppsControls:MetroProgressBar Grid.Row="4" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True" Margin="0,0,0,10">
@@ -796,34 +795,42 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <WrapPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" >
-                                <Button Command="{Binding AddIPv4AddressCommand}">
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding CanConfigure}" Value="False">
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding IsConfigurationRunning}" Value="True">
-                                                    <Setter Property="IsEnabled" Value="False" />
-                                                </DataTrigger>                                                
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                    <Button.Content>
+                                <mah:DropDownButton Style="{StaticResource ImageDropDrownButton}"  >
+                                    <mah:DropDownButton.Content>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle Width="20" Height="20" Margin="10,4,0,4" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                 <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListAddBelow}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ExpansionCardVariant}" />
                                                 </Rectangle.OpacityMask>
                                             </Rectangle>
-                                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddIPv4AddressDots}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AdditionalConfigDots}" FontSize="14" Margin="10,4" TextAlignment="Center"/>
                                         </Grid>
-                                    </Button.Content>
-                                </Button>
+                                    </mah:DropDownButton.Content>
+                                    <mah:DropDownButton.Items>
+                                        <MenuItem Header="{x:Static localization:Strings.AddIPv4AddressDots}" Command="{Binding AddIPv4AddressCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                            <MenuItem.Icon>
+                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListAddBelow}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="{x:Static localization:Strings.RemoveIPv4AddressDots}" Command="{Binding RemoveIPv4AddressCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                            <MenuItem.Icon>
+                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListDelete}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                            </MenuItem.Icon>
+                                        </MenuItem>                                       
+                                    </mah:DropDownButton.Items>
+                                </mah:DropDownButton>
                             </WrapPanel>
                             <Button Grid.Column="2" Command="{Binding ApplyConfigurationCommand}" VerticalAlignment="Bottom">
                                 <Button.Content>

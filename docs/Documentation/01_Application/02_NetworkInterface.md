@@ -32,28 +32,3 @@ The **Add IPv4-address...** button will open a dialog where you can enter an add
 ![NetworkInterface_Configure](02_NetworkInterface_Configure.png)
 
 ## Profile
-
-![NetworkInterface_Configure](02_NetworkInterface_Profile.png)
-
-### Obtain an IP address automatically
-
-
-
-### Use the following IP address:
-
-**IPv4 address**
-
-
-**Subnetmask or CIDR**
-
-
-**Default-Gateway**
-
-### Obtain DNS server address automatically
-
-### Use the following DNS server addresses:
-
-**Primary DNS server**
-
-
-**Secondary DNS server**

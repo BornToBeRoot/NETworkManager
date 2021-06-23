@@ -32,17 +32,17 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AirspaceFixer" Version="1.0.5" />
-    <PackageReference Include="DnsClient" Version="1.4.0" />
+    <PackageReference Include="DnsClient" Version="1.5.0" />
     <PackageReference Include="Dragablz" Version="0.0.3.223" />
-    <PackageReference Include="IPNetwork2" Version="2.5.303" />
+    <PackageReference Include="IPNetwork2" Version="2.5.322" />
     <PackageReference Include="Lextm.SharpSnmpLib" Version="12.3.0" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
-    <PackageReference Include="MahApps.Metro" Version="2.4.5" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.6" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.1.3" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.818.41" />    
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.2.5" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.864.35" />    
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.3.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <Reference Include="AxMSTSCLib">
@@ -91,6 +91,9 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="Views\NetworkConnectionView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Views\IPAddressDialog.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="Views\PortProfilesDialog.xaml">

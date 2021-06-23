@@ -4,9 +4,9 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
-    public class NetworkInterfaceAddIPAddressViewModel : ViewModelBase
+    public class IPAddressAndSubnetmaskViewModel : ViewModelBase
     {
-        public ICommand AddCommand { get; }
+        public ICommand OKCommand { get; }
 
         public ICommand CancelCommand { get; }
 
@@ -38,9 +38,9 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public NetworkInterfaceAddIPAddressViewModel(Action<NetworkInterfaceAddIPAddressViewModel> addCommand, Action<NetworkInterfaceAddIPAddressViewModel> cancelHandler)
+        public IPAddressAndSubnetmaskViewModel(Action<IPAddressAndSubnetmaskViewModel> okCommand, Action<IPAddressAndSubnetmaskViewModel> cancelHandler)
         {
-            AddCommand = new RelayCommand(p => addCommand(this));
+            OKCommand = new RelayCommand(p => okCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
         }        
     }

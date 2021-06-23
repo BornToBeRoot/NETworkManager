@@ -475,6 +475,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Additional config....
+        /// </summary>
+        public static string AdditionalConfigDots {
+            get {
+                return ResourceManager.GetString("AdditionalConfigDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Additionals.
         /// </summary>
         public static string Additionals {
@@ -6399,6 +6408,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Windows Sockets send call failed..
         /// </summary>
         public static string RemoteDesktopDisconnectReason_WinsockSendFailed {
@@ -6503,6 +6521,24 @@ namespace NETworkManager.Localization.Resources {
         public static string RemotePort {
             get {
                 return ResourceManager.GetString("RemotePort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove IPv4 address.
+        /// </summary>
+        public static string RemoveIPv4Address {
+            get {
+                return ResourceManager.GetString("RemoveIPv4Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove IPv4 address....
+        /// </summary>
+        public static string RemoveIPv4AddressDots {
+            get {
+                return ResourceManager.GetString("RemoveIPv4AddressDots", resourceCulture);
             }
         }
         
@@ -7656,15 +7692,6 @@ namespace NETworkManager.Localization.Resources {
         public static string Steel {
             get {
                 return ResourceManager.GetString("Steel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
