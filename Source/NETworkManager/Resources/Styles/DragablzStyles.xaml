@@ -60,7 +60,7 @@
             <Setter.Value>
                 <DataTemplate DataType="networkManagerControls:DragablzTabItem">
                     <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
-                        <Grid Height="32">
+                        <Grid Height="49">
                             <Grid.InputBindings>
                                 <MouseBinding Command="dragablz:TabablzControl.CloseItemCommand" Gesture="MiddleClick" />
                             </Grid.InputBindings>
