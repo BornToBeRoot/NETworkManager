@@ -104,7 +104,7 @@
                         <TextBlock Text="{x:Static localization:Strings.UnlockProfile}" Style="{StaticResource LinkTextBlock}"  VerticalAlignment="Center" Margin="5,0" />
                     </StackPanel>
                 </Button>
-                <ComboBox ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" Foreground="{DynamicResource MahApps.Brushes.Gray5}" Background="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0" />
+                <ComboBox ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" Background="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0" />
                 <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}" CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">

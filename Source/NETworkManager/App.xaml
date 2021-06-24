@@ -7,11 +7,13 @@
             <ResourceDictionary.MergedDictionaries>
                 <!-- MahApps.Metro -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/MetroWindow.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Controls.xaml" />                
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Lime.xaml" />      
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Lime.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatButton.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatSlider.xaml" />
+
                 <!-- Dragablz -->
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/MahApps.xaml" />
                 <!-- LoadingIndicators.WPF -->
@@ -34,7 +36,7 @@
                 <ResourceDictionary Source="/Resources/Styles/GridSplitterStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/MetroDialogStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />                
+                <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollBarStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollViewerStyles.xaml" />

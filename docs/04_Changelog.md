@@ -15,6 +15,7 @@ permalink: /Changelog
 
 # Bugfixes
 - Remote Desktop - Add disconnect reason 4 [#845](https://github.com/BornToBeRoot/NETworkManager/issues/845){:target="_blank"}
+- Close/Minimize/Maximize buttons not visible in light theme
 
 # Other
 - Language files updates
