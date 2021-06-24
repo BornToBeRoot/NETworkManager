@@ -149,7 +149,7 @@
                     <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Text="{x:Static localization:Strings.AddAHostToMonitor}" Visibility="{Binding Hosts.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
                 </Grid>
                 <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
-                <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource RightExpander}" IsExpanded="{Binding ExpandProfileView}">
+                <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource ProfileExpander}" IsExpanded="{Binding ExpandProfileView}">
                     <Grid>
                         <Grid Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                             <Grid.RowDefinitions>

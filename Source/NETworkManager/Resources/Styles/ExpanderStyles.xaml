@@ -63,7 +63,7 @@
         <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ExpanderDownHeader}" />
     </Style>
 
-    <Style x:Key="RightExpanderOpen" BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down}" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="ProfileExpanderOpen" BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Down}" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -97,7 +97,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="RightExpanderClosed" BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right}" TargetType="{x:Type ToggleButton}">
+    <Style x:Key="ProfileExpanderClosed" BasedOn="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right}" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -132,18 +132,18 @@
         </Setter>
     </Style>
 
-    <Style x:Key="RightExpander" TargetType="{x:Type Expander}" BasedOn="{StaticResource MahApps.Styles.Expander}">
+    <Style x:Key="ProfileExpander" TargetType="{x:Type Expander}" BasedOn="{StaticResource MahApps.Styles.Expander}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="ExpandDirection" Value="Right" />
         <Setter Property="Padding" Value="10" />
         <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderBackground" Value="Transparent" />
         <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderForeground" Value="{StaticResource MahApps.Brushes.Gray3}" />
         <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
-        <Setter Property="mahAppsControls:ExpanderHelper.HeaderRightStyle" Value="{DynamicResource RightExpanderClosed}" />
+        <Setter Property="mahAppsControls:ExpanderHelper.HeaderRightStyle" Value="{DynamicResource ProfileExpanderClosed}" />
         <Style.Triggers>
             <Trigger Property="IsExpanded" Value="True">
                 <Setter Property="ExpandDirection" Value="Down" />
-                <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource RightExpanderOpen}" />
+                <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle" Value="{DynamicResource ProfileExpanderOpen}" />
             </Trigger>
         </Style.Triggers>
     </Style>
