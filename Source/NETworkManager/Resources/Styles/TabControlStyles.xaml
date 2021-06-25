@@ -4,7 +4,7 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Height" Value="51" />
+        <Setter Property="Height" Value="34" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="10,0" />
         <Setter Property="MinWidth" Value="150" />

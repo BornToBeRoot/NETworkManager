@@ -38,108 +38,415 @@
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
     </UserControl.Resources>
-    <TabControl Style="{StaticResource DefaultTabControl}">
-        <TabItem Header="{x:Static localization:Strings.Information}">
-            <Grid Margin="10" >
-                <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Interface}" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <ComboBox Grid.Column="0" x:Name="ComboBoxNetworkInterfaceProfiles" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Rectangle Width="24" Height="24">
-                                                <Rectangle.Resources>
-                                                    <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}"/>
-                                                    <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
-                                                </Rectangle.Resources>
-                                                <Rectangle.Style>
-                                                    <Style TargetType="{x:Type Rectangle}">
-                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualDown}" />
-                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsOperational}" Value="True">
-                                                                <Setter Property="OpacityMask" Value="{StaticResource VisualUp}" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Rectangle.Style>
-                                            </Rectangle>
-                                            <StackPanel Margin="10,0,0,0">
-                                                <TextBlock Text="{Binding Path=Name}" />
-                                                <TextBlock Text="{Binding Path=Description}" Foreground="{DynamicResource MahApps.Brushes.Gray3}"/>
+    <Grid>
+        <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition MinWidth="{x:Static settings:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
+            </Grid.ColumnDefinitions>
+            <TabControl Style="{StaticResource DefaultTabControl}" >
+                <TabItem Header="{x:Static localization:Strings.Information}">
+                    <Grid Margin="10" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Interface}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0" x:Name="ComboBoxNetworkInterfaceProfiles" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Rectangle Width="24" Height="24">
+                                                    <Rectangle.Resources>
+                                                        <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}"/>
+                                                        <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
+                                                    </Rectangle.Resources>
+                                                    <Rectangle.Style>
+                                                        <Style TargetType="{x:Type Rectangle}">
+                                                            <Setter Property="OpacityMask" Value="{StaticResource VisualDown}" />
+                                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsOperational}" Value="True">
+                                                                    <Setter Property="OpacityMask" Value="{StaticResource VisualUp}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Rectangle.Style>
+                                                </Rectangle>
+                                                <StackPanel Margin="10,0,0,0">
+                                                    <TextBlock Text="{Binding Path=Name}" />
+                                                    <TextBlock Text="{Binding Path=Description}" Foreground="{DynamicResource MahApps.Brushes.Gray3}"/>
+                                                </StackPanel>
                                             </StackPanel>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                                <ComboBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MahApps.Styles.ComboBoxItem}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ComboBoxItem">
-                                                    <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
-                                                        <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                                        <Grid Margin="{TemplateBinding BorderThickness}">
-                                                            <ContentPresenter x:Name="contentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                    <ComboBox.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MahApps.Styles.ComboBoxItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ComboBoxItem">
+                                                        <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                                                            <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                            <Grid Margin="{TemplateBinding BorderThickness}">
+                                                                <ContentPresenter x:Name="contentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                            </Grid>
                                                         </Grid>
-                                                    </Grid>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsSelected" Value="True">
-                                                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray9}" />
-                                                        </Trigger>
-                                                        <MultiTrigger>
-                                                            <MultiTrigger.Conditions>
-                                                                <Condition Property="IsSelected" Value="False" />
-                                                                <Condition Property="IsMouseOver" Value="True" />
-                                                            </MultiTrigger.Conditions>
-                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
-                                                        </MultiTrigger>
-                                                        <Trigger Property="IsEnabled" Value="False">
-                                                            <Setter TargetName="contentPresenter" Property="Opacity" Value=".55" />
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ComboBox.ItemContainerStyle>
-                            </ComboBox>
-                            <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
-                                <Rectangle Width="24" Height="24">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
-                                    </Rectangle.OpacityMask>
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                                                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                                                            </Trigger>
+                                                            <MultiTrigger>
+                                                                <MultiTrigger.Conditions>
+                                                                    <Condition Property="IsSelected" Value="False" />
+                                                                    <Condition Property="IsMouseOver" Value="True" />
+                                                                </MultiTrigger.Conditions>
+                                                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                                                            </MultiTrigger>
+                                                            <Trigger Property="IsEnabled" Value="False">
+                                                                <Setter TargetName="contentPresenter" Property="Opacity" Value=".55" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
                                         </Style>
-                                    </Rectangle.Style>
-                                </Rectangle>
+                                    </ComboBox.ItemContainerStyle>
+                                </ComboBox>
+                                <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                                    <Rectangle Width="24" Height="24">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                        </Rectangle.OpacityMask>
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Details}" Style="{StaticResource HeaderTextBlock}" />
+                        <ScrollViewer Grid.Row="2" Style="{StaticResource DefaultScrollViewer}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
+                                        <Setter Property="TextWrapping" Value="NoWrap" />
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <GridSplitter Grid.Column="1" Grid.RowSpan="19" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
+                                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding SelectedNetworkInterface.Name}" />
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Description}" />
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SelectedNetworkInterface.Description}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Type}" />
+                                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding SelectedNetworkInterface.Type}" />
+                                <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.PhysicalAddress}" />
+                                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding SelectedNetworkInterface.PhysicalAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Status}" />
+                                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding SelectedNetworkInterface.Status, Converter={StaticResource OperationalStatusToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.Speed}" />
+                                <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding SelectedNetworkInterface.Speed, Converter={StaticResource Bytes1000ToSpeedConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.IPv4ProtocolAvailable}" />
+                                <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.IPv4Address}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding SelectedNetworkInterface.IPv4Address, Converter={StaticResource IPAddressSubnetmaskTupleArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.IPv4DefaultGateway}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding SelectedNetworkInterface.IPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.DHCPEnabled}" />
+                                <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.DHCPServer}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding SelectedNetworkInterface.DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="11" Text="{x:Static localization:Strings.DHCPLeaseObtained}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding SelectedNetworkInterface.DhcpLeaseObtained}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.DHCPLeaseExpires}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding SelectedNetworkInterface.DhcpLeaseExpires}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="13" Text="{x:Static localization:Strings.IPv6ProtocolAvailable}" />
+                                <TextBox Grid.Column="2" Grid.Row="13" Text="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="14" Text="{x:Static localization:Strings.IPv6AddressLinkLocal}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"  />
+                                <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding SelectedNetworkInterface.IPv6AddressLinkLocal, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="15" Text="{x:Static localization:Strings.IPv6Address}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="15" Text="{Binding SelectedNetworkInterface.IPv6Address, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="16" Text="{x:Static localization:Strings.IPv6DefaultGateway}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding SelectedNetworkInterface.IPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="17" Text="{x:Static localization:Strings.DNSAutoconfiguration}" />
+                                <TextBox Grid.Column="2" Grid.Row="17" Text="{Binding SelectedNetworkInterface.DNSAutoconfigurationEnabled, Converter={StaticResource BooleanToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="18" Text="{x:Static localization:Strings.DNSSuffix}" />
+                                <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding SelectedNetworkInterface.DNSSuffix}" />
+                                <TextBlock Grid.Column="0" Grid.Row="19" Text="{x:Static localization:Strings.DNSServers}" />
+                                <TextBox Grid.Column="2" Grid.Row="19" Text="{Binding SelectedNetworkInterface.DNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
+                            </Grid>
+                        </ScrollViewer>
+                        <mahAppsControls:MetroProgressBar Grid.Row="4" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True" Margin="0,0,0,10">
+                            <mahAppsControls:MetroProgressBar.Style>
+                                <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsConfigurationRunning}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </mahAppsControls:MetroProgressBar.Style>
+                        </mahAppsControls:MetroProgressBar>
+                        <WrapPanel Grid.Row="5" HorizontalAlignment="Left" Orientation="Horizontal" >
+                            <Button Margin="0,0,10,0" Command="{Binding OpenNetworkConnectionsCommand}" Style="{StaticResource ImageWithTextButton}">
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.NetworkConnectionsDots}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                    </Grid>
+                                </Button.Content>
                             </Button>
-                        </Grid>
-                    </StackPanel>
-                    <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Details}" Style="{StaticResource HeaderTextBlock}" />
-                    <ScrollViewer Grid.Row="2" Style="{StaticResource DefaultScrollViewer}">
-                        <Grid>
+                            <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}" Margin="0,0,10,0">
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListDelete}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.FlushDNSCache}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                            <mah:DropDownButton Style="{StaticResource ImageDropDrownButton}">
+                                <mah:DropDownButton.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Width="20" Height="20" Margin="10,4,0,4" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.ReleaseRenew}" FontSize="14" Margin="10,4" TextAlignment="Center"/>
+                                    </Grid>
+                                </mah:DropDownButton.Content>
+                                <mah:DropDownButton.Items>
+                                    <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}" Command="{Binding ReleaseRenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Header="{x:Static localization:Strings.Release}" Command="{Binding ReleaseCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{x:Static localization:Strings.Renew}" Command="{Binding RenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </mah:DropDownButton.Items>
+                            </mah:DropDownButton>
+                        </WrapPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="{x:Static localization:Strings.Bandwidth}">
+                    <Grid Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Interface}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Rectangle Width="24" Height="24">
+                                                    <Rectangle.Resources>
+                                                        <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}"/>
+                                                        <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
+                                                    </Rectangle.Resources>
+                                                    <Rectangle.Style>
+                                                        <Style TargetType="{x:Type Rectangle}">
+                                                            <Setter Property="OpacityMask" Value="{StaticResource VisualDown}" />
+                                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsOperational}" Value="True">
+                                                                    <Setter Property="OpacityMask" Value="{StaticResource VisualUp}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Rectangle.Style>
+                                                </Rectangle>
+                                                <StackPanel Margin="10,0,0,0">
+                                                    <TextBlock Text="{Binding Path=Name}" />
+                                                    <TextBlock Text="{Binding Path=Description}" Foreground="{DynamicResource MahApps.Brushes.Gray3}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                    <ComboBox.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MahApps.Styles.ComboBoxItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ComboBoxItem">
+                                                        <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
+                                                            <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                            <Grid Margin="{TemplateBinding BorderThickness}">
+                                                                <ContentPresenter x:Name="contentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                            </Grid>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                                                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                                                            </Trigger>
+                                                            <MultiTrigger>
+                                                                <MultiTrigger.Conditions>
+                                                                    <Condition Property="IsSelected" Value="False" />
+                                                                    <Condition Property="IsMouseOver" Value="True" />
+                                                                </MultiTrigger.Conditions>
+                                                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                                                            </MultiTrigger>
+                                                            <Trigger Property="IsEnabled" Value="False">
+                                                                <Setter TargetName="contentPresenter" Property="Opacity" Value=".55" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ComboBox.ItemContainerStyle>
+                                </ComboBox>
+                                <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
+                                    <Rectangle Width="24" Height="24">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                        </Rectangle.OpacityMask>
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                        <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Bandwidth}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <liveChart:CartesianChart Grid.Row="2" Series="{Binding Series}" LegendLocation="Right" Margin="0,0,0,20" DisableAnimations="True">
+                            <liveChart:CartesianChart.DataTooltip>
+                                <controls:LvlChartsBandwidthTooltip Background="Transparent" />
+                            </liveChart:CartesianChart.DataTooltip>
+                            <liveChart:CartesianChart.AxisX>
+                                <liveChart:Axis LabelFormatter="{Binding FormatterDate}">
+                                    <liveChart:Axis.Separator>
+                                        <liveChart:Separator StrokeThickness="0" />
+                                    </liveChart:Axis.Separator>
+                                </liveChart:Axis>
+                            </liveChart:CartesianChart.AxisX>
+                            <liveChart:CartesianChart.AxisY>
+                                <liveChart:Axis MinValue="0" LabelFormatter="{Binding FormatterSpeed}">
+                                    <liveChart:Axis.Separator>
+                                        <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource MahApps.Brushes.Gray8}" StrokeDashArray="10" />
+                                    </liveChart:Axis.Separator>
+                                </liveChart:Axis>
+                            </liveChart:CartesianChart.AxisY>
+                        </liveChart:CartesianChart>
+                        <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.NetworkUsage}" Style="{StaticResource HeaderTextBlock}" />
+                        <Grid Grid.Row="4" Margin="0,0,0,20">
                             <Grid.Resources>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
@@ -150,403 +457,44 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <GridSplitter Grid.Column="1" Grid.RowSpan="19" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
-                            <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding SelectedNetworkInterface.Name}" />
-                            <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Description}" />
-                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SelectedNetworkInterface.Description}" />
-                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Type}" />
-                            <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding SelectedNetworkInterface.Type}" />
-                            <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.PhysicalAddress}" />
-                            <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding SelectedNetworkInterface.PhysicalAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Status}" />
-                            <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding SelectedNetworkInterface.Status, Converter={StaticResource OperationalStatusToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.Speed}" />
-                            <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding SelectedNetworkInterface.Speed, Converter={StaticResource Bytes1000ToSpeedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.IPv4ProtocolAvailable}" />
-                            <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.IPv4Address}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding SelectedNetworkInterface.IPv4Address, Converter={StaticResource IPAddressSubnetmaskTupleArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.IPv4DefaultGateway}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding SelectedNetworkInterface.IPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.DHCPEnabled}" />
-                            <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.DHCPServer}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding SelectedNetworkInterface.DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="11" Text="{x:Static localization:Strings.DHCPLeaseObtained}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding SelectedNetworkInterface.DhcpLeaseObtained}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.DHCPLeaseExpires}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding SelectedNetworkInterface.DhcpLeaseExpires}" Visibility="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="13" Text="{x:Static localization:Strings.IPv6ProtocolAvailable}" />
-                            <TextBox Grid.Column="2" Grid.Row="13" Text="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="14" Text="{x:Static localization:Strings.IPv6AddressLinkLocal}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"  />
-                            <TextBox Grid.Column="2" Grid.Row="14" Text="{Binding SelectedNetworkInterface.IPv6AddressLinkLocal, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="15" Text="{x:Static localization:Strings.IPv6Address}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="15" Text="{Binding SelectedNetworkInterface.IPv6Address, Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="16" Text="{x:Static localization:Strings.IPv6DefaultGateway}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBox Grid.Column="2" Grid.Row="16" Text="{Binding SelectedNetworkInterface.IPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}" Visibility="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="17" Text="{x:Static localization:Strings.DNSAutoconfiguration}" />
-                            <TextBox Grid.Column="2" Grid.Row="17" Text="{Binding SelectedNetworkInterface.DNSAutoconfigurationEnabled, Converter={StaticResource BooleanToStringConverter}}" />
-                            <TextBlock Grid.Column="0" Grid.Row="18" Text="{x:Static localization:Strings.DNSSuffix}" />
-                            <TextBox Grid.Column="2" Grid.Row="18" Text="{Binding SelectedNetworkInterface.DNSSuffix}" />
-                            <TextBlock Grid.Column="0" Grid.Row="19" Text="{x:Static localization:Strings.DNSServers}" />
-                            <TextBox Grid.Column="2" Grid.Row="19" Text="{Binding SelectedNetworkInterface.DNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}" />
-                        </Grid>
-                    </ScrollViewer>
-                    <mahAppsControls:MetroProgressBar Grid.Row="4" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True" Margin="0,0,0,10">
-                        <mahAppsControls:MetroProgressBar.Style>
-                            <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsConfigurationRunning}" Value="True">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </mahAppsControls:MetroProgressBar.Style>
-                    </mahAppsControls:MetroProgressBar>
-                    <WrapPanel Grid.Row="5" HorizontalAlignment="Left" Orientation="Horizontal" >
-                        <Button Margin="0,0,10,0" Command="{Binding OpenNetworkConnectionsCommand}" Style="{StaticResource ImageWithTextButton}">
-                            <Button.Content>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.NetworkConnectionsDots}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                                </Grid>
-                            </Button.Content>
-                        </Button>
-                        <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource ImageWithTextButton}" Margin="0,0,10,0">
-                            <Button.Content>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListDelete}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.FlushDNSCache}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                                </Grid>
-                            </Button.Content>
-                        </Button>
-                        <mah:DropDownButton Style="{StaticResource ImageDropDrownButton}">
-                            <mah:DropDownButton.Content>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Rectangle Width="20" Height="20" Margin="10,4,0,4" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.ReleaseRenew}" FontSize="14" Margin="10,4" TextAlignment="Center"/>
-                                </Grid>
-                            </mah:DropDownButton.Content>
-                            <mah:DropDownButton.Items>
-                                <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}" Command="{Binding ReleaseRenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator />
-                                <MenuItem Header="{x:Static localization:Strings.Release}" Command="{Binding ReleaseCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{x:Static localization:Strings.Renew}" Command="{Binding RenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
-                                    <MenuItem.Icon>
-                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </mah:DropDownButton.Items>
-                        </mah:DropDownButton>
-                    </WrapPanel>
-                </Grid>
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
-                    <StackPanel.Style>
-                        <Style TargetType="{x:Type StackPanel}">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </StackPanel.Style>
-                    <TextBlock Text="{x:Static localization:Strings.NoEnabledNetworkAdaptersFound}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-                    <Button Command="{Binding OpenNetworkConnectionsCommand}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.NetworkConnectionsDots}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </TabItem>
-        <TabItem Header="{x:Static localization:Strings.Bandwidth}">
-            <Grid Margin="10">
-                <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Interface}" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <ComboBox Grid.Column="0" ItemsSource="{Binding NetworkInterfaces}" SelectedItem="{Binding SelectedNetworkInterface}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Rectangle Width="24" Height="24">
-                                                <Rectangle.Resources>
-                                                    <VisualBrush x:Key="VisualUp" Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}"/>
-                                                    <VisualBrush x:Key="VisualDown" Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
-                                                </Rectangle.Resources>
-                                                <Rectangle.Style>
-                                                    <Style TargetType="{x:Type Rectangle}">
-                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualDown}" />
-                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsOperational}" Value="True">
-                                                                <Setter Property="OpacityMask" Value="{StaticResource VisualUp}" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Rectangle.Style>
-                                            </Rectangle>
-                                            <StackPanel Margin="10,0,0,0">
-                                                <TextBlock Text="{Binding Path=Name}" />
-                                                <TextBlock Text="{Binding Path=Description}" Foreground="{DynamicResource MahApps.Brushes.Gray3}"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                                <ComboBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource MahApps.Styles.ComboBoxItem}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ComboBoxItem">
-                                                    <Grid Background="{TemplateBinding Background}" RenderOptions.ClearTypeHint="{TemplateBinding RenderOptions.ClearTypeHint}">
-                                                        <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                                        <Grid Margin="{TemplateBinding BorderThickness}">
-                                                            <ContentPresenter x:Name="contentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                                        </Grid>
-                                                    </Grid>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsSelected" Value="True">
-                                                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray9}" />
-                                                        </Trigger>
-                                                        <MultiTrigger>
-                                                            <MultiTrigger.Conditions>
-                                                                <Condition Property="IsSelected" Value="False" />
-                                                                <Condition Property="IsMouseOver" Value="True" />
-                                                            </MultiTrigger.Conditions>
-                                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
-                                                        </MultiTrigger>
-                                                        <Trigger Property="IsEnabled" Value="False">
-                                                            <Setter TargetName="contentPresenter" Property="Opacity" Value=".55" />
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ComboBox.ItemContainerStyle>
-                            </ComboBox>
-                            <Button Grid.Column="1" Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" Height="{Binding ElementName=ComboBoxNetworkInterfaceProfiles, Path=ActualHeight}" Command="{Binding ReloadNetworkInterfacesCommand}" Style="{StaticResource CleanButton}" IsEnabled="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseConverter}}" Margin="10,0,0,0">
-                                <Rectangle Width="24" Height="24">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
-                                    </Rectangle.OpacityMask>
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ReloadAnimation}">
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                </Rectangle>
-                            </Button>
-                        </Grid>
-                    </StackPanel>
-                    <TextBlock Grid.Row="1" Text="{x:Static localization:Strings.Bandwidth}">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                    <liveChart:CartesianChart Grid.Row="2" Series="{Binding Series}" LegendLocation="Right" Margin="0,0,0,20" DisableAnimations="True">
-                        <liveChart:CartesianChart.DataTooltip>
-                            <controls:LvlChartsBandwidthTooltip Background="Transparent" />
-                        </liveChart:CartesianChart.DataTooltip>
-                        <liveChart:CartesianChart.AxisX>
-                            <liveChart:Axis LabelFormatter="{Binding FormatterDate}">
-                                <liveChart:Axis.Separator>
-                                    <liveChart:Separator StrokeThickness="0" />
-                                </liveChart:Axis.Separator>
-                            </liveChart:Axis>
-                        </liveChart:CartesianChart.AxisX>
-                        <liveChart:CartesianChart.AxisY>
-                            <liveChart:Axis MinValue="0" LabelFormatter="{Binding FormatterSpeed}">
-                                <liveChart:Axis.Separator>
-                                    <liveChart:Separator StrokeThickness="1" Stroke="{DynamicResource MahApps.Brushes.Gray8}" StrokeDashArray="10" />
-                                </liveChart:Axis.Separator>
-                            </liveChart:Axis>
-                        </liveChart:CartesianChart.AxisY>
-                    </liveChart:CartesianChart>
-                    <TextBlock Grid.Row="3" Text="{x:Static localization:Strings.NetworkUsage}" Style="{StaticResource HeaderTextBlock}" />
-                    <Grid Grid.Row="4" Margin="0,0,0,20">
-                        <Grid.Resources>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                                <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
-                                <Setter Property="TextWrapping" Value="NoWrap" />
-                            </Style>
-                        </Grid.Resources>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <GridSplitter Grid.Column="1" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
-                        <GridSplitter Grid.Column="3" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
-                        <GridSplitter Grid.Column="5" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.CurrentDownloadSpeed}" />
-                        <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding BandwidthBytesReceivedSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.CurrentUploadSpeed}" />
-                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding BandwidthBytesSentSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.TotalBytesReceived}" />
-                        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding BandwidthTotalBytesReceived, Converter={StaticResource BandwidthBytesWithSizeConverter}}" />
-                        <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.TotalBytesSent}" />
-                        <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding BandwidthTotalBytesSent, Converter={StaticResource BandwidthBytesWithSizeConverter}}" />
+                            <GridSplitter Grid.Column="1" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                            <GridSplitter Grid.Column="3" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                            <GridSplitter Grid.Column="5" Grid.RowSpan="4" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.CurrentDownloadSpeed}" />
+                            <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding BandwidthBytesReceivedSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.CurrentUploadSpeed}" />
+                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding BandwidthBytesSentSpeed, Converter={StaticResource BandwidthBytesToSpeedConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.TotalBytesReceived}" />
+                            <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding BandwidthTotalBytesReceived, Converter={StaticResource BandwidthBytesWithSizeConverter}}" />
+                            <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.TotalBytesSent}" />
+                            <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding BandwidthTotalBytesSent, Converter={StaticResource BandwidthBytesWithSizeConverter}}" />
 
-                        <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.StartTime}" />
-                        <TextBox Grid.Column="6" Grid.Row="0" Text="{Binding BandwidthStartTime}" />
-                        <TextBlock Grid.Column="4" Grid.Row="1" Text="{x:Static localization:Strings.MeasuredTime}" />
-                        <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding BandwidthMeasuredTime, StringFormat={}{0:hh\\:mm\\:ss}}" />
+                            <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.StartTime}" />
+                            <TextBox Grid.Column="6" Grid.Row="0" Text="{Binding BandwidthStartTime}" />
+                            <TextBlock Grid.Column="4" Grid.Row="1" Text="{x:Static localization:Strings.MeasuredTime}" />
+                            <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding BandwidthMeasuredTime, StringFormat={}{0:hh\\:mm\\:ss}}" />
 
-                        <TextBlock Grid.Column="4" Grid.Row="2" Text="{x:Static localization:Strings.CurrentlyDownloaded}" />
-                        <TextBox Grid.Column="6" Grid.Row="2" Text="{Binding BandwidthDiffBytesReceived, Converter={StaticResource Bytes1000ToSizeConverter}}" />
-                        <TextBlock Grid.Column="4" Grid.Row="3" Text="{x:Static localization:Strings.CurrentlyUploaded}" />
-                        <TextBox Grid.Column="6" Grid.Row="3" Text="{Binding BandwidthDiffBytesSent, Converter={StaticResource Bytes1000ToSizeConverter}}" />
+                            <TextBlock Grid.Column="4" Grid.Row="2" Text="{x:Static localization:Strings.CurrentlyDownloaded}" />
+                            <TextBox Grid.Column="6" Grid.Row="2" Text="{Binding BandwidthDiffBytesReceived, Converter={StaticResource Bytes1000ToSizeConverter}}" />
+                            <TextBlock Grid.Column="4" Grid.Row="3" Text="{x:Static localization:Strings.CurrentlyUploaded}" />
+                            <TextBox Grid.Column="6" Grid.Row="3" Text="{Binding BandwidthDiffBytesSent, Converter={StaticResource Bytes1000ToSizeConverter}}" />
+                        </Grid>
                     </Grid>
-                </Grid>
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
-                    <TextBlock Text="{x:Static localization:Strings.NoEnabledNetworkAdaptersFound}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-                    <Button Command="{Binding OpenNetworkConnectionsCommand}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.NetworkConnectionsDots}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </TabItem>
-        <TabItem Header="{x:Static localization:Strings.Configure}">
-            <Grid>
-                <Grid Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition MinWidth="{x:Static settings:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" Margin="10">
+                </TabItem>
+                <TabItem Header="{x:Static localization:Strings.Configure}">
+                    <Grid Margin="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="10" />
@@ -788,7 +736,8 @@
                                 </Style>
                             </mahAppsControls:MetroProgressBar.Style>
                         </mahAppsControls:MetroProgressBar>
-                        <Grid Grid.Row="3">
+                        <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+                        <Grid Grid.Row="4">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="10" />
@@ -828,7 +777,7 @@
                                                     </Rectangle.OpacityMask>
                                                 </Rectangle>
                                             </MenuItem.Icon>
-                                        </MenuItem>                                       
+                                        </MenuItem>
                                     </mah:DropDownButton.Items>
                                 </mah:DropDownButton>
                             </WrapPanel>
@@ -861,7 +810,7 @@
                                                         <Binding Path="ConfigEnableDynamicDNS" />
                                                         <Binding Path="ConfigEnableStaticDNS" />
                                                         <Binding ElementName="TextBoxConfigPrimaryDNSServer" Path="(Validation.HasError)" />
-                                                        <Binding ElementName="TextBoxConfigSecondaryDNSServer" Path="(Validation.HasError)" />                                                        
+                                                        <Binding ElementName="TextBoxConfigSecondaryDNSServer" Path="(Validation.HasError)" />
                                                     </MultiBinding>
                                                 </DataTrigger.Binding>
                                                 <Setter Property="IsEnabled" Value="False" />
@@ -877,267 +826,266 @@
                                 </Button.Style>
                             </Button>
                         </Grid>
-                        <TextBlock Grid.Row="4" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
                     </Grid>
-                    <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
-                    <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource ProfileExpander}" IsExpanded="{Binding ExpandProfileView}">
-                        <Grid>
-                            <Grid Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="30" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <ToggleButton Grid.Column="0" Grid.Row="0" IsChecked="{Binding ExpandProfileView}">
-                                        <ToggleButton.Style>
-                                            <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MahApps.Styles.Button.Circle}">
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" />
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </ToggleButton.Style>
-                                        <Rectangle Width="16" Height="16">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinLeft}" />
-                                            </Rectangle.OpacityMask>
-                                            <Rectangle.Style>
-                                                <Style TargetType="{x:Type Rectangle}">
-                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Rectangle.Style>
-                                        </Rectangle>
-                                    </ToggleButton>
-                                    <TextBox x:Name="TextBoxSearch" VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
-                                    <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
-                                        <Rectangle Width="16" Height="16">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
-                                            </Rectangle.OpacityMask>
-                                            <Rectangle.Style>
-                                                <Style TargetType="{x:Type Rectangle}">
-                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Rectangle.Style>
-                                        </Rectangle>
-                                    </Button>
-                                </Grid>
-                                <ListBox Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
-                                    <ListBox.Resources>
-                                        <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                            <MenuItem Header="{x:Static localization:Strings.Apply}" Command="{Binding ApplyProfileConfigCommand}">
-                                                <MenuItem.Icon>
-                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                                        <Rectangle.OpacityMask>
-                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentSave}" />
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
-                                                </MenuItem.Icon>
-                                            </MenuItem>
-                                            <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileCommand}">
-                                                <MenuItem.Icon>
-                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                                        <Rectangle.OpacityMask>
-                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
-                                                </MenuItem.Icon>
-                                            </MenuItem>
-                                            <MenuItem Header="{x:Static localization:Strings.CopyAsDots}" Command="{Binding CopyAsProfileCommand}">
-                                                <MenuItem.Icon>
-                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                                        <Rectangle.OpacityMask>
-                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentDuplicate}" />
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
-                                                </MenuItem.Icon>
-                                            </MenuItem>
-                                            <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
-                                                <MenuItem.Icon>
-                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                                        <Rectangle.OpacityMask>
-                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
-                                                </MenuItem.Icon>
-                                            </MenuItem>
-                                        </ContextMenu>
-                                    </ListBox.Resources>
-                                    <ListBox.InputBindings>
-                                        <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
-                                        <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
-                                    </ListBox.InputBindings>
-                                    <ListBox.GroupStyle>
-                                        <GroupStyle>
-                                            <GroupStyle.ContainerStyle>
-                                                <Style TargetType="{x:Type GroupItem}">
-                                                    <Setter Property="Template">
-                                                        <Setter.Value>
-                                                            <ControlTemplate>
-                                                                <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
-                                                                    <Expander.Header>
-                                                                        <Grid>
-                                                                            <Grid.ColumnDefinitions>
-                                                                                <ColumnDefinition Width="*" />
-                                                                                <ColumnDefinition Width="Auto" />
-                                                                            </Grid.ColumnDefinitions>
-                                                                            <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
-                                                                            <Button Grid.Column="1" ToolTip="{x:Static localization:Strings.EditGroupDots}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
-                                                                                <Rectangle Width="16" Height="16">
-                                                                                    <Rectangle.OpacityMask>
-                                                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
-                                                                                    </Rectangle.OpacityMask>
-                                                                                    <Rectangle.Style>
-                                                                                        <Style TargetType="{x:Type Rectangle}">
-                                                                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                                                                            <Style.Triggers>
-                                                                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                                                                </DataTrigger>
-                                                                                            </Style.Triggers>
-                                                                                        </Style>
-                                                                                    </Rectangle.Style>
-                                                                                </Rectangle>
-                                                                            </Button>
-                                                                        </Grid>
-                                                                    </Expander.Header>
-                                                                    <ItemsPresenter />
-                                                                </Expander>
-                                                            </ControlTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Style>
-                                            </GroupStyle.ContainerStyle>
-                                        </GroupStyle>
-                                    </ListBox.GroupStyle>
-                                    <ListBox.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MahApps.Styles.ListBoxItem}">
-                                            <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
-                                        </Style>
-                                    </ListBox.ItemContainerStyle>
-                                </ListBox>
-                                <mah:ProgressRing Grid.Row="2" Height="50" Width="50" IsActive="{Binding IsSearching}"/>
-                                <Grid Grid.Row="2" VerticalAlignment="Center">
-                                    <Grid.Style>
-                                        <Style TargetType="{x:Type Grid}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
+                </TabItem>
+            </TabControl>
+            <GridSplitter Grid.Column="1" Style="{StaticResource ProfileGridSplitter}" />
+            <Expander Grid.Column="2" x:Name="ExpanderProfiles" Header="{x:Static localization:Strings.Profiles}" Style="{StaticResource ProfileExpander}" IsExpanded="{Binding ExpandProfileView}">
+                <Grid>
+                    <Grid Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <ToggleButton Grid.Column="0" Grid.Row="0" IsChecked="{Binding ExpandProfileView}">
+                                <ToggleButton.Style>
+                                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource MahApps.Styles.Button.Circle}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ToggleButton.Style>
+                                <Rectangle Width="16" Height="16">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinLeft}" />
+                                    </Rectangle.OpacityMask>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                             <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding Profiles.Count}" Value="0" />
-                                                        <Condition Binding="{Binding IsSearching}" Value="False" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                </Trigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </Grid.Style>
-                                    <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
-                                        <Button.Style>
-                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
-                                                <Setter Property="Command" Value="{Binding AddProfileCommand}" />
+                                    </Rectangle.Style>
+                                </Rectangle>
+                            </ToggleButton>
+                            <TextBox x:Name="TextBoxSearch" VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}"/>
+                            <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
+                                <Rectangle Width="16" Height="16">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                    </Rectangle.OpacityMask>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                            </Button>
+                        </Grid>
+                        <ListBox Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
+                            <ListBox.Resources>
+                                <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                    <MenuItem Header="{x:Static localization:Strings.Apply}" Command="{Binding ApplyProfileConfigCommand}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentSave}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileCommand}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{x:Static localization:Strings.CopyAsDots}" Command="{Binding CopyAsProfileCommand}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentDuplicate}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
+                                        <MenuItem.Icon>
+                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </ListBox.Resources>
+                            <ListBox.InputBindings>
+                                <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
+                                <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
+                            </ListBox.InputBindings>
+                            <ListBox.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}">
+                                                            <Expander.Header>
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*" />
+                                                                        <ColumnDefinition Width="Auto" />
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{DynamicResource DefaultTextBlock}"/>
+                                                                    <Button Grid.Column="1" ToolTip="{x:Static localization:Strings.EditGroupDots}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding Name}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
+                                                                        <Rectangle Width="16" Height="16">
+                                                                            <Rectangle.OpacityMask>
+                                                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                                                            </Rectangle.OpacityMask>
+                                                                            <Rectangle.Style>
+                                                                                <Style TargetType="{x:Type Rectangle}">
+                                                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                                                    <Style.Triggers>
+                                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                                                        </DataTrigger>
+                                                                                    </Style.Triggers>
+                                                                                </Style>
+                                                                            </Rectangle.Style>
+                                                                        </Rectangle>
+                                                                    </Button>
+                                                                </Grid>
+                                                            </Expander.Header>
+                                                            <ItemsPresenter />
+                                                        </Expander>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                </GroupStyle>
+                            </ListBox.GroupStyle>
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource MahApps.Styles.ListBoxItem}">
+                                    <Setter Property="ContextMenu" Value="{StaticResource ListBoxItemContextMenu}" />
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+                        <mah:ProgressRing Grid.Row="2" Height="50" Width="50" IsActive="{Binding IsSearching}"/>
+                        <Grid Grid.Row="2" VerticalAlignment="Center">
+                            <Grid.Style>
+                                <Style TargetType="{x:Type Grid}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Profiles.Count}" Value="0" />
+                                                <Condition Binding="{Binding IsSearching}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </MultiDataTrigger.Setters>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <Button HorizontalAlignment="Center" Focusable="False" Margin="0,0,0,10">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                        <Setter Property="Command" Value="{Binding AddProfileCommand}" />
 
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
+                                                <Setter Property="ToolTip" Value="{x:Static localization:Strings.ClearFilter}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Grid.Column="0" Width="20" Height="20">
+                                        <Rectangle.Resources>
+                                            <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}"/>
+                                            <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
+                                        </Rectangle.Resources>
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}">
+                                                <Setter Property="OpacityMask" Value="{StaticResource VisualPlus}" />
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                 <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                    </DataTrigger>
                                                     <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                                        <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
-                                                        <Setter Property="ToolTip" Value="{x:Static localization:Strings.ClearFilter}" />
+                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </Button.Style>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Rectangle Grid.Column="0" Width="20" Height="20">
-                                                <Rectangle.Resources>
-                                                    <VisualBrush x:Key="VisualPlus" Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}"/>
-                                                    <VisualBrush x:Key="VisualClear" Stretch="Uniform" Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
-                                                </Rectangle.Resources>
-                                                <Rectangle.Style>
-                                                    <Style TargetType="{x:Type Rectangle}">
-                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualPlus}" />
-                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                                                <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Rectangle.Style>
-                                            </Rectangle>
-                                            <TextBlock Grid.Column="1">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
-                                                        <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
-                                                                <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Grid>
-                                    </Button>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                                <Setter Property="Text" Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
+                                                        <Setter Property="Text" Value="{x:Static localization:Strings.NothingFound}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
                                 </Grid>
-                            </Grid>
-                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                                <TextBlock Text="{x:Static localization:Strings.UnlockTheProfileFileMessage}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-                            </StackPanel>
+                            </Button>
                         </Grid>
-                    </Expander>
+                    </Grid>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <TextBlock Text="{x:Static localization:Strings.UnlockTheProfileFileMessage}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+                    </StackPanel>
                 </Grid>
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
-                    <TextBlock Text="{x:Static localization:Strings.NoEnabledNetworkAdaptersFound}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-                    <Button Command="{Binding OpenNetworkConnectionsCommand}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.NetworkConnectionsDots}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </TabItem>
-    </TabControl>
+            </Expander>
+        </Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}" Margin="10">
+            <TextBlock Text="{x:Static localization:Strings.NoEnabledNetworkAdaptersFound}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <Button Command="{Binding OpenNetworkConnectionsCommand}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.NetworkConnectionsDots}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+    </Grid>
 </UserControl>

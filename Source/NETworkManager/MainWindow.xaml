@@ -194,7 +194,7 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="48" />
+                                <RowDefinition Height="31" />
                             </Grid.RowDefinitions>
                             <Button Grid.Column="0" Command="{Binding OpenApplicationListCommand}" ToolTip="{x:Static localization:Strings.Search}">
                                 <Button.Style>
@@ -224,9 +224,9 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>
-                                <Rectangle Grid.Column="0" Width="24" Height="24" Margin="0,0,-2,0">
+                                <Rectangle Grid.Column="0" Width="16" Height="16" Margin="0,0,-2,0">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:VaadinIcons Kind=Sitemap}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:VaadinIcons Kind=AngleDoubleRight}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">

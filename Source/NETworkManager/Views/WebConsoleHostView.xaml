@@ -185,7 +185,7 @@
                 <Grid>
                     <Grid Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="10" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
