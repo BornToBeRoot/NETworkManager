@@ -188,7 +188,6 @@
                         </Style>
                     </Grid.Style>
                     <Border Grid.Row="0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,0,1" Background="Transparent">
-
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -225,9 +224,9 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>
-                                <Rectangle Width="16" Height="16">
+                                <Rectangle Grid.Column="0" Width="16" Height="16" Margin="0,0,-2,0">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDoubleRight}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:VaadinIcons Kind=AngleDoubleRight}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -564,7 +563,7 @@
                                     <ColumnDefinition Width="48" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Grid.Column="0" Width="24" Height="24">
+                                <Rectangle Grid.Column="0" Width="24" Height="24" Margin="0,0,-2,0">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
                                     </Rectangle.OpacityMask>
@@ -641,7 +640,7 @@
             </Grid.Style>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="32" />
+                    <RowDefinition Height="49" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,0,1">
