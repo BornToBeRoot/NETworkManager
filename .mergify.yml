@@ -1,7 +1,7 @@
 pull_request_rules:
   - name: automatic merge for pull request based on label
     conditions:
-      - label~=auto-merge-when-ci-is-happy$
+      - label~=LGTM$
       - check-success=Analyze (csharp)
       - check-success=CodeQL
       - check-success=continuous-integration/appveyor/pr
