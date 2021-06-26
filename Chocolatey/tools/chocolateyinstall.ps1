@@ -1,6 +1,6 @@
 ﻿$ErrorActionPreference = 'Stop'
 $toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$url        = 'https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Setup.exe'
+$url        = 'https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Setup.exe'
 
 $packageArgs = @{
   packageName   = $env:ChocolateyPackageName
@@ -9,7 +9,7 @@ $packageArgs = @{
   url           = $url
   softwareName  = 'NETworkManager*'
 
-  checksum      = '1D44A5A07975A8364DE742E061E0D72B3DD1CC03E02F4D87103A0767E3C7F7A2'
+  checksum      = 'EAA8D1CC1F76FABD0C26DF70B9E23A21F9F83355D70D0FCCD43E5677A1AE7EAE'
   checksumType  = 'sha256'
     
   silentArgs   = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /TASKS="desktopicon" /SP-'

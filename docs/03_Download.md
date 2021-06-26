@@ -8,14 +8,14 @@ permalink: /Download
 
 # Download
 
-Version: **2021.5.9.0** <br>
-Date: **09.05.2021**
+Version: **2021.6.26.0** <br>
+Date: **26.06.2021**
 
 | Download | Checksum [SHA256] |
 |---|---|
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn">Setup</button></a> | `1D44A5A07975A8364DE742E061E0D72B3DD1CC03E02F4D87103A0767E3C7F7A2` |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn">Portable</button></a> | `ED3DC6DFC111A3261DC6BF3F3D2820E0A1FF96ECF48A3C7DFBF3454A39694848` |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.5.9.0/NETworkManager_2021.5.9.0_Archiv.zip' target='_blank'><button type="button" name="button" class="btn">Archive</button></a> | `DD0B800EA55B97BA0A6B3A5884D62FCE2C4E74EAB1CCE01163823EBD30DC9B4E` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn">Setup</button></a> | `EAA8D1CC1F76FABD0C26DF70B9E23A21F9F83355D70D0FCCD43E5677A1AE7EAE` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn">Portable</button></a> | `02A98625966C6229E4EC23463B3B7607365668CC1B63F47D563C26FF764710CE` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Archiv.zip' target='_blank'><button type="button" name="button" class="btn">Archive</button></a> | `3C23B74EEBC8CF113D8F536F6D9D2BBC6CB3CCF1BABEF0275B9101D84A45ADDB` |
 
 
 The setup is also available on [Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="_blank"} and [WinGet](https://github.com/microsoft/winget-pkgs/tree/master/manifests/b/BornToBeRoot/NETworkManager/){:target="_blank"}:

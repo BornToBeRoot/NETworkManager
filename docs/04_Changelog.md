@@ -6,7 +6,15 @@ description: "Changelog and download links of all available versions."
 permalink: /Changelog
 ---
 
-<!--
+# Version 2021.6.26.0
+Date: **26.06.2021**
+
+| File | Checksum [SHA256] |
+|---|---|
+|[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Setup.exe){:target="_blank"}| `EAA8D1CC1F76FABD0C26DF70B9E23A21F9F83355D70D0FCCD43E5677A1AE7EAE` |
+|[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Portable.zip){:target="_blank"}| `02A98625966C6229E4EC23463B3B7607365668CC1B63F47D563C26FF764710CE` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Archive.zip){:target="_blank"}| `3C23B74EEBC8CF113D8F536F6D9D2BBC6CB3CCF1BABEF0275B9101D84A45ADDB` |
+
 ## What's new?
 - Network Interface - Remove IPv4 address added [#212](https://github.com/BornToBeRoot/NETworkManager/issues/212){:target="_blank"}
 - NETworkManager is now available on WinGet `winget install BornToBeRoot.NETworkManager`
@@ -20,7 +28,6 @@ permalink: /Changelog
 # Other
 - Language files updates
 - Dependencies updated
--->
 
 # Version 2021.5.9.0
 Date: **09.05.2021**

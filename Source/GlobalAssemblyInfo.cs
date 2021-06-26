@@ -6,5 +6,5 @@
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("2021.5.9.0")]
-[assembly: AssemblyFileVersion("2021.5.9.0")]
+[assembly: AssemblyVersion("2021.6.26.0")]
+[assembly: AssemblyFileVersion("2021.6.26.0")]
