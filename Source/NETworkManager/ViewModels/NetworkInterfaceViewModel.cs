@@ -806,19 +806,19 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.RemoveIPv4Address
             };
 
-            var ipAddressViewModel = new IPAddressViewModel(async instance =>
+            var dropdownViewModel = new DropdownViewModel(async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                RemoveIPv4Address(instance.IPAddress);
+                RemoveIPv4Address(instance.SelectedValue.Split("/")[0]);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            });
+            }, SelectedNetworkInterface.IPv4Address.Select(x => $"{x.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(x.Item2)}").ToList(), Localization.Resources.Strings.IPv4Address);
 
-            customDialog.Content = new IPAddressDialog
+            customDialog.Content = new DropdownDialog
             {
-                DataContext = ipAddressViewModel
+                DataContext = dropdownViewModel
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
