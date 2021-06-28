@@ -42,7 +42,7 @@
 # More informations
 - [Download](https://borntoberoot.net/NETworkManager/Download)
 - [Changelog](https://borntoberoot.net/NETworkManager/Changelog)
-- [Documentation](https://borntoberoot.net/NETworkManager/Application)
+- [Documentation](https://borntoberoot.net/NETworkManager/Documentation/Application)
 - [How to contribute, add a translation, write documentation or report a bug?](https://github.com/BornToBeRoot/NETworkManager/blob/master/CONTRIBUTING.md)
 - [List of contributors](https://github.com/BornToBeRoot/NETworkManager/blob/master/Contributors.md)
 - [How to report a security vulnerability?](https://github.com/BornToBeRoot/NETworkManager/blob/master/SECURITY.md)
