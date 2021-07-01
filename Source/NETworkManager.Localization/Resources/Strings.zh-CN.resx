@@ -121,7 +121,7 @@
     <value>关于</value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>重点</value>
+    <value>焦点</value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
     <value>新增凭据</value>
@@ -235,7 +235,7 @@
     <value>热键</value>
   </data>
   <data name="HTTPHeaders" xml:space="preserve">
-    <value>HTTP头信息</value>
+    <value>HTTP 头</value>
   </data>
   <data name="Import" xml:space="preserve">
     <value>导入</value>
@@ -301,13 +301,13 @@
     <value>端口</value>
   </data>
   <data name="Portable" xml:space="preserve">
-    <value>绿色版</value>
+    <value>便携版</value>
   </data>
   <data name="PortScanner" xml:space="preserve">
     <value>端口扫描器</value>
   </data>
   <data name="Profiles" xml:space="preserve">
-    <value>简介</value>
+    <value>配置文件</value>
   </data>
   <data name="PuTTY" xml:space="preserve">
     <value>PuTTY</value>
@@ -340,7 +340,7 @@
     <value>搜索</value>
   </data>
   <data name="SelectAProfileDots" xml:space="preserve">
-    <value>选择一个配置文件</value>
+    <value>选择一个配置文件...</value>
   </data>
   <data name="SetMasterPassword" xml:space="preserve">
     <value>设置主密码</value>
@@ -457,10 +457,10 @@
     <value>DHCP服务器</value>
   </data>
   <data name="DNSServers" xml:space="preserve">
-    <value>DNS服务器(多)</value>
+    <value>DNS 服务器</value>
   </data>
   <data name="DNSSuffix" xml:space="preserve">
-    <value>DNS后缀</value>
+    <value>DNS 后缀</value>
   </data>
   <data name="DynamicIPv4Address" xml:space="preserve">
     <value>动态IPv4地址</value>
@@ -529,7 +529,7 @@
     <value>新的子网掩码或CIDR</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>不</value>
+    <value>否</value>
   </data>
   <data name="ObtainAnIPAddressAutomatically" xml:space="preserve">
     <value>自动获取IP地址</value>
@@ -553,7 +553,7 @@
     <value>主DNS服务器</value>
   </data>
   <data name="ReceivedLost" xml:space="preserve">
-    <value>收到 / 丢失</value>
+    <value>接收 / 丢失</value>
   </data>
   <data name="ResolveHostname" xml:space="preserve">
     <value>解析主机名</value>
@@ -622,7 +622,7 @@
     <value>超时（毫秒）</value>
   </data>
   <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>Ping中间等待时间</value>
+    <value>每次 Ping 之间等待的时间</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>生存周期</value>
@@ -643,7 +643,7 @@
     <value>是</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>新增</value>
+    <value>添加</value>
   </data>
   <data name="AddATabToPerformADNSLookup" xml:space="preserve">
     <value>添加一个DNS查找页...</value>
@@ -685,7 +685,7 @@
     <value>响应</value>
   </data>
   <data name="ApplicationWillBeRestartedAfterwards" xml:space="preserve">
-    <value>The application will be restarted afterwards!</value>
+    <value>之后将重新启动应用程序！</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>应用</value>
@@ -769,9 +769,9 @@
     <value>凭据</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Profile files are encrypted on disk using Rijndael (AES) with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+    <value>配置文件在磁盘上使用Rijndael（AES）加密，在CBC模式下密钥大小为256位，块大小为128位。加密密钥是使用Rfc2898DeriveBytes（PBKDF2）通过1000000次迭代从主密码派生的。在运行时，一旦加载概要文件，密码就存储为安全字符串。对于某些函数，密码必须转换为普通字符串，并在内存中保持未加密状态，直到垃圾收集器将其清除。
 
-This is a new feature that may still contain bugs. Please backup your profile files first before enabling profile file encryption!</value>
+这是一个可能仍然包含bug的新特性。在启用配置文件加密之前，请先备份您的配置文件！</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>自定义</value>
@@ -867,7 +867,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>固定屏幕大小：</value>
   </data>
   <data name="StarForkTheProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork the Project on GitHub</value>
+    <value>在Github上对项目关注或创建分支</value>
   </data>
   <data name="Found" xml:space="preserve">
     <value>查找</value>
@@ -885,13 +885,13 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>主机名或IP地址</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Hosts</value>
+    <value>主机</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
   <data name="InheritHostFromDefault" xml:space="preserve">
-    <value>Inherit host from default</value>
+    <value>从默认值继承主机</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>IP范围</value>
@@ -912,7 +912,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>唤醒数据包发送成功！</value>
   </data>
   <data name="MaximumNumberOfHopsReached" xml:space="preserve">
-    <value>达到最大hops/router 限制（{0}）！</value>
+    <value>达到最大跳数/路由器限制（{0}）！</value>
   </data>
   <data name="MessageSize" xml:space="preserve">
     <value>消息大小</value>
@@ -994,10 +994,11 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>覆盖</value>
   </data>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite settings in the destination folder?
+    <value>是否覆盖目标文件夹中的设置？
 
-"Overwrite" will overwrite the file in the destination folder.
-"Use other" will use the existing settings file in the destination and restart the application.</value>
+“覆盖”将覆盖目标文件夹中的文件。
+
+“使用其他”将使用目标中的现有设置文件并重新启动应用程序。</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
@@ -1012,7 +1013,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>端口或服务</value>
   </data>
   <data name="Ports" xml:space="preserve">
-    <value>Ports</value>
+    <value>端口</value>
   </data>
   <data name="Priv" xml:space="preserve">
     <value>Priv</value>
@@ -1099,7 +1100,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>选择一个分辨率</value>
   </data>
   <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>The selected settings are overwritten!</value>
+    <value>所选设置被覆盖！</value>
   </data>
   <data name="SelectedSettingsAreReset" xml:space="preserve">
     <value>选中的设置将被重置。</value>
@@ -1111,10 +1112,10 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>选择你想导入的设置：</value>
   </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
-    <value>This will reset all settings!</value>
+    <value>这将重置所有设置！</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>串</value>
+    <value>串口</value>
   </data>
   <data name="SerialLine" xml:space="preserve">
     <value>串行</value>
@@ -1270,7 +1271,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>更改</value>
   </data>
   <data name="ChangeMasterPasswordDots" xml:space="preserve">
-    <value>更改主密码。。。</value>
+    <value>更改主密码...</value>
   </data>
   <data name="Check" xml:space="preserve">
     <value>检查</value>
@@ -1400,7 +1401,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>发送</value>
   </data>
   <data name="SetMasterPasswordDots" xml:space="preserve">
-    <value>设置主密码。。。</value>
+    <value>设置主密码...</value>
   </data>
   <data name="ShowLocalLicenses" xml:space="preserve">
     <value>显示本地许可证</value>
@@ -1448,7 +1449,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>Amber</value>
   </data>
   <data name="Appearance" xml:space="preserve">
-    <value>偏好</value>
+    <value>外观</value>
   </data>
   <data name="Applications" xml:space="preserve">
     <value>应用</value>
@@ -1532,7 +1533,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>请求超时。</value>
   </data>
   <data name="IPStatus_TtlExpired" xml:space="preserve">
-    <value>TTL expired in transit.</value>
+    <value>TTL在传输途中过期。</value>
   </data>
   <data name="KeyMustHave8CharactersOrMore" xml:space="preserve">
     <value>密钥必须有8个字符或更多!</value>
@@ -1710,7 +1711,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>Sienna</value>
   </data>
   <data name="SpacesAreNotAllowed" xml:space="preserve">
-    <value>不允许有空位!</value>
+    <value>不允许有空格!</value>
   </data>
   <data name="Steel" xml:space="preserve">
     <value>Steel</value>
@@ -1755,7 +1756,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>TimeWait</value>
   </data>
   <data name="TcpState_Unknown" xml:space="preserve">
-    <value>Unkown</value>
+    <value>未知</value>
   </data>
   <data name="Teal" xml:space="preserve">
     <value>Teal</value>
@@ -1797,7 +1798,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>Whois</value>
   </data>
   <data name="AddATabToQueryWhois" xml:space="preserve">
-    <value>Add a tab to query whois...</value>
+    <value>添加 whois 查询页...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
     <value>输入有效的域名（例如“example.com”）！</value>
@@ -1806,16 +1807,16 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>没有找到该域名的Whois服务器: "{0}"</value>
   </data>
   <data name="Routing" xml:space="preserve">
-    <value>Routing</value>
+    <value>路由</value>
   </data>
   <data name="Release" xml:space="preserve">
-    <value>Release</value>
+    <value>释放</value>
   </data>
   <data name="ReleaseRenew" xml:space="preserve">
-    <value>发布和更新</value>
+    <value>释放&amp;更新</value>
   </data>
   <data name="Renew" xml:space="preserve">
-    <value>Renew</value>
+    <value>更新</value>
   </data>
   <data name="WindowsDNSSettings" xml:space="preserve">
     <value>Windows DNS 设置</value>
@@ -1869,41 +1870,41 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>导出所选</value>
   </data>
   <data name="LocationDots" xml:space="preserve">
-    <value>Location...</value>
+    <value>位置...</value>
   </data>
   <data name="File" xml:space="preserve">
-    <value>File</value>
+    <value>文件</value>
   </data>
   <data name="EnterValidFilePath" xml:space="preserve">
-    <value>Enter a valid file path!</value>
+    <value>输入有效的文件路径！</value>
   </data>
   <data name="All" xml:space="preserve">
-    <value>All</value>
+    <value>所有</value>
   </data>
   <data name="Format" xml:space="preserve">
-    <value>Format</value>
+    <value>格式</value>
   </data>
   <data name="Selected" xml:space="preserve">
-    <value>Selected</value>
+    <value>已选</value>
   </data>
   <data name="AnErrorOccurredWhileExportingTheData" xml:space="preserve">
     <value>导出数据时发生错误。
 有关详细信息，请参阅：</value>
   </data>
   <data name="Design" xml:space="preserve">
-    <value>Design</value>
+    <value>设计</value>
   </data>
   <data name="HighlightTimeouts" xml:space="preserve">
-    <value>Highlight timeouts</value>
+    <value>突出显示超时</value>
   </data>
   <data name="EnterSubnetsToCreateAWideSubnet" xml:space="preserve">
-    <value>Enter subnets to create a wide subnet...</value>
+    <value>输入子网以创建宽子网...</value>
   </data>
   <data name="WideSubnet" xml:space="preserve">
-    <value>Wide Subnet</value>
+    <value>宽子网</value>
   </data>
   <data name="AddTabDots" xml:space="preserve">
-    <value>Add tab...</value>
+    <value>添加标签...</value>
   </data>
   <data name="AddIPv4AddressDots" xml:space="preserve">
     <value>添加IPv4地址</value>
@@ -1912,10 +1913,10 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>添加IPv4地址</value>
   </data>
   <data name="HostThreads" xml:space="preserve">
-    <value>Host threads</value>
+    <value>主机线程</value>
   </data>
   <data name="PortThreads" xml:space="preserve">
-    <value>Port threads</value>
+    <value>端口线程</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -1927,7 +1928,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>PowerShell  进程已终止！</value>
   </data>
   <data name="ExecutionPolicy" xml:space="preserve">
-    <value>Execution Policy</value>
+    <value>执行策略</value>
   </data>
   <data name="RemoteConsole" xml:space="preserve">
     <value>远程控制台</value>
@@ -1966,7 +1967,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>应用Windows组合键</value>
   </data>
   <data name="CredentialSecuritySupportProvider" xml:space="preserve">
-    <value>Credential Security Support Provider</value>
+    <value>凭据安全支持提供程序</value>
   </data>
   <data name="BackgroundJob" xml:space="preserve">
     <value>后台任务</value>
@@ -2048,7 +2049,7 @@ URL: https://api.github.com/</value>
     <value>错误</value>
   </data>
   <data name="ConnectionState_OK" xml:space="preserve">
-    <value>OK</value>
+    <value>确定</value>
   </data>
   <data name="ConnectionState_Warning" xml:space="preserve">
     <value>警告</value>
@@ -2153,10 +2154,10 @@ URL: https://api.github.com/</value>
     <value>断开后重新连接</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_BroadbandHigh" xml:space="preserve">
-    <value>远程带宽高</value>
+    <value>高速宽带（2 Mbps-10 Mbps）</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_BroadbandLow" xml:space="preserve">
-    <value>远程带宽低</value>
+    <value>低速宽带（256 kbps-2 Mbps）</value>
   </data>
   <data name="RemoteDesktopNetworkConnectionType_DetectAutomatically" xml:space="preserve">
     <value>远程带宽自动检测</value>
@@ -2681,13 +2682,13 @@ $$hostname$$	--&gt;	主机名</value>
     <value>Steel</value>
   </data>
   <data name="ProfileViewName_General" xml:space="preserve">
-    <value>General</value>
+    <value>常规</value>
   </data>
   <data name="ProfileViewName_DNSLookup" xml:space="preserve">
     <value>DNS 查找</value>
   </data>
   <data name="ProfileViewName_HTTPHeaders" xml:space="preserve">
-    <value>HTTP Headers</value>
+    <value>HTTP 头</value>
   </data>
   <data name="ProfileViewName_IP Scanner" xml:space="preserve">
     <value>IP 扫描器</value>
@@ -2699,7 +2700,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>Ping</value>
   </data>
   <data name="ProfileViewName_PingMonitor" xml:space="preserve">
-    <value>Ping Monitor</value>
+    <value>Ping 监视器</value>
   </data>
   <data name="ProfileViewName_PortScanner" xml:space="preserve">
     <value>端口扫描器</value>
@@ -2735,7 +2736,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>常规</value>
   </data>
   <data name="SettingsViewName_Appearance" xml:space="preserve">
-    <value>偏好</value>
+    <value>外观</value>
   </data>
   <data name="SettingsViewName_Autostart" xml:space="preserve">
     <value>自动启动</value>
@@ -2840,19 +2841,19 @@ $$hostname$$	--&gt;	主机名</value>
     <value>输入一个有效的文件名!</value>
   </data>
   <data name="Lost" xml:space="preserve">
-    <value>Lost</value>
+    <value>丢失</value>
   </data>
   <data name="Received" xml:space="preserve">
-    <value>Received</value>
+    <value>接收</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Status change</value>
+    <value>状态更改</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>更新可用!</value>
   </data>
   <data name="PrivateKeyFile" xml:space="preserve">
-    <value>Private key file</value>
+    <value>私钥文件</value>
   </data>
   <data name="Preview" xml:space="preserve">
     <value>预览</value>
@@ -3075,16 +3076,16 @@ $$hostname$$	--&gt;	主机名</value>
     <value>公网可访问IPv6地址。</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
-    <value>公共IPv4地址</value>
+    <value>公共 IPv4 地址</value>
   </data>
   <data name="PublicIPv6Address" xml:space="preserve">
-    <value>公共IPv4地址</value>
+    <value>公共 IPv6 地址</value>
   </data>
   <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
     <value>使用自定义IPv6地址API</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Time to live</value>
+    <value>存活时间</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
     <value>Chassis Id</value>
@@ -3108,6 +3109,6 @@ $$hostname$$	--&gt;	主机名</value>
     <value>删除IPv4地址</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
-    <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
+    <value>远程会话已结束，因为已达到总登录时间限制。此限制由服务器管理员或网络策略设置。</value>
   </data>
 </root>
