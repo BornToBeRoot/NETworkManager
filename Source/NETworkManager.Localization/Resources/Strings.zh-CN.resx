@@ -121,7 +121,7 @@
     <value>关于</value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>重点</value>
+    <value>焦点</value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
     <value>新增凭据</value>
@@ -235,7 +235,7 @@
     <value>热键</value>
   </data>
   <data name="HTTPHeaders" xml:space="preserve">
-    <value>HTTP头信息</value>
+    <value>HTTP 头</value>
   </data>
   <data name="Import" xml:space="preserve">
     <value>导入</value>
@@ -301,13 +301,13 @@
     <value>端口</value>
   </data>
   <data name="Portable" xml:space="preserve">
-    <value>绿色版</value>
+    <value>便携版</value>
   </data>
   <data name="PortScanner" xml:space="preserve">
     <value>端口扫描器</value>
   </data>
   <data name="Profiles" xml:space="preserve">
-    <value>简介</value>
+    <value>配置文件</value>
   </data>
   <data name="PuTTY" xml:space="preserve">
     <value>PuTTY</value>
@@ -2681,13 +2681,13 @@ $$hostname$$	--&gt;	主机名</value>
     <value>Steel</value>
   </data>
   <data name="ProfileViewName_General" xml:space="preserve">
-    <value>General</value>
+    <value>常规</value>
   </data>
   <data name="ProfileViewName_DNSLookup" xml:space="preserve">
     <value>DNS 查找</value>
   </data>
   <data name="ProfileViewName_HTTPHeaders" xml:space="preserve">
-    <value>HTTP Headers</value>
+    <value>HTTP 头</value>
   </data>
   <data name="ProfileViewName_IP Scanner" xml:space="preserve">
     <value>IP 扫描器</value>
@@ -2699,7 +2699,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>Ping</value>
   </data>
   <data name="ProfileViewName_PingMonitor" xml:space="preserve">
-    <value>Ping Monitor</value>
+    <value>Ping 监视器</value>
   </data>
   <data name="ProfileViewName_PortScanner" xml:space="preserve">
     <value>端口扫描器</value>
@@ -2735,7 +2735,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>常规</value>
   </data>
   <data name="SettingsViewName_Appearance" xml:space="preserve">
-    <value>偏好</value>
+    <value>外观</value>
   </data>
   <data name="SettingsViewName_Autostart" xml:space="preserve">
     <value>自动启动</value>
@@ -2840,19 +2840,19 @@ $$hostname$$	--&gt;	主机名</value>
     <value>输入一个有效的文件名!</value>
   </data>
   <data name="Lost" xml:space="preserve">
-    <value>Lost</value>
+    <value>丢失</value>
   </data>
   <data name="Received" xml:space="preserve">
-    <value>Received</value>
+    <value>接收</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Status change</value>
+    <value>状态更改</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>更新可用!</value>
   </data>
   <data name="PrivateKeyFile" xml:space="preserve">
-    <value>Private key file</value>
+    <value>私钥文件</value>
   </data>
   <data name="Preview" xml:space="preserve">
     <value>预览</value>
@@ -3075,16 +3075,16 @@ $$hostname$$	--&gt;	主机名</value>
     <value>公网可访问IPv6地址。</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
-    <value>公共IPv4地址</value>
+    <value>公共 IPv4 地址</value>
   </data>
   <data name="PublicIPv6Address" xml:space="preserve">
-    <value>公共IPv4地址</value>
+    <value>公共 IPv6 地址</value>
   </data>
   <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
     <value>使用自定义IPv6地址API</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Time to live</value>
+    <value>存活时间</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
     <value>Chassis Id</value>
@@ -3108,6 +3108,6 @@ $$hostname$$	--&gt;	主机名</value>
     <value>删除IPv4地址</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
-    <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
+    <value>远程会话已结束，因为已达到总登录时间限制。此限制由服务器管理员或网络策略设置。</value>
   </data>
 </root>
