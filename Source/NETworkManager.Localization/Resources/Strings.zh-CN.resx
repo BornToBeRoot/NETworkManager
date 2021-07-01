@@ -2843,16 +2843,16 @@ $$hostname$$	--&gt;	主机名</value>
     <value>Lost</value>
   </data>
   <data name="Received" xml:space="preserve">
-    <value>Received</value>
+    <value>接收</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Status change</value>
+    <value>状态更改</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>更新可用!</value>
   </data>
   <data name="PrivateKeyFile" xml:space="preserve">
-    <value>Private key file</value>
+    <value>私钥文件</value>
   </data>
   <data name="Preview" xml:space="preserve">
     <value>预览</value>
@@ -3075,16 +3075,16 @@ $$hostname$$	--&gt;	主机名</value>
     <value>公网可访问IPv6地址。</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
-    <value>公共IPv4地址</value>
+    <value>公共 IPv4 地址</value>
   </data>
   <data name="PublicIPv6Address" xml:space="preserve">
-    <value>公共IPv4地址</value>
+    <value>公共 IPv6 地址</value>
   </data>
   <data name="UseCustomIPv6AddressAPI" xml:space="preserve">
     <value>使用自定义IPv6地址API</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Time to live</value>
+    <value>存活时间</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
     <value>Chassis Id</value>
@@ -3108,6 +3108,6 @@ $$hostname$$	--&gt;	主机名</value>
     <value>删除IPv4地址</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
-    <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
+    <value>远程会话已结束，因为已达到总登录时间限制。此限制由服务器管理员或网络策略设置。</value>
   </data>
 </root>
