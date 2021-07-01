@@ -3108,6 +3108,6 @@ $$hostname$$	--&gt;	主机名</value>
     <value>删除IPv4地址</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
-    <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
+    <value>远程会话已结束，因为已达到总登录时间限制。此限制由服务器管理员或网络策略设置。</value>
   </data>
 </root>
