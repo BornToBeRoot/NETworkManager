@@ -6,6 +6,30 @@ description: "Changelog and download links of all available versions."
 permalink: /Changelog
 ---
 
+<!--
+# Version 2021.x.xx.0
+Date: **xx.0x.2021**
+
+| File | Checksum [SHA256] |
+|---|---|
+|[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Setup.exe){:target="_blank"}| `EAA8D1CC1F76FABD0C26DF70B9E23A21F9F83355D70D0FCCD43E5677A1AE7EAE` |
+|[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Portable.zip){:target="_blank"}| `02A98625966C6229E4EC23463B3B7607365668CC1B63F47D563C26FF764710CE` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Archive.zip){:target="_blank"}| `3C23B74EEBC8CF113D8F536F6D9D2BBC6CB3CCF1BABEF0275B9101D84A45ADDB` |
+
+## What's new?
+-
+
+## Improvements
+- Rmeote Desktop - Connection dialog now allows `hostname:port` [#1214](https://github.com/BornToBeRoot/NETworkManager/issues/1214){:target="_blank"}
+
+## Bugfixes
+- Remote Desktop - Settings when connecting without profile were ignored [#1214](https://github.com/BornToBeRoot/NETworkManager/issues/1214){:target="_blank"}
+
+## Other
+- Language files updates [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
+- Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="_blank"}
+-->
+
 # Version 2021.6.26.0
 Date: **26.06.2021**
 

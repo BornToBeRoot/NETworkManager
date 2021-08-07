@@ -15,6 +15,7 @@ Official:
 Community:
 - Chinese (China)
 - Chinese (Taiwan)
+- Czech
 - Dutch
 - French
 - Hungarian
