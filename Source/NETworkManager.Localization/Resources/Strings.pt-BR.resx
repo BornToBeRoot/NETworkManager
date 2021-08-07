@@ -3101,4 +3101,13 @@ Habilite a criptografia do arquivo de perfil em Configurações &gt; Perfil para
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
     <value>A sessão remota foi encerrada porque o limite de tempo total de login foi atingido. Este limite é definido pelo administrador do servidor ou pelas políticas de rede.</value>
   </data>
+  <data name="EnterValidHostname" xml:space="preserve">
+    <value>Entre o nome válido de host!</value>
+  </data>
+  <data name="EnterValidHostnameAndPort" xml:space="preserve">
+    <value>Entre o nome válido de host e porta!</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
+    <value>Não foi possível reconectar na sessão remota.</value>
+  </data>
 </root>
