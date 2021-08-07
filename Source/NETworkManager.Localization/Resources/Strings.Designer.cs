@@ -19,7 +19,7 @@ namespace NETworkManager.Localization.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -2748,6 +2748,24 @@ namespace NETworkManager.Localization.Resources {
         public static string EnterValidFilePath {
             get {
                 return ResourceManager.GetString("EnterValidFilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid hostname!.
+        /// </summary>
+        public static string EnterValidHostname {
+            get {
+                return ResourceManager.GetString("EnterValidHostname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid hostname and port!.
+        /// </summary>
+        public static string EnterValidHostnameAndPort {
+            get {
+                return ResourceManager.GetString("EnterValidHostnameAndPort", resourceCulture);
             }
         }
         
@@ -6413,6 +6431,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached {
             get {
                 return ResourceManager.GetString("RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to reconnect to the remote session..
+        /// </summary>
+        public static string RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession {
+            get {
+                return ResourceManager.GetString("RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession", resourceCulture);
             }
         }
         

@@ -1,62 +1,148 @@
 ﻿using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
+using System.Windows.Forms;
 
 namespace NETworkManager.Profiles.Application
 {
     public static class RemoteDesktop
     {
-        public static RemoteDesktopSessionInfo CreateSessionInfo(ProfileInfo profileInfo = null)
+        public static RemoteDesktopSessionInfo CreateSessionInfo()
         {
-            if (profileInfo == null)
-                return new RemoteDesktopSessionInfo();
-
-            var info = new RemoteDesktopSessionInfo
+            return new RemoteDesktopSessionInfo
             {
                 // Hostname
-                Hostname = profileInfo.Host,
-
-                // Display
-                AdjustScreenAutomatically = profileInfo.RemoteDesktop_OverrideDisplay ? profileInfo.RemoteDesktop_AdjustScreenAutomatically : SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically,
-                UseCurrentViewSize = profileInfo.RemoteDesktop_OverrideDisplay ? profileInfo.RemoteDesktop_UseCurrentViewSize : SettingsManager.Current.RemoteDesktop_UseCurrentViewSize,
-                DesktopWidth = profileInfo.RemoteDesktop_OverrideDisplay ? (profileInfo.RemoteDesktop_UseCustomScreenSize ? profileInfo.RemoteDesktop_CustomScreenWidth : profileInfo.RemoteDesktop_ScreenWidth) : (SettingsManager.Current.RemoteDesktop_UseCustomScreenSize ? SettingsManager.Current.RemoteDesktop_CustomScreenWidth : SettingsManager.Current.RemoteDesktop_ScreenWidth),
-                DesktopHeight = profileInfo.RemoteDesktop_OverrideDisplay ? (profileInfo.RemoteDesktop_UseCustomScreenSize ? profileInfo.RemoteDesktop_CustomScreenHeight : profileInfo.RemoteDesktop_ScreenHeight) : (SettingsManager.Current.RemoteDesktop_UseCustomScreenSize ? SettingsManager.Current.RemoteDesktop_CustomScreenHeight : SettingsManager.Current.RemoteDesktop_ScreenHeight),
-                ColorDepth = profileInfo.RemoteDesktop_OverrideColorDepth ? profileInfo.RemoteDesktop_ColorDepth : SettingsManager.Current.RemoteDesktop_ColorDepth,
+                Hostname = string.Empty,
 
                 // Network
-                Port = profileInfo.RemoteDesktop_OverridePort ? profileInfo.RemoteDesktop_Port : SettingsManager.Current.RemoteDesktop_Port,
+                Port = SettingsManager.Current.RemoteDesktop_Port,
+
+                // Display
+                AdjustScreenAutomatically = SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically,
+                UseCurrentViewSize = SettingsManager.Current.RemoteDesktop_UseCurrentViewSize,
+                DesktopWidth = SettingsManager.Current.RemoteDesktop_UseCustomScreenSize ? SettingsManager.Current.RemoteDesktop_CustomScreenWidth : SettingsManager.Current.RemoteDesktop_ScreenWidth,
+                DesktopHeight = SettingsManager.Current.RemoteDesktop_UseCustomScreenSize ? SettingsManager.Current.RemoteDesktop_CustomScreenHeight : SettingsManager.Current.RemoteDesktop_ScreenHeight,
+                ColorDepth = SettingsManager.Current.RemoteDesktop_ColorDepth,
 
                 // Authentication
-                EnableCredSspSupport = profileInfo.RemoteDesktop_OverrideCredSspSupport ? profileInfo.RemoteDesktop_EnableCredSspSupport : SettingsManager.Current.RemoteDesktop_EnableCredSspSupport,
-                AuthenticationLevel = profileInfo.RemoteDesktop_OverrideAuthenticationLevel ? profileInfo.RemoteDesktop_AuthenticationLevel : SettingsManager.Current.RemoteDesktop_AuthenticationLevel,
+                EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport,
+                AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel,
 
                 // Remote audio
-                AudioRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioRedirectionMode ? profileInfo.RemoteDesktop_AudioRedirectionMode : SettingsManager.Current.RemoteDesktop_AudioRedirectionMode,
-                AudioCaptureRedirectionMode = profileInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode ? profileInfo.RemoteDesktop_AudioCaptureRedirectionMode : SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode,
+                AudioRedirectionMode = SettingsManager.Current.RemoteDesktop_AudioRedirectionMode,
+                AudioCaptureRedirectionMode = SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode,
 
                 // Keyboard
-                KeyboardHookMode = profileInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations ? profileInfo.RemoteDesktop_KeyboardHookMode : SettingsManager.Current.RemoteDesktop_KeyboardHookMode,
+                KeyboardHookMode = SettingsManager.Current.RemoteDesktop_KeyboardHookMode,
 
                 // Local devices and resources
-                RedirectClipboard = profileInfo.RemoteDesktop_OverrideRedirectClipboard ? profileInfo.RemoteDesktop_RedirectClipboard : SettingsManager.Current.RemoteDesktop_RedirectClipboard,
-                RedirectDevices = profileInfo.RemoteDesktop_OverrideRedirectDevices ? profileInfo.RemoteDesktop_RedirectDevices : SettingsManager.Current.RemoteDesktop_RedirectDevices,
-                RedirectDrives = profileInfo.RemoteDesktop_OverrideRedirectDrives ? profileInfo.RemoteDesktop_RedirectDrives : SettingsManager.Current.RemoteDesktop_RedirectDrives,
-                RedirectPorts = profileInfo.RemoteDesktop_OverrideRedirectPorts ? profileInfo.RemoteDesktop_RedirectPorts : SettingsManager.Current.RemoteDesktop_RedirectPorts,
-                RedirectSmartCards = profileInfo.RemoteDesktop_OverrideRedirectSmartcards ? profileInfo.RemoteDesktop_RedirectSmartCards : SettingsManager.Current.RemoteDesktop_RedirectSmartCards,
-                RedirectPrinters = profileInfo.RemoteDesktop_OverrideRedirectPrinters ? profileInfo.RemoteDesktop_RedirectPrinters : SettingsManager.Current.RemoteDesktop_RedirectPrinters,
+                RedirectClipboard = SettingsManager.Current.RemoteDesktop_RedirectClipboard,
+                RedirectDevices = SettingsManager.Current.RemoteDesktop_RedirectDevices,
+                RedirectDrives = SettingsManager.Current.RemoteDesktop_RedirectDrives,
+                RedirectPorts = SettingsManager.Current.RemoteDesktop_RedirectPorts,
+                RedirectSmartCards = SettingsManager.Current.RemoteDesktop_RedirectSmartCards,
+                RedirectPrinters = SettingsManager.Current.RemoteDesktop_RedirectPrinters,
 
                 // Experience
-                PersistentBitmapCaching = profileInfo.RemoteDesktop_OverridePersistentBitmapCaching ? profileInfo.RemoteDesktop_PersistentBitmapCaching : SettingsManager.Current.RemoteDesktop_PersistentBitmapCaching,
-                ReconnectIfTheConnectionIsDropped = profileInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped ? profileInfo.RemoteDesktop_ReconnectIfTheConnectionIsDropped : SettingsManager.Current.RemoteDesktop_ReconnectIfTheConnectionIsDropped,
+                PersistentBitmapCaching = SettingsManager.Current.RemoteDesktop_PersistentBitmapCaching,
+                ReconnectIfTheConnectionIsDropped = SettingsManager.Current.RemoteDesktop_ReconnectIfTheConnectionIsDropped,
 
                 // Performance
-                NetworkConnectionType = profileInfo.RemoteDesktop_OverrideNetworkConnectionType ? profileInfo.RemoteDesktop_NetworkConnectionType : SettingsManager.Current.RemoteDesktop_NetworkConnectionType,
-                DesktopBackground = profileInfo.RemoteDesktop_OverrideDesktopBackground ? profileInfo.RemoteDesktop_DesktopBackground : SettingsManager.Current.RemoteDesktop_DesktopBackground,
-                FontSmoothing = profileInfo.RemoteDesktop_OverrideFontSmoothing ? profileInfo.RemoteDesktop_FontSmoothing : SettingsManager.Current.RemoteDesktop_FontSmoothing,
-                DesktopComposition = profileInfo.RemoteDesktop_OverrideDesktopComposition ? profileInfo.RemoteDesktop_DesktopComposition : SettingsManager.Current.RemoteDesktop_DesktopComposition,
-                ShowWindowContentsWhileDragging = profileInfo.RemoteDesktop_OverrideShowWindowContentsWhileDragging ? profileInfo.RemoteDesktop_ShowWindowContentsWhileDragging : SettingsManager.Current.RemoteDesktop_ShowWindowContentsWhileDragging,
-                MenuAndWindowAnimation = profileInfo.RemoteDesktop_OverrideMenuAndWindowAnimation ? profileInfo.RemoteDesktop_MenuAndWindowAnimation : SettingsManager.Current.RemoteDesktop_MenuAndWindowAnimation,
-                VisualStyles = profileInfo.RemoteDesktop_OverrideVisualStyles ? profileInfo.RemoteDesktop_VisualStyles : SettingsManager.Current.RemoteDesktop_VisualStyles
+                NetworkConnectionType = SettingsManager.Current.RemoteDesktop_NetworkConnectionType,
+                DesktopBackground = SettingsManager.Current.RemoteDesktop_DesktopBackground,
+                FontSmoothing = SettingsManager.Current.RemoteDesktop_FontSmoothing,
+                DesktopComposition = SettingsManager.Current.RemoteDesktop_DesktopComposition,
+                ShowWindowContentsWhileDragging = SettingsManager.Current.RemoteDesktop_ShowWindowContentsWhileDragging,
+                MenuAndWindowAnimation = SettingsManager.Current.RemoteDesktop_MenuAndWindowAnimation,
+                VisualStyles = SettingsManager.Current.RemoteDesktop_VisualStyles
             };
+        }
+
+        public static RemoteDesktopSessionInfo CreateSessionInfo(ProfileInfo profileInfo)
+        {
+            var info = new RemoteDesktopSessionInfo();
+            // Override hostname
+            info.Hostname = profileInfo.Host;
+
+            // Network
+            if (profileInfo.RemoteDesktop_OverridePort)
+                info.Port = profileInfo.RemoteDesktop_Port;
+
+            // Display
+            if (profileInfo.RemoteDesktop_OverrideDisplay)
+            {
+                info.AdjustScreenAutomatically = profileInfo.RemoteDesktop_AdjustScreenAutomatically;
+                info.UseCurrentViewSize = profileInfo.RemoteDesktop_UseCurrentViewSize;
+                info.DesktopWidth = profileInfo.RemoteDesktop_UseCustomScreenSize ? profileInfo.RemoteDesktop_CustomScreenWidth : profileInfo.RemoteDesktop_ScreenWidth;
+                info.DesktopHeight = profileInfo.RemoteDesktop_UseCustomScreenSize ? profileInfo.RemoteDesktop_CustomScreenHeight : profileInfo.RemoteDesktop_ScreenHeight;
+                info.ColorDepth = profileInfo.RemoteDesktop_ColorDepth;
+            }
+
+            // Authentication
+            if (profileInfo.RemoteDesktop_OverrideCredSspSupport)
+                info.EnableCredSspSupport = profileInfo.RemoteDesktop_EnableCredSspSupport;
+
+            if (profileInfo.RemoteDesktop_OverrideAuthenticationLevel)
+                info.AuthenticationLevel = profileInfo.RemoteDesktop_AuthenticationLevel;
+
+            // Remote audio
+            if (profileInfo.RemoteDesktop_OverrideAudioRedirectionMode)
+                info.AudioRedirectionMode = profileInfo.RemoteDesktop_AudioRedirectionMode;
+
+            if (profileInfo.RemoteDesktop_OverrideAudioCaptureRedirectionMode)
+                info.AudioCaptureRedirectionMode = profileInfo.RemoteDesktop_AudioCaptureRedirectionMode;
+
+            // Keyboard
+            if (profileInfo.RemoteDesktop_OverrideApplyWindowsKeyCombinations)
+                info.KeyboardHookMode = profileInfo.RemoteDesktop_KeyboardHookMode;
+
+            // Local devices and resources
+            if (profileInfo.RemoteDesktop_OverrideRedirectClipboard)
+                info.RedirectClipboard = profileInfo.RemoteDesktop_RedirectClipboard;
+
+            if (profileInfo.RemoteDesktop_OverrideRedirectDevices)
+                info.RedirectDevices = profileInfo.RemoteDesktop_RedirectDevices;
+
+            if (profileInfo.RemoteDesktop_OverrideRedirectDrives)
+                info.RedirectDrives = profileInfo.RemoteDesktop_RedirectDrives;
+
+            if (profileInfo.RemoteDesktop_OverrideRedirectPorts)
+                info.RedirectPorts = profileInfo.RemoteDesktop_RedirectPorts;
+
+            if (profileInfo.RemoteDesktop_OverrideRedirectSmartcards)
+                info.RedirectSmartCards = profileInfo.RemoteDesktop_RedirectSmartCards;
+
+            if (profileInfo.RemoteDesktop_OverrideRedirectPrinters)
+                info.RedirectPrinters = profileInfo.RemoteDesktop_RedirectPrinters;
+
+            // Experience
+            if (profileInfo.RemoteDesktop_OverridePersistentBitmapCaching)
+                info.PersistentBitmapCaching = profileInfo.RemoteDesktop_PersistentBitmapCaching;
+
+            if (profileInfo.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped)
+                info.ReconnectIfTheConnectionIsDropped = profileInfo.RemoteDesktop_ReconnectIfTheConnectionIsDropped;
+
+            // Performance
+            if (profileInfo.RemoteDesktop_OverrideNetworkConnectionType)
+                info.NetworkConnectionType = profileInfo.RemoteDesktop_NetworkConnectionType;
+
+            if (profileInfo.RemoteDesktop_OverrideDesktopBackground)
+                info.DesktopBackground = profileInfo.RemoteDesktop_DesktopBackground;
+
+            if (profileInfo.RemoteDesktop_OverrideFontSmoothing)
+                info.FontSmoothing = profileInfo.RemoteDesktop_FontSmoothing;
+
+            if (profileInfo.RemoteDesktop_OverrideDesktopComposition)
+                info.DesktopComposition = profileInfo.RemoteDesktop_DesktopComposition;
+
+            if (profileInfo.RemoteDesktop_OverrideShowWindowContentsWhileDragging)
+                info.ShowWindowContentsWhileDragging = profileInfo.RemoteDesktop_ShowWindowContentsWhileDragging;
+
+            if (profileInfo.RemoteDesktop_OverrideMenuAndWindowAnimation)
+                info.MenuAndWindowAnimation = profileInfo.RemoteDesktop_MenuAndWindowAnimation;
+
+            if (profileInfo.RemoteDesktop_OverrideVisualStyles)
+                info.VisualStyles = profileInfo.RemoteDesktop_VisualStyles;
+
 
             // Set credentials
             if (profileInfo.RemoteDesktop_UseCredentials)
@@ -68,6 +154,6 @@ namespace NETworkManager.Profiles.Application
             }
 
             return info;
-        }                          
+        }
     }
 }

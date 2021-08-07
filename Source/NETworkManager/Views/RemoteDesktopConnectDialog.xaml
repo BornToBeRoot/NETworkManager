@@ -55,7 +55,7 @@
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                            <validators:RemoteDesktopHostnameAndPortValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
