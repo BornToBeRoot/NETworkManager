@@ -4,7 +4,7 @@ daysUntilStale: 60
 daysUntilClose: 7
 # Issues with these labels will never be considered stale
 exemptLabels:
-  - ":beetle: bug"
+  - ":bug: bug"
   - ":rocket: feature-request"
   - ":book: documentation"
 # Label to use when marking an issue as stale
