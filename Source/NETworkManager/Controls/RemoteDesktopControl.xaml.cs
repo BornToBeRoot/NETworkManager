@@ -405,6 +405,8 @@ namespace NETworkManager.Controls
                     return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrAccountExpired;
                 case 3847:
                     return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrPasswordExpired;
+                case 4360:
+                    return Localization.Resources.Strings.RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession;
                 case 4615:
                     return Localization.Resources.Strings.RemoteDesktopDisconnectReason_SslErrPasswordMustChange;
                 case 5639:

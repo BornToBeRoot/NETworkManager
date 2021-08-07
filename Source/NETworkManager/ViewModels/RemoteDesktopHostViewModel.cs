@@ -373,7 +373,16 @@ namespace NETworkManager.ViewModels
                 // Create new session info with default settings
                 var sessionInfo = NETworkManager.Profiles.Application.RemoteDesktop.CreateSessionInfo();
 
-                sessionInfo.Hostname = instance.Host;
+                if(instance.Host.Contains(":"))
+                {
+                    // Validate input via UI
+                    sessionInfo.Hostname = instance.Host.Split(':')[0];
+                    sessionInfo.Port = int.Parse(instance.Host.Split(':')[1]);
+                }
+                else
+                {
+                    sessionInfo.Hostname = instance.Host;
+                }
 
                 if (instance.UseCredentials)
                 {
