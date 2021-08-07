@@ -3131,4 +3131,13 @@ Per archiviare le credenziali in modo sicuro abilita la crittografia del file de
     <value>La sessione remota è terminata perché è stato raggiunto il limite di tempo di accesso totale. 
 Questo limite è impostato dall'amministratore del server o dai criteri di rete.</value>
   </data>
+  <data name="EnterValidHostname" xml:space="preserve">
+    <value>Inserisci un nome host valido!</value>
+  </data>
+  <data name="EnterValidHostnameAndPort" xml:space="preserve">
+    <value>Inserisci un nome host ed una porta validi!</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
+    <value>Impossibile ricollegarsi alla sessione remota.</value>
+  </data>
 </root>
