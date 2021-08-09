@@ -62,6 +62,7 @@ namespace NETworkManager.Localization
             // Community            
             new LocalizationInfo("Chinese (China)", "大陆简体", GetImageUri("zh-CN"), "zh-CN"),
             new LocalizationInfo("Chinese (Taiwan)", "台灣正體", GetImageUri("zh-TW"), "zh-TW"),
+            new LocalizationInfo("Czech (Czech Republic)", "Čeština", GetImageUri("cs-CZ"), "cs-CZ"),
             new LocalizationInfo("Dutch (Netherlands)", "Nederlands", GetImageUri("nl-NL"), "nl-NL"),
             new LocalizationInfo("French (France)", "Français", GetImageUri("fr-FR"), "fr-FR"),
             new LocalizationInfo("Hungarian (Hungary)", "Magyar", GetImageUri("hu-HU"), "hu-HU"),

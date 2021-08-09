@@ -11,6 +11,7 @@
     <NoWarn>1701;1702;CA1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\Flags\cs-CZ.png" />
     <None Remove="Resources\Flags\en-US.png" />
     <None Remove="Resources\Flags\de-DE.png" />
     <None Remove="Resources\Flags\es-ES.png" />
@@ -30,6 +31,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Flags\cs-CZ.png" />
     <Resource Include="Resources\Flags\en-US.png" />
     <Resource Include="Resources\Flags\de-DE.png" />
     <Resource Include="Resources\Flags\es-ES.png" />
