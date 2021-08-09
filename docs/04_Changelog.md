@@ -17,10 +17,10 @@ Date: **xx.0x.2021**
 |[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Archive.zip){:target="_blank"}| `3C23B74EEBC8CF113D8F536F6D9D2BBC6CB3CCF1BABEF0275B9101D84A45ADDB` |
 
 ## What's new?
--
+- Czech added [#1221](https://github.com/BornToBeRoot/NETworkManager/pull/1221){:target="_blank"}
 
 ## Improvements
-- Rmeote Desktop - Connection dialog now allows `hostname:port` [#1214](https://github.com/BornToBeRoot/NETworkManager/issues/1214){:target="_blank"}
+- Remote Desktop - Connection dialog now allows `hostname:port` [#1214](https://github.com/BornToBeRoot/NETworkManager/issues/1214){:target="_blank"}
 
 ## Bugfixes
 - Remote Desktop - Settings when connecting without profile were ignored [#1214](https://github.com/BornToBeRoot/NETworkManager/issues/1214){:target="_blank"}
