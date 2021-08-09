@@ -57,11 +57,11 @@ namespace NETworkManager.Models.Network
 			if (UseCustomDNSServer)
 			{
 				foreach (var dnsServer in CustomDNSServer.Servers)
-					dnsServers.Add(new IPEndPoint(IPAddress.Parse(dnsServer), CustomDNSServer.Port));
+					dnsServers.Add(new IPEndPoint(IPAddress.Parse(dnsServer.Server), dnsServer.Port));
 			}
 			else
 			{
-				foreach (var dnsServer in NameServer.ResolveNameServers(true, false))
+				foreach (NameServer dnsServer in NameServer.ResolveNameServers(true, false))
 				{
 					dnsServers.Add(new IPEndPoint(IPAddress.Parse(dnsServer.Address), dnsServer.Port));
 				}

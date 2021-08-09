@@ -3110,4 +3110,13 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
     <value>Unable to reconnect to the remote session.</value>
   </data>
+  <data name="DNSoverHTTPS" xml:space="preserve">
+    <value>DNS over HTTPS</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>Server</value>
+  </data>
 </root>

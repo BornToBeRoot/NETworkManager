@@ -2383,6 +2383,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DNS over HTTPS.
+        /// </summary>
+        public static string DNSoverHTTPS {
+            get {
+                return ResourceManager.GetString("DNSoverHTTPS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DNS server.
         /// </summary>
         public static string DNSServer {
@@ -4718,6 +4727,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NoPTRDNSRecordResolvedForXXXMessage {
             get {
                 return ResourceManager.GetString("NoPTRDNSRecordResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal.
+        /// </summary>
+        public static string Normal {
+            get {
+                return ResourceManager.GetString("Normal", resourceCulture);
             }
         }
         
@@ -7079,6 +7097,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SerialLine {
             get {
                 return ResourceManager.GetString("SerialLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server.
+        /// </summary>
+        public static string Server {
+            get {
+                return ResourceManager.GetString("Server", resourceCulture);
             }
         }
         

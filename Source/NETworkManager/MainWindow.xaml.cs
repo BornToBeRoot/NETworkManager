@@ -490,7 +490,7 @@ namespace NETworkManager
             }
 
             // Hide the application to tray
-            if (!_closeApplication && (SettingsManager.Current.Window_MinimizeInsteadOfTerminating && WindowState != WindowState.Minimized))
+            if (!_closeApplication && SettingsManager.Current.Window_MinimizeInsteadOfTerminating && WindowState != WindowState.Minimized)
             {
                 e.Cancel = true;
 

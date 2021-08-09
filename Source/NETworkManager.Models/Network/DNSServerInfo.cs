@@ -14,14 +14,19 @@ namespace NETworkManager.Models.Network
         public string Name { get; set; }
 
         /// <summary>
-        /// List of DNS server ip addresses as <see cref="string"/>.
+        /// List of DNS servers as with ip address and port./>.
         /// </summary>
-        public List<string> Servers { get; set; }
+        public List<DNSServerClassicInfo> Servers { get; set; }
+        
+        /// <summary>
+        /// Indicates if DoH is used.
+        /// </summary>
+        public bool UseDoHServer { get; set; }
 
         /// <summary>
-        /// Port which is used for the DNS request.
+        /// List of DNS server URLs.
         /// </summary>
-        public int Port { get; set; } = 53;
+        public List<DNSServerDoHInfo> DoHServers { get; set; }
 
         /// <summary>
         /// Indicates if the windows DNS server is used. 
@@ -34,21 +39,30 @@ namespace NETworkManager.Models.Network
         /// </summary>
         public DNSServerInfo()
         {
-            UseWindowsDNSServer = true;
+            
         }
 
         /// <summary>
-        /// Create an instance of <see cref="DNSServerInfo"/> with DNS server and port.
+        /// Create an instance of <see cref="DNSServerInfo"/> with DNS servers.
         /// </summary>
         /// <param name="name">Name of the profile.</param>
-        /// <param name="servers">List of DNS server ip addresses as <see cref="string"/>.</param>
-        /// <param name="port">Port which is used for the DNS request.</param>
-        public DNSServerInfo(string name, List<string> servers, int port = 53)
+        /// <param name="servers">List of DNS servers.</param>        
+        public DNSServerInfo(string name, List<DNSServerClassicInfo> servers)
         {
-            UseWindowsDNSServer = false;
             Name = name;
             Servers = servers;
-            Port = port;
+        }
+
+        /// <summary>
+        /// Create an instance of <see cref="DNSServerInfo"/> with DNS servers.
+        /// </summary>
+        /// <param name="name">Name of the profile.</param>
+        /// <param name="doHServers">List of DNS servers.</param>
+        public DNSServerInfo(string name, List<DNSServerDoHInfo> doHServers)
+        {
+            Name = name;
+            UseDoHServer = true;
+            DoHServers = doHServers;
         }
     }
 }

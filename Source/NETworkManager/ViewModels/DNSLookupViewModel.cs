@@ -183,7 +183,7 @@ namespace NETworkManager.ViewModels
                 _statusMessage = value;
                 OnPropertyChanged();
             }
-        }        
+        }
         #endregion
 
         #region Contructor, load settings
@@ -337,7 +337,15 @@ namespace NETworkManager.ViewModels
             IsStatusMessageDisplayed = false;
             StatusMessage = string.Empty;
 
-            IsLookupRunning = true;                       
+            /* DEBUG */
+            if (DNSServer.UseDoHServer)
+            {
+                IsStatusMessageDisplayed = true;
+                StatusMessage = "DNS over HTTPS is not implemented yet!";
+                return;
+            }            
+
+            IsLookupRunning = true;
 
             // Reset the latest results
             LookupResults.Clear();
@@ -370,7 +378,7 @@ namespace NETworkManager.ViewModels
             if (!DNSServer.UseWindowsDNSServer)
             {
                 dnsLookup.UseCustomDNSServer = true;
-                dnsLookup.CustomDNSServer = DNSServer;                
+                dnsLookup.CustomDNSServer = DNSServer;
             }
 
             if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
@@ -387,7 +395,7 @@ namespace NETworkManager.ViewModels
         }
 
         private void LookupFinished()
-        {         
+        {
             IsLookupRunning = false;
         }
 
@@ -436,7 +444,7 @@ namespace NETworkManager.ViewModels
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 //lock (LookupResults)
-                    LookupResults.Add(dnsLookupRecordInfo);
+                LookupResults.Add(dnsLookupRecordInfo);
             }));
         }
 
@@ -444,7 +452,7 @@ namespace NETworkManager.ViewModels
         {
             if (!string.IsNullOrEmpty(StatusMessage))
                 StatusMessage += Environment.NewLine;
-            
+
             StatusMessage += $"{e.DNSServer.Address}: {e.ErrorCode}";
 
             IsStatusMessageDisplayed = true;
@@ -456,11 +464,11 @@ namespace NETworkManager.ViewModels
         {
             LookupFinished();
         }
-                
+
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
-            {             
+            {
                 case nameof(SettingsInfo.DNSLookup_ShowOnlyMostCommonQueryTypes):
                     LoadTypes();
                     break;

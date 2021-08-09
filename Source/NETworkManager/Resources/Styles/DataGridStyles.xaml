@@ -11,6 +11,10 @@
         <Setter Property="IsReadOnly" Value="True" />
     </Style>
 
+    <Style x:Key="EditableDataGrid" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource DefaultDataGrid}">
+        <Setter Property="IsReadOnly" Value="False" />
+    </Style>
+    
     <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource DefaultDataGrid}" />
     <Style TargetType="{x:Type controls:MultiSelectScrollingDataGrid}" BasedOn="{StaticResource DefaultDataGrid}" />
 

@@ -4,10 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"            
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:DNSServerViewModel}">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+    </UserControl.Resources>
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -41,7 +46,7 @@
                                     <Setter.Value>
                                         <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />                                                
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </Setter.Value>
@@ -64,29 +69,23 @@
                 </TextBox.Style>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.DNSServers}" />
-            <TextBox x:Name="TextBoxDNSServers" Grid.Column="2" Grid.Row="2" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServers}">
-                <TextBox.Text>
-                    <Binding Path="DNSServers" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <validators:MultipleIPAddressesValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Port}" />
-            <TextBox x:Name="TextBoxPort" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort53}">
-                <TextBox.Text>
-                    <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <validators:PortValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
+            <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal">
+                <RadioButton Content="{x:Static localization:Strings.Normal}" IsChecked="{Binding UseClassic}" Margin="0,0,10,0" />
+                <RadioButton  Content="{x:Static localization:Strings.DNSoverHTTPS}" IsChecked="{Binding UseDoH}" />
+            </StackPanel>
+            <DataGrid Style="{StaticResource EditableDataGrid}" Grid.Column="2" Grid.Row="4" MinHeight="150" CanUserAddRows="True" CanUserDeleteRows="True" ItemsSource="{Binding Servers}" Visibility="{Binding UseDoH, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Server}" Header="{x:Static localization:Strings.Server}" Width="2*" />
+                    <DataGridTextColumn Binding="{Binding Port}" Header="{x:Static localization:Strings.Port}" Width="1*" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Style="{StaticResource EditableDataGrid}" Grid.Column="2" Grid.Row="4" Height="250" CanUserAddRows="True" CanUserDeleteRows="True" ItemsSource="{Binding DoHServers}" Visibility="{Binding UseDoH, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding URL}" Header="{x:Static localization:Strings.URL}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">            
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="0,0,10,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
@@ -95,8 +94,6 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxName}" Value="False" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxDNSServers}" Value="False" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxPort}" Value="False" />
                                     <Condition Binding="{Binding InfoChanged}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
