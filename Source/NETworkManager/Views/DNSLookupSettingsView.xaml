@@ -15,6 +15,7 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DNSLookupSettingsViewModel}">
     <UserControl.Resources>
         <converters:ListToStringConverter x:Key="ListToStringConverter" />
+        <converters:DNSServerInfoToServerListConverter x:Key="DNSServerInfoToServerListConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.DNSLookup}" Style="{StaticResource HeaderTextBlock}" />
@@ -45,10 +46,8 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:DNSServerInfo.Name)}" Width="1*" />
-                <!--
-                <DataGridTextColumn Header="{x:Static localization:Strings.DNSServers}" Binding="{Binding (network:DNSServerInfo), Converter={StaticResource ListToStringConverter}}" Width="2*" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:DNSServerInfo.Port)}" Width="80" />
-                -->
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.DNSoverHTTPS}" Binding="{Binding (network:DNSServerInfo.UseDoHServer)}" SortMemberPath="UseDoHServer" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Server}"  Binding="{Binding Path=., Converter={StaticResource DNSServerInfoToServerListConverter}}" Width="2*" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditDNSServerCommand}" Key="F2" />
