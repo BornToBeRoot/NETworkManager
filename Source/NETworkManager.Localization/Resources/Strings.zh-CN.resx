@@ -472,7 +472,7 @@
     <value>跳</value>
   </data>
   <data name="Hops" xml:space="preserve">
-    <value>跳</value>
+    <value>路由数</value>
   </data>
   <data name="Hostname" xml:space="preserve">
     <value>主机名</value>
@@ -3110,5 +3110,14 @@ $$hostname$$	--&gt;	主机名</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
     <value>远程会话已结束，因为已达到总登录时间限制。此限制由服务器管理员或网络策略设置。</value>
+  </data>
+  <data name="EnterValidHostname" xml:space="preserve">
+    <value>输入一个有效的主机名！</value>
+  </data>
+  <data name="EnterValidHostnameAndPort" xml:space="preserve">
+    <value>输入一个有效的主机名与端口！</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
+    <value>无法重新连接远程会话。</value>
   </data>
 </root>
