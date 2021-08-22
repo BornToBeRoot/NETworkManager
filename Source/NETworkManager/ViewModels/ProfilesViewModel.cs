@@ -89,7 +89,7 @@ namespace NETworkManager.ViewModels
         {
             _dialogCoordinator = instance;
 
-            Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
@@ -278,7 +278,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+                //ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
                 RefreshProfiles();
             }, instance =>
@@ -307,7 +307,7 @@ namespace NETworkManager.ViewModels
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileManager.ResetProfiles();
+                ProfileManager.Reset();
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

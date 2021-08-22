@@ -142,7 +142,7 @@ namespace NETworkManager
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+                //ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
 
                 viewModel.RefreshProfiles();
             }, async instance =>
@@ -165,9 +165,9 @@ namespace NETworkManager
         {
             ProfileManager.AddProfile(new ProfileInfo
             {
-                Name = instance.Name?.Trim(),
-                Host = instance.Host?.Trim(),
-                Group = instance.Group?.Trim(),
+                Name = instance.Name.Trim(),
+                Host = instance.Host.Trim(),
+                Group = instance.Group.Trim(),
                 Tags = instance.Tags?.Trim(),
 
                 NetworkInterface_Enabled = instance.NetworkInterface_Enabled,

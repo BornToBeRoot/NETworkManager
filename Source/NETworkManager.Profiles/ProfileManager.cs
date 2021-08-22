@@ -54,7 +54,7 @@ namespace NETworkManager.Profiles
             }
         }
 
-        public static ObservableCollection<ProfileInfo> Profiles { get; set; } = new ObservableCollection<ProfileInfo>();
+        public static ObservableCollection<GroupInfo> Groups { get; set; } = new ObservableCollection<GroupInfo>();
 
         public static bool ProfilesChanged { get; set; }
         #endregion
@@ -75,8 +75,6 @@ namespace NETworkManager.Profiles
         {
             // Load files
             LoadProfileFiles();
-
-            Profiles.CollectionChanged += Profiles_CollectionChanged;
         }
 
         #region Profiles locations (default, custom, portable)
@@ -170,7 +168,7 @@ namespace NETworkManager.Profiles
 
             CheckAndCreateDirectory();
 
-            SerializeToFile(profileFileInfo.Path, new List<ProfileInfo>());
+            SerializeToFile(profileFileInfo.Path, new List<GroupInfo>());
 
             ProfileFiles.Add(profileFileInfo);
         }
@@ -384,7 +382,8 @@ namespace NETworkManager.Profiles
                     var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
                     var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(profileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
 
-                    DeserializeFromByteArray(decryptedBytes).ForEach(AddProfile);
+
+                    DeserializeFromByteArray(decryptedBytes).ForEach(AddGroup);
 
                     // Password is valid
                     ProfileFiles.FirstOrDefault(x => x.Equals(profileFileInfo)).IsPasswordValid = true;
@@ -393,7 +392,7 @@ namespace NETworkManager.Profiles
                 }
                 else
                 {
-                    DeserializeFromFile(profileFileInfo.Path).ForEach(AddProfile);
+                    DeserializeFromFile(profileFileInfo.Path).ForEach(AddGroup);
                 }
             }
             else
@@ -427,7 +426,7 @@ namespace NETworkManager.Profiles
                 // Only if the password provided earlier was valid...
                 if (LoadedProfileFile.IsPasswordValid)
                 {
-                    byte[] decryptedBytes = SerializeToByteArray(new List<ProfileInfo>(Profiles));
+                    byte[] decryptedBytes = SerializeToByteArray(new List<GroupInfo>(Groups));
                     byte[] encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(LoadedProfileFile.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
 
                     File.WriteAllBytes(LoadedProfileFile.Path, encryptedBytes);
@@ -435,7 +434,7 @@ namespace NETworkManager.Profiles
             }
             else
             {
-                SerializeToFile(LoadedProfileFile.Path, new List<ProfileInfo>(Profiles));
+                SerializeToFile(LoadedProfileFile.Path, new List<GroupInfo>(Groups));
             }
 
             ProfilesChanged = false;
@@ -446,7 +445,7 @@ namespace NETworkManager.Profiles
             if (saveLoadedProfiles && LoadedProfileFile != null && ProfilesChanged)
                 Save();
 
-            ClearProfile();
+            Reset();
 
             Load(info);
         }
@@ -462,93 +461,159 @@ namespace NETworkManager.Profiles
         #endregion
 
         #region Serialize
-        private static void SerializeToFile(string filePath, List<ProfileInfo> profiles)
+        private static void SerializeToFile(string filePath, List<GroupInfo> groups)
         {
-            List<ProfileInfoSerializable> profilesSerializable = new List<ProfileInfoSerializable>();
+            List<GroupInfoSerializable> groupsSerializable = new();
 
-            string password = string.Empty;
+            string groupRemoteDesktopPassword = string.Empty;
 
-            foreach (ProfileInfo profile in profiles)
+            foreach (GroupInfo group in groups)
             {
-                if (profile.RemoteDesktop_Password != null)
-                    password = SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password);
+                List<ProfileInfoSerializable> profilesSerializable = new();
 
-                profilesSerializable.Add(new ProfileInfoSerializable(profile)
+                string profileRemoteDesktopPassword = string.Empty;
+
+                foreach (ProfileInfo profile in group.Profiles)
                 {
-                    RemoteDesktop_Password = password
+                    if (profile.RemoteDesktop_Password != null)
+                        profileRemoteDesktopPassword = SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password);
+
+                    profilesSerializable.Add(new ProfileInfoSerializable(profile)
+                    {
+                        RemoteDesktop_Password = profileRemoteDesktopPassword
+                    });
+                }
+
+                if (group.RemoteDesktop_Password != null)
+                    groupRemoteDesktopPassword = SecureStringHelper.ConvertToString(group.RemoteDesktop_Password);
+
+                groupsSerializable.Add(new GroupInfoSerializable(group)
+                {
+                    Profiles = profilesSerializable,
+                    RemoteDesktop_Password = groupRemoteDesktopPassword
                 });
             }
 
-            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfoSerializable>));
+            var xmlSerializer = new XmlSerializer(typeof(List<GroupInfoSerializable>));
 
             using var fileStream = new FileStream(filePath, FileMode.Create);
 
-            xmlSerializer.Serialize(fileStream, profilesSerializable);
+            xmlSerializer.Serialize(fileStream, groupsSerializable);
         }
 
-        private static byte[] SerializeToByteArray(List<ProfileInfo> profiles)
+        private static byte[] SerializeToByteArray(List<GroupInfo> groups)
         {
-            List<ProfileInfoSerializable> profilesSerializable = new List<ProfileInfoSerializable>();
+            List<GroupInfoSerializable> groupsSerializable = new();
 
-            string password = string.Empty;
+            string groupRemoteDesktopPassword = string.Empty;
 
-            foreach (ProfileInfo profile in profiles)
-            {
-                if (profile.RemoteDesktop_Password != null)
-                    password = SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password);
+            foreach (GroupInfo group in groups)
+            {                
+                List<ProfileInfoSerializable> profilesSerializable = new();
 
-                profilesSerializable.Add(new ProfileInfoSerializable(profile)
+                string profileRemoteDesktopPassword = string.Empty;
+
+                foreach (ProfileInfo profile in group.Profiles)
                 {
-                    RemoteDesktop_Password = password
+                    if (profile.RemoteDesktop_Password != null)
+                        profileRemoteDesktopPassword = SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password);
+
+                    profilesSerializable.Add(new ProfileInfoSerializable(profile)
+                    {
+                        RemoteDesktop_Password = profileRemoteDesktopPassword
+                    });
+                }
+
+                if (group.RemoteDesktop_Password != null)
+                    groupRemoteDesktopPassword = SecureStringHelper.ConvertToString(group.RemoteDesktop_Password);
+
+                groupsSerializable.Add(new GroupInfoSerializable(group)
+                {
+                    Profiles = profilesSerializable,
+                    RemoteDesktop_Password = groupRemoteDesktopPassword
                 });
             }
 
-            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfoSerializable>));
+            var xmlSerializer = new XmlSerializer(typeof(List<GroupInfoSerializable>));
 
             using var memoryStream = new MemoryStream();
 
             using var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8);
 
-            xmlSerializer.Serialize(streamWriter, profilesSerializable);
+            xmlSerializer.Serialize(streamWriter, groupsSerializable);
 
             return memoryStream.ToArray();
         }
         #endregion
 
         #region Deserialize
-        private static List<ProfileInfo> DeserializeFromFile(string filePath)
+        private static List<GroupInfo> DeserializeFromFile(string filePath)
         {
-            var profiles = new List<ProfileInfo>();
+            List<GroupInfo> groups = new();
 
-            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfoSerializable>));
+            XmlSerializer xmlSerializer = new(typeof(List<GroupInfoSerializable>));
 
-            using (var fileStream = new FileStream(filePath, FileMode.Open))
+            using (FileStream fileStream = new(filePath, FileMode.Open))
             {
-                ((List<ProfileInfoSerializable>)xmlSerializer.Deserialize(fileStream)).ForEach(x => profiles.Add(new ProfileInfo(x)
+                foreach (GroupInfoSerializable groupSerializable in (List<GroupInfoSerializable>)xmlSerializer.Deserialize(fileStream))
                 {
-                    // Convert passwort to secure string
-                    RemoteDesktop_Password = !string.IsNullOrEmpty(x.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(x.RemoteDesktop_Password) : null
-                }));
+                    ObservableCollection<ProfileInfo> profiles = new();
+
+                    foreach (ProfileInfoSerializable profileSerializable in groupSerializable.Profiles)
+                    {
+                        ProfileInfo profile = new(profileSerializable)
+                        {
+                            RemoteDesktop_Password = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_Password) : null
+                        };
+
+                        profiles.Add(profile);
+                    }
+
+                    groups.Add(new(groupSerializable)
+                    {
+                        Profiles = profiles,
+
+                        // Convert passwort to secure string
+                        RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password) : null
+                    });
+                }
             }
 
-            return profiles;
+            return groups;
         }
 
-        private static List<ProfileInfo> DeserializeFromByteArray(byte[] xml)
+        private static List<GroupInfo> DeserializeFromByteArray(byte[] xml)
         {
-            var profiles = new List<ProfileInfo>();
+            List<GroupInfo> groups = new();
 
-            var xmlSerializer = new XmlSerializer(typeof(List<ProfileInfoSerializable>));
+            XmlSerializer xmlSerializer = new(typeof(List<GroupInfoSerializable>));
 
             using var memoryStream = new MemoryStream(xml);
 
-            ((List<ProfileInfoSerializable>)xmlSerializer.Deserialize(memoryStream)).ForEach(x => profiles.Add(new ProfileInfo(x)
+            foreach (GroupInfoSerializable groupSerializable in (List<GroupInfoSerializable>)xmlSerializer.Deserialize(memoryStream))
             {
-                // Convert passwort to secure string
-                RemoteDesktop_Password = !string.IsNullOrEmpty(x.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(x.RemoteDesktop_Password) : null
-            }));
+                ObservableCollection<ProfileInfo> profiles = new();
 
-            return profiles;
+                foreach (ProfileInfoSerializable profileSerializable in groupSerializable.Profiles)
+                {
+                    ProfileInfo profile = new(profileSerializable)
+                    {
+                        RemoteDesktop_Password = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_Password) : null
+                    };
+
+                    profiles.Add(profile);
+                }
+
+                groups.Add(new(groupSerializable)
+                {
+                    Profiles = profiles,
+
+                    // Convert passwort to secure string
+                    RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password) : null
+                });
+            }
+
+            return groups;
         }
         #endregion               
 
@@ -583,30 +648,93 @@ namespace NETworkManager.Profiles
         }
         #endregion
 
-        #region Reset profiles
-        public static void ResetProfiles()
+        #region Reset groups / profiles
+        public static void Reset()
         {
-            Profiles.Clear();
+            Groups.Clear();
+
+            ProfilesHasChanged();
         }
         #endregion
 
-        #region Add profile, Remove profile, Rename group
-        /// <summary>
-        /// Add a profile.
-        /// </summary>
-        /// <param name="profile"><see cref="ProfileInfo"/> to add.</param>
-        public static void AddProfile(ProfileInfo profile)
+        #region Add group, remove group, get groups
+        public static void AddGroup(GroupInfo group)
         {
             // Possible fix for appcrash --> when icollection view is refreshed...
             System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 //lock (Profiles)
-                Profiles.Add(profile);
+                Groups.Add(group);
             }));
+
+            ProfilesHasChanged();
+        }
+
+        public static void RemoveGroup(GroupInfo group)
+        {
+            // Possible fix for appcrash --> when icollection view is refreshed...
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                //lock (Profiles)
+                Groups.Remove(group);
+            }));
+
+            ProfilesHasChanged();
         }
 
         /// <summary>
-        /// Remove a profile.
+        /// Method to get a list of all groups.
+        /// </summary>
+        /// <returns>List of groups.</returns>
+        public static List<string> GetGroups()
+        {
+            var list = new List<string>();
+
+            foreach (var groups in Groups)
+                list.Add(groups.Name);
+
+            return list;
+        }
+
+        public static bool GroupExists(string name)
+        {
+            foreach (GroupInfo group in Groups)
+            {
+                if (group.Name == name)
+                    return true;
+            }
+
+            return false;
+        }
+        public static bool GroupProfilesIsEmpty(string name)
+        {
+            return Groups.FirstOrDefault(x => x.Name == name).Profiles.Count == 0;
+        }
+
+        #endregion
+
+        #region Add profile, remove profile
+        /// <summary>
+        /// Add a profile to a group.
+        /// </summary>
+        /// <param name="profile"><see cref="ProfileInfo"/> to add.</param>
+        public static void AddProfile(ProfileInfo profile)
+        {
+            if (!GroupExists(profile.Group))
+                AddGroup(new GroupInfo(profile.Group));
+
+            // Possible fix for appcrash --> when icollection view is refreshed...
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                //lock (Profiles)
+                Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Add(profile);
+            }));
+
+            ProfilesHasChanged();
+        }
+
+        /// <summary>
+        /// Remove a profile from a group.
         /// </summary>
         /// <param name="profile"><see cref="ProfileInfo"/> to remove.</param>
         public static void RemoveProfile(ProfileInfo profile)
@@ -615,27 +743,23 @@ namespace NETworkManager.Profiles
             System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 //lock (Profiles)
-                Profiles.Remove(profile);
+                Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Remove(profile);
             }));
-        }
 
-        public static void ClearProfile()
-        {
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                Profiles.Clear();
-            }));
+            ProfilesHasChanged();
         }
+        #endregion
 
         /// <summary>
         /// Method to rename a group.
         /// </summary>
         /// <param name="oldGroup">Old name of the group.</param>
         /// <param name="group">New name of the group.</param>
+        /*
         public static void RenameGroup(string oldGroup, string group)
         {
             // Go through all groups
-            foreach (var profile in Profiles)
+            foreach (var profile in Groups)
             {
                 // Find specific group
                 if (profile.Group != oldGroup)
@@ -647,32 +771,11 @@ namespace NETworkManager.Profiles
                 ProfilesChanged = true;
             }
         }
-        #endregion
+        */
 
-        #region GetGroups
-        /// <summary>
-        /// Method to get a list of all groups.
-        /// </summary>
-        /// <returns>List of groups.</returns>
-        public static List<string> GetGroups()
-        {
-            var list = new List<string>();
-
-            foreach (var profile in Profiles)
-            {
-                if (!list.Contains(profile.Group))
-                    list.Add(profile.Group);
-            }
-
-            return list;
-        }
-        #endregion
-
-        #region Collection changed   
-        private static void Profiles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        public static void ProfilesHasChanged()
         {
             ProfilesChanged = true;
         }
-        #endregion
     }
 }

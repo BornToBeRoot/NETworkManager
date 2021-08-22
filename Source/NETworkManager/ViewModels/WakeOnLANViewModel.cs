@@ -259,7 +259,7 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
