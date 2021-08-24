@@ -3075,7 +3075,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Use custom IPv6 address API</value>
   </data>
   <data name="TimeToLive" xml:space="preserve">
-    <value>Time to live</value>    
+    <value>Time to live</value>
   </data>
   <data name="ChassisId" xml:space="preserve">
     <value>Chassis Id</value>
@@ -3100,5 +3100,14 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
     <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
+  </data>
+  <data name="EnterValidHostname" xml:space="preserve">
+    <value>Enter a valid hostname!</value>
+  </data>
+  <data name="EnterValidHostnameAndPort" xml:space="preserve">
+    <value>Enter a valid hostname and port!</value>
+  </data>
+  <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
+    <value>Unable to reconnect to the remote session.</value>
   </data>
 </root>
