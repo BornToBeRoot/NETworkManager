@@ -13,8 +13,11 @@ jobs:
   analyze:
     name: Analyze
     runs-on: windows-latest
-    if: "!contains(github.event.head_commit.message, 'Apply translations in')"
-
+    # Ignore dependabot, ImgBot and transifex-integration
+    if: github.actor!= 'dependabot[bot]' &&
+        github.actor!= 'imgbot[bot]' &&
+        github.actor!= 'transifex-integration[bot]'
+    
     strategy:
       fail-fast: false
       matrix:
