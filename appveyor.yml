@@ -8,6 +8,6 @@ before_build:
   - dotnet restore .\Source\NETworkManager.sln
 build_script:
   - dotnet build .\Source\NETworkManager.sln --configuration Release --no-restore
-install:
-  - ps: Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
-  - ps: '& $env:temp\dotnet-install.ps1 -Architecture x64 -Version "5.0.301" -InstallDir "$env:ProgramFiles\dotnet"'
+#install:
+#  - ps: Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
+#  - ps: '& $env:temp\dotnet-install.ps1 -Architecture x64 -Version "5.0.302" -InstallDir "$env:ProgramFiles\dotnet"'
