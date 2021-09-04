@@ -31,6 +31,11 @@ $SetupContent = Get-Content -Path $InnoSetupFile -Encoding utf8
 $SetupContent = $SetupContent -replace $PatternSetupVersion,"#define MyAppVersion ""$($VersionString)"""
 $SetupContent | Set-Content -Path $InnoSetupFile -Encoding utf8
 
+### Warnings ###
+# CS4014 - Call is not awaited
+# NU1701 - Target framework is .NET Framework
+# CS1591 - Missing XML comment
+
 # Dotnet clean, restore, build and publish
 dotnet clean "$PSScriptRoot\Source\NETworkManager.sln"
 dotnet restore "$PSScriptRoot\Source\NETworkManager.sln"
@@ -58,13 +63,31 @@ Compress-Archive -Path "$BuildPath\NETworkManager" -DestinationPath "$BuildPath\
 Remove-Item -Path "$BuildPath\NETworkManager\IsPortable.settings"
 
 # Installer Build
-$InnoSetupCompiler = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+$InnoSetupPath = "${env:ProgramFiles(x86)}\Inno Setup 6"
 
-if (Test-Path -Path $InnoSetupCompiler) {
-    Start-Process -FilePath $InnoSetupCompiler -ArgumentList """$PSScriptRoot\InnoSetup.iss""" -NoNewWindow -Wait
+$InnoSetupLanguageMissing = $false
+
+if(-not(Test-Path -Path "$InnoSetupPath\Languages\ChineseSimplified.isl"))
+{
+    Write-Host "ChineseSimplified.isl not found in InnoSetup language folder.`nDownload URL: https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/ChineseSimplified.isl" -ForegroundColor Yellow
+    $InnoSetupLanguageMissing = $true
 }
-else {
-    Write-Host "InnoSetup not installed or not found. Skip installer build..." -ForegroundColor Yellow
+
+if(-not(Test-Path -Path "$InnoSetupPath\Languages\ChineseTraditional.isl"))
+{
+    Write-Host "ChineseTraditional.isl not found in InnoSetup language folder.`nDownload URL: https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/ChineseTraditional.isl" -ForegroundColor Yellow
+    $InnoSetupLanguageMissing = $true
+}
+
+$InnoSetupCompiler = "$InnoSetupPath\ISCC.exe"
+
+if(-not(Test-Path -Path $InnoSetupCompiler) -or $InnoSetupLanguageMissing)
+{
+    Write-Host "InnoSetup is not installed correctly. Skip installer build..." -ForegroundColor Cyan
+}
+else
+{
+    Start-Process -FilePath $InnoSetupCompiler -ArgumentList """$PSScriptRoot\InnoSetup.iss""" -NoNewWindow -Wait
 }
 
 # SHA256 file hash
