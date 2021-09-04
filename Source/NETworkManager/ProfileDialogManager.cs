@@ -104,12 +104,12 @@ namespace NETworkManager
 
         public static async Task ShowDeleteProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
         {
-            var customDialog = new CustomDialog
+            CustomDialog customDialog = new CustomDialog
             {
                 Title = Localization.Resources.Strings.DeleteProfile
             };
 
-            var confirmDeleteViewModel = new ConfirmDeleteViewModel(async instance =>
+            ConfirmDeleteViewModel confirmDeleteViewModel = new ConfirmDeleteViewModel(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
@@ -132,17 +132,17 @@ namespace NETworkManager
 
         public static async Task ShowEditGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, string group)
         {
-            var customDialog = new CustomDialog
+            CustomDialog customDialog = new CustomDialog
             {
                 Title = Localization.Resources.Strings.EditGroup
             };
 
-            var editGroupViewModel = new GroupViewModel(async instance =>
+            GroupViewModel editGroupViewModel = new GroupViewModel(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-
-                //ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+                
+                ProfileManager.RenameGroup(group, instance.Group);
 
                 viewModel.RefreshProfiles();
             }, async instance =>

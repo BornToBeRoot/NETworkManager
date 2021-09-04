@@ -2,6 +2,7 @@
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
+using System.Collections.Generic;
 using System.Security;
 using System.Xml.Serialization;
 

@@ -210,6 +210,8 @@ namespace NETworkManager.ViewModels
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.WebConsole_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
+            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
+
             _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
@@ -467,6 +469,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Event
+        private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
+        {
+            RefreshProfiles();
+        }
+
         private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
         {
             StopDelayedSearch();

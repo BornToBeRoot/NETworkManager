@@ -727,6 +727,9 @@ namespace NETworkManager.Profiles
                 // Rename the group
                 group.Name = @newGroup?.Trim();
 
+                foreach (ProfileInfo profile in group.Profiles)
+                    profile.Group = newGroup?.Trim();
+
                 ProfilesUpdated();
             }
         }

@@ -19,6 +19,7 @@ using System.Windows.Threading;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace NETworkManager.ViewModels
 {
@@ -198,6 +199,8 @@ namespace NETworkManager.ViewModels
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PuTTY_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
+            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
+
             _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
@@ -376,7 +379,7 @@ namespace NETworkManager.ViewModels
                 AddProfileToHistory(instance.Profile);
 
                 // Create Profile info
-                var info = new PuTTYSessionInfo
+                PuTTYSessionInfo info = new PuTTYSessionInfo
                 {
                     HostOrSerialLine = instance.ConnectionMode == ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
@@ -417,7 +420,7 @@ namespace NETworkManager.ViewModels
             // Create log path
             DirectoryCreator.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
 
-            var info = new ProcessStartInfo
+            ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
                 Arguments = PuTTY.BuildCommandLine(NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile))
@@ -457,7 +460,7 @@ namespace NETworkManager.ViewModels
         private static void AddSerialLineToHistory(string serialLine)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory.ToList(), serialLine, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory.ToList(), serialLine, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_SerialLineHistory.Clear();
@@ -469,7 +472,7 @@ namespace NETworkManager.ViewModels
         private static void AddPortToHistory(string port)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_PortHistory.Clear();
@@ -481,7 +484,7 @@ namespace NETworkManager.ViewModels
         private static void AddBaudToHistory(string baud)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), baud, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), baud, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_BaudHistory.Clear();
@@ -493,7 +496,7 @@ namespace NETworkManager.ViewModels
         private static void AddUsernameToHistory(string username)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), username, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), username, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_UsernameHistory.Clear();
@@ -505,7 +508,7 @@ namespace NETworkManager.ViewModels
         private static void AddPrivateKeyToHistory(string host)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_PrivateKeyFileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_PrivateKeyFileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_PrivateKeyFileHistory.Clear();
@@ -517,7 +520,7 @@ namespace NETworkManager.ViewModels
         private static void AddProfileToHistory(string host)
         {
             // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
 
             // Clear the old items
             SettingsManager.Current.PuTTY_ProfileHistory.Clear();
@@ -601,6 +604,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Event
+        private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
+        {
+            RefreshProfiles();
+        }
+
         private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
         {
             StopDelayedSearch();
