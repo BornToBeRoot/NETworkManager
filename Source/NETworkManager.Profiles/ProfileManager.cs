@@ -36,8 +36,9 @@ namespace NETworkManager.Profiles
         /// </summary>
         public static string ProfileFileExtensionEncrypted => ".encrypted";
 
-        public static string TagIdentifier => "tag=";
-
+        /// <summary>
+        /// ObservableCollection of all profile files.
+        /// </summary>
         public static ObservableCollection<ProfileFileInfo> ProfileFiles { get; set; } = new ObservableCollection<ProfileFileInfo>();
 
         private static ProfileFileInfo _profileFileInfo;
@@ -54,7 +55,7 @@ namespace NETworkManager.Profiles
             }
         }
 
-        public static ObservableCollection<GroupInfo> Groups { get; set; } = new ObservableCollection<GroupInfo>();
+        public static List<GroupInfo> Groups { get; set; } = new List<GroupInfo>();
 
         public static bool ProfilesChanged { get; set; }
         #endregion
@@ -69,11 +70,19 @@ namespace NETworkManager.Profiles
         {
             OnLoadedProfileFileChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo));
         }
+
+        public static event EventHandler OnProfilesUpdated;
+
+        private static void ProfilesUpdated()
+        {
+            ProfilesChanged = true;
+
+            OnProfilesUpdated?.Invoke(null, EventArgs.Empty);
+        }
         #endregion
 
         static ProfileManager()
         {
-            // Load files
             LoadProfileFiles();
         }
 
@@ -382,8 +391,7 @@ namespace NETworkManager.Profiles
                     var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
                     var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(profileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
 
-
-                    DeserializeFromByteArray(decryptedBytes).ForEach(AddGroup);
+                    AddGroups(DeserializeFromByteArray(decryptedBytes));
 
                     // Password is valid
                     ProfileFiles.FirstOrDefault(x => x.Equals(profileFileInfo)).IsPasswordValid = true;
@@ -392,7 +400,7 @@ namespace NETworkManager.Profiles
                 }
                 else
                 {
-                    DeserializeFromFile(profileFileInfo.Path).ForEach(AddGroup);
+                    AddGroups(DeserializeFromFile(profileFileInfo.Path));
                 }
             }
             else
@@ -449,18 +457,14 @@ namespace NETworkManager.Profiles
 
             Load(info);
         }
-
-        private static void CheckAndCreateDirectory()
-        {
-            var location = GetProfilesLocation();
-
-            if (!Directory.Exists(location))
-                Directory.CreateDirectory(location);
-        }
-
         #endregion
 
-        #region Serialize
+        #region Serialize and deserialize
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="groups"></param>
         private static void SerializeToFile(string filePath, List<GroupInfo> groups)
         {
             List<GroupInfoSerializable> groupsSerializable = new();
@@ -501,6 +505,11 @@ namespace NETworkManager.Profiles
             xmlSerializer.Serialize(fileStream, groupsSerializable);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="groups"></param>
+        /// <returns></returns>
         private static byte[] SerializeToByteArray(List<GroupInfo> groups)
         {
             List<GroupInfoSerializable> groupsSerializable = new();
@@ -508,7 +517,7 @@ namespace NETworkManager.Profiles
             string groupRemoteDesktopPassword = string.Empty;
 
             foreach (GroupInfo group in groups)
-            {                
+            {
                 List<ProfileInfoSerializable> profilesSerializable = new();
 
                 string profileRemoteDesktopPassword = string.Empty;
@@ -544,9 +553,12 @@ namespace NETworkManager.Profiles
 
             return memoryStream.ToArray();
         }
-        #endregion
 
-        #region Deserialize
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath">Path of an XML file.</param>
+        /// <returns>List of <see cref="GroupInfo"/>.</returns>
         private static List<GroupInfo> DeserializeFromFile(string filePath)
         {
             List<GroupInfo> groups = new();
@@ -582,6 +594,11 @@ namespace NETworkManager.Profiles
             return groups;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="xml">XML as <see cref="Byte"/> Array.</param>
+        /// <returns>List of <see cref="GroupInfo"/>.</returns>
         private static List<GroupInfo> DeserializeFromByteArray(byte[] xml)
         {
             List<GroupInfo> groups = new();
@@ -648,45 +665,77 @@ namespace NETworkManager.Profiles
         }
         #endregion
 
-        #region Reset groups / profiles
-        public static void Reset()
-        {
-            Groups.Clear();
-
-            ProfilesHasChanged();
-        }
-        #endregion
-
         #region Add group, remove group, get groups
-        public static void AddGroup(GroupInfo group)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="groups"></param>
+        public static void AddGroups(List<GroupInfo> groups)
         {
-            // Possible fix for appcrash --> when icollection view is refreshed...
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                //lock (Profiles)
+            foreach (GroupInfo group in groups)
                 Groups.Add(group);
-            }));
 
-            ProfilesHasChanged();
-        }
-
-        public static void RemoveGroup(GroupInfo group)
-        {
-            // Possible fix for appcrash --> when icollection view is refreshed...
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                //lock (Profiles)
-                Groups.Remove(group);
-            }));
-
-            ProfilesHasChanged();
+            ProfilesUpdated();
         }
 
         /// <summary>
-        /// Method to get a list of all groups.
+        /// 
         /// </summary>
-        /// <returns>List of groups.</returns>
-        public static List<string> GetGroups()
+        /// <param name="group"></param>
+        public static void AddGroup(GroupInfo group)
+        {
+            // Possible fix for appcrash --> when icollection view is refreshed...
+            //System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            //{
+            //lock (Profiles)
+            Groups.Add(group);
+            //}));
+
+            ProfilesUpdated();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="group"></param>
+        public static void RemoveGroup(GroupInfo group)
+        {
+            // Possible fix for appcrash --> when icollection view is refreshed...
+            //System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            //{
+            //lock (Profiles)
+            Groups.Remove(group);
+            //}));
+
+            ProfilesUpdated();
+        }
+
+        /// <summary>
+        /// Method to rename a group.
+        /// </summary>
+        /// <param name="oldGroup">Old name of the group.</param>
+        /// <param name="newGroup">New name of the group.</param>
+        public static void RenameGroup(string oldGroup, string newGroup)
+        {
+            // Go through all groups
+            foreach (GroupInfo group in Groups)
+            {
+                // Find specific group
+                if (group.Name != oldGroup)
+                    continue;
+
+                // Rename the group
+                group.Name = @newGroup?.Trim();
+
+                ProfilesUpdated();
+            }
+        }
+
+        /// <summary>
+        /// Method to get a list of all group names.
+        /// </summary>
+        /// <returns>List of group names.</returns>
+        public static List<string> GetGroupNames()
         {
             var list = new List<string>();
 
@@ -696,6 +745,11 @@ namespace NETworkManager.Profiles
             return list;
         }
 
+        /// <summary>
+        /// Method to check if a profile exists.
+        /// </summary>
+        /// <param name="name">Name of the group.</param>
+        /// <returns>True if the profile exists.</returns>
         public static bool GroupExists(string name)
         {
             foreach (GroupInfo group in Groups)
@@ -706,11 +760,16 @@ namespace NETworkManager.Profiles
 
             return false;
         }
-        public static bool GroupProfilesIsEmpty(string name)
+
+        /// <summary>
+        /// Method checks if a group has profiles.
+        /// </summary>
+        /// <param name="name">Name of the group</param>
+        /// <returns>True if the group has no profiles.</returns>
+        public static bool IsGroupEmpty(string name)
         {
             return Groups.FirstOrDefault(x => x.Name == name).Profiles.Count == 0;
         }
-
         #endregion
 
         #region Add profile, remove profile
@@ -724,13 +783,13 @@ namespace NETworkManager.Profiles
                 AddGroup(new GroupInfo(profile.Group));
 
             // Possible fix for appcrash --> when icollection view is refreshed...
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                //lock (Profiles)
-                Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Add(profile);
-            }));
+            //System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            //{
+            //lock (Profiles)
+            Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Add(profile);
+            //}));
 
-            ProfilesHasChanged();
+            ProfilesUpdated();
         }
 
         /// <summary>
@@ -740,42 +799,37 @@ namespace NETworkManager.Profiles
         public static void RemoveProfile(ProfileInfo profile)
         {
             // Possible fix for appcrash --> when icollection view is refreshed...
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                //lock (Profiles)
-                Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Remove(profile);
-            }));
+            //System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            //{
+            //lock (Profiles)
+            Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Remove(profile);
+            //}));
 
-            ProfilesHasChanged();
+            ProfilesUpdated();
         }
         #endregion
 
+        #region Helper       
         /// <summary>
-        /// Method to rename a group.
+        /// Method to reset the profiles.
         /// </summary>
-        /// <param name="oldGroup">Old name of the group.</param>
-        /// <param name="group">New name of the group.</param>
-        /*
-        public static void RenameGroup(string oldGroup, string group)
+        public static void Reset()
         {
-            // Go through all groups
-            foreach (var profile in Groups)
-            {
-                // Find specific group
-                if (profile.Group != oldGroup)
-                    continue;
+            Groups.Clear();
 
-                // Rename the group
-                profile.Group = @group?.Trim();
-
-                ProfilesChanged = true;
-            }
+            ProfilesUpdated();
         }
-        */
 
-        public static void ProfilesHasChanged()
+        /// <summary>
+        /// Create directory if it does not exist.
+        /// </summary>
+        private static void CheckAndCreateDirectory()
         {
-            ProfilesChanged = true;
+            var location = GetProfilesLocation();
+
+            if (!Directory.Exists(location))
+                Directory.CreateDirectory(location);
         }
+        #endregion
     }
 }

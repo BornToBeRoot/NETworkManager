@@ -198,8 +198,10 @@ namespace NETworkManager.ViewModels
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
+                /*
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
                     return !string.IsNullOrEmpty(info.Tags) && info.WebConsole_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                */
 
                 // Search by: Name, WebConsole_Url
                 return info.WebConsole_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.WebConsole_Url.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);

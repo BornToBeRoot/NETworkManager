@@ -104,8 +104,10 @@ namespace NETworkManager.ViewModels
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
+                /*
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
                     return !string.IsNullOrEmpty(info.Tags) && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                */
 
                 // Search by: Name, IPScanner_IPRange
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
@@ -175,7 +177,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups());
+            }, ProfileManager.GetGroupNames());
 
             customDialog.Content = new ProfileDialog
             {
@@ -203,7 +205,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), ProfileEditMode.Edit, SelectedProfile);
+            }, ProfileManager.GetGroupNames(), ProfileEditMode.Edit, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -229,7 +231,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), ProfileEditMode.Copy, SelectedProfile);
+            }, ProfileManager.GetGroupNames(), ProfileEditMode.Copy, SelectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -284,7 +286,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, group.ToString(), ProfileManager.GetGroups());
+            }, group.ToString(), ProfileManager.GetGroupNames());
 
             customDialog.Content = new GroupDialog
             {

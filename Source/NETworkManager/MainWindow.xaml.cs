@@ -330,8 +330,8 @@ namespace NETworkManager
             // Register event system...
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
             //EventSystem.RedirectProfileToApplicationEvent += EventSystem_RedirectProfileToApplicationEvent;
-            EventSystem.RedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
-            EventSystem.RedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
+            EventSystem.OnRedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
+            EventSystem.OnRedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
 
             _isLoading = false;
         }
@@ -1033,7 +1033,6 @@ namespace NETworkManager
             _isProfileUpdating = false;
         }
         #endregion
-
 
         #region Handle WndProc messages (Single instance, handle HotKeys)
         private HwndSource _hwndSoure;

@@ -347,7 +347,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), ProfileEditMode.Add, profileInfo);
+            }, ProfileManager.GetGroupNames(), ProfileEditMode.Add, profileInfo);
 
             customDialog.Content = new ProfileDialog
             {

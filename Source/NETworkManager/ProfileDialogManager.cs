@@ -30,7 +30,7 @@ namespace NETworkManager
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, ProfileManager.GetGroups());
+            }, ProfileManager.GetGroupNames());
 
             customDialog.Content = new ProfileDialog
             {
@@ -62,7 +62,7 @@ namespace NETworkManager
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, ProfileManager.GetGroups(), ProfileEditMode.Edit, selectedProfile);
+            }, ProfileManager.GetGroupNames(), ProfileEditMode.Edit, selectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -91,7 +91,7 @@ namespace NETworkManager
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, ProfileManager.GetGroups(), ProfileEditMode.Copy, selectedProfile);
+            }, ProfileManager.GetGroupNames(), ProfileEditMode.Copy, selectedProfile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -149,7 +149,7 @@ namespace NETworkManager
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, group, ProfileManager.GetGroups());
+            }, group, ProfileManager.GetGroupNames());
 
             customDialog.Content = new GroupDialog
             {
