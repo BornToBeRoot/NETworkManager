@@ -18,12 +18,13 @@ Date: **xx.0x.2021**
 
 ## What's new?
 - Czech added [#1221](https://github.com/BornToBeRoot/NETworkManager/pull/1221){:target="_blank"}
+- Chinese added to InnoSetup [#1224](https://github.com/BornToBeRoot/NETworkManager/pull/1224){:target="_blank"}
 
 ## Improvements
 - Remote Desktop - Connection dialog now allows `hostname:port` [#1214](https://github.com/BornToBeRoot/NETworkManager/issues/1214){:target="_blank"}
 
 ## Bugfixes
-- Remote Desktop - Settings when connecting without profile were ignored [#1214](https://github.com/BornToBeRoot/NETworkManager/issues/1214){:target="_blank"}
+- Remote Desktop - Settings when connecting without profile are now applied [#1214](https://github.com/BornToBeRoot/NETworkManager/issues/1214){:target="_blank"}
 
 ## Other
 - Language files updates [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
