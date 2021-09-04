@@ -55,7 +55,7 @@ $Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$BuildPath\NETw
 Get-ChildItem -Recurse | Where-Object {$_.Name.EndsWith(".pdb")} | Remove-Item
 
 # Archiv Build
-Compress-Archive -Path "$BuildPath\NETworkManager" -DestinationPath "$BuildPath\NETworkManager_$($Version)_Archiv.zip"
+Compress-Archive -Path "$BuildPath\NETworkManager" -DestinationPath "$BuildPath\NETworkManager_$($Version)_Archive.zip"
 
 # Portable Build
 New-Item -Path "$BuildPath\NETworkManager" -Name "IsPortable.settings" -ItemType File
