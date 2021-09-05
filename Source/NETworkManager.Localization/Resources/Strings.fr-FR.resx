@@ -3102,12 +3102,12 @@ Activez le cryptage des fichiers de profil dans Paramètres&gt; Profil pour stoc
     <value>La session à distance s'est terminée car la limite de temps de connexion totale a été atteinte. Cette limite est définie par l'administrateur du serveur ou par les politiques de réseau.</value>
   </data>
   <data name="EnterValidHostname" xml:space="preserve">
-    <value>Enter a valid hostname!</value>
+    <value>Entrez un nom d'hôte valide!</value>
   </data>
   <data name="EnterValidHostnameAndPort" xml:space="preserve">
-    <value>Enter a valid hostname and port!</value>
+    <value>Entrez un nom d'hôte et un port valides!</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
-    <value>Unable to reconnect to the remote session.</value>
+    <value>Impossible de se reconnecter à la session distante.</value>
   </data>
 </root>
