@@ -116,6 +116,8 @@ namespace NETworkManager.ViewModels
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
             SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
 
+            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
+
             _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
         }
@@ -350,10 +352,15 @@ namespace NETworkManager.ViewModels
         public void RefreshProfiles()
         {
             Profiles.Refresh();
-        }        
+        }
         #endregion
 
         #region Event
+        private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
+        {
+            RefreshProfiles();
+        }
+
         private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
         {
             StopDelayedSearch();
