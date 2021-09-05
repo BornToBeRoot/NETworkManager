@@ -40,6 +40,7 @@
 </div>
 
 # More informations
+- [Features](https://borntoberoot.net/NETworkManager/Features)
 - [Download](https://borntoberoot.net/NETworkManager/Download)
 - [Changelog](https://borntoberoot.net/NETworkManager/Changelog)
 - [Documentation](https://borntoberoot.net/NETworkManager/Documentation/Application)
