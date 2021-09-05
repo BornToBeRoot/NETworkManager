@@ -34,8 +34,10 @@
                 </Grid.ColumnDefinitions>
                 <TextBox x:Name="TextBoxSearch" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
             </Grid>
-            <controls:MultiSelectDataGrid x:Name="DataGridProfiles" Grid.Row="2" Style="{StaticResource MahApps.Styles.DataGrid}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True"
+            <controls:MultiSelectDataGrid x:Name="DataGridProfiles" Grid.Row="2" Style="{StaticResource MahApps.Styles.DataGrid}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false"
                                       ScrollViewer.CanContentScroll="True"
+                                      EnableColumnVirtualization="True"
+                                      EnableRowVirtualization="True"
                                       VirtualizingPanel.IsVirtualizing="True"
                                       VirtualizingPanel.IsVirtualizingWhenGrouping="True"    
                                       VirtualizingPanel.IsContainerVirtualizable="True"
