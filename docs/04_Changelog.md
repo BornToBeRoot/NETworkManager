@@ -6,29 +6,28 @@ description: "Changelog and download links of all available versions."
 permalink: /Changelog
 ---
 
-<!--
-# Version 2021.x.xx.0
-Date: **xx.0x.2021**
+# Version 2021.9.5.0
+Date: **05.09.2021**
 
 | File | Checksum [SHA256] |
 |---|---|
-|[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Setup.exe){:target="_blank"}| `EAA8D1CC1F76FABD0C26DF70B9E23A21F9F83355D70D0FCCD43E5677A1AE7EAE` |
-|[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Portable.zip){:target="_blank"}| `02A98625966C6229E4EC23463B3B7607365668CC1B63F47D563C26FF764710CE` |
-|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.6.26.0/NETworkManager_2021.6.26.0_Archive.zip){:target="_blank"}| `3C23B74EEBC8CF113D8F536F6D9D2BBC6CB3CCF1BABEF0275B9101D84A45ADDB` |
+|[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.9.5.0/NETworkManager_2021.9.5.0_Setup.exe){:target="_blank"}| `883188AD58FB936FCA82846A261840F67E19734C20093996CBCDA75F4CE41EAA` |
+|[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.9.5.0/NETworkManager_2021.9.5.0_Portable.zip){:target="_blank"}| `F186755939FC2A5A07C2D5BDED59128189D16968FD61DF8E17C100E181B3C39D` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.9.5.0/NETworkManager_2021.9.5.0_Archive.zip){:target="_blank"}| `E9680A1C52270A5B2AB192AADE08563CB3509CDCD3EF3F9BA2603CE3BB84DF45` |
 
 ## What's new?
 - Czech added [#1221](https://github.com/BornToBeRoot/NETworkManager/pull/1221){:target="_blank"}
+- Chinese added to InnoSetup [#1224](https://github.com/BornToBeRoot/NETworkManager/pull/1224){:target="_blank"}
 
 ## Improvements
 - Remote Desktop - Connection dialog now allows `hostname:port` [#1214](https://github.com/BornToBeRoot/NETworkManager/issues/1214){:target="_blank"}
 
 ## Bugfixes
-- Remote Desktop - Settings when connecting without profile were ignored [#1214](https://github.com/BornToBeRoot/NETworkManager/issues/1214){:target="_blank"}
+- Remote Desktop - Settings when connecting without profile are now applied [#1214](https://github.com/BornToBeRoot/NETworkManager/issues/1214){:target="_blank"}
 
 ## Other
 - Language files updates [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="_blank"}
--->
 
 # Version 2021.6.26.0
 Date: **26.06.2021**

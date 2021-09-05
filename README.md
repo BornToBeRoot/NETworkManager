@@ -50,14 +50,15 @@
 # Build
 __Requirements__
 - [SDK .NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
-- Visual Studio with `.NET desktop development` and `Universal Windows Platform development` 
+- Visual Studio 2019 or later with `.NET desktop development` and `Universal Windows Platform development` 
 
 __Optional__
 - [InnoSetup](https://jrsoftware.org/isinfo.php) (if you want to create an installer)
+  - Download `ChineseSimplified.isl` and `ChineseTraditional.isl` from the [official repo](https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/) and place them in the language folder of InnoSetup
 
-__Steps__
-1. Clone or download the repository
-2. Run the `.\build.ps1` script with PowerShell (alternatively open the `Source/NETworkManager.sln` in Visual Studio)
+__Build__
+1. Clone or download the repository: `git clone https://github.com/BornToBeRoot/NETworkManager`
+2. Run the `.\build.ps1` script with PowerShell to compile the solution and create a portable and a setup version (or open the file `Source/NETworkManager.sln` in Visual Studio to debug or build the solution)
 
 You can also copy & paste this command in your PowerShell console :smile:
 ```PowerShell
