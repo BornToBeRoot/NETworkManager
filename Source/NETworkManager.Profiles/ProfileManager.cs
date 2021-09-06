@@ -198,7 +198,7 @@ namespace NETworkManager.Profiles
                 switchProfile = true;
             }
 
-            ProfileFileInfo newProfileFileInfo = new ProfileFileInfo(newProfileName, Path.Combine(GetProfilesLocation(), newProfileName, Path.GetExtension(profileFileInfo.Path)), profileFileInfo.IsEncrypted)
+            ProfileFileInfo newProfileFileInfo = new ProfileFileInfo(newProfileName, Path.Combine(GetProfilesLocation(), $"{newProfileName}{Path.GetExtension(profileFileInfo.Path)}"), profileFileInfo.IsEncrypted)
             {
                 Password = profileFileInfo.Password,
                 IsPasswordValid = profileFileInfo.IsPasswordValid
