@@ -987,8 +987,10 @@ namespace NETworkManager
             }
 
             // Save the settings
+            /* Disabled (07.09.2021) - because settings are saved on app shutdown
             if (SettingsManager.Current.SettingsChanged)
                 SettingsManager.Save();
+            */
 
             // Refresh the view
             ChangeApplicationView(SelectedApplication.Name, true);

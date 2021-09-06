@@ -2,6 +2,7 @@
 using NETworkManager.Profiles;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
+using System.Collections.Generic;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
@@ -55,7 +56,7 @@ namespace NETworkManager
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                ProfileManager.RemoveProfile(selectedProfile);
+                RemoveProfile(selectedProfile);
 
                 AddProfile(instance);
             }, async instance =>
@@ -114,7 +115,7 @@ namespace NETworkManager
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                ProfileManager.RemoveProfile(selectedProfile);
+                RemoveProfile(selectedProfile);
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -130,7 +131,7 @@ namespace NETworkManager
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
-        public static async Task ShowEditGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, string group)
+        public static async Task ShowEditGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, GroupInfo group)
         {
             CustomDialog customDialog = new CustomDialog
             {
@@ -141,8 +142,9 @@ namespace NETworkManager
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-                
-                ProfileManager.RenameGroup(group, instance.Group);
+
+                RemoveGroup(instance.Group);
+                AddGroup(instance);
 
                 viewModel.RefreshProfiles();
             }, async instance =>
@@ -160,6 +162,11 @@ namespace NETworkManager
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
         #endregion
+
+        public static void RemoveProfile(ProfileInfo profile)
+        {
+            ProfileManager.RemoveProfile(profile);
+        }
 
         public static void AddProfile(ProfileViewModel instance)
         {
@@ -305,6 +312,33 @@ namespace NETworkManager
                 Whois_InheritHost = instance.Whois_InheritHost,
                 Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim()
             });
+        }
+
+        public static void AddGroup(GroupViewModel instance)
+        {
+            List<ProfileInfo> profiles = instance.Group.Profiles;
+
+            string name = instance.Name.Trim();
+
+            // Update group in profiles
+            if (!instance.Group.Name.Equals(name))
+                foreach (ProfileInfo profile in profiles)
+                    profile.Group = name;
+
+            ProfileManager.AddGroup(new GroupInfo
+            {
+                Name = name,
+
+                Profiles = profiles,
+
+                RemoteDesktop_Username = instance.Group.RemoteDesktop_Username,
+                RemoteDesktop_Password = instance.Group.RemoteDesktop_Password,
+            });
+        }
+
+        public static void RemoveGroup(GroupInfo group)
+        {
+            ProfileManager.RemoveGroup(group);
         }
     }
 }

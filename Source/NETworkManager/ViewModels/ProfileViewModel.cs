@@ -19,7 +19,7 @@ namespace NETworkManager.ViewModels
     public class ProfileViewModel : ViewModelBase
     {
         #region Variables
-        private readonly bool _isLoading;
+        private readonly bool _isLoading  =true;
 
         public bool IsProfileFileEncrypted => ProfileManager.LoadedProfileFile.IsEncrypted;
 
@@ -2094,8 +2094,6 @@ namespace NETworkManager.ViewModels
 
         public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null)
         {
-            _isLoading = true;
-
             // Load the view
             ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
             ProfileViews.SortDescriptions.Add(new SortDescription(nameof(ProfileViewInfo.Name), ListSortDirection.Ascending));

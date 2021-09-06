@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Security;
 using System.Xml.Serialization;
 
@@ -16,7 +15,7 @@ namespace NETworkManager.Profiles
         public string Name { get; set; }
 
         [XmlIgnore]
-        public new ObservableCollection<ProfileInfo> Profiles { get; set; }
+        public new List<ProfileInfo> Profiles { get; set; }
 
         public string RemoteDesktop_Username { get; set; }
 
@@ -29,7 +28,7 @@ namespace NETworkManager.Profiles
         /// </summary>
         public GroupInfo()
         {
-            Profiles = new ObservableCollection<ProfileInfo>();
+            Profiles = new List<ProfileInfo>();
         }
 
         /// <summary>

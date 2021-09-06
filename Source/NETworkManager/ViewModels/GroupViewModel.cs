@@ -1,36 +1,23 @@
-﻿using NETworkManager.Utilities;
+﻿using NETworkManager.Profiles;
+using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
     public class GroupViewModel : ViewModelBase
     {
-        private readonly bool _isLoading;
+        private readonly bool _isLoading = true;
+
+        public bool IsProfileFileEncrypted => ProfileManager.LoadedProfileFile.IsEncrypted;
 
         public ICommand OKCommand { get; }
 
         public ICommand CancelCommand { get; }
 
-        private string _oldGroup;
-        public string OldGroup
-        {
-            get => _oldGroup;
-            set
-            {
-                if (value == _oldGroup)
-                    return;
-
-                _oldGroup = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _group;
-        public string Group
+        private GroupInfo _group;
+        public GroupInfo Group
         {
             get => _group;
             set
@@ -38,42 +25,38 @@ namespace NETworkManager.ViewModels
                 if (value == _group)
                     return;
 
-                if (!_isLoading)
-                    GroupHasChanged = !string.IsNullOrEmpty(value) && (value != OldGroup);
-
                 _group = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICollectionView Groups { get; }
-        
-        private bool _groupHasChanged;
-        public bool GroupHasChanged
+        private string _name;
+        public string Name
         {
-            get => _groupHasChanged;
+            get => _name;
             set
             {
-                if (value == _groupHasChanged)
+                if (value == _name)
                     return;
 
-                _groupHasChanged = value;
+                // Check name for duplicate...
+
+                _name = value;
                 OnPropertyChanged();
             }
         }
 
-        public GroupViewModel(Action<GroupViewModel> okCommand, Action<GroupViewModel> cancelHandler, string group, IReadOnlyCollection<string> groups)
+        private List<string> _groups { get; }
+        
+        public GroupViewModel(Action<GroupViewModel> okCommand, Action<GroupViewModel> cancelHandler, GroupInfo group, List<string> groups)
         {
-            _isLoading = true;
-
             OKCommand = new RelayCommand(p => okCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            OldGroup = group;
             Group = group;
+            _groups = groups;
 
-            Groups = CollectionViewSource.GetDefaultView(groups);
-            Groups.SortDescriptions.Add(new SortDescription());
+            Name = Group.Name;
 
             _isLoading = false;
         }

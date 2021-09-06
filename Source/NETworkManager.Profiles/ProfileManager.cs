@@ -569,7 +569,7 @@ namespace NETworkManager.Profiles
             {
                 foreach (GroupInfoSerializable groupSerializable in (List<GroupInfoSerializable>)xmlSerializer.Deserialize(fileStream))
                 {
-                    ObservableCollection<ProfileInfo> profiles = new();
+                    List<ProfileInfo> profiles = new();
 
                     foreach (ProfileInfoSerializable profileSerializable in groupSerializable.Profiles)
                     {
@@ -605,11 +605,11 @@ namespace NETworkManager.Profiles
 
             XmlSerializer xmlSerializer = new(typeof(List<GroupInfoSerializable>));
 
-            using var memoryStream = new MemoryStream(xml);
+            using MemoryStream memoryStream = new(xml);
 
             foreach (GroupInfoSerializable groupSerializable in (List<GroupInfoSerializable>)xmlSerializer.Deserialize(memoryStream))
             {
-                ObservableCollection<ProfileInfo> profiles = new();
+                List<ProfileInfo> profiles = new();
 
                 foreach (ProfileInfoSerializable profileSerializable in groupSerializable.Profiles)
                 {
@@ -694,6 +694,11 @@ namespace NETworkManager.Profiles
             ProfilesUpdated();
         }
 
+        public static GroupInfo GetGroup(string name)
+        {
+            return Groups.FirstOrDefault(x => x.Name.Equals(name));
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -711,33 +716,9 @@ namespace NETworkManager.Profiles
         }
 
         /// <summary>
-        /// Method to rename a group.
-        /// </summary>
-        /// <param name="oldGroup">Old name of the group.</param>
-        /// <param name="newGroup">New name of the group.</param>
-        public static void RenameGroup(string oldGroup, string newGroup)
-        {
-            // Go through all groups
-            foreach (GroupInfo group in Groups)
-            {
-                // Find specific group
-                if (group.Name != oldGroup)
-                    continue;
-
-                // Rename the group
-                group.Name = @newGroup?.Trim();
-
-                foreach (ProfileInfo profile in group.Profiles)
-                    profile.Group = newGroup?.Trim();
-
-                ProfilesUpdated();
-            }
-        }
-
-        /// <summary>
         /// Method to get a list of all group names.
         /// </summary>
-        /// <returns>List of group names.</returns>
+        /// <returns>List of group names.</returns>       
         public static List<string> GetGroupNames()
         {
             var list = new List<string>();
@@ -746,7 +727,7 @@ namespace NETworkManager.Profiles
                 list.Add(groups.Name);
 
             return list;
-        }
+        }       
 
         /// <summary>
         /// Method to check if a profile exists.
@@ -782,8 +763,10 @@ namespace NETworkManager.Profiles
         /// <param name="profile"><see cref="ProfileInfo"/> to add.</param>
         public static void AddProfile(ProfileInfo profile)
         {
-            if (!GroupExists(profile.Group))
-                AddGroup(new GroupInfo(profile.Group));
+            string group = profile.Group;
+
+            if (!GroupExists(group))
+                AddGroup(new GroupInfo(group));
 
             // Possible fix for appcrash --> when icollection view is refreshed...
             //System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
@@ -801,12 +784,17 @@ namespace NETworkManager.Profiles
         /// <param name="profile"><see cref="ProfileInfo"/> to remove.</param>
         public static void RemoveProfile(ProfileInfo profile)
         {
+            string group = profile.Group;
+
             // Possible fix for appcrash --> when icollection view is refreshed...
             //System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             //{
             //lock (Profiles)
-            Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Remove(profile);
+            Groups.First(x => x.Name.Equals(group)).Profiles.Remove(profile);
             //}));
+
+            if (IsGroupEmpty(group))
+                RemoveGroup(GetGroup(group));
 
             ProfilesUpdated();
         }

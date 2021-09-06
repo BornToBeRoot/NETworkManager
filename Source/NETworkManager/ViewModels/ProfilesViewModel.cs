@@ -201,8 +201,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileManager.RemoveProfile(SelectedProfile);
-
+                ProfileDialogManager.RemoveProfile(SelectedProfile);
                 ProfileDialogManager.AddProfile(instance);
             }, instance =>
             {
@@ -257,7 +256,7 @@ namespace NETworkManager.ViewModels
                 var list = new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>());
 
                 foreach (var profile in list)
-                    ProfileManager.RemoveProfile(profile);
+                    ProfileDialogManager.RemoveProfile(profile);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -279,16 +278,17 @@ namespace NETworkManager.ViewModels
             };
 
             var editGroupViewModel = new GroupViewModel(instance =>
-            {
+            {                
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                //ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
+                ProfileDialogManager.RemoveGroup(instance.Group);
+                ProfileDialogManager.AddGroup(instance);
 
                 RefreshProfiles();
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, group.ToString(), ProfileManager.GetGroupNames());
+            }, ProfileManager.GetGroup(group.ToString()), ProfileManager.GetGroupNames());
 
             customDialog.Content = new GroupDialog
             {

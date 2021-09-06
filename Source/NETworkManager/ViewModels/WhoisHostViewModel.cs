@@ -253,7 +253,7 @@ namespace NETworkManager.ViewModels
 
         private void EditGroupAction(object group)
         {
-            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
