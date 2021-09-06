@@ -13,7 +13,6 @@ using NETworkManager.Views;
 using NETworkManager.Utilities;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
-using NETworkManager.Settings;
 using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
@@ -27,7 +26,8 @@ namespace NETworkManager.ViewModels
         public IInterTabClient InterTabClient { get; }
         public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-        private readonly bool _isLoading;
+        private readonly bool _isLoading = true;
+        private bool _isViewActive = true;
 
         private int _tabId;
 
@@ -143,8 +143,6 @@ namespace NETworkManager.ViewModels
         #region Constructor
         public WhoisHostViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true;
-
             _dialogCoordinator = instance;
 
             InterTabClient = new DragablzInterTabClient(ApplicationName.Whois);
@@ -257,7 +255,7 @@ namespace NETworkManager.ViewModels
         {
             ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
         }
-              
+
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
@@ -333,16 +331,21 @@ namespace NETworkManager.ViewModels
 
         public void OnViewVisible()
         {
+            _isViewActive = true;
+
             RefreshProfiles();
         }
 
         public void OnViewHide()
         {
-
+            _isViewActive = false;
         }
 
         public void RefreshProfiles()
         {
+            if (!_isViewActive)
+                return;
+
             Profiles.Refresh();
         }
 

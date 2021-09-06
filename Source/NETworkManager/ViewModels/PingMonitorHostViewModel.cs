@@ -23,7 +23,8 @@ namespace NETworkManager.ViewModels
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
 
-        private readonly bool _isLoading;
+        private readonly bool _isLoading = true;
+        private bool _isViewActive = true;
 
         private int _hostId;
 
@@ -212,8 +213,6 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public PingMonitorHostViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true;
-
             _dialogCoordinator = instance;
 
             // Host history
@@ -460,16 +459,21 @@ namespace NETworkManager.ViewModels
 
         public void OnViewVisible()
         {
+            _isViewActive = true;
+
             RefreshProfiles();
         }
 
         public void OnViewHide()
         {
-
+            _isViewActive = false;
         }
 
         public void RefreshProfiles()
         {
+            if (!_isViewActive)
+                return;
+
             Profiles.Refresh();
         }
 

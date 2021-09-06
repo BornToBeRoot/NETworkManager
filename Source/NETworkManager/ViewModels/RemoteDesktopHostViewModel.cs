@@ -29,7 +29,8 @@ namespace NETworkManager.ViewModels
         public IInterTabClient InterTabClient { get; }
         public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-        private readonly bool _isLoading;
+        private readonly bool _isLoading = true;
+        private bool _isViewActive = true;
 
         private int _selectedTabIndex;
         public int SelectedTabIndex
@@ -143,8 +144,6 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public RemoteDesktopHostViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true;
-
             _dialogCoordinator = instance;
 
             InterTabClient = new DragablzInterTabClient(ApplicationName.RemoteDesktop);
@@ -547,16 +546,21 @@ namespace NETworkManager.ViewModels
 
         public void OnViewVisible()
         {
+            _isViewActive = true;
+
             RefreshProfiles();
         }
 
         public void OnViewHide()
         {
-
+            _isViewActive = false;
         }
 
         public void RefreshProfiles()
         {
+            if (!_isViewActive)
+                return;
+
             Profiles.Refresh();
         }
 

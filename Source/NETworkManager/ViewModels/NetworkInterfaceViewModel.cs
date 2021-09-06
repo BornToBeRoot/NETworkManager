@@ -29,7 +29,8 @@ namespace NETworkManager.ViewModels
         private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
         private BandwidthMeter _bandwidthMeter;
 
-        private readonly bool _isLoading;
+        private readonly bool _isLoading = true;
+        private bool _isViewActive = true;
 
         private bool _isNetworkInteraceLoading;
         public bool IsNetworkInterfaceLoading
@@ -504,8 +505,6 @@ namespace NETworkManager.ViewModels
         #region Constructor, LoadSettings, OnShutdown
         public NetworkInterfaceViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true;
-
             _dialogCoordinator = instance;
 
             LoadNetworkInterfaces();
@@ -1137,6 +1136,8 @@ namespace NETworkManager.ViewModels
 
         public void OnViewVisible()
         {
+            _isViewActive = true;
+
             RefreshProfiles();
 
             ResumeBandwidthMeter();
@@ -1145,10 +1146,15 @@ namespace NETworkManager.ViewModels
         public void OnViewHide()
         {
             StopBandwidthMeter();
+
+            _isViewActive = false;
         }
 
         public void RefreshProfiles()
         {
+            if (!_isViewActive)
+                return;
+
             Profiles.Refresh();
         }
 

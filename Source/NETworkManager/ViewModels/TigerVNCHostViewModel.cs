@@ -31,7 +31,8 @@ namespace NETworkManager.ViewModels
         public IInterTabClient InterTabClient { get; }
         public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-        private readonly bool _isLoading;
+        private readonly bool _isLoading = true;
+        private bool _isViewActive = true;
 
         private bool _isConfigured;
         public bool IsConfigured
@@ -160,8 +161,6 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public TigerVNCHostViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true;
-
             _dialogCoordinator = instance;
 
             // Check if putty is available...
@@ -474,18 +473,24 @@ namespace NETworkManager.ViewModels
 
         public void OnViewVisible()
         {
+            _isViewActive = true;
+
             RefreshProfiles();
         }
 
         public void OnViewHide()
         {
-
+            _isViewActive = false;
         }
 
         public void RefreshProfiles()
         {
+            if (!_isViewActive)
+                return;
+
             Profiles.Refresh();
         }
+
         public void OnProfileDialogOpen()
         {
             ConfigurationManager.Current.FixAirspace = true;

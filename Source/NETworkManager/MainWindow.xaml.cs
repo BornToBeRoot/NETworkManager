@@ -540,7 +540,7 @@ namespace NETworkManager
         #endregion
 
         #region Application Views
-        private DashboardView _overviewView;
+        private DashboardView _dashboardView;
         private NetworkInterfaceView _networkInterfaceView;
         private WiFiView _wiFiView;
         private IPScannerHostView _ipScannerHostView;
@@ -573,12 +573,60 @@ namespace NETworkManager
             // Stop some functions on the old view
             switch (_currentApplicationViewName)
             {
+                case ApplicationName.Dashboard:
+                    _dashboardView?.OnViewHide();
+                    break;
                 case ApplicationName.NetworkInterface:
                     _networkInterfaceView?.OnViewHide();
                     break;
                 case ApplicationName.WiFi:
                     _wiFiView?.OnViewHide();
                     break;
+                case ApplicationName.IPScanner:
+                    _ipScannerHostView?.OnViewHide();
+                    break;
+                case ApplicationName.PortScanner:
+                    _portScannerHostView?.OnViewHide();
+                    break;
+                case ApplicationName.PingMonitor:
+                    _pingMonitorHostView?.OnViewHide();
+                    break;
+                case ApplicationName.Traceroute:
+                    _tracerouteHostView?.OnViewHide();
+                    break;
+                case ApplicationName.DNSLookup:
+                    _dnsLookupHostView?.OnViewHide();
+                    break;
+                case ApplicationName.RemoteDesktop:
+                    _remoteDesktopHostView?.OnViewHide();
+                    break;
+                case ApplicationName.PowerShell:
+                    _powerShellHostView?.OnViewHide();
+                    break;
+                case ApplicationName.PuTTY:
+                    _puttyHostView?.OnViewHide();
+                    break;
+                case ApplicationName.TigerVNC:
+                    _tigerVNCHostView?.OnViewHide();
+                    break;
+                case ApplicationName.WebConsole:
+                    _webConsoleHostView?.OnViewHide();
+                    break;
+                case ApplicationName.SNMP:
+                    _snmpHostView?.OnViewHide();
+                    break;
+                case ApplicationName.DiscoveryProtocol:
+                    _discoveryProtocolView?.OnViewHide();
+                    break;
+                case ApplicationName.WakeOnLAN:
+                    _wakeOnLanView?.OnViewHide();
+                    break;
+                //case ApplicationName.SubnetCalculator:
+                //    _subnetCalculatorHostView?.OnViewHide();
+                //    break;
+                //case ApplicationName.Lookup:
+                //    _lookupHostView?.OnViewHide();
+                //    break;
                 case ApplicationName.Connections:
                     _connectionsView?.OnViewHide();
                     break;
@@ -594,12 +642,12 @@ namespace NETworkManager
             switch (name)
             {
                 case ApplicationName.Dashboard:
-                    if (_overviewView == null)
-                        _overviewView = new DashboardView();
+                    if (_dashboardView == null)
+                        _dashboardView = new DashboardView();
                     else
-                        _overviewView.OnViewVisible();
+                        _dashboardView.OnViewVisible();
 
-                    ContentControlApplication.Content = _overviewView;
+                    ContentControlApplication.Content = _dashboardView;
                     break;
                 case ApplicationName.NetworkInterface:
                     if (_networkInterfaceView == null)
@@ -732,12 +780,16 @@ namespace NETworkManager
                 case ApplicationName.SubnetCalculator:
                     if (_subnetCalculatorHostView == null)
                         _subnetCalculatorHostView = new SubnetCalculatorHostView();
+                    //else
+                    //    _subnetCalculatorHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _subnetCalculatorHostView;
                     break;
                 case ApplicationName.Lookup:
                     if (_lookupHostView == null)
                         _lookupHostView = new LookupHostView();
+                    //else
+                    //    _lookupHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _lookupHostView;
                     break;
@@ -1387,7 +1439,7 @@ namespace NETworkManager
                 return;
 
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {                
+            {
                 OpenStatusWindow(false);
             }));
         }
