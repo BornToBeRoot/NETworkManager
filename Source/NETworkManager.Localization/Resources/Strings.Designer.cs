@@ -4415,6 +4415,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Migrate.
+        /// </summary>
+        public static string Migrate {
+            get {
+                return ResourceManager.GetString("Migrate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimize main window instead of terminating the application.
         /// </summary>
         public static string MinimizeInsteadOfTerminating {
@@ -5032,9 +5041,7 @@ namespace NETworkManager.Localization.Resources {
         ///
         ///&quot;Overwrite&quot; will copy the profile files to the destination folder and overwrite existing profile files.
         ///&quot;Merge&quot; will copy the profile files to the destination folder, but won&apos;t overwrite exitsting profile files.
-        ///&quot;Use other folder&quot; will use the existing profile files in the destination folder.
-        ///
-        ///The application will be restarted afterwards!.
+        ///&quot;Use other folder&quot; will use the existing profile files in the destination folder..
         /// </summary>
         public static string OverwriteProfilesInDestinationFolderMessage {
             get {
@@ -5397,11 +5404,13 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The profile could not be loaded and may be corrupted. If this is unexpected or due to an update, please report this issue on GitHub!.
+        ///   Looks up a localized string similar to If this happened after an update, you may need to migrate the profiles to a newer version. When you click &quot;Migrate&quot;, a PowerShell window opens with the migration script. Check the path and press Enter.
+        ///
+        ///Otherwise, the profile may be corrupted and you want to report the issue on GitHub..
         /// </summary>
-        public static string ProfileCouldNotBeLoadedAndMayBeCorruptedMessage {
+        public static string ProfileCouldNotBeLoadedMessage {
             get {
-                return ResourceManager.GetString("ProfileCouldNotBeLoadedAndMayBeCorruptedMessage", resourceCulture);
+                return ResourceManager.GetString("ProfileCouldNotBeLoadedMessage", resourceCulture);
             }
         }
         
@@ -6602,6 +6611,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ReportAnIssueOrCreateAFeatureRequest {
             get {
                 return ResourceManager.GetString("ReportAnIssueOrCreateAFeatureRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ReportOnGitHub.
+        /// </summary>
+        public static string ReportOnGitHub {
+            get {
+                return ResourceManager.GetString("ReportOnGitHub", resourceCulture);
             }
         }
         

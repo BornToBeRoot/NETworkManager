@@ -30,6 +30,7 @@ using NETworkManager.Models.EventSystem;
 using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Net.NetworkInformation;
+using System.IO;
 
 namespace NETworkManager
 {
@@ -1060,16 +1061,31 @@ namespace NETworkManager
 
                 ConfigurationManager.Current.FixAirspace = false;
             }
-            catch (Exception ex)
+            catch
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.ReportOnGitHub;
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+                settings.FirstAuxiliaryButtonText = Localization.Resources.Strings.Migrate;
+                settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
+              //  settings.
 
                 ConfigurationManager.Current.FixAirspace = true;
 
-                await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedAndMayBeCorruptedMessage, MessageDialogStyle.Affirmative, settings);
+                var result = await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
+
+                switch (result)
+                {
+                    case MessageDialogResult.FirstAuxiliary:
+                        ExternalProcessStarter.RunProcess("powershell.exe", $"-NoLogo -NoProfile -ExecutionPolicy ByPass -File \"{Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Convert-Profiles.ps1")}\" -Path \"{ProfileManager.GetProfilesLocation()}\" -NETworkManagerPath \"{ConfigurationManager.Current.ApplicationFullName}\"");
+                        CloseApplication();
+                        break;
+                    case MessageDialogResult.Affirmative:
+
+                        break;
+                }
             }
         }
 
@@ -1345,30 +1361,25 @@ namespace NETworkManager
 
         private void CloseApplicationAction()
         {
-            _closeApplication = true;
-            Close();
+            CloseApplication();
         }
 
-        public void RestartApplication(bool asAdmin = false)
+        public void CloseApplication()
         {
-            ProcessStartInfo info = new ProcessStartInfo
-            {
-                FileName = ConfigurationManager.Current.ApplicationFullName,
-                Arguments = $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Process.GetCurrentProcess().Id} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{_currentApplicationViewName}",
-                UseShellExecute = true
-            };
-
-            if (asAdmin)
-                info.Verb = "runas";
-
-            Process.Start(info);
-
             _closeApplication = true;
 
+            // Make it thread safe when it's called inside a dialog
             System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 Close();
             }));
+        }
+
+        public void RestartApplication(bool asAdmin = false)
+        {
+            ExternalProcessStarter.RunProcess(ConfigurationManager.Current.ApplicationFullName, $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Process.GetCurrentProcess().Id} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{_currentApplicationViewName}", asAdmin);
+
+            CloseApplication();
         }
 
         public ICommand ApplicationListMouseEnterCommand
