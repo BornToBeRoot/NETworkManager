@@ -6,7 +6,6 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using System.Xml.Serialization;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
