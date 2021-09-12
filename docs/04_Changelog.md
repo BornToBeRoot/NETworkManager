@@ -51,7 +51,7 @@ Date: **05.09.2021**
 - Remote Desktop - Settings when connecting without profile are now applied [#1214](https://github.com/BornToBeRoot/NETworkManager/issues/1214){:target="_blank"}
 
 ## Other
-- Language files updates [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
+- Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="_blank"}
 
 # Version 2021.6.26.0
@@ -74,8 +74,8 @@ Date: **26.06.2021**
 - Close/Minimize/Maximize buttons not visible in light theme
 
 ## Other
-- Language files updates
-- Dependencies updated
+- Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
+- Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="_blank"}
 
 # Version 2021.5.9.0
 Date: **09.05.2021**
@@ -99,8 +99,8 @@ Date: **09.05.2021**
 - App crash fixed when Remote Desktop is opened from a differnet view [#767](https://github.com/BornToBeRoot/NETworkManager/issues/767){:target="_blank"}
 
 ## Other
-- Language files updated
-- Dependencies updated
+- Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
+- Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="_blank"}
 
 # 2021.3.28.0
 Date: **28.03.2021**
