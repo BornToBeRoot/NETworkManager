@@ -22,6 +22,22 @@ namespace NETworkManager.ViewModels
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
 
+        public ICollectionView Groups { get; }
+
+        private GroupInfo _selectedGroup = new GroupInfo();
+        public GroupInfo SelectedGroup
+        {
+            get => _selectedGroup;
+            set
+            {
+                if (value == _selectedGroup)
+                    return;
+
+                _selectedGroup = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICollectionView Profiles { get; }
 
         private ProfileInfo _selectedProfile = new ProfileInfo();
@@ -88,6 +104,11 @@ namespace NETworkManager.ViewModels
         public ProfilesViewModel(IDialogCoordinator instance)
         {
             _dialogCoordinator = instance;
+
+            Groups = new CollectionViewSource { Source = ProfileManager.Groups }.View;
+            Groups.SortDescriptions.Add(new SortDescription(nameof(GroupInfo.Name), ListSortDirection.Ascending));
+
+            SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
 
             Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
@@ -358,6 +379,8 @@ namespace NETworkManager.ViewModels
         #region Event
         private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
         {
+            Groups.Refresh();
+
             RefreshProfiles();
         }
 

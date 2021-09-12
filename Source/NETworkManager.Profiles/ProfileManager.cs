@@ -767,12 +767,7 @@ namespace NETworkManager.Profiles
             if (!GroupExists(group))
                 AddGroup(new GroupInfo(group));
 
-            // Possible fix for appcrash --> when icollection view is refreshed...
-            //System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            //{
-            //lock (Profiles)
             Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Add(profile);
-            //}));
 
             ProfilesUpdated();
         }
@@ -785,15 +780,10 @@ namespace NETworkManager.Profiles
         {
             string group = profile.Group;
 
-            // Possible fix for appcrash --> when icollection view is refreshed...
-            //System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            //{
-            //lock (Profiles)
             Groups.First(x => x.Name.Equals(group)).Profiles.Remove(profile);
-            //}));
-
-            if (IsGroupEmpty(group))
-                RemoveGroup(GetGroup(group));
+            
+            //if (IsGroupEmpty(group))
+            //    RemoveGroup(GetGroup(group));
 
             ProfilesUpdated();
         }

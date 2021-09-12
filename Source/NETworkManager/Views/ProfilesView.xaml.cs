@@ -18,10 +18,17 @@ namespace NETworkManager.Views
 
        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
-            if (sender is ContextMenu menu) menu.DataContext = _viewModel;
+            if (sender is ContextMenu menu) 
+                menu.DataContext = _viewModel;
         }
 
-        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void DataGridGroupsRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+         //   if (e.ChangedButton == MouseButton.Left)
+         //       _viewModel.EditGroup();
+        }
+
+        private void DataGridProfilesRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 _viewModel.EditProfile();
@@ -31,7 +38,5 @@ namespace NETworkManager.Views
         {
             _viewModel.RefreshProfiles();
         }
-
-
     }
 }

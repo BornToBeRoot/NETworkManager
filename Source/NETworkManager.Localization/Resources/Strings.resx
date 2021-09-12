@@ -3116,4 +3116,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="ReportOnGitHub" xml:space="preserve">
     <value>ReportOnGitHub</value>
   </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Groups</value>
+  </data>
 </root>
