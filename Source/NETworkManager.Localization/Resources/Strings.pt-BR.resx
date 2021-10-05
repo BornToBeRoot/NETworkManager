@@ -890,7 +890,7 @@ Este é um novo recurso que ainda pode conter bugs. Faça backup de seus arquivo
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
+  <data name="InheritHostFromGeneral" xml:space="preserve">
     <value>Herdar host do padrão</value>
   </data>
   <data name="IPRange" xml:space="preserve">

@@ -897,7 +897,7 @@ Verifica se disponi delle autorizzazioni di scrittura.</value>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
+  <data name="InheritHostFromGeneral" xml:space="preserve">
     <value>Eredita host dall'impostazione predefinita</value>
   </data>
   <data name="IPRange" xml:space="preserve">

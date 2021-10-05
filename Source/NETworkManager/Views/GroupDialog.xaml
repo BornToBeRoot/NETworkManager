@@ -256,7 +256,7 @@
                                         <ColumnDefinition Width="1*" />
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding RemoteDesktop_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                     <TextBox x:Name="TextBoxRemoteDesktopHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding RemoteDesktop_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
@@ -495,7 +495,7 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.RemoteConsole}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding PowerShell_EnableRemoteConsole}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnContent="" OffContent="" IsOn="{Binding PowerShell_InheritHost}" IsEnabled="{Binding PowerShell_EnableRemoteConsole}" />
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Host}" />
                                 <TextBox x:Name="TextBoxPowerShellHost" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
@@ -600,7 +600,7 @@
                                         <RadioButton Content="{x:Static localization:Strings.Rlogin}" IsChecked="{Binding PuTTY_UseRlogin}" />
                                         <RadioButton Content="{x:Static localization:Strings.RAW}" IsChecked="{Binding PuTTY_UseRAW}" />
                                     </WrapPanel>
-                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.InheritHostFromDefault}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.InheritHostFromGeneral}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnContent="" OffContent="" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" IsOn="{Binding PuTTY_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="4">
                                         <TextBlock.Style>
@@ -766,7 +766,7 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding TigerVNC_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                 <TextBox x:Name="TextBoxTigerVNCHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding TigerVNC_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">

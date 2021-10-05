@@ -786,7 +786,7 @@
   <data name="Hosts" xml:space="preserve">
     <value>主機</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
+  <data name="InheritHostFromGeneral" xml:space="preserve">
     <value>來自預設繼承主機</value>
   </data>
   <data name="IPRange" xml:space="preserve">
