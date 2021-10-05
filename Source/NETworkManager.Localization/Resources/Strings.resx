@@ -891,7 +891,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>ID</value>
   </data>
   <data name="InheritHostFromDefault" xml:space="preserve">
-    <value>Inherit host from default</value>
+    <value>Inherit host from general</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>IP range</value>

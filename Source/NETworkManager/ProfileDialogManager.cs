@@ -18,7 +18,7 @@ namespace NETworkManager
             var customDialog = new CustomDialog
             {
                 Title = Localization.Resources.Strings.AddProfile,
-                Style = (Style)Application.Current.FindResource("ProfileMetroDialog")
+                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
             };
 
             var profileViewModel = new ProfileViewModel(async instance =>
@@ -48,7 +48,7 @@ namespace NETworkManager
             var customDialog = new CustomDialog
             {
                 Title = Localization.Resources.Strings.EditProfile,
-                Style = (Style)Application.Current.FindResource("ProfileMetroDialog")
+                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
             };
 
             var profileViewModel = new ProfileViewModel(async instance =>
@@ -79,7 +79,7 @@ namespace NETworkManager
             var customDialog = new CustomDialog
             {
                 Title = Localization.Resources.Strings.CopyProfile,
-                Style = (Style)Application.Current.FindResource("ProfileMetroDialog")
+                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
             };
 
             var profileViewModel = new ProfileViewModel(async instance =>
@@ -135,7 +135,8 @@ namespace NETworkManager
         {
             CustomDialog customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.EditGroup
+                Title = Localization.Resources.Strings.EditGroup,
+                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
             };
 
             GroupViewModel editGroupViewModel = new GroupViewModel(async instance =>

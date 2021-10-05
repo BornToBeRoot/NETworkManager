@@ -3641,7 +3641,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inherit host from default.
+        ///   Looks up a localized string similar to Inherit host from general.
         /// </summary>
         public static string InheritHostFromDefault {
             get {

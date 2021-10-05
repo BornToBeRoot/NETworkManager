@@ -2,6 +2,8 @@
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
@@ -12,7 +14,9 @@ namespace NETworkManager.ViewModels
 
         public bool IsProfileFileEncrypted => ProfileManager.LoadedProfileFile.IsEncrypted;
 
-        public ICommand OKCommand { get; }
+        public ICollectionView GroupViews { get; }
+
+        public ICommand SaveCommand { get; }
 
         public ICommand CancelCommand { get; }
 
@@ -48,9 +52,13 @@ namespace NETworkManager.ViewModels
 
         private List<string> _groups { get; }
         
-        public GroupViewModel(Action<GroupViewModel> okCommand, Action<GroupViewModel> cancelHandler, GroupInfo group, List<string> groups)
+        public GroupViewModel(Action<GroupViewModel> saveCommand, Action<GroupViewModel> cancelHandler, GroupInfo group, List<string> groups)
         {
-            OKCommand = new RelayCommand(p => okCommand(this));
+            // Load the view
+            GroupViews = new CollectionViewSource { Source = GroupViewManager.List }.View;
+            GroupViews.SortDescriptions.Add(new SortDescription(nameof(GroupViewInfo.Name), ListSortDirection.Ascending));
+
+            SaveCommand = new RelayCommand(p => saveCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
             Group = group;
