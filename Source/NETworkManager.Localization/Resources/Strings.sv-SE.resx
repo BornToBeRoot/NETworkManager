@@ -121,7 +121,7 @@
     <value>Om</value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>Accent</value>
+    <value>Accentfärg</value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
     <value>Add credentials</value>
