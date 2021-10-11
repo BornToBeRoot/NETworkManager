@@ -602,7 +602,7 @@
             </TabControl>
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">            
-            <Button Content="{x:Static localization:Strings.Save}" Command="{Binding OKCommand}" IsDefault="True" Margin="0,0,10,0">
+            <Button Content="{x:Static localization:Strings.Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="0,0,10,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <!--

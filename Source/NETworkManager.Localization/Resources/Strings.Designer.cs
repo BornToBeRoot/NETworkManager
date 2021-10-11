@@ -439,6 +439,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add group.
+        /// </summary>
+        public static string AddGroup {
+            get {
+                return ResourceManager.GetString("AddGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add host.
         /// </summary>
         public static string AddHost {
@@ -2064,6 +2073,24 @@ namespace NETworkManager.Localization.Resources {
         public static string DeleteEntry {
             get {
                 return ResourceManager.GetString("DeleteEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete group.
+        /// </summary>
+        public static string DeleteGroup {
+            get {
+                return ResourceManager.GetString("DeleteGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected group and all profiles inside this group will be deleted permanently..
+        /// </summary>
+        public static string DeleteGroupMessage {
+            get {
+                return ResourceManager.GetString("DeleteGroupMessage", resourceCulture);
             }
         }
         

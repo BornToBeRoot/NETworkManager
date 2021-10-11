@@ -309,7 +309,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroup(group.ToString()), ProfileManager.GetGroupNames());
+            }, ProfileManager.GetGroupNames(), GroupEditMode.Edit, ProfileManager.GetGroup(group.ToString()));
 
             customDialog.Content = new GroupDialog
             {

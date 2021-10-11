@@ -2319,13 +2319,15 @@ namespace NETworkManager.ViewModels
         }
 
         public ICommand RemoteDesktopPasswordChangedCommand => new RelayCommand(p => RemoteDesktopPasswordChangedAction());
+
+        #endregion
+
+        #region Methods      
         private void RemoteDesktopPasswordChangedAction()
         {
             RemoteDesktop_PasswordChanged = true;
         }
-        #endregion
 
-        #region Methods
         private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType connectionSpeed)
         {
             switch (connectionSpeed)

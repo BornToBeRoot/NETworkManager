@@ -12,7 +12,7 @@ namespace NETworkManager
     public static class ProfileDialogManager
     {
 
-        #region Add profile, Edit profile, CopyAs profile, Delete profile, Edit group
+        #region Dialog to add, edit, copy as and delete profile
         public static async Task ShowAddProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator)
         {
             var customDialog = new CustomDialog
@@ -43,7 +43,7 @@ namespace NETworkManager
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
-        public static async Task ShowEditProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
+        public static async Task ShowEditProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile)
         {
             var customDialog = new CustomDialog
             {
@@ -56,14 +56,14 @@ namespace NETworkManager
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                RemoveProfile(selectedProfile);
+                RemoveProfile(profile);
 
                 AddProfile(instance);
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, ProfileManager.GetGroupNames(), ProfileEditMode.Edit, selectedProfile);
+            }, ProfileManager.GetGroupNames(), ProfileEditMode.Edit, profile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -74,7 +74,7 @@ namespace NETworkManager
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
-        public static async Task ShowCopyAsProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
+        public static async Task ShowCopyAsProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile)
         {
             var customDialog = new CustomDialog
             {
@@ -92,7 +92,7 @@ namespace NETworkManager
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, ProfileManager.GetGroupNames(), ProfileEditMode.Copy, selectedProfile);
+            }, ProfileManager.GetGroupNames(), ProfileEditMode.Copy, profile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -103,7 +103,7 @@ namespace NETworkManager
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
-        public static async Task ShowDeleteProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo selectedProfile)
+        public static async Task ShowDeleteProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile)
         {
             CustomDialog customDialog = new CustomDialog
             {
@@ -115,7 +115,7 @@ namespace NETworkManager
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                RemoveProfile(selectedProfile);
+                RemoveProfile(profile);
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -130,6 +130,38 @@ namespace NETworkManager
             viewModel.OnProfileDialogOpen();
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
+        #endregion
+
+        #region Dialog to add, edit and delete group
+        public static async Task ShowAddGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator)
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.AddGroup,
+                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
+            };
+
+            var groupViewModel = new GroupViewModel(async instance =>
+            {
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
+
+                AddGroup(instance);
+            }, async instance =>
+            {
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
+            }, ProfileManager.GetGroupNames());
+
+            customDialog.Content = new ProfileDialog
+            {
+                DataContext = groupViewModel
+            };
+
+            viewModel.OnProfileDialogOpen();
+
+            await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        }
 
         public static async Task ShowEditGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, GroupInfo group)
         {
@@ -139,7 +171,7 @@ namespace NETworkManager
                 Style = (Style)Application.Current.FindResource("LargeMetroDialog")
             };
 
-            GroupViewModel editGroupViewModel = new GroupViewModel(async instance =>
+            GroupViewModel groupViewModel = new GroupViewModel(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
@@ -152,11 +184,39 @@ namespace NETworkManager
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, group, ProfileManager.GetGroupNames());
+            }, ProfileManager.GetGroupNames(), GroupEditMode.Edit, group);
 
             customDialog.Content = new GroupDialog
             {
-                DataContext = editGroupViewModel
+                DataContext = groupViewModel
+            };
+
+            viewModel.OnProfileDialogOpen();
+            await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
+        }
+
+        public static async Task ShowDeleteGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, GroupInfo group)
+        {
+            CustomDialog customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.DeleteGroup
+            };
+
+            ConfirmDeleteViewModel confirmDeleteViewModel = new ConfirmDeleteViewModel(async instance =>
+            {
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
+
+                RemoveGroup(group);
+            }, async instance =>
+            {
+                await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
+                viewModel.OnProfileDialogClose();
+            }, Localization.Resources.Strings.DeleteGroupMessage);
+
+            customDialog.Content = new ConfirmDeleteDialog
+            {
+                DataContext = confirmDeleteViewModel
             };
 
             viewModel.OnProfileDialogOpen();
@@ -164,11 +224,7 @@ namespace NETworkManager
         }
         #endregion
 
-        public static void RemoveProfile(ProfileInfo profile)
-        {
-            ProfileManager.RemoveProfile(profile);
-        }
-
+        #region Methods to add and remove profile
         public static void AddProfile(ProfileViewModel instance)
         {
             ProfileManager.AddProfile(new ProfileInfo
@@ -315,6 +371,13 @@ namespace NETworkManager
             });
         }
 
+        public static void RemoveProfile(ProfileInfo profile)
+        {
+            ProfileManager.RemoveProfile(profile);
+        }
+        #endregion
+
+        #region Methods to add and remove group
         public static void AddGroup(GroupViewModel instance)
         {
             List<ProfileInfo> profiles = instance.Group.Profiles;
@@ -332,8 +395,85 @@ namespace NETworkManager
 
                 Profiles = profiles,
 
-                RemoteDesktop_Username = instance.Group.RemoteDesktop_Username,
-                RemoteDesktop_Password = instance.Group.RemoteDesktop_Password,
+                RemoteDesktop_Enabled = instance.RemoteDesktop_Enabled,
+                RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,
+                RemoteDesktop_Username = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Username : string.Empty, // Remove sensitive info on disable
+                RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Password : new SecureString(), // Remove sensitive info on disable
+                RemoteDesktop_OverrideDisplay = instance.RemoteDesktop_OverrideDisplay,
+                RemoteDesktop_AdjustScreenAutomatically = instance.RemoteDesktop_AdjustScreenAutomatically,
+                RemoteDesktop_UseCurrentViewSize = instance.RemoteDesktop_UseCurrentViewSize,
+                RemoteDesktop_UseFixedScreenSize = instance.RemoteDesktop_UseFixedScreenSize,
+                RemoteDesktop_ScreenWidth = instance.RemoteDesktop_ScreenWidth,
+                RemoteDesktop_ScreenHeight = instance.RemoteDesktop_ScreenHeight,
+                RemoteDesktop_UseCustomScreenSize = instance.RemoteDesktop_UseCustomScreenSize,
+                RemoteDesktop_CustomScreenWidth = int.Parse(instance.RemoteDesktop_CustomScreenWidth),
+                RemoteDesktop_CustomScreenHeight = int.Parse(instance.RemoteDesktop_CustomScreenHeight),
+                RemoteDesktop_OverrideColorDepth = instance.RemoteDesktop_OverrideColorDepth,
+                RemoteDesktop_ColorDepth = instance.RemoteDesktop_SelectedColorDepth,
+                RemoteDesktop_OverridePort = instance.RemoteDesktop_OverridePort,
+                RemoteDesktop_Port = instance.RemoteDesktop_Port,
+                RemoteDesktop_OverrideCredSspSupport = instance.RemoteDesktop_OverrideCredSspSupport,
+                RemoteDesktop_EnableCredSspSupport = instance.RemoteDesktop_EnableCredSspSupport,
+                RemoteDesktop_OverrideAuthenticationLevel = instance.RemoteDesktop_OverrideAuthenticationLevel,
+                RemoteDesktop_AuthenticationLevel = instance.RemoteDesktop_AuthenticationLevel,
+                RemoteDesktop_OverrideAudioRedirectionMode = instance.RemoteDesktop_OverrideAudioRedirectionMode,
+                RemoteDesktop_AudioRedirectionMode = instance.RemoteDesktop_AudioRedirectionMode,
+                RemoteDesktop_OverrideAudioCaptureRedirectionMode = instance.RemoteDesktop_OverrideAudioCaptureRedirectionMode,
+                RemoteDesktop_AudioCaptureRedirectionMode = instance.RemoteDesktop_AudioCaptureRedirectionMode,
+                RemoteDesktop_OverrideApplyWindowsKeyCombinations = instance.RemoteDesktop_OverrideApplyWindowsKeyCombinations,
+                RemoteDesktop_KeyboardHookMode = instance.RemoteDesktop_KeyboardHookMode,
+                RemoteDesktop_OverrideRedirectClipboard = instance.RemoteDesktop_OverrideRedirectClipboard,
+                RemoteDesktop_RedirectClipboard = instance.RemoteDesktop_RedirectClipboard,
+                RemoteDesktop_OverrideRedirectDevices = instance.RemoteDesktop_OverrideRedirectDevices,
+                RemoteDesktop_RedirectDevices = instance.RemoteDesktop_RedirectDevices,
+                RemoteDesktop_OverrideRedirectDrives = instance.RemoteDesktop_OverrideRedirectDrives,
+                RemoteDesktop_RedirectDrives = instance.RemoteDesktop_RedirectDrives,
+                RemoteDesktop_OverrideRedirectPorts = instance.RemoteDesktop_OverrideRedirectPorts,
+                RemoteDesktop_RedirectPorts = instance.RemoteDesktop_RedirectPorts,
+                RemoteDesktop_OverrideRedirectSmartcards = instance.RemoteDesktop_OverrideRedirectSmartcards,
+                RemoteDesktop_RedirectSmartCards = instance.RemoteDesktop_RedirectSmartCards,
+                RemoteDesktop_OverrideRedirectPrinters = instance.RemoteDesktop_OverrideRedirectPrinters,
+                RemoteDesktop_RedirectPrinters = instance.RemoteDesktop_RedirectPrinters,
+                RemoteDesktop_OverridePersistentBitmapCaching = instance.RemoteDesktop_OverridePersistentBitmapCaching,
+                RemoteDesktop_PersistentBitmapCaching = instance.RemoteDesktop_PersistentBitmapCaching,
+                RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped = instance.RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped,
+                RemoteDesktop_ReconnectIfTheConnectionIsDropped = instance.RemoteDesktop_ReconnectIfTheConnectionIsDropped,
+                RemoteDesktop_OverrideNetworkConnectionType = instance.RemoteDesktop_OverrideNetworkConnectionType,
+                RemoteDesktop_NetworkConnectionType = instance.RemoteDesktop_NetworkConnectionType,
+                RemoteDesktop_DesktopBackground = instance.RemoteDesktop_DesktopBackground,
+                RemoteDesktop_FontSmoothing = instance.RemoteDesktop_FontSmoothing,
+                RemoteDesktop_DesktopComposition = instance.RemoteDesktop_DesktopComposition,
+                RemoteDesktop_ShowWindowContentsWhileDragging = instance.RemoteDesktop_ShowWindowContentsWhileDragging,
+                RemoteDesktop_MenuAndWindowAnimation = instance.RemoteDesktop_MenuAndWindowAnimation,
+                RemoteDesktop_VisualStyles = instance.RemoteDesktop_VisualStyles,
+
+                PowerShell_Enabled = instance.PowerShell_Enabled,
+                PowerShell_OverrideAdditionalCommandLine = instance.PowerShell_OverrideAdditionalCommandLine,
+                PowerShell_AdditionalCommandLine = instance.PowerShell_AdditionalCommandLine,
+                PowerShell_OverrideExecutionPolicy = instance.PowerShell_OverrideExecutionPolicy,
+                PowerShell_ExecutionPolicy = instance.PowerShell_ExecutionPolicy,
+
+                PuTTY_Enabled = instance.PuTTY_Enabled,
+                PuTTY_OverrideUsername = instance.PuTTY_OverrideUsername,
+                PuTTY_Username = instance.PuTTY_Username?.Trim(),
+                PuTTY_OverridePrivateKeyFile = instance.PuTTY_OverridePrivateKeyFile,
+                PuTTY_PrivateKeyFile = instance.PuTTY_PrivateKeyFile,
+                PuTTY_OverrideProfile = instance.PuTTY_OverrideProfile,
+                PuTTY_Profile = instance.PuTTY_Profile?.Trim(),
+                PuTTY_OverrideEnableLog = instance.PuTTY_OverrideEnableLog,
+                PuTTY_EnableLog = instance.PuTTY_EnableLog,
+                PuTTY_OverrideLogMode = instance.PuTTY_OverrideLogMode,
+                PuTTY_LogMode = instance.PuTTY_LogMode,
+                PuTTY_OverrideLogPath = instance.PuTTY_OverrideLogPath,
+                PuTTY_LogPath = instance.PuTTY_LogPath,
+                PuTTY_OverrideLogFileName = instance.PuTTY_OverrideLogFileName,
+                PuTTY_LogFileName = instance.PuTTY_LogFileName,
+                PuTTY_OverrideAdditionalCommandLine = instance.PuTTY_OverrideAdditionalCommandLine,
+                PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
+
+                TigerVNC_Enabled = instance.TigerVNC_Enabled,
+                TigerVNC_OverridePort = instance.TigerVNC_OverridePort,
+                TigerVNC_Port = instance.TigerVNC_Port
             });
         }
 
@@ -341,5 +481,6 @@ namespace NETworkManager
         {
             ProfileManager.RemoveGroup(group);
         }
+        #endregion
     }
 }

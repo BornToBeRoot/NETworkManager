@@ -3119,4 +3119,13 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="Groups" xml:space="preserve">
     <value>Groups</value>
   </data>
+  <data name="AddGroup" xml:space="preserve">
+    <value>Add group</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Delete group</value>
+  </data>
+  <data name="DeleteGroupMessage" xml:space="preserve">
+    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
+  </data>
 </root>
