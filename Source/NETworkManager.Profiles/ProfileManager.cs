@@ -172,7 +172,7 @@ namespace NETworkManager.Profiles
         /// <param name="profileName"></param>
         public static void CreateEmptyProfileFile(string profileName)
         {
-            ProfileFileInfo profileFileInfo = new ProfileFileInfo(profileName, Path.Combine(GetDefaultProfilesLocation(), $"{profileName}{ProfileFileExtension}"));
+            ProfileFileInfo profileFileInfo = new ProfileFileInfo(profileName, Path.Combine(GetProfilesLocation(), $"{profileName}{ProfileFileExtension}"));
 
             CheckAndCreateDirectory();
 
