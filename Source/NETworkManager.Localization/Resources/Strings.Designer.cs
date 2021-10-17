@@ -2968,6 +2968,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The name is already used!.
+        /// </summary>
+        public static string ErrorMessage_NameIsAlreadyUsed {
+            get {
+                return ResourceManager.GetString("ErrorMessage_NameIsAlreadyUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Everything.
         /// </summary>
         public static string Everything {

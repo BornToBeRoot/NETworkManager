@@ -11,8 +11,6 @@ using NETworkManager.Models.RemoteDesktop;
 using DnsClient;
 using NETworkManager.Models;
 
-// ReSharper disable InconsistentNaming
-
 namespace NETworkManager.Settings
 {
     public static class GlobalStaticConfiguration

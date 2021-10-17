@@ -51,7 +51,6 @@
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Grid.Column="0" Width="20" Height="20" Margin="10,0">
                                         <Rectangle.OpacityMask>
-                                            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved, can not bind to (networkManager:SettingsViewInfo.Icon) -->
                                             <VisualBrush Stretch="Uniform" Visual="{Binding Icon}" />
                                         </Rectangle.OpacityMask>
                                         <Rectangle.Style>

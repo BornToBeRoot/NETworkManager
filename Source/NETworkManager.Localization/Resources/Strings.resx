@@ -3128,4 +3128,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="DeleteGroupMessage" xml:space="preserve">
     <value>Selected group and all profiles inside this group will be deleted permanently.</value>
   </data>
+  <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
+    <value>The name is already used!</value>
+  </data>
 </root>

@@ -26,6 +26,20 @@ namespace NETworkManager.ViewModels
         private List<string> _groups { get; }
 
         #region General
+        private bool _nameIsValid = true;
+        public bool NameIsValid
+        {
+            get => _nameIsValid;
+            set
+            {
+                if (value == _nameIsValid)
+                    return;
+
+                _nameIsValid = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _name;
         public string Name
         {
@@ -36,6 +50,10 @@ namespace NETworkManager.ViewModels
                     return;
 
                 // Check name for duplicate...
+                if (_groups.Contains(value) && !value.Equals(Group.Name))
+                    NameIsValid = false;
+                else
+                    NameIsValid = true;
 
                 _name = value;
                 OnPropertyChanged();
@@ -1197,7 +1215,7 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        public GroupViewModel(Action<GroupViewModel> saveCommand, Action<GroupViewModel> cancelHandler, List<string> groups, GroupEditMode editMode = GroupEditMode.Add, GroupInfo group = null )
+        public GroupViewModel(Action<GroupViewModel> saveCommand, Action<GroupViewModel> cancelHandler, List<string> groups, GroupEditMode editMode = GroupEditMode.Add, GroupInfo group = null)
         {
             // Load the view
             GroupViews = new CollectionViewSource { Source = GroupViewManager.List }.View;
@@ -1293,7 +1311,7 @@ namespace NETworkManager.ViewModels
             PuTTY_AdditionalCommandLine = groupInfo.PuTTY_AdditionalCommandLine;
 
             // TigerVNC
-            TigerVNC_Enabled = groupInfo.TigerVNC_Enabled;            
+            TigerVNC_Enabled = groupInfo.TigerVNC_Enabled;
             TigerVNC_OverridePort = groupInfo.TigerVNC_OverridePort;
             TigerVNC_Port = groupInfo.TigerVNC_OverridePort ? groupInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port;
 

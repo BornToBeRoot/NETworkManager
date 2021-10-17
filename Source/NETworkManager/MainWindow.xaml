@@ -19,7 +19,6 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:ApplicationNameToTranslatedStringConverter x:Key="ApplicationNameToTranslatedStringConverter" />
         <converters:ApplicationNameToIconConverter x:Key="ApplicationNameToIconConverter" />
-        <!-- ReSharper disable once Xaml.RedundantResource, because MainWindow uses FindResource("ContextMenuNotifyIcon") -->
         <ContextMenu x:Key="ContextMenuNotifyIcon" MinWidth="200" Opened="ContextMenu_Opened" x:Shared="False">
             <MenuItem Header="{x:Static localization:Strings.Show}" Command="{Binding ShowWindowCommand}">
                 <MenuItem.Icon>

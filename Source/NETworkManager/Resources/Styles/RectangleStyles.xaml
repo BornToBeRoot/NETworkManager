@@ -43,6 +43,20 @@
         <Setter Property="ToolTipService.ShowDuration" Value="600000" />
     </Style>
 
+    <Style x:Key="ErrorImageRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertCircle}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
+        <Setter Property="ToolTipService.ShowDuration" Value="600000" />
+    </Style>
+
     <Style x:Key="ReloadAnimation" TargetType="{x:Type Rectangle}">
         <Setter Property="Height" Value="24" />
         <Setter Property="RenderTransform">

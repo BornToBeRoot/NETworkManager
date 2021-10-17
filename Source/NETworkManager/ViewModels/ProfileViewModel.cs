@@ -115,20 +115,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private bool _showUnlockCredentialsHint;
-        public bool ShowUnlockCredentialsHint
-        {
-            get => _showUnlockCredentialsHint;
-            set
-            {
-                if (value == _showUnlockCredentialsHint)
-                    return;
-
-                _showUnlockCredentialsHint = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #region Network Interface
