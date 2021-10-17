@@ -22,7 +22,7 @@ namespace NETworkManager.ViewModels
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
 
-        public ICollectionView Groups { get; }
+        public ICollectionView Groups { get; set; }
 
         private GroupInfo _selectedGroup = new GroupInfo();
         public GroupInfo SelectedGroup
@@ -33,12 +33,23 @@ namespace NETworkManager.ViewModels
                 if (value == _selectedGroup)
                     return;
 
+                // NullReferenceException occurs if profile file is changed
+                if (value == null)
+                {
+                    Profiles = null;
+                    OnPropertyChanged(nameof(Profiles));
+                }
+                else
+                {
+                    SetProfilesView(value.Name);
+                }
+
                 _selectedGroup = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICollectionView Profiles { get; }
+        public ICollectionView Profiles { get; set; }
 
         private ProfileInfo _selectedProfile = new ProfileInfo();
         public ProfileInfo SelectedProfile
@@ -105,14 +116,30 @@ namespace NETworkManager.ViewModels
         {
             _dialogCoordinator = instance;
 
+            SetGroupView();
+
+            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
+
+            _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+            _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+        }
+
+        public void SetGroupView()
+        {
             Groups = new CollectionViewSource { Source = ProfileManager.Groups }.View;
             Groups.SortDescriptions.Add(new SortDescription(nameof(GroupInfo.Name), ListSortDirection.Ascending));
 
             SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
 
-            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
-            Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+            if (SelectedGroup != null)
+                SetProfilesView(SelectedGroup.Name);
+
+            OnPropertyChanged(nameof(Groups));
+        }
+
+        public void SetProfilesView(string groupName)
+        {
+            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => x.Name.Equals(groupName)).FirstOrDefault().Profiles }.View;
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>
             {
@@ -130,17 +157,14 @@ namespace NETworkManager.ViewModels
                     return !string.IsNullOrEmpty(info.Tags) && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
                 */
 
-                // Search by: Name, IPScanner_IPRange
+                // Search by: Name
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
             SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
 
-            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
-
-            _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-            _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+            OnPropertyChanged(nameof(Profiles));
         }
         #endregion
 
@@ -299,7 +323,7 @@ namespace NETworkManager.ViewModels
             };
 
             var editGroupViewModel = new GroupViewModel(instance =>
-            {                
+            {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 ProfileDialogManager.RemoveGroup(instance.Group);
@@ -379,9 +403,8 @@ namespace NETworkManager.ViewModels
         #region Event
         private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
         {
-            Groups.Refresh();
-
-            RefreshProfiles();
+            // Update group view (and profile view) when the profile file has changed
+            SetGroupView();
         }
 
         private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
