@@ -18,7 +18,7 @@ namespace NETworkManager.Validators
             }
             else
             {
-                return Regex.IsMatch((string)value, RegexHelper.DomainRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidHostname);
+                return Regex.IsMatch((string)value, RegexHelper.HostnameRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidHostname);
             }
         }
     }
