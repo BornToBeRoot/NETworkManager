@@ -2017,7 +2017,7 @@ URL: https://api.github.com/</value>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
     <value>L'indirizzo IP pubblico è determinato tramite ipify.org.
 
-URL: https://api.ipify.org/</value>
+URL: https://api6.ipify.org/</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
