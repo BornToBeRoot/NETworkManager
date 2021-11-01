@@ -2017,7 +2017,7 @@ URL: https://api.github.com/</value>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
     <value>L'indirizzo IP pubblico è determinato tramite ipify.org.
 
-URL: https://api.ipify.org/</value>
+URL: https://api.ipify.org e https://api6.ipify.org</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
@@ -2363,7 +2363,7 @@ $$hostname$$	--&gt;	Nome host</value>
     <value>Nome dominio</value>
   </data>
   <data name="TimeoutS" xml:space="preserve">
-    <value>Timeout</value>
+    <value>Timeout (s)</value>
   </data>
   <data name="ReportAnIssueOrCreateAFeatureRequest" xml:space="preserve">
     <value>Segnala un problema o richiedi nuova funzionalità</value>
@@ -2969,8 +2969,7 @@ Se selezioni 'Unisci', i profili attuali verranno copiati nella cartella.</value
 'Unisci' copierà i file del profilo nella cartella di destinazione, ma non sovrascriverà i file del profilo di uscita.
 'Usa altra cartella' userà i file del profilo esistenti nella cartella di destinazione.
 
-Quindi l'applicazione verrà riavviata!
-</value>
+Quindi l'applicazione verrà riavviata!</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Usa altri</value>
