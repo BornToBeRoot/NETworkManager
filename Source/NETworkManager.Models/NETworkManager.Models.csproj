@@ -24,7 +24,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="DnsClient" Version="1.5.0" />
-		<PackageReference Include="IPNetwork2" Version="2.5.360" />
+		<PackageReference Include="IPNetwork2" Version="2.5.362" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.4.0" />
 		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
 		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
