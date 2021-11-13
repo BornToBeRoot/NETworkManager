@@ -6,6 +6,30 @@ description: "Changelog and download links of all available versions."
 permalink: /Changelog
 ---
 
+<!--
+# Version 2021.x.x.x
+Date: **xx.xx.2021**
+
+| File | Checksum [SHA256] |
+|---|---|
+|[Setup](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.9.5.0/NETworkManager_2021.9.5.0_Setup.exe){:target="_blank"}| `883188AD58FB936FCA82846A261840F67E19734C20093996CBCDA75F4CE41EAA` |
+|[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.9.5.0/NETworkManager_2021.9.5.0_Portable.zip){:target="_blank"}| `F186755939FC2A5A07C2D5BDED59128189D16968FD61DF8E17C100E181B3C39D` |
+|[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.9.5.0/NETworkManager_2021.9.5.0_Archive.zip){:target="_blank"}| `E9680A1C52270A5B2AB192AADE08563CB3509CDCD3EF3F9BA2603CE3BB84DF45` |
+
+## What's new?
+-  
+
+## Improvements
+- 
+
+## Bugfixes
+- Remote Desktop - Connection dialog now allows `host` and `host:port` [#1284](https://github.com/BornToBeRoot/NETworkManager/issues/1284){:target="_blank"}
+
+## Other
+- Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
+- Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="_blank"}
+-->
+
 # Version 2021.9.5.0
 Date: **05.09.2021**
 

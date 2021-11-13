@@ -79,9 +79,9 @@ namespace NETworkManager.Utilities
         // Private port values
         private const string PortValues = @"((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))";
 
-        // Match a hostname and port like local.example.com:443
-        public const string HostnameAndPortRegex = @"^" + HostnameValues + @"(:" + PortValues + @")*$";
-
+        // Match a port between 1-65535
+        public const string PortRegex = @"^" + PortValues + @"$";
+                
         // Match any filepath (like "c:\temp\") --> https://www.codeproject.com/Tips/216238/Regular-Expression-to-Validate-File-Path-and-Exten
         public const string FilePath = @"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+$";
 
