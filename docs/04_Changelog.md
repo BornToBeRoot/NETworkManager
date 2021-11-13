@@ -16,8 +16,13 @@ Date: **xx.xx.2021**
 |[Portable](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.9.5.0/NETworkManager_2021.9.5.0_Portable.zip){:target="_blank"}| `F186755939FC2A5A07C2D5BDED59128189D16968FD61DF8E17C100E181B3C39D` |
 |[Archive](https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.9.5.0/NETworkManager_2021.9.5.0_Archive.zip){:target="_blank"}| `E9680A1C52270A5B2AB192AADE08563CB3509CDCD3EF3F9BA2603CE3BB84DF45` |
 
+**New system requirements**
+- Windows 10 / Server x64 (1809 or later)
+- [.NET Desktop Runtime 6.x (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0){:target="_blank"}
+- [Microsoft Edge - WebView2 Runtime (Evergreen)](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="_blank"}
+
 ## What's new?
--  
+-  Migrated to .net 6.0
 
 ## Improvements
 - 
