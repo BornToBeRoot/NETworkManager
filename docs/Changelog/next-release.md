@@ -2,7 +2,7 @@
 layout: default
 title: Next release
 parent: Changelog
-nav_order: 983
+nav_order: 1
 description: "Changelog for next release"
 permalink: /Changelog/next-release
 ---
