@@ -27,3 +27,4 @@ permalink: /Changelog/next-release
 ## Other
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="_blank"}
+- PSDiscoveryProtocol updated to version 1.4.1
