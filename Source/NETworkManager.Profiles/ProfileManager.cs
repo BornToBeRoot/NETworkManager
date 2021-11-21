@@ -256,7 +256,7 @@ namespace NETworkManager.Profiles
 
             // Save the encrypted file
             byte[] decryptedBytes = SerializeToByteArray(profiles);
-            byte[] encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(newProfileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+            byte[] encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(newProfileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionIterations);
 
             File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
 
@@ -301,12 +301,12 @@ namespace NETworkManager.Profiles
 
             // Load and decrypt the profiles from the profile file
             var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
-            var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+            var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionIterations);
             var profiles = DeserializeFromByteArray(decryptedBytes);
 
             // Save the encrypted file
             decryptedBytes = SerializeToByteArray(profiles);
-            encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(newProfileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+            encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(newProfileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionIterations);
 
             File.WriteAllBytes(newProfileFileInfo.Path, encryptedBytes);
 
@@ -346,7 +346,7 @@ namespace NETworkManager.Profiles
 
             // Load and decrypt the profiles from the profile file
             var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
-            var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+            var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionIterations);
             var profiles = DeserializeFromByteArray(decryptedBytes);
 
             // Save the decrypted profiles to the profile file
@@ -382,7 +382,7 @@ namespace NETworkManager.Profiles
                 if (profileFileInfo.IsEncrypted)
                 {
                     var encryptedBytes = File.ReadAllBytes(profileFileInfo.Path);
-                    var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(profileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+                    var decryptedBytes = CryptoHelper.Decrypt(encryptedBytes, SecureStringHelper.ConvertToString(profileFileInfo.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionIterations);
 
                     DeserializeFromByteArray(decryptedBytes).ForEach(AddProfile);
 
@@ -428,7 +428,7 @@ namespace NETworkManager.Profiles
                 if (LoadedProfileFile.IsPasswordValid)
                 {
                     byte[] decryptedBytes = SerializeToByteArray(new List<ProfileInfo>(Profiles));
-                    byte[] encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(LoadedProfileFile.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionBlockSize, GlobalStaticConfiguration.Profile_EncryptionIterations);
+                    byte[] encryptedBytes = CryptoHelper.Encrypt(decryptedBytes, SecureStringHelper.ConvertToString(LoadedProfileFile.Password), GlobalStaticConfiguration.Profile_EncryptionKeySize, GlobalStaticConfiguration.Profile_EncryptionIterations);
 
                     File.WriteAllBytes(LoadedProfileFile.Path, encryptedBytes);
                 }
