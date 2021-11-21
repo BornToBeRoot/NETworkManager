@@ -81,7 +81,20 @@ namespace NETworkManager.Utilities
             using var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
 
             var text = new byte[cipher.Length];
-            cryptoStream.Read(text, 0, text.Length);
+
+            //cryptoStream.Read(text, 0, text.Length);
+            // Fix for issue: https://github.com/dotnet/runtime/issues/61535
+
+            int readBytes = 0;
+            while (readBytes < text.Length)
+            {
+                int n = cryptoStream.Read(text, readBytes, text.Length - readBytes);
+
+                if (n == 0)
+                    break;
+
+                readBytes += n;
+            }
 
             memoryStream.Close();
             cryptoStream.Close();
