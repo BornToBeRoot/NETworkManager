@@ -22,6 +22,7 @@ permalink: /Changelog/next-release
 
 ## Bugfixes
 - Remote Desktop - Connection dialog now allows `host` and `host:port` [#1284](https://github.com/BornToBeRoot/NETworkManager/issues/1284){:target="_blank"}
+- PowerShell/PuTTY/TigerVNC - Flickering fixed when process terminates [#1304](https://github.com/BornToBeRoot/NETworkManager/issues/1304){:target="_blank"}
 
 ## Other
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
