@@ -17,22 +17,21 @@ namespace NETworkManager.Utilities
         /// <returns></returns>
         public static byte[] Encrypt(byte[] decryptedBytes, string password, int keySize, int blockSize, int iterations)
         {
-            var salt = GenerateRandomEntropy(keySize / 8); // Generate salt based
-            var iv = GenerateRandomEntropy(blockSize / 8); // Generate iv, has to be the same as the block size
+            var salt = RandomNumberGenerator.GetBytes(keySize / 8); // Generate salt based
+            var iv = RandomNumberGenerator.GetBytes(blockSize / 8); // Generate iv, has to be the same as the block size
 
             using var rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, salt, iterations);
 
             var key = rfc2898DeriveBytes.GetBytes(keySize / 8);
 
-            using var rijndaelManaged = new RijndaelManaged
-            {
-                KeySize = keySize,
-                BlockSize = blockSize,
-                Mode = CipherMode.CBC,
-                Padding = PaddingMode.PKCS7
-            };
+            using Aes aes = Aes.Create();
 
-            using var encryptor = rijndaelManaged.CreateEncryptor(key, iv);
+            aes.KeySize = keySize;
+            aes.BlockSize = blockSize;
+            aes.Mode = CipherMode.CBC;
+            aes.Padding = PaddingMode.PKCS7;
+
+            using var encryptor = aes.CreateEncryptor(key, iv);
             using var memoryStream = new MemoryStream();
             using var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
 
@@ -68,15 +67,14 @@ namespace NETworkManager.Utilities
 
             var key = rfc2898DeriveBytes.GetBytes(keySize / 8);
 
-            using var rijndaelManaged = new RijndaelManaged
-            {
-                KeySize = keySize,
-                BlockSize = blockSize,
-                Mode = CipherMode.CBC,
-                Padding = PaddingMode.PKCS7
-            };
+            using Aes aes = Aes.Create();
 
-            using var decryptor = rijndaelManaged.CreateDecryptor(key, iv);
+            aes.KeySize = keySize;
+            aes.BlockSize = blockSize;
+            aes.Mode = CipherMode.CBC;
+            aes.Padding = PaddingMode.PKCS7;
+
+            using var decryptor = aes.CreateDecryptor(key, iv);
             using var memoryStream = new MemoryStream(cipher);
             using var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
 
@@ -100,23 +98,6 @@ namespace NETworkManager.Utilities
             cryptoStream.Close();
 
             return text;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="size"></param>
-        /// <returns></returns>
-        private static byte[] GenerateRandomEntropy(int size)
-        {
-            var randomBytes = new byte[size];
-
-            using (var rngCryptoServiceProvider = new RNGCryptoServiceProvider())
-            {
-                rngCryptoServiceProvider.GetBytes(randomBytes);
-            }
-
-            return randomBytes;
         }
     }
 }
