@@ -48,7 +48,6 @@ namespace NETworkManager.Settings
         public static double Profile_DefaultWidthExpanded => 250;
         public static double Profile_MaxWidthExpanded => 350;
         public static int Profile_EncryptionKeySize => 256;
-        public static int Profile_EncryptionBlockSize => 128;
         public static int Profile_EncryptionIterations => 1000000;
 
         // Application: Dashboard
