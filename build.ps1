@@ -40,12 +40,12 @@ $SetupContent | Set-Content -Path $InnoSetupFile -Encoding utf8
 dotnet clean "$PSScriptRoot\Source\NETworkManager.sln"
 dotnet restore "$PSScriptRoot\Source\NETworkManager.sln"
 # dotnet build --configuration Release "$PSScriptRoot\Source\NETworkManager.sln"
-dotnet publish --configuration Release --framework net5.0-windows10.0.17763.0 --runtime win10-x64 --self-contained false --output "$BuildPath\NETworkManager" "$PSScriptRoot\Source\NETworkManager\NETworkManager.csproj" 
+dotnet publish --configuration Release --framework net6.0-windows10.0.17763.0 --runtime win10-x64 --self-contained false --output "$BuildPath\NETworkManager" "$PSScriptRoot\Source\NETworkManager\NETworkManager.csproj" 
 
 # Test if release build is available
 if(-not(Test-Path -Path "$BuildPath\NETworkManager\NETworkManager.exe"))
 {
-    Write-Error "Could not find dotnet release build. Is .NET SDK 5.0 or later installed?" -ErrorAction Stop
+    Write-Error "Could not find dotnet release build. Is .NET SDK 6.0 or later installed?" -ErrorAction Stop
 }
 
 # Get NETworkManager File Version
