@@ -176,7 +176,10 @@ namespace NETworkManager.Models.Network
                     if (socket.LocalEndPoint is IPEndPoint ipAddress)
                         return ipAddress.Address;
                 }
-                catch (SocketException) { }
+                catch (SocketException ex) {
+                    Console.WriteLine(ex);
+                
+                }
             }
 
             return null;
@@ -222,11 +225,11 @@ namespace NETworkManager.Models.Network
         public void ConfigureNetworkInterface(NetworkInterfaceConfig config)
         {
             // IP
-            var command = @"netsh interface ipv4 set address name='" + config.Name + @"'";
+            var command = $"netsh interface {config.IpVersion} set address name='{config.Name}'";
             command += config.EnableStaticIPAddress ? @" source=static address=" + config.IPAddress + @" mask=" + config.Subnetmask + @" gateway=" + config.Gateway : @" source=dhcp";
 
             // DNS
-            command += @";netsh interface ipv4 set DNSservers name='" + config.Name + @"'";
+            command += $";netsh interface {config.IpVersion} set DNSservers name='{config.Name}'";
             command += config.EnableStaticDNS ? @" source=static address=" + config.PrimaryDNSServer + @" register=primary validate=no" : @" source=dhcp";
             command += (config.EnableStaticDNS && !string.IsNullOrEmpty(config.SecondaryDNSServer)) ? @";netsh interface ipv4 add DNSservers name='" + config.Name + @"' address=" + config.SecondaryDNSServer + @" index=2 validate=no" : "";
 

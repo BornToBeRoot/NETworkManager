@@ -10,10 +10,15 @@
         public bool EnableStaticDNS { get; set; }
         public string PrimaryDNSServer { get; set; }
         public string SecondaryDNSServer { get; set; }
-
+        public IpVersionConfig IpVersion { get; set; } = IpVersionConfig.ipv4;
         public NetworkInterfaceConfig()
         {
 
         }        
+    }
+    public enum IpVersionConfig
+    {
+        ipv4,
+        ipv6
     }
 }
