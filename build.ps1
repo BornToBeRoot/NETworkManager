@@ -39,8 +39,10 @@ $SetupContent | Set-Content -Path $InnoSetupFile -Encoding utf8
 # Dotnet clean, restore, build and publish
 dotnet clean "$PSScriptRoot\Source\NETworkManager.sln"
 dotnet restore "$PSScriptRoot\Source\NETworkManager.sln"
-# dotnet build --configuration Release "$PSScriptRoot\Source\NETworkManager.sln"
+# Issue: dotnet publish ignores zh-CN, zh-TW (https://github.com/dotnet/msbuild/issues/3897)
 dotnet publish --configuration Release --framework net6.0-windows10.0.17763.0 --runtime win10-x64 --self-contained false --output "$BuildPath\NETworkManager" "$PSScriptRoot\Source\NETworkManager\NETworkManager.csproj" 
+
+Read-Host "Copy the missing language files and press enter"
 
 # Test if release build is available
 if(-not(Test-Path -Path "$BuildPath\NETworkManager\NETworkManager.exe"))
