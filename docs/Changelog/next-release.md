@@ -21,7 +21,7 @@ permalink: /Changelog/next-release
 -
 
 ## Bugfixes
-- 
+- App crash fixed when renaming a profile file [#1318](https://github.com/BornToBeRoot/NETworkManager/issues/1318){:target="_blank"}
 
 ## Other
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
