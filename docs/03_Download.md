@@ -13,10 +13,10 @@ Date: **30.11.2021**
 
 | Download | Checksum [SHA256] |
 |---|---|
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.11.30.0/NETworkManager_2021.11.30.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn btn-outline">Setup</button></a> | `AFDA99002A95D78127A26ADCED00F1A86DCBDB6DA0782A761088FFBF3BFF1DF9` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.11.30.0/NETworkManager_2021.11.30.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn btn-blue">Setup</button></a> | `AFDA99002A95D78127A26ADCED00F1A86DCBDB6DA0782A761088FFBF3BFF1DF9` |
 | <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.11.30.0/NETworkManager_2021.11.30.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn btn-blue">Portable</button></a> | `6EE94EDF8EEDE8D65E2143D5BF60C59CA715536D4C15E680FFB0454174D22FE1` |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.11.30.0/NETworkManager_2021.11.30.0_Archive.zip' target='_blank'><button type="button" name="button" class="btn">Archive</button></a> | `5F72238031B7DB28F885BD8E74046734BDBCA37E4DFC5110ADB75EB216C50DF1` |
-
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.11.30.0/NETworkManager_2021.11.30.0_Archive.zip' target='_blank'><button type="button" name="button" class="btn btn-blue">:package: Archive</button></a> | `5F72238031B7DB28F885BD8E74046734BDBCA37E4DFC5110ADB75EB216C50DF1` |
+:package:
 ## System requirements
 - Windows 10 / Server x64 (1809 or later)
 - [.NET Desktop Runtime 6.x (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0){:target="_blank"}
