@@ -3098,15 +3098,15 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Odstrani naslov IPv4...</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
-    <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
+    <value>Oddaljena seja se je končala, ker je bila dosežena skupna časovna omejitev za prijavo. To omejitev nastavi skrbnik strežnika ali politike omrežja.</value>
   </data>
   <data name="EnterValidHostname" xml:space="preserve">
-    <value>Enter a valid hostname!</value>
+    <value>Vnesite veljavno ime gostitelja!</value>
   </data>
   <data name="EnterValidHostnameAndPort" xml:space="preserve">
-    <value>Enter a valid hostname and port!</value>
+    <value>Vnesite veljavno ime gostitelja in vrata!</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
-    <value>Unable to reconnect to the remote session.</value>
+    <value>Ni mogoče znova vzpostaviti povezave z oddaljeno sejo.</value>
   </data>
 </root>
