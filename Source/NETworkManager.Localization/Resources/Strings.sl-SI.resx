@@ -1992,12 +1992,14 @@ Uveljavitev sprememb te vrednosti zahteva ponovni zagon programa.</value>
 Za zagotavljanje dodatnih funkcij program uporablja internetne storitve, ki jih ne upravljam jaz. Nobeni podatki mi ne bodo nikoli poslani.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>Ob zagonu programa ta v ozadju preveri, če je na GitHubu na voljo nova različica programa.</value>
+    <value>Ob zagonu programa ta v ozadju preveri, če je na GitHubu na voljo nova različica programa.
+
+URL: https://api.github.com/</value>
   </data>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
     <value>Javni naslov IP je določen prek ipify.org.
 
-URL: https://api.ipify.org/</value>
+URL: https://api.ipify.org and https://api6.ipify.org</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Zasebnost</value>
@@ -2069,7 +2071,7 @@ URL: https://api.ipify.org/</value>
     <value>Dobili ste "{0}" kot javni naslov IP od "{1}"!</value>
   </data>
   <data name="ResolvedXXXAsHostnameForIPAddressXXXMessage" xml:space="preserve">
-    <value>razrešeno je "{0}" kot ime gostitelja za naslov IP "{1}"!</value>
+    <value>Razrešeno je "{0}" kot ime gostitelja za naslov IP "{1}"!</value>
   </data>
   <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
     <value>Preverjanje javnega naslova IP
@@ -2559,7 +2561,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Iskanje</value>
   </data>
   <data name="ApplicationName_NetworkInterface" xml:space="preserve">
-    <value>Omrežni vmesnik</value>
+    <value>Omrežna kartica</value>
   </data>
   <data name="ApplicationName_Ping" xml:space="preserve">
     <value>Ping</value>
@@ -2958,22 +2960,22 @@ Aplikacija se bo nato znova zagnala! </value>
     <value>Skrito omrežje</value>
   </data>
   <data name="DevelopedAndMaintainedByX" xml:space="preserve">
-    <value>Developed and maintained by {0} with the help of the</value>
+    <value>Razvil in vzdržuje {0} s pomočjo</value>
   </data>
   <data name="ExternalService_ipify_Description" xml:space="preserve">
-    <value>A Simple Public IP Address API</value>
+    <value>Preprost API za javni IP naslov</value>
   </data>
   <data name="Library_AirspaceFixer_Description" xml:space="preserve">
-    <value>AirspacePanel fixes all Airspace issues with WPF-hosted Winforms.</value>
+    <value>AirspacePanel odpravlja vse težave z zračnim prostorom z Winforms, ki jih gosti WPF.</value>
   </data>
   <data name="Library_ControlzEx_Description" xml:space="preserve">
-    <value>Shared Controlz for WPF and ... more</value>
+    <value>Deljen nadzor za WPF in ... več </value>
   </data>
   <data name="Library_DnsClientNET_Description" xml:space="preserve">
-    <value>DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups</value>
+    <value>DnsClient.NET je preprosta, a zelo zmogljiva in visoko zmogljiva odprtokodna knjižnica za .NET Framework za iskanje DNS</value>
   </data>
   <data name="Library_Dragablz_Description" xml:space="preserve">
-    <value>Dragable and tearable tab control for WPF</value>
+    <value>Nadzor zavihkov, ki jih je mogoče povleči in trgati, za WPF</value>
   </data>
   <data name="Library_IPNetwork_Description" xml:space="preserve">
     <value>C# library take care of complex network, IP, IPv4, IPv6, netmask, CIDR, subnet, subnetting, supernet, and supernetting calculation for .NET developers.</value>
@@ -3098,15 +3100,15 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Odstrani naslov IPv4...</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
-    <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
+    <value>Oddaljena seja se je končala, ker je bila dosežena skupna časovna omejitev za prijavo. To omejitev nastavi skrbnik strežnika ali politike omrežja.</value>
   </data>
   <data name="EnterValidHostname" xml:space="preserve">
-    <value>Enter a valid hostname!</value>
+    <value>Vnesite veljavno ime gostitelja!</value>
   </data>
   <data name="EnterValidHostnameAndPort" xml:space="preserve">
-    <value>Enter a valid hostname and port!</value>
+    <value>Vnesite veljavno ime gostitelja in vrata!</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
-    <value>Unable to reconnect to the remote session.</value>
+    <value>Ni mogoče znova vzpostaviti povezave z oddaljeno sejo.</value>
   </data>
 </root>
