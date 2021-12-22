@@ -2978,16 +2978,16 @@ Aplikacija se bo nato znova zagnala! </value>
     <value>Nadzor zavihkov, ki jih je mogoče povleči in trgati, za WPF</value>
   </data>
   <data name="Library_IPNetwork_Description" xml:space="preserve">
-    <value>C# library take care of complex network, IP, IPv4, IPv6, netmask, CIDR, subnet, subnetting, supernet, and supernetting calculation for .NET developers.</value>
+    <value>Knjižnica C# skrbi za kompleksno omrežje, IP, IPv4, IPv6, omrežno masko, CIDR, podomrežje, podomrežje, superomrežje in izračun superomrežij za razvijalce .NET.</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Simple, flexible, interactive &amp; powerful charts, maps and gauges for .Net</value>
+    <value>Preprosti, prilagodljivi, interaktivni in zmogljivi grafikoni, zemljevidi in merilniki za .Net</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
-    <value>A collection of loading indicators for WPF</value>
+    <value>Zbirka kazalnikov obremenitve za WPF</value>
   </data>
   <data name="Library_MahAppsMetroIconPacks_Description" xml:space="preserve">
-    <value>Some awesome icons for WPF and UWP all together...</value>
+    <value>Nekaj odličnih ikon za WPF in UWP, vse skupaj... </value>
   </data>
   <data name="Library_MahAppsMetro_Description" xml:space="preserve">
     <value>A toolkit for creating Metro / Modern UI styled WPF apps.</value>
