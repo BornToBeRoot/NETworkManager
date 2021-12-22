@@ -2999,22 +2999,22 @@ Aplikacija se bo nato znova zagnala! </value>
     <value>Odjemalska knjižnica API GitHub za .NET</value>
   </data>
   <data name="Library_PSDicoveryProtocol_Description" xml:space="preserve">
-    <value>Capture and parse CDP and LLDP packets on local or remote computers</value>
+    <value>Zajeme in razčleni pakete CDP in LLDP na lokalnih ali oddaljenih računalnikih</value>
   </data>
   <data name="Library_SharpSNMP_Description" xml:space="preserve">
-    <value>Sharp SNMP Library - Open Source SNMP for .NET and Mono</value>
+    <value>Sharp SNMP knjižnica – odprtokodni SNMP za .NET in Mono</value>
   </data>
   <data name="Resource_Flag_Description" xml:space="preserve">
-    <value>A collection of all country flags in SVG</value>
+    <value>Zbirka vseh državnih zastav v SVG</value>
   </data>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
-    <value>List of Top-Level-Domains from iana.org, which is used to query whois servers of the TLD from whois.iana.org via port 43</value>
+    <value>Seznam domen najvišje ravni iz iana.org, ki se uporablja za poizvedovanje whois strežnikov TLD s whois.iana.org prek vrat 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Sanitized IEEE OUI Data from linuxnet.ca.</value>
+    <value>Razkuženi podatki IEEE OUI z linuxnet.ca.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
-    <value>Service Name and Transport Protocol Port Number Registry from iana.org.</value>
+    <value>Ime storitve in register številke vrat transportnega protokola z iana.org.</value>
   </data>
   <data name="License_ApacheLicense2dot0" xml:space="preserve">
     <value>Apache License 2.0</value>
