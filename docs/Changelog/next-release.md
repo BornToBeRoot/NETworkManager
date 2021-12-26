@@ -15,16 +15,14 @@ permalink: /Changelog/next-release
 - [Microsoft Edge - WebView2 Runtime (Evergreen)](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="_blank"}
 
 ## What's new?
--  Migrated to .net 6.0
+-  
 
 ## Improvements
-- 
+-
 
 ## Bugfixes
-- Remote Desktop - Connection dialog now allows `host` and `host:port` [#1284](https://github.com/BornToBeRoot/NETworkManager/issues/1284){:target="_blank"}
-- PowerShell/PuTTY/TigerVNC - Flickering fixed when process terminates [#1304](https://github.com/BornToBeRoot/NETworkManager/issues/1304){:target="_blank"}
+- App crash fixed when renaming a profile file [#1318](https://github.com/BornToBeRoot/NETworkManager/issues/1318){:target="_blank"}
 
 ## Other
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="_blank"}
-- PSDiscoveryProtocol updated to version 1.4.1
