@@ -124,6 +124,7 @@ namespace NETworkManager.Settings
 
         // Application: PuTTY
         public static ConnectionMode PuTTY_DefaultConnectionMode => ConnectionMode.SSH;
+        public static string PuTTY_DefaultProfile => "NETworkManager";
         public static LogMode PuTTY_LogMode => LogMode.SessionLog;
         public static string PuTTY_LogPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyManager.Current.Name, "PuTTY_Log");
         public static string PuTTY_LogFileName => "&H_&Y-&M-&D_&T.log";
