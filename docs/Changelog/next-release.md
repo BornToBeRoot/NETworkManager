@@ -9,14 +9,22 @@ permalink: /Changelog/next-release
 
 # Next release
 
-**New system requirements**
+**System requirements**
 - Windows 10 / Server x64 (1809 or later)
 - [.NET Desktop Runtime 6.x (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0){:target="_blank"}
 - [Microsoft Edge - WebView2 Runtime (Evergreen)](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="_blank"}
 
 ## What's new?
--  
+-  PuTTY - Custom PuTTY profile `NETworkManager` added [#1358](https://github.com/BornToBeRoot/NETworkManager/pull/1358){:target="_blank"}
+  - PuTTY background now matches the background of NETworkManager
+  - Font changed to `Consolas`
+  - FontSize increased to 12
+  - Cursor blink
 
+# Features removed
+- Light theme (temporarily) disabled (due to [#1358](https://github.com/BornToBeRoot/NETworkManager/pull/1358){:target="_blank"})
+  - The design needs to be revised and is currently too garish anyway
+  
 ## Improvements
 -
 
