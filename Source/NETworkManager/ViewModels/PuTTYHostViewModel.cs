@@ -167,6 +167,10 @@ namespace NETworkManager.ViewModels
             // Check if putty is available...
             CheckIfConfigured();
 
+            // Create default PuTTY profile for NETworkManager 
+            if (IsConfigured)
+                PuTTY.WriteDefaultProfileToRegistry();
+
             InterTabClient = new DragablzInterTabClient(ApplicationName.PuTTY);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
