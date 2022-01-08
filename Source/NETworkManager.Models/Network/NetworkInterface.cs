@@ -31,7 +31,7 @@ namespace NETworkManager.Models.Network
         public static List<NetworkInterfaceInfo> GetNetworkInterfaces()
         {
             var listNetworkInterfaceInfo = new List<NetworkInterfaceInfo>();
-
+            
             foreach (var networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
             {
                 // NetworkInterfaceType 53 is proprietary virtual/internal interface
@@ -123,7 +123,7 @@ namespace NETworkManager.Models.Network
                 {
                     ipv6Properties = ipProperties.GetIPv6Properties();
                 }
-                catch (NetworkInformationException)
+                catch (NetworkInformationException ex)
                 {
                     ipv6ProtocolAvailable = false;
                 }
