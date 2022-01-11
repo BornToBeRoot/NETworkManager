@@ -249,7 +249,7 @@ namespace NETworkManager.ViewModels
 
             return false;
         }
-
+              
         public ICommand PuTTY_ReconnectCommand => new RelayCommand(PuTTY_ReconnectAction);
 
         private void PuTTY_ReconnectAction(object view)
@@ -261,12 +261,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public ICommand PuTTY_ResizeWindowCommand => new RelayCommand(PuTTY_ResizeWindowAction, PuTTY_Connected_CanExecute);
+
+        private void PuTTY_ResizeWindowAction(object view)
+        {
+            if (view is PuTTYControl control)
+                control.ResizeEmbeddedWindow();
+        }
+
         public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction, PuTTY_Connected_CanExecute);
 
         private void PuTTY_RestartSessionAction(object view)
         {
-            if (view is PuTTYControl puttyControl)
-                puttyControl.RestartSession();
+            if (view is PuTTYControl control)
+                control.RestartSession();
         }
 
         public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
