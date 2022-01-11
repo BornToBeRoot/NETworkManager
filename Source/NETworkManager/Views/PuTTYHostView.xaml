@@ -86,6 +86,15 @@
                                                 </MenuItem.Icon>
                                             </MenuItem>
                                             <Separator />
+                                            <MenuItem Header="{x:Static localization:Strings.Resize}" Command="{Binding Data.PuTTY_ResizeWindowCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                                <MenuItem.Icon>
+                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                        <Rectangle.OpacityMask>
+                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ArrowExpand}" />
+                                                        </Rectangle.OpacityMask>
+                                                    </Rectangle>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
                                             <MenuItem Header="{x:Static localization:Strings.RestartSession}" Command="{Binding Data.PuTTY_RestartSessionCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                 <MenuItem.Icon>
                                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">

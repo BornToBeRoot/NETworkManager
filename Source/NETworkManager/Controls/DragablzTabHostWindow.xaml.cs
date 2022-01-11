@@ -221,11 +221,19 @@ namespace NETworkManager.Controls
 
         private void PuTTY_ReconnectAction(object view)
         {
-            if (view is PuTTYControl puttyControl)
+            if (view is PuTTYControl control)
             {
-                if (puttyControl.ReconnectCommand.CanExecute(null))
-                    puttyControl.ReconnectCommand.Execute(null);
+                if (control.ReconnectCommand.CanExecute(null))
+                    control.ReconnectCommand.Execute(null);
             }
+        }
+
+        public ICommand PuTTY_ResizeWindowCommand => new RelayCommand(PuTTY_ResizeWindowAction, PuTTY_Connected_CanExecute);
+
+        private void PuTTY_ResizeWindowAction(object view)
+        {
+            if (view is PuTTYControl control)
+                control.ResizeEmbeddedWindow();
         }
 
         public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction, PuTTY_Connected_CanExecute);

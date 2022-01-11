@@ -11,7 +11,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         mc:Ignorable="d"
-        Style="{DynamicResource DefaultWindow}" MinWidth="1280" MinHeight="768" Height="1280" Width="768" TitleAlignment="Left"
+        Style="{DynamicResource DefaultWindow}" MinWidth="1024" Width="1024" Height="768" MinHeight="576" TitleAlignment="Left"
         d:DataContext="{d:DesignInstance controls:DragablzTabHostWindow}">
     <mahAppsControls:MetroWindow.WindowButtonCommands>
         <mahAppsControls:WindowButtonCommands Template="{DynamicResource MahApps.Metro.Templates.WindowButtonCommands.Win10}" />
@@ -231,6 +231,15 @@
                                                                 </MenuItem.Icon>
                                                             </MenuItem>
                                                             <Separator />
+                                                            <MenuItem Header="{x:Static localization:Strings.Resize}" Command="{Binding Data.PuTTY_ResizeWindowCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                                                <MenuItem.Icon>
+                                                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                        <Rectangle.OpacityMask>
+                                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ArrowExpand}" />
+                                                                        </Rectangle.OpacityMask>
+                                                                    </Rectangle>
+                                                                </MenuItem.Icon>
+                                                            </MenuItem>
                                                             <MenuItem Header="{x:Static localization:Strings.RestartSession}" Command="{Binding Data.PuTTY_RestartSessionCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
                                                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
