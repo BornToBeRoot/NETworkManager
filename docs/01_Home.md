@@ -13,12 +13,12 @@ NETworkManager is a powerful tool for managing networks and troubleshoot network
 <div align="center">
   <p>
     <a href='./Download'>
-      <span class="fs-6">
+      <span class="fs-5">
         <button type="button" name="button" class="btn btn-blue">:package: Download</button>
       </span>
     </a>    
     <a href='https://github.com/BornToBeRoot/NETworkManager' target="_blank">
-      <span class="fs-6">
+      <span class="fs-5">
         <button type="button" name="button" class="btn">:octocat: Github</button>
       </span>
     </a> 
