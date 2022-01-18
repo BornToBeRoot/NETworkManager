@@ -392,7 +392,9 @@ namespace NETworkManager.ViewModels
                     AdditionalCommandLine = instance.AdditionalCommandLine
                 };
 
-                // Add host to history               
+                // Add host to history
+                // Note: The history can only be updated after the values have been read.
+                //       Otherwise, in some cases, incorrect values are taken over.
                 if (!string.IsNullOrEmpty(instance.Host))
                     AddHostToHistory(instance.Host);
 
