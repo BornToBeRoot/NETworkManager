@@ -249,7 +249,7 @@ namespace NETworkManager.ViewModels
 
             return false;
         }
-              
+
         public ICommand PuTTY_ReconnectCommand => new RelayCommand(PuTTY_ReconnectAction);
 
         private void PuTTY_ReconnectAction(object view)
@@ -376,16 +376,7 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                // Add host to history
-                AddHostToHistory(instance.Host);
-                AddSerialLineToHistory(instance.SerialLine);
-                AddPortToHistory(instance.Port.ToString());
-                AddBaudToHistory(instance.Baud.ToString());
-                AddUsernameToHistory(instance.Username);
-                AddPrivateKeyToHistory(instance.PrivateKeyFile);
-                AddProfileToHistory(instance.Profile);
-
-                // Create Profile info
+                // Create profile info
                 var info = new PuTTYSessionInfo
                 {
                     HostOrSerialLine = instance.ConnectionMode == ConnectionMode.Serial ? instance.SerialLine : instance.Host,
@@ -400,6 +391,28 @@ namespace NETworkManager.ViewModels
                     LogPath = Settings.Application.PuTTY.LogPath,
                     AdditionalCommandLine = instance.AdditionalCommandLine
                 };
+
+                // Add host to history               
+                if (!string.IsNullOrEmpty(instance.Host))
+                    AddHostToHistory(instance.Host);
+
+                if (!string.IsNullOrEmpty(instance.SerialLine))
+                    AddSerialLineToHistory(instance.SerialLine);
+
+                if (instance.Port != 0)
+                    AddPortToHistory(instance.Port.ToString());
+
+                if (instance.Baud != 0)
+                    AddBaudToHistory(instance.Baud.ToString());
+
+                if (!string.IsNullOrEmpty(instance.Username))
+                    AddUsernameToHistory(instance.Username);
+
+                if (!string.IsNullOrEmpty(instance.PrivateKeyFile))
+                    AddPrivateKeyToHistory(instance.PrivateKeyFile);
+
+                if (!string.IsNullOrEmpty(instance.Profile))
+                    AddProfileToHistory(instance.Profile);
 
                 Connect(info);
             }, async instance =>
