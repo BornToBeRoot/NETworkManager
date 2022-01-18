@@ -15,7 +15,7 @@ permalink: /Changelog/next-release
 - [Microsoft Edge - WebView2 Runtime (Evergreen)](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="_blank"}
 
 ## What's new?
-- New Icon/Logo for the application [#1362](https://github.com/BornToBeRoot/NETworkManager/pull/1362){:target="_blank"}
+- New Icon/Logo for the application [#1362](https://github.com/BornToBeRoot/NETworkManager/pull/1362){:target="_blank"} [#1371](https://github.com/BornToBeRoot/NETworkManager/pull/1371){:target="_blank"}
 - PuTTY 
   - Custom profile `NETworkManager` will be added to the registry (`HCKU\Software\SimonTatham\PuTTY\Sessions\NETworkManager`) which will set the PuTTY background to the application background [#1358](https://github.com/BornToBeRoot/NETworkManager/pull/1358){:target="_blank"}
   - Add context menu button (right click on the tab) to fix the PuTTY embedded window size [#1366](https://github.com/BornToBeRoot/NETworkManager/pull/1366){:target="_blank"}
