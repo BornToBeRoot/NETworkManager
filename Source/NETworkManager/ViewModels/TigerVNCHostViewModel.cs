@@ -337,16 +337,18 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                // Add host to history
-                AddHostToHistory(instance.Host);
-                AddPortToHistory(instance.Port);
-
-                // Create Profile info
+                // Create profile info
                 var info = new TigerVNCSessionInfo
                 {
                     Host = instance.Host,
                     Port = instance.Port
                 };
+
+                // Add to history
+                // Note: The history can only be updated after the values have been read.
+                //       Otherwise, in some cases, incorrect values are taken over.
+                AddHostToHistory(instance.Host);
+                AddPortToHistory(instance.Port);
 
                 // Connect
                 Connect(info);
@@ -398,26 +400,18 @@ namespace NETworkManager.ViewModels
         // Modify history list
         private static void AddHostToHistory(string host)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.TigerVNC_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            if (string.IsNullOrEmpty(host))
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.TigerVNC_HostHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.TigerVNC_HostHistory.Add(x));
+            SettingsManager.Current.TigerVNC_HostHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.TigerVNC_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries));
         }
 
         private static void AddPortToHistory(int port)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.TigerVNC_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
+            if (port == 0)
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.TigerVNC_PortHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.TigerVNC_PortHistory.Add(x));
+            SettingsManager.Current.TigerVNC_PortHistory = new ObservableCollection<int>(ListHelper.Modify(SettingsManager.Current.TigerVNC_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries));
         }
 
         private void StartDelayedSearch()
