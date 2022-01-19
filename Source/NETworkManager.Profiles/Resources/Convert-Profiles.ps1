@@ -14,16 +14,22 @@ param (
         Position=1,
         Mandatory=$false,
         HelpMessage='Path of the NETworkManager.exe')]    
-    [String]$NETworkManagerPath
+    [String]$NETworkManagerPath,
+
+    [Parameter(
+        Position=2,
+        Mandatory=$false,
+        HelpMessage='Version of NETworkManager')]    
+    [String]$NETworkManagerVersion
 )
 
 Write-Host "== NETworkManager Profile Converter ==`n" -ForegroundColor Green
-Write-Host "Convert profiles from 2021.9.5.0 and before to 2021.x.x.x and later`n"
+Write-Host "Convert profiles to versions $NETworkManagerVersion`n"
 
-Write-Host "If you use encrypted profiles:`n  1) Disable profile encryption with NETworkManager 2021.9.5.0`n     https://borntoberoot.net/NETworkManager/FAQ#how-to-disable-profile-file-encryption`n  2) Run this script to convert the profiles`n  3) Re-enable profile encryption with NETworkManager 2021.x.x.x`n     https://borntoberoot.net/NETworkManager/FAQ#how-to-enable-profile-file-encryption`n" -ForegroundColor Yellow
+Write-Host "If you use encrypted profiles:`n  1) Disable profile encryption for all encrypted profiles with the previous NETworkManager version`n     https://borntoberoot.net/NETworkManager/FAQ#how-to-disable-profile-file-encryption`n  2) Run this script to convert the profiles`n  3) Re-enable profile encryption with the newest release of NETworkManager`n     https://borntoberoot.net/NETworkManager/FAQ#how-to-enable-profile-file-encryption`n" -ForegroundColor Yellow
 
 $defaultValue = $Path
-$prompt = Read-Host "Profile file or folder [$($defaultValue)] (Enter to continue)"
+$prompt = Read-Host "Profile file or folder [$($defaultValue)] (Enter to continue | CTRL+C to cancel)"
 $prompt = ($defaultValue,$prompt)[[bool]$prompt]
 
 Write-Host ""

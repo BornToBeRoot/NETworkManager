@@ -1068,9 +1068,10 @@ namespace NETworkManager
                 settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
                 settings.FirstAuxiliaryButtonText = Localization.Resources.Strings.Migrate;
                 settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
-              //  settings.
 
                 ConfigurationManager.Current.FixAirspace = true;
+
+                // ToDo: Improve Message
 
                 var result = await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
 
@@ -1079,11 +1080,10 @@ namespace NETworkManager
                 switch (result)
                 {
                     case MessageDialogResult.FirstAuxiliary:
-                        ExternalProcessStarter.RunProcess("powershell.exe", $"-NoLogo -NoProfile -ExecutionPolicy ByPass -File \"{Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Convert-Profiles.ps1")}\" -Path \"{ProfileManager.GetProfilesLocation()}\" -NETworkManagerPath \"{ConfigurationManager.Current.ApplicationFullName}\"");
+                        ExternalProcessStarter.RunProcess("powershell.exe", $"-NoLogo -NoProfile -ExecutionPolicy ByPass -File \"{Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Convert-Profiles.ps1")}\" -Path \"{ProfileManager.GetProfilesLocation()}\" -NETworkManagerPath \"{ConfigurationManager.Current.ApplicationFullName}\" -NETworkManagerVersion \"{AssemblyManager.Current.Version}\"");
                         CloseApplication();
                         break;
                     case MessageDialogResult.Affirmative:
-
                         break;
                 }
             }
