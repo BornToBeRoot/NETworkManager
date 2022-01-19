@@ -265,12 +265,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public ICommand PuTTY_ResizeWindowCommand => new RelayCommand(PuTTY_ResizeWindowAction, PuTTY_Connected_CanExecute);
+
+        private void PuTTY_ResizeWindowAction(object view)
+        {
+            if (view is PuTTYControl control)
+                control.ResizeEmbeddedWindow();
+        }
+
         public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction, PuTTY_Connected_CanExecute);
 
         private void PuTTY_RestartSessionAction(object view)
         {
-            if (view is PuTTYControl puttyControl)
-                puttyControl.RestartSession();
+            if (view is PuTTYControl control)
+                control.RestartSession();
         }
 
         public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
@@ -372,17 +380,8 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                // Add host to history
-                AddHostToHistory(instance.Host);
-                AddSerialLineToHistory(instance.SerialLine);
-                AddPortToHistory(instance.Port.ToString());
-                AddBaudToHistory(instance.Baud.ToString());
-                AddUsernameToHistory(instance.Username);
-                AddPrivateKeyToHistory(instance.PrivateKeyFile);
-                AddProfileToHistory(instance.Profile);
-
-                // Create Profile info
-                PuTTYSessionInfo info = new PuTTYSessionInfo
+                // Create profile info
+                var info = new PuTTYSessionInfo
                 {
                     HostOrSerialLine = instance.ConnectionMode == ConnectionMode.Serial ? instance.SerialLine : instance.Host,
                     Mode = instance.ConnectionMode,
@@ -396,6 +395,17 @@ namespace NETworkManager.ViewModels
                     LogPath = Settings.Application.PuTTY.LogPath,
                     AdditionalCommandLine = instance.AdditionalCommandLine
                 };
+
+                // Add to history
+                // Note: The history can only be updated after the values have been read.
+                //       Otherwise, in some cases, incorrect values are taken over.
+                AddHostToHistory(instance.Host);
+                AddSerialLineToHistory(instance.SerialLine);
+                AddPortToHistory(instance.Port);
+                AddBaudToHistory(instance.Baud);
+                AddUsernameToHistory(instance.Username);
+                AddPrivateKeyToHistory(instance.PrivateKeyFile);
+                AddProfileToHistory(instance.Profile);
 
                 Connect(info);
             }, async instance =>
@@ -450,86 +460,58 @@ namespace NETworkManager.ViewModels
         // Modify history list
         private static void AddHostToHistory(string host)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            if (string.IsNullOrEmpty(host))
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_HostHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_HostHistory.Add(x));
+            SettingsManager.Current.PuTTY_HostHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries));
         }
 
         private static void AddSerialLineToHistory(string serialLine)
         {
-            // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory.ToList(), serialLine, SettingsManager.Current.General_HistoryListEntries);
+            if (string.IsNullOrEmpty(serialLine))
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_SerialLineHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_SerialLineHistory.Add(x));
+            SettingsManager.Current.PuTTY_SerialLineHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory.ToList(), serialLine, SettingsManager.Current.General_HistoryListEntries));
         }
 
-        private static void AddPortToHistory(string port)
+        private static void AddPortToHistory(int port)
         {
-            // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
+            if (port == 0)
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_PortHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_PortHistory.Add(x));
+            SettingsManager.Current.PuTTY_PortHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), port.ToString(), SettingsManager.Current.General_HistoryListEntries));
         }
 
-        private static void AddBaudToHistory(string baud)
+        private static void AddBaudToHistory(int baud)
         {
-            // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), baud, SettingsManager.Current.General_HistoryListEntries);
+            if (baud == 0)
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_BaudHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_BaudHistory.Add(x));
+            SettingsManager.Current.PuTTY_BaudHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), baud.ToString(), SettingsManager.Current.General_HistoryListEntries));
         }
 
         private static void AddUsernameToHistory(string username)
         {
-            // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), username, SettingsManager.Current.General_HistoryListEntries);
+            if (string.IsNullOrEmpty(username))
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_UsernameHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_UsernameHistory.Add(x));
+            SettingsManager.Current.PuTTY_UsernameHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), username, SettingsManager.Current.General_HistoryListEntries));
         }
 
-        private static void AddPrivateKeyToHistory(string host)
+        private static void AddPrivateKeyToHistory(string privateKey)
         {
-            // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_PrivateKeyFileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            if (string.IsNullOrEmpty(privateKey))
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_PrivateKeyFileHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_PrivateKeyFileHistory.Add(x));
+            SettingsManager.Current.PuTTY_PrivateKeyFileHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_PrivateKeyFileHistory.ToList(), privateKey, SettingsManager.Current.General_HistoryListEntries));
         }
 
-        private static void AddProfileToHistory(string host)
+        private static void AddProfileToHistory(string profile)
         {
-            // Create the new list
-            List<string> list = ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            if (string.IsNullOrEmpty(profile))
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_ProfileHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_ProfileHistory.Add(x));
+            SettingsManager.Current.PuTTY_ProfileHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory.ToList(), profile, SettingsManager.Current.General_HistoryListEntries));
         }
 
         private void StartDelayedSearch()

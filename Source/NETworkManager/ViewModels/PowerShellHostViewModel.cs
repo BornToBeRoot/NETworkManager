@@ -339,10 +339,7 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                // Add host to history
-                AddHostToHistory(instance.Host);
-
-                // Create Profile info
+                // Create profile info
                 var info = new PowerShellSessionInfo
                 {
                     EnableRemoteConsole = instance.EnableRemoteConsole,
@@ -350,6 +347,11 @@ namespace NETworkManager.ViewModels
                     AdditionalCommandLine = instance.AdditionalCommandLine,
                     ExecutionPolicy = instance.ExecutionPolicy
                 };
+
+                // Add to history
+                // Note: The history can only be updated after the values have been read.
+                //       Otherwise, in some cases, incorrect values are taken over.
+                AddHostToHistory(instance.Host);
 
                 // Connect
                 Connect(info);
@@ -378,7 +380,7 @@ namespace NETworkManager.ViewModels
             var info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
-                Arguments = Models.PowerShell.PowerShell.BuildCommandLine(NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile))
+                Arguments = PowerShell.BuildCommandLine(NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile))
             };
 
             Process.Start(info);
@@ -401,14 +403,10 @@ namespace NETworkManager.ViewModels
         // Modify history list
         private static void AddHostToHistory(string host)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PowerShell_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
-
-            // Clear the old items
-            SettingsManager.Current.PowerShell_HostHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PowerShell_HostHistory.Add(x));
+            if (string.IsNullOrEmpty(host))
+                return;
+            
+            SettingsManager.Current.PowerShell_HostHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PowerShell_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries));
         }
 
         private void StartDelayedSearch()
