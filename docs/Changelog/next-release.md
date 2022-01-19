@@ -27,6 +27,7 @@ permalink: /Changelog/next-release
 ## Bugfixes
 - The Min/Max/Close button on the pulled out window is visible again [#1366](https://github.com/BornToBeRoot/NETworkManager/pull/1366){:target="_blank"}
 - App crash fixed when renaming a profile file [#1318](https://github.com/BornToBeRoot/NETworkManager/issues/1318){:target="_blank"}
+- Fixed that some arguments from the connect dialog of PuTTY (like privatekey) were not applied correctly. Fix was also applied to remote desktop, powershell, tigervnc and webconsole, even if the bug could not be reproduced there. [#1372](https://github.com/BornToBeRoot/NETworkManager/issues/1372){:target="_blank"}
 
 ## Other
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}

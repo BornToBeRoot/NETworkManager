@@ -340,16 +340,17 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                // Add host to history
-                AddUrlToHistory(instance.Url);
-
-                // Create Profile info
+                // Create profile info
                 var info = new WebConsoleSessionInfo
                 {
                     Url = instance.Url
                 };
 
-                // Connect
+                // Add to history
+                // Note: The history can only be updated after the values have been read.
+                //       Otherwise, in some cases, incorrect values are taken over.
+                AddUrlToHistory(instance.Url);
+
                 Connect(info);
             }, async instance =>
              {
@@ -367,7 +368,7 @@ namespace NETworkManager.ViewModels
         }
 
         private void ConnectProfile()
-        {            
+        {
             Connect(NETworkManager.Profiles.Application.WebConsole.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
 
@@ -381,14 +382,10 @@ namespace NETworkManager.ViewModels
         // Modify history list
         private static void AddUrlToHistory(string url)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), url, SettingsManager.Current.General_HistoryListEntries);
+            if (string.IsNullOrEmpty(url))
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.WebConsole_UrlHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.WebConsole_UrlHistory.Add(x));
+             SettingsManager.Current.WebConsole_UrlHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), url, SettingsManager.Current.General_HistoryListEntries));
         }
 
         private void StartDelayedSearch()

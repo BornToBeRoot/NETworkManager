@@ -367,9 +367,6 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                // Add host to history
-                AddHostToHistory(instance.Host);
-
                 // Create new session info with default settings
                 var sessionInfo = NETworkManager.Profiles.Application.RemoteDesktop.CreateSessionInfo();
 
@@ -391,6 +388,11 @@ namespace NETworkManager.ViewModels
                     sessionInfo.Username = instance.Username;
                     sessionInfo.Password = instance.Password;
                 }
+
+                // Add to history
+                // Note: The history can only be updated after the values have been read.
+                //       Otherwise, in some cases, incorrect values are taken over.
+                AddHostToHistory(instance.Host);
 
                 Connect(sessionInfo);
             }, async instance =>
@@ -483,14 +485,10 @@ namespace NETworkManager.ViewModels
         // Modify history list
         private static void AddHostToHistory(string host)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.RemoteDesktop_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
-
-            // Clear the old items
-            SettingsManager.Current.RemoteDesktop_HostHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.RemoteDesktop_HostHistory.Add(x));
+            if (string.IsNullOrEmpty(host))
+                return;
+            
+            SettingsManager.Current.RemoteDesktop_HostHistory = new ObservableCollection<string>( ListHelper.Modify(SettingsManager.Current.RemoteDesktop_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries));
         }
 
         private void StartDelayedSearch()
