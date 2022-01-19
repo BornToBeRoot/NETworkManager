@@ -23,7 +23,7 @@ permalink: /Changelog/next-release
 
 ## Improvements
 - Min Window size reduced to 800x600 [#1366](https://github.com/BornToBeRoot/NETworkManager/pull/1366){:target="_blank"}
-- Default history entries increased from 5 to 10
+- Default history entries increased from 5 to 10 [#1372](https://github.com/BornToBeRoot/NETworkManager/issues/1372){:target="_blank"}
 
 ## Bugfixes
 - The Min/Max/Close button on the pulled out window is visible again [#1366](https://github.com/BornToBeRoot/NETworkManager/pull/1366){:target="_blank"}
