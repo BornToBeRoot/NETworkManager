@@ -231,7 +231,7 @@
                                 </ToggleButton.Style>
                                 <Rectangle Width="16" Height="16">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinLeft}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinRight}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -334,12 +334,14 @@
                                                             <Expander.Header>
                                                                 <Grid>
                                                                     <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition Width="*" />
                                                                         <ColumnDefinition Width="Auto" />
+                                                                        <ColumnDefinition Width="10" />
+                                                                        <ColumnDefinition Width="Auto" />
+                                                                        <ColumnDefinition Width="*" />
                                                                     </Grid.ColumnDefinitions>
-                                                                    <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource DefaultTextBlock}"/>
-                                                                    <Button Grid.Column="1" ToolTip="{x:Static localization:Strings.EditGroupDots}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
-                                                                        <Rectangle Width="16" Height="16">
+                                                                    <Rectangle Grid.Column="0" Grid.ColumnSpan="4" Fill="Transparent" />
+                                                                    <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource ProfileGroupTextBlock}" />
+                                                                    <Button Grid.Column="2" ToolTip="{x:Static localization:Strings.EditGroupDots}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">                                                                        <Rectangle Width="16" Height="16">
                                                                             <Rectangle.OpacityMask>
                                                                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
                                                                             </Rectangle.OpacityMask>
@@ -354,7 +356,7 @@
                                                                                 </Style>
                                                                             </Rectangle.Style>
                                                                         </Rectangle>
-                                                                    </Button>
+                                                                    </Button>                                                                    
                                                                 </Grid>
                                                             </Expander.Header>
                                                             <ItemsPresenter />
