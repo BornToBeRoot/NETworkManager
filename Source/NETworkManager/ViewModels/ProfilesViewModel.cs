@@ -13,6 +13,7 @@ using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
@@ -396,6 +397,12 @@ namespace NETworkManager.ViewModels
 
         public void RefreshProfiles()
         {
+            if(Profiles == null)
+            {
+                Debug.WriteLine("Profiles is null");
+                return;
+            }
+
             Profiles.Refresh();
         }
         #endregion
