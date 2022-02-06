@@ -20,11 +20,11 @@
     <Grid>
         <Grid Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" MinWidth="500" />
+                <ColumnDefinition Width="250" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -65,8 +65,8 @@
                     </ContextMenu>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding Name}" MinWidth="250" Width="Auto" />
-                    <DataGridTextColumn Header="{x:Static localization:Strings.Profiles}" Binding="{Binding Profiles.Count}" MinWidth="100" Width="*" />
+                    <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding Name}" Width="*" />
+                    <DataGridTextColumn Header="{x:Static localization:Strings.Profiles}" Binding="{Binding Profiles.Count}" Width="Auto" />
                 </DataGrid.Columns>
                 <DataGrid.InputBindings>
                     <KeyBinding Command="{Binding EditGroupCommand}" Key="F2" />
@@ -83,85 +83,22 @@
                     </Style>
                 </DataGrid.RowStyle>
             </DataGrid>
-            <StackPanel Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Command="{Binding DeleteProfileCommand}">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}" Value="0" />
-                                    </MultiDataTrigger.Conditions>
-                                    <MultiDataTrigger.Setters>
-                                        <Setter Property="IsEnabled" Value="False"/>
-                                    </MultiDataTrigger.Setters>
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <Button Command="{Binding EditProfileCommand}" Margin="10,0,0,0">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                            <Setter Property="IsEnabled" Value="False"/>
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}" Value="1" />
-                                    </MultiDataTrigger.Conditions>
-                                    <MultiDataTrigger.Setters>
-                                        <Setter Property="IsEnabled" Value="True"/>
-                                    </MultiDataTrigger.Setters>
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.EditDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <Button Command="{Binding AddProfileCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
+            <Button Command="{Binding AddGroupCommand}" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" Style="{StaticResource ImageWithTextButton}">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+            </Button>
             <Border Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Width="1" Margin="0,-10" Background="{DynamicResource MahApps.Brushes.Gray8}" />
             <Grid Grid.Column="4" Grid.Row="0" >
                 <Grid.ColumnDefinitions>
@@ -171,7 +108,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Profiles}" />
                 <TextBox x:Name="TextBoxSearch" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-            </Grid>            
+            </Grid>
             <controls:MultiSelectDataGrid x:Name="DataGridProfiles" Grid.Column="4" Grid.Row="1" Style="{StaticResource MahApps.Styles.DataGrid}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True"
                                       ScrollViewer.CanContentScroll="True"
                                       EnableColumnVirtualization="True"

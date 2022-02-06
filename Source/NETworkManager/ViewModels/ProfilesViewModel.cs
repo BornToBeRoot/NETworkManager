@@ -200,11 +200,25 @@ namespace NETworkManager.ViewModels
             DeleteProfile();
         }
 
-        public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
+        public ICommand AddGroupCommand => new RelayCommand(p => AddGroupAction());
 
-        private void EditGroupAction(object group)
+        private void AddGroupAction()
         {
-            EditGroup(group);
+            AddGroup();
+        }
+
+        public ICommand EditGroupCommand => new RelayCommand(p => EditGroupAction());
+
+        private void EditGroupAction()
+        {
+            EditGroup();
+        }
+
+        public ICommand DeleteGroupCommand => new RelayCommand(p => DeleteGroupAction());
+
+        private void DeleteGroupAction()
+        {
+            DeleteGroup();
         }
         #endregion
 
@@ -316,11 +330,23 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public async Task EditGroup(object group)
+        public async Task AddGroup()
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.EditGroup
+                Title = Localization.Resources.Strings.EditGroup,
+                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
+
+            };
+        }
+
+        public async Task EditGroup()
+        {
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.EditGroup,
+                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
+
             };
 
             var editGroupViewModel = new GroupViewModel(instance =>
@@ -334,7 +360,7 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroupNames(), GroupEditMode.Edit, ProfileManager.GetGroup(group.ToString()));
+            }, ProfileManager.GetGroupNames(), GroupEditMode.Edit, SelectedGroup);
 
             customDialog.Content = new GroupDialog
             {
@@ -344,6 +370,15 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
+        public async Task DeleteGroup()
+        {
+            CustomDialog customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.DeleteGroup
+            };
+        }
+
+        /*
         public ICommand ResetProfilesCommand => new RelayCommand(p => ResetProfilesAction());
 
         private async Task ResetProfilesAction()
@@ -370,6 +405,7 @@ namespace NETworkManager.ViewModels
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
+        */
 
         private void StartDelayedSearch()
         {
@@ -397,7 +433,7 @@ namespace NETworkManager.ViewModels
 
         public void RefreshProfiles()
         {
-            if(Profiles == null)
+            if (Profiles == null)
             {
                 Debug.WriteLine("Profiles is null");
                 return;
