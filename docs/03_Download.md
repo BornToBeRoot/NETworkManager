@@ -17,6 +17,8 @@ Date: **30.11.2021**
 | <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.11.30.0/NETworkManager_2021.11.30.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn btn-blue">Portable</button></a> | `6EE94EDF8EEDE8D65E2143D5BF60C59CA715536D4C15E680FFB0454174D22FE1` |
 | <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.11.30.0/NETworkManager_2021.11.30.0_Archive.zip' target='_blank'><button type="button" name="button" class="btn btn-blue">Archive</button></a> | `5F72238031B7DB28F885BD8E74046734BDBCA37E4DFC5110ADB75EB216C50DF1` |
 
+Test a pre-release version with the latest features and bugfixes [here](https://github.com/BornToBeRoot/NETworkManager/releases?q=Nightly&expanded=true){:target="_blank"}! 
+
 ## System requirements
 - Windows 10 / Server x64 (1809 or later)
 - [.NET Desktop Runtime 6.x (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0){:target="_blank"}
