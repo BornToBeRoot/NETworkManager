@@ -1,6 +1,5 @@
 ﻿using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
-using System.Windows.Forms;
 
 namespace NETworkManager.Profiles.Application
 {
@@ -59,7 +58,8 @@ namespace NETworkManager.Profiles.Application
 
         public static RemoteDesktopSessionInfo CreateSessionInfo(ProfileInfo profileInfo)
         {
-            var info = new RemoteDesktopSessionInfo();
+            var info = CreateSessionInfo();
+
             // Override hostname
             info.Hostname = profileInfo.Host;
 
