@@ -59,7 +59,8 @@ namespace NETworkManager.Profiles.Application
 
         public static RemoteDesktopSessionInfo CreateSessionInfo(ProfileInfo profileInfo)
         {
-            var info = new RemoteDesktopSessionInfo();
+            var info = CreateSessionInfo();
+
             // Override hostname
             info.Hostname = profileInfo.Host;
 
