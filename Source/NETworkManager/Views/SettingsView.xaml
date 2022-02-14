@@ -173,7 +173,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static localization:Strings.Profiles}">
-                <views:ProfilesView x:Name="ProfilesView" Margin="10" />
+                <views:ProfilesView x:Name="ProfilesView" />
             </TabItem>
             <!-- About -->
             <TabItem Header="{x:Static localization:Strings.About}">
