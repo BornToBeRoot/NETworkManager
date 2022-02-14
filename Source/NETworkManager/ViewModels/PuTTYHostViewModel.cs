@@ -19,7 +19,6 @@ using System.Windows.Threading;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace NETworkManager.ViewModels
 {
@@ -169,7 +168,7 @@ namespace NETworkManager.ViewModels
 
             // Create default PuTTY profile for NETworkManager 
             if (IsConfigured)
-                PuTTY.WriteDefaultProfileToRegistry();
+                PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
 
             InterTabClient = new DragablzInterTabClient(ApplicationName.PuTTY);
 
