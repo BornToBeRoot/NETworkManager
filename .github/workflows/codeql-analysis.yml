@@ -11,7 +11,8 @@ on:
 jobs:
   analyze:
     name: Analyze
-    runs-on: windows-latest
+    # runs-on: windows-latest
+    runs-on: windows-2019
     # Ignore dependabot, ImgBot and transifex-integration
     if: github.actor!= 'dependabot[bot]' &&
         github.actor!= 'imgbot[bot]' &&
