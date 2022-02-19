@@ -6660,7 +6660,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die ReportOnGitHub ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Report on GitHub ähnelt.
         /// </summary>
         public static string ReportOnGitHub {
             get {
