@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Windows.Data;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Views;
 using System;
 using NETworkManager.Utilities;
 using System.Linq;
@@ -11,13 +10,11 @@ using System.Collections;
 using System.Windows.Threading;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
-    public class ProfilesViewModel : ViewModelBase
+    public class ProfilesViewModel : ViewModelBase, IProfileManager
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
@@ -174,7 +171,7 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            AddProfile();
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);           
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), EditProfile_CanExecute);
@@ -183,230 +180,46 @@ namespace NETworkManager.ViewModels
 
         private void EditProfileAction()
         {
-            EditProfile();
+            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);                       
         }
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
-            CopyAsProfile();
+            ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private void DeleteProfileAction()
         {
-            DeleteProfile();
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>()));
         }
 
         public ICommand AddGroupCommand => new RelayCommand(p => AddGroupAction());
 
         private void AddGroupAction()
         {
-            AddGroup();
+            ProfileDialogManager.ShowAddGroupDialog(this, _dialogCoordinator);            
         }
 
         public ICommand EditGroupCommand => new RelayCommand(p => EditGroupAction());
 
         private void EditGroupAction()
         {
-            EditGroup();
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, SelectedGroup);
         }
 
         public ICommand DeleteGroupCommand => new RelayCommand(p => DeleteGroupAction());
 
         private void DeleteGroupAction()
         {
-            DeleteGroup();
+            ProfileDialogManager.ShowDeleteGroupDialog(this, _dialogCoordinator, SelectedGroup);
         }
         #endregion
 
         #region Methods
-        public async Task AddProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.AddProfile,
-                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileDialogManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroupNames());
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async Task EditProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.EditProfile,
-                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileDialogManager.RemoveProfile(SelectedProfile);
-                ProfileDialogManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroupNames(), ProfileEditMode.Edit, SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async Task CopyAsProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.CopyProfile,
-                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileDialogManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroupNames(), ProfileEditMode.Copy, SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async Task DeleteProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.DeleteProfile
-            };
-
-            var confirmDeleteViewModel = new ConfirmDeleteViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                var list = new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>());
-
-                foreach (var profile in list)
-                    ProfileDialogManager.RemoveProfile(profile);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Localization.Resources.Strings.DeleteProfileMessage);
-
-            customDialog.Content = new ConfirmDeleteDialog
-            {
-                DataContext = confirmDeleteViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async Task AddGroup()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.EditGroup,
-                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
-
-            };
-        }
-
-        public async Task EditGroup()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.EditGroup,
-                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
-
-            };
-
-            var editGroupViewModel = new GroupViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileDialogManager.RemoveGroup(instance.Group);
-                ProfileDialogManager.AddGroup(instance);
-
-                RefreshProfiles();
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroupNames(), GroupEditMode.Edit, SelectedGroup);
-
-            customDialog.Content = new GroupDialog
-            {
-                DataContext = editGroupViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async Task DeleteGroup()
-        {
-            CustomDialog customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.DeleteGroup
-            };
-        }
-
-        /*
-        public ICommand ResetProfilesCommand => new RelayCommand(p => ResetProfilesAction());
-
-        private async Task ResetProfilesAction()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.Confirm
-            };
-
-            var confirmDeleteViewModel = new ConfirmDeleteViewModel(async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.Reset();
-            }, async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Localization.Resources.Strings.ResetProfilesMessage);
-
-            customDialog.Content = new ConfirmDeleteDialog
-            {
-                DataContext = confirmDeleteViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-        */
-
         private void StartDelayedSearch()
         {
             if (!IsSearching)
@@ -439,7 +252,19 @@ namespace NETworkManager.ViewModels
                 return;
             }
 
+            Debug.WriteLine("SETTINGS > PROFILES > Refresh Profiles...");
+
             Profiles.Refresh();
+        }
+
+        public void OnProfileDialogOpen()
+        {
+
+        }
+
+        public void OnProfileDialogClose()
+        {
+
         }
         #endregion
 
@@ -453,7 +278,7 @@ namespace NETworkManager.ViewModels
         private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
         {
             StopDelayedSearch();
-        }
+        }              
         #endregion
     }
 }
