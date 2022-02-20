@@ -887,10 +887,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
   <data name="Hosts" xml:space="preserve">
     <value>主機</value>
   </data>
-  <data name="ID" xml:space="preserve">
-    <value>ID</value>
-  </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
+  <data name="InheritHostFromGeneral" xml:space="preserve">
     <value>來自預設繼承主機</value>
   </data>
   <data name="IPRange" xml:space="preserve">

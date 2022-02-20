@@ -65,7 +65,8 @@ namespace NETworkManager.ViewModels
             Accents = new CollectionViewSource { Source = AppearanceManager.Accents }.View;
 
             // ToDo: Enable White Theme again (Fix: PuTTY and PowerShell)
-            Themes = new CollectionViewSource { Source = AppearanceManager.Themes.Where(x => x.Name != "Light") }.View;
+            Themes = new CollectionViewSource { Source = AppearanceManager.Themes }.View;
+            // Themes = new CollectionViewSource { Source = AppearanceManager.Themes.Where(x => x.Name != "Light") }.View;
 
             LoadSettings();
 

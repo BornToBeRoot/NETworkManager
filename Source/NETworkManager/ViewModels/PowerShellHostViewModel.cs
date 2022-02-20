@@ -19,6 +19,7 @@ using System.Windows.Threading;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace NETworkManager.ViewModels
 {
@@ -31,7 +32,8 @@ namespace NETworkManager.ViewModels
         public IInterTabClient InterTabClient { get; }
         public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-        private readonly bool _isLoading;
+        private readonly bool _isLoading = true;
+        private bool _isViewActive = true;
 
         private bool _isConfigured;
         public bool IsConfigured
@@ -159,8 +161,6 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public PowerShellHostViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true;
-
             _dialogCoordinator = instance;
 
             // Check if putty is available...
@@ -170,7 +170,7 @@ namespace NETworkManager.ViewModels
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 
-            Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
@@ -185,8 +185,10 @@ namespace NETworkManager.ViewModels
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
+                /*
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
                     return !string.IsNullOrEmpty(info.Tags) && info.PowerShell_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                */
 
                 // Search by: Name, TigerVNC_Host
                 return info.PowerShell_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PowerShell_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
@@ -195,6 +197,8 @@ namespace NETworkManager.ViewModels
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PowerShell_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
+            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;    
+                
             _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
@@ -204,7 +208,7 @@ namespace NETworkManager.ViewModels
 
             _isLoading = false;
         }
-
+               
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))
@@ -293,14 +297,14 @@ namespace NETworkManager.ViewModels
 
         private void DeleteProfileAction()
         {
-            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private void EditGroupAction(object group)
         {
-            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -456,16 +460,21 @@ namespace NETworkManager.ViewModels
 
         public void OnViewVisible()
         {
+            _isViewActive = true;
+
             RefreshProfiles();
         }
 
         public void OnViewHide()
         {
-
+            _isViewActive = false;
         }
 
         public void RefreshProfiles()
         {
+            if (!_isViewActive)
+                return;
+
             Profiles.Refresh();
         }
 
@@ -481,6 +490,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Event
+        private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
+        {
+            RefreshProfiles();
+        }
+
         private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
         {
             StopDelayedSearch();

@@ -1,88 +1,94 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <ProjectGuid>{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NETworkManager.Documentation</RootNamespace>
-    <AssemblyName>NETworkManager.Documentation</AssemblyName>
-    <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
-    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
-    <SelfContained>false</SelfContained>
-    <UseWPF>true</UseWPF>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <DocumentationFile>bin\Debug\NETworkManager.Documentation.xml</DocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Licenses\Microsoft.PowerShell.SDK.txt" />
-    <None Remove="Licenses\Microsoft.Web.WebView2.txt" />
-    <None Remove="Licenses\Microsoft.Windows.CsWinRT.txt" />
-    <None Remove="Licenses\Microsoft.Xaml.Behaviors.Wpf.txt" />
-    <None Remove="Licenses\PSDiscoveryProtocol.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
-    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
-    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Licenses\AirspaceFixer.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\ControlsEx.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\DnsClient.NET.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\Dragablz.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\IPNetwork.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\LiveCharts.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\LoadingIndicators.WPF.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\MahApps.Metro.IconPack.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\MahApps.Metro.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\Microsoft.Web.WebView2.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\Microsoft.Windows.CsWinRT.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\Microsoft.Xaml.Behaviors.Wpf.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\NETworkManager.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\Newtonsoft.Json.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\PSDiscoveryProtocol.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\Octokit.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Licenses\SharpSnmpLib.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Licenses\Microsoft.PowerShell.SDK.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<PropertyGroup>
+		<ProjectGuid>{95CE4AD5-14C0-4486-9C11-5D6A5EC48176}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<AppDesignerFolder>Properties</AppDesignerFolder>
+		<RootNamespace>NETworkManager.Documentation</RootNamespace>
+		<AssemblyName>NETworkManager.Documentation</AssemblyName>
+		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+		<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+		<SelfContained>false</SelfContained>
+		<UseWPF>true</UseWPF>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<DocumentationFile>bin\Debug\NETworkManager.Documentation.xml</DocumentationFile>
+	</PropertyGroup>
+	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
+	<ItemGroup>
+		<FrameworkReference
+		Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms"
+		TargetingPackVersion="6.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Licenses\Microsoft.PowerShell.SDK.txt" />
+		<None Remove="Licenses\Microsoft.Web.WebView2.txt" />
+		<None Remove="Licenses\Microsoft.Windows.CsWinRT.txt" />
+		<None Remove="Licenses\Microsoft.Xaml.Behaviors.Wpf.txt" />
+		<None Remove="Licenses\PSDiscoveryProtocol.txt" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
+		<ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
+		<ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Licenses\AirspaceFixer.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\ControlsEx.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\DnsClient.NET.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\Dragablz.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\IPNetwork.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\LiveCharts.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\LoadingIndicators.WPF.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\MahApps.Metro.IconPack.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\MahApps.Metro.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\Microsoft.Web.WebView2.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\Microsoft.Windows.CsWinRT.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\Microsoft.Xaml.Behaviors.Wpf.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\NETworkManager.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\Newtonsoft.Json.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\PSDiscoveryProtocol.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\Octokit.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\SharpSnmpLib.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Licenses\Microsoft.PowerShell.SDK.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 </Project>

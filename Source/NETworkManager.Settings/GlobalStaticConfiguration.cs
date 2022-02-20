@@ -11,8 +11,6 @@ using NETworkManager.Models.RemoteDesktop;
 using DnsClient;
 using NETworkManager.Models;
 
-// ReSharper disable InconsistentNaming
-
 namespace NETworkManager.Settings
 {
     public static class GlobalStaticConfiguration
@@ -29,7 +27,7 @@ namespace NETworkManager.Settings
 
         // Settings
         public static ApplicationName General_DefaultApplicationViewName => ApplicationName.Dashboard;
-        public static int General_BackgroundJobInterval => 15;
+        public static int General_BackgroundJobInterval => 5;
         public static int General_HistoryListEntries => 10;
         public static bool SplashScreen_Enabled => true;
         public static string Appearance_Theme => "Dark";

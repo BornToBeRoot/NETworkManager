@@ -30,6 +30,7 @@ using NETworkManager.Models.EventSystem;
 using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Net.NetworkInformation;
+using System.IO;
 
 namespace NETworkManager
 {
@@ -330,8 +331,8 @@ namespace NETworkManager
             // Register event system...
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
             //EventSystem.RedirectProfileToApplicationEvent += EventSystem_RedirectProfileToApplicationEvent;
-            EventSystem.RedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
-            EventSystem.RedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
+            EventSystem.OnRedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
+            EventSystem.OnRedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
 
             _isLoading = false;
         }
@@ -540,7 +541,7 @@ namespace NETworkManager
         #endregion
 
         #region Application Views
-        private DashboardView _overviewView;
+        private DashboardView _dashboardView;
         private NetworkInterfaceView _networkInterfaceView;
         private WiFiView _wiFiView;
         private IPScannerHostView _ipScannerHostView;
@@ -573,12 +574,60 @@ namespace NETworkManager
             // Stop some functions on the old view
             switch (_currentApplicationViewName)
             {
+                case ApplicationName.Dashboard:
+                    _dashboardView?.OnViewHide();
+                    break;
                 case ApplicationName.NetworkInterface:
                     _networkInterfaceView?.OnViewHide();
                     break;
                 case ApplicationName.WiFi:
                     _wiFiView?.OnViewHide();
                     break;
+                case ApplicationName.IPScanner:
+                    _ipScannerHostView?.OnViewHide();
+                    break;
+                case ApplicationName.PortScanner:
+                    _portScannerHostView?.OnViewHide();
+                    break;
+                case ApplicationName.PingMonitor:
+                    _pingMonitorHostView?.OnViewHide();
+                    break;
+                case ApplicationName.Traceroute:
+                    _tracerouteHostView?.OnViewHide();
+                    break;
+                case ApplicationName.DNSLookup:
+                    _dnsLookupHostView?.OnViewHide();
+                    break;
+                case ApplicationName.RemoteDesktop:
+                    _remoteDesktopHostView?.OnViewHide();
+                    break;
+                case ApplicationName.PowerShell:
+                    _powerShellHostView?.OnViewHide();
+                    break;
+                case ApplicationName.PuTTY:
+                    _puttyHostView?.OnViewHide();
+                    break;
+                case ApplicationName.TigerVNC:
+                    _tigerVNCHostView?.OnViewHide();
+                    break;
+                case ApplicationName.WebConsole:
+                    _webConsoleHostView?.OnViewHide();
+                    break;
+                case ApplicationName.SNMP:
+                    _snmpHostView?.OnViewHide();
+                    break;
+                case ApplicationName.DiscoveryProtocol:
+                    _discoveryProtocolView?.OnViewHide();
+                    break;
+                case ApplicationName.WakeOnLAN:
+                    _wakeOnLanView?.OnViewHide();
+                    break;
+                //case ApplicationName.SubnetCalculator:
+                //    _subnetCalculatorHostView?.OnViewHide();
+                //    break;
+                //case ApplicationName.Lookup:
+                //    _lookupHostView?.OnViewHide();
+                //    break;
                 case ApplicationName.Connections:
                     _connectionsView?.OnViewHide();
                     break;
@@ -594,12 +643,12 @@ namespace NETworkManager
             switch (name)
             {
                 case ApplicationName.Dashboard:
-                    if (_overviewView == null)
-                        _overviewView = new DashboardView();
+                    if (_dashboardView == null)
+                        _dashboardView = new DashboardView();
                     else
-                        _overviewView.OnViewVisible();
+                        _dashboardView.OnViewVisible();
 
-                    ContentControlApplication.Content = _overviewView;
+                    ContentControlApplication.Content = _dashboardView;
                     break;
                 case ApplicationName.NetworkInterface:
                     if (_networkInterfaceView == null)
@@ -732,12 +781,16 @@ namespace NETworkManager
                 case ApplicationName.SubnetCalculator:
                     if (_subnetCalculatorHostView == null)
                         _subnetCalculatorHostView = new SubnetCalculatorHostView();
+                    //else
+                    //    _subnetCalculatorHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _subnetCalculatorHostView;
                     break;
                 case ApplicationName.Lookup:
                     if (_lookupHostView == null)
                         _lookupHostView = new LookupHostView();
+                    //else
+                    //    _lookupHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _lookupHostView;
                     break;
@@ -935,8 +988,10 @@ namespace NETworkManager
             }
 
             // Save the settings
+            /* Disabled (07.09.2021) - because settings are saved on app shutdown
             if (SettingsManager.Current.SettingsChanged)
                 SettingsManager.Save();
+            */
 
             // Refresh the view
             ChangeApplicationView(SelectedApplication.Name, true);
@@ -1006,16 +1061,31 @@ namespace NETworkManager
 
                 ConfigurationManager.Current.FixAirspace = false;
             }
-            catch (Exception ex)
+            catch
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.ReportOnGitHub;
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
+                settings.FirstAuxiliaryButtonText = Localization.Resources.Strings.Migrate;
+                settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
 
                 ConfigurationManager.Current.FixAirspace = true;
 
-                await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedAndMayBeCorruptedMessage, MessageDialogStyle.Affirmative, settings);
+                // ToDo: Improve Message
+
+                var result = await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
+
+                switch (result)
+                {
+                    case MessageDialogResult.FirstAuxiliary:
+                        ExternalProcessStarter.RunProcess("powershell.exe", $"-NoLogo -NoProfile -ExecutionPolicy ByPass -File \"{Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Migrate-Profiles.ps1")}\" -Path \"{ProfileManager.GetProfilesLocation()}\" -NETworkManagerPath \"{ConfigurationManager.Current.ApplicationFullName}\" -NETworkManagerVersion \"{AssemblyManager.Current.Version}\"");
+                        CloseApplication();
+                        break;
+                    case MessageDialogResult.Affirmative:
+                        break;
+                }
             }
         }
 
@@ -1033,7 +1103,6 @@ namespace NETworkManager
             _isProfileUpdating = false;
         }
         #endregion
-
 
         #region Handle WndProc messages (Single instance, handle HotKeys)
         private HwndSource _hwndSoure;
@@ -1292,30 +1361,25 @@ namespace NETworkManager
 
         private void CloseApplicationAction()
         {
-            _closeApplication = true;
-            Close();
+            CloseApplication();
         }
 
-        public void RestartApplication(bool asAdmin = false)
+        public void CloseApplication()
         {
-            ProcessStartInfo info = new ProcessStartInfo
-            {
-                FileName = ConfigurationManager.Current.ApplicationFullName,
-                Arguments = $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Process.GetCurrentProcess().Id} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{_currentApplicationViewName}",
-                UseShellExecute = true
-            };
-
-            if (asAdmin)
-                info.Verb = "runas";
-
-            Process.Start(info);
-
             _closeApplication = true;
 
+            // Make it thread safe when it's called inside a dialog
             System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 Close();
             }));
+        }
+
+        public void RestartApplication(bool asAdmin = false)
+        {
+            ExternalProcessStarter.RunProcess(ConfigurationManager.Current.ApplicationFullName, $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Process.GetCurrentProcess().Id} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{_currentApplicationViewName}", asAdmin);
+
+            CloseApplication();
         }
 
         public ICommand ApplicationListMouseEnterCommand
@@ -1388,7 +1452,7 @@ namespace NETworkManager
                 return;
 
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {                
+            {
                 OpenStatusWindow(false);
             }));
         }
