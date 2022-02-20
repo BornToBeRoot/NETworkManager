@@ -605,10 +605,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 // Validate the password string
-                if (value == null)
-                    RemoteDesktop_IsPasswordEmpty = true;
-                else
-                    RemoteDesktop_IsPasswordEmpty = string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+                RemoteDesktop_IsPasswordEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
                 _remoteDesktop_Password = value;
                 OnPropertyChanged();
