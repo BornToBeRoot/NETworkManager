@@ -1,19 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <ProjectGuid>{93733008-7269-460D-8390-AB281C75DB91}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>NETworkManager.Utilities.WPF</RootNamespace>
-    <AssemblyName>NETworkManager.Utilities.WPF</AssemblyName>
-    <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
-    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
-    <SelfContained>false</SelfContained>
-    <UseWPF>true</UseWPF>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
-  </ItemGroup>
+	<PropertyGroup>
+		<ProjectGuid>{93733008-7269-460D-8390-AB281C75DB91}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>NETworkManager.Utilities.WPF</RootNamespace>
+		<AssemblyName>NETworkManager.Utilities.WPF</AssemblyName>
+		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+		<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+		<SelfContained>false</SelfContained>
+		<UseWPF>true</UseWPF>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
+	<ItemGroup>
+		<FrameworkReference
+		Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms"
+		TargetingPackVersion="6.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
+	</ItemGroup>
 </Project>

@@ -439,6 +439,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add group ähnelt.
+        /// </summary>
+        public static string AddGroup {
+            get {
+                return ResourceManager.GetString("AddGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Add host ähnelt.
         /// </summary>
         public static string AddHost {
@@ -2068,6 +2077,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete group ähnelt.
+        /// </summary>
+        public static string DeleteGroup {
+            get {
+                return ResourceManager.GetString("DeleteGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Selected group and all profiles inside this group will be deleted permanently. ähnelt.
+        /// </summary>
+        public static string DeleteGroupMessage {
+            get {
+                return ResourceManager.GetString("DeleteGroupMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Delete port profile ähnelt.
         /// </summary>
         public static string DeletePortProfile {
@@ -2113,11 +2140,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Selected profiles will be deleted permanently. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Selected profile will be deleted permanently. ähnelt.
         /// </summary>
         public static string DeleteProfileMessage {
             get {
                 return ResourceManager.GetString("DeleteProfileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete profiles ähnelt.
+        /// </summary>
+        public static string DeleteProfiles {
+            get {
+                return ResourceManager.GetString("DeleteProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Selected profiles will be deleted permanently. ähnelt.
+        /// </summary>
+        public static string DeleteProfilesMessage {
+            get {
+                return ResourceManager.GetString("DeleteProfilesMessage", resourceCulture);
             }
         }
         
@@ -2941,6 +2986,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The name is already used! ähnelt.
+        /// </summary>
+        public static string ErrorMessage_NameIsAlreadyUsed {
+            get {
+                return ResourceManager.GetString("ErrorMessage_NameIsAlreadyUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Everything ähnelt.
         /// </summary>
         public static string Everything {
@@ -3263,6 +3317,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Group {
             get {
                 return ResourceManager.GetString("Group", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Groups ähnelt.
+        /// </summary>
+        public static string Groups {
+            get {
+                return ResourceManager.GetString("Groups", resourceCulture);
             }
         }
         
@@ -3632,11 +3695,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Inherit host from default ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Inherit host from general ähnelt.
         /// </summary>
-        public static string InheritHostFromDefault {
+        public static string InheritHostFromGeneral {
             get {
-                return ResourceManager.GetString("InheritHostFromDefault", resourceCulture);
+                return ResourceManager.GetString("InheritHostFromGeneral", resourceCulture);
             }
         }
         
@@ -4415,6 +4478,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Migrate ähnelt.
+        /// </summary>
+        public static string Migrate {
+            get {
+                return ResourceManager.GetString("Migrate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Minimize main window instead of terminating the application ähnelt.
         /// </summary>
         public static string MinimizeInsteadOfTerminating {
@@ -5032,9 +5104,7 @@ namespace NETworkManager.Localization.Resources {
         ///
         ///&quot;Overwrite&quot; will copy the profile files to the destination folder and overwrite existing profile files.
         ///&quot;Merge&quot; will copy the profile files to the destination folder, but won&apos;t overwrite exitsting profile files.
-        ///&quot;Use other folder&quot; will use the existing profile files in the destination folder.
-        ///
-        ///The application will be restarted afterwards! ähnelt.
+        ///&quot;Use other folder&quot; will use the existing profile files in the destination folder. ähnelt.
         /// </summary>
         public static string OverwriteProfilesInDestinationFolderMessage {
             get {
@@ -5397,11 +5467,13 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The profile could not be loaded and may be corrupted. If this is unexpected or due to an update, please report this issue on GitHub! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If this happened after an update, you may need to migrate the profiles to a newer version. When you click &quot;Migrate&quot;, a PowerShell window opens with the migration script. Check the path and press Enter.
+        ///
+        ///Otherwise, the profile may be corrupted and you want to report the issue on GitHub. ähnelt.
         /// </summary>
-        public static string ProfileCouldNotBeLoadedAndMayBeCorruptedMessage {
+        public static string ProfileCouldNotBeLoadedMessage {
             get {
-                return ResourceManager.GetString("ProfileCouldNotBeLoadedAndMayBeCorruptedMessage", resourceCulture);
+                return ResourceManager.GetString("ProfileCouldNotBeLoadedMessage", resourceCulture);
             }
         }
         
@@ -6602,6 +6674,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ReportAnIssueOrCreateAFeatureRequest {
             get {
                 return ResourceManager.GetString("ReportAnIssueOrCreateAFeatureRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Report on GitHub ähnelt.
+        /// </summary>
+        public static string ReportOnGitHub {
+            get {
+                return ResourceManager.GetString("ReportOnGitHub", resourceCulture);
             }
         }
         
@@ -8407,11 +8488,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Unlock the profile file to add, change or delete a profile! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Unlock the profile file to use the profiles! ähnelt.
         /// </summary>
         public static string UnlockTheProfileFileMessage {
             get {
                 return ResourceManager.GetString("UnlockTheProfileFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Unlock the profile file to add, change or delete a profile! ähnelt.
+        /// </summary>
+        public static string UnlockTheProfileFileMessage2 {
+            get {
+                return ResourceManager.GetString("UnlockTheProfileFileMessage2", resourceCulture);
             }
         }
         

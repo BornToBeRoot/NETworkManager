@@ -890,7 +890,7 @@
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
+  <data name="InheritHostFromGeneral" xml:space="preserve">
     <value>기본값에서 호스트 상속</value>
   </data>
   <data name="IPRange" xml:space="preserve">

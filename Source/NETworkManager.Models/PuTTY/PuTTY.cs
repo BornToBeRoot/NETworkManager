@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace NETworkManager.Models.PuTTY
 {
@@ -10,11 +11,9 @@ namespace NETworkManager.Models.PuTTY
     /// </summary>
     public partial class PuTTY
     {
-        private static List<Tuple<string, string>> DefaultProfileRegkeysSZ = new()
+        private static List<Tuple<string, string>> DefaultProfileRegkeysSZBase = new()
         {
-            new Tuple<string, string>("Colour0", "187,187,187"),
             new Tuple<string, string>("Colour1", "255,255,255"),
-            new Tuple<string, string>("Colour2", "37,37,37"), // Background color
             new Tuple<string, string>("Colour3", "85,85,85"),
             new Tuple<string, string>("Colour4", "0,0,0"),
             new Tuple<string, string>("Colour5", "0,255,0"),
@@ -37,6 +36,26 @@ namespace NETworkManager.Models.PuTTY
             new Tuple<string, string>("LineCodePage", "UTF-8"),
             new Tuple<string, string>("Font", "Consolas")
         };
+
+        private static List<Tuple<string, string>> GetProfileRegkeysSZDark()
+        {
+            return DefaultProfileRegkeysSZBase.Concat(
+                new[] {
+                    // new Tuple<string, string>("Colour0", "255,255,255"),
+                    new Tuple<string, string>("Colour0", "187,187,187"),    // Foreground
+                    new Tuple<string, string>("Colour2", "37,37,37")        // Background
+                }).ToList();
+        }
+
+        private static List<Tuple<string, string>> GetProfileRegkeysSZWhite()
+        {
+            return DefaultProfileRegkeysSZBase.Concat(
+                new[] {
+                    // new Tuple<string, string>("Colour0", "68,68,68"),
+                    new Tuple<string, string>("Colour0", "0,0,0"),          // Foreground
+                    new Tuple<string, string>("Colour2", "255,255,255")     // Background
+                }).ToList();
+        }
 
         private static List<Tuple<string, int>> DefaultProfileRegkeysDword = new()
         {
@@ -124,7 +143,7 @@ namespace NETworkManager.Models.PuTTY
         /// <summary>
         /// 
         /// </summary>
-        public static void WriteDefaultProfileToRegistry()
+        public static void WriteDefaultProfileToRegistry(string AccentName)
         {
             string profilePath = @"Software\SimonTatham\PuTTY\Sessions\NETworkManager";
 
@@ -135,7 +154,7 @@ namespace NETworkManager.Models.PuTTY
 
             if (registryKey != null)
             {
-                foreach (var key in DefaultProfileRegkeysSZ)
+                foreach (Tuple<string, string> key in AccentName == "Dark" ? GetProfileRegkeysSZDark() : GetProfileRegkeysSZWhite())
                     registryKey.SetValue(key.Item1, key.Item2);
 
                 foreach (var key in DefaultProfileRegkeysDword)

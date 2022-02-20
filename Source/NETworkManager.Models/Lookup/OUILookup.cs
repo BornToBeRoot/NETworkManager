@@ -26,7 +26,6 @@ namespace NETworkManager.Models.Lookup
             var document = new XmlDocument();
             document.Load(OuiFilePath);
 
-            // ReSharper disable once PossibleNullReferenceException
             foreach (XmlNode node in document.SelectNodes("/OUIs/OUI"))
             {
                 if (node != null)

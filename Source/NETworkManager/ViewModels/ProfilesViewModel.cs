@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Windows.Data;
 using MahApps.Metro.Controls.Dialogs;
-using NETworkManager.Views;
 using System;
 using NETworkManager.Utilities;
 using System.Linq;
@@ -11,18 +10,67 @@ using System.Collections;
 using System.Windows.Threading;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
-    public class ProfilesViewModel : ViewModelBase
+    public class ProfilesViewModel : ViewModelBase, IProfileManager
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
 
-        public ICollectionView Profiles { get; }
+        public ICollectionView _groups;
+        public ICollectionView Groups
+        {
+            get => _groups;
+            set
+            {
+                if (value == _groups)
+                    return;
+
+                _groups = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _lastSelectedGroup;
+
+        private GroupInfo _selectedGroup = new GroupInfo();
+        public GroupInfo SelectedGroup
+        {
+            get => _selectedGroup;
+            set
+            {
+                if (value == _selectedGroup)
+                    return;
+
+                // NullReferenceException occurs if profile file is changed
+                if (value == null)
+                    Profiles = null;
+                else
+                    SetProfilesView(value.Name);
+
+                _selectedGroup = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICollectionView _profiles;
+        public ICollectionView Profiles
+        {
+            get => _profiles;
+            set
+            {
+                if (value == _profiles)
+                    return;
+
+                _profiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _lastSelectedProfile;
 
         private ProfileInfo _selectedProfile = new ProfileInfo();
         public ProfileInfo SelectedProfile
@@ -89,33 +137,55 @@ namespace NETworkManager.ViewModels
         {
             _dialogCoordinator = instance;
 
-            Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
-            Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-            Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+            SetGroupView();
+
+            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
+
+            _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+            _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+        }
+
+        public void SetGroupView()
+        {
+            Groups = new CollectionViewSource { Source = ProfileManager.Groups }.View;
+
+            Groups.SortDescriptions.Add(new SortDescription(nameof(GroupInfo.Name), ListSortDirection.Ascending));
+
+            SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
+        }
+
+        public void SetProfilesView(string groupName)
+        {
+            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Name.Equals(groupName)).Profiles }.View;
+
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                if (!(o is ProfileInfo info))
+                if (o is not ProfileInfo info)
                     return false;
 
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
+                /*
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
                     return !string.IsNullOrEmpty(info.Tags) && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                */
 
-                // Search by: Name, IPScanner_IPRange
+                // Search by: Name
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
-            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
-            SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
+            // Select first profile, or the last selected profile
+            if (string.IsNullOrEmpty(_lastSelectedProfile))
+                SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Name).FirstOrDefault();
+            else
+                SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().FirstOrDefault(x => x.Name.Equals(_lastSelectedProfile));
 
-            _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-            _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+            SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
         }
         #endregion
 
@@ -124,7 +194,10 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            AddProfile();
+            _lastSelectedGroup = SelectedGroup?.Name;
+            _lastSelectedProfile = SelectedProfile?.Name;
+
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, SelectedGroup.Name);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), EditProfile_CanExecute);
@@ -133,194 +206,64 @@ namespace NETworkManager.ViewModels
 
         private void EditProfileAction()
         {
-            EditProfile();
+            _lastSelectedGroup = SelectedGroup?.Name;
+            _lastSelectedProfile = SelectedProfile?.Name;
+
+            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
-            CopyAsProfile();
+            _lastSelectedGroup = SelectedGroup?.Name;
+            _lastSelectedProfile = SelectedProfile?.Name;
+
+            ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
 
         private void DeleteProfileAction()
         {
-            DeleteProfile();
+            _lastSelectedGroup = SelectedGroup?.Name;
+            _lastSelectedProfile = null;
+
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>()));
         }
 
-        public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
+        public ICommand AddGroupCommand => new RelayCommand(p => AddGroupAction());
 
-        private void EditGroupAction(object group)
+        private void AddGroupAction()
         {
-            EditGroup(group);
+            _lastSelectedGroup = SelectedGroup?.Name;
+            _lastSelectedProfile = SelectedProfile?.Name;
+
+            ProfileDialogManager.ShowAddGroupDialog(this, _dialogCoordinator);
+        }
+
+        public ICommand EditGroupCommand => new RelayCommand(p => EditGroupAction());
+
+        private void EditGroupAction()
+        {
+            _lastSelectedGroup = SelectedGroup?.Name;
+            _lastSelectedProfile = SelectedProfile?.Name;
+
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, SelectedGroup);
+        }
+
+        public ICommand DeleteGroupCommand => new RelayCommand(p => DeleteGroupAction());
+
+        private void DeleteGroupAction()
+        {
+            _lastSelectedGroup = null;
+            _lastSelectedProfile = null;
+
+            ProfileDialogManager.ShowDeleteGroupDialog(this, _dialogCoordinator, SelectedGroup);
         }
         #endregion
 
         #region Methods
-        public async Task AddProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.AddProfile,
-                Style = (Style)Application.Current.FindResource("ProfileMetroDialog")
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileDialogManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups());
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async Task EditProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.EditProfile,
-                Style = (Style)Application.Current.FindResource("ProfileMetroDialog")
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.RemoveProfile(SelectedProfile);
-
-                ProfileDialogManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), ProfileEditMode.Edit, SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async Task CopyAsProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.CopyProfile,
-                Style = (Style)Application.Current.FindResource("ProfileMetroDialog")
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileDialogManager.AddProfile(instance);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), ProfileEditMode.Copy, SelectedProfile);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async Task DeleteProfile()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.DeleteProfile
-            };
-
-            var confirmDeleteViewModel = new ConfirmDeleteViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                var list = new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>());
-
-                foreach (var profile in list)
-                    ProfileManager.RemoveProfile(profile);
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Localization.Resources.Strings.DeleteProfileMessage);
-
-            customDialog.Content = new ConfirmDeleteDialog
-            {
-                DataContext = confirmDeleteViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public async Task EditGroup(object group)
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.EditGroup
-            };
-
-            var editGroupViewModel = new GroupViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.RenameGroup(instance.OldGroup, instance.Group);
-
-                RefreshProfiles();
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, group.ToString(), ProfileManager.GetGroups());
-
-            customDialog.Content = new GroupDialog
-            {
-                DataContext = editGroupViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
-        public ICommand ResetProfilesCommand => new RelayCommand(p => ResetProfilesAction());
-
-        private async Task ResetProfilesAction()
-        {
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.Confirm
-            };
-
-            var confirmDeleteViewModel = new ConfirmDeleteViewModel(async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.ResetProfiles();
-            }, async instance =>
-            {
-                await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Localization.Resources.Strings.ResetProfilesMessage);
-
-            customDialog.Content = new ConfirmDeleteDialog
-            {
-                DataContext = confirmDeleteViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-
         private void StartDelayedSearch()
         {
             if (!IsSearching)
@@ -347,11 +290,34 @@ namespace NETworkManager.ViewModels
 
         public void RefreshProfiles()
         {
-            Profiles.Refresh();
-        }        
+            if (Profiles == null)
+            {
+                Debug.WriteLine("Profiles is null");
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(_lastSelectedGroup))
+                SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Name.Equals(_lastSelectedGroup));
+        }
+
+        public void OnProfileDialogOpen()
+        {
+
+        }
+
+        public void OnProfileDialogClose()
+        {
+
+        }
         #endregion
 
         #region Event
+        private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
+        {
+            // Update group view (and profile view) when the profile file has changed
+            SetGroupView();
+        }
+
         private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
         {
             StopDelayedSearch();

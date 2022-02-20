@@ -892,7 +892,7 @@ To je nova funkcija, ki lahko še vedno vsebuje napake. Najprej varnostno kopira
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
+  <data name="InheritHostFromGeneral" xml:space="preserve">
     <value>Podeduj gostitelja iz privzetega</value>
   </data>
   <data name="IPRange" xml:space="preserve">
