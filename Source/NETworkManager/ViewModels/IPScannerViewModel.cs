@@ -9,7 +9,6 @@ using System.Threading;
 using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using System.Windows.Threading;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;

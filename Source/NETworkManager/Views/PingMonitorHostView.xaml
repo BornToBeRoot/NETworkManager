@@ -276,10 +276,9 @@
                                                         <Expander.Header>
                                                             <Grid>
                                                                 <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="Auto" />
+                                                                    <ColumnDefinition Width="*" />
                                                                     <ColumnDefinition Width="10" />
                                                                     <ColumnDefinition Width="Auto" />
-                                                                    <ColumnDefinition Width="*" />
                                                                 </Grid.ColumnDefinitions>
                                                                 <Rectangle Grid.Column="0" Grid.ColumnSpan="4" Fill="Transparent" />
                                                                 <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource ProfileGroupTextBlock}" />
