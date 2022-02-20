@@ -91,7 +91,7 @@
                                 <Style TargetType="Rectangle">
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -100,10 +100,43 @@
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=InterfacePassword}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Text="{x:Static localization:Strings.UnlockProfile}" Style="{StaticResource LinkTextBlock}"  VerticalAlignment="Center" Margin="5,0" />
+                        <TextBlock Text="{x:Static localization:Strings.UnlockProfile}" Style="{StaticResource LinkTextBlock}" Margin="5,0" />
                     </StackPanel>
                 </Button>
-                <ComboBox ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" Background="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0" />
+                <ComboBox ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition MinWidth="70" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Grid.Column="0" Grid.Row="0" Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                    <Rectangle.Style>
+                                        <Style TargetType="Rectangle">
+                                            <Setter Property="OpacityMask">
+                                                <Setter.Value>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=UserSolid}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsEncrypted}" Value="True">
+                                                    <Setter Property="OpacityMask">
+                                                        <Setter.Value>
+                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=UserLockSolid}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>                                   
+                                </Rectangle>
+                                <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Name}" />
+                            </Grid>                                        
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
                 <Button Command="{Binding OpenWebsiteCommand}" ToolTip="{x:Static localization:Strings.StarForkTheProjectOnGitHub}" CommandParameter="{x:Static resources:Resources.NETworkManager_RepoUrl}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
