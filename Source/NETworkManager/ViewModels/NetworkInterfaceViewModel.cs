@@ -698,7 +698,7 @@ namespace NETworkManager.ViewModels
 
         private void DeleteProfileAction()
         {
-            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);

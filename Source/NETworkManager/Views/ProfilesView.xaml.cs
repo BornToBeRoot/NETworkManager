@@ -16,22 +16,27 @@ namespace NETworkManager.Views
             DataContext = _viewModel;
         }
 
-       private void ContextMenu_Opened(object sender, RoutedEventArgs e)
+        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
-            if (sender is ContextMenu menu) 
+            if (sender is ContextMenu menu)
                 menu.DataContext = _viewModel;
         }
 
         private void DataGridGroupsRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-         //   if (e.ChangedButton == MouseButton.Left)
-         //       _viewModel.EditGroup();
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                if (_viewModel.EditGroupCommand.CanExecute(null))
+                    _viewModel.EditGroupCommand.Execute(null);
+            }
         }
-
         private void DataGridProfilesRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
-                _viewModel.EditProfile();
+            {
+                if (_viewModel.EditProfileCommand.CanExecute(null))
+                    _viewModel.EditProfileCommand.Execute(null);
+            }
         }
 
         public void Refresh()

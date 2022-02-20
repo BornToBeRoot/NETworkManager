@@ -810,7 +810,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>Delete entry</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Selected profiles will be deleted permanently.</value>
+    <value>Selected profile will be deleted permanently.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>DNS autconfiguration</value>
@@ -3133,5 +3133,11 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   </data>
   <data name="Resize" xml:space="preserve">
     <value>Resize</value>
+  </data>
+  <data name="DeleteProfiles" xml:space="preserve">
+    <value>Delete profiles</value>
+  </data>
+  <data name="DeleteProfilesMessage" xml:space="preserve">
+    <value>Selected profiles will be deleted permanently.</value>
   </data>
 </root>

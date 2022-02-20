@@ -1230,7 +1230,7 @@ namespace NETworkManager.ViewModels
             _groups = groups;
 
             // General
-            Name = group.Name;
+            Name = groupInfo.Name;
 
             // Remote Desktop
             RemoteDesktop_Enabled = groupInfo.RemoteDesktop_Enabled;

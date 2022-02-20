@@ -14,6 +14,7 @@ using System.Net;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace NETworkManager.ViewModels
 {
@@ -327,7 +328,7 @@ namespace NETworkManager.ViewModels
 
         private void DeleteProfileAction()
         {
-            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);

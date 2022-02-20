@@ -11,17 +11,20 @@ namespace NETworkManager
 {
     public static class ProfileDialogManager
     {
+        #region Variables
+        private static string DialogResourceKey = "LargeMetroDialog";
+        #endregion
 
         #region Dialog to add, edit, copy as and delete profile
         public static async Task ShowAddProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator)
         {
-            var customDialog = new CustomDialog
+            CustomDialog customDialog = new()
             {
                 Title = Localization.Resources.Strings.AddProfile,
-                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
+                Style = (Style)Application.Current.FindResource(DialogResourceKey)
             };
 
-            var profileViewModel = new ProfileViewModel(async instance =>
+            ProfileViewModel profileViewModel = new(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
@@ -45,13 +48,13 @@ namespace NETworkManager
 
         public static async Task ShowEditProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile)
         {
-            var customDialog = new CustomDialog
+            CustomDialog customDialog = new()
             {
                 Title = Localization.Resources.Strings.EditProfile,
-                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
+                Style = (Style)Application.Current.FindResource(DialogResourceKey)
             };
 
-            var profileViewModel = new ProfileViewModel(async instance =>
+            ProfileViewModel profileViewModel = new(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
@@ -76,13 +79,13 @@ namespace NETworkManager
 
         public static async Task ShowCopyAsProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile)
         {
-            var customDialog = new CustomDialog
+            CustomDialog customDialog = new()
             {
                 Title = Localization.Resources.Strings.CopyProfile,
-                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
+                Style = (Style)Application.Current.FindResource(DialogResourceKey)
             };
 
-            var profileViewModel = new ProfileViewModel(async instance =>
+            ProfileViewModel profileViewModel = new(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
@@ -103,24 +106,25 @@ namespace NETworkManager
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
-        public static async Task ShowDeleteProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile)
+        public static async Task ShowDeleteProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, IList<ProfileInfo> profiles)
         {
-            CustomDialog customDialog = new CustomDialog
+            CustomDialog customDialog = new()
             {
-                Title = Localization.Resources.Strings.DeleteProfile
+                Title = profiles.Count == 1 ? Localization.Resources.Strings.DeleteProfile : Localization.Resources.Strings.DeleteProfiles
             };
 
-            ConfirmDeleteViewModel confirmDeleteViewModel = new ConfirmDeleteViewModel(async instance =>
+            ConfirmDeleteViewModel confirmDeleteViewModel = new(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                RemoveProfile(profile);
+                foreach (var profile in profiles)
+                    RemoveProfile(profile);
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, Localization.Resources.Strings.DeleteProfileMessage);
+            }, profiles.Count == 1 ? Localization.Resources.Strings.DeleteProfileMessage : Localization.Resources.Strings.DeleteProfilesMessage);
 
             customDialog.Content = new ConfirmDeleteDialog
             {
@@ -132,46 +136,47 @@ namespace NETworkManager
         }
         #endregion
 
-        #region Dialog to add, edit and delete group
+        #region Dialog to add, edit and delete group        
         public static async Task ShowAddGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator)
         {
-            var customDialog = new CustomDialog
+            CustomDialog customDialog = new()
             {
-                Title = Localization.Resources.Strings.AddGroup,
-                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
+                Title = Localization.Resources.Strings.EditGroup,
+                Style = (Style)Application.Current.FindResource(DialogResourceKey)
             };
 
-            var groupViewModel = new GroupViewModel(async instance =>
+            GroupViewModel groupViewModel = new(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
                 AddGroup(instance);
+
+                viewModel.RefreshProfiles();
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
             }, ProfileManager.GetGroupNames());
 
-            customDialog.Content = new ProfileDialog
+            customDialog.Content = new GroupDialog
             {
                 DataContext = groupViewModel
             };
 
             viewModel.OnProfileDialogOpen();
-
             await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
         }
 
         public static async Task ShowEditGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, GroupInfo group)
         {
-            CustomDialog customDialog = new CustomDialog
+            CustomDialog customDialog = new()
             {
                 Title = Localization.Resources.Strings.EditGroup,
-                Style = (Style)Application.Current.FindResource("LargeMetroDialog")
+                Style = (Style)Application.Current.FindResource(DialogResourceKey)
             };
 
-            GroupViewModel groupViewModel = new GroupViewModel(async instance =>
+            GroupViewModel groupViewModel = new(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
@@ -197,12 +202,12 @@ namespace NETworkManager
 
         public static async Task ShowDeleteGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, GroupInfo group)
         {
-            CustomDialog customDialog = new CustomDialog
+            CustomDialog customDialog = new()
             {
                 Title = Localization.Resources.Strings.DeleteGroup
             };
 
-            ConfirmDeleteViewModel confirmDeleteViewModel = new ConfirmDeleteViewModel(async instance =>
+            ConfirmDeleteViewModel confirmDeleteViewModel = new(async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();

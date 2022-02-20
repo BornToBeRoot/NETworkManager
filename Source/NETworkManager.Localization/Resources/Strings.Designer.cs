@@ -2140,11 +2140,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Selected profiles will be deleted permanently. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Selected profile will be deleted permanently. ähnelt.
         /// </summary>
         public static string DeleteProfileMessage {
             get {
                 return ResourceManager.GetString("DeleteProfileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete profiles ähnelt.
+        /// </summary>
+        public static string DeleteProfiles {
+            get {
+                return ResourceManager.GetString("DeleteProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Selected profiles will be deleted permanently. ähnelt.
+        /// </summary>
+        public static string DeleteProfilesMessage {
+            get {
+                return ResourceManager.GetString("DeleteProfilesMessage", resourceCulture);
             }
         }
         
