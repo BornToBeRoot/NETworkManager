@@ -194,8 +194,8 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            _lastSelectedGroup = SelectedGroup.Name;
-            _lastSelectedProfile = SelectedProfile.Name;
+            _lastSelectedGroup = SelectedGroup?.Name;
+            _lastSelectedProfile = SelectedProfile?.Name;
 
             ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, SelectedGroup.Name);
         }
@@ -206,8 +206,8 @@ namespace NETworkManager.ViewModels
 
         private void EditProfileAction()
         {
-            _lastSelectedGroup = SelectedGroup.Name;
-            _lastSelectedProfile = SelectedProfile.Name;
+            _lastSelectedGroup = SelectedGroup?.Name;
+            _lastSelectedProfile = SelectedProfile?.Name;
 
             ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
@@ -216,8 +216,8 @@ namespace NETworkManager.ViewModels
 
         private void CopyAsProfileAction()
         {
-            _lastSelectedGroup = SelectedGroup.Name;
-            _lastSelectedProfile = SelectedProfile.Name;
+            _lastSelectedGroup = SelectedGroup?.Name;
+            _lastSelectedProfile = SelectedProfile?.Name;
 
             ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
@@ -226,8 +226,8 @@ namespace NETworkManager.ViewModels
 
         private void DeleteProfileAction()
         {
-            _lastSelectedGroup = SelectedGroup.Name;
-            _lastSelectedProfile = "";
+            _lastSelectedGroup = SelectedGroup?.Name;
+            _lastSelectedProfile = null;
 
             ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>()));
         }
@@ -236,8 +236,8 @@ namespace NETworkManager.ViewModels
 
         private void AddGroupAction()
         {
-            _lastSelectedGroup = SelectedGroup.Name;
-            _lastSelectedProfile = SelectedProfile.Name;
+            _lastSelectedGroup = SelectedGroup?.Name;
+            _lastSelectedProfile = SelectedProfile?.Name;
 
             ProfileDialogManager.ShowAddGroupDialog(this, _dialogCoordinator);
         }
@@ -246,8 +246,8 @@ namespace NETworkManager.ViewModels
 
         private void EditGroupAction()
         {
-            _lastSelectedGroup = SelectedGroup.Name;
-            _lastSelectedProfile = SelectedProfile.Name;
+            _lastSelectedGroup = SelectedGroup?.Name;
+            _lastSelectedProfile = SelectedProfile?.Name;
 
             ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, SelectedGroup);
         }
@@ -256,8 +256,8 @@ namespace NETworkManager.ViewModels
 
         private void DeleteGroupAction()
         {
-            _lastSelectedGroup = "";
-            _lastSelectedProfile = "";
+            _lastSelectedGroup = null;
+            _lastSelectedProfile = null;
 
             ProfileDialogManager.ShowDeleteGroupDialog(this, _dialogCoordinator, SelectedGroup);
         }
