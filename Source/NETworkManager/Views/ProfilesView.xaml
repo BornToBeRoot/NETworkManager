@@ -330,7 +330,7 @@
             </Grid>
         </Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <TextBlock Text="{x:Static localization:Strings.UnlockTheProfileFileMessage}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <TextBlock Text="{x:Static localization:Strings.UnlockTheProfileFileMessage2}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
         </StackPanel>
     </Grid>
 </UserControl>

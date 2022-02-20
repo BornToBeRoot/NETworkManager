@@ -2925,7 +2925,7 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>Unlock profile</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Unlock the profile file to add, change or delete a profile!</value>
+    <value>Unlock the profile file to use the profiles!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>Disclaimer</value>
@@ -3139,5 +3139,8 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   </data>
   <data name="DeleteProfilesMessage" xml:space="preserve">
     <value>Selected profiles will be deleted permanently.</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
+    <value>Unlock the profile file to add, change or delete a profile!</value>
   </data>
 </root>

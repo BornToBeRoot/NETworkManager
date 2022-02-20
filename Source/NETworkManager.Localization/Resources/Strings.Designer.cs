@@ -8488,11 +8488,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Unlock the profile file to add, change or delete a profile! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Unlock the profile file to use the profiles! ähnelt.
         /// </summary>
         public static string UnlockTheProfileFileMessage {
             get {
                 return ResourceManager.GetString("UnlockTheProfileFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Unlock the profile file to add, change or delete a profile! ähnelt.
+        /// </summary>
+        public static string UnlockTheProfileFileMessage2 {
+            get {
+                return ResourceManager.GetString("UnlockTheProfileFileMessage2", resourceCulture);
             }
         }
         
