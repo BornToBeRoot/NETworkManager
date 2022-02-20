@@ -694,7 +694,7 @@ namespace NETworkManager.Profiles
 
         public static GroupInfo GetGroup(string name)
         {
-            return Groups.FirstOrDefault(x => x.Name.Equals(name));
+            return Groups.First(x => x.Name.Equals(name));
         }
 
         /// <summary>

@@ -156,7 +156,7 @@ namespace NETworkManager.ViewModels
 
         public void SetProfilesView(string groupName)
         {
-            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => x.Name.Equals(groupName)).FirstOrDefault().Profiles }.View;
+            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Name.Equals(groupName)).Profiles }.View;
 
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>
@@ -183,7 +183,7 @@ namespace NETworkManager.ViewModels
             if (string.IsNullOrEmpty(_lastSelectedProfile))
                 SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Name).FirstOrDefault();
             else
-                SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().FirstOrDefault(x => x.Name == _lastSelectedProfile);
+                SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().FirstOrDefault(x => x.Name.Equals(_lastSelectedProfile));
 
             SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
         }
@@ -297,7 +297,7 @@ namespace NETworkManager.ViewModels
             }
 
             if (!string.IsNullOrEmpty(_lastSelectedGroup))
-                SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Name == _lastSelectedGroup);
+                SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Name.Equals(_lastSelectedGroup));
         }
 
         public void OnProfileDialogOpen()
