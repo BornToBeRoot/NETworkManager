@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>Über</value>
@@ -810,7 +810,7 @@ Dies ist eine neue Funktion und könnte Bugs enthalten. Bitte sichern Sie zuerst
     <value>Eintrag löschen</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Ausgewählte Profile werden unwiederbringlich gelöscht.</value>
+    <value>Das ausgewählte Profil wird unwiederbringlich gelöscht.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>DNS Autkonfiguration</value>
@@ -891,7 +891,7 @@ Dies ist eine neue Funktion und könnte Bugs enthalten. Bitte sichern Sie zuerst
     <value>ID</value>
   </data>
   <data name="InheritHostFromGeneral" xml:space="preserve">
-    <value>Host von Standard übernehmen</value>
+    <value>Host von Allgemein erben</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>IP-Bereich</value>
@@ -2892,8 +2892,10 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
     <value>Profil konnte nicht geladen werden!</value>
   </data>
-  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
-    <value>Das Profil konnte nicht geladen werden und ist möglicherweise beschädigt. Wenn dies unerwartet ist oder auf ein Update zurückzuführen ist, melden Sie dieses Problem bitte auf GitHub!</value>
+  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
+    <value>Wenn dies nach einem Update passiert ist, müssen Sie die Profile möglicherweise auf eine neuere Version migrieren. Wenn Sie auf "Migrieren" klicken, öffnet sich ein PowerShell-Fenster mit dem Migrationsskript. Überprüfen Sie den Pfad und drücken Sie die Eingabetaste.
+
+Ansonsten kann das Profil beschädigt sein und Sie können das Problem auf GitHub melden.</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Gruppe bearbeiten...</value>
@@ -2923,7 +2925,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Profil entsperren</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Entsperren Sie die Profildatei, um ein Profil hinzuzufügen, zu ändern oder zu löschen!</value>
+    <value>Entsperren Sie die Profildatei, um die Profile verwenden zu können!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>Disclaimer</value>
@@ -2937,11 +2939,9 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
     <value>Profile im Zielordner überschreiben?
 
-"Überschreiben" kopiert die Profildateien in den Zielordner und überschreibt vorhandene Profildateien.
+Mit "Überschreiben" werden die Profildateien in den Zielordner kopiert und die vorhandenen Profildateien überschrieben.
 "Zusammenführen" kopiert die Profildateien in den Zielordner, überschreibt aber nicht die vorhandenen Profildateien.
-"Anderen Ordner verwenden" verwendet die vorhandenen Profildateien im Zielordner.
-
-Die Anwendung wird anschließend neu gestartet!</value>
+Mit "Anderen Ordner verwenden" werden die vorhandenen Profildateien im Zielordner verwendet.</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Anderen Verwenden</value>
@@ -3110,7 +3110,37 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
     <value>Die Verbindung zur Remote-Sitzung kann nicht wiederhergestellt werden.</value>
   </data>
+  <data name="Migrate" xml:space="preserve">
+    <value>Migrieren</value>
+  </data>
+  <data name="ReportOnGitHub" xml:space="preserve">
+    <value>Auf GitHub melden</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Gruppen</value>
+  </data>
+  <data name="AddGroup" xml:space="preserve">
+    <value>Gruppe hinzufügen</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Gruppe löschen</value>
+  </data>
+  <data name="DeleteGroupMessage" xml:space="preserve">
+    <value>Die ausgewählte Gruppe und alle Profile in dieser Gruppe werden dauerhaft gelöscht.</value>
+  </data>
+  <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
+    <value>Der Name wird bereits verwendet!</value>
+  </data>
   <data name="Resize" xml:space="preserve">
     <value>Größe anpassen</value>
+  </data>
+  <data name="DeleteProfiles" xml:space="preserve">
+    <value>Profile löschen</value>
+  </data>
+  <data name="DeleteProfilesMessage" xml:space="preserve">
+    <value>Die ausgewählten Profile werden unwiederbringlich gelöscht.</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
+    <value>Entsperren Sie die Profildatei, um ein Profil hinzuzufügen, zu ändern oder zu löschen!</value>
   </data>
 </root>
