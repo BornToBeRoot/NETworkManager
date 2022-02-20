@@ -472,6 +472,7 @@
                                                                 <Binding Path="PortScanner_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                        <validators:MultipleHostsRangeValidator ValidatesOnTargetUpdated="True" />
                                                                     </Binding.ValidationRules>
                                                                 </Binding>
                                                             </Setter.Value>
@@ -536,6 +537,7 @@
                                                                 <Binding Path="PingMonitor_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                        <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                     </Binding.ValidationRules>
                                                                 </Binding>
                                                             </Setter.Value>
@@ -590,6 +592,7 @@
                                                                 <Binding Path="Traceroute_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                        <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                     </Binding.ValidationRules>
                                                                 </Binding>
                                                             </Setter.Value>
@@ -644,6 +647,7 @@
                                                                 <Binding Path="DNSLookup_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                        <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                     </Binding.ValidationRules>
                                                                 </Binding>
                                                             </Setter.Value>
@@ -756,6 +760,7 @@
                                                                 <Binding Path="RemoteDesktop_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                        <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                     </Binding.ValidationRules>
                                                                 </Binding>
                                                             </Setter.Value>
@@ -773,6 +778,7 @@
                                             <Binding Path="RemoteDesktop_Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
                                                     <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                    <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
@@ -1004,6 +1010,7 @@
                                                             <Binding Path="PowerShell_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                 <Binding.ValidationRules>
                                                                     <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                    <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                 </Binding.ValidationRules>
                                                             </Binding>
                                                         </Setter.Value>
@@ -1266,6 +1273,7 @@
                                                             <Binding Path="TigerVNC_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                 <Binding.ValidationRules>
                                                                     <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                    <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                 </Binding.ValidationRules>
                                                             </Binding>
                                                         </Setter.Value>
@@ -1429,6 +1437,7 @@
                                                                 <Binding Path="Whois_Domain" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                        <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                     </Binding.ValidationRules>
                                                                 </Binding>
                                                             </Setter.Value>
