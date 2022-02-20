@@ -1,5 +1,7 @@
 <#      
-    Convert NETworkManager profiles from 2021.9.5.0 and before to 2021.x.x.x and later
+    Migrate NETworkManager profiles 
+        from 2021.11.30.0 and before 
+        to 2021.x.x.x and later
 #>
 
 [CmdletBinding()]
@@ -23,10 +25,10 @@ param (
     [String]$NETworkManagerVersion
 )
 
-Write-Host "== NETworkManager Profile Converter ==`n" -ForegroundColor Green
-Write-Host "Convert profiles to versions $NETworkManagerVersion`n"
+Write-Host "=== NETworkManager ===`n" -ForegroundColor Green
+Write-Host "Migrate profiles to versions $NETworkManagerVersion`n"
 
-Write-Host "If you use encrypted profiles:`n  1) Disable profile encryption for all encrypted profiles with the previous NETworkManager version`n     https://borntoberoot.net/NETworkManager/FAQ#how-to-disable-profile-file-encryption`n  2) Run this script to convert the profiles`n  3) Re-enable profile encryption with the newest release of NETworkManager`n     https://borntoberoot.net/NETworkManager/FAQ#how-to-enable-profile-file-encryption`n" -ForegroundColor Yellow
+Write-Host "If you use encrypted profiles:`n  1) Disable profile encryption for all encrypted profiles with the previous NETworkManager version`n     https://borntoberoot.net/NETworkManager/FAQ#how-to-disable-profile-file-encryption`n  2) Run this script to migrate the profiles`n  3) Re-enable profile encryption with the newest release of NETworkManager`n     https://borntoberoot.net/NETworkManager/FAQ#how-to-enable-profile-file-encryption`n" -ForegroundColor Yellow
 
 $defaultValue = $Path
 $prompt = Read-Host "Profile file or folder [$($defaultValue)] (Enter to continue | CTRL+C to cancel)"
