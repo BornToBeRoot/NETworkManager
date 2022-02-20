@@ -19,7 +19,7 @@ namespace NETworkManager.ViewModels
     public class ProfileViewModel : ViewModelBase
     {
         #region Variables
-        private readonly bool _isLoading  =true;
+        private readonly bool _isLoading = true;
 
         public bool IsProfileFileEncrypted => ProfileManager.LoadedProfileFile.IsEncrypted;
 
@@ -2078,7 +2078,7 @@ namespace NETworkManager.ViewModels
         #endregion
         #endregion
 
-        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null)
+        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null)
         {
             // Load the view
             ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
@@ -2095,7 +2095,10 @@ namespace NETworkManager.ViewModels
                 Name += " - " + Localization.Resources.Strings.CopyNoun;
 
             Host = profileInfo.Host;
-            Group = string.IsNullOrEmpty(profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Localization.Resources.Strings.Default) : profileInfo.Group;
+
+            // Try to get group (name) as parameter, then from profile, then the first in the list of groups, then the default group            
+            Group = group ?? (string.IsNullOrEmpty(profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Localization.Resources.Strings.Default) : profileInfo.Group);
+
             Tags = profileInfo.Tags;
 
             Groups = CollectionViewSource.GetDefaultView(groups);

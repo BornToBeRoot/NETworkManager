@@ -3,6 +3,7 @@ using NETworkManager.Profiles;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,7 +17,7 @@ namespace NETworkManager
         #endregion
 
         #region Dialog to add, edit, copy as and delete profile
-        public static async Task ShowAddProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator)
+        public static async Task ShowAddProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, string group = null)
         {
             CustomDialog customDialog = new()
             {
@@ -34,7 +35,7 @@ namespace NETworkManager
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, ProfileManager.GetGroupNames());
+            }, ProfileManager.GetGroupNames(), group);
 
             customDialog.Content = new ProfileDialog
             {
@@ -66,7 +67,7 @@ namespace NETworkManager
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, ProfileManager.GetGroupNames(), ProfileEditMode.Edit, profile);
+            }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Edit, profile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -95,7 +96,7 @@ namespace NETworkManager
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, ProfileManager.GetGroupNames(), ProfileEditMode.Copy, profile);
+            }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Copy, profile);
 
             customDialog.Content = new ProfileDialog
             {
@@ -390,9 +391,18 @@ namespace NETworkManager
             string name = instance.Name.Trim();
 
             // Update group in profiles
-            if (!instance.Group.Name.Equals(name))
-                foreach (ProfileInfo profile in profiles)
-                    profile.Group = name;
+            if(profiles.Count > 0)
+            {
+                if(!string.IsNullOrEmpty(instance.Group.Name) && string.Equals(instance.Group.Name, name, System.StringComparison.Ordinal))
+                {
+                    foreach (ProfileInfo profile in profiles)
+                        profile.Group = name;
+                }
+                else
+                {
+                    Debug.WriteLine("Cannot update group in profiles");
+                }
+            }
 
             ProfileManager.AddGroup(new GroupInfo
             {

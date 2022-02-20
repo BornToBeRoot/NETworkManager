@@ -171,7 +171,7 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);           
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, SelectedGroup.Name);           
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), EditProfile_CanExecute);
@@ -201,7 +201,7 @@ namespace NETworkManager.ViewModels
 
         private void AddGroupAction()
         {
-            ProfileDialogManager.ShowAddGroupDialog(this, _dialogCoordinator);            
+            ProfileDialogManager.ShowAddGroupDialog(this, _dialogCoordinator);
         }
 
         public ICommand EditGroupCommand => new RelayCommand(p => EditGroupAction());
