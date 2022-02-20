@@ -20,7 +20,21 @@ namespace NETworkManager.ViewModels
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
 
-        public ICollectionView Groups { get; set; }
+        public ICollectionView _groups;
+        public ICollectionView Groups
+        {
+            get => _groups;
+            set
+            {
+                if (value == _groups)
+                    return;
+
+                _groups = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _lastSelectedGroup;
 
         private GroupInfo _selectedGroup = new GroupInfo();
         public GroupInfo SelectedGroup
@@ -33,21 +47,30 @@ namespace NETworkManager.ViewModels
 
                 // NullReferenceException occurs if profile file is changed
                 if (value == null)
-                {
                     Profiles = null;
-                    OnPropertyChanged(nameof(Profiles));
-                }
                 else
-                {
                     SetProfilesView(value.Name);
-                }
 
                 _selectedGroup = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICollectionView Profiles { get; set; }
+        public ICollectionView _profiles;
+        public ICollectionView Profiles
+        {
+            get => _profiles;
+            set
+            {
+                if (value == _profiles)
+                    return;
+
+                _profiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _lastSelectedProfile;
 
         private ProfileInfo _selectedProfile = new ProfileInfo();
         public ProfileInfo SelectedProfile
@@ -125,26 +148,23 @@ namespace NETworkManager.ViewModels
         public void SetGroupView()
         {
             Groups = new CollectionViewSource { Source = ProfileManager.Groups }.View;
+
             Groups.SortDescriptions.Add(new SortDescription(nameof(GroupInfo.Name), ListSortDirection.Ascending));
 
             SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
-
-            if (SelectedGroup != null)
-                SetProfilesView(SelectedGroup.Name);
-
-            OnPropertyChanged(nameof(Groups));
         }
 
         public void SetProfilesView(string groupName)
         {
             Profiles = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => x.Name.Equals(groupName)).FirstOrDefault().Profiles }.View;
+
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>
             {
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                if (!(o is ProfileInfo info))
+                if (o is not ProfileInfo info)
                     return false;
 
                 var search = Search.Trim();
@@ -159,10 +179,13 @@ namespace NETworkManager.ViewModels
                 return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
             };
 
-            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
-            SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
+            // Select first profile, or the last selected profile
+            if (string.IsNullOrEmpty(_lastSelectedProfile))
+                SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Name).FirstOrDefault();
+            else
+                SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().FirstOrDefault(x => x.Name == _lastSelectedProfile);
 
-            OnPropertyChanged(nameof(Profiles));
+            SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
         }
         #endregion
 
@@ -171,7 +194,10 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, SelectedGroup.Name);           
+            _lastSelectedGroup = SelectedGroup.Name;
+            _lastSelectedProfile = SelectedProfile.Name;
+
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, SelectedGroup.Name);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), EditProfile_CanExecute);
@@ -180,13 +206,19 @@ namespace NETworkManager.ViewModels
 
         private void EditProfileAction()
         {
-            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);                       
+            _lastSelectedGroup = SelectedGroup.Name;
+            _lastSelectedProfile = SelectedProfile.Name;
+
+            ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
 
         private void CopyAsProfileAction()
         {
+            _lastSelectedGroup = SelectedGroup.Name;
+            _lastSelectedProfile = SelectedProfile.Name;
+
             ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
@@ -194,6 +226,9 @@ namespace NETworkManager.ViewModels
 
         private void DeleteProfileAction()
         {
+            _lastSelectedGroup = SelectedGroup.Name;
+            _lastSelectedProfile = "";
+
             ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo>(SelectedProfiles.Cast<ProfileInfo>()));
         }
 
@@ -201,6 +236,9 @@ namespace NETworkManager.ViewModels
 
         private void AddGroupAction()
         {
+            _lastSelectedGroup = SelectedGroup.Name;
+            _lastSelectedProfile = SelectedProfile.Name;
+
             ProfileDialogManager.ShowAddGroupDialog(this, _dialogCoordinator);
         }
 
@@ -208,6 +246,9 @@ namespace NETworkManager.ViewModels
 
         private void EditGroupAction()
         {
+            _lastSelectedGroup = SelectedGroup.Name;
+            _lastSelectedProfile = SelectedProfile.Name;
+
             ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, SelectedGroup);
         }
 
@@ -215,6 +256,9 @@ namespace NETworkManager.ViewModels
 
         private void DeleteGroupAction()
         {
+            _lastSelectedGroup = "";
+            _lastSelectedProfile = "";
+
             ProfileDialogManager.ShowDeleteGroupDialog(this, _dialogCoordinator, SelectedGroup);
         }
         #endregion
@@ -252,9 +296,8 @@ namespace NETworkManager.ViewModels
                 return;
             }
 
-            Debug.WriteLine("SETTINGS > PROFILES > Refresh Profiles...");
-
-            Profiles.Refresh();
+            if (!string.IsNullOrEmpty(_lastSelectedGroup))
+                SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Name == _lastSelectedGroup);
         }
 
         public void OnProfileDialogOpen()
@@ -278,7 +321,7 @@ namespace NETworkManager.ViewModels
         private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
         {
             StopDelayedSearch();
-        }              
+        }
         #endregion
     }
 }

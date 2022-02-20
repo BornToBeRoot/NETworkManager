@@ -31,6 +31,8 @@ namespace NETworkManager
                 viewModel.OnProfileDialogClose();
 
                 AddProfile(instance);
+
+                viewModel.RefreshProfiles();
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -61,8 +63,9 @@ namespace NETworkManager
                 viewModel.OnProfileDialogClose();
 
                 RemoveProfile(profile);
-
                 AddProfile(instance);
+
+                viewModel.RefreshProfiles();
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -92,6 +95,8 @@ namespace NETworkManager
                 viewModel.OnProfileDialogClose();
 
                 AddProfile(instance);
+
+                viewModel.RefreshProfiles();
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -121,6 +126,8 @@ namespace NETworkManager
 
                 foreach (var profile in profiles)
                     RemoveProfile(profile);
+
+                viewModel.RefreshProfiles();
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -214,6 +221,8 @@ namespace NETworkManager
                 viewModel.OnProfileDialogClose();
 
                 RemoveGroup(group);
+
+                viewModel.RefreshProfiles();
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
