@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 12/05/2020 00:58:20-->
+Generated 02/21/2022 03:26:03-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -1794,8 +1794,8 @@ Generated 12/05/2020 00:58:20-->
   <Port>
     <Number>143</Number>
     <Protocol>udp</Protocol>
-    <Name>imap</Name>
-    <Description>Internet Message Access Protocol</Description>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>144</Number>
@@ -8848,8 +8848,8 @@ Generated 12/05/2020 00:58:20-->
   <Port>
     <Number>993</Number>
     <Protocol>udp</Protocol>
-    <Name>imaps</Name>
-    <Description>imap4 protocol over TLS/SSL</Description>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>994</Number>
@@ -15197,14 +15197,20 @@ Generated 12/05/2020 00:58:20-->
   <Port>
     <Number>1528</Number>
     <Protocol>tcp</Protocol>
-    <Name>record</Name>
-    <Description>Reserved</Description>
+    <Name>norp</Name>
+    <Description>Not Only a Routeing Protocol</Description>
   </Port>
   <Port>
     <Number>1528</Number>
     <Protocol>udp</Protocol>
-    <Name>ngr-t</Name>
-    <Description>NGR transport protocol for mobile ad-hoc networks</Description>
+    <Name>norp</Name>
+    <Description>Not Only a Routeing Protocol</Description>
+  </Port>
+  <Port>
+    <Number>1528</Number>
+    <Protocol>sctp</Protocol>
+    <Name>norp</Name>
+    <Description>Not Only a Routeing Protocol</Description>
   </Port>
   <Port>
     <Number>1529</Number>
@@ -31537,6 +31543,18 @@ Generated 12/05/2020 00:58:20-->
     <Description>RADIX</Description>
   </Port>
   <Port>
+    <Number>2873</Number>
+    <Protocol>tcp</Protocol>
+    <Name>psrt</Name>
+    <Description>PubSub Realtime Telemetry Protocol</Description>
+  </Port>
+  <Port>
+    <Number>2873</Number>
+    <Protocol>udp</Protocol>
+    <Name>psrt</Name>
+    <Description>PubSub Realtime Telemetry Protocol</Description>
+  </Port>
+  <Port>
     <Number>2874</Number>
     <Protocol>tcp</Protocol>
     <Name>dxmessagebase1</Name>
@@ -44913,14 +44931,14 @@ Generated 12/05/2020 00:58:20-->
   <Port>
     <Number>3980</Number>
     <Protocol>tcp</Protocol>
-    <Name>acms</Name>
-    <Description>Aircraft Cabin Management System</Description>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>3980</Number>
     <Protocol>udp</Protocol>
-    <Name>acms</Name>
-    <Description>Aircraft Cabin Management System</Description>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>3981</Number>
@@ -47557,6 +47575,18 @@ Generated 12/05/2020 00:58:20-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>4194</Number>
+    <Protocol>tcp</Protocol>
+    <Name>spdm</Name>
+    <Description>Security Protocol and Data Model</Description>
+  </Port>
+  <Port>
+    <Number>4194</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>4195</Number>
     <Protocol>tcp</Protocol>
     <Name>aws-wsp</Name>
@@ -47795,6 +47825,30 @@ Generated 12/05/2020 00:58:20-->
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>4317</Number>
+    <Protocol>tcp</Protocol>
+    <Name>opentelemetry</Name>
+    <Description>OpenTelemetry Protocol</Description>
+  </Port>
+  <Port>
+    <Number>4317</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>4319</Number>
+    <Protocol>tcp</Protocol>
+    <Name>fox-skytale</Name>
+    <Description>Fox SkyTale encrypted communication</Description>
+  </Port>
+  <Port>
+    <Number>4319</Number>
+    <Protocol>udp</Protocol>
+    <Name>fox-skytale</Name>
+    <Description>Fox SkyTale encrypted communication</Description>
   </Port>
   <Port>
     <Number>4320</Number>
@@ -49804,13 +49858,13 @@ Generated 12/05/2020 00:58:20-->
     <Number>4646</Number>
     <Protocol>tcp</Protocol>
     <Name>dots-signal</Name>
-    <Description>DOTS Signal Channel Protocol. The service name is used to construct the SRV service names "_dots-signal._udp" and "_dots-signal._tcp" for discovering DOTS servers used to establish DOTS signal channel.</Description>
+    <Description>Distributed Denial-of-Service Open Threat Signaling (DOTS) Signal Channel Protocol. The service name is used to construct the SRV service names "_dots-signal._udp" and "_dots-signal._tcp" for discovering DOTS servers used to establish DOTS signal channel.</Description>
   </Port>
   <Port>
     <Number>4646</Number>
     <Protocol>udp</Protocol>
     <Name>dots-signal</Name>
-    <Description>DOTS Signal Channel Protocol. The service name is used to construct the SRV service names "_dots-signal._udp" and "_dots-signal._tcp" for discovering DOTS servers used to establish DOTS signal channel.</Description>
+    <Description>Distributed Denial-of-Service Open Threat Signaling (DOTS) Signal Channel Protocol. The service name is used to construct the SRV service names "_dots-signal._udp" and "_dots-signal._tcp" for discovering DOTS servers used to establish DOTS signal channel.</Description>
   </Port>
   <Port>
     <Number>4658</Number>
@@ -51949,14 +52003,14 @@ Generated 12/05/2020 00:58:20-->
   <Port>
     <Number>5030</Number>
     <Protocol>tcp</Protocol>
-    <Name>surfpass</Name>
-    <Description>SurfPass</Description>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>5030</Number>
     <Protocol>udp</Protocol>
-    <Name>surfpass</Name>
-    <Description>SurfPass</Description>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>5031</Number>
@@ -55033,6 +55087,18 @@ Generated 12/05/2020 00:58:20-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>5540</Number>
+    <Protocol>tcp</Protocol>
+    <Name>matter</Name>
+    <Description>Matter Operational Discovery and Communi</Description>
+  </Port>
+  <Port>
+    <Number>5540</Number>
+    <Protocol>udp</Protocol>
+    <Name>matter</Name>
+    <Description>Matter Operational Discovery and Communi</Description>
+  </Port>
+  <Port>
     <Number>5550</Number>
     <Protocol>tcp</Protocol>
     <Name>cbus</Name>
@@ -56295,14 +56361,14 @@ Generated 12/05/2020 00:58:20-->
   <Port>
     <Number>5777</Number>
     <Protocol>tcp</Protocol>
-    <Name>dali-port</Name>
-    <Description>DALI Port</Description>
+    <Name>starfield-io</Name>
+    <Description>Control commands and responses</Description>
   </Port>
   <Port>
     <Number>5777</Number>
     <Protocol>udp</Protocol>
-    <Name>dali-port</Name>
-    <Description>DALI Port</Description>
+    <Name>starfield-io</Name>
+    <Description>Control commands and responses</Description>
   </Port>
   <Port>
     <Number>5780</Number>
@@ -56423,6 +56489,18 @@ Generated 12/05/2020 00:58:20-->
     <Protocol>udp</Protocol>
     <Name>spdp</Name>
     <Description>Simple Peered Discovery Protocol</Description>
+  </Port>
+  <Port>
+    <Number>5798</Number>
+    <Protocol>tcp</Protocol>
+    <Name>enlabel-dpl</Name>
+    <Description>Proprietary Website deployment service</Description>
+  </Port>
+  <Port>
+    <Number>5798</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>5813</Number>
@@ -56756,6 +56834,18 @@ Generated 12/05/2020 00:58:20-->
   </Port>
   <Port>
     <Number>5993</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>5994</Number>
+    <Protocol>tcp</Protocol>
+    <Name>rms-agent</Name>
+    <Description>RMS Agent Listening Service</Description>
+  </Port>
+  <Port>
+    <Number>5994</Number>
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
@@ -61251,6 +61341,18 @@ Generated 12/05/2020 00:58:20-->
     <Description>Virtual Prototypes License Manager</Description>
   </Port>
   <Port>
+    <Number>7123</Number>
+    <Protocol>tcp</Protocol>
+    <Name>snif</Name>
+    <Description>End-to-end TLS Relay Control Connection</Description>
+  </Port>
+  <Port>
+    <Number>7123</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>7128</Number>
     <Protocol>tcp</Protocol>
     <Name>scenidm</Name>
@@ -63513,6 +63615,18 @@ Generated 12/05/2020 00:58:20-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>8017</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>8017</Number>
+    <Protocol>udp</Protocol>
+    <Name>cisco-cloudsec</Name>
+    <Description>Cisco Cloudsec Dataplane Port Number</Description>
+  </Port>
+  <Port>
     <Number>8019</Number>
     <Protocol>tcp</Protocol>
     <Name>qbdb</Name>
@@ -64948,6 +65062,18 @@ Generated 12/05/2020 00:58:20-->
   </Port>
   <Port>
     <Number>8423</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>8432</Number>
+    <Protocol>tcp</Protocol>
+    <Name>pgbackrest</Name>
+    <Description>PostgreSQL Backup</Description>
+  </Port>
+  <Port>
+    <Number>8432</Number>
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
@@ -71807,6 +71933,18 @@ Generated 12/05/2020 00:58:20-->
     <Description>Track</Description>
   </Port>
   <Port>
+    <Number>20810</Number>
+    <Protocol>tcp</Protocol>
+    <Name>crtech-nlm</Name>
+    <Description>CRTech NLM</Description>
+  </Port>
+  <Port>
+    <Number>20810</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>20999</Number>
     <Protocol>tcp</Protocol>
     <Name>athand-mmp</Name>
@@ -73241,6 +73379,18 @@ Generated 12/05/2020 00:58:20-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>28080</Number>
+    <Protocol>tcp</Protocol>
+    <Name>thor-engine</Name>
+    <Description>thor/server - ML engine</Description>
+  </Port>
+  <Port>
+    <Number>28080</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>28119</Number>
     <Protocol>tcp</Protocol>
     <Name>record</Name>
@@ -73527,6 +73677,18 @@ Generated 12/05/2020 00:58:20-->
     <Protocol>udp</Protocol>
     <Name>yawn</Name>
     <Description>YaWN - Yet Another Windows Notifier</Description>
+  </Port>
+  <Port>
+    <Number>31337</Number>
+    <Protocol>tcp</Protocol>
+    <Name>eldim</Name>
+    <Description>eldim is a secure file upload proxy</Description>
+  </Port>
+  <Port>
+    <Number>31337</Number>
+    <Protocol>udp</Protocol>
+    <Name>eldim</Name>
+    <Description>eldim is a secure file upload proxy</Description>
   </Port>
   <Port>
     <Number>31400</Number>
@@ -74615,6 +74777,18 @@ Generated 12/05/2020 00:58:20-->
     <Description>F1 Control Plane (3GPP)</Description>
   </Port>
   <Port>
+    <Number>38638</Number>
+    <Protocol>tcp</Protocol>
+    <Name>psqlmws</Name>
+    <Description>Premier SQL Middleware Server</Description>
+  </Port>
+  <Port>
+    <Number>38638</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>38800</Number>
     <Protocol>tcp</Protocol>
     <Name>sruth</Name>
@@ -74634,6 +74808,18 @@ Generated 12/05/2020 00:58:20-->
   </Port>
   <Port>
     <Number>38865</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>39063</Number>
+    <Protocol>tcp</Protocol>
+    <Name>vroa</Name>
+    <Description>Children's hearing test/Telemedicine</Description>
+  </Port>
+  <Port>
+    <Number>39063</Number>
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
