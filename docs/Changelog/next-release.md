@@ -49,6 +49,8 @@ permalink: /Changelog/next-release
 - Language `zh-CN` and `zh-TW` is missing in dotnet publish. Build script changed from `dotnet` to `msbuild` [#1316](https://github.com/BornToBeRoot/NETworkManager/issues/1316){:target="_blank"}
 - Remote Desktop 
   - Connection via Profile leads to error message "Error Code 4 (Total login limit was reached)" fixed [#1265](https://github.com/BornToBeRoot/NETworkManager/issues/1265){:target="_blank"}
+- PowerShell
+  - Validate host input in connect dialog [#1373](https://github.com/BornToBeRoot/NETworkManager/issues/1373){:target="_blank"}
 - PuTTY
   - Fixed that some arguments from the connect dialog of PuTTY (like privatekey) were not applied correctly. Fix was also applied to remote desktop, powershell, tigervnc and webconsole, even if the bug could not be reproduced there. [#1372](https://github.com/BornToBeRoot/NETworkManager/issues/1372){:target="_blank"}
 
