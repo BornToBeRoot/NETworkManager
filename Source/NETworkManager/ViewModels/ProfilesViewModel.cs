@@ -197,7 +197,7 @@ namespace NETworkManager.ViewModels
             _lastSelectedGroup = SelectedGroup?.Name;
             _lastSelectedProfile = SelectedProfile?.Name;
 
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, SelectedGroup.Name);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, SelectedGroup?.Name);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), EditProfile_CanExecute);
