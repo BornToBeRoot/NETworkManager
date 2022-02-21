@@ -63,7 +63,7 @@ if(-not(Test-Path -Path $MSBuildPath -PathType Leaf))
     Write-Error "Could not find msbuild. Is Visual Studio installed?" -ErrorAction Stop
 }
 
-Start-Process -FilePath $MSBuildPath -ArgumentList "$PSScriptRoot\Source\NETworkManager.sln /restore /t:Clean,Build /p:Configuration=Release /p:OutputPath=$BuildPath\NETworkManager" -Wait -NoNewWindow
+Start-Process -FilePath $MSBuildPath -ArgumentList "$PSScriptRoot\Source\NETworkManager.sln /restore /t:Clean,Build /p:Configuration=Release /p:TargetFramework=net6.0-windows10.0.17763.0 /p:RuntimeIdentifier=win-x64 /p:SelfContained=false /p:OutputPath=$BuildPath\NETworkManager" -Wait -NoNewWindow
 
 # Test if release build is available
 if(-not(Test-Path -Path "$BuildPath\NETworkManager\NETworkManager.exe" -PathType Leaf))
