@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
@@ -6,5 +6,5 @@
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: AssemblyVersion("2021.12.9.0")]
-[assembly: AssemblyFileVersion("2021.12.9.0")]
+[assembly: AssemblyVersion("2022.2.21.0")]
+[assembly: AssemblyFileVersion("2022.2.21.0")]
