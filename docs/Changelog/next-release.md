@@ -39,6 +39,8 @@ permalink: /Changelog/next-release
 - Default history entries increased from 5 to 10 [#1372](https://github.com/BornToBeRoot/NETworkManager/issues/1372){:target="_blank"}
 - Default background job time decreased from 15 to 5 minutes (save settings, profiles in background and not only when closing the application) [#1236](https://github.com/BornToBeRoot/NETworkManager/pull/1236){:target="_blank"}
 - Edit group button in the profiles list is not visible when the group name is longer than the width of the profiles list [#1236](https://github.com/BornToBeRoot/NETworkManager/pull/1236){:target="_blank"}
+- Port Scanner
+  - MySQL and PostgreSQL ports added to port profile 
 
 ## Bugfixes
 - Visibility of the min/max/close button on the pulled out window fixed [#1366](https://github.com/BornToBeRoot/NETworkManager/pull/1366){:target="_blank"}
