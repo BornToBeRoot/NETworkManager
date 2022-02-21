@@ -19,6 +19,7 @@
 		<PackageIcon>NETworkManager.ico</PackageIcon>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<Description>A powerful tool for managing networks and troubleshoot network problems!</Description>
+		<PlatformTarget>x64</PlatformTarget>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Remove="NETworkManager.ico" />
@@ -34,9 +35,7 @@
 	</ItemGroup>
 	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
 	<ItemGroup>
-		<FrameworkReference
-		Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms"
-		TargetingPackVersion="6.0.0" />
+		<FrameworkReference Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms" TargetingPackVersion="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AirspaceFixer" Version="1.0.5" />

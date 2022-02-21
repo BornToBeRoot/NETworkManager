@@ -6,6 +6,9 @@ if (Test-Path -Path $BuildPath) {
     Remove-Item -Path $BuildPath -Recurse -ErrorAction Stop
 }
 
+# Run a cleanup
+& ".\cleanup.ps1"
+
 # Set the version based on the current date (e.g. 2021.2.15.0)
 $Date = Get-Date
 $Patch = 0
@@ -37,20 +40,38 @@ $SetupContent | Set-Content -Path $InnoSetupFile -Encoding utf8
 # CS1591 - Missing XML comment
 
 # Dotnet clean, restore, build and publish
-dotnet clean "$PSScriptRoot\Source\NETworkManager.sln"
-dotnet restore "$PSScriptRoot\Source\NETworkManager.sln"
+##dotnet clean "$PSScriptRoot\Source\NETworkManager.sln"
+##dotnet restore "$PSScriptRoot\Source\NETworkManager.sln"
 # Issue: dotnet publish ignores zh-CN, zh-TW (https://github.com/dotnet/msbuild/issues/3897)
-dotnet publish --configuration Release --framework net6.0-windows10.0.17763.0 --runtime win10-x64 --self-contained false --output "$BuildPath\NETworkManager" "$PSScriptRoot\Source\NETworkManager\NETworkManager.csproj" 
+##dotnet publish --configuration Release --framework net6.0-windows10.0.17763.0 --runtime win10-x64 --self-contained false --output "$BuildPath\NETworkManager" "$PSScriptRoot\Source\NETworkManager\NETworkManager.csproj" 
+##Read-Host "Copy the missing language files and press enter"
 
-Read-Host "Copy the missing language files and press enter"
+# Get msbuild path (docs: https://www.meziantou.net/locating-msbuild-on-a-machine.htm)
+$VSwherePath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
 
-# Test if release build is available
-if(-not(Test-Path -Path "$BuildPath\NETworkManager\NETworkManager.exe"))
+if(-not(Test-Path -Path $VSwherePath -PathType Leaf))
 {
-    Write-Error "Could not find dotnet release build. Is .NET SDK 6.0 or later installed?" -ErrorAction Stop
+    Write-Error "Could not find VSwhere. Is Visual Studio installed?" -ErrorAction Stop
 }
 
-# Get NETworkManager File Version
+$VSwhere = & $VSwherePath -version "[16.0,18.0)" -products * -requires Microsoft.Component.MSBuild -prerelease -latest -utf8 -format json | ConvertFrom-Json
+$MSBuildPath = Join-Path $VSwhere[0].installationPath "MSBuild" "Current" "Bin" "MSBuild.exe"
+
+# Test if we found msbuild
+if(-not(Test-Path -Path $MSBuildPath -PathType Leaf))
+{
+    Write-Error "Could not find msbuild. Is Visual Studio installed?" -ErrorAction Stop
+}
+
+Start-Process -FilePath $MSBuildPath -ArgumentList "$PSScriptRoot\Source\NETworkManager.sln /restore /t:Clean,Build /p:Configuration=Release /p:OutputPath=$BuildPath\NETworkManager" -Wait -NoNewWindow
+
+# Test if release build is available
+if(-not(Test-Path -Path "$BuildPath\NETworkManager\NETworkManager.exe" -PathType Leaf))
+{
+    Write-Error "Could not find release build. Is .NET SDK 6.0 or later installed?" -ErrorAction Stop
+}
+
+# Get NETworkManager file version
 $Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$BuildPath\NETworkManager\NETworkManager.exe").FileVersion
 
 # Cleanup .pdb files
@@ -83,7 +104,7 @@ if(-not(Test-Path -Path "$InnoSetupPath\Languages\ChineseTraditional.isl"))
 
 $InnoSetupCompiler = "$InnoSetupPath\ISCC.exe"
 
-if(-not(Test-Path -Path $InnoSetupCompiler) -or $InnoSetupLanguageMissing)
+if(-not(Test-Path -Path $InnoSetupCompiler -PathType Leaf) -or $InnoSetupLanguageMissing)
 {
     Write-Host "InnoSetup is not installed correctly. Skip installer build..." -ForegroundColor Cyan
 }
