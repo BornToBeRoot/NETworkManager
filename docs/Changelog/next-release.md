@@ -44,6 +44,7 @@ permalink: /Changelog/next-release
 - Visibility of the min/max/close button on the pulled out window fixed [#1366](https://github.com/BornToBeRoot/NETworkManager/pull/1366){:target="_blank"}
 - App crash when building with SDK .NET 6.0.2 and running the app on 6.0.0 or 6.0.1 fixed [#1236](https://github.com/BornToBeRoot/NETworkManager/pull/1236){:target="_blank"} [#1381](https://github.com/BornToBeRoot/NETworkManager/issues/1381){:target="_blank"}
 - App crash when renaming a profile file fixed [#1318](https://github.com/BornToBeRoot/NETworkManager/issues/1318){:target="_blank"}
+- Language `zh-CN` and `zh-TW` is missing in dotnet publish. Build script changed from `dotnet` to `msbuild` [#1316](https://github.com/BornToBeRoot/NETworkManager/issues/1316){:target="_blank"}
 - Remote Desktop 
   - Connection via Profile leads to error message "Error Code 4 (Total login limit was reached)" fixed [#1265](https://github.com/BornToBeRoot/NETworkManager/issues/1265){:target="_blank"}
 - PuTTY
