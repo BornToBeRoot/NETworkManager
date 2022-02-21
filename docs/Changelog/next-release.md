@@ -16,8 +16,7 @@ permalink: /Changelog/next-release
 
 ## What's new?
 - New Icon/Logo for the application [#1362](https://github.com/BornToBeRoot/NETworkManager/pull/1362){:target="_blank"} [#1371](https://github.com/BornToBeRoot/NETworkManager/pull/1371){:target="_blank"}
-- Profiles reworked [BREAKING CHANGE] [#1236](https://github.com/BornToBeRoot/NETworkManager/pull/1236){:target="_blank"}
-  
+- Profiles reworked [BREAKING CHANGE] [#1236](https://github.com/BornToBeRoot/NETworkManager/pull/1236){:target="_blank"} <br />  
   Group-specific settings can now be set for:
   - Remote Desktop (Credentials for a group of servers, Settings)
   - PowerShell (Settings)
