@@ -342,7 +342,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileDialogManager.AddProfile(instance);
+                ProfileManager.AddProfile(ProfileDialogManager.ParseProfileInfo(instance));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

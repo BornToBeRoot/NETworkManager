@@ -30,9 +30,7 @@ namespace NETworkManager
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                AddProfile(instance);
-
-                viewModel.RefreshProfiles();
+                ProfileManager.AddProfile(ParseProfileInfo(instance));                
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -62,10 +60,7 @@ namespace NETworkManager
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                RemoveProfile(profile);
-                AddProfile(instance);
-
-                viewModel.RefreshProfiles();
+                ProfileManager.ReplaceProfile(profile, ParseProfileInfo(instance));
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -94,9 +89,7 @@ namespace NETworkManager
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                AddProfile(instance);
-
-                viewModel.RefreshProfiles();
+                ProfileManager.AddProfile(ParseProfileInfo(instance));
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -124,10 +117,8 @@ namespace NETworkManager
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                foreach (var profile in profiles)
-                    RemoveProfile(profile);
+                ProfileManager.RemoveProfiles(profiles);
 
-                viewModel.RefreshProfiles();
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -158,9 +149,7 @@ namespace NETworkManager
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                AddGroup(instance);
-
-                viewModel.RefreshProfiles();
+                ProfileManager.AddGroup(ParseGroupInfo(instance));                
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -189,10 +178,7 @@ namespace NETworkManager
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                RemoveGroup(instance.Group);
-                AddGroup(instance);
-
-                viewModel.RefreshProfiles();
+                ProfileManager.ReplaceGroup(instance.Group, ParseGroupInfo(instance));
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -220,9 +206,7 @@ namespace NETworkManager
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
 
-                RemoveGroup(group);
-
-                viewModel.RefreshProfiles();
+                ProfileManager.RemoveGroup(group);
             }, async instance =>
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
@@ -240,9 +224,9 @@ namespace NETworkManager
         #endregion
 
         #region Methods to add and remove profile
-        public static void AddProfile(ProfileViewModel instance)
+        public static ProfileInfo ParseProfileInfo(ProfileViewModel instance)
         {
-            ProfileManager.AddProfile(new ProfileInfo
+            return new ProfileInfo
             {
                 Name = instance.Name.Trim(),
                 Host = instance.Host.Trim(),
@@ -383,17 +367,12 @@ namespace NETworkManager
                 Whois_Enabled = instance.Whois_Enabled,
                 Whois_InheritHost = instance.Whois_InheritHost,
                 Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim()
-            });
-        }
-
-        public static void RemoveProfile(ProfileInfo profile)
-        {
-            ProfileManager.RemoveProfile(profile);
+            };
         }
         #endregion
 
         #region Methods to add and remove group
-        public static void AddGroup(GroupViewModel instance)
+        public static GroupInfo ParseGroupInfo(GroupViewModel instance)
         {
             List<ProfileInfo> profiles = instance.Group.Profiles;
 
@@ -413,7 +392,7 @@ namespace NETworkManager
                 }
             }
 
-            ProfileManager.AddGroup(new GroupInfo
+            return new GroupInfo
             {
                 Name = name,
 
@@ -498,12 +477,7 @@ namespace NETworkManager
                 TigerVNC_Enabled = instance.TigerVNC_Enabled,
                 TigerVNC_OverridePort = instance.TigerVNC_OverridePort,
                 TigerVNC_Port = instance.TigerVNC_Port
-            });
-        }
-
-        public static void RemoveGroup(GroupInfo group)
-        {
-            ProfileManager.RemoveGroup(group);
+            };
         }
         #endregion
     }

@@ -682,12 +682,7 @@ namespace NETworkManager.Profiles
         /// <param name="group"></param>
         public static void AddGroup(GroupInfo group)
         {
-            // Possible fix for appcrash --> when icollection view is refreshed...
-            //System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            //{
-            //lock (Profiles)
             Groups.Add(group);
-            //}));
 
             ProfilesUpdated();
         }
@@ -697,18 +692,21 @@ namespace NETworkManager.Profiles
             return Groups.First(x => x.Name.Equals(name));
         }
 
+        public static void ReplaceGroup(GroupInfo oldGroup, GroupInfo newGroup)
+        {
+            Groups.Remove(oldGroup);
+            Groups.Add(newGroup);
+
+            ProfilesUpdated();
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="group"></param>
         public static void RemoveGroup(GroupInfo group)
         {
-            // Possible fix for appcrash --> when icollection view is refreshed...
-            //System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            //{
-            //lock (Profiles)
             Groups.Remove(group);
-            //}));
 
             ProfilesUpdated();
         }
@@ -725,7 +723,7 @@ namespace NETworkManager.Profiles
                 list.Add(groups.Name);
 
             return list;
-        }       
+        }
 
         /// <summary>
         /// Method to check if a profile exists.
@@ -761,13 +759,26 @@ namespace NETworkManager.Profiles
         /// <param name="profile"><see cref="ProfileInfo"/> to add.</param>
         public static void AddProfile(ProfileInfo profile)
         {
-            string group = profile.Group;
-
-            if (!GroupExists(group))
-                AddGroup(new GroupInfo(group));
+            if (!GroupExists(profile.Group))
+                AddGroup(new GroupInfo(profile.Group));
 
             Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Add(profile);
 
+            ProfilesUpdated();
+        }
+
+        public static void ReplaceProfile(ProfileInfo oldProfile, ProfileInfo newProfile)
+        {
+            // Remove
+            Groups.First(x => x.Name.Equals(oldProfile.Group)).Profiles.Remove(oldProfile);
+
+            // Add
+            if (!GroupExists(newProfile.Group))
+                AddGroup(new GroupInfo(newProfile.Group));
+
+            Groups.First(x => x.Name.Equals(newProfile.Group)).Profiles.Add(newProfile);
+
+            // Notify
             ProfilesUpdated();
         }
 
@@ -777,12 +788,19 @@ namespace NETworkManager.Profiles
         /// <param name="profile"><see cref="ProfileInfo"/> to remove.</param>
         public static void RemoveProfile(ProfileInfo profile)
         {
-            string group = profile.Group;
+            Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Remove(profile);
 
-            Groups.First(x => x.Name.Equals(group)).Profiles.Remove(profile);
-            
-            //if (IsGroupEmpty(group))
-            //    RemoveGroup(GetGroup(group));
+            ProfilesUpdated();
+        }
+
+        /// <summary>
+        /// Remove profiles from a group.
+        /// </summary>
+        /// <param name="profile"><see cref="ProfileInfo"/> to remove.</param>
+        public static void RemoveProfiles(IList<ProfileInfo> profiles)
+        {
+            foreach (ProfileInfo profile in profiles)
+                Groups.First(x => x.Name.Equals(profile.Group)).Profiles.Remove(profile);
 
             ProfilesUpdated();
         }
