@@ -58,3 +58,6 @@ permalink: /Changelog/next-release
 - Code refactoring, Cleanup, etc.
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="_blank"}
+- Update OUI list [f2f6e77](https://github.com/BornToBeRoot/NETworkManager/commit/f2f6e77e2bae2fc30f6dcfe9e9ceeb759d2e2f70){:target="_blank"}
+- Update Whois list [f2f6e77](https://github.com/BornToBeRoot/NETworkManager/commit/f2f6e77e2bae2fc30f6dcfe9e9ceeb759d2e2f70){:target="_blank"}
+- Update Ports list [f2f6e77](https://github.com/BornToBeRoot/NETworkManager/commit/f2f6e77e2bae2fc30f6dcfe9e9ceeb759d2e2f70){:target="_blank"}
