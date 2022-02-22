@@ -13,11 +13,20 @@ Date: **30.11.2021**
 
 | Download | Checksum [SHA256] |
 |---|---|
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.11.30.0/NETworkManager_2021.11.30.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn btn-blue">Setup</button></a> | `AFDA99002A95D78127A26ADCED00F1A86DCBDB6DA0782A761088FFBF3BFF1DF9` |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.11.30.0/NETworkManager_2021.11.30.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn btn-blue">Portable</button></a> | `6EE94EDF8EEDE8D65E2143D5BF60C59CA715536D4C15E680FFB0454174D22FE1` |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2021.11.30.0/NETworkManager_2021.11.30.0_Archive.zip' target='_blank'><button type="button" name="button" class="btn btn-blue">Archive</button></a> | `5F72238031B7DB28F885BD8E74046734BDBCA37E4DFC5110ADB75EB216C50DF1` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.2.22.0/NETworkManager_2022.2.22.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn btn-blue">Setup</button></a> | `F0CF905B14622588E658977BC2E7B85042858FA4191CDAEF4F84C1BAE2DC9311` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.2.22.0/NETworkManager_2022.2.22.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn btn-blue">Portable</button></a> | `241F02978697BAF2E8BD695671D5197C081CB44C5D52925BC30CC3CECF0A4592` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.2.22.0/NETworkManager_2022.2.22.0_Archive.zip' target='_blank'><button type="button" name="button" class="btn btn-blue">Archive</button></a> | `DC5FC8FF4FC61E21F9D795B39E28C8CCDEC2FD4F01323031F27D691A93563CF8` |
 
-Test a pre-release version with the latest features and bugfixes [here](https://github.com/BornToBeRoot/NETworkManager/releases?&expanded=true){:target="_blank"}! 
+:warning: [BREAKING CHANGE] :warning:
+**Read this before upgrading from 2021.11.30.0 and earlier to 2022.2.22.0 or later!**
+
+The profile (file) has been updated and needs to be migrated:
+1. The encryption of the profile file(s) must be disabled in the currently installed version.
+2. Then the update can be installed as usual.
+3. At the first startup the loading of the profiles fails and a PowerShell script can be started to migrate the profiles.
+4. After the migration the encryption of the profiles can be enabled again.
+
+Note: _Steps 1 and 4 can be skipped if the profiles are not encrypted._
 
 ## System requirements
 - Windows 10 / Server x64 (1809 or later)
