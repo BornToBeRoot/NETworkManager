@@ -1064,27 +1064,22 @@ namespace NETworkManager
             catch
             {
                 var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.ReportOnGitHub;
-                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
-                settings.FirstAuxiliaryButtonText = Localization.Resources.Strings.Migrate;
-                settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
+                settings.AffirmativeButtonText = Localization.Resources.Strings.Migrate;
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;                
+                settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 ConfigurationManager.Current.FixAirspace = true;
 
                 // ToDo: Improve Message
 
-                var result = await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
+                var result = await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
 
-                switch (result)
+                if(result == MessageDialogResult.Affirmative)
                 {
-                    case MessageDialogResult.FirstAuxiliary:
-                        ExternalProcessStarter.RunProcess("powershell.exe", $"-NoLogo -NoProfile -ExecutionPolicy ByPass -File \"{Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Migrate-Profiles.ps1")}\" -Path \"{ProfileManager.GetProfilesLocation()}\" -NETworkManagerPath \"{ConfigurationManager.Current.ApplicationFullName}\" -NETworkManagerVersion \"{AssemblyManager.Current.Version}\"");
-                        CloseApplication();
-                        break;
-                    case MessageDialogResult.Affirmative:
-                        break;
+                    ExternalProcessStarter.RunProcess("powershell.exe", $"-NoLogo -NoProfile -ExecutionPolicy ByPass -File \"{Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Migrate-Profiles.ps1")}\" -Path \"{ProfileManager.GetProfilesLocation()}\" -NETworkManagerPath \"{ConfigurationManager.Current.ApplicationFullName}\" -NETworkManagerVersion \"{AssemblyManager.Current.Version}\"");
+                    CloseApplication();
                 }
             }
         }
