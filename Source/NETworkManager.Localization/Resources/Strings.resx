@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>About</value>
@@ -810,7 +810,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
     <value>Delete entry</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Selected profiles will be deleted permanently.</value>
+    <value>Selected profile will be deleted permanently.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>DNS autconfiguration</value>
@@ -890,8 +890,8 @@ This is a new feature that may still contain bugs. Please backup your profile fi
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
-    <value>Inherit host from default</value>
+  <data name="InheritHostFromGeneral" xml:space="preserve">
+    <value>Inherit host from general</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>IP range</value>
@@ -2892,8 +2892,10 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
     <value>Profile could not be loaded!</value>
   </data>
-  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
-    <value>The profile could not be loaded and may be corrupted. If this is unexpected or due to an update, please report this issue on GitHub!</value>
+  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
+    <value>If this happened after an update, you may need to migrate the profiles to a newer version. When you click "Migrate", a PowerShell window opens with the migration script. Check the path and press Enter.
+
+Otherwise, the profile may be corrupted and you want to report the issue on GitHub.</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Edit group...</value>
@@ -2923,7 +2925,7 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Unlock profile</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Unlock the profile file to add, change or delete a profile!</value>
+    <value>Unlock the profile file to use the profiles!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>Disclaimer</value>
@@ -2939,9 +2941,7 @@ $$hostname$$	--&gt;	Hostname</value>
 
 "Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
 "Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
-"Use other folder" will use the existing profile files in the destination folder.
-
-The application will be restarted afterwards!</value>
+"Use other folder" will use the existing profile files in the destination folder.</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Use other</value>
@@ -3109,5 +3109,38 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
     <value>Unable to reconnect to the remote session.</value>
+  </data>
+  <data name="Migrate" xml:space="preserve">
+    <value>Migrate</value>
+  </data>
+  <data name="ReportOnGitHub" xml:space="preserve">
+    <value>Report on GitHub</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="AddGroup" xml:space="preserve">
+    <value>Add group</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Delete group</value>
+  </data>
+  <data name="DeleteGroupMessage" xml:space="preserve">
+    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
+  </data>
+  <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
+    <value>The name is already used!</value>
+  </data>
+  <data name="Resize" xml:space="preserve">
+    <value>Resize</value>
+  </data>
+  <data name="DeleteProfiles" xml:space="preserve">
+    <value>Delete profiles</value>
+  </data>
+  <data name="DeleteProfilesMessage" xml:space="preserve">
+    <value>Selected profiles will be deleted permanently.</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
+    <value>Unlock the profile file to add, change or delete a profile!</value>
   </data>
 </root>

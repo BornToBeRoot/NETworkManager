@@ -30,7 +30,6 @@ namespace NETworkManager.Converters
             var subnetmaskOrCidr = subnetData[1];
             int cidr;
 
-            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (ipAddress.AddressFamily)
             {
                 case System.Net.Sockets.AddressFamily.InterNetwork when subnetmaskOrCidr.Length < 3:
