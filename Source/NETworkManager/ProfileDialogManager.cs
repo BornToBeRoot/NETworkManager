@@ -381,7 +381,7 @@ namespace NETworkManager
             // Update group in profiles
             if(profiles.Count > 0)
             {
-                if(!string.IsNullOrEmpty(instance.Group.Name) && string.Equals(instance.Group.Name, name, System.StringComparison.Ordinal))
+                if(!string.IsNullOrEmpty(instance.Group.Name) && !string.Equals(instance.Group.Name, name, System.StringComparison.Ordinal))
                 {
                     foreach (ProfileInfo profile in profiles)
                         profile.Group = name;
