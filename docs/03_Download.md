@@ -18,6 +18,7 @@ Date: **30.11.2021**
 | <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.2.22.0/NETworkManager_2022.2.22.0_Archive.zip' target='_blank'><button type="button" name="button" class="btn btn-blue">Archive</button></a> | `DC5FC8FF4FC61E21F9D795B39E28C8CCDEC2FD4F01323031F27D691A93563CF8` |
 
 :warning: [BREAKING CHANGE] :warning:
+
 **Read this before upgrading from 2021.11.30.0 and earlier to 2022.2.22.0 or later!**
 
 The profile (file) has been updated and needs to be migrated:
