@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>Acerca de</value>
@@ -769,9 +769,9 @@
     <value>Credencial</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Los archivos de perfil se cifran en el disco mediante Rijndael (AES) con un tamaño de clave de 256 bits y un tamaño de bloque de 128 bits en modo CBC. La clave de cifrado se deriva de una contraseña maestra que utiliza Rfc2898DeriveBytes (PBKDF2) con 1.000.000 de iteraciones. En tiempo de ejecución, las contraseñas se almacenan como SecureString una vez que se carga el archivo de perfil. Para algunas funciones, la contraseña debe convertirse en una cadena normal y permanecerá sin cifrar en la memoria hasta que el recolector de basura las limpie.
+    <value>Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
 
-Esta es una característica nueva que aún puede contener errores. ¡Haz una copia de seguridad de tus archivos de perfil antes de habilitar el cifrado de archivos de perfil!</value>
+First make a backup copy of your profile files before enabling encryption!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Personalizado</value>
@@ -810,7 +810,7 @@ Esta es una característica nueva que aún puede contener errores. ¡Haz una cop
     <value>Eliminar entrada</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Los perfiles seleccionados será eliminado permanentemente.</value>
+    <value>Selected profile will be deleted permanently.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Configuración automática de DNS</value>
@@ -890,8 +890,8 @@ Esta es una característica nueva que aún puede contener errores. ¡Haz una cop
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
-    <value>Heredar el host de forma predeterminada</value>
+  <data name="InheritHostFromGeneral" xml:space="preserve">
+    <value>Inherit host from general</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>Rango de IP</value>
@@ -1247,7 +1247,7 @@ Crear uno...</value>
     <value>Ancho</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>No se pudo descifrar el archivo con la contraseña proporcionada.</value>
+    <value>Profile file could not be decrypted with the given password.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>La contraseña introducida no es correcta.</value>
@@ -2892,8 +2892,10 @@ $$hostname$$	--&gt;	Nombre del host</value>
   <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
     <value>¡No se pudo cargar el perfil!</value>
   </data>
-  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
-    <value>No se pudo cargar el perfil y puede estar dañado. Si esto es inesperado o debido a una actualización, ¡por favor informa este problema en GitHub!</value>
+  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
+    <value>If this happened after an update, you may need to migrate the profiles to a newer version. When you click "Migrate", a PowerShell window opens with the migration script. Check the path and press Enter.
+
+Otherwise, the profile may be corrupted and you want to report the issue on GitHub.</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Editar grupo...</value>
@@ -2923,7 +2925,7 @@ $$hostname$$	--&gt;	Nombre del host</value>
     <value>Desbloquear perfil</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>¡Desbloquee el archivo de perfil para agregar, cambiar o eliminar un perfil!</value>
+    <value>Unlock the profile file to use the profiles!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>Descargo de responsabilidad</value>
@@ -2935,13 +2937,11 @@ $$hostname$$	--&gt;	Nombre del host</value>
     <value>La carpeta de destino ya contiene archivos. Si hace clic en Fusionar, los perfiles actuales se copiaran a la carpeta.</value>
   </data>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>¿Sobrescribir perfiles en la carpeta de destino?
+    <value>Overwrite profiles in destination folder?
 
-"Sobrescribir" copiará los archivos de perfil en la carpeta de destino y sobrescribirá los archivos de perfil existentes.
-"Fusionar" copiará los archivos de perfil en la carpeta de destino, pero no sobrescribirá los archivos de perfil de salida.
-"Usar otra carpeta" usará los archivos de perfil existentes en la carpeta de destino.
-
-¡La aplicación se reiniciará después!</value>
+"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
+"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
+"Use other folder" will use the existing profile files in the destination folder.</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Usar otro</value>
@@ -3109,5 +3109,38 @@ Habilita el cifrado de archivos de perfil en Configuración &gt; Perfil para alm
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
     <value>No se puede reconectar a la sesión remota.</value>
+  </data>
+  <data name="Migrate" xml:space="preserve">
+    <value>Migrate</value>
+  </data>
+  <data name="ReportOnGitHub" xml:space="preserve">
+    <value>Report on GitHub</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="AddGroup" xml:space="preserve">
+    <value>Add group</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Delete group</value>
+  </data>
+  <data name="DeleteGroupMessage" xml:space="preserve">
+    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
+  </data>
+  <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
+    <value>The name is already used!</value>
+  </data>
+  <data name="Resize" xml:space="preserve">
+    <value>Resize</value>
+  </data>
+  <data name="DeleteProfiles" xml:space="preserve">
+    <value>Delete profiles</value>
+  </data>
+  <data name="DeleteProfilesMessage" xml:space="preserve">
+    <value>Selected profiles will be deleted permanently.</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
+    <value>Unlock the profile file to add, change or delete a profile!</value>
   </data>
 </root>
