@@ -8,8 +8,8 @@ permalink: /Download
 
 # Download
 
-Version: **2021.11.30.0** <br>
-Date: **30.11.2021**
+Version: **2022.2.22.0** <br>
+Date: **22.2.2022**
 
 | Download | Checksum [SHA256] |
 |---|---|
