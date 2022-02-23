@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>정보</value>
@@ -769,9 +769,9 @@
     <value>자격 증명</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>프로필 파일은 256비트의 키 크기와 CBC 모드에서 128비트의 블록 크기가 있는 Rijndael (AES)을 사용하여 디스크에서 암호화됩니다. 암호화 키는 Rfc2898DeriveBytes (PBKDF2)를 사용하여 1,000,000회의 반복을 사용하여 마스터 암호에서 파생됩니다. 런타임에 암호는 프로필 파일이 로드되면 SecureString으로 저장됩니다. 일부 기능의 경우 암호를 정상 문자열로 변환해야 하며 가비지 수집기가 정화될 때까지 메모리에 암호화되지 않은 상태로 유지되어야 합니다.
+    <value>Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
 
-이것은 여전히 버그를 포함할 수 있는 새로운 기능입니다. 프로필 파일 암호화를 실행하기 전에 프로필 파일을 먼저 백업하십시오!</value>
+First make a backup copy of your profile files before enabling encryption!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>사용자 정의</value>
@@ -1247,7 +1247,7 @@
     <value>너비</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>지정된 암호로 파일의 암호를 해독할 수 없습니다.</value>
+    <value>Profile file could not be decrypted with the given password.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>입력한 암호가 잘못되었습니다.</value>
