@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>Sobre</value>
@@ -769,9 +769,9 @@
     <value>Credencial</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Os arquivos de perfil são criptografados em disco usando Rijndael (AES) com um tamanho de chave de 256 bits e um tamanho de bloco de 128 bits no modo CBC. A chave de criptografia é derivada de uma senha mestre usando Rfc2898DeriveBytes (PBKDF2) com 1.000.000 de iterações. No tempo de execução, as senhas são armazenadas como SecureString assim que o arquivo de perfil é carregado. Para algumas funções, a senha deve ser convertida em uma string normal e permanecer sem criptografia na memória até que o coletor de lixo as limpe.
+    <value>Os arquivos de perfil são criptografados em disco usando AES com um tamanho de chave de 256 bits e um tamanho de bloco de 128 bits no modo CBC. A chave de criptografia é derivada de uma senha mestre usando Rfc2898DeriveBytes (PBKDF2) com 1.000.000 de iterações. No tempo de execução, as senhas são armazenadas como SecureString assim que o arquivo de perfil é carregado. Para algumas funções, a senha deve ser convertida em uma string normal e permanecer sem criptografia na memória até que o coletor de lixo as limpe.
 
-Este é um novo recurso que ainda pode conter bugs. Faça backup de seus arquivos de perfil antes de habilitar a criptografia de arquivo de perfil!</value>
+Primeiro faça uma cópia de backup dos seus arquivos de perfil antes de habilitar a criptografia!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Personalizado</value>
@@ -1247,7 +1247,7 @@ Crie um...</value>
     <value>Largura</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Não foi possível descriptografar o arquivo com a senha fornecida.</value>
+    <value>Não foi possível descriptografar o perfil com a senha fornecida.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>A senha digitada está errada.</value>
