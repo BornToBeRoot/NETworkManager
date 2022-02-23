@@ -890,7 +890,7 @@
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
+  <data name="InheritHostFromGeneral" xml:space="preserve">
     <value>从默认值继承主机</value>
   </data>
   <data name="IPRange" xml:space="preserve">
