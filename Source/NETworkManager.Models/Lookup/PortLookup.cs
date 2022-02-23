@@ -25,7 +25,6 @@ namespace NETworkManager.Models.Lookup
             var document = new XmlDocument();
             document.Load(PortsFilePath);
 
-            // ReSharper disable once PossibleNullReferenceException
             foreach (XmlNode node in document.SelectNodes("/Ports/Port"))
             {
                 if (node == null)

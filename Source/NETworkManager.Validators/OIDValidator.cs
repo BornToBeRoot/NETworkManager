@@ -11,7 +11,6 @@ namespace NETworkManager.Validators
             // Use SharpSNMP new ObjectIdentifiert to validate oid
             try
             {
-                // ReSharper disable once UnusedVariable
                 var oid = new ObjectIdentifier(value as string);
             }
             catch (System.ArgumentException)

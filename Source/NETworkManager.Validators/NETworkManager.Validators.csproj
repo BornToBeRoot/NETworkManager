@@ -1,22 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <ProjectGuid>{29172E71-52AF-4E64-9683-30C5F4D0C746}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>NETworkManager.Validators</RootNamespace>
-    <AssemblyName>NETworkManager.Validators</AssemblyName>
-    <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
-    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
-    <UseWPF>true</UseWPF>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Lextm.SharpSnmpLib" Version="12.4.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
-    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<ProjectGuid>{29172E71-52AF-4E64-9683-30C5F4D0C746}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>NETworkManager.Validators</RootNamespace>
+		<AssemblyName>NETworkManager.Validators</AssemblyName>
+		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+		<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+		<SelfContained>false</SelfContained>
+		<UseWPF>true</UseWPF>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
+	<ItemGroup>
+		<FrameworkReference
+		Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms"
+		TargetingPackVersion="6.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.4.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
+		<ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
+	</ItemGroup>
 </Project>

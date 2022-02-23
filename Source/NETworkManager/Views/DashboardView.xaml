@@ -10,9 +10,6 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:DashboardViewModel}">
-    <UserControl.InputBindings>
-        <KeyBinding Key="F5" Command="{Binding CheckConnectionViaHotkeyCommand}" />
-    </UserControl.InputBindings>
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
@@ -27,44 +24,7 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <ContentControl x:Name="ContentControlNetworkConnection" Grid.Column="0" />
-                <!--
-                <Grid Grid.Row="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>                    
-                    <TextBox Grid.Row="0" VerticalAlignment="Center" Width="250" Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />                    
-                    <ListView Grid.Row="2" ItemsSource="{Binding Profiles}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal"  HorizontalAlignment="Center"/>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="{StaticResource MahApps.Brushes.Gray8}" BorderThickness="1" Margin="10">
-                                    <Grid Margin="10" Width="250" Height="50">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="10" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Grid.Column="0" Width="32" Height="32" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=LinuxBrands}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                        <TextBlock Grid.Column="2" Text="{Binding Name}" Style="{StaticResource MessageTextBlock}" />
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <mah:ProgressRing Grid.Row="2" Height="50" Width="50" IsActive="{Binding IsSearching}"/>
-                </Grid>
-                -->
+                <ContentControl x:Name="ContentControlNetworkConnection" Grid.Column="0" />            
             </Grid>                
         </TabItem>
     </TabControl>

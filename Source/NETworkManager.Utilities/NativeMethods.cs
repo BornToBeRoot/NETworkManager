@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 
 namespace NETworkManager.Utilities
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class NativeMethods
     {
         #region Win32 Constants

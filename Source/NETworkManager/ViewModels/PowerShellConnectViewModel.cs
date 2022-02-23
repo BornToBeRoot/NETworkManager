@@ -37,7 +37,7 @@ namespace NETworkManager.ViewModels
             {
                 if (value == _host)
                     return;
-
+                                
                 _host = value;
                 OnPropertyChanged();
             }
@@ -98,7 +98,6 @@ namespace NETworkManager.ViewModels
                 EnableRemoteConsole = true;
             }
 
-
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PowerShell_HostHistory);
 
             LoadSettings();
@@ -113,7 +112,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadExecutionPolicies()
         {
-            ExecutionPolicies = System.Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
+            ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
             ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy);
         }
     }

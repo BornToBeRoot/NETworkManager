@@ -4,11 +4,18 @@
 		<OutputType>Library</OutputType>
 		<RootNamespace>NETworkManager.Settings</RootNamespace>
 		<AssemblyName>NETworkManager.Settings</AssemblyName>
-    <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
-    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
-    <UseWPF>true</UseWPF>
+		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+		<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+		<SelfContained>false</SelfContained>
+		<UseWPF>true</UseWPF>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
+	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
+	<ItemGroup>
+		<FrameworkReference
+		Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms"
+		TargetingPackVersion="6.0.0" />
+	</ItemGroup>
 	<ItemGroup>
 		<Compile Remove="Themes\**" />
 		<EmbeddedResource Remove="Themes\**" />
@@ -16,16 +23,14 @@
 		<Page Remove="Themes\**" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
 	</ItemGroup>
-
 	<ItemGroup>
-		<PackageReference Include="DnsClient" Version="1.5.0" />
+		<PackageReference Include="DnsClient" Version="1.6.0" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.4.0" />
 		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
 		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<None Include="Properties\Settings.settings">
 			<Generator>SettingsSingleFileGenerator</Generator>

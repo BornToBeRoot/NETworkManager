@@ -5,7 +5,6 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators
 {
-    // ReSharper disable once InconsistentNaming
     public class IPv4IPv6SubnetmaskOrCIDRValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
