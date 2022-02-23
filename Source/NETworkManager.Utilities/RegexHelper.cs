@@ -2,7 +2,6 @@
 
 namespace NETworkManager.Utilities
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class RegexHelper
     {        
         /// <summary>

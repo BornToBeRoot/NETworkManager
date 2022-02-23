@@ -19,86 +19,157 @@
     </UserControl.Resources>
     <Grid>
         <Grid Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBox x:Name="TextBoxSearch" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-            </Grid>
-            <controls:MultiSelectDataGrid x:Name="DataGridProfiles" Grid.Row="2" Style="{StaticResource MahApps.Styles.DataGrid}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Grid.Row="0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Groups}" />
+                    <DataGrid x:Name="DataGridGroups" Grid.Column="0" Grid.Row="1" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding Groups}" SelectionMode="Single" SelectedItem="{Binding SelectedGroup}">
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                            <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
+                                <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditGroupCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteGroupCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding Name}" Width="*" />
+                            <DataGridTextColumn Header="{x:Static localization:Strings.Profiles}" Binding="{Binding Profiles.Count}" Width="Auto" />
+                        </DataGrid.Columns>
+                        <DataGrid.InputBindings>
+                            <KeyBinding Command="{Binding EditGroupCommand}" Key="F2" />
+                            <KeyBinding Command="{Binding DeleteGroupCommand}" Key="Delete" />
+                        </DataGrid.InputBindings>
+                        <DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
+                                <EventSetter Event="MouseDoubleClick" Handler="DataGridGroupsRow_MouseDoubleClick" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
+                                        <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                    </DataGrid>
+                    <Button Command="{Binding AddGroupCommand}" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" Style="{StaticResource ImageWithTextButton}">
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                </Grid>
+            </Border>
+            <Grid Grid.Column="1" Grid.Row="0" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Profiles}" />
+                <TextBox x:Name="TextBoxSearch" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
+                <controls:MultiSelectDataGrid x:Name="DataGridProfiles" Grid.Column="4" Grid.Row="1" Style="{StaticResource MahApps.Styles.DataGrid}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True"
                                       ScrollViewer.CanContentScroll="True"
+                                      EnableColumnVirtualization="True"
+                                      EnableRowVirtualization="True"
                                       VirtualizingPanel.IsVirtualizing="True"
                                       VirtualizingPanel.IsVirtualizingWhenGrouping="True"    
                                       VirtualizingPanel.IsContainerVirtualizable="True"
                                       VirtualizingPanel.VirtualizationMode="Recycling"
                                       VirtualizingPanel.ScrollUnit="Item">
-                <DataGrid.Resources>
-                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
-                    <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                        <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </ContextMenu>
-                    <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                        <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.CopyAsDots}" Command="{Binding CopyAsProfileCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentDuplicate}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
-                            <MenuItem.Icon>
-                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </ContextMenu>
-                </DataGrid.Resources>
-                <DataGrid.InputBindings>
-                    <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
-                    <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
-                </DataGrid.InputBindings>
-                <DataGrid.RowStyle>
-                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
-                        <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick" />
-                        <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
-                                <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.RowStyle>
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                        <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                            <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                        <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                            <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static localization:Strings.CopyAsDots}" Command="{Binding CopyAsProfileCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentDuplicate}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </DataGrid.Resources>
+                    <DataGrid.InputBindings>
+                        <KeyBinding Command="{Binding EditProfileCommand}" Key="F2" />
+                        <KeyBinding Command="{Binding DeleteProfileCommand}" Key="Delete" />
+                    </DataGrid.InputBindings>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
+                            <EventSetter Event="MouseDoubleClick" Handler="DataGridProfilesRow_MouseDoubleClick" />
+                            <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
+                                    <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <!--
                 <DataGrid.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>
@@ -114,24 +185,7 @@
                                                             <ColumnDefinition Width="10" />
                                                             <ColumnDefinition Width="Auto" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,10,0"/>
-                                                        <Button Grid.Column="2" ToolTip="{x:Static localization:Strings.EditGroupDots}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
-                                                            <Rectangle Width="16" Height="16">
-                                                                <Rectangle.OpacityMask>
-                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
-                                                                </Rectangle.OpacityMask>
-                                                                <Rectangle.Style>
-                                                                    <Style TargetType="{x:Type Rectangle}">
-                                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </Rectangle.Style>
-                                                            </Rectangle>
-                                                        </Button>
+                                                        <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource DefaultTextBlock}" />
                                                     </Grid>
                                                 </Expander.Header>
                                                 <ItemsPresenter />
@@ -143,62 +197,27 @@
                         </GroupStyle.ContainerStyle>
                     </GroupStyle>
                 </DataGrid.GroupStyle>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profiles:ProfileInfo.Name)}" SortMemberPath="Name" MinWidth="250" />
-                    <DataGridTextColumn Header="{x:Static localization:Strings.Host}" Binding="{Binding (profiles:ProfileInfo.Host)}" SortMemberPath="Host" MinWidth="250" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.NetworkInterface}" Binding="{Binding (profiles:ProfileInfo.NetworkInterface_Enabled)}" SortMemberPath="NetworkInterface_Enabled" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.IPScanner}" Binding="{Binding (profiles:ProfileInfo.IPScanner_Enabled)}" SortMemberPath="IPScanner_Enabled" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.PortScanner}" Binding="{Binding (profiles:ProfileInfo.PortScanner_Enabled)}" SortMemberPath="PortScanner_Enabled" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.PingMonitor}" Binding="{Binding (profiles:ProfileInfo.PingMonitor_Enabled)}" SortMemberPath="PingMonitor_Enabled" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.Traceroute}" Binding="{Binding (profiles:ProfileInfo.Traceroute_Enabled)}" SortMemberPath="Traceroute_Enabled" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.DNSLookup}" Binding="{Binding (profiles:ProfileInfo.DNSLookup_Enabled)}" SortMemberPath="DNSLookup_Enabled" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.RemoteDesktop}" Binding="{Binding (profiles:ProfileInfo.RemoteDesktop_Enabled)}" SortMemberPath="RemoteDesktop_Enabled" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.PowerShell}" Binding="{Binding (profiles:ProfileInfo.PowerShell_Enabled)}" SortMemberPath="PowerShell_Enabled" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.PuTTY}" Binding="{Binding (profiles:ProfileInfo.PuTTY_Enabled)}" SortMemberPath="PuTTY_Enabled" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.TigerVNC}" Binding="{Binding (profiles:ProfileInfo.TigerVNC_Enabled)}" SortMemberPath="TigerVNC_Enabled" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.WebConsole}" Binding="{Binding (profiles:ProfileInfo.WebConsole_Enabled)}" SortMemberPath="WebConsole_Enabled" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.WakeOnLAN}" Binding="{Binding (profiles:ProfileInfo.WakeOnLAN_Enabled)}" SortMemberPath="WakeOnLAN_Enabled" />
-                    <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.Whois}" Binding="{Binding (profiles:ProfileInfo.Whois_Enabled)}" SortMemberPath="Whois_Enabled" />
-                </DataGrid.Columns>
-            </controls:MultiSelectDataGrid>
-            <mah:ProgressRing Grid.Row="2" Height="50" Width="50" IsActive="{Binding IsSearching}"/>
-            <Grid Grid.Row="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Command="{Binding ResetProfilesCommand}">
-                    <Button.Style>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding ElementName=DataGridProfiles, Path=SelectedItems.Count}" Value="0" />
-                                    </MultiDataTrigger.Conditions>
-                                    <MultiDataTrigger.Setters>
-                                        <Setter Property="IsEnabled" Value="False"/>
-                                    </MultiDataTrigger.Setters>
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Reset}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Reset}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <StackPanel Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal">
+                -->
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profiles:ProfileInfo.Name)}" SortMemberPath="Name" MinWidth="250" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.Host}" Binding="{Binding (profiles:ProfileInfo.Host)}" SortMemberPath="Host" MinWidth="250" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.NetworkInterface}" Binding="{Binding (profiles:ProfileInfo.NetworkInterface_Enabled)}" SortMemberPath="NetworkInterface_Enabled" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.IPScanner}" Binding="{Binding (profiles:ProfileInfo.IPScanner_Enabled)}" SortMemberPath="IPScanner_Enabled" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.PortScanner}" Binding="{Binding (profiles:ProfileInfo.PortScanner_Enabled)}" SortMemberPath="PortScanner_Enabled" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.PingMonitor}" Binding="{Binding (profiles:ProfileInfo.PingMonitor_Enabled)}" SortMemberPath="PingMonitor_Enabled" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.Traceroute}" Binding="{Binding (profiles:ProfileInfo.Traceroute_Enabled)}" SortMemberPath="Traceroute_Enabled" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.DNSLookup}" Binding="{Binding (profiles:ProfileInfo.DNSLookup_Enabled)}" SortMemberPath="DNSLookup_Enabled" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.RemoteDesktop}" Binding="{Binding (profiles:ProfileInfo.RemoteDesktop_Enabled)}" SortMemberPath="RemoteDesktop_Enabled" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.PowerShell}" Binding="{Binding (profiles:ProfileInfo.PowerShell_Enabled)}" SortMemberPath="PowerShell_Enabled" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.PuTTY}" Binding="{Binding (profiles:ProfileInfo.PuTTY_Enabled)}" SortMemberPath="PuTTY_Enabled" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.TigerVNC}" Binding="{Binding (profiles:ProfileInfo.TigerVNC_Enabled)}" SortMemberPath="TigerVNC_Enabled" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.WebConsole}" Binding="{Binding (profiles:ProfileInfo.WebConsole_Enabled)}" SortMemberPath="WebConsole_Enabled" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.WakeOnLAN}" Binding="{Binding (profiles:ProfileInfo.WakeOnLAN_Enabled)}" SortMemberPath="WakeOnLAN_Enabled" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.Whois}" Binding="{Binding (profiles:ProfileInfo.Whois_Enabled)}" SortMemberPath="Whois_Enabled" />
+                    </DataGrid.Columns>
+                </controls:MultiSelectDataGrid>
+                <mah:ProgressRing Grid.Column="4" Grid.Row="1" Height="50" Width="50" IsActive="{Binding IsSearching}"/>
+                <StackPanel Grid.Column="4" Grid.Row="3" HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button Command="{Binding DeleteProfileCommand}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
@@ -311,7 +330,7 @@
             </Grid>
         </Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType= {x:Type mah:MetroWindow}}, Path=DataContext.IsProfileFileLocked, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <TextBlock Text="{x:Static localization:Strings.UnlockTheProfileFileMessage}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <TextBlock Text="{x:Static localization:Strings.UnlockTheProfileFileMessage2}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
         </StackPanel>
     </Grid>
 </UserControl>

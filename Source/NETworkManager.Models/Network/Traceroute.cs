@@ -80,7 +80,6 @@ namespace NETworkManager.Models.Network
                         }, cancellationToken));
                     }
 
-                    // ReSharper disable once CoVariantArrayConversion, no write operation
                     Task.WaitAll(tasks.ToArray());
 
                     var ipAddressHop = tasks.FirstOrDefault(x => x.Result.Item1 != null)?.Result.Item1.Address;

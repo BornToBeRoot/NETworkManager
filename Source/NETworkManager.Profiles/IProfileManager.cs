@@ -6,7 +6,6 @@ namespace NETworkManager.Profiles
     public interface IProfileManager
     {
         ICollectionView Profiles { get; }
-        void RefreshProfiles();
         void OnProfileDialogOpen();
         void OnProfileDialogClose();
         ICommand AddProfileCommand { get; }

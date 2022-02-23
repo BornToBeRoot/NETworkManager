@@ -4,7 +4,6 @@ using System.Windows.Controls;
 using NETworkManager.Utilities;
 namespace NETworkManager.Validators
 {
-    // ReSharper disable once InconsistentNaming
     public class IPv4IPv6SubnetValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)

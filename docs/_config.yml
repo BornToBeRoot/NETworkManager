@@ -4,8 +4,8 @@ baseurl: "/NETworkManager"
 url: "https://borntoberoot.net"
 logo: "Logo.png"
 remote_theme: "pmarsceill/just-the-docs"
-color_scheme: "custom"
-search_enabled: true
+color_scheme: "dark"
+search_enabled: false
 aux_links:
   "View on GitHub":
     - "//github.com/BornToBeRoot/NETworkManager"

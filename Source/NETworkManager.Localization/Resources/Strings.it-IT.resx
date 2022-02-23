@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>Informazioni programma</value>
@@ -770,13 +770,10 @@
     <value>Credenziali</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>I file del profilo vengono crittografati su disco usando Rijndael (AES) con una dimensione della chiave di 256 bit e una dimensione del blocco di 128 bit in modalità CBC. 
-La chiave di crittografia è derivata da una password principale usando Rfc2898DeriveBytes (PBKDF2) con 1.000.000 di iterazioni. 
-In fase di esecuzione, le password vengono archiviate come SecureString una volta caricato il file del profilo. 
-Per alcune funzioni, la password deve essere convertita in una stringa normale e rimane non crittografata in memoria finché il Garbage Collector non le pulisce.
-
-Questa è una nuova funzionalità che potrebbe ancora contenere bug.
-Esegui il backup dei file del profilo prima di abilitare la crittografia dei file del profilo!</value>
+    <value>I file profilo vengono crittografati su disco usando AES con una dimensione della chiave di 256 bit e una dimensione del blocco di 128 bit in modalità CBC. 
+La chiave di crittografia deriva da una password principale usando Rfc2898DeriveBytes (PBKDF2) con 1.000.000 iterazioni. 
+In fase di runtime, le password vengono memorizzate come SecureString una volta caricato il file del profilo. 
+Per alcune funzioni, la password deve essere convertita in una stringa normale e rimane non crittografata in memoria fino a quando il garbage collector non le pulisce.</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Personalizza</value>
@@ -815,7 +812,7 @@ Esegui il backup dei file del profilo prima di abilitare la crittografia dei fil
     <value>Elimina voce</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>I profili selezionati verranno eliminati in modo permanente.</value>
+    <value>Il profilo selezionato verrà eliminato definitivamente.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Autoconfigurazione DNS</value>
@@ -897,8 +894,8 @@ Verifica se disponi delle autorizzazioni di scrittura.</value>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
-    <value>Eredita host dall'impostazione predefinita</value>
+  <data name="InheritHostFromGeneral" xml:space="preserve">
+    <value>Eredita host da generale</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>Intervallo IP</value>
@@ -1260,7 +1257,7 @@ Tutte le impostazioni sono state ripristinate (i file di profilo non sono intere
     <value>Larghezza</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Impossibile decriptare il file con la password fornita.</value>
+    <value>Impossibile decifrare il file profilo con la password specificata.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>La password inserita non è corretta.</value>
@@ -2916,9 +2913,11 @@ Vedi messaggio errore: "{0}"</value>
   <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
     <value>Il profilo non può essere caricato!</value>
   </data>
-  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
-    <value>Il profilo non può esser caricato e potrebbe essere danneggiato. 
-Se questo non era previsto o è avvenuto a causa di un aggiornamento segnala il problema su GitHub!</value>
+  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
+    <value>Se ciò si è verificato dopo un aggiornamento, potrebbe essere necessario migrare i profili ad una versione più recente. 
+Quando selezioni "Migra", si apre una finestra di PowerShell con lo script di migrazione. 
+Controlla il percorso e premi 'Invio'.
+In caso contrario, il profilo potrebbe essere danneggiato e se vuoi puoi  segnalare il problema su GitHub.</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Modifica gruppo...</value>
@@ -2950,7 +2949,7 @@ Segnala questo problema su Github.</value>
     <value>Sblocca profilo</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Sblocca il profilo per aggiungere,modificare o eliminare il profilo </value>
+    <value>Per usare i profili sblocca il file del profilo!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>Disconoscimento</value>
@@ -2963,13 +2962,11 @@ Segnala questo problema su Github.</value>
 Se selezioni 'Unisci', i profili attuali verranno copiati nella cartella.</value>
   </data>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Vuoi sovrascrivere i profili nella cartella destinazione?
+    <value>Vuoi sovrascrivre i profili nella cartella destinazione?
 
-'Sovrascrivi' copierà i file del profilo nella cartella destinazione e sovrascriverà i file del profilo esistenti.
-'Unisci' copierà i file del profilo nella cartella di destinazione, ma non sovrascriverà i file del profilo di uscita.
-'Usa altra cartella' userà i file del profilo esistenti nella cartella di destinazione.
-
-Quindi l'applicazione verrà riavviata!</value>
+"Sovrascrivi" copierà i file dei profili nella cartella destinazione e sovrascriverà i file profilo esistenti.
+"Unisci" copierà i file profilo nella cartella di destinazione, ma non sovrascriverà i file profilo esistenti.
+"Usa altra cartella" userà i file profilo esistenti nella cartella destinazione.</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Usa altri</value>
@@ -3138,5 +3135,38 @@ Questo limite è impostato dall'amministratore del server o dai criteri di rete.
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
     <value>Impossibile ricollegarsi alla sessione remota.</value>
+  </data>
+  <data name="Migrate" xml:space="preserve">
+    <value>Migra</value>
+  </data>
+  <data name="ReportOnGitHub" xml:space="preserve">
+    <value>Segnala su GitHub</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Gruppi</value>
+  </data>
+  <data name="AddGroup" xml:space="preserve">
+    <value>Aggiungi gruppo</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Elimina gruppo</value>
+  </data>
+  <data name="DeleteGroupMessage" xml:space="preserve">
+    <value>Verranno eliminati in modo permanente il gruppo selezionato e tutti i profili all'interno di questo gruppo.</value>
+  </data>
+  <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
+    <value>Questo nome è già in uso!</value>
+  </data>
+  <data name="Resize" xml:space="preserve">
+    <value>Ridimensiona</value>
+  </data>
+  <data name="DeleteProfiles" xml:space="preserve">
+    <value>Elimina profili</value>
+  </data>
+  <data name="DeleteProfilesMessage" xml:space="preserve">
+    <value>I profili selezionati verranno eliminati definitivamente.</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
+    <value>Per aggiungere, modificare o eliminare un profilo sblocca il file del profilo!</value>
   </data>
 </root>

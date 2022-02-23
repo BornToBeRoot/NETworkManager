@@ -1,111 +1,117 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
-    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
-    <CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>
-    <RootNamespace>NETworkManager</RootNamespace>
-    <AssemblyName>NETworkManager</AssemblyName>
-    <UseWPF>true</UseWPF>
-    <UseWindowsForms>true</UseWindowsForms>
-    <StartupObject>NETworkManager.App</StartupObject>
-    <ApplicationIcon>NETworkManager.ico</ApplicationIcon>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Authors>BornToBeRoot</Authors>
-    <PackageProjectUrl>https://github.com/BornToBeRoot/NETworkManager</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/BornToBeRoot/NETworkManager</RepositoryUrl>
-    <PackageLicenseFile>NETworkManager.txt</PackageLicenseFile>
-    <PackageIcon>NETworkManager.ico</PackageIcon>
-    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-    <Description>A powerful tool for managing networks and troubleshoot network problems!</Description>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Remove="NETworkManager.ico" />
-    <None Remove="SplashScreen.png" />
-    <None Include="..\NETworkManager.Documentation\Licenses\NETworkManager.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="NETworkManager.ico">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="AirspaceFixer" Version="1.0.5" />
-    <PackageReference Include="DnsClient" Version="1.5.0" />
-    <PackageReference Include="Dragablz" Version="0.0.3.223" />
-    <PackageReference Include="IPNetwork2" Version="2.5.366" />
-    <PackageReference Include="Lextm.SharpSnmpLib" Version="12.4.0" />
-    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
-    <PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
-    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1020.30" />    
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.4.1" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.0" />
-    <Reference Include="AxMSTSCLib">
-      <HintPath>$(TargetDir)\AxMSTSCLib.dll</HintPath>
-    </Reference>
-    <Reference Include="MSTSCLib">
-      <HintPath>$(TargetDir)\MSTSCLib.dll</HintPath>
-    </Reference>
-    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />
-    <ProjectReference Include="..\NETworkManager.Converters\NETworkManager.Converters.csproj" />
-    <ProjectReference Include="..\NETworkManager.Documentation\NETworkManager.Documentation.csproj" />
-    <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
-    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
-    <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj" />
-    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj" />
-    <ProjectReference Include="..\NETworkManager.Update\NETworkManager.Update.csproj" />
-    <ProjectReference Include="..\NETworkManager.Utilities.WPF\NETworkManager.Utilities.WPF.csproj" />
-    <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
-    <ProjectReference Include="..\NETworkManager.Validators\NETworkManager.Validators.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="NETworkManager.ico" />
-    <Resource Include="SplashScreen.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Resources\Styles\WindowStyles.xaml">
-      <CopyToOutputDirectory></CopyToOutputDirectory>
-    </Page>
-    <Page Update="Views\CredentialsChangePasswordDialog.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Views\DropdownDialog.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\NetworkConnectionView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Views\IPAddressDialog.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Views\PortProfilesDialog.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File &quot;$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1&quot; &quot;$(TargetDir)&quot;" />
-  </Target>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+		<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+		<SelfContained>false</SelfContained>
+		<CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>
+		<RootNamespace>NETworkManager</RootNamespace>
+		<AssemblyName>NETworkManager</AssemblyName>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+		<StartupObject>NETworkManager.App</StartupObject>
+		<ApplicationIcon>NETworkManager.ico</ApplicationIcon>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<Authors>BornToBeRoot</Authors>
+		<PackageProjectUrl>https://github.com/BornToBeRoot/NETworkManager</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/BornToBeRoot/NETworkManager</RepositoryUrl>
+		<PackageLicenseFile>NETworkManager.txt</PackageLicenseFile>
+		<PackageIcon>NETworkManager.ico</PackageIcon>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+		<Description>A powerful tool for managing networks and troubleshoot network problems!</Description>
+		<PlatformTarget>x64</PlatformTarget>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="NETworkManager.ico" />
+		<None Remove="SplashScreen.png" />
+		<None Include="..\NETworkManager.Documentation\Licenses\NETworkManager.txt">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="NETworkManager.ico">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
+	<ItemGroup>
+		<FrameworkReference Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms" TargetingPackVersion="6.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AirspaceFixer" Version="1.0.5" />
+		<PackageReference Include="DnsClient" Version="1.6.0" />
+		<PackageReference Include="Dragablz" Version="0.0.3.223" />
+		<PackageReference Include="IPNetwork2" Version="2.5.386" />
+		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.4.0" />
+		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+		<PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
+		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
+		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1108.44" />
+		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.5.0" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.1" />
+		<Reference Include="AxMSTSCLib">
+			<HintPath>$(TargetDir)\AxMSTSCLib.dll</HintPath>
+		</Reference>
+		<Reference Include="MSTSCLib">
+			<HintPath>$(TargetDir)\MSTSCLib.dll</HintPath>
+		</Reference>
+		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />
+		<ProjectReference Include="..\NETworkManager.Converters\NETworkManager.Converters.csproj" />
+		<ProjectReference Include="..\NETworkManager.Documentation\NETworkManager.Documentation.csproj" />
+		<ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
+		<ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
+		<ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj" />
+		<ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj" />
+		<ProjectReference Include="..\NETworkManager.Update\NETworkManager.Update.csproj" />
+		<ProjectReference Include="..\NETworkManager.Utilities.WPF\NETworkManager.Utilities.WPF.csproj" />
+		<ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
+		<ProjectReference Include="..\NETworkManager.Validators\NETworkManager.Validators.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="NETworkManager.ico" />
+		<Resource Include="SplashScreen.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<Page Update="Resources\Styles\WindowStyles.xaml">
+			<CopyToOutputDirectory></CopyToOutputDirectory>
+		</Page>
+		<Page Update="Views\CredentialsChangePasswordDialog.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\DropdownDialog.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+		<Page Update="Views\NetworkConnectionView.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\IPAddressDialog.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
+		<Page Update="Views\PortProfilesDialog.xaml">
+			<SubType>Designer</SubType>
+		</Page>
+	</ItemGroup>
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File &quot;$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1&quot; &quot;$(TargetDir)&quot;" />
+	</Target>
 </Project>
