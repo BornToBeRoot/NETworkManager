@@ -890,7 +890,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
+  <data name="InheritHostFromGeneral" xml:space="preserve">
     <value>Dziedzicz hosta z domyślnego</value>
   </data>
   <data name="IPRange" xml:space="preserve">
@@ -3090,24 +3090,24 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Port description</value>
   </data>
   <data name="RemoveIPv4Address" xml:space="preserve">
-    <value>Remove IPv4 address</value>
+    <value>Usuń adres IPv4</value>
   </data>
   <data name="AdditionalConfigDots" xml:space="preserve">
-    <value>Additional config...</value>
+    <value>Dodatkowa konfiguracja...</value>
   </data>
   <data name="RemoveIPv4AddressDots" xml:space="preserve">
-    <value>Remove IPv4 address...</value>
+    <value>Usuń adres IPv4...</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
-    <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
+    <value>Sesja zdalna zakończyła się, ponieważ całkowity czas zalogowania został przekroczony. Ten limit jest ustawiana przez administratora serwera, albo przez reguły sieciowe.</value>
   </data>
   <data name="EnterValidHostname" xml:space="preserve">
-    <value>Enter a valid hostname!</value>
+    <value>Wpisz poprawną nazwę hosta!</value>
   </data>
   <data name="EnterValidHostnameAndPort" xml:space="preserve">
-    <value>Enter a valid hostname and port!</value>
+    <value>Wpisz poprawną nazwę hosta i port!</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
-    <value>Unable to reconnect to the remote session.</value>
+    <value>Nie udało się ponownie połączyć do sesji zdalnej.</value>
   </data>
 </root>

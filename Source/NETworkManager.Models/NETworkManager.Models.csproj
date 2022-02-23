@@ -1,15 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<ProjectGuid>{8A2859DC-38B6-4E9D-A6B2-1828DC6641B3}</ProjectGuid>
 		<OutputType>Library</OutputType>
 		<RootNamespace>NETworkManager.Models</RootNamespace>
 		<AssemblyName>NETworkManager.Models</AssemblyName>
-    <TargetFramework>net5.0-windows10.0.17763.0</TargetFramework>    
-    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
-    <CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>
-    <UseWPF>true</UseWPF>
+		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+		<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+		<SelfContained>false</SelfContained>
+		<CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>
+		<UseWPF>true</UseWPF>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
+	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
+	<ItemGroup>
+		<FrameworkReference
+		Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms"
+		TargetingPackVersion="6.0.0" />
+	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Resources\OUI.xml" />
 		<None Remove="Resources\Ports.xml" />
@@ -17,21 +24,21 @@
 		<None Remove="Resources\WhoisServers.xml" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Resources\PSDiscoveryProtocol.psm1" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="DnsClient" Version="1.5.0" />
-		<PackageReference Include="IPNetwork2" Version="2.5.346" />
+		<PackageReference Include="DnsClient" Version="1.6.0" />
+		<PackageReference Include="IPNetwork2" Version="2.5.386" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.4.0" />
-		<PackageReference Include="MahApps.Metro" Version="2.4.7" />
-		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
-		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.1.4" />		
-		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.902.49" />		
-		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.3.3" />
+		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
+		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1108.44" />
+		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.5.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>

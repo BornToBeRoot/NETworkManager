@@ -17,13 +17,10 @@ namespace NETworkManager.Models.Network
     {
         #region Variables
         // The max number of physical addresses.
-        // ReSharper disable once UnusedMember.Local
         private const int MAXLEN_PHYSADDR = 8;
 
         // Define the MIB_IPNETROW structure.
         [StructLayout(LayoutKind.Sequential)]
-        [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Local")]
         private struct MIB_IPNETROW
         {
             [MarshalAs(UnmanagedType.U4)]
@@ -55,14 +52,12 @@ namespace NETworkManager.Models.Network
         // Declare the GetIpNetTable function.
         [DllImport("IpHlpApi.dll")]
         [return: MarshalAs(UnmanagedType.U4)]
-        // ReSharper disable once ArrangeTypeMemberModifiers
         static extern int GetIpNetTable(IntPtr pIpNetTable, [MarshalAs(UnmanagedType.U4)] ref int pdwSize, bool bOrder);
 
         [DllImport("IpHlpApi.dll", SetLastError = true, CharSet = CharSet.Auto)]
         internal static extern int FreeMibTable(IntPtr plpNetTable);
 
         // The insufficient buffer error.
-        // ReSharper disable once ArrangeTypeMemberModifiers
         const int ERROR_INSUFFICIENT_BUFFER = 122;
         #endregion
 

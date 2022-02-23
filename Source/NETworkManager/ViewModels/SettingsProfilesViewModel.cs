@@ -154,7 +154,7 @@ namespace NETworkManager.ViewModels
              *  -1  Cancel
              *  0   Move and overwrite
              *  1   Move and merge
-             *  2   User other path (don't move)
+             *  2   User other path (don't move/overwrite files)
              */
             int decision = -1;
 

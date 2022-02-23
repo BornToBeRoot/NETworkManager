@@ -890,7 +890,7 @@ Esta es una característica nueva que aún puede contener errores. ¡Haz una cop
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
+  <data name="InheritHostFromGeneral" xml:space="preserve">
     <value>Heredar el host de forma predeterminada</value>
   </data>
   <data name="IPRange" xml:space="preserve">

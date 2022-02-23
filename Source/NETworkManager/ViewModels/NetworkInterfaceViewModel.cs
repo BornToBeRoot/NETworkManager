@@ -29,7 +29,8 @@ namespace NETworkManager.ViewModels
         private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
         private BandwidthMeter _bandwidthMeter;
 
-        private readonly bool _isLoading;
+        private readonly bool _isLoading = true;
+        private bool _isViewActive = true;
 
         private bool _isNetworkInteraceLoading;
         public bool IsNetworkInterfaceLoading
@@ -504,15 +505,13 @@ namespace NETworkManager.ViewModels
         #region Constructor, LoadSettings, OnShutdown
         public NetworkInterfaceViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true;
-
             _dialogCoordinator = instance;
 
             LoadNetworkInterfaces();
 
             InitialBandwidthChart();
 
-            Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
@@ -527,8 +526,10 @@ namespace NETworkManager.ViewModels
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
+                /*
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
                     return !string.IsNullOrEmpty(info.Tags) && info.NetworkInterface_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                */
 
                 // Search by: Name, IPScanner_IPRange
                 return info.NetworkInterface_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
@@ -536,6 +537,8 @@ namespace NETworkManager.ViewModels
 
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.NetworkInterface_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+
+            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
             _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
@@ -695,14 +698,14 @@ namespace NETworkManager.ViewModels
 
         private void DeleteProfileAction()
         {
-            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private void EditGroupAction(object group)
         {
-            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
         }
 
         public ICommand FlushDNSCommand => new RelayCommand(p => FlushDNSAction(), FlushDNS_CanExecute);
@@ -1133,6 +1136,8 @@ namespace NETworkManager.ViewModels
 
         public void OnViewVisible()
         {
+            _isViewActive = true;
+
             RefreshProfiles();
 
             ResumeBandwidthMeter();
@@ -1141,10 +1146,15 @@ namespace NETworkManager.ViewModels
         public void OnViewHide()
         {
             StopBandwidthMeter();
+
+            _isViewActive = false;
         }
 
         public void RefreshProfiles()
         {
+            if (!_isViewActive)
+                return;
+
             Profiles.Refresh();
         }
 
@@ -1160,6 +1170,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Events
+        private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
+        {
+            RefreshProfiles();
+        }
+
         private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
         {
             StopDelayedSearch();

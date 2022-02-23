@@ -147,7 +147,7 @@ namespace NETworkManager
             // Save local settings (custom settings path in AppData/Local)
             LocalSettingsManager.Save();
 
-            if (SettingsManager.Current.SettingsChanged) // This will also create the "Settings" folder, if it does not exist
+            if (SettingsManager.Current.SettingsChanged)
                 SettingsManager.Save();
 
             if (ProfileManager.ProfilesChanged)
