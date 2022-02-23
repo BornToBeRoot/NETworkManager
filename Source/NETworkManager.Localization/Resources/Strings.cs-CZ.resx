@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>O aplikaci</value>
@@ -769,9 +769,9 @@
     <value>Pověření</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Soubory profilů jsou  na disku šifrovány pomocí Rijndael (AES) s velikostí klíče 256 bitů a velikostí bloku 128 bitů v režimu CBC. Šifrovací klíč je odvozen od hlavního hesla pomocí Rfc2898DeriveBytes (PBKDF2) s 1 000 000 iterací. Po spuštění jsou hesla uložena jako SecureString po načtení souboru profilu. U některých funkcí musí být heslo převedeno na normální řetězec a zůstane nezašifrované v paměti, dokud je sběrač odpadků nevyčistí.
+    <value>Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
 
-Toto je nová funkce, která může stále obsahovat chyby. Než povolíte šifrování souborů profilu, nejprve si zálohujte soubory profilu!</value>
+First make a backup copy of your profile files before enabling encryption!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Vlastní</value>
@@ -810,7 +810,7 @@ Toto je nová funkce, která může stále obsahovat chyby. Než povolíte šifr
     <value>Ostranit záznam</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Vybraný profil bude trvale odstraněn.</value>
+    <value>Selected profile will be deleted permanently.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Automatická konfigurace DNS...</value>
@@ -891,7 +891,7 @@ Toto je nová funkce, která může stále obsahovat chyby. Než povolíte šifr
     <value>ID</value>
   </data>
   <data name="InheritHostFromGeneral" xml:space="preserve">
-    <value>Dědit hosta z výchozího</value>
+    <value>Inherit host from general</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>Rozsah IP</value>
@@ -1247,7 +1247,7 @@ Možnost "Použít jiné" použije existující soubor nastavení v cíli a rest
     <value>Šířka</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Nelze dešifrovat soubor pomocí zadaného hesla.</value>
+    <value>Profile file could not be decrypted with the given password.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>Nesprávné heslo.</value>
@@ -2891,8 +2891,10 @@ $$hostname$$	--&gt;	Název hosta</value>
   <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
     <value>Profil se nepodařilo načíst!</value>
   </data>
-  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
-    <value>Profil nelze načíst a může být poškozen. Pokud je to neočekávané nebo kvůli aktualizaci, nahlas prosím tento problém na GitHubu!</value>
+  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
+    <value>If this happened after an update, you may need to migrate the profiles to a newer version. When you click "Migrate", a PowerShell window opens with the migration script. Check the path and press Enter.
+
+Otherwise, the profile may be corrupted and you want to report the issue on GitHub.</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Upravit skupinu...</value>
@@ -2922,7 +2924,7 @@ $$hostname$$	--&gt;	Název hosta</value>
     <value>Odemknout profil</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Chceš-li přidat, změnit nebo odstranit profil, musíš nejdřív odemknout soubor profilu!</value>
+    <value>Unlock the profile file to use the profiles!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>Odmítnout odpovědnost</value>
@@ -2934,13 +2936,11 @@ $$hostname$$	--&gt;	Název hosta</value>
     <value>Cílová složka již obsahuje soubory. Pokud kliknete na Sloučit, aktuální profily se zkopírují do složky.</value>
   </data>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Přepsat profily v cílové složce?
+    <value>Overwrite profiles in destination folder?
 
-"Přepsat" zkopíruje soubory profilu do cílové složky a přepíše existující soubory profilu.
-Možnost "Sloučit" zkopíruje soubory profilu do cílové složky, ale nepřepíše výstupní soubory profilu.
-Možnost "Použít jinou složku" použije existující soubory profilu v cílové složce.
-
-Poté bude aplikace restartována!</value>
+"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
+"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
+"Use other folder" will use the existing profile files in the destination folder.</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Použít jiné</value>
@@ -3109,5 +3109,38 @@ Pověření v profilu budou bezpečnější.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
     <value>Unable to reconnect to the remote session.</value>
+  </data>
+  <data name="Migrate" xml:space="preserve">
+    <value>Migrate</value>
+  </data>
+  <data name="ReportOnGitHub" xml:space="preserve">
+    <value>Report on GitHub</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="AddGroup" xml:space="preserve">
+    <value>Add group</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Delete group</value>
+  </data>
+  <data name="DeleteGroupMessage" xml:space="preserve">
+    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
+  </data>
+  <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
+    <value>The name is already used!</value>
+  </data>
+  <data name="Resize" xml:space="preserve">
+    <value>Resize</value>
+  </data>
+  <data name="DeleteProfiles" xml:space="preserve">
+    <value>Delete profiles</value>
+  </data>
+  <data name="DeleteProfilesMessage" xml:space="preserve">
+    <value>Selected profiles will be deleted permanently.</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
+    <value>Unlock the profile file to add, change or delete a profile!</value>
   </data>
 </root>
