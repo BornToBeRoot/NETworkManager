@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>Vizitka</value>
@@ -771,9 +771,9 @@
     <value>Poverilnica</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Datoteke profila so šifrirane na disku z uporabo Rijndael (AES) z velikostjo ključa 256 bitov in velikostjo bloka 128 bitov v načinu CBC. Šifrirni ključ je izpeljan iz glavnega gesla z uporabo Rfc2898DeriveBytes (PBKDF2) s 1.000.000 ponovitvami. Ko je datoteka profila naložena, se med izvajanjem gesla shranijo kot SecureString. Za nekatere funkcije je treba geslo pretvoriti v običajni niz in ostane nešifrirano v pomnilniku, dokler jih zbiralnik smeti ne očisti. 
+    <value>Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
 
-To je nova funkcija, ki lahko še vedno vsebuje napake. Najprej varnostno kopirajte datoteke profila, preden omogočite šifriranje datotek profila! </value>
+First make a backup copy of your profile files before enabling encryption!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Po meri</value>
@@ -812,7 +812,7 @@ To je nova funkcija, ki lahko še vedno vsebuje napake. Najprej varnostno kopira
     <value>Izbriši vnos</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Izbrani profili bodo trajno izbrisani.</value>
+    <value>Selected profile will be deleted permanently.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Nastavitve DNS</value>
@@ -893,7 +893,7 @@ To je nova funkcija, ki lahko še vedno vsebuje napake. Najprej varnostno kopira
     <value>ID</value>
   </data>
   <data name="InheritHostFromGeneral" xml:space="preserve">
-    <value>Podeduj gostitelja iz privzetega</value>
+    <value>Inherit host from general</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>Razpon IP</value>
@@ -1248,7 +1248,7 @@ Ustvarite enega...</value>
     <value>Širina</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Datoteke ni bilo mogoče dešifrirati z navedenim geslom. </value>
+    <value>Profile file could not be decrypted with the given password.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>Vneseno geslo je napačno.</value>
@@ -2893,8 +2893,10 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
     <value>Profila ni bilo mogoče naložiti! </value>
   </data>
-  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
-    <value>Profila ni bilo mogoče naložiti in je morda poškodovan. Če je to nepričakovano ali je posledica posodobitve, prijavite to težavo na GitHubu! </value>
+  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
+    <value>If this happened after an update, you may need to migrate the profiles to a newer version. When you click "Migrate", a PowerShell window opens with the migration script. Check the path and press Enter.
+
+Otherwise, the profile may be corrupted and you want to report the issue on GitHub.</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Uredi skupino...</value>
@@ -2924,7 +2926,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Odkleni profil</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Odklenite datoteko profila, če želite dodati, spremeniti ali izbrisati profil! </value>
+    <value>Unlock the profile file to use the profiles!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>Izjava o omejitvi odgovornosti </value>
@@ -2936,13 +2938,11 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Ciljna mapa že vsebuje datoteke. Če kliknete 'Združi', se trenutni profili kopirajo v mapo. </value>
   </data>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Prepišem profile v ciljni mapi? 
+    <value>Overwrite profiles in destination folder?
 
-"Prepiši" bo datoteke profila kopiralo v ciljno mapo in prepisalo obstoječe datoteke profila. 
-"Združi" bo datoteke profila kopiralo v ciljno mapo, ne bo pa prepisalo datotek profila za izhod. 
-"Uporabi drugo mapo" bo uporabilo obstoječe datoteke profila v ciljni mapi. 
-
-Aplikacija se bo nato znova zagnala! </value>
+"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
+"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
+"Use other folder" will use the existing profile files in the destination folder.</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Uporabi drugo</value>
@@ -3108,5 +3108,38 @@ Aplikacija se bo nato znova zagnala! </value>
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
     <value>Ni mogoče znova vzpostaviti povezave z oddaljeno sejo.</value>
+  </data>
+  <data name="Migrate" xml:space="preserve">
+    <value>Migrate</value>
+  </data>
+  <data name="ReportOnGitHub" xml:space="preserve">
+    <value>Report on GitHub</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="AddGroup" xml:space="preserve">
+    <value>Add group</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Delete group</value>
+  </data>
+  <data name="DeleteGroupMessage" xml:space="preserve">
+    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
+  </data>
+  <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
+    <value>The name is already used!</value>
+  </data>
+  <data name="Resize" xml:space="preserve">
+    <value>Resize</value>
+  </data>
+  <data name="DeleteProfiles" xml:space="preserve">
+    <value>Delete profiles</value>
+  </data>
+  <data name="DeleteProfilesMessage" xml:space="preserve">
+    <value>Selected profiles will be deleted permanently.</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
+    <value>Unlock the profile file to add, change or delete a profile!</value>
   </data>
 </root>
