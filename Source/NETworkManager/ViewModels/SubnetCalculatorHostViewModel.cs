@@ -1,11 +1,10 @@
-﻿using NETworkManager.Utilities;
-
-namespace NETworkManager.ViewModels
+﻿namespace NETworkManager.ViewModels
 {
     public class SubnetCalculatorHostViewModel : ViewModelBase
     {
         public SubnetCalculatorHostViewModel()
         {
-        }
+
+        }              
     }
 }

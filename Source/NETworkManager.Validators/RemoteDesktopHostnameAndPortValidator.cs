@@ -14,11 +14,16 @@ namespace NETworkManager.Validators
 
             if(hostnameAndPort.Contains(":"))
             {
-                return Regex.IsMatch((string)value, RegexHelper.HostnameAndPortRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidHostnameAndPort);
+                string[] hostnameAndPortValues = hostnameAndPort.Split(':');
+
+                if (Regex.IsMatch(hostnameAndPortValues[0], RegexHelper.HostnameRegex) && !string.IsNullOrEmpty(hostnameAndPortValues[1]) && Regex.IsMatch(hostnameAndPortValues[1], RegexHelper.PortRegex))
+                    return ValidationResult.ValidResult;
+                
+                return new ValidationResult(false, Strings.EnterValidHostnameAndPort);
             }
             else
             {
-                return Regex.IsMatch((string)value, RegexHelper.DomainRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidHostname);
+                return Regex.IsMatch((string)value, RegexHelper.HostnameRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidHostname);
             }
         }
     }

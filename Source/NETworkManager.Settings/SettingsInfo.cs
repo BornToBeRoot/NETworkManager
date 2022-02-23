@@ -2437,7 +2437,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private string _puTTY_Profile;
+        private string _puTTY_Profile = GlobalStaticConfiguration.PuTTY_DefaultProfile;
         public string PuTTY_Profile
         {
             get => _puTTY_Profile;

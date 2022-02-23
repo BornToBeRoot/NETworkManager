@@ -19,6 +19,7 @@ using System.Windows.Threading;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace NETworkManager.ViewModels
 {
@@ -31,7 +32,8 @@ namespace NETworkManager.ViewModels
         public IInterTabClient InterTabClient { get; }
         public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-        private readonly bool _isLoading;
+        private readonly bool _isLoading = true;
+        private bool _isViewActive = true;
 
         private bool _isConfigured;
         public bool IsConfigured
@@ -160,18 +162,20 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public PuTTYHostViewModel(IDialogCoordinator instance)
         {
-            _isLoading = true;
-
             _dialogCoordinator = instance;
 
             // Check if putty is available...
             CheckIfConfigured();
 
+            // Create default PuTTY profile for NETworkManager 
+            if (IsConfigured)
+                PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
+
             InterTabClient = new DragablzInterTabClient(ApplicationName.PuTTY);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 
-            Profiles = new CollectionViewSource { Source = ProfileManager.Profiles }.View;
+            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
@@ -186,8 +190,10 @@ namespace NETworkManager.ViewModels
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
+                /*
                 if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
                     return !string.IsNullOrEmpty(info.Tags) && info.PuTTY_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                */
 
                 // Search by: Name, PuTTY_HostOrSerialLine
                 return info.PuTTY_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PuTTY_HostOrSerialLine.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
@@ -195,6 +201,8 @@ namespace NETworkManager.ViewModels
 
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PuTTY_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+
+            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
             _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
@@ -257,12 +265,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        public ICommand PuTTY_ResizeWindowCommand => new RelayCommand(PuTTY_ResizeWindowAction, PuTTY_Connected_CanExecute);
+
+        private void PuTTY_ResizeWindowAction(object view)
+        {
+            if (view is PuTTYControl control)
+                control.ResizeEmbeddedWindow();
+        }
+
         public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction, PuTTY_Connected_CanExecute);
 
         private void PuTTY_RestartSessionAction(object view)
         {
-            if (view is PuTTYControl puttyControl)
-                puttyControl.RestartSession();
+            if (view is PuTTYControl control)
+                control.RestartSession();
         }
 
         public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
@@ -321,14 +337,14 @@ namespace NETworkManager.ViewModels
 
         private void DeleteProfileAction()
         {
-            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, SelectedProfile);
+            ProfileDialogManager.ShowDeleteProfileDialog(this, _dialogCoordinator, new List<ProfileInfo> { SelectedProfile });
         }
 
         public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
         private void EditGroupAction(object group)
         {
-            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, group.ToString());
+            ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -364,16 +380,7 @@ namespace NETworkManager.ViewModels
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
-                // Add host to history
-                AddHostToHistory(instance.Host);
-                AddSerialLineToHistory(instance.SerialLine);
-                AddPortToHistory(instance.Port.ToString());
-                AddBaudToHistory(instance.Baud.ToString());
-                AddUsernameToHistory(instance.Username);
-                AddPrivateKeyToHistory(instance.PrivateKeyFile);
-                AddProfileToHistory(instance.Profile);
-
-                // Create Profile info
+                // Create profile info
                 var info = new PuTTYSessionInfo
                 {
                     HostOrSerialLine = instance.ConnectionMode == ConnectionMode.Serial ? instance.SerialLine : instance.Host,
@@ -388,6 +395,17 @@ namespace NETworkManager.ViewModels
                     LogPath = Settings.Application.PuTTY.LogPath,
                     AdditionalCommandLine = instance.AdditionalCommandLine
                 };
+
+                // Add to history
+                // Note: The history can only be updated after the values have been read.
+                //       Otherwise, in some cases, incorrect values are taken over.
+                AddHostToHistory(instance.Host);
+                AddSerialLineToHistory(instance.SerialLine);
+                AddPortToHistory(instance.Port);
+                AddBaudToHistory(instance.Baud);
+                AddUsernameToHistory(instance.Username);
+                AddPrivateKeyToHistory(instance.PrivateKeyFile);
+                AddProfileToHistory(instance.Profile);
 
                 Connect(info);
             }, async instance =>
@@ -415,7 +433,7 @@ namespace NETworkManager.ViewModels
             // Create log path
             DirectoryCreator.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
 
-            var info = new ProcessStartInfo
+            ProcessStartInfo info = new ProcessStartInfo
             {
                 FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
                 Arguments = PuTTY.BuildCommandLine(NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile))
@@ -442,86 +460,58 @@ namespace NETworkManager.ViewModels
         // Modify history list
         private static void AddHostToHistory(string host)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            if (string.IsNullOrEmpty(host))
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_HostHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_HostHistory.Add(x));
+            SettingsManager.Current.PuTTY_HostHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries));
         }
 
         private static void AddSerialLineToHistory(string serialLine)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory.ToList(), serialLine, SettingsManager.Current.General_HistoryListEntries);
+            if (string.IsNullOrEmpty(serialLine))
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_SerialLineHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_SerialLineHistory.Add(x));
+            SettingsManager.Current.PuTTY_SerialLineHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory.ToList(), serialLine, SettingsManager.Current.General_HistoryListEntries));
         }
 
-        private static void AddPortToHistory(string port)
+        private static void AddPortToHistory(int port)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries);
+            if (port == 0)
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_PortHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_PortHistory.Add(x));
+            SettingsManager.Current.PuTTY_PortHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), port.ToString(), SettingsManager.Current.General_HistoryListEntries));
         }
 
-        private static void AddBaudToHistory(string baud)
+        private static void AddBaudToHistory(int baud)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), baud, SettingsManager.Current.General_HistoryListEntries);
+            if (baud == 0)
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_BaudHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_BaudHistory.Add(x));
+            SettingsManager.Current.PuTTY_BaudHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), baud.ToString(), SettingsManager.Current.General_HistoryListEntries));
         }
 
         private static void AddUsernameToHistory(string username)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), username, SettingsManager.Current.General_HistoryListEntries);
+            if (string.IsNullOrEmpty(username))
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_UsernameHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_UsernameHistory.Add(x));
+            SettingsManager.Current.PuTTY_UsernameHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), username, SettingsManager.Current.General_HistoryListEntries));
         }
 
-        private static void AddPrivateKeyToHistory(string host)
+        private static void AddPrivateKeyToHistory(string privateKey)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_PrivateKeyFileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            if (string.IsNullOrEmpty(privateKey))
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_PrivateKeyFileHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_PrivateKeyFileHistory.Add(x));
+            SettingsManager.Current.PuTTY_PrivateKeyFileHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_PrivateKeyFileHistory.ToList(), privateKey, SettingsManager.Current.General_HistoryListEntries));
         }
 
-        private static void AddProfileToHistory(string host)
+        private static void AddProfileToHistory(string profile)
         {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
+            if (string.IsNullOrEmpty(profile))
+                return;
 
-            // Clear the old items
-            SettingsManager.Current.PuTTY_ProfileHistory.Clear();
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.PuTTY_ProfileHistory.Add(x));
+            SettingsManager.Current.PuTTY_ProfileHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory.ToList(), profile, SettingsManager.Current.General_HistoryListEntries));
         }
 
         private void StartDelayedSearch()
@@ -574,16 +564,21 @@ namespace NETworkManager.ViewModels
 
         public void OnViewVisible()
         {
+            _isViewActive = true;
+
             RefreshProfiles();
         }
 
         public void OnViewHide()
         {
-
+            _isViewActive = false;
         }
 
         public void RefreshProfiles()
         {
+            if (!_isViewActive)
+                return;
+
             Profiles.Refresh();
         }
 
@@ -599,6 +594,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Event
+        private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
+        {
+            RefreshProfiles();
+        }
+
         private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
         {
             StopDelayedSearch();

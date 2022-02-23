@@ -6,15 +6,17 @@ namespace NETworkManager.Profiles.Application
 {
     public static class TigerVNC
     {
-        public static TigerVNCSessionInfo CreateSessionInfo(ProfileInfo profileInfo)
+        public static TigerVNCSessionInfo CreateSessionInfo(ProfileInfo profile)
         {
-            var info = new TigerVNCSessionInfo
-            {
-                Host = profileInfo.TigerVNC_Host,
-                Port = profileInfo.TigerVNC_OverridePort ? profileInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port
-            };
+            // Get group info
+            GroupInfo group = ProfileManager.GetGroup(profile.Group);
 
-            return info;
+            return new TigerVNCSessionInfo
+            {
+                Host = profile.TigerVNC_Host,
+
+                Port = profile.TigerVNC_OverridePort ? profile.TigerVNC_Port : (group.TigerVNC_OverridePort ? group.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port)
+            };
         }
     }
 }
