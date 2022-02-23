@@ -890,7 +890,7 @@ This is a new feature that may still contain bugs. Please backup your profile fi
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
+  <data name="InheritHostFromGeneral" xml:space="preserve">
     <value>Наследовать узел от значения по умолчанию</value>
   </data>
   <data name="IPRange" xml:space="preserve">

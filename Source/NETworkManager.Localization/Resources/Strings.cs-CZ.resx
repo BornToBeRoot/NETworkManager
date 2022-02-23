@@ -890,7 +890,7 @@ Toto je nová funkce, která může stále obsahovat chyby. Než povolíte šifr
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
+  <data name="InheritHostFromGeneral" xml:space="preserve">
     <value>Dědit hosta z výchozího</value>
   </data>
   <data name="IPRange" xml:space="preserve">

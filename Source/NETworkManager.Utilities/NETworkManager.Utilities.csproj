@@ -4,17 +4,23 @@
 		<OutputType>Library</OutputType>
 		<RootNamespace>NETworkManager.Utilities</RootNamespace>
 		<AssemblyName>NETworkManager.Utilities</AssemblyName>
-    <TargetFramework>net5.0-windows10.0.17763.0</TargetFramework>
-    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
-    <UseWPF>true</UseWPF>
+		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+		<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+		<SelfContained>false</SelfContained>
+		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
+	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
 	<ItemGroup>
-	  <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+		<FrameworkReference
+		Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms"
+		TargetingPackVersion="6.0.0" />
 	</ItemGroup>
-
 	<ItemGroup>
-		<PackageReference Include="DnsClient" Version="1.5.0" />
+		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="DnsClient" Version="1.6.0" />
 	</ItemGroup>
 </Project>

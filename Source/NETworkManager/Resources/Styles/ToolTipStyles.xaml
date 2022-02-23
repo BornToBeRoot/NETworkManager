@@ -47,4 +47,6 @@
     </Style>
 
     <Style x:Key="WarnToolTip" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+
+    <Style x:Key="ErrorToolTip" TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
 </ResourceDictionary>

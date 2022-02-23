@@ -11,8 +11,6 @@ using NETworkManager.Models.RemoteDesktop;
 using DnsClient;
 using NETworkManager.Models;
 
-// ReSharper disable InconsistentNaming
-
 namespace NETworkManager.Settings
 {
     public static class GlobalStaticConfiguration
@@ -29,8 +27,8 @@ namespace NETworkManager.Settings
 
         // Settings
         public static ApplicationName General_DefaultApplicationViewName => ApplicationName.Dashboard;
-        public static int General_BackgroundJobInterval => 15;
-        public static int General_HistoryListEntries => 5;
+        public static int General_BackgroundJobInterval => 5;
+        public static int General_HistoryListEntries => 10;
         public static bool SplashScreen_Enabled => true;
         public static string Appearance_Theme => "Dark";
         public static string Appearance_Accent => "Lime";
@@ -50,7 +48,6 @@ namespace NETworkManager.Settings
         public static double Profile_DefaultWidthExpanded => 250;
         public static double Profile_MaxWidthExpanded => 350;
         public static int Profile_EncryptionKeySize => 256;
-        public static int Profile_EncryptionBlockSize => 128;
         public static int Profile_EncryptionIterations => 1000000;
 
         // Application: Dashboard
@@ -125,6 +122,7 @@ namespace NETworkManager.Settings
 
         // Application: PuTTY
         public static ConnectionMode PuTTY_DefaultConnectionMode => ConnectionMode.SSH;
+        public static string PuTTY_DefaultProfile => "NETworkManager";
         public static LogMode PuTTY_LogMode => LogMode.SessionLog;
         public static string PuTTY_LogPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AssemblyManager.Current.Name, "PuTTY_Log");
         public static string PuTTY_LogFileName => "&H_&Y-&M-&D_&T.log";

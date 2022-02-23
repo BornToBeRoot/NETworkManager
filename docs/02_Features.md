@@ -30,4 +30,12 @@ permalink: /Features
 - [Listeners](Documentation/Application/Listeners)
 - [ARP Table](Documentation/Application/ARPTable)
 
-Hosts can be stored in profiles, which can be used across all features. Individual settings such as the path to an SSH key can be stored here to override the global settings. The profile files can be stored encrypted on disk and protected with a master password to provide an additional layer of security.
+## Profiles
+Hosts can be stored in profiles, which can be used across all features. Individual settings such as the path to an SSH key can be stored here to override the group settings or global settings. The profile files can be stored encrypted on disk and protected with a master password to provide an additional layer of security for credentials.
+
+## Languages
+NETworkManager is available in 16 languages. [Here](https://www.transifex.com/BornToBeRoot/NETworkManager/dashboard/){:target="_blank"} you can find the list with all languages and the progress of the translation.
+
+If you miss a language, find missing or incorrect translations, you can request a language and help to improve the translation on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager){:target="_blank"}. 
+
+See also the [contributing guidelines](https://github.com/BornToBeRoot/NETworkManager/blob/master/CONTRIBUTING.md){:target="_blank"} if you want to contribute to the project.

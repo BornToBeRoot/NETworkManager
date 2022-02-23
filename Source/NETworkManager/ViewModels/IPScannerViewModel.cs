@@ -9,7 +9,6 @@ using System.Threading;
 using System.Collections.Generic;
 using NETworkManager.Models.Network;
 using System.Windows.Threading;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
@@ -343,11 +342,11 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                ProfileDialogManager.AddProfile(instance);
+                ProfileManager.AddProfile(ProfileDialogManager.ParseProfileInfo(instance));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroups(), ProfileEditMode.Add, profileInfo);
+            }, ProfileManager.GetGroupNames(), null, ProfileEditMode.Add, profileInfo);
 
             customDialog.Content = new ProfileDialog
             {
