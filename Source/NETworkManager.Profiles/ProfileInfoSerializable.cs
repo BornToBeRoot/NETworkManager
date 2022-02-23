@@ -1,8 +1,5 @@
-﻿using System.Xml.Serialization;
-
-namespace NETworkManager.Profiles
+﻿namespace NETworkManager.Profiles
 {
-    [XmlType("ProfileInfo")] // XML --> Has to mapped because of #378   
     public class ProfileInfoSerializable : ProfileInfo
     {
         /// <summary>

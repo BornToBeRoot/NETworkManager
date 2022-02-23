@@ -1,9 +1,7 @@
 <div align="center">       
   <h1>NETworkManager</h1>
-  <h3>A powerful tool for managing networks and troubleshoot network problems!</h3>
-  
+  <h3>A powerful tool for managing networks and troubleshoot network problems!</h3> 
   <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/master/docs/Preview.gif?raw=true" />
-  
   <p>   
     <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
       <img alt="All releases" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=for-the-badge&logo=github" />
@@ -40,6 +38,7 @@
 </div>
 
 # More informations
+- [Features](https://borntoberoot.net/NETworkManager/Features)
 - [Download](https://borntoberoot.net/NETworkManager/Download)
 - [Changelog](https://borntoberoot.net/NETworkManager/Changelog)
 - [Documentation](https://borntoberoot.net/NETworkManager/Documentation/Application)
@@ -49,7 +48,7 @@
 
 # Build
 __Requirements__
-- [SDK .NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+- [SDK .NET 6.x](https://dotnet.microsoft.com/download/dotnet/6.0)
 - Visual Studio 2019 or later with `.NET desktop development` and `Universal Windows Platform development` 
 
 __Optional__

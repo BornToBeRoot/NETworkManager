@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>Vizitka</value>
@@ -145,7 +145,7 @@
     <value>Preverjanje pristnosti</value>
   </data>
   <data name="Autostart" xml:space="preserve">
-    <value>Samodejni začetek</value>
+    <value>Samodejni zagon</value>
   </data>
   <data name="Calculator" xml:space="preserve">
     <value>Računalo</value>
@@ -624,7 +624,7 @@
     <value>Odmor (ms)</value>
   </data>
   <data name="TimeToWaitBetweenEachPing" xml:space="preserve">
-    <value>Čas čakanja med vsakim pingom</value>
+    <value>Čakalni čas med vsakim pingom</value>
   </data>
   <data name="TTL" xml:space="preserve">
     <value>TTL</value>
@@ -675,7 +675,7 @@
     <value>Dodatna ukazna vrstica</value>
   </data>
   <data name="Additionals" xml:space="preserve">
-    <value>Dodatniki</value>
+    <value>Dodatki</value>
   </data>
   <data name="AddProfileDots" xml:space="preserve">
     <value>Dodaj profil...</value>
@@ -771,9 +771,9 @@
     <value>Poverilnica</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Datoteke profila so šifrirane na disku z uporabo Rijndael (AES) z velikostjo ključa 256 bitov in velikostjo bloka 128 bitov v načinu CBC. Šifrirni ključ je izpeljan iz glavnega gesla z uporabo Rfc2898DeriveBytes (PBKDF2) s 1.000.000 ponovitvami. Ko je datoteka profila naložena, se med izvajanjem gesla shranijo kot SecureString. Za nekatere funkcije je treba geslo pretvoriti v običajni niz in ostane nešifrirano v pomnilniku, dokler jih zbiralnik smeti ne očisti. 
+    <value>Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
 
-To je nova funkcija, ki lahko še vedno vsebuje napake. Najprej varnostno kopirajte datoteke profila, preden omogočite šifriranje datotek profila! </value>
+First make a backup copy of your profile files before enabling encryption!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Po meri</value>
@@ -812,7 +812,7 @@ To je nova funkcija, ki lahko še vedno vsebuje napake. Najprej varnostno kopira
     <value>Izbriši vnos</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Izbrani profili bodo trajno izbrisani.</value>
+    <value>Selected profile will be deleted permanently.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Nastavitve DNS</value>
@@ -892,8 +892,8 @@ To je nova funkcija, ki lahko še vedno vsebuje napake. Najprej varnostno kopira
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="InheritHostFromDefault" xml:space="preserve">
-    <value>Podeduj gostitelja iz privzetega</value>
+  <data name="InheritHostFromGeneral" xml:space="preserve">
+    <value>Inherit host from general</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>Razpon IP</value>
@@ -1248,7 +1248,7 @@ Ustvarite enega...</value>
     <value>Širina</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Datoteke ni bilo mogoče dešifrirati z navedenim geslom. </value>
+    <value>Profile file could not be decrypted with the given password.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>Vneseno geslo je napačno.</value>
@@ -1992,12 +1992,14 @@ Uveljavitev sprememb te vrednosti zahteva ponovni zagon programa.</value>
 Za zagotavljanje dodatnih funkcij program uporablja internetne storitve, ki jih ne upravljam jaz. Nobeni podatki mi ne bodo nikoli poslani.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
-    <value>Ob zagonu programa ta v ozadju preveri, če je na GitHubu na voljo nova različica programa.</value>
+    <value>Ob zagonu programa ta v ozadju preveri, če je na GitHubu na voljo nova različica programa.
+
+URL: https://api.github.com/</value>
   </data>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
     <value>Javni naslov IP je določen prek ipify.org.
 
-URL: https://api.ipify.org/</value>
+URL: https://api.ipify.org and https://api6.ipify.org</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Zasebnost</value>
@@ -2069,7 +2071,7 @@ URL: https://api.ipify.org/</value>
     <value>Dobili ste "{0}" kot javni naslov IP od "{1}"!</value>
   </data>
   <data name="ResolvedXXXAsHostnameForIPAddressXXXMessage" xml:space="preserve">
-    <value>razrešeno je "{0}" kot ime gostitelja za naslov IP "{1}"!</value>
+    <value>Razrešeno je "{0}" kot ime gostitelja za naslov IP "{1}"!</value>
   </data>
   <data name="PublicIPAddressCheckIsDisabled" xml:space="preserve">
     <value>Preverjanje javnega naslova IP
@@ -2559,7 +2561,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Iskanje</value>
   </data>
   <data name="ApplicationName_NetworkInterface" xml:space="preserve">
-    <value>Omrežni vmesnik</value>
+    <value>Omrežna kartica</value>
   </data>
   <data name="ApplicationName_Ping" xml:space="preserve">
     <value>Ping</value>
@@ -2891,8 +2893,10 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
     <value>Profila ni bilo mogoče naložiti! </value>
   </data>
-  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
-    <value>Profila ni bilo mogoče naložiti in je morda poškodovan. Če je to nepričakovano ali je posledica posodobitve, prijavite to težavo na GitHubu! </value>
+  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
+    <value>If this happened after an update, you may need to migrate the profiles to a newer version. When you click "Migrate", a PowerShell window opens with the migration script. Check the path and press Enter.
+
+Otherwise, the profile may be corrupted and you want to report the issue on GitHub.</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Uredi skupino...</value>
@@ -2922,7 +2926,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Odkleni profil</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Odklenite datoteko profila, če želite dodati, spremeniti ali izbrisati profil! </value>
+    <value>Unlock the profile file to use the profiles!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>Izjava o omejitvi odgovornosti </value>
@@ -2934,13 +2938,11 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Ciljna mapa že vsebuje datoteke. Če kliknete 'Združi', se trenutni profili kopirajo v mapo. </value>
   </data>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Prepišem profile v ciljni mapi? 
+    <value>Overwrite profiles in destination folder?
 
-"Prepiši" bo datoteke profila kopiralo v ciljno mapo in prepisalo obstoječe datoteke profila. 
-"Združi" bo datoteke profila kopiralo v ciljno mapo, ne bo pa prepisalo datotek profila za izhod. 
-"Uporabi drugo mapo" bo uporabilo obstoječe datoteke profila v ciljni mapi. 
-
-Aplikacija se bo nato znova zagnala! </value>
+"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
+"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
+"Use other folder" will use the existing profile files in the destination folder.</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Uporabi drugo</value>
@@ -2958,93 +2960,91 @@ Aplikacija se bo nato znova zagnala! </value>
     <value>Skrito omrežje</value>
   </data>
   <data name="DevelopedAndMaintainedByX" xml:space="preserve">
-    <value>Developed and maintained by {0} with the help of the</value>
+    <value>Razvil in vzdržuje {0} s pomočjo</value>
   </data>
   <data name="ExternalService_ipify_Description" xml:space="preserve">
-    <value>A Simple Public IP Address API</value>
+    <value>Preprost API za javni IP naslov</value>
   </data>
   <data name="Library_AirspaceFixer_Description" xml:space="preserve">
-    <value>AirspacePanel fixes all Airspace issues with WPF-hosted Winforms.</value>
+    <value>AirspacePanel odpravlja vse težave z zračnim prostorom z Winforms, ki jih gosti WPF.</value>
   </data>
   <data name="Library_ControlzEx_Description" xml:space="preserve">
-    <value>Shared Controlz for WPF and ... more</value>
+    <value>Deljen nadzor za WPF in ... več </value>
   </data>
   <data name="Library_DnsClientNET_Description" xml:space="preserve">
-    <value>DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups</value>
+    <value>DnsClient.NET je preprosta, a zelo zmogljiva in visoko zmogljiva odprtokodna knjižnica za .NET Framework za iskanje DNS</value>
   </data>
   <data name="Library_Dragablz_Description" xml:space="preserve">
-    <value>Dragable and tearable tab control for WPF</value>
+    <value>Nadzor zavihkov, ki jih je mogoče povleči in trgati, za WPF</value>
   </data>
   <data name="Library_IPNetwork_Description" xml:space="preserve">
-    <value>C# library take care of complex network, IP, IPv4, IPv6, netmask, CIDR, subnet, subnetting, supernet, and supernetting calculation for .NET developers.</value>
+    <value>Knjižnica C# skrbi za kompleksno omrežje, IP, IPv4, IPv6, omrežno masko, CIDR, podomrežje, podomrežje, superomrežje in izračun superomrežij za razvijalce .NET.</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Simple, flexible, interactive &amp; powerful charts, maps and gauges for .Net</value>
+    <value>Preprosti, prilagodljivi, interaktivni in zmogljivi grafikoni, zemljevidi in merilniki za .Net</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
-    <value>A collection of loading indicators for WPF</value>
+    <value>Zbirka kazalnikov obremenitve za WPF</value>
   </data>
   <data name="Library_MahAppsMetroIconPacks_Description" xml:space="preserve">
-    <value>Some awesome icons for WPF and UWP all together...</value>
+    <value>Nekaj odličnih ikon za WPF in UWP, vse skupaj... </value>
   </data>
   <data name="Library_MahAppsMetro_Description" xml:space="preserve">
-    <value>A toolkit for creating Metro / Modern UI styled WPF apps.</value>
+    <value>Zbirka orodij za ustvarjanje aplikacij v slogu Metro/Modernega uporabniškega vmesnika WPF.</value>
   </data>
   <data name="Library_NewtonsoftJson_Description" xml:space="preserve">
-    <value>Json.NET is a popular high-performance JSON framework for .NET</value>
+    <value>Json.NET je priljubljen visokozmogljiv okvir JSON za .NET</value>
   </data>
   <data name="Library_Octokit_Description" xml:space="preserve">
-    <value>A GitHub API client library for .NET</value>
+    <value>Odjemalska knjižnica API GitHub za .NET</value>
   </data>
   <data name="Library_PSDicoveryProtocol_Description" xml:space="preserve">
-    <value>Capture and parse CDP and LLDP packets on local or remote computers</value>
+    <value>Zajeme in razčleni pakete CDP in LLDP na lokalnih ali oddaljenih računalnikih</value>
   </data>
   <data name="Library_SharpSNMP_Description" xml:space="preserve">
-    <value>Sharp SNMP Library - Open Source SNMP for .NET and Mono</value>
+    <value>Sharp SNMP knjižnica – odprtokodni SNMP za .NET in Mono</value>
   </data>
   <data name="Resource_Flag_Description" xml:space="preserve">
-    <value>A collection of all country flags in SVG</value>
+    <value>Zbirka vseh državnih zastav v SVG</value>
   </data>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
-    <value>List of Top-Level-Domains from iana.org, which is used to query whois servers of the TLD from whois.iana.org via port 43</value>
+    <value>Seznam domen najvišje ravni iz iana.org, ki se uporablja za poizvedovanje whois strežnikov TLD s whois.iana.org prek vrat 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Sanitized IEEE OUI Data from linuxnet.ca.</value>
+    <value>Razkuženi podatki IEEE OUI z linuxnet.ca.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
-    <value>Service Name and Transport Protocol Port Number Registry from iana.org.</value>
+    <value>Ime storitve in register številke vrat transportnega protokola z iana.org.</value>
   </data>
   <data name="License_ApacheLicense2dot0" xml:space="preserve">
-    <value>Apache License 2.0</value>
+    <value>Licenca Apache 2.0</value>
   </data>
   <data name="License_BDS2Clause" xml:space="preserve">
-    <value>BSD-2-Clause</value>
+    <value>BSD-2-klavzula</value>
   </data>
   <data name="License_MITLicense" xml:space="preserve">
-    <value>MIT License</value>
+    <value>Licenca MIT</value>
   </data>
   <data name="License_Unlicense" xml:space="preserve">
-    <value>Unlicense</value>
+    <value>Preklic licence</value>
   </data>
   <data name="Library_CsWinRT_Description" xml:space="preserve">
-    <value>C#/WinRT provides packaged WinRT projection support for the C# language.</value>
+    <value>C#/WinRT ponuja pakirano podporo za projekcijo WinRT za jezik C#.</value>
   </data>
   <data name="Library_PowerShellSDK_Description" xml:space="preserve">
-    <value>Runtime for hosting PowerShell</value>
+    <value>Runtime za gostovanje PowerShell</value>
   </data>
   <data name="Library_WebView2_Description" xml:space="preserve">
-    <value>The WebView2 control enables you to embed web technologies (HTML, CSS, and JavaScript) in your native applications powered by Microsoft Edge (Chromium).</value>
+    <value>Kontrolnik WebView2 vam omogoča, da spletne tehnologije (HTML, CSS in JavaScript) vdelate v svoje domače aplikacije, ki jih poganja Microsoft Edge (Chromium).</value>
   </data>
   <data name="Library_XamlBehaviorsWpf_Description" xml:space="preserve">
-    <value>Easily add interactivity to your apps using XAML Behaviors for WPF.</value>
+    <value>Preprosto dodajte interaktivnost svojim aplikacijam z uporabo XAML Behaviors for WPF. </value>
   </data>
   <data name="License_MicrosoftWebView2License" xml:space="preserve">
-    <value>Microsoft WebView2 License</value>
+    <value>Licenca Microsoft WebView2</value>
   </data>
   <data name="WarningMessage_ProfileFileNotEncryptedStoringPasswords" xml:space="preserve">
-    <value>The current profile file is not encrypted and passwords will stored unencrypted on disk! 
-
-Enable profile file encryption in Settings&gt;Profile to store credentials securely.</value>
+    <value>Trenutna datoteka profila ni šifrirana in gesla bodo shranjena nešifrirana na disku! Omogočite šifriranje datoteke profila v Nastavitve -&gt; Profil za varno shranjevanje poverilnic. </value>
   </data>
   <data name="ICMPv4" xml:space="preserve">
     <value>ICMPv4</value>
@@ -3098,15 +3098,48 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Odstrani naslov IPv4...</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_TotalLoginTimeLimitReached" xml:space="preserve">
-    <value>The remote session ended because the total login time limit was reached. This limit is set by the server administrator or by network policies.</value>
+    <value>Oddaljena seja se je končala, ker je bila dosežena skupna časovna omejitev za prijavo. To omejitev nastavi skrbnik strežnika ali politike omrežja.</value>
   </data>
   <data name="EnterValidHostname" xml:space="preserve">
-    <value>Enter a valid hostname!</value>
+    <value>Vnesite veljavno ime gostitelja!</value>
   </data>
   <data name="EnterValidHostnameAndPort" xml:space="preserve">
-    <value>Enter a valid hostname and port!</value>
+    <value>Vnesite veljavno ime gostitelja in vrata!</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
-    <value>Unable to reconnect to the remote session.</value>
+    <value>Ni mogoče znova vzpostaviti povezave z oddaljeno sejo.</value>
+  </data>
+  <data name="Migrate" xml:space="preserve">
+    <value>Migrate</value>
+  </data>
+  <data name="ReportOnGitHub" xml:space="preserve">
+    <value>Report on GitHub</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="AddGroup" xml:space="preserve">
+    <value>Add group</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Delete group</value>
+  </data>
+  <data name="DeleteGroupMessage" xml:space="preserve">
+    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
+  </data>
+  <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
+    <value>The name is already used!</value>
+  </data>
+  <data name="Resize" xml:space="preserve">
+    <value>Resize</value>
+  </data>
+  <data name="DeleteProfiles" xml:space="preserve">
+    <value>Delete profiles</value>
+  </data>
+  <data name="DeleteProfilesMessage" xml:space="preserve">
+    <value>Selected profiles will be deleted permanently.</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
+    <value>Unlock the profile file to add, change or delete a profile!</value>
   </data>
 </root>

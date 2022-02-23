@@ -19,7 +19,7 @@ namespace NETworkManager.ViewModels
     public class ProfileViewModel : ViewModelBase
     {
         #region Variables
-        private readonly bool _isLoading;
+        private readonly bool _isLoading = true;
 
         public bool IsProfileFileEncrypted => ProfileManager.LoadedProfileFile.IsEncrypted;
 
@@ -112,20 +112,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _tags = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _showUnlockCredentialsHint;
-        public bool ShowUnlockCredentialsHint
-        {
-            get => _showUnlockCredentialsHint;
-            set
-            {
-                if (value == _showUnlockCredentialsHint)
-                    return;
-
-                _showUnlockCredentialsHint = value;
                 OnPropertyChanged();
             }
         }
@@ -619,10 +605,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 // Validate the password string
-                if (value == null)
-                    RemoteDesktop_IsPasswordEmpty = true;
-                else
-                    RemoteDesktop_IsPasswordEmpty = string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+                RemoteDesktop_IsPasswordEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
                 _remoteDesktop_Password = value;
                 OnPropertyChanged();
@@ -2092,10 +2075,8 @@ namespace NETworkManager.ViewModels
         #endregion
         #endregion
 
-        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null)
+        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null)
         {
-            _isLoading = true;
-
             // Load the view
             ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
             ProfileViews.SortDescriptions.Add(new SortDescription(nameof(ProfileViewInfo.Name), ListSortDirection.Ascending));
@@ -2111,7 +2092,10 @@ namespace NETworkManager.ViewModels
                 Name += " - " + Localization.Resources.Strings.CopyNoun;
 
             Host = profileInfo.Host;
-            Group = string.IsNullOrEmpty(profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Localization.Resources.Strings.Default) : profileInfo.Group;
+
+            // Try to get group (name) as parameter, then from profile, then the first in the list of groups, then the default group            
+            Group = group ?? (string.IsNullOrEmpty(profileInfo.Group) ? (groups.Count > 0 ? groups.OrderBy(x => x).First() : Localization.Resources.Strings.Default) : profileInfo.Group);
+
             Tags = profileInfo.Tags;
 
             Groups = CollectionViewSource.GetDefaultView(groups);
@@ -2321,13 +2305,15 @@ namespace NETworkManager.ViewModels
         }
 
         public ICommand RemoteDesktopPasswordChangedCommand => new RelayCommand(p => RemoteDesktopPasswordChangedAction());
+
+        #endregion
+
+        #region Methods      
         private void RemoteDesktopPasswordChangedAction()
         {
             RemoteDesktop_PasswordChanged = true;
         }
-        #endregion
 
-        #region Methods
         private void ChangeNetworkConnectionTypeSettings(NetworkConnectionType connectionSpeed)
         {
             switch (connectionSpeed)

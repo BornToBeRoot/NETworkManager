@@ -326,7 +326,6 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                         <MenuItem Header="{x:Static localization:Strings.Hostname}" Command="{Binding CopySelectedHostnameCommand}" IsEnabled="{Binding Data.SelectedHostResult.Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -336,7 +335,6 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                         <MenuItem Header="{x:Static localization:Strings.MACAddress}" Command="{Binding CopySelectedMACAddressCommand}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -346,7 +344,6 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
                         <MenuItem Header="{x:Static localization:Strings.Vendor}" Command="{Binding CopySelectedVendorCommand}" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">

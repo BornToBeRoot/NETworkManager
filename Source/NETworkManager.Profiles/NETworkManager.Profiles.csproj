@@ -1,26 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <ProjectGuid>{D3B37F13-E8E6-4218-9E8E-96D52432A9CF}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>NETworkManager.Profiles</RootNamespace>
-    <AssemblyName>NETworkManager.Profiles</AssemblyName>
-    <TargetFramework>net5.0-windows10.0.17763.0</TargetFramework>
-    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
-    <UseWPF>true</UseWPF>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="MahApps.Metro" Version="2.4.7" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.8.0" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
-    <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj" />
-  </ItemGroup>
-
+	<PropertyGroup>
+		<ProjectGuid>{D3B37F13-E8E6-4218-9E8E-96D52432A9CF}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<RootNamespace>NETworkManager.Profiles</RootNamespace>
+		<AssemblyName>NETworkManager.Profiles</AssemblyName>
+		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
+		<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+		<SelfContained>false</SelfContained>
+		<UseWPF>true</UseWPF>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
+	<ItemGroup>
+		<FrameworkReference Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms" TargetingPackVersion="6.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Resources\Migrate-Profiles.ps1" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="Resources\Migrate-Profiles.ps1">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
+		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
+		<ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj" />
+	</ItemGroup>
 </Project>
