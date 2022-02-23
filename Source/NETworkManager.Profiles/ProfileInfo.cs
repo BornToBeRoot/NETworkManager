@@ -2,6 +2,7 @@
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
+using System.Collections.Generic;
 using System.Security;
 using System.Xml.Serialization;
 
@@ -10,7 +11,6 @@ namespace NETworkManager.Profiles
     /// <summary>
     /// Class represents a profile.
     /// </summary>
-    [XmlType("ProfileInfoLegacy")] // XML --> Deprecated because of #378   
     public class ProfileInfo
     {
         /// <summary>
@@ -26,7 +26,7 @@ namespace NETworkManager.Profiles
         /// <summary>
         /// Name of the group. Profiles are grouped based on the name.
         /// </summary>
-        public string Group { get; set; }
+         public string Group { get; set; }
 
         /// <summary>
         /// Tags to classify the profiles and to filter by it.
@@ -191,7 +191,7 @@ namespace NETworkManager.Profiles
         /// </summary>
         public ProfileInfo(ProfileInfo profile)
         {
-            Name = profile.Name;
+            Name = profile.Name;            
             Host = profile.Host;
             Group = profile.Group;
             Tags = profile.Tags;

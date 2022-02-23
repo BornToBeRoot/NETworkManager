@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace NETworkManager.Utilities
 {
@@ -26,16 +25,7 @@ namespace NETworkManager.Utilities
         /// <param name="info"><see cref="CustomCommandInfo"/> which is executed.</param>
         public static void Run(CustomCommandInfo info)
         {
-            var processStartInfo = new ProcessStartInfo()
-            {
-                FileName = info.FilePath,
-                UseShellExecute = true
-            };
-
-            if (!string.IsNullOrEmpty(info.Arguments))
-                processStartInfo.Arguments = info.Arguments;
-
-            Process.Start(processStartInfo);
+            ExternalProcessStarter.RunProcess(info.FilePath, info.Arguments);
         }
     }
 }

@@ -5,8 +5,8 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <!-- Profile dialog -->
-    <Style x:Key="ProfileMetroDialog" TargetType="{x:Type dialog:BaseMetroDialog}" BasedOn="{StaticResource {x:Type dialog:BaseMetroDialog}}">
+    <!-- Wide dialog for a lot of content -->
+    <Style x:Key="LargeMetroDialog" TargetType="{x:Type dialog:BaseMetroDialog}" BasedOn="{StaticResource {x:Type dialog:BaseMetroDialog}}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type dialog:BaseMetroDialog}">

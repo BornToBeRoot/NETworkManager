@@ -51,7 +51,6 @@
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Grid.Column="0" Width="20" Height="20" Margin="10,0">
                                         <Rectangle.OpacityMask>
-                                            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved, can not bind to (networkManager:SettingsViewInfo.Icon) -->
                                             <VisualBrush Stretch="Uniform" Visual="{Binding Icon}" />
                                         </Rectangle.OpacityMask>
                                         <Rectangle.Style>
@@ -396,7 +395,7 @@
                                         <ColumnDefinition Width="1*" />
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding IPScanner_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPRange}" />
                                     <TextBox x:Name="TextBoxIPScannerIPRange" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding IPScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetWithCIDR}">
@@ -453,7 +452,7 @@
                                         <ColumnDefinition Width="1*" />
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding PortScanner_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                     <TextBox x:Name="TextBoxPortScannerHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding PortScanner_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
@@ -473,6 +472,7 @@
                                                                 <Binding Path="PortScanner_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                        <validators:MultipleHostsRangeValidator ValidatesOnTargetUpdated="True" />
                                                                     </Binding.ValidationRules>
                                                                 </Binding>
                                                             </Setter.Value>
@@ -517,7 +517,7 @@
                                         <ColumnDefinition Width="1*" />
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding PingMonitor_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                     <TextBox x:Name="TextBoxPingMonitorHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding PingMonitor_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
@@ -537,6 +537,7 @@
                                                                 <Binding Path="PingMonitor_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                        <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                     </Binding.ValidationRules>
                                                                 </Binding>
                                                             </Setter.Value>
@@ -571,7 +572,7 @@
                                         <ColumnDefinition Width="1*" />
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding Traceroute_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                     <TextBox x:Name="TextBoxTracerouteHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Traceroute_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
@@ -591,6 +592,7 @@
                                                                 <Binding Path="Traceroute_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                        <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                     </Binding.ValidationRules>
                                                                 </Binding>
                                                             </Setter.Value>
@@ -625,7 +627,7 @@
                                         <ColumnDefinition Width="1*" />
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding DNSLookup_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                     <TextBox x:Name="TextBoxDNSLookupHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding DNSLookup_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
@@ -645,6 +647,7 @@
                                                                 <Binding Path="DNSLookup_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                        <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                     </Binding.ValidationRules>
                                                                 </Binding>
                                                             </Setter.Value>
@@ -737,7 +740,7 @@
                                         <ColumnDefinition Width="1*" />
                                         <ColumnDefinition Width="34" />                                        
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding RemoteDesktop_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                     <TextBox x:Name="TextBoxRemoteDesktopHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding RemoteDesktop_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
@@ -757,6 +760,7 @@
                                                                 <Binding Path="RemoteDesktop_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                        <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                     </Binding.ValidationRules>
                                                                 </Binding>
                                                             </Setter.Value>
@@ -774,6 +778,7 @@
                                             <Binding Path="RemoteDesktop_Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
                                                     <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                    <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
@@ -976,7 +981,7 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.RemoteConsole}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding PowerShell_EnableRemoteConsole}" />
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnContent="" OffContent="" IsOn="{Binding PowerShell_InheritHost}" IsEnabled="{Binding PowerShell_EnableRemoteConsole}" />
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Host}" />
                                 <TextBox x:Name="TextBoxPowerShellHost" Grid.Column="2" Grid.Row="4" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
@@ -1005,6 +1010,7 @@
                                                             <Binding Path="PowerShell_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                 <Binding.ValidationRules>
                                                                     <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                    <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                 </Binding.ValidationRules>
                                                             </Binding>
                                                         </Setter.Value>
@@ -1081,7 +1087,7 @@
                                         <RadioButton Content="{x:Static localization:Strings.Rlogin}" IsChecked="{Binding PuTTY_UseRlogin}" />
                                         <RadioButton Content="{x:Static localization:Strings.RAW}" IsChecked="{Binding PuTTY_UseRAW}" />
                                     </WrapPanel>
-                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.InheritHostFromDefault}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.InheritHostFromGeneral}" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OnContent="" OffContent="" Visibility="{Binding PuTTY_UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" IsOn="{Binding PuTTY_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="4">
                                         <TextBlock.Style>
@@ -1247,7 +1253,7 @@
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="34" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding TigerVNC_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
                                 <TextBox x:Name="TextBoxTigerVNCHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding TigerVNC_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
@@ -1267,6 +1273,7 @@
                                                             <Binding Path="TigerVNC_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                 <Binding.ValidationRules>
                                                                     <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                    <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                 </Binding.ValidationRules>
                                                             </Binding>
                                                         </Setter.Value>
@@ -1410,7 +1417,7 @@
                                         <ColumnDefinition Width="1*" />
                                         <ColumnDefinition Width="34" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromDefault}" />
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                     <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding Whois_InheritHost}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Domain}" />
                                     <TextBox x:Name="TextBoxWhoisDomain" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding Whois_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
@@ -1430,6 +1437,7 @@
                                                                 <Binding Path="Whois_Domain" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                     <Binding.ValidationRules>
                                                                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                                        <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                                                     </Binding.ValidationRules>
                                                                 </Binding>
                                                             </Setter.Value>

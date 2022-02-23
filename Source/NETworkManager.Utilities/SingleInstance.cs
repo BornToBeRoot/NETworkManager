@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 
 namespace NETworkManager.Utilities
 {    
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class SingleInstance
     {
         public const int HWND_BROADCAST = 0xffff;
