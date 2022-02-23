@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>关于</value>
@@ -769,9 +769,9 @@
     <value>凭据</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>配置文件在磁盘上使用Rijndael（AES）加密，在CBC模式下密钥大小为256位，块大小为128位。加密密钥是使用Rfc2898DeriveBytes（PBKDF2）通过1000000次迭代从主密码派生的。在运行时，一旦加载概要文件，密码就存储为安全字符串。对于某些函数，密码必须转换为普通字符串，并在内存中保持未加密状态，直到垃圾收集器将其清除。
+    <value>Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
 
-这是一个可能仍然包含bug的新特性。在启用配置文件加密之前，请先备份您的配置文件！</value>
+First make a backup copy of your profile files before enabling encryption!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>自定义</value>
@@ -810,7 +810,7 @@
     <value>删除条目</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>所选配置将永久删除。</value>
+    <value>Selected profile will be deleted permanently.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>DNS配置</value>
@@ -891,7 +891,7 @@
     <value>ID</value>
   </data>
   <data name="InheritHostFromGeneral" xml:space="preserve">
-    <value>从默认值继承主机</value>
+    <value>Inherit host from general</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>IP范围</value>
@@ -1249,7 +1249,7 @@
     <value>宽度</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>无法用给定的密码解密该文件。</value>
+    <value>Profile file could not be decrypted with the given password.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>输入密码有误。</value>
@@ -2899,8 +2899,10 @@ $$hostname$$	--&gt;	主机名</value>
   <data name="ProfileCouldNotBeLoaded" xml:space="preserve">
     <value>配置文件无法加载!</value>
   </data>
-  <data name="ProfileCouldNotBeLoadedAndMayBeCorruptedMessage" xml:space="preserve">
-    <value>无法加载配置文件，可能已损坏。如果这是意外的或由于更新，请在GitHub上报告这个问题!</value>
+  <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
+    <value>If this happened after an update, you may need to migrate the profiles to a newer version. When you click "Migrate", a PowerShell window opens with the migration script. Check the path and press Enter.
+
+Otherwise, the profile may be corrupted and you want to report the issue on GitHub.</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>编辑组</value>
@@ -2930,7 +2932,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>打开配置文件</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>解锁配置文件添加，更改或删除配置文件!</value>
+    <value>Unlock the profile file to use the profiles!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>免责声明</value>
@@ -2942,15 +2944,11 @@ $$hostname$$	--&gt;	主机名</value>
     <value>目标文件夹已经包含文件。如果单击“合并”，当前配置文件将复制到文件夹中。</value>
   </data>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>覆盖目标文件夹中的配置文件?
- 
-“覆盖”将把配置文件复制到目标文件夹，并覆盖现有的配置文件。
- 
-“合并”将把配置文件复制到目标文件夹，但不会覆盖现有的配置文件。
- 
-“使用其他文件夹”将使用目标文件夹中的现有配置文件。
- 
-应用程序将在之后重新启动!</value>
+    <value>Overwrite profiles in destination folder?
+
+"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
+"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
+"Use other folder" will use the existing profile files in the destination folder.</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>使用其他</value>
@@ -3118,5 +3116,38 @@ $$hostname$$	--&gt;	主机名</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_UnableToReconnectToRemoteSession" xml:space="preserve">
     <value>无法重新连接远程会话。</value>
+  </data>
+  <data name="Migrate" xml:space="preserve">
+    <value>Migrate</value>
+  </data>
+  <data name="ReportOnGitHub" xml:space="preserve">
+    <value>Report on GitHub</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="AddGroup" xml:space="preserve">
+    <value>Add group</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Delete group</value>
+  </data>
+  <data name="DeleteGroupMessage" xml:space="preserve">
+    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
+  </data>
+  <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
+    <value>The name is already used!</value>
+  </data>
+  <data name="Resize" xml:space="preserve">
+    <value>Resize</value>
+  </data>
+  <data name="DeleteProfiles" xml:space="preserve">
+    <value>Delete profiles</value>
+  </data>
+  <data name="DeleteProfilesMessage" xml:space="preserve">
+    <value>Selected profiles will be deleted permanently.</value>
+  </data>
+  <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
+    <value>Unlock the profile file to add, change or delete a profile!</value>
   </data>
 </root>
