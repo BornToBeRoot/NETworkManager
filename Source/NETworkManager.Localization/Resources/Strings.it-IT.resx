@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>Informazioni programma</value>
@@ -770,13 +770,10 @@
     <value>Credenziali</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>I file del profilo vengono crittografati su disco usando Rijndael (AES) con una dimensione della chiave di 256 bit e una dimensione del blocco di 128 bit in modalità CBC. 
-La chiave di crittografia è derivata da una password principale usando Rfc2898DeriveBytes (PBKDF2) con 1.000.000 di iterazioni. 
-In fase di esecuzione, le password vengono archiviate come SecureString una volta caricato il file del profilo. 
-Per alcune funzioni, la password deve essere convertita in una stringa normale e rimane non crittografata in memoria finché il Garbage Collector non le pulisce.
-
-Questa è una nuova funzionalità che potrebbe ancora contenere bug.
-Esegui il backup dei file del profilo prima di abilitare la crittografia dei file del profilo!</value>
+    <value>I file profilo vengono crittografati su disco usando AES con una dimensione della chiave di 256 bit e una dimensione del blocco di 128 bit in modalità CBC. 
+La chiave di crittografia deriva da una password principale usando Rfc2898DeriveBytes (PBKDF2) con 1.000.000 iterazioni. 
+In fase di runtime, le password vengono memorizzate come SecureString una volta caricato il file del profilo. 
+Per alcune funzioni, la password deve essere convertita in una stringa normale e rimane non crittografata in memoria fino a quando il garbage collector non le pulisce.</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Personalizza</value>
@@ -1260,7 +1257,7 @@ Tutte le impostazioni sono state ripristinate (i file di profilo non sono intere
     <value>Larghezza</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Impossibile decriptare il file con la password fornita.</value>
+    <value>Impossibile decifrare il file profilo con la password specificata.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>La password inserita non è corretta.</value>
