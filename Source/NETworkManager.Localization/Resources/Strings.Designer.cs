@@ -5478,9 +5478,9 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Profile files are encrypted on disk using Rijndael (AES) with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
         ///
-        ///This is a new feature that may still c [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///First make a backup copy of your profile files be [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         public static string ProfileEncryptionDisclaimer {
             get {
@@ -8976,7 +8976,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Could not be decrypted the file with the given password. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Profile file could not be decrypted with the given password. ähnelt.
         /// </summary>
         public static string WrongPasswordDecryptionFailedMessage {
             get {
