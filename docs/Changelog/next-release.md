@@ -18,7 +18,7 @@ permalink: /Changelog/next-release
 -   
   
 ## Improvements
-- 
+- Profile migration dialog improved [#1393](https://github.com/BornToBeRoot/NETworkManager/pull/1393){:target="_blank"}
 
 ## Bugfixes
 - 

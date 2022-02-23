@@ -26,7 +26,7 @@ param (
 )
 
 Write-Host "=== NETworkManager ===`n" -ForegroundColor Green
-Write-Host "Migrate profiles to versions $NETworkManagerVersion`n"
+Write-Host "Migrate profiles to version $NETworkManagerVersion`n"
 
 Write-Host "If you use encrypted profiles:`n  1) Disable profile encryption for all encrypted profiles with the previous NETworkManager version`n     https://borntoberoot.net/NETworkManager/FAQ#how-to-disable-profile-file-encryption`n  2) Run this script to migrate the profiles`n  3) Re-enable profile encryption with the newest release of NETworkManager`n     https://borntoberoot.net/NETworkManager/FAQ#how-to-enable-profile-file-encryption`n" -ForegroundColor Yellow
 
@@ -36,7 +36,7 @@ $prompt = ($defaultValue,$prompt)[[bool]$prompt]
 
 Write-Host ""
 
-if(-not(Test-Path -Path $prompt))
+if(-not(Test-Path -Path $prompt -PathType Container))
 {
     Write-Host "$prompt does not exist!" -ForegroundColor Red
     return
@@ -51,7 +51,7 @@ foreach($file in Get-ChildItem -Path $prompt -Filter "*.xml")
         continue
     }
     
-    Copy-Item $file.FullName -Destination "$($file.FullName).backup"
+    Copy-Item $file.FullName -Destination "$($file.FullName).$(Get-Date -f yyyyMMdd_HHmmss).backup"
 
     $Content = Get-Content -Path $file.FullName -Raw
     $Content = $Content -replace "<ProfileInfo>","<ProfileInfoSerializable>"
