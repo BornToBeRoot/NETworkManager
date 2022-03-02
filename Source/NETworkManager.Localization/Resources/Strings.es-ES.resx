@@ -769,9 +769,9 @@
     <value>Credencial</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+    <value>Los archivos de perfil se cifran en el disco utilizando AES con un tamaño de clave de 256 bits y un tamaño de bloque de 128 bits en modo CBC. La clave de cifrado se deriva de una contraseña maestra utilizando Rfc2898DeriveBytes (PBKDF2) con 1.000.000 de iteraciones. En tiempo de ejecución, las contraseñas se almacenan como SecureString una vez cargado el archivo de perfil. Para algunas funciones, la contraseña debe convertirse en una cadena normal y permanece sin cifrar en la memoria hasta que el recolector de basura las limpia.
 
-First make a backup copy of your profile files before enabling encryption!</value>
+¡Primero haz un respaldo de tus archivos de perfil antes de habilitar el cifrado!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Personalizado</value>
@@ -810,7 +810,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>Eliminar entrada</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Selected profile will be deleted permanently.</value>
+    <value>El perfil seleccionado será eliminado de forma permanente.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Configuración automática de DNS</value>
@@ -891,7 +891,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>ID</value>
   </data>
   <data name="InheritHostFromGeneral" xml:space="preserve">
-    <value>Inherit host from general</value>
+    <value>Heredar host de general</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>Rango de IP</value>
@@ -1247,7 +1247,7 @@ Crear uno...</value>
     <value>Ancho</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Profile file could not be decrypted with the given password.</value>
+    <value>El archivo de perfil no se pudo descifrar con la contraseña proporcionada.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>La contraseña introducida no es correcta.</value>
@@ -2893,9 +2893,9 @@ $$hostname$$	--&gt;	Nombre del host</value>
     <value>¡No se pudo cargar el perfil!</value>
   </data>
   <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>If this happened after an update, you may need to migrate the profiles to a newer version. When you click "Migrate", a PowerShell window opens with the migration script. Check the path and press Enter.
+    <value>Si esto sucedió después de una actualización, es posible que debas migrar los perfiles a una versión más nueva. Al hacer clic en "Migrar", se abre una ventana de PowerShell con el script de migración. Verifica la ruta y presiona Entrar.
 
-Otherwise, the profile may be corrupted and you want to report the issue on GitHub.</value>
+De lo contrario, es posible que el perfil esté dañado y quieras informar del problema en GitHub.</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Editar grupo...</value>
@@ -2925,7 +2925,7 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>Desbloquear perfil</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Unlock the profile file to use the profiles!</value>
+    <value>¡Desbloquear el archivo de perfil para usar los perfiles!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>Descargo de responsabilidad</value>
@@ -2937,11 +2937,11 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>La carpeta de destino ya contiene archivos. Si hace clic en Fusionar, los perfiles actuales se copiaran a la carpeta.</value>
   </data>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite profiles in destination folder?
+    <value>¿Sobrescribir los perfiles en la carpeta de destino?
 
-"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
-"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
-"Use other folder" will use the existing profile files in the destination folder.</value>
+"Sobrescribir" copiará los archivos de perfil en la carpeta de destino y sobrescribirá los archivos de perfil existentes.
+"Fusionar" copiará los archivos de perfil en la carpeta de destino, pero no sobrescribirá los archivos de perfil existentes.
+"Usar otra carpeta" utilizará los archivos de perfil existentes en la carpeta de destino.</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Usar otro</value>
@@ -3111,36 +3111,36 @@ Habilita el cifrado de archivos de perfil en Configuración &gt; Perfil para alm
     <value>No se puede reconectar a la sesión remota.</value>
   </data>
   <data name="Migrate" xml:space="preserve">
-    <value>Migrate</value>
+    <value>Migrar</value>
   </data>
   <data name="ReportOnGitHub" xml:space="preserve">
-    <value>Report on GitHub</value>
+    <value>Informar en GitHub</value>
   </data>
   <data name="Groups" xml:space="preserve">
-    <value>Groups</value>
+    <value>Grupos</value>
   </data>
   <data name="AddGroup" xml:space="preserve">
-    <value>Add group</value>
+    <value>Añadir grupo</value>
   </data>
   <data name="DeleteGroup" xml:space="preserve">
-    <value>Delete group</value>
+    <value>Eliminar grupo</value>
   </data>
   <data name="DeleteGroupMessage" xml:space="preserve">
-    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
+    <value>El grupo seleccionado y todos los perfiles dentro de este grupo serán eliminados permanentemente.</value>
   </data>
   <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
-    <value>The name is already used!</value>
+    <value>¡El nombre ya está en uso!</value>
   </data>
   <data name="Resize" xml:space="preserve">
-    <value>Resize</value>
+    <value>Redimensionar</value>
   </data>
   <data name="DeleteProfiles" xml:space="preserve">
-    <value>Delete profiles</value>
+    <value>Eliminar perfiles</value>
   </data>
   <data name="DeleteProfilesMessage" xml:space="preserve">
-    <value>Selected profiles will be deleted permanently.</value>
+    <value>Los perfiles seleccionados serán eliminados permanentemente.</value>
   </data>
   <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
-    <value>Unlock the profile file to add, change or delete a profile!</value>
+    <value>¡Desbloquear el archivo de perfil para añadir, cambiar o eliminar un perfil!</value>
   </data>
 </root>
