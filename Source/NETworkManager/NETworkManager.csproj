@@ -41,7 +41,7 @@
 		<PackageReference Include="AirspaceFixer" Version="1.0.5" />
 		<PackageReference Include="DnsClient" Version="1.6.0" />
 		<PackageReference Include="Dragablz" Version="0.0.3.223" />
-		<PackageReference Include="IPNetwork2" Version="2.5.402" />
+		<PackageReference Include="IPNetwork2" Version="2.5.407" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.4.0" />
 		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 		<PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
