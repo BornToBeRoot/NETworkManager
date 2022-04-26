@@ -13,9 +13,9 @@ Date: **22.2.2022**
 
 | Download | Checksum [SHA256] |
 |---|---|
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.2.22.0/NETworkManager_2022.2.22.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn btn-blue">Setup</button></a> | `F0CF905B14622588E658977BC2E7B85042858FA4191CDAEF4F84C1BAE2DC9311` |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.2.22.0/NETworkManager_2022.2.22.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn btn-blue">Portable</button></a> | `241F02978697BAF2E8BD695671D5197C081CB44C5D52925BC30CC3CECF0A4592` |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.2.22.0/NETworkManager_2022.2.22.0_Archive.zip' target='_blank'><button type="button" name="button" class="btn btn-blue">Archive</button></a> | `DC5FC8FF4FC61E21F9D795B39E28C8CCDEC2FD4F01323031F27D691A93563CF8` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.2.22.0/NETworkManager_2022.2.22.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn">Setup</button></a> | `F0CF905B14622588E658977BC2E7B85042858FA4191CDAEF4F84C1BAE2DC9311` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.2.22.0/NETworkManager_2022.2.22.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn">Portable</button></a> | `241F02978697BAF2E8BD695671D5197C081CB44C5D52925BC30CC3CECF0A4592` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.2.22.0/NETworkManager_2022.2.22.0_Archive.zip' target='_blank'><button type="button" name="button" class="btn">Archive</button></a> | `DC5FC8FF4FC61E21F9D795B39E28C8CCDEC2FD4F01323031F27D691A93563CF8` |
 
 :warning: [BREAKING CHANGE] :warning:
 
