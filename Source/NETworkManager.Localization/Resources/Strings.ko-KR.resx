@@ -769,9 +769,9 @@
     <value>자격 증명</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+    <value>프로필 파일은 CBC 모드에서 키 크기 256비트, 블록 크기 128비트의 AES를 사용하여 디스크에서 암호화됩니다. 암호화 키는 1,000,000회 반복하는 Rfc2898DeriveBytes (PBKDF2)를 사용하는 마스터 암호에서 파생됩니다. 런타임에 프로필 파일이 로드되면 암호가 SecureString으로 저장됩니다. 일부 함수의 경우 암호를 일반 문자열로 변환해야 하며 가비지 수집기가 암호를 정리할 때까지 메모리에 암호화되지 않은 상태로 남아 있습니다.
 
-First make a backup copy of your profile files before enabling encryption!</value>
+암호화를 활성화하기 전에 먼저 프로필 파일의 백업 복사본을 만드십시오!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>사용자 정의</value>
@@ -1247,7 +1247,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>너비</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Profile file could not be decrypted with the given password.</value>
+    <value>지정된 암호로 프로필 파일의 암호를 해독할 수 없습니다.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>입력한 암호가 잘못되었습니다.</value>
