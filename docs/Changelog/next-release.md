@@ -21,7 +21,7 @@ permalink: /Changelog/next-release
 - Profile migration dialog improved [#1393](https://github.com/BornToBeRoot/NETworkManager/pull/1393){:target="_blank"}
 
 ## Bugfixes
-- 
+- Fixed some rare cases where the profile file was overwritten [#1495](https://github.com/BornToBeRoot/NETworkManager/pull/1425){:target="_blank"}
 
 ## Other
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}

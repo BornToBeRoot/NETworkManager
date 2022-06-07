@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using System.Diagnostics;
+using System.Windows;
 
 namespace NETworkManager.ViewModels
 {
@@ -270,8 +271,11 @@ namespace NETworkManager.ViewModels
                 SetGroupView();
             }
 
-            Groups?.Refresh();
-            Profiles?.Refresh();
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                Groups?.Refresh();
+                Profiles?.Refresh();
+            }));
         }
 
         public void OnProfileDialogOpen()

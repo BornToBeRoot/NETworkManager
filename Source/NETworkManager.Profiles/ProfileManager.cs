@@ -207,7 +207,7 @@ namespace NETworkManager.Profiles
 
             if (switchProfile)
             {
-                SwitchProfile(newProfileFileInfo, false);
+                Switch(newProfileFileInfo, false);
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
 
@@ -223,7 +223,7 @@ namespace NETworkManager.Profiles
         {
             if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
             {
-                SwitchProfile(ProfileFiles.FirstOrDefault(x => !x.Equals(profileFileInfo)));
+                Switch(ProfileFiles.FirstOrDefault(x => !x.Equals(profileFileInfo)));
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
 
@@ -271,7 +271,7 @@ namespace NETworkManager.Profiles
             // Switch profile, if it was previously loaded
             if (switchProfile)
             {
-                SwitchProfile(newProfileFileInfo, false);
+                Switch(newProfileFileInfo, false);
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
 
@@ -322,7 +322,7 @@ namespace NETworkManager.Profiles
             // Switch profile, if it was previously loaded
             if (switchProfile)
             {
-                SwitchProfile(newProfileFileInfo, false);
+                Switch(newProfileFileInfo, false);
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
 
@@ -363,7 +363,7 @@ namespace NETworkManager.Profiles
             // Switch profile, if it was previously loaded
             if (switchProfile)
             {
-                SwitchProfile(newProfileFileInfo, false);
+                Switch(newProfileFileInfo, false);
                 LoadedProfileFileChanged(LoadedProfileFile);
             }
 
@@ -446,12 +446,28 @@ namespace NETworkManager.Profiles
             ProfilesChanged = false;
         }
 
-        public static void SwitchProfile(ProfileFileInfo info, bool saveLoadedProfiles = true)
+        /// <summary>
+        /// Method to unload the currently loaded profile file.
+        /// </summary>
+        /// <param name="saveLoadedProfiles">Save loaded profile file (default is true)</param>
+        public static void Unload(bool saveLoadedProfiles = true)
         {
             if (saveLoadedProfiles && LoadedProfileFile != null && ProfilesChanged)
                 Save();
 
+            LoadedProfileFile = null;
+
             Reset();
+        }
+
+        /// <summary>
+        /// Method to switch to another profile file.
+        /// </summary>
+        /// <param name="info">New <see cref="ProfileFileInfo"/> to load.</param>
+        /// <param name="saveLoadedProfiles">Save loaded profile file (defualt is true)</param>
+        public static void Switch(ProfileFileInfo info, bool saveLoadedProfiles = true)
+        {
+            Unload(saveLoadedProfiles);
 
             Load(info);
         }

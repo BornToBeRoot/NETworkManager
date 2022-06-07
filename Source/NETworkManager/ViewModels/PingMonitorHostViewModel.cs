@@ -474,8 +474,11 @@ namespace NETworkManager.ViewModels
         {
             if (!_isViewActive)
                 return;
-
-            Profiles.Refresh();
+                
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                Profiles.Refresh();
+            }));
         }
 
         public void OnProfileDialogOpen()

@@ -1024,6 +1024,8 @@ namespace NETworkManager
                 {
                     await this.HideMetroDialogAsync(customDialog).ConfigureAwait(false);
 
+                    ProfileManager.Unload();
+
                     IsProfileFileLocked = true;
                 });
 
@@ -1044,7 +1046,7 @@ namespace NETworkManager
         {
             try
             {
-                ProfileManager.SwitchProfile(info);
+                ProfileManager.Switch(info);
 
                 IsProfileFileLocked = false;
             }
