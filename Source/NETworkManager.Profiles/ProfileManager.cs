@@ -446,6 +446,10 @@ namespace NETworkManager.Profiles
             ProfilesChanged = false;
         }
 
+        /// <summary>
+        /// Method to unload the currently loaded profile file.
+        /// </summary>
+        /// <param name="saveLoadedProfiles">Save loaded profile file (default is true)</param>
         public static void Unload(bool saveLoadedProfiles = true)
         {
             if (saveLoadedProfiles && LoadedProfileFile != null && ProfilesChanged)
@@ -456,6 +460,11 @@ namespace NETworkManager.Profiles
             Reset();
         }
 
+        /// <summary>
+        /// Method to switch to another profile file.
+        /// </summary>
+        /// <param name="info">New <see cref="ProfileFileInfo"/> to load.</param>
+        /// <param name="saveLoadedProfiles">Save loaded profile file (defualt is true)</param>
         public static void Switch(ProfileFileInfo info, bool saveLoadedProfiles = true)
         {
             Unload(saveLoadedProfiles);
