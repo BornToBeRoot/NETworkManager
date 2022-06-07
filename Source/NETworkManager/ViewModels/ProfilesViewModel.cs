@@ -270,8 +270,11 @@ namespace NETworkManager.ViewModels
                 SetGroupView();
             }
 
-            Groups?.Refresh();
-            Profiles?.Refresh();
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                Groups?.Refresh();
+                Profiles?.Refresh();
+            }));
         }
 
         public void OnProfileDialogOpen()

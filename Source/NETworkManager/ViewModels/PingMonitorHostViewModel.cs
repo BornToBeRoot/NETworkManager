@@ -474,6 +474,7 @@ namespace NETworkManager.ViewModels
         {
             if (!_isViewActive)
                 return;
+                
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 Profiles.Refresh();
