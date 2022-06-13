@@ -30,7 +30,7 @@
 		<EmbeddedResource Include="Resources\PSDiscoveryProtocol.psm1" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="DnsClient" Version="1.6.0" />
+		<PackageReference Include="DnsClient" Version="1.6.1" />
 		<PackageReference Include="IPNetwork2" Version="2.5.422" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.4.0" />
 		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
