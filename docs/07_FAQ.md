@@ -10,10 +10,10 @@ permalink: /FAQ
 The documentation and the FAQ are not complete yet! Feel free to ask questions on [GitHub Discussions](https://github.com/BornToBeRoot/NETworkManager/discussions).
 
 ## How to contribute or report an issue?
-Read the [contributing guidelines](https://github.com/BornToBeRoot/NETworkManager/blob/master/CONTRIBUTING.md){:target="_blank"} and follow the instructions there.
+Read the [contributing guidelines](https://github.com/BornToBeRoot/NETworkManager/blob/main/CONTRIBUTING.md){:target="_blank"} and follow the instructions there.
 
 ## How to build the project?
-The project can be build with Visual Studio or with a PowerShell script. More details and the requirements can be found in the [README](https://github.com/BornToBeRoot/NETworkManager/blob/master/README.md#build){:target="_blank"}.
+The project can be build with Visual Studio or with a PowerShell script. More details and the requirements can be found in the [README](https://github.com/BornToBeRoot/NETworkManager/blob/main/README.md#build){:target="_blank"}.
 
 ## Profile, groups and settings priority
 Settings in profiles overwrite group settings. Group settings overwrite global settings.

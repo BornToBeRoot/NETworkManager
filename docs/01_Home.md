@@ -38,10 +38,10 @@ NETworkManager is a powerful tool for managing networks and troubleshoot network
     </a>     
   </p> 
   <p> 
-    <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
-      <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=for-the-badge&logo=appveyor&&label=master" />
+    <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/main">
+      <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/main.svg?style=for-the-badge&logo=appveyor&&label=main" />
     </a>   
-    <a href="https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE">
+    <a href="https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE">
       <img alt="AppVeyor" src="https://img.shields.io/github/license/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
     </a>     
   </p> 
@@ -58,4 +58,4 @@ NETworkManager is a powerful tool for managing networks and troubleshoot network
   </p> 
 </div>
 
-The code is open source and available on [GitHub](https://github.com/BornToBeRoot/NETworkManager){:target="_blank"} published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE){:target="_blank"}. This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/master/CODE_OF_CONDUCT.md){:target="_blank"} defined by the [Contributor Covenant](http://contributor-covenant.org/){:target="_blank"}.
+The code is open source and available on [GitHub](https://github.com/BornToBeRoot/NETworkManager){:target="_blank"} published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE){:target="_blank"}. This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/main/CODE_OF_CONDUCT.md){:target="_blank"} defined by the [Contributor Covenant](http://contributor-covenant.org/){:target="_blank"}.

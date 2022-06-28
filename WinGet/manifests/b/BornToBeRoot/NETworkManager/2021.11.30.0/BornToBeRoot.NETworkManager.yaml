@@ -5,7 +5,7 @@ Publisher: BornToBeRoot
 ShortDescription: A powerful tool for managing networks and troubleshoot network problems!
 PackageUrl: https://borntoberoot.net/NETworkManager
 License: GNU General Public License v3.0
-LicenseUrl: https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE
+LicenseUrl: https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE
 Moniker: networkmanager
 Tags: 
 - wifi

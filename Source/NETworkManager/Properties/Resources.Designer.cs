@@ -70,7 +70,7 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/blob/master/Contributors.md.
+        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/blob/main/Contributors.md.
         /// </summary>
         public static string NETworkManager_Contributors {
             get {
@@ -115,7 +115,7 @@ namespace NETworkManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE.
+        ///   Looks up a localized string similar to https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE.
         /// </summary>
         public static string NETworkManager_LicenseUrl {
             get {

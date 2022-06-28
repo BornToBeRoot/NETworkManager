@@ -1,7 +1,7 @@
 <div align="center">       
   <h1>NETworkManager</h1>
   <h3>A powerful tool for managing networks and troubleshoot network problems!</h3> 
-  <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/master/docs/Preview.gif?raw=true" />
+  <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/docs/Preview.gif?raw=true" />
   <p>   
     <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
       <img alt="All releases" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=for-the-badge&logo=github" />
@@ -17,10 +17,10 @@
     </a>     
   </p> 
   <p> 
-    <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/master">
-      <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/master.svg?style=for-the-badge&logo=appveyor&&label=master" />
+    <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/main">
+      <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/main.svg?style=for-the-badge&logo=appveyor&&label=main" />
     </a>   
-    <a href="https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE">
+    <a href="https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE">
       <img alt="AppVeyor" src="https://img.shields.io/github/license/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
     </a>     
   </p> 
@@ -42,9 +42,9 @@
 - [Download](https://borntoberoot.net/NETworkManager/Download)
 - [Changelog](https://borntoberoot.net/NETworkManager/Changelog)
 - [Documentation](https://borntoberoot.net/NETworkManager/Documentation/Application)
-- [How to contribute, add a translation, write documentation or report a bug?](https://github.com/BornToBeRoot/NETworkManager/blob/master/CONTRIBUTING.md)
-- [List of contributors](https://github.com/BornToBeRoot/NETworkManager/blob/master/Contributors.md)
-- [How to report a security vulnerability?](https://github.com/BornToBeRoot/NETworkManager/blob/master/SECURITY.md)
+- [How to contribute, add a translation, write documentation or report a bug?](https://github.com/BornToBeRoot/NETworkManager/blob/main/CONTRIBUTING.md)
+- [List of contributors](https://github.com/BornToBeRoot/NETworkManager/blob/main/Contributors.md)
+- [How to report a security vulnerability?](https://github.com/BornToBeRoot/NETworkManager/blob/main/SECURITY.md)
 
 # Build
 __Requirements__
@@ -65,7 +65,7 @@ git clone https://github.com/BornToBeRoot/NETworkManager; Set-ExecutionPolicy -S
 ```
 
 # Code of Conduct
-This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/master/CODE_OF_CONDUCT.md) defined by the [Contributor Covenant](http://contributor-covenant.org/).
+This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/main/CODE_OF_CONDUCT.md) defined by the [Contributor Covenant](http://contributor-covenant.org/).
 
 # License
-NETworkManager is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE). The licenses of the used libraries can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/master/Source/NETworkManager.Documentation/Licenses).
+NETworkManager is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE). The licenses of the used libraries can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/main/Source/NETworkManager.Documentation/Licenses).

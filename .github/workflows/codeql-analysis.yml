@@ -2,9 +2,9 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
   schedule:
     - cron: '29 7 * * 1'
 
@@ -12,7 +12,7 @@ jobs:
   analyze:
     name: Analyze
     # runs-on: windows-latest
-    runs-on: windows-2019
+    runs-on: windows-2022
     # Ignore dependabot, ImgBot and transifex-integration
     if: github.actor!= 'dependabot[bot]' &&
         github.actor!= 'imgbot[bot]' &&

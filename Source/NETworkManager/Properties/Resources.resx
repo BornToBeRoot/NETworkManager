@@ -121,7 +121,7 @@
     <value>https://developer.microsoft.com/en-us/microsoft-edge/webview2/</value>
   </data>
   <data name="NETworkManager_Contributors" xml:space="preserve">
-    <value>https://github.com/BornToBeRoot/NETworkManager/blob/master/Contributors.md</value>
+    <value>https://github.com/BornToBeRoot/NETworkManager/blob/main/Contributors.md</value>
   </data>
   <data name="NETworkManager_GitHub_Repo" xml:space="preserve">
     <value>NETworkManager</value>
@@ -136,7 +136,7 @@
     <value>GNU General Public License v3.0</value>
   </data>
   <data name="NETworkManager_LicenseUrl" xml:space="preserve">
-    <value>https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE</value>
+    <value>https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE</value>
   </data>
   <data name="NETworkManager_NewIssueUrl" xml:space="preserve">
     <value>https://github.com/BornToBeRoot/NETworkManager/issues/new/choose</value>

@@ -2,7 +2,7 @@
 
 - You found a bug or have a feature request? Feel free to create a [new issue](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
 - General questions can be discussed in the [GitHub discussions](https://github.com/BornToBeRoot/NETworkManager/discussions).
-- If you contribute to the code, documentation or translation, you can add your name to the [contributors](https://github.com/BornToBeRoot/NETworkManager/blob/master/Contributors.md) list with a pull request.
+- If you contribute to the code, documentation or translation, you can add your name to the [contributors](https://github.com/BornToBeRoot/NETworkManager/blob/main/Contributors.md) list with a pull request.
 
 ## Code
 - If you want to fix a bug or implement a new features, let me know in the issues that you are work on it.

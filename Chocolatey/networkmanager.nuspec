@@ -8,8 +8,8 @@
     <title>NETworkManager</title>
     <authors>BornToBeRoot</authors>
     <projectUrl>https://borntoberoot.net/NETworkManager</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/BornToBeRoot/NETworkManager/master/Images/NETworkManager.svg</iconUrl>
-    <licenseUrl>https://github.com/BornToBeRoot/NETworkManager/blob/master/LICENSE</licenseUrl>
+    <iconUrl>https://raw.githubusercontent.com/BornToBeRoot/NETworkManager/main/Images/NETworkManager.svg</iconUrl>
+    <licenseUrl>https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/BornToBeRoot/NETworkManager</projectSourceUrl>
     <docsUrl>https://borntoberoot.net/NETworkManager/Documentation</docsUrl>

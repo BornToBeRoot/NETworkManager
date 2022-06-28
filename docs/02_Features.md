@@ -38,4 +38,4 @@ NETworkManager is available in 16 languages. [Here](https://www.transifex.com/Bo
 
 If you miss a language, find missing or incorrect translations, you can request a language and help to improve the translation on [Transifex](https://www.transifex.com/BornToBeRoot/NETworkManager){:target="_blank"}. 
 
-See also the [contributing guidelines](https://github.com/BornToBeRoot/NETworkManager/blob/master/CONTRIBUTING.md){:target="_blank"} if you want to contribute to the project.
+See also the [contributing guidelines](https://github.com/BornToBeRoot/NETworkManager/blob/main/CONTRIBUTING.md){:target="_blank"} if you want to contribute to the project.
