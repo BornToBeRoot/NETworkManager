@@ -232,6 +232,36 @@ namespace NETworkManager.Settings
             }
         }
 
+        private bool _appearance_UseCustomTheme = GlobalStaticConfiguration.Appearance_UseCustomTheme;
+        public bool Appearance_UseCustomTheme
+        {
+            get => _appearance_UseCustomTheme;
+            set
+            {
+                if (value == _appearance_UseCustomTheme)
+                    return;
+
+                _appearance_UseCustomTheme= value;
+                OnPropertyChanged();
+                SettingsChanged= true;
+            }
+        }
+
+        private string _appearance_CustomThemeName;
+        public string Appearance_CustomThemeName
+        {
+            get => _appearance_CustomThemeName;
+            set
+            {
+                if (value == _appearance_CustomThemeName)
+                    return;
+
+                _appearance_CustomThemeName = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         // Localization
         private string _localization_CultureCode;
         public string Localization_CultureCode

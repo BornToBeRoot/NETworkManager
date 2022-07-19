@@ -21,7 +21,7 @@ namespace NETworkManager.ViewModels
                 if (value == _selectedTheme)
                     return;
 
-                if (!_isLoading)
+                if (!_isLoading && !UseCustomTheme)
                 {
                     AppearanceManager.ChangeTheme(value.Name);
                     SettingsManager.Current.Appearance_Theme = value.Name;
@@ -44,7 +44,7 @@ namespace NETworkManager.ViewModels
                 if (value == _selectedAccent)
                     return;
 
-                if (!_isLoading)
+                if (!_isLoading && !UseCustomTheme)
                 {
                     AppearanceManager.ChangeAccent(value.Name);
                     SettingsManager.Current.Appearance_Accent = value.Name;
@@ -55,18 +55,60 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        #endregion        
+        private bool _useCustomTheme;
+        public bool UseCustomTheme
+        {
+            get => _useCustomTheme;
+            set
+            {
+                if (value == _useCustomTheme)
+                    return;
+
+                if (!_isLoading)
+                {
+                    SettingsManager.Current.Appearance_UseCustomTheme = value;
+                    AppearanceManager.Load();
+                }
+
+                _useCustomTheme = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICollectionView CustomThemes { get; private set; }
+
+
+        private ThemeInfo _selectedCustomTheme;
+        public ThemeInfo SelectedCustomTheme
+        {
+            get => _selectedCustomTheme;
+            set
+            {
+                if (value == _selectedCustomTheme)
+                    return;
+
+                if (!_isLoading && UseCustomTheme)
+                {
+                    AppearanceManager.ChangeTheme(value);
+                    SettingsManager.Current.Appearance_CustomThemeName = value.Name;
+                }
+
+                _selectedCustomTheme = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        #endregion
 
         #region Constructor, LoadSettings
         public SettingsAppearanceViewModel()
         {
             _isLoading = true;
 
-            Accents = new CollectionViewSource { Source = AppearanceManager.Accents }.View;
-
-            // ToDo: Enable White Theme again (Fix: PuTTY and PowerShell)
             Themes = new CollectionViewSource { Source = AppearanceManager.Themes }.View;
-            // Themes = new CollectionViewSource { Source = AppearanceManager.Themes.Where(x => x.Name != "Light") }.View;
+            Accents = new CollectionViewSource { Source = AppearanceManager.Accents }.View;
+            CustomThemes = new CollectionViewSource { Source = AppearanceManager.CustomThemes }.View;
 
             LoadSettings();
 
@@ -77,6 +119,10 @@ namespace NETworkManager.ViewModels
         {
             SelectedTheme = Themes.Cast<ThemeColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Theme);
             SelectedAccent = Accents.Cast<AccentColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Accent);
+            
+            UseCustomTheme = SettingsManager.Current.Appearance_UseCustomTheme;
+            
+            SelectedCustomTheme = CustomThemes.Cast<ThemeInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_CustomThemeName) ?? CustomThemes.Cast<ThemeInfo>().FirstOrDefault();
         }
         #endregion
     }

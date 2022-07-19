@@ -1879,6 +1879,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Custom themes ähnelt.
+        /// </summary>
+        public static string CustomThemes {
+            get {
+                return ResourceManager.GetString("CustomThemes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Cut ähnelt.
         /// </summary>
         public static string Cut {
@@ -8619,6 +8628,15 @@ namespace NETworkManager.Localization.Resources {
         public static string UseCustomIPv6AddressAPI {
             get {
                 return ResourceManager.GetString("UseCustomIPv6AddressAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use custom themes ähnelt.
+        /// </summary>
+        public static string UseCustomThemes {
+            get {
+                return ResourceManager.GetString("UseCustomThemes", resourceCulture);
             }
         }
         

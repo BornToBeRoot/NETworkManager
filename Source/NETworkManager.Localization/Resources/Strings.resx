@@ -3143,4 +3143,10 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
     <value>Unlock the profile file to add, change or delete a profile!</value>
   </data>
+  <data name="UseCustomThemes" xml:space="preserve">
+    <value>Use custom themes</value>
+  </data>
+  <data name="CustomThemes" xml:space="preserve">
+    <value>Custom themes</value>
+  </data>
 </root>
