@@ -165,12 +165,14 @@ namespace NETworkManager.Models.Network
 
         public static IPAddress DetectLocalIPAddressBasedOnRouting(IPAddress remoteIPAddress)
         {
-            using (var socket = new Socket(remoteIPAddress.AddressFamily == AddressFamily.InterNetwork ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp))
+            bool isIPv4 = remoteIPAddress.AddressFamily == AddressFamily.InterNetwork;
+
+            using (var socket = new Socket(isIPv4 ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp))
             {
                 // return null on error...
                 try
                 {
-                    socket.Bind(new IPEndPoint(IPAddress.Any, 0));
+                    socket.Bind(new IPEndPoint( isIPv4 ? IPAddress.Any : IPAddress.IPv6Any, 0));
                     socket.Connect(new IPEndPoint(remoteIPAddress, 0));
 
                     if (socket.LocalEndPoint is IPEndPoint ipAddress)
