@@ -140,7 +140,7 @@ namespace NETworkManager
         {
             CustomDialog customDialog = new()
             {
-                Title = Localization.Resources.Strings.EditGroup,
+                Title = Localization.Resources.Strings.AddGroup,
                 Style = (Style)Application.Current.FindResource(DialogResourceKey)
             };
 

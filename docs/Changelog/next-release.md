@@ -26,6 +26,7 @@ permalink: /Changelog/next-release
   - Detect local ipv6 address fixed [#1423](https://github.com/BornToBeRoot/NETworkManager/pull/1423){:target="_blank"}
 - Profiles
   - Fixed some rare cases where the profile file was overwritten [#1495](https://github.com/BornToBeRoot/NETworkManager/pull/1425){:target="_blank"}
+  - Header in add group dialog fixed [#1426](https://github.com/BornToBeRoot/NETworkManager/pull/1426){:target="_blank"}
 
 ## Other
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
