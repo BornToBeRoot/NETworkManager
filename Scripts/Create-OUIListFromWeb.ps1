@@ -1,8 +1,8 @@
 # Filepath in the resources...
 [string]$OutFilePath = Join-Path -Path (Split-Path $PSScriptRoot -Parent) -ChildPath "Source\NETworkManager.Models\Resources\OUI.xml"
 
-# Download cleanup IEEE oui version from linuxnet
-$LatestOUIs = (Invoke-WebRequest -Uri "http://linuxnet.ca/ieee/oui.txt").Content
+# Download oui list from ieee.org
+$LatestOUIs = (Invoke-WebRequest -Uri "https://standards-oui.ieee.org/oui/oui.txt").Content
 
 # Create xml document
 [xml]$Document = New-Object System.Xml.XmlDocument
