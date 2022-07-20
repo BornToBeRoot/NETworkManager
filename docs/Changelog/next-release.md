@@ -28,6 +28,8 @@ permalink: /Changelog/next-release
 - Profiles
   - Fixed some rare cases where the profile file was overwritten [#1495](https://github.com/BornToBeRoot/NETworkManager/pull/1425){:target="_blank"}
   - Header in add group dialog fixed [#1426](https://github.com/BornToBeRoot/NETworkManager/pull/1426){:target="_blank"}
+- IP Scanner / OUI Lookup
+  - Use ieee.org instead of linuxnet.ca to generate the oui.txt [#1460](https://github.com/BornToBeRoot/NETworkManager/pull/1460){:target="_blank"}
 
 ## Other
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
