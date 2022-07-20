@@ -230,10 +230,6 @@ namespace NETworkManager.ViewModels
             HostsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostsHistory);
             PortsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortsHistory);
 
-            // Add default port profiles...
-            if (SettingsManager.Current.PortScanner_PortProfiles.Count == 0)
-                SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.DefaultList());
-
             // Result view
             ResultsView = CollectionViewSource.GetDefaultView(PortScanResult);
             ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.IPAddress)));
