@@ -30,11 +30,13 @@ permalink: /Changelog/next-release
 ## Bugfixes
 - Dashboard / Status Window
   - Detect local ipv6 address fixed [#1423](https://github.com/BornToBeRoot/NETworkManager/pull/1423){:target="_blank"}
+- IP Scanner / OUI Lookup
+  - Use ieee.org instead of linuxnet.ca to generate the oui.txt [#1463](https://github.com/BornToBeRoot/NETworkManager/pull/1463){:target="_blank"}
 - Profiles
   - Fixed some rare cases where the profile file was overwritten [#1449](https://github.com/BornToBeRoot/NETworkManager/pull/1449){:target="_blank"}
   - Header in add group dialog fixed [#1461](https://github.com/BornToBeRoot/NETworkManager/pull/1461){:target="_blank"}
-- IP Scanner / OUI Lookup
-  - Use ieee.org instead of linuxnet.ca to generate the oui.txt [#1463](https://github.com/BornToBeRoot/NETworkManager/pull/1463){:target="_blank"}
+- Settings
+  - Fix and improve settings move, import, export and reset [#1465](https://github.com/BornToBeRoot/NETworkManager/pull/1465){:target="_blank"}
 
 ## Other
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
