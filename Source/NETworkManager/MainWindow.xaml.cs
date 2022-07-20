@@ -31,6 +31,8 @@ using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Net.NetworkInformation;
 using System.IO;
+using System.Collections.ObjectModel;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager
 {
@@ -362,20 +364,26 @@ namespace NETworkManager
                     Title = Localization.Resources.Strings.Welcome
                 };
 
-                var arpTableAddEntryViewModel = new FirstRunViewModel(async instance =>
+                var firstRunViewModel = new FirstRunViewModel(async instance =>
                 {
                     await this.HideMetroDialogAsync(customDialog);
-
+                                        
                     SettingsManager.Current.FirstRun = false;
+
+                    // Set settings based on user choice
                     SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
                     SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
+
+                    // Generate some settings on the first run
+                    SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.DefaultList());
+                    SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(DNSServer.DefaultList());
 
                     AfterContentRendered();
                 });
 
                 customDialog.Content = new FirstRunDialog
                 {
-                    DataContext = arpTableAddEntryViewModel
+                    DataContext = firstRunViewModel
                 };
 
                 await this.ShowMetroDialogAsync(customDialog).ConfigureAwait(true);

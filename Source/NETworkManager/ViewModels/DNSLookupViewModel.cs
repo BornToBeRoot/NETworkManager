@@ -197,11 +197,7 @@ namespace NETworkManager.ViewModels
             Host = host;
 
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
-
-            // Add default DNS server...
-            if (SettingsManager.Current.DNSLookup_DNSServers.Count == 0)
-                SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(Models.Network.DNSServer.DefaultList());
-
+                        
             DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers }.View;
             DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.UseWindowsDNSServer), ListSortDirection.Descending));
             DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.Name), ListSortDirection.Ascending));
