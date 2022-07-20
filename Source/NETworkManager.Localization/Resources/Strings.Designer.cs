@@ -3677,6 +3677,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Import settings? ähnelt.
+        /// </summary>
+        public static string ImportSettingsQuestion {
+            get {
+                return ResourceManager.GetString("ImportSettingsQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Indigo ähnelt.
         /// </summary>
         public static string Indigo {
@@ -5109,6 +5118,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Overwrite existing settings file? ähnelt.
+        /// </summary>
+        public static string OverwriteExistingSettingsFileQuestion {
+            get {
+                return ResourceManager.GetString("OverwriteExistingSettingsFileQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Overwrite profiles in destination folder?
         ///
         ///&quot;Overwrite&quot; will copy the profile files to the destination folder and overwrite existing profile files.
@@ -5133,8 +5151,8 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Overwrite settings in the destination folder?
         ///
-        ///&quot;Overwrite&quot; will overwrite the file in the destination folder.
-        ///&quot;Use other&quot; will use the existing settings file in the destination and restart the application. ähnelt.
+        ///&quot;Overwrite&quot; will overwrite the settings file in the destination folder.
+        ///&quot;Use other&quot; will use the existing setting file in the destination folder and restart the application afterwards. ähnelt.
         /// </summary>
         public static string OverwriteSettingsInDestinationFolderMessage {
             get {
@@ -6714,6 +6732,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset settings? ähnelt.
+        /// </summary>
+        public static string ResetSettingsQuestion {
+            get {
+                return ResourceManager.GetString("ResetSettingsQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Resize ähnelt.
         /// </summary>
         public static string Resize {
@@ -7110,24 +7137,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The selected settings are overwritten! ähnelt.
-        /// </summary>
-        public static string SelectedSettingsAreOverwritten {
-            get {
-                return ResourceManager.GetString("SelectedSettingsAreOverwritten", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The selected settings are reset. ähnelt.
-        /// </summary>
-        public static string SelectedSettingsAreReset {
-            get {
-                return ResourceManager.GetString("SelectedSettingsAreReset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Select port profile ähnelt.
         /// </summary>
         public static string SelectPortProfile {
@@ -7218,8 +7227,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The settings file found was corrupted or is not compatible with this version. All settings have been reset!
-        ///(Profile files are not affected!) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Settings are overwritten! ähnelt.
+        /// </summary>
+        public static string SettingsAreOverwrittenMessage {
+            get {
+                return ResourceManager.GetString("SettingsAreOverwrittenMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Settings are reset! ähnelt.
+        /// </summary>
+        public static string SettingsAreResetMessage {
+            get {
+                return ResourceManager.GetString("SettingsAreResetMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The found settings file was corrupted or is not compatible with this version! You may report this issue on GitHub.
+        ///
+        ///A backup of the settings file was created in the settings folder and the settings were reset.
+        ///
+        ///Profile files are not affected! ähnelt.
         /// </summary>
         public static string SettingsFileFoundWasCorruptOrNotCompatibleMessage {
             get {
@@ -7233,6 +7263,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SettingsHaveBeenReset {
             get {
                 return ResourceManager.GetString("SettingsHaveBeenReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Settings reset! ähnelt.
+        /// </summary>
+        public static string SettingsResetExclamationMark {
+            get {
+                return ResourceManager.GetString("SettingsResetExclamationMark", resourceCulture);
             }
         }
         
@@ -8155,7 +8194,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The settings location is not affected ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The settings location is not affected! ähnelt.
         /// </summary>
         public static string TheSettingsLocationIsNotAffected {
             get {

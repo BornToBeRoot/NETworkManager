@@ -167,6 +167,9 @@ namespace NETworkManager.Settings
             // Delete existing file
             File.Delete(filePath);
 
+            // Save the current settings
+            Save();
+
             // Create archiv
             using (var zipArchive = ZipFile.Open(filePath, ZipArchiveMode.Create))
             {

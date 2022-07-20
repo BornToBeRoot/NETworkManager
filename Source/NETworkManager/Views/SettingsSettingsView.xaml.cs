@@ -61,7 +61,7 @@ namespace NETworkManager.Views
 
         public void OnVisible()
         {
-            _viewModel.SaveAndCheckSettings();
+            _viewModel.CheckSettingsFileExists();
         }
     }
 }

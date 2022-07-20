@@ -367,7 +367,7 @@ namespace NETworkManager
                 var firstRunViewModel = new FirstRunViewModel(async instance =>
                 {
                     await this.HideMetroDialogAsync(customDialog);
-                                        
+                    
                     SettingsManager.Current.FirstRun = false;
 
                     // Set settings based on user choice
@@ -377,6 +377,9 @@ namespace NETworkManager
                     // Generate some settings on the first run
                     SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.DefaultList());
                     SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(DNSServer.DefaultList());
+
+                    // Save it to create a settings file
+                    SettingsManager.Save();
 
                     AfterContentRendered();
                 });
@@ -488,8 +491,8 @@ namespace NETworkManager
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {
             // Force restart --> e.g. Import or reset settings
-            // Soft restart --> e.g. change profile path
-            if (!_closeApplication && (ConfigurationManager.Current.ForceRestart || ConfigurationManager.Current.SoftRestart))
+            // Restart --> e.g. change profile path
+            if (!_closeApplication && ConfigurationManager.Current.Restart)
             {
                 e.Cancel = true;
 

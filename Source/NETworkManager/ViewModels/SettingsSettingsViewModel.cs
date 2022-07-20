@@ -201,7 +201,7 @@ namespace NETworkManager.ViewModels
                 settings.FirstAuxiliaryButtonText = Localization.Resources.Strings.UseOther;
                 settings.DefaultButtonFocus = MessageDialogResult.FirstAuxiliary;
 
-                var result = await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Overwrite, Localization.Resources.Strings.OverwriteSettingsInDestinationFolderMessage, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
+                var result = await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.OverwriteExistingSettingsFileQuestion, Localization.Resources.Strings.OverwriteSettingsInDestinationFolderMessage, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, AppearanceManager.MetroDialog);
 
                 switch (result)
                 {
@@ -214,21 +214,26 @@ namespace NETworkManager.ViewModels
                 }
             }
 
-            // Use other location
+            // Use settings file(s) in other location
             if (useFileInOtherLocation)
             {
-                LocalSettingsManager.Settings_CustomSettingsLocation = Location;
+                // Save settings files
+                if (SettingsManager.Current.SettingsChanged)
+                    SettingsManager.Save();
+
+                // Change location
+                LocalSettingsManager.Settings_CustomSettingsLocation = Location;                
 
                 MovingFiles = false;
 
                 // Restart the application
-                ConfigurationManager.Current.ForceRestart = true;
+                ConfigurationManager.Current.Restart = true;                
                 CloseAction();
 
                 return;
             }
 
-            // Move files...
+            // Move settings file(s)...
             try
             {
                 await SettingsManager.MoveSettingsAsync(Location);
@@ -280,12 +285,12 @@ namespace NETworkManager.ViewModels
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Localization.Resources.Strings.Continue;
+            settings.AffirmativeButtonText = Localization.Resources.Strings.Import;
             settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure, Localization.Resources.Strings.SelectedSettingsAreOverwritten + Environment.NewLine + Environment.NewLine + Localization.Resources.Strings.ApplicationWillBeRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.ImportSettingsQuestion, Localization.Resources.Strings.SettingsAreOverwrittenMessage + Environment.NewLine + Environment.NewLine + Localization.Resources.Strings.ApplicationWillBeRestartedAfterwards, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
             try
@@ -293,7 +298,8 @@ namespace NETworkManager.ViewModels
                 SettingsManager.Import(ImportFilePath);
 
                 // Restart the application
-                ConfigurationManager.Current.ForceRestart = true;
+                ConfigurationManager.Current.Restart = true;
+                ConfigurationManager.Current.DisableSaveSettings = true;
                 CloseAction();
             }
             catch (Exception ex)
@@ -339,17 +345,17 @@ namespace NETworkManager.ViewModels
         {
             var settings = AppearanceManager.MetroDialog;
 
-            settings.AffirmativeButtonText = Localization.Resources.Strings.Continue;
+            settings.AffirmativeButtonText = Localization.Resources.Strings.Reset;
             settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
 
             settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-            var message = Localization.Resources.Strings.SelectedSettingsAreReset;
+            var message = Localization.Resources.Strings.SettingsAreResetMessage;
 
-            message += Environment.NewLine + Environment.NewLine + $"* {Localization.Resources.Strings.TheSettingsLocationIsNotAffected}";
-            message += Environment.NewLine + $"* {Localization.Resources.Strings.ApplicationWillBeRestartedAfterwards}";
+            message += Environment.NewLine + Environment.NewLine + $"- {Localization.Resources.Strings.TheSettingsLocationIsNotAffected}";
+            message += Environment.NewLine + $"- {Localization.Resources.Strings.ApplicationWillBeRestartedAfterwards}";
 
-            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.AreYouSure, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
+            if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.ResetSettingsQuestion, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
             SettingsManager.Reset();
@@ -357,21 +363,18 @@ namespace NETworkManager.ViewModels
             message = Localization.Resources.Strings.SettingsSuccessfullyReset;
             message += Environment.NewLine + Environment.NewLine + Localization.Resources.Strings.TheApplicationWillBeRestarted;
 
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Success, message, MessageDialogStyle.Affirmative, settings);
+            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.SettingsResetExclamationMark, message, MessageDialogStyle.Affirmative, settings);
 
             // Restart the application
-            ConfigurationManager.Current.ForceRestart = true;
+            ConfigurationManager.Current.Restart = true;
+            ConfigurationManager.Current.DisableSaveSettings = true;
             CloseAction();
         }
         #endregion
 
         #region Methods
-        public void SaveAndCheckSettings()
-        {
-            // Save everything
-            if (SettingsManager.Current.SettingsChanged)
-                SettingsManager.Save();
-
+        public void CheckSettingsFileExists()
+        {           
             // Check if files exist
             SettingsExists = File.Exists(SettingsManager.GetSettingsFilePath());
         }

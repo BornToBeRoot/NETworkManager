@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Threading;
 using NETworkManager.Profiles;
 using NETworkManager.Localization;
+using System.IO;
 
 namespace NETworkManager
 {
@@ -64,6 +65,9 @@ namespace NETworkManager
             }
             catch (InvalidOperationException)
             {
+                // Create backup of corrupted file                
+                File.Copy(SettingsManager.GetSettingsFilePath(), Path.Combine(SettingsManager.GetSettingsLocation(), $"{TimestampHelper.GetTimestamp()}_corrupted_" + SettingsManager.GetSettingsFileName()));
+                
                 SettingsManager.InitDefault();
 
                 ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
@@ -134,7 +138,7 @@ namespace NETworkManager
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             // Save settings, when the application is normally closed
-            if (_singleInstanceClose || ConfigurationManager.Current.ForceRestart || CommandLineManager.Current.Help)
+            if (_singleInstanceClose || CommandLineManager.Current.Help)
                 return;
 
             _dispatcherTimer?.Stop();
@@ -147,7 +151,7 @@ namespace NETworkManager
             // Save local settings (custom settings path in AppData/Local)
             LocalSettingsManager.Save();
 
-            if (SettingsManager.Current.SettingsChanged)
+            if (SettingsManager.Current.SettingsChanged && !ConfigurationManager.Current.DisableSaveSettings)
                 SettingsManager.Save();
 
             if (ProfileManager.ProfilesChanged)
