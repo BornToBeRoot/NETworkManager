@@ -15,7 +15,8 @@ permalink: /Changelog/next-release
 - [Microsoft Edge - WebView2 Runtime (Evergreen)](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="_blank"}
 
 ## What's new?
-- 
+- Settings
+  - Add support for [MahApps.Metro custom themes](https://mahapps.com/docs/themes/thememanager#creating-custom-themes). Themes can be placed in the folder `Themes` in the application root [#1439](https://github.com/BornToBeRoot/NETworkManager/pull/1439){:target="_blank"}
   
 ## Improvements
 - Profiles

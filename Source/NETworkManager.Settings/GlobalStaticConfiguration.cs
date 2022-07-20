@@ -32,6 +32,7 @@ namespace NETworkManager.Settings
         public static bool SplashScreen_Enabled => true;
         public static string Appearance_Theme => "Dark";
         public static string Appearance_Accent => "Lime";
+        public static bool Appearance_UseCustomTheme => false;
         public static bool Status_ShowWindowOnNetworkChange => true;
         public static int Status_WindowCloseTime => 10;
         public static string Status_IPAddressToDetectLocalIPAddressBasedOnRouting => "1.1.1.1";
