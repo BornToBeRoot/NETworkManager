@@ -21,10 +21,9 @@ namespace NETworkManager.Settings
         public Version OSVersion { get; set; }
 
         // Everything below will be set dynamically in the application
-        public bool ShowSettingsResetNoteOnStartup { get; set; }
-        public bool ForceRestart { get; set; }
-
-        public bool SoftRestart { get; set; }
+        public bool ShowSettingsResetNoteOnStartup { get; set; }        
+        public bool DisableSaveSettings { get; set; }
+        public bool Restart { get; set; }
 
         private bool _isDialogOpen;
         public bool FixAirspace

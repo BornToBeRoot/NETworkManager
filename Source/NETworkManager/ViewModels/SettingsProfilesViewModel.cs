@@ -239,7 +239,7 @@ namespace NETworkManager.ViewModels
             SettingsManager.Current.Profiles_CustomProfilesLocation = Location;
                         
             // Restart the application
-            ConfigurationManager.Current.SoftRestart = true;
+            ConfigurationManager.Current.Restart = true;
             CloseAction();
 
             MovingFiles = false;
