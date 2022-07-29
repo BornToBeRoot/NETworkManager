@@ -181,7 +181,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <GridSplitter Grid.Column="1" Grid.RowSpan="19" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                                <GridSplitter Grid.Column="1" Grid.RowSpan="20" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
                                 <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding SelectedNetworkInterface.Name}" />
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Description}" />
