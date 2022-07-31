@@ -22,6 +22,7 @@ permalink: /Changelog/next-release
 ## Improvements
 - Profiles
   - Migration dialog improved [#1393](https://github.com/BornToBeRoot/NETworkManager/pull/1393){:target="_blank"}
+  - Select app when creating a profile (#1466)(https://github.com/BornToBeRoot/NETworkManager/pull/1466){:target="_blank"}
 - Port Scanner
   - Generate Port list at first run [#1464](https://github.com/BornToBeRoot/NETworkManager/pull/1464){:target="_blank"}
 - DNS Lookup
