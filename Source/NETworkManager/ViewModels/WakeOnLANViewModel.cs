@@ -14,6 +14,7 @@ using MahApps.Metro.Controls;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
 using System.Collections.Generic;
+using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
 {
@@ -335,7 +336,7 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.WakeOnLAN);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());

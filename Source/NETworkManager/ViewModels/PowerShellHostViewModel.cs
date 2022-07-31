@@ -276,7 +276,7 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.PowerShell);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());

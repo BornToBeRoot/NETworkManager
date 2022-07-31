@@ -316,7 +316,7 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator,null, ApplicationName.PuTTY);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());

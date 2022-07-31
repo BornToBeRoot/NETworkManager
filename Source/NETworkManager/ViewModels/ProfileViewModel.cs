@@ -13,6 +13,7 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
 using NETworkManager.Models.PuTTY;
 using System.Security;
+using NETworkManager.Models;
 
 namespace NETworkManager.ViewModels
 {
@@ -2075,7 +2076,17 @@ namespace NETworkManager.ViewModels
         #endregion
         #endregion
 
-        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="saveCommand"></param>
+        /// <param name="cancelHandler"></param>
+        /// <param name="groups"></param>
+        /// <param name="group"></param>
+        /// <param name="editMode"></param>
+        /// <param name="profile"></param>
+        /// <param name="applicationName"></param>
+        public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null, ApplicationName applicationName = ApplicationName.None)
         {
             // Load the view
             ProfileViews = new CollectionViewSource { Source = ProfileViewManager.List }.View;
@@ -2102,7 +2113,7 @@ namespace NETworkManager.ViewModels
             Groups.SortDescriptions.Add(new SortDescription());
 
             // Network Interface
-            NetworkInterface_Enabled = profileInfo.NetworkInterface_Enabled;
+            NetworkInterface_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.NetworkInterface : profileInfo.NetworkInterface_Enabled;
             NetworkInterface_EnableDynamicIPAddress = !profileInfo.NetworkInterface_EnableStaticIPAddress;
             NetworkInterface_EnableStaticIPAddress = profileInfo.NetworkInterface_EnableStaticIPAddress;
             NetworkInterface_IPAddress = profileInfo.NetworkInterface_IPAddress;
@@ -2114,33 +2125,33 @@ namespace NETworkManager.ViewModels
             NetworkInterface_SecondaryDNSServer = profileInfo.NetworkInterface_SecondaryDNSServer;
 
             // IP Scanner
-            IPScanner_Enabled = profileInfo.IPScanner_Enabled;
+            IPScanner_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.IPScanner : profileInfo.IPScanner_Enabled;
             IPScanner_InheritHost = profileInfo.IPScanner_InheritHost;
             IPScanner_HostOrIPRange = profileInfo.IPScanner_HostOrIPRange;
 
             // Port Scanner
-            PortScanner_Enabled = profileInfo.PortScanner_Enabled;
+            PortScanner_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.PortScanner : profileInfo.PortScanner_Enabled;
             PortScanner_InheritHost = profileInfo.PortScanner_InheritHost;
             PortScanner_Host = profileInfo.PortScanner_Host;
             PortScanner_Ports = profileInfo.PortScanner_Ports;
 
             // Ping Monitor
-            PingMonitor_Enabled = profileInfo.PingMonitor_Enabled;
+            PingMonitor_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.PingMonitor: profileInfo.PingMonitor_Enabled;
             PingMonitor_InheritHost = profileInfo.PingMonitor_InheritHost;
             PingMonitor_Host = profileInfo.PingMonitor_Host;
 
             // Traceroute
-            Traceroute_Enabled = profileInfo.Traceroute_Enabled;
+            Traceroute_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.Traceroute : profileInfo.Traceroute_Enabled;
             Traceroute_InheritHost = profileInfo.Traceroute_InheritHost;
             Traceroute_Host = profileInfo.Traceroute_Host;
 
             // DNS Lookup
-            DNSLookup_Enabled = profileInfo.DNSLookup_Enabled;
+            DNSLookup_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.DNSLookup : profileInfo.DNSLookup_Enabled;
             DNSLookup_InheritHost = profileInfo.DNSLookup_InheritHost;
             DNSLookup_Host = profileInfo.DNSLookup_Host;
 
             // Remote Desktop
-            RemoteDesktop_Enabled = profileInfo.RemoteDesktop_Enabled;
+            RemoteDesktop_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.RemoteDesktop : profileInfo.RemoteDesktop_Enabled;
             RemoteDesktop_InheritHost = profileInfo.RemoteDesktop_InheritHost;
             RemoteDesktop_Host = profileInfo.RemoteDesktop_Host;
             RemoteDesktop_UseCredentials = profileInfo.RemoteDesktop_UseCredentials;
@@ -2193,7 +2204,7 @@ namespace NETworkManager.ViewModels
             RemoteDesktop_VisualStyles = profileInfo.RemoteDesktop_VisualStyles;
 
             // PowerShell
-            PowerShell_Enabled = profileInfo.PowerShell_Enabled;
+            PowerShell_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.PowerShell : profileInfo.PowerShell_Enabled;
             PowerShell_EnableRemoteConsole = profileInfo.PowerShell_EnableRemoteConsole;
             PowerShell_InheritHost = profileInfo.PowerShell_InheritHost;
             PowerShell_Host = profileInfo.PowerShell_Host;
@@ -2204,7 +2215,7 @@ namespace NETworkManager.ViewModels
             PowerShell_ExecutionPolicy = editMode != ProfileEditMode.Add ? profileInfo.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
 
             // PuTTY
-            PuTTY_Enabled = profileInfo.PuTTY_Enabled;
+            PuTTY_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.PuTTY : profileInfo.PuTTY_Enabled;
 
             switch (profileInfo.PuTTY_ConnectionMode)
             {
@@ -2248,25 +2259,25 @@ namespace NETworkManager.ViewModels
             PuTTY_AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine;
 
             // TigerVNC
-            TigerVNC_Enabled = profileInfo.TigerVNC_Enabled;
+            TigerVNC_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.TigerVNC : profileInfo.TigerVNC_Enabled;
             TigerVNC_InheritHost = profileInfo.TigerVNC_InheritHost;
             TigerVNC_Host = profileInfo.TigerVNC_Host;
             TigerVNC_OverridePort = profileInfo.TigerVNC_OverridePort;
             TigerVNC_Port = profileInfo.TigerVNC_OverridePort ? profileInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port;
 
             // Web Console
-            WebConsole_Enabled = profileInfo.WebConsole_Enabled;
+            WebConsole_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.WebConsole : profileInfo.WebConsole_Enabled;
             WebConsole_Url = profileInfo.WebConsole_Url;
 
             // Wake on LAN
-            WakeOnLAN_Enabled = profileInfo.WakeOnLAN_Enabled;
+            WakeOnLAN_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.WakeOnLAN : profileInfo.WakeOnLAN_Enabled;
             WakeOnLAN_MACAddress = profileInfo.WakeOnLAN_MACAddress;
             WakeOnLAN_Broadcast = profileInfo.WakeOnLAN_Broadcast;
             WakeOnLAN_OverridePort = profileInfo.WakeOnLAN_OverridePort;
             WakeOnLAN_Port = profileInfo.WakeOnLAN_OverridePort ? profileInfo.WakeOnLAN_Port : SettingsManager.Current.WakeOnLAN_Port;
 
             // Whois
-            Whois_Enabled = profileInfo.Whois_Enabled;
+            Whois_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.Whois : profileInfo.Whois_Enabled;
             Whois_InheritHost = profileInfo.Whois_InheritHost;
             Whois_Domain = profileInfo.Whois_Domain;
 

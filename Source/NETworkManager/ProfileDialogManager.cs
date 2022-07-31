@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models;
 using NETworkManager.Profiles;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
@@ -17,7 +18,7 @@ namespace NETworkManager
         #endregion
 
         #region Dialog to add, edit, copy as and delete profile
-        public static async Task ShowAddProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, string group = null)
+        public static async Task ShowAddProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, string group = null, ApplicationName applicationName = ApplicationName.None)
         {
             CustomDialog customDialog = new()
             {
@@ -35,7 +36,7 @@ namespace NETworkManager
             {
                 await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
                 viewModel.OnProfileDialogClose();
-            }, ProfileManager.GetGroupNames(), group);
+            }, ProfileManager.GetGroupNames(), group, ProfileEditMode.Add, null, applicationName);
 
             customDialog.Content = new ProfileDialog
             {
