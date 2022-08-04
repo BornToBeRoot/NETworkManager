@@ -994,11 +994,10 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>覆盖</value>
   </data>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>是否覆盖目标文件夹中的设置？
+    <value>Overwrite settings in the destination folder?
 
-“覆盖”将覆盖目标文件夹中的文件。
-
-“使用其他”将使用目标中的现有设置文件并重新启动应用程序。</value>
+"Overwrite" will overwrite the settings file in the destination folder.
+"Use other" will use the existing setting file in the destination folder and restart the application afterwards.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>密码</value>
@@ -1099,11 +1098,11 @@ First make a backup copy of your profile files before enabling encryption!</valu
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>选择一个分辨率</value>
   </data>
-  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>所选设置被覆盖！</value>
+  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
+    <value>Settings are overwritten!</value>
   </data>
-  <data name="SelectedSettingsAreReset" xml:space="preserve">
-    <value>选中的设置将被重置。</value>
+  <data name="SettingsAreResetMessage" xml:space="preserve">
+    <value>Settings are reset!</value>
   </data>
   <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
     <value>选择你想导出的设置：</value>
@@ -1124,9 +1123,11 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>服务</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>发现的设置文件已损坏或与此版本不兼容。所有设置已重置!
- 
-(配置文件不受影响!)</value>
+    <value>The found settings file was corrupted or is not compatible with this version! You may report this issue on GitHub.
+
+A backup of the settings file was created in the settings folder and the settings were reset.
+
+Profile files are not affected!</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>设置已成功导出！</value>
@@ -1189,7 +1190,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>此进程将耗费一些时间和资源（CPU/RAM）。</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>此设置位置无效</value>
+    <value>The settings location is not affected!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
     <value>SNMP查询超时。</value>
@@ -3149,5 +3150,23 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
   </data>
   <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
     <value>Unlock the profile file to add, change or delete a profile!</value>
+  </data>
+  <data name="UseCustomThemes" xml:space="preserve">
+    <value>Use custom themes</value>
+  </data>
+  <data name="CustomThemes" xml:space="preserve">
+    <value>Custom themes</value>
+  </data>
+  <data name="ImportSettingsQuestion" xml:space="preserve">
+    <value>Import settings?</value>
+  </data>
+  <data name="ResetSettingsQuestion" xml:space="preserve">
+    <value>Reset settings?</value>
+  </data>
+  <data name="SettingsResetExclamationMark" xml:space="preserve">
+    <value>Settings reset!</value>
+  </data>
+  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
+    <value>Overwrite existing settings file?</value>
   </data>
 </root>
