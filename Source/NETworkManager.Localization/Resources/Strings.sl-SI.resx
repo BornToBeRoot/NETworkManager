@@ -771,9 +771,7 @@
     <value>Poverilnica</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
-
-First make a backup copy of your profile files before enabling encryption!</value>
+    <value>Datoteke profila so šifrirane na disku z uporabo AES z velikostjo ključa 256 bitov in velikostjo bloka 128 bitov v načinu CBC. Šifrirni ključ je pridobljen iz glavnega gesla z uporabo Rfc2898DeriveBytes (PBKDF2) z 1.000.000 ponovitvami. Med izvajanjem so gesla shranjena kot SecureString, ko je datoteka profila naložena. Za nekatere funkcije je treba geslo pretvoriti v običajni niz in ostane nešifrirano v pomnilniku, dokler jih zbiralnik smeti ne počisti.Najprej naredite varnostno kopijo datotek svojega profila, preden omogočite šifriranje!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Po meri</value>
@@ -812,7 +810,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>Izbriši vnos</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Selected profile will be deleted permanently.</value>
+    <value>Izbrani profil bo trajno izbrisan.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Nastavitve DNS</value>
@@ -893,7 +891,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>ID</value>
   </data>
   <data name="InheritHostFromGeneral" xml:space="preserve">
-    <value>Inherit host from general</value>
+    <value>Podeduj gostitelja iz splošnega</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>Razpon IP</value>
@@ -996,10 +994,7 @@ Ustvarite enega...</value>
     <value>preglasi</value>
   </data>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Prepišem nastavitve v ciljni mapi? 
-
-"Prepiši" bo prepisal datoteko v ciljni mapi. 
-"Uporabi drugo" bo uporabilo obstoječo datoteko z nastavitvami na cilju in znova zagnalo aplikacijo. </value>
+    <value>'Prepiši' bo prepisal datoteko z nastavitvami v ciljni mapi. 'Uporabi drugo' bo uporabil obstoječo nastavitveno datoteko v ciljni mapi in nato znova zagnal aplikacijo.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Geslo</value>
@@ -1100,11 +1095,11 @@ Ustvarite enega...</value>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Izberite ločljivost zaslona</value>
   </data>
-  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>Izbrane nastavitve so prepisane! </value>
+  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
+    <value>Nastavitve so prepisane!</value>
   </data>
-  <data name="SelectedSettingsAreReset" xml:space="preserve">
-    <value>Izbrane nastavitve so ponastavljene.</value>
+  <data name="SettingsAreResetMessage" xml:space="preserve">
+    <value>Nastavitve so ponastavljene!</value>
   </data>
   <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
     <value>Izberite nastavitve, ki jih želite izvoziti:</value>
@@ -1125,7 +1120,7 @@ Ustvarite enega...</value>
     <value>Storitev</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>Najdena nastavitvena datoteka je bila poškodovana ali ni združljiva s to različico. Vse nastavitve so ponastavljene! (Profilne datoteke ne vplivajo!)</value>
+    <value>Najdena datoteka z nastavitvami je bila poškodovana ali pa ni združljiva s to različico! To težavo lahko prijavite na GitHub. V mapi z nastavitvami je bila ustvarjena varnostna kopija datoteke z nastavitvami in nastavitve so bile ponastavljene. Datoteke profila niso prizadete!</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Nastavitve so bile uspešno izvožene!</value>
@@ -1188,7 +1183,7 @@ Ustvarite enega...</value>
     <value>Proces lahko vzame nekaj časa in virov (CPE/RAM).</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>Mesto nastavitev ne vpliva</value>
+    <value>Nastavitev lokacije ni prizadeta!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
     <value>Časovna omejitev poizvedbe SNMP.</value>
@@ -1248,7 +1243,7 @@ Ustvarite enega...</value>
     <value>Širina</value>
   </data>
   <data name="WrongPasswordDecryptionFailedMessage" xml:space="preserve">
-    <value>Profile file could not be decrypted with the given password.</value>
+    <value>Datoteke profila ni bilo mogoče dešifrirati z danim geslom.</value>
   </data>
   <data name="WrongPasswordMessage" xml:space="preserve">
     <value>Vneseno geslo je napačno.</value>
@@ -2894,9 +2889,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Profila ni bilo mogoče naložiti! </value>
   </data>
   <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>If this happened after an update, you may need to migrate the profiles to a newer version. When you click "Migrate", a PowerShell window opens with the migration script. Check the path and press Enter.
-
-Otherwise, the profile may be corrupted and you want to report the issue on GitHub.</value>
+    <value>Če se je to zgodilo po posodobitvi, boste morda morali preseliti profile na novejšo različico. Ko kliknete 'Preseli', se odpre okno PowerShell s skriptom za selitev. Preverite pot in pritisnite Enter. V nasprotnem primeru je profil morda poškodovan in, če želite, prijaviti težavo na GitHub.</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Uredi skupino...</value>
@@ -2926,7 +2919,7 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>Odkleni profil</value>
   </data>
   <data name="UnlockTheProfileFileMessage" xml:space="preserve">
-    <value>Unlock the profile file to use the profiles!</value>
+    <value>Odklenite datoteko profila za uporabo profilov!</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>Izjava o omejitvi odgovornosti </value>
@@ -2938,11 +2931,7 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>Ciljna mapa že vsebuje datoteke. Če kliknete 'Združi', se trenutni profili kopirajo v mapo. </value>
   </data>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite profiles in destination folder?
-
-"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
-"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
-"Use other folder" will use the existing profile files in the destination folder.</value>
+    <value>Želite prepisati profile v ciljni mapi? 'Prepiši' kopira datoteke profila v ciljno mapo in prepiše obstoječe datoteke profila. 'Združi' bo kopiral datoteke profila v ciljno mapo, vendar ne bo prepisal obstoječih datotek profila. 'Uporabi drugo mapo' bo uporabil obstoječe datoteke profila v ciljni mapi.</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Uporabi drugo</value>
@@ -3110,36 +3099,54 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>Ni mogoče znova vzpostaviti povezave z oddaljeno sejo.</value>
   </data>
   <data name="Migrate" xml:space="preserve">
-    <value>Migrate</value>
+    <value>Preseli</value>
   </data>
   <data name="ReportOnGitHub" xml:space="preserve">
-    <value>Report on GitHub</value>
+    <value>Prijavi na GitHubu</value>
   </data>
   <data name="Groups" xml:space="preserve">
-    <value>Groups</value>
+    <value>Skupine</value>
   </data>
   <data name="AddGroup" xml:space="preserve">
-    <value>Add group</value>
+    <value>Dodaj skupino</value>
   </data>
   <data name="DeleteGroup" xml:space="preserve">
-    <value>Delete group</value>
+    <value>Izbriši skupino</value>
   </data>
   <data name="DeleteGroupMessage" xml:space="preserve">
-    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
+    <value>Izbrana skupina in vsi profili znotraj te skupine bodo trajno izbrisani.</value>
   </data>
   <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
-    <value>The name is already used!</value>
+    <value>Ime je že uporabljeno!</value>
   </data>
   <data name="Resize" xml:space="preserve">
-    <value>Resize</value>
+    <value>Spremeni velikost</value>
   </data>
   <data name="DeleteProfiles" xml:space="preserve">
-    <value>Delete profiles</value>
+    <value>Izbriši profile</value>
   </data>
   <data name="DeleteProfilesMessage" xml:space="preserve">
-    <value>Selected profiles will be deleted permanently.</value>
+    <value>Izbrani profili bodo trajno izbrisani.</value>
   </data>
   <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
-    <value>Unlock the profile file to add, change or delete a profile!</value>
+    <value>Odklenite datoteko profila, da dodate, spremenite ali izbrišete profile!</value>
+  </data>
+  <data name="UseCustomThemes" xml:space="preserve">
+    <value>Uporabi teme po meri</value>
+  </data>
+  <data name="CustomThemes" xml:space="preserve">
+    <value>Teme po meri</value>
+  </data>
+  <data name="ImportSettingsQuestion" xml:space="preserve">
+    <value>Želite uvoziti nastavitve?</value>
+  </data>
+  <data name="ResetSettingsQuestion" xml:space="preserve">
+    <value>Želite ponastaviti nastavitve?</value>
+  </data>
+  <data name="SettingsResetExclamationMark" xml:space="preserve">
+    <value>Nastavitve so ponastavljene!</value>
+  </data>
+  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
+    <value>Želite prepisati obstoječo datoteko z nastavitvami?</value>
   </data>
 </root>
