@@ -996,8 +996,8 @@ Creëer er een...</value>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
     <value>Overwrite settings in the destination folder?
 
-"Overwrite" will overwrite the settings file in the destination folder.
-"Use other" will use the existing setting file in the destination folder and restart the application afterwards.</value>
+"Overwrite" will overwrite the file in the destination folder.
+"Use other" will use the existing settings file in the destination and restart the application.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Wachtwoord</value>
@@ -1123,11 +1123,8 @@ Creëer er een...</value>
     <value>Service</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>The found settings file was corrupted or is not compatible with this version! You may report this issue on GitHub.
-
-A backup of the settings file was created in the settings folder and the settings were reset.
-
-Profile files are not affected!</value>
+    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset!
+(Profile files are not affected!)</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Settings successfully exported!</value>
@@ -1190,7 +1187,7 @@ Profile files are not affected!</value>
     <value>The process can take up some time and resources (CPU / RAM).</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>The settings location is not affected!</value>
+    <value>The settings location is not affected</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
     <value>Timeout on SNMP query.</value>
