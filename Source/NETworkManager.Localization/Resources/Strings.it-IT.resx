@@ -1004,10 +1004,10 @@ Controlla i parametri!</value>
     <value>sostituisci</value>
   </data>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Vuoi sovrascrivere le impostazioni nella cartella di destinazione?
+    <value>Vuoi sovrascrivere le impostazioni nella cartella destinazione?
 
-'Sovrascrivi' sovrascriverà il file nella cartella di destinazione.
-'Usa altro' userà il file delle impostazioni esistente nella destinazione e riavvierà l'applicazione.</value>
+"Sovrascrivi" sovrascriverà il file delle impostazioni nella cartella  destinazione.
+"Usa altro" userà il file di impostazione esistente nella cartella destinazione e riavvierà in seguito l'applicazione.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
@@ -1108,11 +1108,11 @@ Controlla i parametri!</value>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Seleziona una risoluzione dello schermo</value>
   </data>
-  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>Le seguenti impostazioni verranno sovrascritte!</value>
+  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
+    <value>Le impostazioni verranno sovrascritte!</value>
   </data>
-  <data name="SelectedSettingsAreReset" xml:space="preserve">
-    <value>Le impostazioni selezionate sono state ripristinate.</value>
+  <data name="SettingsAreResetMessage" xml:space="preserve">
+    <value>Le impostazioni sono state ripristinate!</value>
   </data>
   <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
     <value>Seleziona le impostazioni da esportare:</value>
@@ -1133,8 +1133,11 @@ Controlla i parametri!</value>
     <value>Servizio</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>Il file delle impostazioni trovato è danneggiato o non è compatibile con questa versione. 
-Tutte le impostazioni sono state ripristinate (i file di profilo non sono interessati)!</value>
+    <value>Il file delle impostazioni trovato è danneggiato o non è compatibile con questa versione! 
+Puoi segnalare questo problema su GitHub.
+È stato creato un backup del file delle impostazioni nella cartella delle impostazioni e le impostazioni sono state ripristinate.
+
+I file del profilo non sono interessati dal problema!</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Esportazione impostazioni completata!</value>
@@ -1197,7 +1200,7 @@ Tutte le impostazioni sono state ripristinate (i file di profilo non sono intere
     <value>Il processo può richiedere del tempo e delle risorse (CPU / RAM).</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>Il percorso delle impostazioni non ha subito modifiche</value>
+    <value>I file delle impostazioni non sono interessati dal problema!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
     <value>Time out interrogazione SNMP</value>
@@ -3168,5 +3171,23 @@ Questo limite è impostato dall'amministratore del server o dai criteri di rete.
   </data>
   <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
     <value>Per aggiungere, modificare o eliminare un profilo sblocca il file del profilo!</value>
+  </data>
+  <data name="UseCustomThemes" xml:space="preserve">
+    <value>Usa temi personalizzati</value>
+  </data>
+  <data name="CustomThemes" xml:space="preserve">
+    <value>Temi personalizzati</value>
+  </data>
+  <data name="ImportSettingsQuestion" xml:space="preserve">
+    <value>Vuoi importare le impostazioni?</value>
+  </data>
+  <data name="ResetSettingsQuestion" xml:space="preserve">
+    <value>Vuoi ripristinare le impostazioni?</value>
+  </data>
+  <data name="SettingsResetExclamationMark" xml:space="preserve">
+    <value>Impostazioni ripristinate!</value>
+  </data>
+  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
+    <value>Vuoi sovrascrivere il file delle impostazioni esistente?</value>
   </data>
 </root>
