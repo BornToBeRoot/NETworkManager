@@ -994,10 +994,10 @@ Erstelle eins...</value>
     <value>überschreiben</value>
   </data>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Einstellungen im Zielordner überschreiben?
+    <value>Overwrite settings in the destination folder?
 
-Mit "Überschreiben" wird die Datei im Zielordner überschrieben.
-"Andere verwenden" verwendet die vorhandene Einstellungsdatei im Zielordner und startet die Anwendung neu.</value>
+"Overwrite" will overwrite the settings file in the destination folder.
+"Use other" will use the existing setting file in the destination folder and restart the application afterwards.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Passwort</value>
@@ -1098,11 +1098,11 @@ Mit "Überschreiben" wird die Datei im Zielordner überschrieben.
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Wählen Sie eine Bildschirmauflösung</value>
   </data>
-  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>Die gewählten Einstellungen werden überschrieben!</value>
+  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
+    <value>Settings are overwritten!</value>
   </data>
-  <data name="SelectedSettingsAreReset" xml:space="preserve">
-    <value>Die ausgewählten Einstellungen werden zurückgesetzt.</value>
+  <data name="SettingsAreResetMessage" xml:space="preserve">
+    <value>Settings are reset!</value>
   </data>
   <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
     <value>Wählen Sie die Einstellungen aus, die Sie exportieren möchten:</value>
@@ -1123,8 +1123,11 @@ Mit "Überschreiben" wird die Datei im Zielordner überschrieben.
     <value>Dienst</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>Die gefundene Einstellungsdatei ist beschädigt oder mit dieser Version nicht kompatibel. Alle Einstellungen wurden zurückgesetzt!
-(Profile sind nicht betroffen!)</value>
+    <value>The found settings file was corrupted or is not compatible with this version! You may report this issue on GitHub.
+
+A backup of the settings file was created in the settings folder and the settings were reset.
+
+Profile files are not affected!</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Einstellungen erfolgreich exportiert!</value>
@@ -1187,7 +1190,7 @@ Mit "Überschreiben" wird die Datei im Zielordner überschrieben.
     <value>Der Vorgang kann einige Zeit und Ressourcen in Anspruch nehmen (CPU / RAM).</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>Der Speicherpfad ist hiervon nicht betroffen</value>
+    <value>The settings location is not affected!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
     <value>Zeitüberschreitung bei SNMP-Abfrage.</value>
@@ -3142,5 +3145,23 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
   </data>
   <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
     <value>Entsperren Sie die Profildatei, um ein Profil hinzuzufügen, zu ändern oder zu löschen!</value>
+  </data>
+  <data name="UseCustomThemes" xml:space="preserve">
+    <value>Use custom themes</value>
+  </data>
+  <data name="CustomThemes" xml:space="preserve">
+    <value>Custom themes</value>
+  </data>
+  <data name="ImportSettingsQuestion" xml:space="preserve">
+    <value>Import settings?</value>
+  </data>
+  <data name="ResetSettingsQuestion" xml:space="preserve">
+    <value>Reset settings?</value>
+  </data>
+  <data name="SettingsResetExclamationMark" xml:space="preserve">
+    <value>Settings reset!</value>
+  </data>
+  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
+    <value>Overwrite existing settings file?</value>
   </data>
 </root>
