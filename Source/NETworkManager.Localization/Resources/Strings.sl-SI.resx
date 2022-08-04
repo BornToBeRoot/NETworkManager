@@ -244,7 +244,7 @@
     <value>Informacija</value>
   </data>
   <data name="Interface" xml:space="preserve">
-    <value>Vmesnik</value>
+    <value>Kartica</value>
   </data>
   <data name="IPScanner" xml:space="preserve">
     <value>Pregledovalnik IP</value>
@@ -771,9 +771,9 @@
     <value>Poverilnica</value>
   </data>
   <data name="ProfileEncryptionDisclaimer" xml:space="preserve">
-    <value>Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
+    <value>Datoteke profila so šifrirane na disku z uporabo AES z velikostjo ključa 256 bitov in velikostjo bloka 128 bitov v načinu CBC. Šifrirni ključ je pridobljen iz glavnega gesla z uporabo Rfc2898DeriveBytes (PBKDF2) z 1.000.000 ponovitvami. Med izvajanjem so gesla shranjena kot VarenNiz, ko je datoteka profila naložena. Za nekatere funkcije je treba geslo pretvoriti v običajni niz in ostane nešifrirano v pomnilniku, dokler jih zbiralnik smeti ne počisti.
 
-First make a backup copy of your profile files before enabling encryption!</value>
+Najprej naredite varnostno kopijo datotek vašega profila, preden omogočite šifriranje!</value>
   </data>
   <data name="Custom" xml:space="preserve">
     <value>Po meri</value>
@@ -812,7 +812,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>Izbriši vnos</value>
   </data>
   <data name="DeleteProfileMessage" xml:space="preserve">
-    <value>Selected profile will be deleted permanently.</value>
+    <value>Izbrani profil bo trajno izbrisan.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
     <value>Nastavitve DNS</value>
@@ -893,7 +893,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>ID</value>
   </data>
   <data name="InheritHostFromGeneral" xml:space="preserve">
-    <value>Inherit host from general</value>
+    <value>Podeduj gostitelja iz splošnega</value>
   </data>
   <data name="IPRange" xml:space="preserve">
     <value>Razpon IP</value>
@@ -1662,7 +1662,7 @@ Ustvarite enega...</value>
     <value>Prejeto potrdilo je poteklo.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrDelegationPolicy" xml:space="preserve">
-    <value>Pplotika ne podpira prenosa poverilnic na ciljni strežnik.</value>
+    <value>Politika ne podpira prenosa poverilnic na ciljni strežnik.</value>
   </data>
   <data name="RemoteDesktopDisconnectReason_SslErrFreshCredRequiredByServer" xml:space="preserve">
     <value>Politika preverjanja pristnosti strežnika ne dovoljuje zahtev za povezavo z uporabo shranjenih poverilnic. Uporabnik mora vnesti nove poverilnice.</value>
@@ -2894,9 +2894,9 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Profila ni bilo mogoče naložiti! </value>
   </data>
   <data name="ProfileCouldNotBeLoadedMessage" xml:space="preserve">
-    <value>If this happened after an update, you may need to migrate the profiles to a newer version. When you click "Migrate", a PowerShell window opens with the migration script. Check the path and press Enter.
+    <value>Če se je to zgodilo po posodobitvi, boste morda morali preseliti profile na novejšo različico. Ko kliknete 'Preseli', se odpre okno PowerShell s skriptom za selitev. Preverite pot in pritisnite Enter.
 
-Otherwise, the profile may be corrupted and you want to report the issue on GitHub.</value>
+V nasprotnem primeru je profil morda poškodovan in prijavite težavo na GitHub.</value>
   </data>
   <data name="EditGroupDots" xml:space="preserve">
     <value>Uredi skupino...</value>
@@ -2917,7 +2917,7 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>Trenutno geslo</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>Novo gslo</value>
+    <value>Novo geslo</value>
   </data>
   <data name="ChangeMasterPassword" xml:space="preserve">
     <value>Spremeni glavno geslo...</value>
@@ -2938,11 +2938,11 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>Ciljna mapa že vsebuje datoteke. Če kliknete 'Združi', se trenutni profili kopirajo v mapo. </value>
   </data>
   <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite profiles in destination folder?
+    <value>Želite repisati profile v ciljni mapi?
 
-"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
-"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
-"Use other folder" will use the existing profile files in the destination folder.</value>
+"Prepiši" kopira datoteke profila v ciljno mapo in prepiše obstoječe datoteke profila.
+"Združi" bo kopiralo datoteke profila v ciljno mapo, vendar ne bo prepisalo obstoječih datotek profila.
+"Uporabi drugo mapo" bo uporabilo obstoječe datoteke profila v ciljni mapi.</value>
   </data>
   <data name="UseOther" xml:space="preserve">
     <value>Uporabi drugo</value>
@@ -3110,36 +3110,36 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>Ni mogoče znova vzpostaviti povezave z oddaljeno sejo.</value>
   </data>
   <data name="Migrate" xml:space="preserve">
-    <value>Migrate</value>
+    <value>Preseli</value>
   </data>
   <data name="ReportOnGitHub" xml:space="preserve">
-    <value>Report on GitHub</value>
+    <value>Prijavi na GitHub</value>
   </data>
   <data name="Groups" xml:space="preserve">
-    <value>Groups</value>
+    <value>Skupine</value>
   </data>
   <data name="AddGroup" xml:space="preserve">
-    <value>Add group</value>
+    <value>Dodaj skupino</value>
   </data>
   <data name="DeleteGroup" xml:space="preserve">
-    <value>Delete group</value>
+    <value>Izbriši skupino</value>
   </data>
   <data name="DeleteGroupMessage" xml:space="preserve">
-    <value>Selected group and all profiles inside this group will be deleted permanently.</value>
+    <value>Izbrana skupina in vsi profili znotraj te skupine bodo trajno izbrisani.</value>
   </data>
   <data name="ErrorMessage_NameIsAlreadyUsed" xml:space="preserve">
-    <value>The name is already used!</value>
+    <value>Ime je že uporabljeno!</value>
   </data>
   <data name="Resize" xml:space="preserve">
-    <value>Resize</value>
+    <value>Spremeni velikost<value>
   </data>
   <data name="DeleteProfiles" xml:space="preserve">
-    <value>Delete profiles</value>
+    <value>Izbriši profile</value>
   </data>
   <data name="DeleteProfilesMessage" xml:space="preserve">
-    <value>Selected profiles will be deleted permanently.</value>
+    <value>Izbrani profili bodo trajno izbrisani.</value>
   </data>
   <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
-    <value>Unlock the profile file to add, change or delete a profile!</value>
+    <value>Odklenite datoteko profila, če želite dodati, spremeniti ali izbrisati profil!</value>
   </data>
 </root>
