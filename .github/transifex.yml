@@ -1,26 +1,27 @@
-filters:
-  - filter_type: file
-    # all supported i18n types: https://docs.transifex.com/formats
-    file_format: RESX
-    source_language: en_US
-    source_file: Source/NETworkManager.Localization/Resources/Strings.resx
-    # path expression to translation files, must contain <lang> placeholder
-    translation_files_expression: 'Source/NETworkManager.Localization/Resources/Strings.<lang>.resx'
-settings:
-    # http://www.codedigest.com/CodeDigest/207-Get-All-Language-Country-Code-List-for-all-Culture-in-C---ASP-Net.aspx
-    language_mapping:        
-        zh_CN: zh-CN
-        zh_TW: zh-TW
-        cs_CZ: cs-CZ
-        nl_NL: nl-NL
-        fr_FR: fr-FR
-        de_DE: de-DE
-        hu_HU: hu-HU
-        it_IT: it-IT
-        ko_KR: ko-KR
-        pl_PL: pl-PL
-        pt_BR: pt-BR
-        ru_RU: ru-RU
-        sl_SI: sl-SI
-        es_ES: es-ES
-        sv_SE: sv-SE
+git:
+  filters:
+    - filter_type: file
+      # all supported i18n types: https://docs.transifex.com/formats
+      file_format: RESX
+      source_language: en_US
+      source_file: Source/NETworkManager.Localization/Resources/Strings.resx
+      # path expression to translation files, must contain <lang> placeholder
+      translation_files_expression: 'Source/NETworkManager.Localization/Resources/Strings.<lang>.resx'
+  settings:
+      # http://www.codedigest.com/CodeDigest/207-Get-All-Language-Country-Code-List-for-all-Culture-in-C---ASP-Net.aspx
+      language_mapping:        
+          zh_CN: zh-CN
+          zh_TW: zh-TW
+          cs_CZ: cs-CZ
+          nl_NL: nl-NL
+          fr_FR: fr-FR
+          de_DE: de-DE
+          hu_HU: hu-HU
+          it_IT: it-IT
+          ko_KR: ko-KR
+          pl_PL: pl-PL
+          pt_BR: pt-BR
+          ru_RU: ru-RU
+          sl_SI: sl-SI
+          es_ES: es-ES
+          sv_SE: sv-SE
