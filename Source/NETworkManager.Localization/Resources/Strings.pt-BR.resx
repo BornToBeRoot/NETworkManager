@@ -996,8 +996,8 @@ Crie um...</value>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
     <value>Substituir as configurações na pasta de destino?
 
-"Substituir" substituirá o arquivo na pasta de destino.
-"Usar outro" usará o arquivo de configurações existente no destino e reiniciará o aplicativo.</value>
+"Substituir" substituirá o arquivo de configurações na pasta de destino.
+"Usar outro" usará o arquivo de configurações existente na pasta de destino e reiniciará o aplicativo.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Senha</value>
@@ -1098,11 +1098,11 @@ Crie um...</value>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Selecione uma resolução de tela</value>
   </data>
-  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>As configurações selecionadas serão substituídas!</value>
+  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
+    <value>As configurações foram substituídas!</value>
   </data>
-  <data name="SelectedSettingsAreReset" xml:space="preserve">
-    <value>As configurações selecionadas foram redefinidas.</value>
+  <data name="SettingsAreResetMessage" xml:space="preserve">
+    <value>Configurações redefinidas!</value>
   </data>
   <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
     <value>Selecione as configurações que deseja exportar:</value>
@@ -1123,8 +1123,11 @@ Crie um...</value>
     <value>Serviço</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>O arquivo de configurações encontrado está corrompido ou não é compatível com esta versão. Todas as configurações foram redefinidas.
-(Arquivos de perfil não foram afetados!)</value>
+    <value>O arquivo de configurações encontrado está corrompido ou não é compatível com esta versão! Você pode reportar este problema no GitHub.
+
+Um backup do arquivo de configurações foi criado na pasta de configurações e as configurações foram redefinidas.
+
+Os arquivos do perfil não foram afetados!</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Configurações exportadas com sucesso!</value>
@@ -1187,7 +1190,7 @@ Crie um...</value>
     <value>O processo pode levar algum tempo e recursos (CPU / RAM).</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>O local das configurações não é afetado</value>
+    <value>A pasta de configurações não é afetada!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
     <value>Tempo limite na consulta SNMP.</value>
@@ -3142,5 +3145,23 @@ Habilite a criptografia do arquivo de perfil em Configurações &gt; Perfil para
   </data>
   <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
     <value>Desbloqueie o perfil para adicionar, alterar ou excluir um perfil!</value>
+  </data>
+  <data name="UseCustomThemes" xml:space="preserve">
+    <value>Usar temas personalizados</value>
+  </data>
+  <data name="CustomThemes" xml:space="preserve">
+    <value>Temas personalizados</value>
+  </data>
+  <data name="ImportSettingsQuestion" xml:space="preserve">
+    <value>Importar configurações?</value>
+  </data>
+  <data name="ResetSettingsQuestion" xml:space="preserve">
+    <value>Redefinir configurações?</value>
+  </data>
+  <data name="SettingsResetExclamationMark" xml:space="preserve">
+    <value>Configurações redefinidas!</value>
+  </data>
+  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
+    <value>Substituir arquivo de configurações existente?</value>
   </data>
 </root>
