@@ -996,8 +996,8 @@ Create one...</value>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
     <value>Overwrite settings in the destination folder?
 
-"Overwrite" will overwrite the file in the destination folder.
-"Use other" will use the existing settings file in the destination and restart the application.</value>
+"Overwrite" will overwrite the settings file in the destination folder.
+"Use other" will use the existing setting file in the destination folder and restart the application afterwards.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>密碼</value>
@@ -1098,11 +1098,11 @@ Create one...</value>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>選擇螢幕解析度</value>
   </data>
-  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>The selected settings are overwritten!</value>
+  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
+    <value>Settings are overwritten!</value>
   </data>
-  <data name="SelectedSettingsAreReset" xml:space="preserve">
-    <value>此已選擇設定被重置。</value>
+  <data name="SettingsAreResetMessage" xml:space="preserve">
+    <value>Settings are reset!</value>
   </data>
   <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
     <value>Select the settings you want to export:</value>
@@ -1123,8 +1123,11 @@ Create one...</value>
     <value>服務</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>The settings file found was corrupted or is not compatible with this version. All settings have been reset!
-(Profile files are not affected!)</value>
+    <value>The found settings file was corrupted or is not compatible with this version! You may report this issue on GitHub.
+
+A backup of the settings file was created in the settings folder and the settings were reset.
+
+Profile files are not affected!</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>設定已成功匯出!</value>
@@ -1187,7 +1190,7 @@ Create one...</value>
     <value>The process can take up some time and resources (CPU / RAM).</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>The settings location is not affected</value>
+    <value>The settings location is not affected!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
     <value>SNMP 查詢逾時</value>
@@ -3142,5 +3145,23 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   </data>
   <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
     <value>Unlock the profile file to add, change or delete a profile!</value>
+  </data>
+  <data name="UseCustomThemes" xml:space="preserve">
+    <value>Use custom themes</value>
+  </data>
+  <data name="CustomThemes" xml:space="preserve">
+    <value>Custom themes</value>
+  </data>
+  <data name="ImportSettingsQuestion" xml:space="preserve">
+    <value>Import settings?</value>
+  </data>
+  <data name="ResetSettingsQuestion" xml:space="preserve">
+    <value>Reset settings?</value>
+  </data>
+  <data name="SettingsResetExclamationMark" xml:space="preserve">
+    <value>Settings reset!</value>
+  </data>
+  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
+    <value>Overwrite existing settings file?</value>
   </data>
 </root>
