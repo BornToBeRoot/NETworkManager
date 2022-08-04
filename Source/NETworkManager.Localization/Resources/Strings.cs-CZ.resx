@@ -994,10 +994,10 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>Přepsat</value>
   </data>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Přepsat nastavení v cílové složce?
+    <value>Overwrite settings in the destination folder?
 
-"Přepsat" přepíše soubor v cílové složce.
-Možnost "Použít jiné" použije existující soubor nastavení v cíli a restartuje aplikaci.</value>
+"Overwrite" will overwrite the settings file in the destination folder.
+"Use other" will use the existing setting file in the destination folder and restart the application afterwards.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Heslo</value>
@@ -1098,11 +1098,11 @@ Možnost "Použít jiné" použije existující soubor nastavení v cíli a rest
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Vyběr rozlišení obrazovky</value>
   </data>
-  <data name="SelectedSettingsAreOverwritten" xml:space="preserve">
-    <value>Vybrané nastavení přepsáno!</value>
+  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
+    <value>Settings are overwritten!</value>
   </data>
-  <data name="SelectedSettingsAreReset" xml:space="preserve">
-    <value>Vybrané nastavení vynulováno.</value>
+  <data name="SettingsAreResetMessage" xml:space="preserve">
+    <value>Settings are reset!</value>
   </data>
   <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
     <value>Výběr nastavení pro export:</value>
@@ -1123,8 +1123,11 @@ Možnost "Použít jiné" použije existující soubor nastavení v cíli a rest
     <value>Služba</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>Soubor nastavení je poškozen a nebo je nekompatibilní s touto verzí. Všechny nastavení byly vynulovány!
-(Soubory profilů zůstaly v pořádku!)</value>
+    <value>The found settings file was corrupted or is not compatible with this version! You may report this issue on GitHub.
+
+A backup of the settings file was created in the settings folder and the settings were reset.
+
+Profile files are not affected!</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Nastavení byly vyexportovány!</value>
@@ -1187,7 +1190,7 @@ Možnost "Použít jiné" použije existující soubor nastavení v cíli a rest
     <value>Operace může trvat delší dobu a spotřebovat více prostředků (CPU / RAM).</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>Umístění nastavení nenarušena</value>
+    <value>The settings location is not affected!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
     <value>Časový limit SNMP dotazu.</value>
@@ -3142,5 +3145,23 @@ Pověření v profilu budou bezpečnější.</value>
   </data>
   <data name="UnlockTheProfileFileMessage2" xml:space="preserve">
     <value>Unlock the profile file to add, change or delete a profile!</value>
+  </data>
+  <data name="UseCustomThemes" xml:space="preserve">
+    <value>Use custom themes</value>
+  </data>
+  <data name="CustomThemes" xml:space="preserve">
+    <value>Custom themes</value>
+  </data>
+  <data name="ImportSettingsQuestion" xml:space="preserve">
+    <value>Import settings?</value>
+  </data>
+  <data name="ResetSettingsQuestion" xml:space="preserve">
+    <value>Reset settings?</value>
+  </data>
+  <data name="SettingsResetExclamationMark" xml:space="preserve">
+    <value>Settings reset!</value>
+  </data>
+  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
+    <value>Overwrite existing settings file?</value>
   </data>
 </root>
