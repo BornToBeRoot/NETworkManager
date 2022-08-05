@@ -1099,10 +1099,10 @@
     <value>화면 해상도 선택</value>
   </data>
   <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
-    <value>Settings are overwritten!</value>
+    <value>설정을 덮어씁니다!</value>
   </data>
   <data name="SettingsAreResetMessage" xml:space="preserve">
-    <value>Settings are reset!</value>
+    <value>설정이 재설정되었습니다!</value>
   </data>
   <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
     <value>내보낼 설정을 선택:</value>
@@ -3144,21 +3144,21 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>프로필을 추가, 변경 또는 삭제하려면 프로필 파일의 잠금을 해제하십시오!</value>
   </data>
   <data name="UseCustomThemes" xml:space="preserve">
-    <value>Use custom themes</value>
+    <value>사용자 지정 테마 사용</value>
   </data>
   <data name="CustomThemes" xml:space="preserve">
-    <value>Custom themes</value>
+    <value>사용자 지정 테마</value>
   </data>
   <data name="ImportSettingsQuestion" xml:space="preserve">
-    <value>Import settings?</value>
+    <value>설정을 가져오시겠습니까?</value>
   </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
-    <value>Reset settings?</value>
+    <value>설정을 재설정하시겠습니까?</value>
   </data>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
-    <value>Settings reset!</value>
+    <value>설정이 재설정되었습니다!</value>
   </data>
   <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
-    <value>Overwrite existing settings file?</value>
+    <value>기존 설정 파일을 덮어쓰시겠습니까?</value>
   </data>
 </root>
