@@ -64,7 +64,7 @@ namespace NETworkManager.Profiles.Application
             GroupInfo group = ProfileManager.GetGroup(profile.Group);
 
             // Override hostname
-            info.Hostname = profile.Host;
+            info.Hostname = profile.RemoteDesktop_Host;
 
             // Network
             if (profile.RemoteDesktop_OverridePort)

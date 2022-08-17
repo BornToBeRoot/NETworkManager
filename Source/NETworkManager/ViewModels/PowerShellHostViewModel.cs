@@ -233,6 +233,14 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem)?.View as PowerShellControl)?.CloseTab();
         }
 
+        private bool PowerShell_Connected_CanExecute(object view)
+        {
+            if (view is PowerShellControl control)
+                return control.IsConnected;
+
+            return false;
+        }
+
         public ICommand PowerShell_ReconnectCommand => new RelayCommand(PowerShell_ReconnectAction);
 
         private void PowerShell_ReconnectAction(object view)
@@ -242,6 +250,14 @@ namespace NETworkManager.ViewModels
                 if (control.ReconnectCommand.CanExecute(null))
                     control.ReconnectCommand.Execute(null);
             }
+        }
+
+        public ICommand PowerShell_ResizeWindowCommand => new RelayCommand(PowerShell_ResizeWindowAction, PowerShell_Connected_CanExecute);
+
+        private void PowerShell_ResizeWindowAction(object view)
+        {
+            if (view is PowerShellControl control)
+                control.ResizeEmbeddedWindow();
         }
 
         public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
