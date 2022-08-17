@@ -187,6 +187,14 @@ namespace NETworkManager.Controls
         #endregion
 
         #region PowerShell Commands
+        private bool PowerShell_Disconnected_CanExecute(object view)
+        {
+            if (view is PowerShellControl control)
+                return !control.IsConnected;
+
+            return false;
+        }
+
         public ICommand PowerShell_ReconnectCommand => new RelayCommand(PowerShell_ReconnectAction);
 
         private void PowerShell_ReconnectAction(object view)
@@ -198,17 +206,16 @@ namespace NETworkManager.Controls
             }
         }
 
+        public ICommand PowerShell_ResizeWindowCommand => new RelayCommand(PowerShell_ResizeWindowAction, PowerShell_Disconnected_CanExecute);
+
+        private void PowerShell_ResizeWindowAction(object view)
+        {
+            if (view is PowerShellControl control)
+                control.ResizeEmbeddedWindow();
+        }
         #endregion
 
         #region PuTTY Commands
-        private bool PuTTY_Disconnected_CanExecute(object view)
-        {
-            if (view is PuTTYControl control)
-                return !control.IsConnected;
-
-            return false;
-        }
-
         private bool PuTTY_Connected_CanExecute(object view)
         {
             if (view is PuTTYControl control)

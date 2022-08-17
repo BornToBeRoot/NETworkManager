@@ -146,18 +146,6 @@ namespace NETworkManager.Controls
 
                         while ((DateTime.Now - startTime).TotalSeconds < 10)
                         {
-                            // Fix for netcore3.1 https://stackoverflow.com/questions/60342879/process-mainwindowhandle-is-non-zero-in-net-framework-but-zero-in-net-core-unl
-                            /*
-                            try
-                            {
-                                _process = Process.GetProcessById(_process.Id);
-                            }
-                            catch
-                            {
-                                break; // Process has exited
-                            }
-                            */
-                            
                             _process.Refresh();
 
                             if (_process.HasExited)
@@ -221,7 +209,7 @@ namespace NETworkManager.Controls
             IsConnected = false;
         }
 
-        private void ResizeEmbeddedWindow()
+        public void ResizeEmbeddedWindow()
         {
             if (IsConnected)
                 NativeMethods.SetWindowPos(_process.MainWindowHandle, IntPtr.Zero, 0, 0, WindowHost.ClientSize.Width, WindowHost.ClientSize.Height, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
