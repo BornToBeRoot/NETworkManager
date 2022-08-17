@@ -38,6 +38,7 @@
 </div>
 
 # More informations
+
 - [Features](https://borntoberoot.net/NETworkManager/Features)
 - [Download](https://borntoberoot.net/NETworkManager/Download)
 - [Changelog](https://borntoberoot.net/NETworkManager/Changelog)
@@ -47,25 +48,32 @@
 - [How to report a security vulnerability?](https://github.com/BornToBeRoot/NETworkManager/blob/main/SECURITY.md)
 
 # Build
-__Requirements__
-- [SDK .NET 6.x](https://dotnet.microsoft.com/download/dotnet/6.0)
-- Visual Studio 2019 or later with `.NET desktop development` and `Universal Windows Platform development` 
 
-__Optional__
+**Requirements**
+
+- [SDK .NET 6.x](https://dotnet.microsoft.com/download/dotnet/6.0)
+- Visual Studio 2019 or later with `.NET desktop development` and `Universal Windows Platform development`
+
+**Optional**
+
 - [InnoSetup](https://jrsoftware.org/isinfo.php) (if you want to create an installer)
   - Download `ChineseSimplified.isl` and `ChineseTraditional.isl` from the [official repo](https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/) and place them in the language folder of InnoSetup
 
-__Build__
+**Build**
+
 1. Clone or download the repository: `git clone https://github.com/BornToBeRoot/NETworkManager`
 2. Run the `.\build.ps1` script with PowerShell to compile the solution and create a portable and a setup version (or open the file `Source/NETworkManager.sln` in Visual Studio to debug or build the solution)
 
 You can also copy & paste this command in your PowerShell console :smile:
+
 ```PowerShell
 git clone https://github.com/BornToBeRoot/NETworkManager; Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; .\NETworkManager\build.ps1
 ```
 
 # Code of Conduct
+
 This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/main/CODE_OF_CONDUCT.md) defined by the [Contributor Covenant](http://contributor-covenant.org/).
 
 # License
+
 NETworkManager is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE). The licenses of the used libraries can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/main/Source/NETworkManager.Documentation/Licenses).
