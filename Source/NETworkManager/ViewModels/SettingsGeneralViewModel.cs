@@ -13,9 +13,6 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
-        //public ObservableCollection<ApplicationViewInfo> ApplicationViewCollection { get; set; }
-        public ICollectionView Applications { get; private set; }
-
         private ApplicationInfo _defaultApplicationSelectedItem;
         public ApplicationInfo DefaultApplicationSelectedItem
         {
@@ -154,10 +151,8 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            //ApplicationViewCollection = new ObservableCollection<ApplicationViewInfo>(SettingsManager.Current.General_ApplicationList);
-            Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
-
             ApplicationsVisible = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
+            ApplicationsVisible.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
             ApplicationsVisible.Filter = o =>
             {
                 if (!(o is ApplicationInfo info))
@@ -167,7 +162,7 @@ namespace NETworkManager.ViewModels
             };
 
             ApplicationsHidden = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
-
+            ApplicationsHidden.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
             ApplicationsHidden.Filter = o =>
             {
                 if (!(o is ApplicationInfo info))
@@ -178,7 +173,7 @@ namespace NETworkManager.ViewModels
 
             ValidateHideVisibleApplications();
 
-            DefaultApplicationSelectedItem = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
+            DefaultApplicationSelectedItem = ApplicationsVisible.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
             BackgroundJobInterval = SettingsManager.Current.General_BackgroundJobInterval;
             HistoryListEntries = SettingsManager.Current.General_HistoryListEntries;
         }

@@ -66,6 +66,11 @@
         PuTTY,
 
         /// <summary>
+        /// AWS Systems Manager Session Manager.
+        /// </summary>
+        AWSSessionManager,
+
+        /// <summary>
         /// TigerVNC application.
         /// </summary>
         TigerVNC,

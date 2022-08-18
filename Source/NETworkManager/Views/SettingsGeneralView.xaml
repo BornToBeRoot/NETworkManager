@@ -91,7 +91,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        <Grid Margin="0,10,0,0">
+        <Grid Margin="0,-10,0,20">
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Visibility" Value="Collapsed" />

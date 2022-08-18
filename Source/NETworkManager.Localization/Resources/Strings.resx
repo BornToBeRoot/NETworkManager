@@ -2736,68 +2736,26 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="SettingsViewName_Autostart" xml:space="preserve">
     <value>Autostart</value>
   </data>
-  <data name="SettingsViewName_Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
-  </data>
-  <data name="SettingsViewName_DNSLookup" xml:space="preserve">
-    <value>DNS Lookup</value>
-  </data>
   <data name="SettingsViewName_General" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="SettingsViewName_HotKeys" xml:space="preserve">
     <value>HotKeys</value>
   </data>
-  <data name="SettingsViewName_HTTPHeaders" xml:space="preserve">
-    <value>HTTP Headers</value>
-  </data>
-  <data name="SettingsViewName_IPScanner" xml:space="preserve">
-    <value>IP Scanner</value>
-  </data>
   <data name="SettingsViewName_Language" xml:space="preserve">
     <value>Language</value>
-  </data>
-  <data name="SettingsViewName_PingMonitor" xml:space="preserve">
-    <value>Ping Monitor</value>
-  </data>
-  <data name="SettingsViewName_PortScanner" xml:space="preserve">
-    <value>Port Scanner</value>
-  </data>
-  <data name="SettingsViewName_PowerShell" xml:space="preserve">
-    <value>PowerShell</value>
   </data>
   <data name="SettingsViewName_Profiles" xml:space="preserve">
     <value>Profiles</value>
   </data>
-  <data name="SettingsViewName_PuTTY" xml:space="preserve">
-    <value>PuTTY</value>
-  </data>
-  <data name="SettingsViewName_RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
-  </data>
   <data name="SettingsViewName_Settings" xml:space="preserve">
     <value>Settings</value>
-  </data>
-  <data name="SettingsViewName_SNMP" xml:space="preserve">
-    <value>SNMP</value>
   </data>
   <data name="SettingsViewName_Status" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="SettingsViewName_TigerVNC" xml:space="preserve">
-    <value>TigerVNC</value>
-  </data>
-  <data name="SettingsViewName_Traceroute" xml:space="preserve">
-    <value>Traceroute</value>
-  </data>
   <data name="SettingsViewName_Update" xml:space="preserve">
     <value>Update</value>
-  </data>
-  <data name="SettingsViewName_WakeOnLAN" xml:space="preserve">
-    <value>Wake On LAN</value>
-  </data>
-  <data name="SettingsViewName_Whois" xml:space="preserve">
-    <value>Whois</value>
   </data>
   <data name="SettingsViewName_Window" xml:space="preserve">
     <value>Window</value>
@@ -3163,5 +3121,8 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   </data>
   <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
     <value>Overwrite existing settings file?</value>
+  </data>
+  <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
+    <value>AWS Session Manager</value>
   </data>
 </root>

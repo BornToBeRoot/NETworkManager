@@ -459,7 +459,9 @@ namespace NETworkManager
 
             Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
 
-            Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending)); // Always have the same order, even if it is translated...
+            // Always have the same order, even if it is translated...
+            Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
+
             Applications.Filter = o =>
             {
                 if (!(o is ApplicationInfo info))
@@ -563,6 +565,7 @@ namespace NETworkManager
         private RemoteDesktopHostView _remoteDesktopHostView;
         private PowerShellHostView _powerShellHostView;
         private PuTTYHostView _puttyHostView;
+        private PowerShellHostView _awsSessionManagerHostView;
         private TigerVNCHostView _tigerVNCHostView;
         private WebConsoleHostView _webConsoleHostView;
         private SNMPHostView _snmpHostView;
@@ -617,6 +620,9 @@ namespace NETworkManager
                     break;
                 case ApplicationName.PuTTY:
                     _puttyHostView?.OnViewHide();
+                    break;
+                case ApplicationName.AWSSessionManager:
+                    _awsSessionManagerHostView?.OnViewHide();
                     break;
                 case ApplicationName.TigerVNC:
                     _tigerVNCHostView?.OnViewHide();
@@ -740,6 +746,14 @@ namespace NETworkManager
                         _puttyHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _puttyHostView;
+                    break;
+                case ApplicationName.AWSSessionManager:
+                    if (_awsSessionManagerHostView == null)
+                        _awsSessionManagerHostView = new PowerShellHostView();
+                    else
+                        _awsSessionManagerHostView.OnViewVisible();
+
+                    ContentControlApplication.Content = _awsSessionManagerHostView;
                     break;
                 case ApplicationName.TigerVNC:
                     if (_tigerVNCHostView == null)
@@ -866,6 +880,12 @@ namespace NETworkManager
             // Crate a new tab / perform action
             switch (data.Application)
             {
+                case ApplicationName.Dashboard:
+                    break;
+                case ApplicationName.NetworkInterface:
+                    break;
+                case ApplicationName.WiFi:
+                    break;
                 case ApplicationName.IPScanner:
                     _ipScannerHostView.AddTab(data.Args);
                     break;
@@ -890,14 +910,18 @@ namespace NETworkManager
                 case ApplicationName.PuTTY:
                     _puttyHostView.AddTab(data.Args);
                     break;
+                case ApplicationName.AWSSessionManager:
+                    break;
                 case ApplicationName.TigerVNC:
                     _tigerVNCHostView.AddTab(data.Args);
+                    break;
+                case ApplicationName.WebConsole:
                     break;
                 case ApplicationName.SNMP:
                     _snmpHostView.AddTab(data.Args);
                     break;
-                case ApplicationName.NetworkInterface:
-                    break;
+                case ApplicationName.DiscoveryProtocol:
+                    break;                    
                 case ApplicationName.WakeOnLAN:
                     break;
                 case ApplicationName.Whois:

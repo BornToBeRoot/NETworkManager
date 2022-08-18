@@ -646,6 +646,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS Session Manager ähnelt.
+        /// </summary>
+        public static string ApplicationName_AWSSessionManager {
+            get {
+                return ResourceManager.GetString("ApplicationName_AWSSessionManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Connections ähnelt.
         /// </summary>
         public static string ApplicationName_Connections {
@@ -7339,24 +7348,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Dashboard ähnelt.
-        /// </summary>
-        public static string SettingsViewName_Dashboard {
-            get {
-                return ResourceManager.GetString("SettingsViewName_Dashboard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DNS Lookup ähnelt.
-        /// </summary>
-        public static string SettingsViewName_DNSLookup {
-            get {
-                return ResourceManager.GetString("SettingsViewName_DNSLookup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die General ähnelt.
         /// </summary>
         public static string SettingsViewName_General {
@@ -7375,56 +7366,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die HTTP Headers ähnelt.
-        /// </summary>
-        public static string SettingsViewName_HTTPHeaders {
-            get {
-                return ResourceManager.GetString("SettingsViewName_HTTPHeaders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die IP Scanner ähnelt.
-        /// </summary>
-        public static string SettingsViewName_IPScanner {
-            get {
-                return ResourceManager.GetString("SettingsViewName_IPScanner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Language ähnelt.
         /// </summary>
         public static string SettingsViewName_Language {
             get {
                 return ResourceManager.GetString("SettingsViewName_Language", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ping Monitor ähnelt.
-        /// </summary>
-        public static string SettingsViewName_PingMonitor {
-            get {
-                return ResourceManager.GetString("SettingsViewName_PingMonitor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Port Scanner ähnelt.
-        /// </summary>
-        public static string SettingsViewName_PortScanner {
-            get {
-                return ResourceManager.GetString("SettingsViewName_PortScanner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die PowerShell ähnelt.
-        /// </summary>
-        public static string SettingsViewName_PowerShell {
-            get {
-                return ResourceManager.GetString("SettingsViewName_PowerShell", resourceCulture);
             }
         }
         
@@ -7438,38 +7384,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die PuTTY ähnelt.
-        /// </summary>
-        public static string SettingsViewName_PuTTY {
-            get {
-                return ResourceManager.GetString("SettingsViewName_PuTTY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Remote Desktop ähnelt.
-        /// </summary>
-        public static string SettingsViewName_RemoteDesktop {
-            get {
-                return ResourceManager.GetString("SettingsViewName_RemoteDesktop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Settings ähnelt.
         /// </summary>
         public static string SettingsViewName_Settings {
             get {
                 return ResourceManager.GetString("SettingsViewName_Settings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SNMP ähnelt.
-        /// </summary>
-        public static string SettingsViewName_SNMP {
-            get {
-                return ResourceManager.GetString("SettingsViewName_SNMP", resourceCulture);
             }
         }
         
@@ -7483,47 +7402,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die TigerVNC ähnelt.
-        /// </summary>
-        public static string SettingsViewName_TigerVNC {
-            get {
-                return ResourceManager.GetString("SettingsViewName_TigerVNC", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Traceroute ähnelt.
-        /// </summary>
-        public static string SettingsViewName_Traceroute {
-            get {
-                return ResourceManager.GetString("SettingsViewName_Traceroute", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Update ähnelt.
         /// </summary>
         public static string SettingsViewName_Update {
             get {
                 return ResourceManager.GetString("SettingsViewName_Update", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Wake On LAN ähnelt.
-        /// </summary>
-        public static string SettingsViewName_WakeOnLAN {
-            get {
-                return ResourceManager.GetString("SettingsViewName_WakeOnLAN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Whois ähnelt.
-        /// </summary>
-        public static string SettingsViewName_Whois {
-            get {
-                return ResourceManager.GetString("SettingsViewName_Whois", resourceCulture);
             }
         }
         
