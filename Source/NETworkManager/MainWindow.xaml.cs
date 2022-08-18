@@ -565,7 +565,7 @@ namespace NETworkManager
         private RemoteDesktopHostView _remoteDesktopHostView;
         private PowerShellHostView _powerShellHostView;
         private PuTTYHostView _puttyHostView;
-        private PowerShellHostView _awsSessionManagerHostView;
+        private AWSSessionManagerHostView _awsSessionManagerHostView;
         private TigerVNCHostView _tigerVNCHostView;
         private WebConsoleHostView _webConsoleHostView;
         private SNMPHostView _snmpHostView;
@@ -749,7 +749,7 @@ namespace NETworkManager
                     break;
                 case ApplicationName.AWSSessionManager:
                     if (_awsSessionManagerHostView == null)
-                        _awsSessionManagerHostView = new PowerShellHostView();
+                        _awsSessionManagerHostView = new AWSSessionManagerHostView();
                     else
                         _awsSessionManagerHostView.OnViewVisible();
 

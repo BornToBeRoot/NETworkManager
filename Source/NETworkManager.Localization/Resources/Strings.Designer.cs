@@ -3731,6 +3731,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Instance ID ähnelt.
+        /// </summary>
+        public static string InstanceId {
+            get {
+                return ResourceManager.GetString("InstanceId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Interface ähnelt.
         /// </summary>
         public static string Interface {

@@ -3125,4 +3125,7 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
     <value>AWS Session Manager</value>
   </data>
+  <data name="InstanceId" xml:space="preserve">
+    <value>Instance ID</value>
+  </data>
 </root>
