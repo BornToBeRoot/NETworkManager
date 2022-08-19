@@ -20,6 +20,9 @@ using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Amazon;
+using Amazon.EC2;
+using Amazon.EC2.Model;
 
 namespace NETworkManager.ViewModels
 {
@@ -65,7 +68,7 @@ namespace NETworkManager.ViewModels
         #region Profiles
 
         public ICollectionView Profiles { get; }
-
+                
         private ProfileInfo _selectedProfile = new ProfileInfo();
         public ProfileInfo SelectedProfile
         {
@@ -79,7 +82,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
+        
         private string _search;
         public string Search
         {
@@ -169,7 +172,7 @@ namespace NETworkManager.ViewModels
             InterTabClient = new DragablzInterTabClient(ApplicationName.PowerShell);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
-
+                        
             Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
@@ -185,14 +188,16 @@ namespace NETworkManager.ViewModels
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
-                /*
-                if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                    return !string.IsNullOrEmpty(info.Tags) && info.PowerShell_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
-                */
+                
+                //if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
+                //    return !string.IsNullOrEmpty(info.Tags) && info.PowerShell_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                //
 
                 // Search by: Name, TigerVNC_Host
                 return info.PowerShell_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PowerShell_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
+
+            Test();
 
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PowerShell_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
@@ -209,6 +214,42 @@ namespace NETworkManager.ViewModels
             _isLoading = false;
         }
                
+        private async Task Test()
+        {
+            AWSConfigs.AWSProfileName = "default";
+            AWSConfigs.AWSRegion = "eu-central-1";
+
+            AmazonEC2Client client = new();
+
+            DescribeInstancesResponse response = await client.DescribeInstancesAsync();
+
+            ProfileManager.AddGroup(new GroupInfo()
+            {
+                Name = "~AWS [default/eu-central-1]",
+                IsTemp = true
+            });
+
+            foreach(var instance in response.Reservations[0].Instances)
+            {
+                Debug.WriteLine("TEST: " + instance.InstanceId);
+
+                ProfileManager.AddProfile(new ProfileInfo()
+                {
+                    Name = instance.InstanceId,
+                    Host = instance.InstanceId,
+                    Group = "~AWS [default/eu-central-1]",
+                    IsTemp = true,
+                    PowerShell_Enabled = true,
+                    PowerShell_EnableRemoteConsole = false,
+                    PowerShell_InheritHost = true,
+                    PowerShell_Host = instance.InstanceId,
+                    PowerShell_OverrideAdditionalCommandLine = true,
+                    PowerShell_AdditionalCommandLine = $"aws ssm start-session --target {instance.InstanceId}",
+                    PowerShell_ExecutionPolicy = PowerShell.ExecutionPolicy.RemoteSigned,
+                });
+            }
+        }
+
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))

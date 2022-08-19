@@ -481,42 +481,11 @@ namespace NETworkManager.Profiles
         /// <param name="groups"></param>
         private static void SerializeToFile(string filePath, List<GroupInfo> groups)
         {
-            List<GroupInfoSerializable> groupsSerializable = new();
-
-            string groupRemoteDesktopPassword = string.Empty;
-
-            foreach (GroupInfo group in groups)
-            {
-                List<ProfileInfoSerializable> profilesSerializable = new();
-
-                string profileRemoteDesktopPassword = string.Empty;
-
-                foreach (ProfileInfo profile in group.Profiles)
-                {
-                    if (profile.RemoteDesktop_Password != null)
-                        profileRemoteDesktopPassword = SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password);
-
-                    profilesSerializable.Add(new ProfileInfoSerializable(profile)
-                    {
-                        RemoteDesktop_Password = profileRemoteDesktopPassword
-                    });
-                }
-
-                if (group.RemoteDesktop_Password != null)
-                    groupRemoteDesktopPassword = SecureStringHelper.ConvertToString(group.RemoteDesktop_Password);
-
-                groupsSerializable.Add(new GroupInfoSerializable(group)
-                {
-                    Profiles = profilesSerializable,
-                    RemoteDesktop_Password = groupRemoteDesktopPassword
-                });
-            }
-
             var xmlSerializer = new XmlSerializer(typeof(List<GroupInfoSerializable>));
 
             using var fileStream = new FileStream(filePath, FileMode.Create);
 
-            xmlSerializer.Serialize(fileStream, groupsSerializable);
+            xmlSerializer.Serialize(fileStream, SerializeGroup(groups));
         }
 
         /// <summary>
@@ -526,18 +495,43 @@ namespace NETworkManager.Profiles
         /// <returns></returns>
         private static byte[] SerializeToByteArray(List<GroupInfo> groups)
         {
+            var xmlSerializer = new XmlSerializer(typeof(List<GroupInfoSerializable>));
+
+            using var memoryStream = new MemoryStream();
+
+            using var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8);
+
+            xmlSerializer.Serialize(streamWriter, SerializeGroup(groups));
+
+            return memoryStream.ToArray();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="groups"></param>
+        /// <returns></returns>
+        private static List<GroupInfoSerializable> SerializeGroup(List<GroupInfo> groups)
+        {
             List<GroupInfoSerializable> groupsSerializable = new();
 
             string groupRemoteDesktopPassword = string.Empty;
 
             foreach (GroupInfo group in groups)
             {
+                // Don't save temp groups
+                if (group.IsTemp)
+                    continue;
+
                 List<ProfileInfoSerializable> profilesSerializable = new();
 
                 string profileRemoteDesktopPassword = string.Empty;
 
                 foreach (ProfileInfo profile in group.Profiles)
                 {
+                    if (profile.IsTemp)
+                        continue;
+                    
                     if (profile.RemoteDesktop_Password != null)
                         profileRemoteDesktopPassword = SecureStringHelper.ConvertToString(profile.RemoteDesktop_Password);
 
@@ -557,15 +551,7 @@ namespace NETworkManager.Profiles
                 });
             }
 
-            var xmlSerializer = new XmlSerializer(typeof(List<GroupInfoSerializable>));
-
-            using var memoryStream = new MemoryStream();
-
-            using var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8);
-
-            xmlSerializer.Serialize(streamWriter, groupsSerializable);
-
-            return memoryStream.ToArray();
+            return groupsSerializable;
         }
 
         /// <summary>
@@ -575,37 +561,9 @@ namespace NETworkManager.Profiles
         /// <returns>List of <see cref="GroupInfo"/>.</returns>
         private static List<GroupInfo> DeserializeFromFile(string filePath)
         {
-            List<GroupInfo> groups = new();
-
-            XmlSerializer xmlSerializer = new(typeof(List<GroupInfoSerializable>));
-
-            using (FileStream fileStream = new(filePath, FileMode.Open))
-            {
-                foreach (GroupInfoSerializable groupSerializable in (List<GroupInfoSerializable>)xmlSerializer.Deserialize(fileStream))
-                {
-                    List<ProfileInfo> profiles = new();
-
-                    foreach (ProfileInfoSerializable profileSerializable in groupSerializable.Profiles)
-                    {
-                        ProfileInfo profile = new(profileSerializable)
-                        {
-                            RemoteDesktop_Password = !string.IsNullOrEmpty(profileSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(profileSerializable.RemoteDesktop_Password) : null
-                        };
-
-                        profiles.Add(profile);
-                    }
-
-                    groups.Add(new(groupSerializable)
-                    {
-                        Profiles = profiles,
-
-                        // Convert passwort to secure string
-                        RemoteDesktop_Password = !string.IsNullOrEmpty(groupSerializable.RemoteDesktop_Password) ? SecureStringHelper.ConvertToSecureString(groupSerializable.RemoteDesktop_Password) : null
-                    });
-                }
-            }
-
-            return groups;
+            using FileStream fileStream = new(filePath, FileMode.Open);
+            
+            return DeserializeGroup(fileStream);
         }
 
         /// <summary>
@@ -615,13 +573,23 @@ namespace NETworkManager.Profiles
         /// <returns>List of <see cref="GroupInfo"/>.</returns>
         private static List<GroupInfo> DeserializeFromByteArray(byte[] xml)
         {
+            using MemoryStream memoryStream = new(xml);
+
+            return DeserializeGroup(memoryStream);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        private static List<GroupInfo> DeserializeGroup(Stream stream)
+        {
             List<GroupInfo> groups = new();
 
             XmlSerializer xmlSerializer = new(typeof(List<GroupInfoSerializable>));
 
-            using MemoryStream memoryStream = new(xml);
-
-            foreach (GroupInfoSerializable groupSerializable in (List<GroupInfoSerializable>)xmlSerializer.Deserialize(memoryStream))
+            foreach (GroupInfoSerializable groupSerializable in (List<GroupInfoSerializable>)xmlSerializer.Deserialize(stream))
             {
                 List<ProfileInfo> profiles = new();
 
@@ -645,6 +613,7 @@ namespace NETworkManager.Profiles
             }
 
             return groups;
+
         }
         #endregion               
 
@@ -736,7 +705,10 @@ namespace NETworkManager.Profiles
             var list = new List<string>();
 
             foreach (var groups in Groups)
-                list.Add(groups.Name);
+            {
+                if(!groups.IsTemp)
+                    list.Add(groups.Name);
+            }                
 
             return list;
         }

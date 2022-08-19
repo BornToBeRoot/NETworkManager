@@ -144,7 +144,7 @@ namespace NETworkManager.ViewModels
 
         public void SetGroupView()
         {
-            Groups = new CollectionViewSource { Source = ProfileManager.Groups }.View;
+            Groups = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => !x.IsTemp) }.View;
 
             Groups.SortDescriptions.Add(new SortDescription(nameof(GroupInfo.Name), ListSortDirection.Ascending));
 
@@ -153,7 +153,7 @@ namespace NETworkManager.ViewModels
 
         public void SetProfilesView(string groupName)
         {
-            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Name.Equals(groupName)).Profiles }.View;
+            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Name.Equals(groupName)).Profiles.Where(x => !x.IsTemp) }.View;
 
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>

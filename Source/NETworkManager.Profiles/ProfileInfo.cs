@@ -2,7 +2,6 @@
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
-using System.Collections.Generic;
 using System.Security;
 using System.Xml.Serialization;
 
@@ -32,6 +31,11 @@ namespace NETworkManager.Profiles
         /// Tags to classify the profiles and to filter by it.
         /// </summary>
         public string Tags { get; set; }
+
+        /// <summary>
+        /// Temp profile is not saved to file.
+        /// </summary>
+        public bool IsTemp { get; set; }
 
         public bool NetworkInterface_Enabled { get; set; }
         public bool NetworkInterface_EnableStaticIPAddress { get; set; }
@@ -195,6 +199,8 @@ namespace NETworkManager.Profiles
             Host = profile.Host;
             Group = profile.Group;
             Tags = profile.Tags;
+
+            IsTemp = profile.IsTemp;
 
             NetworkInterface_Enabled = profile.NetworkInterface_Enabled;
             NetworkInterface_EnableStaticIPAddress = profile.NetworkInterface_EnableStaticIPAddress;

@@ -4,10 +4,10 @@
     {
         public static string BuildCommandLine(PowerShellSessionInfo sessionInfo)
         {
-            var command = $"-ExecutionPolicy {sessionInfo.ExecutionPolicy} {sessionInfo.AdditionalCommandLine}";
+            var command = $"-NoExit -ExecutionPolicy {sessionInfo.ExecutionPolicy} {sessionInfo.AdditionalCommandLine}";
 
             if (sessionInfo.EnableRemoteConsole)
-                command += $" -NoExit -Command \"Enter-PSSession -ComputerName {sessionInfo.Host}\"";
+                command += $" -Command \"Enter-PSSession -ComputerName {sessionInfo.Host}\"";
 
             return command;
         }
