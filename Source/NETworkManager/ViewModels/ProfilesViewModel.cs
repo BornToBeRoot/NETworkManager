@@ -200,14 +200,16 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
+        private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamicProfile;
+
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
         private void CopyAsProfileAction()
         {
             ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
 
         private void DeleteProfileAction()
         {
