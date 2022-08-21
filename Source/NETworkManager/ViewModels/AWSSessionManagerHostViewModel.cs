@@ -229,24 +229,27 @@ namespace NETworkManager.ViewModels
                 IsTemp = true
             });
 
-            foreach(var instance in response.Reservations[0].Instances)
+            foreach(var reservation in response.Reservations)
             {
-                Debug.WriteLine("TEST: " + instance.InstanceId);
-
-                ProfileManager.AddProfile(new ProfileInfo()
+                foreach (var instance in reservation.Instances)
                 {
-                    Name = instance.InstanceId,
-                    Host = instance.InstanceId,
-                    Group = "~AWS [default/eu-central-1]",
-                    IsTemp = true,
-                    PowerShell_Enabled = true,
-                    PowerShell_EnableRemoteConsole = false,
-                    PowerShell_InheritHost = true,
-                    PowerShell_Host = instance.InstanceId,
-                    PowerShell_OverrideAdditionalCommandLine = true,
-                    PowerShell_AdditionalCommandLine = $"aws ssm start-session --target {instance.InstanceId}",
-                    PowerShell_ExecutionPolicy = PowerShell.ExecutionPolicy.RemoteSigned,
-                });
+                    Debug.WriteLine("TEST: " + instance.InstanceId);
+
+                    ProfileManager.AddProfile(new ProfileInfo()
+                    {
+                        Name = $"{instance.Tags.FirstOrDefault(x => x.Key == "Name")?.Value} ({instance.InstanceId})",
+                        Host = instance.InstanceId,
+                        Group = "~AWS [default/eu-central-1]",
+                        IsTemp = true,
+                        PowerShell_Enabled = true,
+                        PowerShell_EnableRemoteConsole = false,
+                        PowerShell_InheritHost = true,
+                        PowerShell_Host = instance.InstanceId,
+                        PowerShell_OverrideAdditionalCommandLine = true,
+                        PowerShell_AdditionalCommandLine = $"aws ssm start-session --target {instance.InstanceId}",
+                        PowerShell_ExecutionPolicy = PowerShell.ExecutionPolicy.RemoteSigned,
+                    });
+                }            
             }
         }
 
