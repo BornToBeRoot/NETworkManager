@@ -21,7 +21,8 @@ permalink: /Changelog/next-release
 
 
 ## Bugfixes
-
+- Dashboard / Status Window
+  - Handle null exception properly [#1423](https://github.com/BornToBeRoot/NETworkManager/pull/1423){:target="\_blank"}
 
 ## Other
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
