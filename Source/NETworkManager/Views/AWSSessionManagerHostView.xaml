@@ -20,6 +20,7 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:IsDynamicProfileToBooleanConverter x:Key="IsDynamicProfileToBooleanConverter" />
         <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
     </UserControl.Resources>
     <UserControl.InputBindings>
@@ -331,17 +332,37 @@
                                                                     </Grid.ColumnDefinitions>
                                                                     <Rectangle Grid.Column="0" Grid.ColumnSpan="4" Fill="Transparent" />
                                                                     <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource ProfileGroupTextBlock}" />
-                                                                    <Button Grid.Column="2" ToolTip="{x:Static localization:Strings.EditGroupDots}" Command="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" CommandParameter="{Binding (CollectionViewGroup.Name)}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource CleanButton}">
-                                                                        <Rectangle Width="16" Height="16">
-                                                                            <Rectangle.OpacityMask>
-                                                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
-                                                                            </Rectangle.OpacityMask>
+                                                                    <Button Grid.Column="2" ToolTip="{x:Static localization:Strings.EditGroupDots}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                                                        <Button.Style>
+                                                                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                                                                <Setter Property="Command" Value="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
+                                                                                <Setter Property="CommandParameter" Value="{Binding (CollectionViewGroup.Name)}" />
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding (CollectionViewGroup.Name), Converter={StaticResource IsDynamicProfileToBooleanConverter}}" Value="True">
+                                                                                        <Setter Property="Command" Value="{Binding DataContext.SyncGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Button.Style>                                                                        
+                                                                        <Rectangle Width="16" Height="16">                                                                            
                                                                             <Rectangle.Style>
-                                                                                <Style TargetType="{x:Type Rectangle}">
+                                                                                <Style TargetType="{x:Type Rectangle}">                                                                                    
                                                                                     <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                                                    <Setter Property="OpacityMask">
+                                                                                        <Setter.Value>
+                                                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                                                                        </Setter.Value>
+                                                                                    </Setter>
                                                                                     <Style.Triggers>
                                                                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
                                                                                             <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                                                        </DataTrigger>
+                                                                                        <DataTrigger Binding="{Binding (CollectionViewGroup.Name), Converter={StaticResource IsDynamicProfileToBooleanConverter}}" Value="True">                                                                                            
+                                                                                            <Setter Property="OpacityMask">
+                                                                                                <Setter.Value>
+                                                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Unicons Kind=Sync}" />
+                                                                                                </Setter.Value>
+                                                                                            </Setter>
                                                                                         </DataTrigger>
                                                                                     </Style.Triggers>
                                                                                 </Style>

@@ -520,7 +520,7 @@ namespace NETworkManager.Profiles
             foreach (GroupInfo group in groups)
             {
                 // Don't save temp groups
-                if (group.IsTemp)
+                if (group.IsDynamic)
                     continue;
 
                 List<ProfileInfoSerializable> profilesSerializable = new();
@@ -529,7 +529,7 @@ namespace NETworkManager.Profiles
 
                 foreach (ProfileInfo profile in group.Profiles)
                 {
-                    if (profile.IsDynamicProfile)
+                    if (profile.IsDynamic)
                         continue;
                     
                     if (profile.RemoteDesktop_Password != null)
@@ -706,7 +706,7 @@ namespace NETworkManager.Profiles
 
             foreach (var groups in Groups)
             {
-                if(!groups.IsTemp)
+                if(!groups.IsDynamic)
                     list.Add(groups.Name);
             }                
 

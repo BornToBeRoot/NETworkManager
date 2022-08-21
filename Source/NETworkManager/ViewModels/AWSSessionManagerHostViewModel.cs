@@ -226,7 +226,7 @@ namespace NETworkManager.ViewModels
             ProfileManager.AddGroup(new GroupInfo()
             {
                 Name = "~AWS [default/eu-central-1]",
-                IsTemp = true
+                IsDynamic = true
             });
 
             foreach(var reservation in response.Reservations)
@@ -240,7 +240,7 @@ namespace NETworkManager.ViewModels
                         Name = $"{instance.Tags.FirstOrDefault(x => x.Key == "Name")?.Value} ({instance.InstanceId})",
                         Host = instance.InstanceId,
                         Group = "~AWS [default/eu-central-1]",
-                        IsDynamicProfile = true,
+                        IsDynamic = true,
                         PowerShell_Enabled = true,
                         PowerShell_EnableRemoteConsole = false,
                         PowerShell_InheritHost = true,
@@ -339,7 +339,7 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.PowerShell);
         }
 
-        private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamicProfile;
+        private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
 

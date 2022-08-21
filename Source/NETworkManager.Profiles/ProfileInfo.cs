@@ -35,7 +35,7 @@ namespace NETworkManager.Profiles
         /// <summary>
         /// Dynamic profiles (e.g. AWS) are not save to file.
         /// </summary>
-        public bool IsDynamicProfile { get; set; }
+        public bool IsDynamic { get; set; }
 
         public bool NetworkInterface_Enabled { get; set; }
         public bool NetworkInterface_EnableStaticIPAddress { get; set; }
@@ -200,7 +200,7 @@ namespace NETworkManager.Profiles
             Group = profile.Group;
             Tags = profile.Tags;
 
-            IsDynamicProfile = profile.IsDynamicProfile;
+            IsDynamic = profile.IsDynamic;
 
             NetworkInterface_Enabled = profile.NetworkInterface_Enabled;
             NetworkInterface_EnableStaticIPAddress = profile.NetworkInterface_EnableStaticIPAddress;

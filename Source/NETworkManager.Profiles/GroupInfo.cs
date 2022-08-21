@@ -18,7 +18,7 @@ namespace NETworkManager.Profiles
         /// </summary>
         public string Name { get; set; }
 
-        public bool IsTemp { get; set; }
+        public bool IsDynamic { get; set; }
 
         [XmlIgnore]
         public new List<ProfileInfo> Profiles { get; set; }

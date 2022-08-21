@@ -144,7 +144,7 @@ namespace NETworkManager.ViewModels
 
         public void SetGroupView()
         {
-            Groups = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => !x.IsTemp) }.View;
+            Groups = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => !x.IsDynamic) }.View;
 
             Groups.SortDescriptions.Add(new SortDescription(nameof(GroupInfo.Name), ListSortDirection.Ascending));
 
@@ -153,7 +153,7 @@ namespace NETworkManager.ViewModels
 
         public void SetProfilesView(string groupName)
         {
-            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Name.Equals(groupName)).Profiles.Where(x => !x.IsDynamicProfile) }.View;
+            Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Name.Equals(groupName)).Profiles.Where(x => !x.IsDynamic) }.View;
 
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>
@@ -200,7 +200,7 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamicProfile;
+        private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
 
         public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
 

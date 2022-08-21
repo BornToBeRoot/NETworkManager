@@ -311,7 +311,7 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.PingMonitor);
         }
 
-        private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamicProfile;
+        private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
 
