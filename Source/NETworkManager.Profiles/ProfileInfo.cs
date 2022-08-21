@@ -33,9 +33,9 @@ namespace NETworkManager.Profiles
         public string Tags { get; set; }
 
         /// <summary>
-        /// Temp profile is not saved to file.
+        /// Dynamic profiles (e.g. AWS) are not save to file.
         /// </summary>
-        public bool IsTemp { get; set; }
+        public bool IsDynamicProfile { get; set; }
 
         public bool NetworkInterface_Enabled { get; set; }
         public bool NetworkInterface_EnableStaticIPAddress { get; set; }
@@ -200,7 +200,7 @@ namespace NETworkManager.Profiles
             Group = profile.Group;
             Tags = profile.Tags;
 
-            IsTemp = profile.IsTemp;
+            IsDynamicProfile = profile.IsDynamicProfile;
 
             NetworkInterface_Enabled = profile.NetworkInterface_Enabled;
             NetworkInterface_EnableStaticIPAddress = profile.NetworkInterface_EnableStaticIPAddress;

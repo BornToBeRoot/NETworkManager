@@ -17,6 +17,7 @@
         Loaded="UserControl_Loaded"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AWSSessionManagerHostViewModel}">
     <UserControl.Resources>
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
@@ -279,7 +280,7 @@
                                             </Rectangle>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileCommand}">
+                                    <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditProfileCommand}" Visibility="{Binding SelectedProfile.IsDynamicProfile, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                 <Rectangle.OpacityMask>
@@ -288,7 +289,7 @@
                                             </Rectangle>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="{x:Static localization:Strings.CopyAsDots}" Command="{Binding CopyAsProfileCommand}">
+                                    <MenuItem Header="{x:Static localization:Strings.CopyAsDots}" Command="{Binding CopyAsProfileCommand}" Visibility="{Binding SelectedProfile.IsDynamicProfile, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                 <Rectangle.OpacityMask>
@@ -297,7 +298,7 @@
                                             </Rectangle>
                                         </MenuItem.Icon>
                                     </MenuItem>
-                                    <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}">
+                                    <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteProfileCommand}" Visibility="{Binding SelectedProfile.IsDynamicProfile, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                 <Rectangle.OpacityMask>

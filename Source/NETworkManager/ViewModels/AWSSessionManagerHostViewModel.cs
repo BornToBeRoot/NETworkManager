@@ -240,7 +240,7 @@ namespace NETworkManager.ViewModels
                         Name = $"{instance.Tags.FirstOrDefault(x => x.Key == "Name")?.Value} ({instance.InstanceId})",
                         Host = instance.InstanceId,
                         Group = "~AWS [default/eu-central-1]",
-                        IsTemp = true,
+                        IsDynamicProfile = true,
                         PowerShell_Enabled = true,
                         PowerShell_EnableRemoteConsole = false,
                         PowerShell_InheritHost = true,
@@ -339,21 +339,23 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.PowerShell);
         }
 
-        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
+        private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamicProfile;
+
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
 
         private void EditProfileAction()
         {
             ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
         private void CopyAsProfileAction()
         {
             ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
 
         private void DeleteProfileAction()
         {

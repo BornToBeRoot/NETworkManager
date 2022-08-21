@@ -529,7 +529,7 @@ namespace NETworkManager.Profiles
 
                 foreach (ProfileInfo profile in group.Profiles)
                 {
-                    if (profile.IsTemp)
+                    if (profile.IsDynamicProfile)
                         continue;
                     
                     if (profile.RemoteDesktop_Password != null)
