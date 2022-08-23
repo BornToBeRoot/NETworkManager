@@ -409,6 +409,7 @@ namespace NETworkManager
             _isProfileLoading = false;
 
             ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
+            ProfileManager.OnSwitchProfileFileViaUIEvent += ProfileManager_OnSwitchProfileFileViaUIEvent;
 
             SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
 
@@ -1026,14 +1027,14 @@ namespace NETworkManager
 
                 var credentialsPasswordViewModel = new CredentialsPasswordViewModel(async instance =>
                 {
-                    await this.HideMetroDialogAsync(customDialog).ConfigureAwait(true);
+                    await this.HideMetroDialogAsync(customDialog);
 
                     info.Password = instance.Password;
 
                     SwitchProfile(info);
                 }, async instance =>
                 {
-                    await this.HideMetroDialogAsync(customDialog).ConfigureAwait(false);
+                    await this.HideMetroDialogAsync(customDialog);
 
                     ProfileManager.Unload();
 
@@ -1045,7 +1046,7 @@ namespace NETworkManager
                     DataContext = credentialsPasswordViewModel
                 };
 
-                await this.ShowMetroDialogAsync(customDialog).ConfigureAwait(false);
+                await this.ShowMetroDialogAsync(customDialog);
             }
             else
             {
@@ -1109,6 +1110,16 @@ namespace NETworkManager
             SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Equals(e.ProfileFileInfo));
 
             _isProfileUpdating = false;
+        }
+
+        /// <summary>
+        /// Switch the profile from code behind via UI to get the password for encrypted files.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProfileManager_OnSwitchProfileFileViaUIEvent(object sender, ProfileFileInfoArgs e)
+        {
+            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Equals(e.ProfileFileInfo));
         }
         #endregion
 

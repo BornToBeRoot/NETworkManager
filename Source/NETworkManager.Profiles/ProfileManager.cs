@@ -40,8 +40,14 @@ namespace NETworkManager.Profiles
         /// </summary>
         public static ObservableCollection<ProfileFileInfo> ProfileFiles { get; set; } = new ObservableCollection<ProfileFileInfo>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         private static ProfileFileInfo _profileFileInfo;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static ProfileFileInfo LoadedProfileFile
         {
             get => _profileFileInfo;
@@ -54,24 +60,54 @@ namespace NETworkManager.Profiles
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static List<GroupInfo> Groups { get; set; } = new List<GroupInfo>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static bool ProfilesChanged { get; set; }
         #endregion
 
         #region Events
         /// <summary>
-        /// Event is fired if a loaded profile file is changed.
+        /// Event is fired if the currently loaded <see cref="ProfileFileInfo"/> is changed.
         /// </summary>
         public static event EventHandler<ProfileFileInfoArgs> OnLoadedProfileFileChangedEvent;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="profileFileInfo"></param>
         private static void LoadedProfileFileChanged(ProfileFileInfo profileFileInfo)
         {
             OnLoadedProfileFileChangedEvent?.Invoke(null, new ProfileFileInfoArgs(profileFileInfo));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public static event EventHandler<ProfileFileInfoArgs> OnSwitchProfileFileViaUIEvent;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="info"></param>
+        private static void SwitchProfileFileViaUI(ProfileFileInfo info)
+        {
+            OnSwitchProfileFileViaUIEvent?.Invoke(null, new ProfileFileInfoArgs(info));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public static event EventHandler OnProfilesUpdated;
 
+        /// <summary>
+        /// 
+        /// </summary>
         private static void ProfilesUpdated()
         {
             ProfilesChanged = true;
@@ -80,32 +116,56 @@ namespace NETworkManager.Profiles
         }
         #endregion
 
+        /// <summary>
+        /// 
+        /// </summary>
         static ProfileManager()
         {
             LoadProfileFiles();
         }
 
         #region Profiles locations (default, custom, portable)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static string GetDefaultProfilesLocation()
         {
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AssemblyManager.Current.Name, ProfilesFolderName);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static string GetCustomProfilesLocation()
         {
             return SettingsManager.Current.Profiles_CustomProfilesLocation;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public static string GetPortableProfilesLocation()
         {
             return Path.Combine(AssemblyManager.Current.Location ?? throw new InvalidOperationException(), ProfilesFolderName);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static string GetProfilesLocation()
         {
             return ConfigurationManager.Current.IsPortable ? GetPortableProfilesLocation() : GetProfilesLocationNotPortable();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static string GetProfilesLocationNotPortable()
         {
             var location = GetCustomProfilesLocation();
@@ -118,11 +178,19 @@ namespace NETworkManager.Profiles
         #endregion
 
         #region FileName, FilePath
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static string GetProfilesDefaultFileName()
         {
             return $"{ProfilesDefaultFileName}{ProfileFileExtension}";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static string GetProfilesDefaultFilePath()
         {
             var path = Path.Combine(GetProfilesLocation(), GetProfilesDefaultFileName());
@@ -196,7 +264,7 @@ namespace NETworkManager.Profiles
 
                 switchProfile = true;
             }
-            ProfileFileInfo newProfileFileInfo = new ProfileFileInfo(newProfileName, Path.Combine(GetProfilesLocation(), $"{newProfileName}{Path.GetExtension(profileFileInfo.Path)}"), profileFileInfo.IsEncrypted)
+            ProfileFileInfo newProfileFileInfo = new(newProfileName, Path.Combine(GetProfilesLocation(), $"{newProfileName}{Path.GetExtension(profileFileInfo.Path)}"), profileFileInfo.IsEncrypted)
             {
                 Password = profileFileInfo.Password,
                 IsPasswordValid = profileFileInfo.IsPasswordValid
@@ -218,14 +286,12 @@ namespace NETworkManager.Profiles
         /// <summary>
         /// Method to delete a profile file.
         /// </summary>
-        /// <param name="profileFileInfo"></param>
+        /// <param name="profileFileInfo"><see cref="ProfileFileInfo"/> to delete.</param>
         public static void DeleteProfileFile(ProfileFileInfo profileFileInfo)
         {
+            // Trigger switch via UI (to get the password if the file is encrypted), if the selected profile file is deleted
             if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
-            {
-                Switch(ProfileFiles.FirstOrDefault(x => !x.Equals(profileFileInfo)));
-                LoadedProfileFileChanged(LoadedProfileFile);
-            }
+                SwitchProfileFileViaUI(ProfileFiles.FirstOrDefault(x => !x.Equals(profileFileInfo)));
 
             File.Delete(profileFileInfo.Path);
             ProfileFiles.Remove(profileFileInfo);
@@ -649,11 +715,22 @@ namespace NETworkManager.Profiles
         #endregion               
 
         #region Move profiles
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targedLocation"></param>
+        /// <param name="overwrite"></param>
+        /// <returns></returns>
         public static Task MoveProfilesAsync(string targedLocation, bool overwrite)
         {
             return Task.Run(() => MoveProfiles(targedLocation, overwrite));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targedLocation"></param>
+        /// <param name="overwrite"></param>
         private static void MoveProfiles(string targedLocation, bool overwrite)
         {
             // Save the current profile
@@ -703,11 +780,21 @@ namespace NETworkManager.Profiles
             ProfilesUpdated();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static GroupInfo GetGroup(string name)
         {
             return Groups.First(x => x.Name.Equals(name));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="oldGroup"></param>
+        /// <param name="newGroup"></param>
         public static void ReplaceGroup(GroupInfo oldGroup, GroupInfo newGroup)
         {
             Groups.Remove(oldGroup);
@@ -783,6 +870,11 @@ namespace NETworkManager.Profiles
             ProfilesUpdated();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="oldProfile"></param>
+        /// <param name="newProfile"></param>
         public static void ReplaceProfile(ProfileInfo oldProfile, ProfileInfo newProfile)
         {
             // Remove
