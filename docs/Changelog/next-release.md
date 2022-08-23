@@ -23,6 +23,8 @@ permalink: /Changelog/next-release
 ## Bugfixes
 - Dashboard / Status Window
   - Handle null exception properly [#1510](https://github.com/BornToBeRoot/NETworkManager/pull/1510){:target="\_blank"}
+- Settings > Profiles
+  - App crash fixed when a profile file is deleted and an encrypted but locked profile file is selected [#1512](https://github.com/BornToBeRoot/NETworkManager/pull/1512){:target="\_blank"}
 
 ## Other
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
