@@ -1500,7 +1500,7 @@ namespace NETworkManager
         }
         #endregion
 
-        private async void RefocusEmbeddedWindow()
+        private async void FocusEmbeddedWindow()
         {
             // Delay the focus to prevent blocking the ui
             do
@@ -1532,12 +1532,7 @@ namespace NETworkManager
 
         private void MetroMainWindow_Activated(object sender, EventArgs e)
         {
-            RefocusEmbeddedWindow();
-        }
-
-        private void ComboBox_DropDownOpened(object sender, EventArgs e)
-        {
-
+            FocusEmbeddedWindow();
         }
     }
 }
