@@ -37,8 +37,6 @@ namespace NETworkManager.Controls
         private Process _process;
         private IntPtr _appWin;
 
-        private readonly DispatcherTimer _resizeTimer = new DispatcherTimer();
-
         private bool _isConnected;
         public bool IsConnected
         {
@@ -77,9 +75,6 @@ namespace NETworkManager.Controls
             _dialogCoordinator = DialogCoordinator.Instance;
 
             _sessionInfo = info;
-
-            _resizeTimer.Tick += ResizeTimer_Tick;
-            _resizeTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
@@ -239,7 +234,7 @@ namespace NETworkManager.Controls
 
         public void Disconnect()
         {
-            if (_process != null && !_process.HasExited)
+            if (IsConnected)
                 _process.Kill();
         }
 
@@ -262,15 +257,8 @@ namespace NETworkManager.Controls
         #region Events
         private void TigerVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (_process != null)
+            if (IsConnected)
                 ResizeEmbeddedWindow();
-        }
-
-        private void ResizeTimer_Tick(object sender, EventArgs e)
-        {
-            _resizeTimer.Stop();
-
-            ResizeEmbeddedWindow();
         }
         #endregion
     }
