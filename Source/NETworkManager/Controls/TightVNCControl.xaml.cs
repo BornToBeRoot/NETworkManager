@@ -140,18 +140,6 @@ namespace NETworkManager.Controls
 
                         while ((DateTime.Now - startTime).TotalSeconds < 10)
                         {
-                            // Fix for netcore3.1 https://stackoverflow.com/questions/60342879/process-mainwindowhandle-is-non-zero-in-net-framework-but-zero-in-net-core-unl
-                            /*
-                            try
-                            {
-                                _process = Process.GetProcessById(_process.Id);
-                            }
-                            catch
-                            {
-                                break; // Process has exited
-                            }
-                            */
-
                             _process.Refresh();
 
                             if (_process.HasExited)
@@ -192,7 +180,9 @@ namespace NETworkManager.Controls
 
                             IsConnected = true;
 
-                            // Resize embedded application & refresh       
+                            // Resize embedded application & refresh
+                            // Requires a short delay because it's not applied immediately
+                            await Task.Delay(250);
                             ResizeEmbeddedWindow();
                         }
                     }
@@ -207,10 +197,10 @@ namespace NETworkManager.Controls
                 if (!_closing)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = NETworkManager.Localization.Resources.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
                     ConfigurationManager.Current.FixAirspace = true;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Localization.Resources.Strings.Error,
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
                         ex.Message, MessageDialogStyle.Affirmative, settings);
 
                     ConfigurationManager.Current.FixAirspace = false;
@@ -224,12 +214,6 @@ namespace NETworkManager.Controls
         {
             // This happens when the user exit the process
             IsConnected = false;
-        }
-
-        public void FocusEmbeddedWindow()
-        {
-            if (IsConnected)
-                NativeMethods.SetForegroundWindow(_process.MainWindowHandle);
         }
 
         private void ResizeEmbeddedWindow()
