@@ -226,6 +226,12 @@ namespace NETworkManager.Controls
             IsConnected = false;
         }
 
+        public void FocusEmbeddedWindow()
+        {
+            if (IsConnected)
+                NativeMethods.SetForegroundWindow(_process.MainWindowHandle);
+        }
+
         private void ResizeEmbeddedWindow()
         {
             if (IsConnected)

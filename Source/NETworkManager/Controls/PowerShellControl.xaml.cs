@@ -170,7 +170,9 @@ namespace NETworkManager.Controls
                         
                         IsConnected = true;
 
-                        // Resize embedded application & refresh       
+                        // Resize embedded application & refresh
+                        // Requires a short delay because it's not applied immediately
+                        await Task.Delay(250);
                         ResizeEmbeddedWindow();
                     }
                 }
@@ -202,6 +204,12 @@ namespace NETworkManager.Controls
         {
             // This happens when the user exit the process
             IsConnected = false;
+        }
+
+        public void FocusEmbeddedWindow()
+        {
+            if (IsConnected)
+                NativeMethods.SetForegroundWindow(_process.MainWindowHandle);
         }
 
         public void ResizeEmbeddedWindow()

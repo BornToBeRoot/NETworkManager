@@ -1521,6 +1521,9 @@ namespace NETworkManager
             // Switch by name
             switch (SelectedApplication.Name)
             {
+                case ApplicationName.PowerShell:
+                    _powerShellHostView?.FocusEmbeddedWindow();
+                    break;
                 case ApplicationName.PuTTY:
                     _puttyHostView?.FocusEmbeddedWindow();
                     break;

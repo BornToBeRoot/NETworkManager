@@ -246,7 +246,7 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </ToggleButton>
-                            <TextBox x:Name="TextBoxSearch" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"  Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}">
+                            <TextBox x:Name="TextBoxSearch" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}">
                                 <TextBox.InputBindings>
                                     <KeyBinding Command="{Binding ConnectProfileCommand}" Key="Enter" />
                                 </TextBox.InputBindings>

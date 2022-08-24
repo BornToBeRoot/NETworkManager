@@ -183,7 +183,7 @@ namespace NETworkManager.Controls
                             IsConnected = true;
 
                             // Resize embedded application & refresh
-                            // Requires a short delay because it'S not applied immediately
+                            // Requires a short delay because it's not applied immediately
                             await Task.Delay(250);
                                                         
                             ResizeEmbeddedWindow();

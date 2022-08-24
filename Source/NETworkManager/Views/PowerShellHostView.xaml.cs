@@ -58,5 +58,10 @@ namespace NETworkManager.Views
         {
             _viewModel.OnViewVisible();
         }
+
+        public void FocusEmbeddedWindow()
+        {
+            _viewModel.FocusEmbeddedWindow();
+        }
     }
 }
