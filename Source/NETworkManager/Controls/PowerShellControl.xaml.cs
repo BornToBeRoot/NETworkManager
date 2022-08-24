@@ -157,7 +157,7 @@ namespace NETworkManager.Controls
                             if (IntPtr.Zero != _appWin)
                                 break;
 
-                            await Task.Delay(50);
+                            await Task.Delay(100);
                         }
                     }
 

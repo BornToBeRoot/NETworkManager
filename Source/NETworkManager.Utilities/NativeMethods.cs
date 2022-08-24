@@ -43,6 +43,9 @@ namespace NETworkManager.Utilities
         #endregion
 
         #region Pinvoke/Win32 Methods
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetForegroundWindow();
+
         [DllImport("user32.dll", SetLastError = true)]
         public static extern long SetParent(IntPtr hWndChild, IntPtr hWndParent);
 
@@ -72,6 +75,9 @@ namespace NETworkManager.Utilities
 
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, WindowShowStyle nCmdShow);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
         #endregion
     }
 }

@@ -13,6 +13,7 @@
         xmlns:controls="clr-namespace:NETworkManager.Controls"
         xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
         xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
+        xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"             
         dialogs:DialogParticipation.Register="{Binding}"
         Loaded="UserControl_Loaded"
@@ -42,7 +43,7 @@
                 <ColumnDefinition MinWidth="{x:Static settings:GlobalStaticConfiguration.Profile_WidthCollapsed}" Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
             </Grid.ColumnDefinitions>
             <airspaceFixer:AirspacePanel Grid.Column="0" Grid.Row="0" FixAirspace="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=FixAirspace}">
-                <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedIndex="{Binding SelectedTabIndex}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                <dragablz:TabablzControl ClosingItemCallback="{Binding CloseItemCommand}" ItemsSource="{Binding TabItems}" SelectedItem="{Binding SelectedTabItem}" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=FixAirspace, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                     <dragablz:TabablzControl.Resources>
                         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                     </dragablz:TabablzControl.Resources>
@@ -245,10 +246,18 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </ToggleButton>
-                            <TextBox x:Name="TextBoxSearch" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}">
+                            <TextBox x:Name="TextBoxSearch" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"  Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}">
                                 <TextBox.InputBindings>
                                     <KeyBinding Command="{Binding ConnectProfileCommand}" Key="Enter" />
                                 </TextBox.InputBindings>
+                                <interactivity:Interaction.Triggers>
+                                    <interactivity:EventTrigger EventName="GotKeyboardFocus">
+                                        <interactivity:InvokeCommandAction Command="{Binding TextBoxSearchGotKeyboardFocusCommand}" />
+                                    </interactivity:EventTrigger>
+                                    <interactivity:EventTrigger EventName="LostKeyboardFocus">
+                                        <interactivity:InvokeCommandAction Command="{Binding TextBoxSearchLostKeyboardFocusCommand}" />
+                                    </interactivity:EventTrigger>
+                                </interactivity:Interaction.Triggers>
                             </TextBox>
                             <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
                                 <Rectangle Width="16" Height="16">

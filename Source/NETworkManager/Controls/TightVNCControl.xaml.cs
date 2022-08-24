@@ -167,7 +167,7 @@ namespace NETworkManager.Controls
                             if (IntPtr.Zero != _appWin)
                                 break;
 
-                            await Task.Delay(50);
+                            await Task.Delay(100);
                         }
                     }
 
@@ -175,7 +175,7 @@ namespace NETworkManager.Controls
                     {
                         while (!_process.HasExited && _process.MainWindowTitle.IndexOf(" - TigerVNC", StringComparison.Ordinal) == -1)
                         {
-                            await Task.Delay(50);
+                            await Task.Delay(100);
 
                             _process.Refresh();
                         }

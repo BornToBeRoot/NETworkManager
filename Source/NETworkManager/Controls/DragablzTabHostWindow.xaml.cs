@@ -10,7 +10,6 @@ using NETworkManager.Models.RemoteDesktop;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Translators;
 using NETworkManager.Models;
-using System.Threading.Tasks;
 
 namespace NETworkManager.Controls
 {
@@ -284,5 +283,10 @@ namespace NETworkManager.Controls
         {
         }
         #endregion
+
+        private void MetroWindow_Activated(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

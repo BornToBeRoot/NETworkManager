@@ -49,16 +49,23 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int _selectedTabIndex;
-        public int SelectedTabIndex
+        private bool _disableFocusEmbeddedWindowOnSelectedTabItemChange;
+
+        private DragablzTabItem _selectedTabItem;
+        public DragablzTabItem SelectedTabItem
         {
-            get => _selectedTabIndex;
+            get => _selectedTabItem;
             set
             {
-                if (value == _selectedTabIndex)
+                if (value == _selectedTabItem)
                     return;
 
-                _selectedTabIndex = value;
+                _selectedTabItem = value;
+
+                // Focus embedded window on switching tab
+                if (!_disableFocusEmbeddedWindowOnSelectedTabItemChange)
+                    FocusEmbeddedWindow();
+
                 OnPropertyChanged();
             }
         }
@@ -94,6 +101,20 @@ namespace NETworkManager.ViewModels
 
                 StartDelayedSearch();
 
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isTextBoxSearchFocused;
+        public bool IsTextBoxSearchFocused
+        {
+            get => _isTextBoxSearchFocused;
+            set
+            {
+                if (value == _isTextBoxSearchFocused)
+                    return;
+
+                _isTextBoxSearchFocused = value;
                 OnPropertyChanged();
             }
         }
@@ -308,7 +329,7 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator,null, ApplicationName.PuTTY);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.PuTTY);
         }
 
         public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
@@ -337,6 +358,26 @@ namespace NETworkManager.ViewModels
         private void EditGroupAction(object group)
         {
             ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        }
+
+        public ICommand TextBoxSearchGotKeyboardFocusCommand
+        {
+            get { return new RelayCommand(p => TextBoxSearchGotKeyboardFocusAction()); }
+        }
+
+        private void TextBoxSearchGotKeyboardFocusAction()
+        {
+            IsTextBoxSearchFocused = true;
+        }
+
+        public ICommand TextBoxSearchLostKeyboardFocusCommand
+        {
+            get { return new RelayCommand(p => TextBoxSearchLostKeyboardFocusAction()); }
+        }
+
+        private void TextBoxSearchLostKeyboardFocusAction()
+        {
+            IsTextBoxSearchFocused = false;
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -425,7 +466,7 @@ namespace NETworkManager.ViewModels
             // Create log path
             DirectoryCreator.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
 
-            ProcessStartInfo info = new ProcessStartInfo
+            ProcessStartInfo info = new()
             {
                 FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
                 Arguments = PuTTY.BuildCommandLine(NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile))
@@ -441,7 +482,10 @@ namespace NETworkManager.ViewModels
 
             TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuTTYControl(profileInfo)));
 
-            SelectedTabIndex = TabItems.Count - 1;
+            // Select the added tab
+            _disableFocusEmbeddedWindowOnSelectedTabItemChange = true;
+            SelectedTabItem = TabItems.Last();
+            _disableFocusEmbeddedWindowOnSelectedTabItemChange = false;
         }
 
         public void AddTab(string host)
@@ -554,11 +598,19 @@ namespace NETworkManager.ViewModels
             _canProfileWidthChange = true;
         }
 
+        public void FocusEmbeddedWindow()
+        {
+            if (!IsTextBoxSearchFocused)
+                (SelectedTabItem?.View as PuTTYControl)?.FocusEmbeddedWindow();
+        }
+
         public void OnViewVisible()
         {
             _isViewActive = true;
 
             RefreshProfiles();
+
+            FocusEmbeddedWindow();
         }
 
         public void OnViewHide()

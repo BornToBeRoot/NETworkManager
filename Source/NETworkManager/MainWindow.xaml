@@ -12,7 +12,7 @@
         xmlns:resources="clr-namespace:NETworkManager.Properties"
         xmlns:networkManager="clr-namespace:NETworkManager"
         mc:Ignorable="d"
-        Style="{DynamicResource DefaultWindow}" MinWidth="800" Width="1024" Height="768" MinHeight="600" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
+        Style="{DynamicResource DefaultWindow}" MinWidth="800" Width="1024" Height="768" MinHeight="600" Activated="MetroMainWindow_Activated" SaveWindowPosition="True" TitleAlignment="Left" Closing="MetroWindowMain_Closing" StateChanged="MetroWindowMain_StateChanged"
         d:DataContext="{d:DesignInstance networkManager:MainWindow}">
     <!-- MetroDialogStyles.xaml must be adjusted if MinWidth/MinHeight is changed -->
     <Window.Resources>
@@ -103,7 +103,7 @@
                         <TextBlock Text="{x:Static localization:Strings.UnlockProfile}" Style="{StaticResource LinkTextBlock}" Margin="5,0" />
                     </StackPanel>
                 </Button>
-                <ComboBox ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0">
+                <ComboBox ItemsSource="{Binding ProfileFiles}" SelectedItem="{Binding SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="{DynamicResource MahApps.Brushes.Gray8}" IsDropDownOpen="{Binding IsProfileFileDropDownOpened}" BorderThickness="0" MinWidth="100" HorizontalAlignment="Left" Margin="0,0,10,0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>

@@ -38,8 +38,6 @@ namespace NETworkManager.Controls
         private Process _process;
         private IntPtr _appWin;
 
-        private readonly DispatcherTimer _resizeTimer = new DispatcherTimer();
-
         private bool _isConnected;
         public bool IsConnected
         {
@@ -78,9 +76,6 @@ namespace NETworkManager.Controls
             _dialogCoordinator = DialogCoordinator.Instance;
 
             _sessionInfo = info;
-
-            _resizeTimer.Tick += ResizeTimer_Tick;
-            _resizeTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
@@ -160,7 +155,7 @@ namespace NETworkManager.Controls
                             if (IntPtr.Zero != _appWin)
                                 break;
 
-                            await Task.Delay(50);
+                            await Task.Delay(100);
                         }
                     }
 
@@ -168,7 +163,7 @@ namespace NETworkManager.Controls
                     {
                         while (!_process.HasExited && _process.MainWindowTitle.IndexOf(" - PuTTY", StringComparison.Ordinal) == -1)
                         {
-                            await Task.Delay(50);
+                            await Task.Delay(100);
 
                             _process.Refresh();
                         }
@@ -189,7 +184,7 @@ namespace NETworkManager.Controls
 
                             // Resize embedded application & refresh
                             // Requires a short delay because it'S not applied immediately
-                            await Task.Delay(500);
+                            await Task.Delay(250);
                                                         
                             ResizeEmbeddedWindow();
                         }
@@ -225,6 +220,12 @@ namespace NETworkManager.Controls
             IsConnected = false;
         }
 
+        public void FocusEmbeddedWindow()
+        {
+            if (IsConnected)
+                NativeMethods.SetForegroundWindow(_process.MainWindowHandle);
+        }
+
         public void ResizeEmbeddedWindow()
         {
             if (IsConnected)
@@ -233,7 +234,7 @@ namespace NETworkManager.Controls
 
         public void Disconnect()
         {
-            if (_process != null && !_process.HasExited)
+            if (IsConnected)
                 _process.Kill();
         }
 
@@ -262,15 +263,8 @@ namespace NETworkManager.Controls
         #region Events
         private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (_process != null)
+            if (IsConnected)
                 ResizeEmbeddedWindow();
-        }
-
-        private void ResizeTimer_Tick(object sender, EventArgs e)
-        {
-            _resizeTimer.Stop();
-
-            ResizeEmbeddedWindow();
         }
         #endregion
     }

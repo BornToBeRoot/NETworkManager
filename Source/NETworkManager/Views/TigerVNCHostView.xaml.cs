@@ -44,7 +44,7 @@ namespace NETworkManager.Views
             // Wait for the interface to load, before displaying the dialog to connect a new profile... 
             // MahApps will throw an exception... 
             while (!_loaded)
-                await Task.Delay(100);
+                await Task.Delay(250);
 
             if (_viewModel.IsConfigured)
                 _viewModel.AddTab(host);
