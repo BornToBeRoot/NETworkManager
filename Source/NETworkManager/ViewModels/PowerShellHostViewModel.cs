@@ -69,6 +69,20 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _headerContextMenuIsOpen;
+        public bool HeaderContextMenuIsOpen
+        {
+            get => _headerContextMenuIsOpen;
+            set
+            {
+                if (value == _headerContextMenuIsOpen)
+                    return;
+
+                _headerContextMenuIsOpen = value;
+                OnPropertyChanged();
+            }
+        }
         #region Profiles
 
         public ICollectionView Profiles { get; }
@@ -104,16 +118,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _isTextBoxSearchFocused;
-        public bool IsTextBoxSearchFocused
+        private bool _textBoxSearchIsFocused;
+        public bool TextBoxSearchIsFocused
         {
-            get => _isTextBoxSearchFocused;
+            get => _textBoxSearchIsFocused;
             set
             {
-                if (value == _isTextBoxSearchFocused)
+                if (value == _textBoxSearchIsFocused)
                     return;
 
-                _isTextBoxSearchFocused = value;
+                _textBoxSearchIsFocused = value;
                 OnPropertyChanged();
             }
         }
@@ -176,6 +190,21 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _profileContextMenuIsOpen;
+        public bool ProfileContextMenuIsOpen
+        {
+            get => _profileContextMenuIsOpen;
+            set
+            {
+
+                if (value == _profileContextMenuIsOpen)
+                    return;
+
+                _profileContextMenuIsOpen = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #endregion
 
@@ -218,8 +247,8 @@ namespace NETworkManager.ViewModels
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PowerShell_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
-            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;    
-                
+            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
+
             _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
@@ -229,7 +258,7 @@ namespace NETworkManager.ViewModels
 
             _isLoading = false;
         }
-               
+
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))
@@ -344,24 +373,24 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
         }
 
-        public ICommand TextBoxSearchGotKeyboardFocusCommand
+        public ICommand TextBoxSearchGotFocusCommand
         {
-            get { return new RelayCommand(p => TextBoxSearchGotKeyboardFocusAction()); }
+            get { return new RelayCommand(p => TextBoxSearchGotFocusAction()); }
         }
 
-        private void TextBoxSearchGotKeyboardFocusAction()
+        private void TextBoxSearchGotFocusAction()
         {
-            IsTextBoxSearchFocused = true;
+            TextBoxSearchIsFocused = true;
         }
 
-        public ICommand TextBoxSearchLostKeyboardFocusCommand
+        public ICommand TextBoxSearchLostFocusCommand
         {
-            get { return new RelayCommand(p => TextBoxSearchLostKeyboardFocusAction()); }
+            get { return new RelayCommand(p => TextBoxSearchLostFocusAction()); }
         }
 
-        private void TextBoxSearchLostKeyboardFocusAction()
+        private void TextBoxSearchLostFocusAction()
         {
-            IsTextBoxSearchFocused = false;
+            TextBoxSearchIsFocused = false;
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -425,7 +454,7 @@ namespace NETworkManager.ViewModels
             };
 
             ConfigurationManager.Current.FixAirspace = true;
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         private void ConnectProfile()
@@ -466,7 +495,7 @@ namespace NETworkManager.ViewModels
         {
             if (string.IsNullOrEmpty(host))
                 return;
-            
+
             SettingsManager.Current.PowerShell_HostHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PowerShell_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries));
         }
 
@@ -520,8 +549,15 @@ namespace NETworkManager.ViewModels
 
         public void FocusEmbeddedWindow()
         {
-            if (!IsTextBoxSearchFocused)
-                (SelectedTabItem?.View as PowerShellControl)?.FocusEmbeddedWindow();
+            /* Don't continue if
+               - Search TextBox is focused
+               - Header ContextMenu is opened
+               - Profile ContextMenu is opened
+            */
+            if (TextBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
+                return;
+
+            (SelectedTabItem?.View as PowerShellControl)?.FocusEmbeddedWindow();
         }
 
         public void OnViewVisible()

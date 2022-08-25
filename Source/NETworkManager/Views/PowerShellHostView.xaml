@@ -75,7 +75,7 @@
                             <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
                                 <Grid Height="32">
                                     <Grid.ContextMenu>
-                                        <ContextMenu>
+                                        <ContextMenu IsOpen="{Binding Data.HeaderContextMenuIsOpen, Source={StaticResource BindingProxy}, Mode=OneWayToSource}">
                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.PowerShell_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                 <MenuItem.Icon>
                                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -241,11 +241,11 @@
                                     <KeyBinding Command="{Binding ConnectProfileCommand}" Key="Enter" />
                                 </TextBox.InputBindings>
                                 <interactivity:Interaction.Triggers>
-                                    <interactivity:EventTrigger EventName="GotKeyboardFocus">
-                                        <interactivity:InvokeCommandAction Command="{Binding TextBoxSearchGotKeyboardFocusCommand}" />
+                                    <interactivity:EventTrigger EventName="GotFocus">
+                                        <interactivity:InvokeCommandAction Command="{Binding TextBoxSearchGotFocusCommand}" />
                                     </interactivity:EventTrigger>
-                                    <interactivity:EventTrigger EventName="LostKeyboardFocus">
-                                        <interactivity:InvokeCommandAction Command="{Binding TextBoxSearchLostKeyboardFocusCommand}" />
+                                    <interactivity:EventTrigger EventName="LostFocus">
+                                        <interactivity:InvokeCommandAction Command="{Binding TextBoxSearchLostFocusCommand}" />
                                     </interactivity:EventTrigger>
                                 </interactivity:Interaction.Triggers>
                             </TextBox>
@@ -269,7 +269,7 @@
                         </Grid>
                         <ListBox Grid.Row="2" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                             <ListBox.Resources>
-                                <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150" IsOpen="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.ProfileContextMenuIsOpen, Mode=OneWayToSource}">
                                     <MenuItem Header="{x:Static localization:Strings.Connect}" Command="{Binding ConnectProfileCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">

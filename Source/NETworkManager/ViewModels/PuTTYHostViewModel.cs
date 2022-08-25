@@ -70,6 +70,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _headerContextMenuIsOpen;
+        public bool HeaderContextMenuIsOpen
+        {
+            get => _headerContextMenuIsOpen;
+            set
+            {
+                if (value == _headerContextMenuIsOpen)
+                    return;
+
+                _headerContextMenuIsOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
         #region Profiles
 
         public ICollectionView Profiles { get; }
@@ -105,16 +119,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _isTextBoxSearchFocused;
-        public bool IsTextBoxSearchFocused
+        private bool _textBoxSearchIsFocused;
+        public bool TextBoxSearchIsFocused
         {
-            get => _isTextBoxSearchFocused;
+            get => _textBoxSearchIsFocused;
             set
             {
-                if (value == _isTextBoxSearchFocused)
+                if (value == _textBoxSearchIsFocused)
                     return;
 
-                _isTextBoxSearchFocused = value;
+                _textBoxSearchIsFocused = value;
                 OnPropertyChanged();
             }
         }
@@ -174,6 +188,21 @@ namespace NETworkManager.ViewModels
                 if (_canProfileWidthChange)
                     ResizeProfile(true);
 
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _profileContextMenuIsOpen;
+        public bool ProfileContextMenuIsOpen
+        {
+            get => _profileContextMenuIsOpen;
+            set
+            {
+
+                if (value == _profileContextMenuIsOpen)
+                    return;
+
+                _profileContextMenuIsOpen = value;
                 OnPropertyChanged();
             }
         }
@@ -360,24 +389,24 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
         }
 
-        public ICommand TextBoxSearchGotKeyboardFocusCommand
+        public ICommand TextBoxSearchGotFocusCommand
         {
-            get { return new RelayCommand(p => TextBoxSearchGotKeyboardFocusAction()); }
+            get { return new RelayCommand(p => TextBoxSearchGotFocusAction()); }
         }
 
-        private void TextBoxSearchGotKeyboardFocusAction()
+        private void TextBoxSearchGotFocusAction()
         {
-            IsTextBoxSearchFocused = true;
+            TextBoxSearchIsFocused = true;
         }
 
-        public ICommand TextBoxSearchLostKeyboardFocusCommand
+        public ICommand TextBoxSearchLostFocusCommand
         {
-            get { return new RelayCommand(p => TextBoxSearchLostKeyboardFocusAction()); }
+            get { return new RelayCommand(p => TextBoxSearchLostFocusAction()); }
         }
 
-        private void TextBoxSearchLostKeyboardFocusAction()
+        private void TextBoxSearchLostFocusAction()
         {
-            IsTextBoxSearchFocused = false;
+            TextBoxSearchIsFocused = false;
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -600,8 +629,15 @@ namespace NETworkManager.ViewModels
 
         public void FocusEmbeddedWindow()
         {
-            if (!IsTextBoxSearchFocused)
-                (SelectedTabItem?.View as PuTTYControl)?.FocusEmbeddedWindow();
+            /* Don't continue if
+               - Search TextBox is focused
+               - Header ContextMenu is opened
+               - Profile ContextMenu is opened
+            */
+            if (TextBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
+                return;
+
+            (SelectedTabItem?.View as PuTTYControl)?.FocusEmbeddedWindow();
         }
 
         public void OnViewVisible()

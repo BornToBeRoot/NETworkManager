@@ -1509,7 +1509,7 @@ namespace NETworkManager
             } while (Mouse.LeftButton == MouseButtonState.Pressed);
 
             /* Don't continue if
-               - Appplication is not set
+               - Application is not set
                - Settings are opened
                - Profile file drop down is opened
                - Application search textbox is opened
