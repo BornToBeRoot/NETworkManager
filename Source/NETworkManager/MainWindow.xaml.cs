@@ -1441,22 +1441,22 @@ namespace NETworkManager
             IsMouseOverApplicationList = false;
         }
 
-        public ICommand TextBoxSearchGotKeyboardFocusCommand
+        public ICommand TextBoxSearchGotFocusCommand
         {
-            get { return new RelayCommand(p => TextBoxSearchGotKeyboardFocusAction()); }
+            get { return new RelayCommand(p => TextBoxSearchGotFocusAction()); }
         }
 
-        private void TextBoxSearchGotKeyboardFocusAction()
+        private void TextBoxSearchGotFocusAction()
         {
             IsTextBoxSearchFocused = true;
         }
 
-        public ICommand TextBoxSearchLostKeyboardFocusCommand
+        public ICommand TextBoxSearchLostFocusCommand
         {
-            get { return new RelayCommand(p => TextBoxSearchLostKeyboardFocusAction()); }
+            get { return new RelayCommand(p => TextBoxSearchLostFocusAction()); }
         }
 
-        private void TextBoxSearchLostKeyboardFocusAction()
+        private void TextBoxSearchLostFocusAction()
         {
             if (!IsMouseOverApplicationList)
                 IsApplicationListOpen = false;

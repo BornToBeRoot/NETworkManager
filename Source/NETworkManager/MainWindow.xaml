@@ -309,11 +309,11 @@
                                     </Style>
                                 </TextBox.Style>
                                 <interactivity:Interaction.Triggers>
-                                    <interactivity:EventTrigger EventName="GotKeyboardFocus">
-                                        <interactivity:InvokeCommandAction Command="{Binding TextBoxSearchGotKeyboardFocusCommand}" />
+                                    <interactivity:EventTrigger EventName="GotFocus">
+                                        <interactivity:InvokeCommandAction Command="{Binding TextBoxSearchGotFocusCommand}" />
                                     </interactivity:EventTrigger>
-                                    <interactivity:EventTrigger EventName="LostKeyboardFocus">
-                                        <interactivity:InvokeCommandAction Command="{Binding TextBoxSearchLostKeyboardFocusCommand}" />
+                                    <interactivity:EventTrigger EventName="LostFocus">
+                                        <interactivity:InvokeCommandAction Command="{Binding TextBoxSearchLostFocusCommand}" />
                                     </interactivity:EventTrigger>
                                 </interactivity:Interaction.Triggers>
                             </TextBox>
