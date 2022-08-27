@@ -291,6 +291,20 @@ namespace NETworkManager
             }
         }
 
+        private bool _isProfileFileDropDownOpened;
+        public bool IsProfileFileDropDownOpened
+        {
+            get => _isProfileFileDropDownOpened;
+            set
+            {
+                if (value == _isProfileFileDropDownOpened)
+                    return;
+
+                _isProfileFileDropDownOpened = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _isProfileFileLocked;
         public bool IsProfileFileLocked
         {
@@ -367,7 +381,7 @@ namespace NETworkManager
                 var firstRunViewModel = new FirstRunViewModel(async instance =>
                 {
                     await this.HideMetroDialogAsync(customDialog);
-                    
+
                     SettingsManager.Current.FirstRun = false;
 
                     // Set settings based on user choice
@@ -409,6 +423,7 @@ namespace NETworkManager
             _isProfileLoading = false;
 
             ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
+            ProfileManager.OnSwitchProfileFileViaUIEvent += ProfileManager_OnSwitchProfileFileViaUIEvent;
 
             SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
 
@@ -1050,14 +1065,16 @@ namespace NETworkManager
 
                 var credentialsPasswordViewModel = new CredentialsPasswordViewModel(async instance =>
                 {
-                    await this.HideMetroDialogAsync(customDialog).ConfigureAwait(true);
+                    await this.HideMetroDialogAsync(customDialog);
+                    ConfigurationManager.Current.FixAirspace = false;
 
                     info.Password = instance.Password;
 
                     SwitchProfile(info);
                 }, async instance =>
                 {
-                    await this.HideMetroDialogAsync(customDialog).ConfigureAwait(false);
+                    await this.HideMetroDialogAsync(customDialog);
+                    ConfigurationManager.Current.FixAirspace = false;
 
                     ProfileManager.Unload();
 
@@ -1069,7 +1086,8 @@ namespace NETworkManager
                     DataContext = credentialsPasswordViewModel
                 };
 
-                await this.ShowMetroDialogAsync(customDialog).ConfigureAwait(false);
+                ConfigurationManager.Current.FixAirspace = true;
+                await this.ShowMetroDialogAsync(customDialog);
             }
             else
             {
@@ -1102,18 +1120,17 @@ namespace NETworkManager
             {
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Localization.Resources.Strings.Migrate;
-                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;                
+                settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 ConfigurationManager.Current.FixAirspace = true;
 
                 // ToDo: Improve Message
-
                 var result = await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
 
                 ConfigurationManager.Current.FixAirspace = false;
 
-                if(result == MessageDialogResult.Affirmative)
+                if (result == MessageDialogResult.Affirmative)
                 {
                     ExternalProcessStarter.RunProcess("powershell.exe", $"-NoLogo -NoProfile -ExecutionPolicy ByPass -File \"{Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Migrate-Profiles.ps1")}\" -Path \"{ProfileManager.GetProfilesLocation()}\" -NETworkManagerPath \"{ConfigurationManager.Current.ApplicationFullName}\" -NETworkManagerVersion \"{AssemblyManager.Current.Version}\"");
                     CloseApplication();
@@ -1133,6 +1150,16 @@ namespace NETworkManager
             SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Equals(e.ProfileFileInfo));
 
             _isProfileUpdating = false;
+        }
+
+        /// <summary>
+        /// Switch the profile from code behind via UI to get the password for encrypted files.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProfileManager_OnSwitchProfileFileViaUIEvent(object sender, ProfileFileInfoArgs e)
+        {
+            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Equals(e.ProfileFileInfo));
         }
         #endregion
 
@@ -1438,22 +1465,22 @@ namespace NETworkManager
             IsMouseOverApplicationList = false;
         }
 
-        public ICommand TextBoxSearchGotKeyboardFocusCommand
+        public ICommand TextBoxSearchGotFocusCommand
         {
-            get { return new RelayCommand(p => TextBoxSearchGotKeyboardFocusAction()); }
+            get { return new RelayCommand(p => TextBoxSearchGotFocusAction()); }
         }
 
-        private void TextBoxSearchGotKeyboardFocusAction()
+        private void TextBoxSearchGotFocusAction()
         {
             IsTextBoxSearchFocused = true;
         }
 
-        public ICommand TextBoxSearchLostKeyboardFocusCommand
+        public ICommand TextBoxSearchLostFocusCommand
         {
-            get { return new RelayCommand(p => TextBoxSearchLostKeyboardFocusAction()); }
+            get { return new RelayCommand(p => TextBoxSearchLostFocusAction()); }
         }
 
-        private void TextBoxSearchLostKeyboardFocusAction()
+        private void TextBoxSearchLostFocusAction()
         {
             if (!IsMouseOverApplicationList)
                 IsApplicationListOpen = false;
@@ -1496,5 +1523,40 @@ namespace NETworkManager
             e.Handled = true;
         }
         #endregion
+
+        private async void FocusEmbeddedWindow()
+        {
+            // Delay the focus to prevent blocking the ui
+            do
+            {
+                await Task.Delay(250);
+            } while (Mouse.LeftButton == MouseButtonState.Pressed);
+
+            /* Don't continue if
+               - Application is not set
+               - Settings are opened
+               - Profile file drop down is opened
+               - Application search textbox is opened
+               - Dialog over an embedded window is opened
+            */
+            if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.FixAirspace)
+                return;
+
+            // Switch by name
+            switch (SelectedApplication.Name)
+            {
+                case ApplicationName.PowerShell:
+                    _powerShellHostView?.FocusEmbeddedWindow();
+                    break;
+                case ApplicationName.PuTTY:
+                    _puttyHostView?.FocusEmbeddedWindow();
+                    break;
+            }
+        }
+
+        private void MetroMainWindow_Activated(object sender, EventArgs e)
+        {
+            FocusEmbeddedWindow();
+        }
     }
 }

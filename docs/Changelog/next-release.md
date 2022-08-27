@@ -18,12 +18,22 @@ permalink: /Changelog/next-release
 
   
 ## Improvements
-
+- PowerShell & PuTTY
+  - Focus embedded window when the application has received the focus [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
+  - Focus embedded window when application is selected again [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
+  - Focus embedded window when switching tabs [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
 
 ## Bugfixes
 - Dashboard / Status Window
   - Handle null exception properly [#1510](https://github.com/BornToBeRoot/NETworkManager/pull/1510){:target="\_blank"}
+- Remote Desktop, PowerShell, PuTTY & TigerVNC
+  - "Unlock profile" dialog is now displayed correctly if an embedded window is already open [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
+PowerShell & TigerVNC
+  - Embedded window is now resized correctly after the inital connect [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
+- Settings > Profiles
+  - App crash fixed when a profile file is deleted and an encrypted but locked profile file is selected [#1512](https://github.com/BornToBeRoot/NETworkManager/pull/1512){:target="\_blank"}
 
 ## Other
+- Code cleanup [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="_blank"}

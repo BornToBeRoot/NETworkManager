@@ -472,7 +472,7 @@ namespace NETworkManager.ViewModels
                 while (IsChecking)
                 {
                     //Debug.WriteLine("Waiting for cancel..");
-                    await Task.Delay(500);
+                    await Task.Delay(250);
                 }
             }
 

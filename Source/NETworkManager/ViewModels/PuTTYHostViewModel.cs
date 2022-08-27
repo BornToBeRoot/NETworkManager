@@ -49,16 +49,37 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int _selectedTabIndex;
-        public int SelectedTabIndex
+        private bool _disableFocusEmbeddedWindowOnSelectedTabItemChange;
+
+        private DragablzTabItem _selectedTabItem;
+        public DragablzTabItem SelectedTabItem
         {
-            get => _selectedTabIndex;
+            get => _selectedTabItem;
             set
             {
-                if (value == _selectedTabIndex)
+                if (value == _selectedTabItem)
                     return;
 
-                _selectedTabIndex = value;
+                _selectedTabItem = value;
+
+                // Focus embedded window on switching tab
+                if (!_disableFocusEmbeddedWindowOnSelectedTabItemChange)
+                    FocusEmbeddedWindow();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _headerContextMenuIsOpen;
+        public bool HeaderContextMenuIsOpen
+        {
+            get => _headerContextMenuIsOpen;
+            set
+            {
+                if (value == _headerContextMenuIsOpen)
+                    return;
+
+                _headerContextMenuIsOpen = value;
                 OnPropertyChanged();
             }
         }
@@ -94,6 +115,20 @@ namespace NETworkManager.ViewModels
 
                 StartDelayedSearch();
 
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _textBoxSearchIsFocused;
+        public bool TextBoxSearchIsFocused
+        {
+            get => _textBoxSearchIsFocused;
+            set
+            {
+                if (value == _textBoxSearchIsFocused)
+                    return;
+
+                _textBoxSearchIsFocused = value;
                 OnPropertyChanged();
             }
         }
@@ -153,6 +188,21 @@ namespace NETworkManager.ViewModels
                 if (_canProfileWidthChange)
                     ResizeProfile(true);
 
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _profileContextMenuIsOpen;
+        public bool ProfileContextMenuIsOpen
+        {
+            get => _profileContextMenuIsOpen;
+            set
+            {
+
+                if (value == _profileContextMenuIsOpen)
+                    return;
+
+                _profileContextMenuIsOpen = value;
                 OnPropertyChanged();
             }
         }
@@ -308,7 +358,7 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator,null, ApplicationName.PuTTY);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.PuTTY);
         }
 
         private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
@@ -339,6 +389,26 @@ namespace NETworkManager.ViewModels
         private void EditGroupAction(object group)
         {
             ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
+        }
+
+        public ICommand TextBoxSearchGotFocusCommand
+        {
+            get { return new RelayCommand(p => TextBoxSearchGotFocusAction()); }
+        }
+
+        private void TextBoxSearchGotFocusAction()
+        {
+            TextBoxSearchIsFocused = true;
+        }
+
+        public ICommand TextBoxSearchLostFocusCommand
+        {
+            get { return new RelayCommand(p => TextBoxSearchLostFocusAction()); }
+        }
+
+        private void TextBoxSearchLostFocusAction()
+        {
+            TextBoxSearchIsFocused = false;
         }
 
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
@@ -427,7 +497,7 @@ namespace NETworkManager.ViewModels
             // Create log path
             DirectoryCreator.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
 
-            ProcessStartInfo info = new ProcessStartInfo
+            ProcessStartInfo info = new()
             {
                 FileName = SettingsManager.Current.PuTTY_ApplicationFilePath,
                 Arguments = PuTTY.BuildCommandLine(NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile))
@@ -443,7 +513,10 @@ namespace NETworkManager.ViewModels
 
             TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuTTYControl(profileInfo)));
 
-            SelectedTabIndex = TabItems.Count - 1;
+            // Select the added tab
+            _disableFocusEmbeddedWindowOnSelectedTabItemChange = true;
+            SelectedTabItem = TabItems.Last();
+            _disableFocusEmbeddedWindowOnSelectedTabItemChange = false;
         }
 
         public void AddTab(string host)
@@ -556,11 +629,26 @@ namespace NETworkManager.ViewModels
             _canProfileWidthChange = true;
         }
 
+        public void FocusEmbeddedWindow()
+        {
+            /* Don't continue if
+               - Search TextBox is focused
+               - Header ContextMenu is opened
+               - Profile ContextMenu is opened
+            */
+            if (TextBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
+                return;
+
+            (SelectedTabItem?.View as PuTTYControl)?.FocusEmbeddedWindow();
+        }
+
         public void OnViewVisible()
         {
             _isViewActive = true;
 
             RefreshProfiles();
+
+            FocusEmbeddedWindow();
         }
 
         public void OnViewHide()

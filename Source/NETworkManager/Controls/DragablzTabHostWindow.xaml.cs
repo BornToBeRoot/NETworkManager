@@ -279,9 +279,34 @@ namespace NETworkManager.Controls
         #endregion
         #endregion
 
+        private async void FocusEmbeddedWindow()
+        {
+            // Delay the focus to prevent blocking the ui
+            do
+            {
+                await Task.Delay(250);
+            } while (Mouse.LeftButton == MouseButtonState.Pressed);
+
+            // Switch by name
+            switch (ApplicationName)
+            {
+                case ApplicationName.PowerShell:
+                    ((PowerShellControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
+                    break;
+                case ApplicationName.PuTTY:
+                    ((PuTTYControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
+                    break;
+            }
+        }
+
         #region Events
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+
+        }
+        private void MetroWindow_Activated(object sender, EventArgs e)
+        {
+            FocusEmbeddedWindow();
         }
         #endregion
     }

@@ -37,8 +37,6 @@ namespace NETworkManager.Controls
         private Process _process;
         private IntPtr _appWin;
 
-        private readonly DispatcherTimer _resizeTimer = new DispatcherTimer();
-
         private bool _isConnected;
         public bool IsConnected
         {
@@ -77,9 +75,6 @@ namespace NETworkManager.Controls
             _dialogCoordinator = DialogCoordinator.Instance;
 
             _sessionInfo = info;
-
-            _resizeTimer.Tick += ResizeTimer_Tick;
-            _resizeTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
         }
@@ -145,18 +140,6 @@ namespace NETworkManager.Controls
 
                         while ((DateTime.Now - startTime).TotalSeconds < 10)
                         {
-                            // Fix for netcore3.1 https://stackoverflow.com/questions/60342879/process-mainwindowhandle-is-non-zero-in-net-framework-but-zero-in-net-core-unl
-                            /*
-                            try
-                            {
-                                _process = Process.GetProcessById(_process.Id);
-                            }
-                            catch
-                            {
-                                break; // Process has exited
-                            }
-                            */
-
                             _process.Refresh();
 
                             if (_process.HasExited)
@@ -167,7 +150,7 @@ namespace NETworkManager.Controls
                             if (IntPtr.Zero != _appWin)
                                 break;
 
-                            await Task.Delay(50);
+                            await Task.Delay(100);
                         }
                     }
 
@@ -175,7 +158,7 @@ namespace NETworkManager.Controls
                     {
                         while (!_process.HasExited && _process.MainWindowTitle.IndexOf(" - TigerVNC", StringComparison.Ordinal) == -1)
                         {
-                            await Task.Delay(50);
+                            await Task.Delay(100);
 
                             _process.Refresh();
                         }
@@ -197,7 +180,9 @@ namespace NETworkManager.Controls
 
                             IsConnected = true;
 
-                            // Resize embedded application & refresh       
+                            // Resize embedded application & refresh
+                            // Requires a short delay because it's not applied immediately
+                            await Task.Delay(250);
                             ResizeEmbeddedWindow();
                         }
                     }
@@ -212,10 +197,10 @@ namespace NETworkManager.Controls
                 if (!_closing)
                 {
                     var settings = AppearanceManager.MetroDialog;
-                    settings.AffirmativeButtonText = NETworkManager.Localization.Resources.Strings.OK;
+                    settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
                     ConfigurationManager.Current.FixAirspace = true;
 
-                    await _dialogCoordinator.ShowMessageAsync(this, NETworkManager.Localization.Resources.Strings.Error,
+                    await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error,
                         ex.Message, MessageDialogStyle.Affirmative, settings);
 
                     ConfigurationManager.Current.FixAirspace = false;
@@ -239,7 +224,7 @@ namespace NETworkManager.Controls
 
         public void Disconnect()
         {
-            if (_process != null && !_process.HasExited)
+            if (IsConnected)
                 _process.Kill();
         }
 
@@ -262,15 +247,8 @@ namespace NETworkManager.Controls
         #region Events
         private void TigerVNCGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (_process != null)
+            if (IsConnected)
                 ResizeEmbeddedWindow();
-        }
-
-        private void ResizeTimer_Tick(object sender, EventArgs e)
-        {
-            _resizeTimer.Stop();
-
-            ResizeEmbeddedWindow();
         }
         #endregion
     }

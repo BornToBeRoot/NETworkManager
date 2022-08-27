@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Report an issue
-labels: ":beetle: bug"
+labels: ":bug: bug"
 ---
 
 **Describe your issue**:
