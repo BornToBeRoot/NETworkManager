@@ -49,16 +49,37 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int _selectedTabIndex;
-        public int SelectedTabIndex
+        private bool _disableFocusEmbeddedWindowOnSelectedTabItemChange;
+
+        private DragablzTabItem _selectedTabItem;
+        public DragablzTabItem SelectedTabItem
         {
-            get => _selectedTabIndex;
+            get => _selectedTabItem;
             set
             {
-                if (value == _selectedTabIndex)
+                if (value == _selectedTabItem)
                     return;
 
-                _selectedTabIndex = value;
+                _selectedTabItem = value;
+
+                // Focus embedded window on switching tab
+                if (!_disableFocusEmbeddedWindowOnSelectedTabItemChange)
+                    FocusEmbeddedWindow();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _headerContextMenuIsOpen;
+        public bool HeaderContextMenuIsOpen
+        {
+            get => _headerContextMenuIsOpen;
+            set
+            {
+                if (value == _headerContextMenuIsOpen)
+                    return;
+
+                _headerContextMenuIsOpen = value;
                 OnPropertyChanged();
             }
         }
@@ -93,6 +114,20 @@ namespace NETworkManager.ViewModels
 
                 StartDelayedSearch();
 
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _textBoxSearchIsFocused;
+        public bool TextBoxSearchIsFocused
+        {
+            get => _textBoxSearchIsFocused;
+            set
+            {
+                if (value == _textBoxSearchIsFocused)
+                    return;
+
+                _textBoxSearchIsFocused = value;
                 OnPropertyChanged();
             }
         }
@@ -155,6 +190,21 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _profileContextMenuIsOpen;
+        public bool ProfileContextMenuIsOpen
+        {
+            get => _profileContextMenuIsOpen;
+            set
+            {
+
+                if (value == _profileContextMenuIsOpen)
+                    return;
+
+                _profileContextMenuIsOpen = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
         #endregion
 
@@ -197,8 +247,8 @@ namespace NETworkManager.ViewModels
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PowerShell_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
-            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;    
-                
+            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
+
             _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
@@ -208,7 +258,7 @@ namespace NETworkManager.ViewModels
 
             _isLoading = false;
         }
-               
+
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))
@@ -323,6 +373,26 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
         }
 
+        public ICommand TextBoxSearchGotFocusCommand
+        {
+            get { return new RelayCommand(p => TextBoxSearchGotFocusAction()); }
+        }
+
+        private void TextBoxSearchGotFocusAction()
+        {
+            TextBoxSearchIsFocused = true;
+        }
+
+        public ICommand TextBoxSearchLostFocusCommand
+        {
+            get { return new RelayCommand(p => TextBoxSearchLostFocusAction()); }
+        }
+
+        private void TextBoxSearchLostFocusAction()
+        {
+            TextBoxSearchIsFocused = false;
+        }
+
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
@@ -384,7 +454,7 @@ namespace NETworkManager.ViewModels
             };
 
             ConfigurationManager.Current.FixAirspace = true;
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         private void ConnectProfile()
@@ -394,7 +464,7 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfileExternal()
         {
-            var info = new ProcessStartInfo
+            ProcessStartInfo info = new()
             {
                 FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
                 Arguments = PowerShell.BuildCommandLine(NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile))
@@ -409,7 +479,10 @@ namespace NETworkManager.ViewModels
 
             TabItems.Add(new DragablzTabItem(header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Localization.Resources.Strings.PowerShell), new PowerShellControl(sessionInfo)));
 
-            SelectedTabIndex = TabItems.Count - 1;
+            // Select the added tab
+            _disableFocusEmbeddedWindowOnSelectedTabItemChange = true;
+            SelectedTabItem = TabItems.Last();
+            _disableFocusEmbeddedWindowOnSelectedTabItemChange = false;
         }
 
         public void AddTab(string host)
@@ -422,7 +495,7 @@ namespace NETworkManager.ViewModels
         {
             if (string.IsNullOrEmpty(host))
                 return;
-            
+
             SettingsManager.Current.PowerShell_HostHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PowerShell_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries));
         }
 
@@ -474,11 +547,26 @@ namespace NETworkManager.ViewModels
             _canProfileWidthChange = true;
         }
 
+        public void FocusEmbeddedWindow()
+        {
+            /* Don't continue if
+               - Search TextBox is focused
+               - Header ContextMenu is opened
+               - Profile ContextMenu is opened
+            */
+            if (TextBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
+                return;
+
+            (SelectedTabItem?.View as PowerShellControl)?.FocusEmbeddedWindow();
+        }
+
         public void OnViewVisible()
         {
             _isViewActive = true;
 
             RefreshProfiles();
+
+            FocusEmbeddedWindow();
         }
 
         public void OnViewHide()

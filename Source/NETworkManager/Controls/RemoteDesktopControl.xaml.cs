@@ -456,7 +456,7 @@ namespace NETworkManager.Controls
 
             do // Prevent to many requests
             {
-                await Task.Delay(500);
+                await Task.Delay(250);
 
             } while (Mouse.LeftButton == MouseButtonState.Pressed);
 
