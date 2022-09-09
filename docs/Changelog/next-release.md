@@ -18,10 +18,13 @@ permalink: /Changelog/next-release
 
   
 ## Improvements
+- Port Scanner
+  - Add more port profiles (LDAP, HTTP proxy, Filetransfer) [#1518](https://github.com/BornToBeRoot/NETworkManager/pull/1518){:target="\_blank"}
 - PowerShell & PuTTY
   - Focus embedded window when the application has received the focus [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
   - Focus embedded window when application is selected again [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
   - Focus embedded window when switching tabs [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
+
 
 ## Bugfixes
 - Dashboard / Status Window
