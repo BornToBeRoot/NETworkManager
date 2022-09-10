@@ -20,8 +20,7 @@ namespace NETworkManager.Profiles
 
         [XmlIgnore]
         public new List<ProfileInfo> Profiles { get; set; }
-
-        public bool RemoteDesktop_Enabled { get; set; }
+                
         public bool RemoteDesktop_UseCredentials { get; set; }
         public string RemoteDesktop_Username { get; set; }
 
@@ -80,14 +79,12 @@ namespace NETworkManager.Profiles
         public bool RemoteDesktop_MenuAndWindowAnimation { get; set; }
         public bool RemoteDesktop_OverrideVisualStyles { get; set; }
         public bool RemoteDesktop_VisualStyles { get; set; }
-
-        public bool PowerShell_Enabled { get; set; }        
+               
         public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
         public string PowerShell_AdditionalCommandLine { get; set; }
         public bool PowerShell_OverrideExecutionPolicy { get; set; }
         public PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy { get; set; }
-
-        public bool PuTTY_Enabled { get; set; }
+                
         public bool PuTTY_OverrideUsername { get; set; }
         public string PuTTY_Username { get; set; }
         public bool PuTTY_OverridePrivateKeyFile { get; set; }
@@ -104,8 +101,7 @@ namespace NETworkManager.Profiles
         public string PuTTY_LogFileName { get; set; } = GlobalStaticConfiguration.PuTTY_LogFileName;
         public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
         public string PuTTY_AdditionalCommandLine { get; set; }
-
-        public bool TigerVNC_Enabled { get; set; }
+                
         public bool TigerVNC_OverridePort { get; set; }
         public int TigerVNC_Port { get; set; }
 
@@ -133,7 +129,6 @@ namespace NETworkManager.Profiles
         {            
             Profiles = group.Profiles;
 
-            RemoteDesktop_Enabled = group.RemoteDesktop_Enabled;
             RemoteDesktop_UseCredentials = group.RemoteDesktop_UseCredentials;
             RemoteDesktop_Username = group.RemoteDesktop_Username;
             RemoteDesktop_Password = group.RemoteDesktop_Password;
@@ -191,13 +186,11 @@ namespace NETworkManager.Profiles
             RemoteDesktop_OverrideVisualStyles = group.RemoteDesktop_OverrideVisualStyles;
             RemoteDesktop_VisualStyles = group.RemoteDesktop_VisualStyles;
 
-            PowerShell_Enabled = group.PowerShell_Enabled;
             PowerShell_OverrideAdditionalCommandLine = group.PowerShell_OverrideAdditionalCommandLine;
             PowerShell_AdditionalCommandLine = group.PowerShell_AdditionalCommandLine;
             PowerShell_OverrideExecutionPolicy = group.PowerShell_OverrideExecutionPolicy;
             PowerShell_ExecutionPolicy = group.PowerShell_ExecutionPolicy;
 
-            PuTTY_Enabled = group.PuTTY_Enabled;
             PuTTY_OverrideUsername = group.PuTTY_OverrideUsername;
             PuTTY_Username = group.PuTTY_Username;
             PuTTY_OverridePrivateKeyFile = group.PuTTY_OverridePrivateKeyFile;
@@ -215,7 +208,6 @@ namespace NETworkManager.Profiles
             PuTTY_OverrideAdditionalCommandLine = group.PuTTY_OverrideAdditionalCommandLine;
             PuTTY_AdditionalCommandLine = group.PuTTY_AdditionalCommandLine;
 
-            TigerVNC_Enabled = group.TigerVNC_Enabled;
             TigerVNC_OverridePort = group.TigerVNC_OverridePort;
             TigerVNC_Port = group.TigerVNC_Port;
         }
