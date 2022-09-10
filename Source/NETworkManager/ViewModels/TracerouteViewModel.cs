@@ -303,7 +303,7 @@ namespace NETworkManager.ViewModels
             TraceResults.Clear();
 
             // Change the tab title (not nice, but it works)
-            var window = System.Windows.Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
             if (window != null)
             {

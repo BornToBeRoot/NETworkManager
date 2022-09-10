@@ -19,16 +19,17 @@ permalink: /Changelog/next-release
   
 ## Improvements
 - Port Scanner
-  - Add more port profiles (LDAP, HTTP proxy, Filetransfer) [#1518](https://github.com/BornToBeRoot/NETworkManager/pull/1518){:target="\_blank"}
+  - Add more port profiles (LDAP, HTTP proxy, Filetransfer) [#1526](https://github.com/BornToBeRoot/NETworkManager/pull/1526){:target="\_blank"}
 - PowerShell & PuTTY
   - Focus embedded window when the application has received the focus [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
   - Focus embedded window when application is selected again [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
   - Focus embedded window when switching tabs [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
 
-
 ## Bugfixes
 - Dashboard / Status Window
   - Handle null exception properly [#1510](https://github.com/BornToBeRoot/NETworkManager/pull/1510){:target="\_blank"}
+- Traceroute
+  - Hops were skipped if they did not respond to ping [#1528](https://github.com/BornToBeRoot/NETworkManager/pull/1528){:target="\_blank"}
 - Remote Desktop, PowerShell, PuTTY & TigerVNC
   - "Unlock profile" dialog is now displayed correctly if an embedded window is already open [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
 PowerShell & TigerVNC
