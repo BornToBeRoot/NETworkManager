@@ -62,21 +62,6 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Remote Desktop
-        private bool _remoteDesktop_Enabled;
-        public bool RemoteDesktop_Enabled
-        {
-            get => _remoteDesktop_Enabled;
-            set
-            {
-                if (value == _remoteDesktop_Enabled)
-                    return;
-
-                _remoteDesktop_Enabled = value;
-
-                OnPropertyChanged();
-            }
-        }
-
         private bool _remoteDesktop_UseCredentials;
         public bool RemoteDesktop_UseCredentials
         {
@@ -825,21 +810,6 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region PowerShell
-        private bool _powerShell_Enabled;
-        public bool PowerShell_Enabled
-        {
-            get => _powerShell_Enabled;
-            set
-            {
-                if (value == _powerShell_Enabled)
-                    return;
-
-                _powerShell_Enabled = value;
-
-                OnPropertyChanged();
-            }
-        }
-
         private bool _powerShell_OverrideAdditionalCommandLine;
         public bool PowerShell_OverrideAdditionalCommandLine
         {
@@ -912,21 +882,6 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region PuTTY 
-        private bool _puTTY_Enabled;
-        public bool PuTTY_Enabled
-        {
-            get => _puTTY_Enabled;
-            set
-            {
-                if (value == _puTTY_Enabled)
-                    return;
-
-                _puTTY_Enabled = value;
-
-                OnPropertyChanged();
-            }
-        }
-
         private bool _puTTY_OverrideUsername;
         public bool PuTTY_OverrideUsername
         {
@@ -1168,21 +1123,6 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region TigerVNC
-        private bool _tigerVNC_Enabled;
-        public bool TigerVNC_Enabled
-        {
-            get => _tigerVNC_Enabled;
-            set
-            {
-                if (value == _tigerVNC_Enabled)
-                    return;
-
-                _tigerVNC_Enabled = value;
-
-                OnPropertyChanged();
-            }
-        }
-
         private bool _tigerVNC_OverridePort;
         public bool TigerVNC_OverridePort
         {
@@ -1230,7 +1170,6 @@ namespace NETworkManager.ViewModels
             Name = groupInfo.Name;
 
             // Remote Desktop
-            RemoteDesktop_Enabled = groupInfo.RemoteDesktop_Enabled;
             RemoteDesktop_UseCredentials = groupInfo.RemoteDesktop_UseCredentials;
             RemoteDesktop_Username = groupInfo.RemoteDesktop_Username;
             RemoteDesktop_Password = groupInfo.RemoteDesktop_Password;
@@ -1281,7 +1220,6 @@ namespace NETworkManager.ViewModels
             RemoteDesktop_VisualStyles = groupInfo.RemoteDesktop_VisualStyles;
 
             // PowerShell
-            PowerShell_Enabled = groupInfo.PowerShell_Enabled;
             PowerShell_OverrideAdditionalCommandLine = groupInfo.PowerShell_OverrideAdditionalCommandLine;
             PowerShell_AdditionalCommandLine = groupInfo.PowerShell_AdditionalCommandLine;
             PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
@@ -1289,7 +1227,6 @@ namespace NETworkManager.ViewModels
             PowerShell_ExecutionPolicy = editMode != GroupEditMode.Add ? groupInfo.PowerShell_ExecutionPolicy : PowerShell_ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy); ;
 
             // PuTTY
-            PuTTY_Enabled = groupInfo.PuTTY_Enabled;
             PuTTY_OverrideUsername = groupInfo.PuTTY_OverrideUsername;
             PuTTY_Username = groupInfo.PuTTY_Username;
             PuTTY_OverridePrivateKeyFile = groupInfo.PuTTY_OverridePrivateKeyFile;
@@ -1308,7 +1245,6 @@ namespace NETworkManager.ViewModels
             PuTTY_AdditionalCommandLine = groupInfo.PuTTY_AdditionalCommandLine;
 
             // TigerVNC
-            TigerVNC_Enabled = groupInfo.TigerVNC_Enabled;
             TigerVNC_OverridePort = groupInfo.TigerVNC_OverridePort;
             TigerVNC_Port = groupInfo.TigerVNC_OverridePort ? groupInfo.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port;
 
