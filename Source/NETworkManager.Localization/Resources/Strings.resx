@@ -3164,4 +3164,10 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
     <value>Overwrite existing settings file?</value>
   </data>
+  <data name="LocalConnection" xml:space="preserve">
+    <value>Local connection</value>
+  </data>
+  <data name="LocalInterface" xml:space="preserve">
+    <value>Local interface</value>
+  </data>
 </root>

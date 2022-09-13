@@ -82,7 +82,7 @@ namespace NETworkManager.Models.Network
         {
             using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("NETworkManager.Models.Resources.PSDiscoveryProtocol.psm1");
 
-            using StreamReader reader = new StreamReader(stream);
+            using StreamReader reader = new(stream);
 
             PSDiscoveryProtocolModule = reader.ReadToEnd();
         }
@@ -109,7 +109,7 @@ namespace NETworkManager.Models.Network
 
                     if (powerShell.Streams.Error.Count > 0)
                     {
-                        StringBuilder stringBuilder = new StringBuilder();
+                        StringBuilder stringBuilder = new();
 
                         foreach (var error in powerShell.Streams.Error)
                         {
@@ -123,7 +123,7 @@ namespace NETworkManager.Models.Network
                     }
                     if (powerShell.Streams.Warning.Count > 0)
                     {
-                        StringBuilder stringBuilder = new StringBuilder();
+                        StringBuilder stringBuilder = new();
 
                         foreach (var warning in powerShell.Streams.Warning)
                         {
@@ -141,7 +141,7 @@ namespace NETworkManager.Models.Network
                         if (outputItem == null)
                             continue;
 
-                        List<string> ipAddresses = new List<string>();
+                        List<string> ipAddresses = new();
 
                         if (outputItem.Properties["IPAddress"] != null)
                         {
@@ -151,7 +151,7 @@ namespace NETworkManager.Models.Network
                             }
                         }
 
-                        List<string> managements = new List<string>();
+                        List<string> managements = new();
 
                         if (outputItem.Properties["Management"] != null)
                         {
@@ -161,7 +161,7 @@ namespace NETworkManager.Models.Network
                             }
                         }
 
-                        OnPackageReceived(new DiscoveryProtocolPackageArgs()
+                        var packageInfo = new DiscoveryProtocolPackageInfo
                         {
                             Device = outputItem.Properties["Device"]?.Value.ToString(),
                             DeviceDescription = outputItem.Properties["SystemDescription"]?.Value.ToString(),
@@ -173,8 +173,12 @@ namespace NETworkManager.Models.Network
                             Protocol = outputItem.Properties["Type"]?.Value.ToString(),
                             TimeToLive = outputItem.Properties["TimeToLive"]?.Value.ToString(),
                             Management = string.Join("; ", managements),
-                            ChassisId = outputItem.Properties["ChassisId"]?.Value.ToString()
-                        });
+                            ChassisId = outputItem.Properties["ChassisId"]?.Value.ToString(),
+                            LocalConnection = outputItem.Properties["Connection"]?.Value.ToString(),
+                            LocalInterface = outputItem.Properties["Interface"]?.Value.ToString(),
+                        };
+
+                        OnPackageReceived(new DiscoveryProtocolPackageArgs(packageInfo));
                     }
                 }
 

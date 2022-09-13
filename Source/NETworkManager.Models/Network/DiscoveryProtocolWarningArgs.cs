@@ -1,7 +1,7 @@
 ﻿namespace NETworkManager.Models.Network
 {
     /// <summary>
-    /// Event arguments when an 
+    /// Event arguments when a Warning message is returned.
     /// </summary>
     public class DiscoveryProtocolWarningArgs : System.EventArgs
     {
