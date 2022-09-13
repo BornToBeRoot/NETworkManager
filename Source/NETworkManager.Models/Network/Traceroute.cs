@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
@@ -13,7 +12,7 @@ namespace NETworkManager.Models.Network
     public class Traceroute
     {
         #region Variables
-        private readonly LookupClient DnsLookupClient = new LookupClient();
+        private readonly LookupClient DnsLookupClient = new();
 
         public int Timeout = 4000;
         public byte[] Buffer = new byte[32];
@@ -82,9 +81,22 @@ namespace NETworkManager.Models.Network
 
                     Task.WaitAll(tasks.ToArray());
 
-                    var ipAddressHop = tasks.FirstOrDefault(x => x.Result.Item1 != null)?.Result.Item1.Address;
+                    // Check results -> Get IP on success or TTL expired
+                    IPAddress ipAddressHop = null;
 
-                   // Resolve Hostname
+                    foreach (var task in tasks)
+                    {
+                        if (task.Result.Item1.Status == IPStatus.TimedOut)
+                            continue;
+                                                
+                        if (task.Result.Item1.Status == IPStatus.TtlExpired || task.Result.Item1.Status == IPStatus.Success)
+                        {
+                            ipAddressHop = task.Result.Item1.Address;
+                            break;
+                        }                          
+                    }
+                    
+                    // Resolve Hostname
                     var hostname = string.Empty;
 
                     if (ResolveHostname && ipAddressHop != null)

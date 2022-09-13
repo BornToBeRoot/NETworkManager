@@ -509,7 +509,7 @@ namespace NETworkManager.ViewModels
             // Try to parse the string into an IP-Address
             if (!IPAddress.TryParse(Host, out var ipAddress))
             {
-                ipAddress = await DnsLookupHelper.ResolveIPAddress(Host);
+                ipAddress = await DnsLookupHelper.ResolveIPAddress(Host, SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4);
             }
 
             if (ipAddress == null)

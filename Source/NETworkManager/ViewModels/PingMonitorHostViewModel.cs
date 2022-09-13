@@ -367,7 +367,7 @@ namespace NETworkManager.ViewModels
             else // Resolve ip address
             {
                 hostname = host;
-                ipAddress = await DnsLookupHelper.ResolveIPAddress(host);
+                ipAddress = await DnsLookupHelper.ResolveIPAddress(host, SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4);
             }
 
             if (ipAddress != null)

@@ -400,7 +400,6 @@ namespace NETworkManager
 
                 Profiles = profiles,
 
-                RemoteDesktop_Enabled = instance.RemoteDesktop_Enabled,
                 RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,
                 RemoteDesktop_Username = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Username : string.Empty, // Remove sensitive info on disable
                 RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Password : new SecureString(), // Remove sensitive info on disable
@@ -452,13 +451,11 @@ namespace NETworkManager
                 RemoteDesktop_MenuAndWindowAnimation = instance.RemoteDesktop_MenuAndWindowAnimation,
                 RemoteDesktop_VisualStyles = instance.RemoteDesktop_VisualStyles,
 
-                PowerShell_Enabled = instance.PowerShell_Enabled,
                 PowerShell_OverrideAdditionalCommandLine = instance.PowerShell_OverrideAdditionalCommandLine,
                 PowerShell_AdditionalCommandLine = instance.PowerShell_AdditionalCommandLine,
                 PowerShell_OverrideExecutionPolicy = instance.PowerShell_OverrideExecutionPolicy,
                 PowerShell_ExecutionPolicy = instance.PowerShell_ExecutionPolicy,
 
-                PuTTY_Enabled = instance.PuTTY_Enabled,
                 PuTTY_OverrideUsername = instance.PuTTY_OverrideUsername,
                 PuTTY_Username = instance.PuTTY_Username?.Trim(),
                 PuTTY_OverridePrivateKeyFile = instance.PuTTY_OverridePrivateKeyFile,
@@ -476,7 +473,6 @@ namespace NETworkManager
                 PuTTY_OverrideAdditionalCommandLine = instance.PuTTY_OverrideAdditionalCommandLine,
                 PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
 
-                TigerVNC_Enabled = instance.TigerVNC_Enabled,
                 TigerVNC_OverridePort = instance.TigerVNC_OverridePort,
                 TigerVNC_Port = instance.TigerVNC_Port
             };
