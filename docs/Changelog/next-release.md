@@ -24,6 +24,8 @@ permalink: /Changelog/next-release
   - Focus embedded window when the application has received the focus [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
   - Focus embedded window when application is selected again [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
   - Focus embedded window when switching tabs [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
+- Discovery Protocol
+  - Add local connection & local interface to output [#1533](https://github.com/BornToBeRoot/NETworkManager/pull/1533){:target="\_blank"}
 - Profiles > Group Dialog
   - Remove checkboxes in group dialog [#1530](https://github.com/BornToBeRoot/NETworkManager/pull/1530){:target="\_blank"}
 

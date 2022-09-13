@@ -4226,11 +4226,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Local connection ähnelt.
+        /// </summary>
+        public static string LocalConnection {
+            get {
+                return ResourceManager.GetString("LocalConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Local devices and resources ähnelt.
         /// </summary>
         public static string LocalDevicesAndResources {
             get {
                 return ResourceManager.GetString("LocalDevicesAndResources", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Local interface ähnelt.
+        /// </summary>
+        public static string LocalInterface {
+            get {
+                return ResourceManager.GetString("LocalInterface", resourceCulture);
             }
         }
         

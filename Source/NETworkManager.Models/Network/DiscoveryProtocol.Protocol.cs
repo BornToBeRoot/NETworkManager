@@ -1,5 +1,8 @@
 ﻿namespace NETworkManager.Models.Network
 {
+    /// <summary>
+    /// Class to capture network discovery protocol packages.
+    /// </summary>
     public partial class DiscoveryProtocol
     {
         /// <summary>
