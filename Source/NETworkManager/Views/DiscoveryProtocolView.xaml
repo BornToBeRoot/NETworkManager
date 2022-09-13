@@ -229,8 +229,12 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <GridSplitter Grid.Column="1" Grid.RowSpan="12" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
+                                <GridSplitter Grid.Column="1" Grid.RowSpan="13" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False" />
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Device}" />
                                 <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding DiscoveryPackage.Device, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.DeviceDescription}" />
@@ -252,7 +256,11 @@
                                 <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.Protocol}" />
                                 <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding DiscoveryPackage.Protocol, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.TimeToLive}" />
-                                <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DiscoveryPackage.TimeToLive, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />                                
+                                <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding DiscoveryPackage.TimeToLive, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="11" Text="{x:Static localization:Strings.LocalConnection}" />
+                                <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding DiscoveryPackage.LocalConnection, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
+                                <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.LocalInterface}" />
+                                <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding DiscoveryPackage.LocalInterface, Mode=OneWay, Converter={StaticResource NullOrEmptyToStringConverter}}" />
                             </Grid>
                         </ScrollViewer>
                         <TextBlock Grid.Row="6" Text="{x:Static localization:Strings.CaptureNetworkPacketsToViewLLDPorCDPInformation}" >

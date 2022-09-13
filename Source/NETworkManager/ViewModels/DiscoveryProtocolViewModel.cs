@@ -269,10 +269,10 @@ namespace NETworkManager.ViewModels
             //NetworkChange.NetworkAvailabilityChanged += (sender, args) => ReloadNetworkInterfacesAction();
             //NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfacesAction();
             
-            _discoveryProtocol.PackageReceived += _discoveryProtocol_PackageReceived;
-            _discoveryProtocol.ErrorReceived += _discoveryProtocol_ErrorReceived;
-            _discoveryProtocol.WarningReceived += _discoveryProtocol_WarningReceived;
-            _discoveryProtocol.Complete += _discoveryProtocol_Complete;
+            _discoveryProtocol.PackageReceived += DiscoveryProtocol_PackageReceived;
+            _discoveryProtocol.ErrorReceived += DiscoveryProtocol_ErrorReceived;
+            _discoveryProtocol.WarningReceived += DiscoveryProtocol_WarningReceived;
+            _discoveryProtocol.Complete += DiscoveryProtocol_Complete;
 
             _remainingTimer = new System.Timers.Timer
             {
@@ -429,14 +429,14 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Events
-        private void _discoveryProtocol_PackageReceived(object sender, DiscoveryProtocolPackageArgs e)
+        private void DiscoveryProtocol_PackageReceived(object sender, DiscoveryProtocolPackageArgs e)
         {
-            DiscoveryPackage = DiscoveryProtocolPackageInfo.Parse(e);
+            DiscoveryPackage = e.PackageInfo;
 
             DiscoveryPackageReceived = true;
         }
 
-        private void _discoveryProtocol_WarningReceived(object sender, DiscoveryProtocolWarningArgs e)
+        private void DiscoveryProtocol_WarningReceived(object sender, DiscoveryProtocolWarningArgs e)
         {
             if (!string.IsNullOrEmpty(StatusMessage))
                 StatusMessage += Environment.NewLine;
@@ -446,7 +446,7 @@ namespace NETworkManager.ViewModels
             IsStatusMessageDisplayed = true;
         }
 
-        private void _discoveryProtocol_ErrorReceived(object sender, DiscoveryProtocolErrorArgs e)
+        private void DiscoveryProtocol_ErrorReceived(object sender, DiscoveryProtocolErrorArgs e)
         {            
             if (!string.IsNullOrEmpty(StatusMessage))
                 StatusMessage += Environment.NewLine;
@@ -456,7 +456,7 @@ namespace NETworkManager.ViewModels
             IsStatusMessageDisplayed = true;
         }
 
-        private void _discoveryProtocol_Complete(object sender, EventArgs e)
+        private void DiscoveryProtocol_Complete(object sender, EventArgs e)
         {
             _remainingTimer.Stop();
             IsCapturing = false;

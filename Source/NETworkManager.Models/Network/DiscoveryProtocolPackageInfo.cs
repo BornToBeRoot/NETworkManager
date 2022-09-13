@@ -1,42 +1,81 @@
 ﻿namespace NETworkManager.Models.Network
 {
+    /// <summary>
+    /// Class contains discovery protocol package informations.
+    /// </summary>
     public class DiscoveryProtocolPackageInfo
     {
-        public string Device { get; private set; }
-        public string DeviceDescription { get; private set; }
-        public string Port { get; private set; }
-        public string PortDescription { get; private set; }
-        public string Model { get; private set; }
-        public string VLAN { get; private set; }
-        public string IPAddress { get; private set; }
-        public string Protocol { get; private set; }
-        public string TimeToLive { get; private set; }
-        public string Management { get; private set; }
-        public string ChassisId { get; private set; }
+        /// <summary>
+        /// Device name.
+        /// </summary>
+        public string Device { get; set; }
 
+        /// <summary>
+        /// Device description.
+        /// </summary>
+        public string DeviceDescription { get; set; }
+
+        /// <summary>
+        /// Port name or number.
+        /// </summary>
+        public string Port { get; set; }
+
+        /// <summary>
+        /// Port description.
+        /// </summary>
+        public string PortDescription { get; set; }
+        
+        /// <summary>
+        /// Device model.
+        /// </summary>
+        public string Model { get; set; }
+
+        /// <summary>
+        /// Management VLAN.
+        /// </summary>
+        public string VLAN { get; set; }
+
+        /// <summary>
+        /// IP address(es) of the device.
+        /// </summary>
+        public string IPAddress { get; set; }
+
+        /// <summary>
+        /// Protocol type.
+        /// </summary>
+        public string Protocol { get; set; }
+
+        /// <summary>
+        /// Time to live of the LLDP/CDP package.
+        /// </summary>
+        public string TimeToLive { get; set; }
+
+        /// <summary>
+        /// Device Management.
+        /// </summary>
+        public string Management { get; set; }
+
+        /// <summary>
+        /// Device Chassis ID.
+        /// </summary>
+        public string ChassisId { get; set; }
+
+        /// <summary>
+        /// Local connection used to capture the LLDP/CDP package.
+        /// </summary>
+        public string LocalConnection { get; set; }
+
+        /// <summary>
+        /// Local interface used to capture the LLDP/CDP package.
+        /// </summary>
+        public string LocalInterface { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DiscoveryProtocolPackageInfo"/> class.
+        /// </summary>
         public DiscoveryProtocolPackageInfo()
         {
 
-        }
-
-        public DiscoveryProtocolPackageInfo(string device, string deviceDescription, string port, string portDescription, string model, string vlan, string ipAdress, string protocol, string timeToLive, string management, string chassisId)
-        {
-            Device = device;
-            DeviceDescription = deviceDescription;
-            Port = port;
-            PortDescription = portDescription;
-            Model = model;
-            VLAN = vlan;
-            IPAddress = ipAdress;
-            Protocol = protocol;
-            TimeToLive = timeToLive;
-            Management = management;
-            ChassisId = chassisId;
-        }
-
-        public static DiscoveryProtocolPackageInfo Parse(DiscoveryProtocolPackageArgs e)
-        {
-            return new DiscoveryProtocolPackageInfo(e.Device, e.DeviceDescription, e.Port, e.PortDescription, e.Model, e.VLAN, e.IPAddress, e.Protocol, e.TimeToLive, e.Management, e.ChassisId);
         }
     }
 }
