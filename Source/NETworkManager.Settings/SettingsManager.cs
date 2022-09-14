@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
@@ -156,10 +157,9 @@ namespace NETworkManager.Settings
         #region Import, Export
         public static void Import(string filePath)
         {
-            using (var zipArchive = ZipFile.OpenRead(filePath))
-            {
-                zipArchive.GetEntry(GetSettingsFileName()).ExtractToFile(GetSettingsFilePath(), true);
-            }
+            using var zipArchive = ZipFile.OpenRead(filePath);
+            
+            zipArchive.GetEntry(GetSettingsFileName()).ExtractToFile(GetSettingsFilePath(), true);
         }
 
         public static void Export(string filePath)
@@ -171,11 +171,10 @@ namespace NETworkManager.Settings
             Save();
 
             // Create archiv
-            using (var zipArchive = ZipFile.Open(filePath, ZipArchiveMode.Create))
-            {
-                // Copy file
-                zipArchive.CreateEntryFromFile(GetSettingsFilePath(), GetSettingsFileName(), CompressionLevel.Optimal);
-            }
+            using var zipArchive = ZipFile.Open(filePath, ZipArchiveMode.Create);
+
+            // Copy file
+            zipArchive.CreateEntryFromFile(GetSettingsFilePath(), GetSettingsFileName(), CompressionLevel.Optimal);
         }
         #endregion
 
@@ -195,6 +194,13 @@ namespace NETworkManager.Settings
 
             // Save manually, settings are not saved on a forced restart...
             Save();
+        }
+        #endregion
+
+        #region Upgrade 
+        public static void Upgrade(Version targetVersion)
+        {
+            Debug.WriteLine("Perform update to: " + targetVersion.ToString());
         }
         #endregion
         #endregion
