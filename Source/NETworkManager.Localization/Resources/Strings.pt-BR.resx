@@ -3164,4 +3164,10 @@ Habilite a criptografia do arquivo de perfil em Configurações &gt; Perfil para
   <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
     <value>Substituir arquivo de configurações existente?</value>
   </data>
+  <data name="LocalConnection" xml:space="preserve">
+    <value>Conexão local</value>
+  </data>
+  <data name="LocalInterface" xml:space="preserve">
+    <value>Interface local</value>
+  </data>
 </root>
