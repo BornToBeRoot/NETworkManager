@@ -3190,4 +3190,10 @@ Questo limite è impostato dall'amministratore del server o dai criteri di rete.
   <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
     <value>Vuoi sovrascrivere il file delle impostazioni esistente?</value>
   </data>
+  <data name="LocalConnection" xml:space="preserve">
+    <value>Connessione locale</value>
+  </data>
+  <data name="LocalInterface" xml:space="preserve">
+    <value>Interfaccia locale</value>
+  </data>
 </root>
