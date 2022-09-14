@@ -994,10 +994,10 @@ Erstelle eins...</value>
     <value>überschreiben</value>
   </data>
   <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite settings in the destination folder?
+    <value>Einstellungen im Zielordner überschrieben?
 
-"Overwrite" will overwrite the settings file in the destination folder.
-"Use other" will use the existing setting file in the destination folder and restart the application afterwards.</value>
+"Überschreiben" überschreibt die Einstellungsdatei im Zielordner.
+"Anderen Ordner verwenden" verwendet die vorhande Einstellungsdatei im Zielordner und startet die Anwendung neu.</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Passwort</value>
@@ -3147,21 +3147,27 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
     <value>Entsperren Sie die Profildatei, um ein Profil hinzuzufügen, zu ändern oder zu löschen!</value>
   </data>
   <data name="UseCustomThemes" xml:space="preserve">
-    <value>Use custom themes</value>
+    <value>Verwende benutzerdefinierte Themes</value>
   </data>
   <data name="CustomThemes" xml:space="preserve">
-    <value>Custom themes</value>
+    <value>Benutzerdefinierte Themes</value>
   </data>
   <data name="ImportSettingsQuestion" xml:space="preserve">
-    <value>Import settings?</value>
+    <value>Einstellungen importieren?</value>
   </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
-    <value>Reset settings?</value>
+    <value>Einstellungen zurücksetzen?</value>
   </data>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
-    <value>Settings reset!</value>
+    <value>Einstellungen zurückgesetzt!</value>
   </data>
   <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
-    <value>Overwrite existing settings file?</value>
+    <value>Existierende Einstellungsdatei überschreiben?</value>
+  </data>
+  <data name="LocalConnection" xml:space="preserve">
+    <value>Lokale Verbindung</value>
+  </data>
+  <data name="LocalInterface" xml:space="preserve">
+    <value>Lokales Interface</value>
   </data>
 </root>
