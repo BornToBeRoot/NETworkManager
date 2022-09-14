@@ -40,7 +40,7 @@ namespace NETworkManager
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
-        {            
+        {
             // If we have restart our application... wait until it has finished
             if (CommandLineManager.Current.RestartPid != -1)
             {
@@ -67,13 +67,24 @@ namespace NETworkManager
             {
                 // Create backup of corrupted file                
                 File.Copy(SettingsManager.GetSettingsFilePath(), Path.Combine(SettingsManager.GetSettingsLocation(), $"{TimestampHelper.GetTimestamp()}_corrupted_" + SettingsManager.GetSettingsFileName()));
-                
+
                 SettingsManager.InitDefault();
 
                 ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
-            }                     
-            
-            // Init the location with the culture code...
+            }
+
+            // Check to perform settings updates
+            if (!string.IsNullOrEmpty(SettingsManager.Current.Version))
+            {
+                if (Version.Parse(SettingsManager.Current.Version) < AssemblyManager.Current.Version)
+                    SettingsManager.Upgrade(AssemblyManager.Current.Version);
+            }
+            else
+            {
+                SettingsManager.Current.Version = AssemblyManager.Current.Version.ToString();
+            }
+
+            // Init the localization with the culture code...
             Localization.Resources.Strings.Culture = LocalizationManager.GetInstance(SettingsManager.Current.Localization_CultureCode).Culture;
 
             if (CommandLineManager.Current.Help)

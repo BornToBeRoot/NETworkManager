@@ -331,10 +331,10 @@ namespace NETworkManager
             // Language Meta
             LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(LocalizationManager.GetInstance().Culture.IetfLanguageTag)));
 
-            // Load / Change appearance
+            // Load and change appearance
             AppearanceManager.Load();
 
-            // Set title
+            // Set window title
             Title = $"NETworkManager {AssemblyManager.Current.Version}";
 
             // NotifyIcon for autostart
@@ -357,7 +357,7 @@ namespace NETworkManager
         {
             base.OnContentRendered(e);
 
-            // Show settings reset note...
+            // Show a note if settings have been reset
             if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
             {
                 var settings = AppearanceManager.MetroDialog;
@@ -370,6 +370,7 @@ namespace NETworkManager
                 ConfigurationManager.Current.FixAirspace = false;
             }
 
+            // Show a note on the first run
             if (SettingsManager.Current.FirstRun)
             {
                 // Show first run dialog...
