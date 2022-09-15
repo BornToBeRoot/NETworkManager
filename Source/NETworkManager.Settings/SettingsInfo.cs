@@ -46,6 +46,21 @@ namespace NETworkManager.Settings
             }
         }
 
+        private string _version { get; set; }
+
+        public string Version
+        {
+            get  => _version;
+            set
+            {
+                if (value == _version)
+                    return;
+
+                _version = value;
+                SettingsChanged = true;
+            }
+        }
+
         #region General 
         // General        
         private ApplicationName _general_DefaultApplicationViewName = GlobalStaticConfiguration.General_DefaultApplicationViewName;
