@@ -3170,4 +3170,7 @@ Habilite a criptografia do arquivo de perfil em Configurações &gt; Perfil para
   <data name="LocalInterface" xml:space="preserve">
     <value>Interface local</value>
   </data>
+  <data name="Library_log4net_Description" xml:space="preserve">
+    <value>log4net é uma ferramenta para ajudar o programador a enviar instruções de log para uma variedade de destinos de saída.</value>
+  </data>
 </root>
