@@ -389,9 +389,19 @@ namespace NETworkManager
                     SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
                     SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
 
-                    // Generate some settings on the first run
+                    // Generate lists at runtime
                     SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.DefaultList());
                     SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(DNSServer.DefaultList());
+
+                    // Check if PuTTY is installed
+                    foreach(var file in Models.PuTTY.PuTTY.GetDefaultInstallationPaths)
+                    {
+                        if(File.Exists(file))
+                        {
+                            SettingsManager.Current.PuTTY_ApplicationFilePath = file;
+                            break;
+                        }
+                    }
 
                     // Save it to create a settings file
                     SettingsManager.Save();

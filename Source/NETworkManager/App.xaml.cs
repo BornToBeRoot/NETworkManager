@@ -10,6 +10,8 @@ using NETworkManager.Profiles;
 using NETworkManager.Localization;
 using System.IO;
 using log4net;
+using NETworkManager.Models.Network;
+using System.Collections.ObjectModel;
 
 namespace NETworkManager
 {
@@ -59,7 +61,7 @@ namespace NETworkManager
             if (CommandLineManager.Current.RestartPid != -1)
             {
                 _log.Info($"Waiting for another NETworkManager process with Pid {CommandLineManager.Current.RestartPid} to exit...");
-                
+
                 var processList = Process.GetProcesses();
                 var process = processList.FirstOrDefault(x => x.Id == CommandLineManager.Current.RestartPid);
                 process?.WaitForExit();
@@ -71,10 +73,10 @@ namespace NETworkManager
             if (LocalSettingsManager.UpgradeRequired)
             {
                 _log.Info("Local application settings are being updated...");
-               
+
                 LocalSettingsManager.Upgrade();
                 LocalSettingsManager.UpgradeRequired = false;
-                
+
                 _log.Info("Local application settings have been updated.");
             }
 
@@ -95,16 +97,38 @@ namespace NETworkManager
                 // Create backup of corrupted file
                 var destinationFile = $"{TimestampHelper.GetTimestamp()}_corrupted_" + SettingsManager.GetSettingsFileName();
                 File.Copy(SettingsManager.GetSettingsFilePath(), Path.Combine(SettingsManager.GetSettingsLocation(), destinationFile));
-                
                 _log.Info($"A backup of the corrupted settings file has been saved under {destinationFile}");
 
                 // Initialize default application settings
                 _log.Info("Initialize default application settings...");
-                
+
                 SettingsManager.InitDefault();
                 ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
-                
+
                 _log.Info("Default application settings have been initialized.");
+            }
+
+            // Check to perform settings updates
+            if (!SettingsManager.Current.FirstRun && !string.IsNullOrEmpty(SettingsManager.Current.Version))
+            {
+                if (Version.Parse(SettingsManager.Current.Version) < AssemblyManager.Current.Version)
+                {
+                    _log.Info($"Application settings are on version {SettingsManager.Current.Version} and will be upgraded to {AssemblyManager.Current.Version}");
+
+                    SettingsManager.Upgrade(AssemblyManager.Current.Version);
+
+                    _log.Info($"Application settings upgraded to version {AssemblyManager.Current.Version}");
+                }
+                else
+                {
+                    _log.Info($"Application settings are already on version {AssemblyManager.Current.Version}.");
+                }
+            }
+            else
+            {
+                _log.Info($"Application settings version is empty and will be set to {AssemblyManager.Current.Version}.");
+
+                SettingsManager.Current.Version = AssemblyManager.Current.Version.ToString();
             }
 
             // Init the location with the culture code...
@@ -124,22 +148,22 @@ namespace NETworkManager
 
             // Create mutex
             _log.Info($"Try to acquire mutex with GUID {GUID} for single instance detection...");
-            
+
             _mutex = new Mutex(true, "{" + GUID + "}");
             var mutexIsAcquired = _mutex.WaitOne(TimeSpan.Zero, true);
-            
+
             _log.Info($"Mutex value for {GUID} is {mutexIsAcquired}");
 
             // Release mutex
             if (mutexIsAcquired)
                 _mutex.ReleaseMutex();
-            
+
             if (mutexIsAcquired || SettingsManager.Current.Window_MultipleInstances)
-            {              
+            {
                 if (SettingsManager.Current.General_BackgroundJobInterval != 0)
                 {
                     _log.Info($"Setup background job with interval {SettingsManager.Current.General_BackgroundJobInterval} minute(s)...");
-                    
+
                     _dispatcherTimer = new DispatcherTimer
                     {
                         Interval = TimeSpan.FromMinutes(SettingsManager.Current.General_BackgroundJobInterval)
@@ -157,18 +181,18 @@ namespace NETworkManager
                 // Show splash screen
                 if (SettingsManager.Current.SplashScreen_Enabled)
                 {
-                    _log.Info("Show SplashScreen while application is loading...");            
+                    _log.Info("Show SplashScreen while application is loading...");
                     new SplashScreen(@"SplashScreen.png").Show(true, true);
                 }
 
                 // Show main window
-                _log.Info("Set StartupUri to MainWindow.xaml.");                
+                _log.Info("Set StartupUri to MainWindow.xaml.");
                 StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
             }
             else
             {
                 // Bring the already running application into the foreground
-                _log.Info("Another NETworkManager process is already running. Try to bring the window to the foreground...");               
+                _log.Info("Another NETworkManager process is already running. Try to bring the window to the foreground...");
                 SingleInstance.PostMessage((IntPtr)SingleInstance.HWND_BROADCAST, SingleInstance.WM_SHOWME, IntPtr.Zero, IntPtr.Zero);
 
                 // Close the application                
@@ -219,7 +243,7 @@ namespace NETworkManager
             {
                 _log.Info("Save current profiles.");
                 ProfileManager.Save();
-            }                
+            }
         }
     }
 }

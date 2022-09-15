@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Management;
 
 namespace NETworkManager.Models.PuTTY
 {
@@ -11,7 +12,16 @@ namespace NETworkManager.Models.PuTTY
     /// </summary>
     public partial class PuTTY
     {
-        private static List<Tuple<string, string>> DefaultProfileRegkeysSZBase = new()
+        private static string _puttyFolder => "PuTTY";
+        private static string _puttyFile => "putty.exe";
+
+        public static readonly List<string> GetDefaultInstallationPaths = new()
+        {
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), _puttyFolder, _puttyFile),
+            Path.Combine(Environment.GetFolderPath( Environment.SpecialFolder.ProgramFilesX86), _puttyFolder, _puttyFile)
+        };
+
+        private static readonly List<Tuple<string, string>> DefaultProfileRegkeysSZBase = new()
         {
             new Tuple<string, string>("Colour1", "255,255,255"),
             new Tuple<string, string>("Colour3", "85,85,85"),
@@ -57,7 +67,7 @@ namespace NETworkManager.Models.PuTTY
                 }).ToList();
         }
 
-        private static List<Tuple<string, int>> DefaultProfileRegkeysDword = new()
+        private static readonly List<Tuple<string, int>> DefaultProfileRegkeysDword = new()
         {
             new Tuple<string, int>("CurType", 2),
             new Tuple<string, int>("FontHeight", 12),
@@ -122,7 +132,7 @@ namespace NETworkManager.Models.PuTTY
                         break;
                 }
 
-                command += $" {'"'}{ Environment.ExpandEnvironmentVariables(Path.Combine(sessionInfo.LogPath, sessionInfo.LogFileName))}{'"'}";
+                command += $" {'"'}{Environment.ExpandEnvironmentVariables(Path.Combine(sessionInfo.LogPath, sessionInfo.LogFileName))}{'"'}";
             }
 
             // Additional commands
