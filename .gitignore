@@ -255,5 +255,3 @@ paket-files/
 # Custom
 Build/
 .vscode/
-Source/NETworkManager.Models/Generated Files/WinRTEventHelpers.cs
-Source/NETworkManager/Generated Files/WinRTEventHelpers.cs
