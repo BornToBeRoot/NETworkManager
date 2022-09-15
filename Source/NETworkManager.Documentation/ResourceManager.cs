@@ -10,7 +10,7 @@ namespace NETworkManager.Documentation
         /// <summary>
         /// Static list with all resources that are used.
         /// </summary>
-        public static List<ResourceInfo> List => new List<ResourceInfo>
+        public static List<ResourceInfo> List => new()
         {
             new ResourceInfo("Organizationally unique identifier", "https://linuxnet.ca/ieee/oui/", Localization.Resources.Strings.Resource_OUI_Description),
             new ResourceInfo("Service names and port numbers", "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml", Localization.Resources.Strings.Resource_ServiceNamePortNumber_Description),

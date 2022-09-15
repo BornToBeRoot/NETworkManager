@@ -6,7 +6,7 @@
 		<RootNamespace>NETworkManager.Documentation</RootNamespace>
 		<AssemblyName>NETworkManager.Documentation</AssemblyName>
 		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
-		<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
 		<SelfContained>false</SelfContained>
 		<UseWPF>true</UseWPF>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -14,11 +14,10 @@
 	</PropertyGroup>
 	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
 	<ItemGroup>
-		<FrameworkReference
-		Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms"
-		TargetingPackVersion="6.0.0" />
+		<FrameworkReference Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms" TargetingPackVersion="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
+		<None Remove="Licenses\log4net.txt" />
 		<None Remove="Licenses\Microsoft.PowerShell.SDK.txt" />
 		<None Remove="Licenses\Microsoft.Web.WebView2.txt" />
 		<None Remove="Licenses\Microsoft.Windows.CsWinRT.txt" />
@@ -37,7 +36,7 @@
 		<Content Include="Licenses\AirspaceFixer.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-		<Content Include="Licenses\ControlsEx.txt">
+		<Content Include="Licenses\ControlzEx.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Licenses\DnsClient.NET.txt">
@@ -54,6 +53,9 @@
 		</Content>
 		<Content Include="Licenses\LoadingIndicators.WPF.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\log4net.txt">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Licenses\MahApps.Metro.IconPack.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
