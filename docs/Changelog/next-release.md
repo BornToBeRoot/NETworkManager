@@ -15,7 +15,7 @@ permalink: /Changelog/next-release
 - [Microsoft Edge - WebView2 Runtime (Evergreen)](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="_blank"}
 
 ## What's new?
-
+- log4net added for error handling (Log file: `%LocalAppData%\NETworkManager\NETworkManager.log`) [#1539](https://github.com/BornToBeRoot/NETworkManager/pull/1539){:target="\_blank"}
   
 ## Improvements
 - Port Scanner

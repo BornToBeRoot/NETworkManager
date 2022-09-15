@@ -4082,6 +4082,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die log4net is a tool to help the programmer output log statements to a variety of output targets. ähnelt.
+        /// </summary>
+        public static string Library_log4net_Description {
+            get {
+                return ResourceManager.GetString("Library_log4net_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die A toolkit for creating Metro / Modern UI styled WPF apps. ähnelt.
         /// </summary>
         public static string Library_MahAppsMetro_Description {
