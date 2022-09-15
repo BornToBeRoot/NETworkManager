@@ -33,7 +33,6 @@ using System.Net.NetworkInformation;
 using System.IO;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Network;
-using Windows.ApplicationModel.VoiceCommands;
 
 namespace NETworkManager
 {
@@ -49,12 +48,6 @@ namespace NETworkManager
         #endregion
 
         #region Variables        
-        private bool _isWindowResizing;
-        private readonly DispatcherTimer _windowResizeTimer = new()
-        {
-            Interval = new TimeSpan(0, 0, 0, 0, 250),
-        };
-
         private NotifyIcon _notifyIcon;
         private StatusWindow _statusWindow;
 
@@ -447,9 +440,6 @@ namespace NETworkManager
             // Detect if network address or status changed...
             NetworkChange.NetworkAvailabilityChanged += (sender, args) => OnNetworkHasChanged();
             NetworkChange.NetworkAddressChanged += (sender, args) => OnNetworkHasChanged();
-
-            // Set window resize timer event
-            _windowResizeTimer.Tick += WindowResizeTimer_Tick;
 
             // Search for updates... 
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
@@ -1530,23 +1520,13 @@ namespace NETworkManager
             FocusEmbeddedWindow();
         }
 
-
-        private void MetroMainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            Debug.WriteLine("Resizing");
-            _isWindowResizing = true;
-
-            _windowResizeTimer.Start();
-        }
-
         private async void FocusEmbeddedWindow()
-        {
-            Debug.WriteLine("Try to set embedded window focus");
+        {         
             // Delay the focus to prevent blocking the ui
             do
             {
                 await Task.Delay(250);
-            } while (Mouse.LeftButton == MouseButtonState.Pressed);
+            } while (Control.MouseButtons == MouseButtons.Left);
 
             /* Don't continue if
                - Application is not set
@@ -1556,7 +1536,7 @@ namespace NETworkManager
                - Dialog over an embedded window is opened
                - Window is resizing
             */
-            if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.FixAirspace || _isWindowResizing)
+            if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.FixAirspace)
                 return;
 
             // Switch by name
@@ -1569,27 +1549,6 @@ namespace NETworkManager
                     _puttyHostView?.FocusEmbeddedWindow();
                     break;
             }
-        }
-
-        private void WindowResizeTimer_Tick(object sender, EventArgs e)
-        {
-            WindowResizeTimerAction();
-        }
-
-        private void WindowResizeTimerAction()
-        {
-            // Check if mouse button is still pressed and try again
-            if (Control.MouseButtons == MouseButtons.Left)
-            {
-                _windowResizeTimer.Start();
-                return;
-            }
-
-            _windowResizeTimer.Stop();
-
-            _isWindowResizing = false;
-
-            FocusEmbeddedWindow();
         }
         #endregion
     }
