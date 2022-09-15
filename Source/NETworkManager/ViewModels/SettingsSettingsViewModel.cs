@@ -222,7 +222,8 @@ namespace NETworkManager.ViewModels
                     SettingsManager.Save();
 
                 // Change location
-                LocalSettingsManager.Settings_CustomSettingsLocation = Location;                
+                LocalSettingsManager.Settings_CustomSettingsLocation = Location;
+                LocalSettingsManager.Save();
 
                 MovingFiles = false;
 
@@ -239,6 +240,7 @@ namespace NETworkManager.ViewModels
                 await SettingsManager.MoveSettingsAsync(Location);
 
                 LocalSettingsManager.Settings_CustomSettingsLocation = Location;
+                LocalSettingsManager.Save();
 
                 // Show the user some awesome animation to indicate we are working on it :)
                 await Task.Delay(2000);
