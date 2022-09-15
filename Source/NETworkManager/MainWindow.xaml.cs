@@ -33,6 +33,7 @@ using System.Net.NetworkInformation;
 using System.IO;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Network;
+using Windows.ApplicationModel.VoiceCommands;
 
 namespace NETworkManager
 {
@@ -48,6 +49,12 @@ namespace NETworkManager
         #endregion
 
         #region Variables        
+        private bool _isWindowResizing;
+        private readonly DispatcherTimer _windowResizeTimer = new()
+        {
+            Interval = new TimeSpan(0, 0, 0, 0, 250),
+        };
+
         private NotifyIcon _notifyIcon;
         private StatusWindow _statusWindow;
 
@@ -428,18 +435,7 @@ namespace NETworkManager
             LoadApplicationList();
 
             // Load profiles    
-            _isProfileLoading = true;
-            ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
-            ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
-            _isProfileLoading = false;
-
-            ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
-            ProfileManager.OnSwitchProfileFileViaUIEvent += ProfileManager_OnSwitchProfileFileViaUIEvent;
-
-            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
-
-            if (SelectedProfileFile == null)
-                SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
+            LoadProfiles();
 
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
@@ -451,6 +447,9 @@ namespace NETworkManager
             // Detect if network address or status changed...
             NetworkChange.NetworkAvailabilityChanged += (sender, args) => OnNetworkHasChanged();
             NetworkChange.NetworkAddressChanged += (sender, args) => OnNetworkHasChanged();
+
+            // Set window resize timer event
+            _windowResizeTimer.Tick += WindowResizeTimer_Tick;
 
             // Search for updates... 
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
@@ -512,6 +511,20 @@ namespace NETworkManager
             // Scroll into view
             if (SelectedApplication != null)
                 ListViewApplication.ScrollIntoView(SelectedApplication);
+        }
+
+        private void LoadProfiles()
+        {
+            _isProfileLoading = true;
+            ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
+            ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
+            _isProfileLoading = false;
+
+            ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
+            ProfileManager.OnSwitchProfileFileViaUIEvent += ProfileManager_OnSwitchProfileFileViaUIEvent;
+
+            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
+            SelectedProfileFile ??= ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
         }
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
@@ -1511,8 +1524,24 @@ namespace NETworkManager
         }
         #endregion
 
+        #region Focus embedded window
+        private void MetroMainWindow_Activated(object sender, EventArgs e)
+        {
+            FocusEmbeddedWindow();
+        }
+
+
+        private void MetroMainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Debug.WriteLine("Resizing");
+            _isWindowResizing = true;
+
+            _windowResizeTimer.Start();
+        }
+
         private async void FocusEmbeddedWindow()
         {
+            Debug.WriteLine("Try to set embedded window focus");
             // Delay the focus to prevent blocking the ui
             do
             {
@@ -1525,8 +1554,9 @@ namespace NETworkManager
                - Profile file drop down is opened
                - Application search textbox is opened
                - Dialog over an embedded window is opened
+               - Window is resizing
             */
-            if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.FixAirspace)
+            if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.FixAirspace || _isWindowResizing)
                 return;
 
             // Switch by name
@@ -1541,9 +1571,26 @@ namespace NETworkManager
             }
         }
 
-        private void MetroMainWindow_Activated(object sender, EventArgs e)
+        private void WindowResizeTimer_Tick(object sender, EventArgs e)
         {
+            WindowResizeTimerAction();
+        }
+
+        private void WindowResizeTimerAction()
+        {
+            // Check if mouse button is still pressed and try again
+            if (Control.MouseButtons == MouseButtons.Left)
+            {
+                _windowResizeTimer.Start();
+                return;
+            }
+
+            _windowResizeTimer.Stop();
+
+            _isWindowResizing = false;
+
             FocusEmbeddedWindow();
         }
+        #endregion
     }
 }
