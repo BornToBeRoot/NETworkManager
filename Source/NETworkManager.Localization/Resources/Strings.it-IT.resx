@@ -3196,4 +3196,7 @@ Questo limite è impostato dall'amministratore del server o dai criteri di rete.
   <data name="LocalInterface" xml:space="preserve">
     <value>Interfaccia locale</value>
   </data>
+  <data name="Library_log4net_Description" xml:space="preserve">
+    <value>log4net è uno strumento per creare un registro delle istruzioni di output del programmatore per una varietà di destinazioni di output.</value>
+  </data>
 </root>
