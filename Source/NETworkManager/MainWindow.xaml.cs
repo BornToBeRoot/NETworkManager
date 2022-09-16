@@ -389,9 +389,19 @@ namespace NETworkManager
                     SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
                     SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
 
-                    // Generate some settings on the first run
+                    // Generate lists at runtime
                     SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.DefaultList());
                     SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(DNSServer.DefaultList());
+
+                    // Check if PuTTY is installed
+                    foreach(var file in Models.PuTTY.PuTTY.GetDefaultInstallationPaths)
+                    {
+                        if(File.Exists(file))
+                        {
+                            SettingsManager.Current.PuTTY_ApplicationFilePath = file;
+                            break;
+                        }
+                    }
 
                     // Save it to create a settings file
                     SettingsManager.Save();
@@ -418,18 +428,7 @@ namespace NETworkManager
             LoadApplicationList();
 
             // Load profiles    
-            _isProfileLoading = true;
-            ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
-            ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
-            _isProfileLoading = false;
-
-            ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
-            ProfileManager.OnSwitchProfileFileViaUIEvent += ProfileManager_OnSwitchProfileFileViaUIEvent;
-
-            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
-
-            if (SelectedProfileFile == null)
-                SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
+            LoadProfiles();
 
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
@@ -504,6 +503,20 @@ namespace NETworkManager
             // Scroll into view
             if (SelectedApplication != null)
                 ListViewApplication.ScrollIntoView(SelectedApplication);
+        }
+
+        private void LoadProfiles()
+        {
+            _isProfileLoading = true;
+            ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
+            ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
+            _isProfileLoading = false;
+
+            ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
+            ProfileManager.OnSwitchProfileFileViaUIEvent += ProfileManager_OnSwitchProfileFileViaUIEvent;
+
+            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
+            SelectedProfileFile ??= ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
         }
 
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
@@ -1525,13 +1538,19 @@ namespace NETworkManager
         }
         #endregion
 
-        private async void FocusEmbeddedWindow()
+        #region Focus embedded window
+        private void MetroMainWindow_Activated(object sender, EventArgs e)
         {
+            FocusEmbeddedWindow();
+        }
+
+        private async void FocusEmbeddedWindow()
+        {         
             // Delay the focus to prevent blocking the ui
             do
             {
                 await Task.Delay(250);
-            } while (Mouse.LeftButton == MouseButtonState.Pressed);
+            } while (Control.MouseButtons == MouseButtons.Left);
 
             /* Don't continue if
                - Application is not set
@@ -1539,6 +1558,7 @@ namespace NETworkManager
                - Profile file drop down is opened
                - Application search textbox is opened
                - Dialog over an embedded window is opened
+               - Window is resizing
             */
             if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.FixAirspace)
                 return;
@@ -1554,10 +1574,6 @@ namespace NETworkManager
                     break;
             }
         }
-
-        private void MetroMainWindow_Activated(object sender, EventArgs e)
-        {
-            FocusEmbeddedWindow();
-        }
+        #endregion
     }
 }
