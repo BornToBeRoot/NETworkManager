@@ -237,10 +237,6 @@ namespace NETworkManager.ViewModels
             ResultsView = CollectionViewSource.GetDefaultView(Results);
             ResultsView.SortDescriptions.Add(new SortDescription(nameof(HostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
 
-            // Add default custom commands...
-            if (SettingsManager.Current.IPScanner_CustomCommands.Count == 0)
-                SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(Utilities.CustomCommand.GetDefaults());
-
             LoadSettings();
 
             // Detect if settings have changed...

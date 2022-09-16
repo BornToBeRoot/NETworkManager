@@ -289,7 +289,7 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView CustomCommands { get; }
 
-        private CustomCommandInfo _selectedCustomCommand = new CustomCommandInfo();
+        private CustomCommandInfo _selectedCustomCommand = new();
         public CustomCommandInfo SelectedCustomCommand
         {
             get => _selectedCustomCommand;

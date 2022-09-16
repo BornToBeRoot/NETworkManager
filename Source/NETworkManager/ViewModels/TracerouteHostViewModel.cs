@@ -140,7 +140,7 @@ namespace NETworkManager.ViewModels
         }
         #endregion
         #endregion
-
+        
         #region Constructor, load settings
         public TracerouteHostViewModel(IDialogCoordinator instance)
         {

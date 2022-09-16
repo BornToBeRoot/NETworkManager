@@ -11,7 +11,7 @@ namespace NETworkManager.Models.Network
         /// Method will return a default list of common dns servers.
         /// </summary>
         /// <returns>List of common dns servers.</returns>
-        public static List<DNSServerInfo> DefaultList()
+        public static List<DNSServerInfo> GetDefaultList()
         {
             return new List<DNSServerInfo>
             {
