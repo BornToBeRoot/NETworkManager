@@ -18,6 +18,8 @@ permalink: /Changelog/next-release
 - log4net added for error handling (Log file: `%LocalAppData%\NETworkManager\NETworkManager.log`) [#1539](https://github.com/BornToBeRoot/NETworkManager/pull/1539){:target="\_blank"}
   
 ## Improvements
+- IPScanner, PortScanner, DNSServers
+  - Generate default lists at first run [#1544](https://github.com/BornToBeRoot/NETworkManager/pull/1544){:target="\_blank"}
 - Port Scanner
   - Add more port profiles (LDAP, HTTP proxy, Filetransfer) [#1526](https://github.com/BornToBeRoot/NETworkManager/pull/1526){:target="\_blank"}
 - PowerShell & PuTTY

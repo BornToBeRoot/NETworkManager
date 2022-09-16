@@ -789,7 +789,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _ipScanner_HostsHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _ipScanner_HostsHistory = new();
         public ObservableCollection<string> IPScanner_HostsHistory
         {
             get => _ipScanner_HostsHistory;
@@ -984,7 +984,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<CustomCommandInfo> _ipScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>();
+        private ObservableCollection<CustomCommandInfo> _ipScanner_CustomCommands = new();
         public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
         {
             get => _ipScanner_CustomCommands;

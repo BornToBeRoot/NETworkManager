@@ -4,7 +4,7 @@ namespace NETworkManager.Models.Network
 {
     public static class PortProfile
     {
-        public static List<PortProfileInfo> DefaultList()
+        public static List<PortProfileInfo> GetDefaultList()
         {
             return new List<PortProfileInfo>
             {
