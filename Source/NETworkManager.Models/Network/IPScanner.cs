@@ -36,20 +36,6 @@ namespace NETworkManager.Models.Network
         public bool ShowScanResultForAllIPAddresses = false;
 
         private LookupClient DnsLookupClient;
-
-        /// <summary>
-        /// Method returns a list of ip scanner custom commands (See <see cref="CustomCommandInfo"/>.
-        /// </summary>
-        /// <returns>List with <see cref="CustomCommandInfo"/>s.</returns>
-        public static List<CustomCommandInfo> GetDefaultCustomCommandList()
-        {
-            return new List<CustomCommandInfo>
-            {
-                new CustomCommandInfo(Guid.NewGuid(), "Internet Explorer", "iexplore.exe", @"http://$$ipaddress$$/"),
-                new CustomCommandInfo(Guid.NewGuid(), "Internet Explorer (https)", "iexplore.exe", @"https://$$ipaddress$$/"),
-                new CustomCommandInfo(Guid.NewGuid(), "Windows Explorer (c$)", "explorer.exe", @"\\$$ipaddress$$\c$")
-            };
-        }
         #endregion
 
         #region Events

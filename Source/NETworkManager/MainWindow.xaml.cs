@@ -390,7 +390,7 @@ namespace NETworkManager
                     SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
 
                     // Generate lists at runtime
-                    SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(IPScanner.GetDefaultCustomCommandList());
+                    SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());
                     SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.GetDefaultList());
                     SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(DNSServer.GetDefaultList());
 

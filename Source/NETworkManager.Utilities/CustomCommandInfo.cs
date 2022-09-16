@@ -7,7 +7,6 @@ namespace NETworkManager.Utilities
     /// </summary>
     public class CustomCommandInfo : ICloneable
     {
-
         /// <summary>
         /// Unique Identifiert for this custom command.
         /// </summary>
