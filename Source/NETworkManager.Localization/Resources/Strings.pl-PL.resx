@@ -3161,4 +3161,13 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
     <value>Overwrite existing settings file?</value>
   </data>
+  <data name="LocalConnection" xml:space="preserve">
+    <value>Local connection</value>
+  </data>
+  <data name="LocalInterface" xml:space="preserve">
+    <value>Local interface</value>
+  </data>
+  <data name="Library_log4net_Description" xml:space="preserve">
+    <value>log4net is a tool to help the programmer output log statements to a variety of output targets.</value>
+  </data>
 </root>
