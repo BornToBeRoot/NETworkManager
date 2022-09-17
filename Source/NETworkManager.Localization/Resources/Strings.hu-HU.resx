@@ -121,13 +121,13 @@
     <value>Névjegy</value>
   </data>
   <data name="Accent" xml:space="preserve">
-    <value>Accent</value>
+    <value>Kiemelés</value>
   </data>
   <data name="AddCredentials" xml:space="preserve">
     <value>Hitelesítő adatok hozzáadása</value>
   </data>
   <data name="AddEntry" xml:space="preserve">
-    <value>Add entry</value>
+    <value>Bejegyzés hozzáadása</value>
   </data>
   <data name="AddProfile" xml:space="preserve">
     <value>Profil hozzáadása</value>
@@ -145,16 +145,16 @@
     <value>Hitelesítés</value>
   </data>
   <data name="Autostart" xml:space="preserve">
-    <value>Autostart</value>
+    <value>Automatikus indítás</value>
   </data>
   <data name="Calculator" xml:space="preserve">
     <value>Számológép</value>
   </data>
   <data name="CommandLineArguments" xml:space="preserve">
-    <value>Command Line Arguments</value>
+    <value>Parancssori argumentumok</value>
   </data>
   <data name="Configure" xml:space="preserve">
-    <value>Configure</value>
+    <value>Konfigurálás</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Megerősítés</value>
@@ -193,16 +193,16 @@
     <value>Szétkapcsolva</value>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Display</value>
+    <value>Megjelenítés</value>
   </data>
   <data name="DNS" xml:space="preserve">
     <value>DNS</value>
   </data>
   <data name="DNSLookup" xml:space="preserve">
-    <value>DNS Lookup</value>
+    <value>DNS-címkeresés</value>
   </data>
   <data name="DontFragment" xml:space="preserve">
-    <value>Don't fragment</value>
+    <value>Tilos tördelni</value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>Hitelesítő adatok szerkesztése</value>
@@ -223,19 +223,19 @@
     <value>Szűrő</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>Általános</value>
   </data>
   <data name="Headers" xml:space="preserve">
-    <value>Headers</value>
+    <value>Fejlécek</value>
   </data>
   <data name="History" xml:space="preserve">
-    <value>History</value>
+    <value>Történet</value>
   </data>
   <data name="HotKeys" xml:space="preserve">
-    <value>HotKeys</value>
+    <value>Gyorsbillentyűk</value>
   </data>
   <data name="HTTPHeaders" xml:space="preserve">
-    <value>HTTP Headers</value>
+    <value>HTTP-fejlécek</value>
   </data>
   <data name="Import" xml:space="preserve">
     <value>Importálás</value>
@@ -247,7 +247,7 @@
     <value>Interfész</value>
   </data>
   <data name="IPScanner" xml:space="preserve">
-    <value>IP Scanner</value>
+    <value>IP szkenner</value>
   </data>
   <data name="Keyboard" xml:space="preserve">
     <value>Billentyűzet</value>
@@ -256,43 +256,43 @@
     <value>Nyelv</value>
   </data>
   <data name="Libraries" xml:space="preserve">
-    <value>Libraries</value>
+    <value>Könyvtárak</value>
   </data>
   <data name="License" xml:space="preserve">
     <value>Licenc</value>
   </data>
   <data name="LocalDevicesAndResources" xml:space="preserve">
-    <value>Local devices and resources</value>
+    <value>Helyi eszközök és erőforrások</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>Hely</value>
   </data>
   <data name="Lookup" xml:space="preserve">
-    <value>Lookup</value>
+    <value>Keresés</value>
   </data>
   <data name="MACAddress" xml:space="preserve">
-    <value>MAC Address</value>
+    <value>MAC-cím</value>
   </data>
   <data name="MasterPassword" xml:space="preserve">
-    <value>Master Password</value>
+    <value>Mesterjelszó</value>
   </data>
   <data name="Multithreading" xml:space="preserve">
-    <value>Multithreading</value>
+    <value>Többszálúság</value>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Network</value>
+    <value>Hálózat</value>
   </data>
   <data name="NetworkInterface" xml:space="preserve">
-    <value>Network Interface</value>
+    <value>Hálózati illesztő</value>
   </data>
   <data name="NewTab" xml:space="preserve">
-    <value>New tab</value>
+    <value>Új lap</value>
   </data>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
   </data>
   <data name="OverwriteQuestion" xml:space="preserve">
-    <value>Overwrite?</value>
+    <value>Felülírja?</value>
   </data>
   <data name="Ping" xml:space="preserve">
     <value>Ping</value>
@@ -301,88 +301,88 @@
     <value>Port</value>
   </data>
   <data name="Portable" xml:space="preserve">
-    <value>Portable</value>
+    <value>Hordozható</value>
   </data>
   <data name="PortScanner" xml:space="preserve">
-    <value>Port Scanner</value>
+    <value>Port szkenner</value>
   </data>
   <data name="Profiles" xml:space="preserve">
-    <value>Profiles</value>
+    <value>Profilok</value>
   </data>
   <data name="PuTTY" xml:space="preserve">
     <value>PuTTY</value>
   </data>
   <data name="Query" xml:space="preserve">
-    <value>Query</value>
+    <value>Lekérdezés</value>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
+    <value>Távoli asztal</value>
   </data>
   <data name="Reset" xml:space="preserve">
-    <value>Reset</value>
+    <value>Visszaállítás</value>
   </data>
   <data name="ResolvePTR" xml:space="preserve">
-    <value>Resolve PTR</value>
+    <value>PTR feloldása</value>
   </data>
   <data name="Resources" xml:space="preserve">
-    <value>Resources</value>
+    <value>Erőforrások</value>
   </data>
   <data name="Result" xml:space="preserve">
-    <value>Result</value>
+    <value>Eredmény</value>
   </data>
   <data name="Route" xml:space="preserve">
-    <value>Route</value>
+    <value>Útvonal</value>
   </data>
   <data name="Scan" xml:space="preserve">
-    <value>Scan</value>
+    <value>Szkennelés</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Search</value>
+    <value>Keresés</value>
   </data>
   <data name="SelectAProfileDots" xml:space="preserve">
-    <value>Select a profile...</value>
+    <value>Válasszon ki egy profilt...</value>
   </data>
   <data name="SetMasterPassword" xml:space="preserve">
-    <value>Set Master Password</value>
+    <value>Állítsa be a mesterjelszót</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Beállítások</value>
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>Settings have been reset!</value>
+    <value>A beállítások vissza lettek állítva!</value>
   </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
   <data name="Socket" xml:space="preserve">
-    <value>Socket</value>
+    <value>Szoftvercsatorna</value>
   </data>
   <data name="Statistics" xml:space="preserve">
-    <value>Statistics</value>
+    <value>Statisztika</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Status</value>
+    <value>Státusz</value>
   </data>
   <data name="Subnet" xml:space="preserve">
-    <value>Subnet</value>
+    <value>Alhálózat</value>
   </data>
   <data name="Subnetting" xml:space="preserve">
-    <value>Subnetting</value>
+    <value>Alhálózatbeosztás</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>Success!</value>
+    <value>Sikeres!</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>Theme</value>
+    <value>Téma</value>
   </data>
   <data name="Traceroute" xml:space="preserve">
     <value>Traceroute</value>
   </data>
   <data name="Tray" xml:space="preserve">
-    <value>Tray</value>
+    <value>Tálca</value>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>Update</value>
+    <value>Frissítés</value>
   </data>
   <data name="v1v2c" xml:space="preserve">
     <value>v1/v2c</value>
@@ -391,7 +391,7 @@
     <value>v3</value>
   </data>
   <data name="ValidationFailed" xml:space="preserve">
-    <value>Validation failed!</value>
+    <value>Ellenőrzés sikertelen!</value>
   </data>
   <data name="WakeOnLAN" xml:space="preserve">
     <value>Wake on LAN</value>
@@ -3163,5 +3163,14 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   </data>
   <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
     <value>Overwrite existing settings file?</value>
+  </data>
+  <data name="LocalConnection" xml:space="preserve">
+    <value>Local connection</value>
+  </data>
+  <data name="LocalInterface" xml:space="preserve">
+    <value>Local interface</value>
+  </data>
+  <data name="Library_log4net_Description" xml:space="preserve">
+    <value>log4net is a tool to help the programmer output log statements to a variety of output targets.</value>
   </data>
 </root>
