@@ -3162,12 +3162,12 @@ Activez le cryptage des fichiers de profil dans Paramètres&gt; Profil pour stoc
     <value>Overwrite existing settings file?</value>
   </data>
   <data name="LocalConnection" xml:space="preserve">
-    <value>Local connection</value>
+    <value>Connexion locale</value>
   </data>
   <data name="LocalInterface" xml:space="preserve">
-    <value>Local interface</value>
+    <value>Interface locale</value>
   </data>
   <data name="Library_log4net_Description" xml:space="preserve">
-    <value>log4net is a tool to help the programmer output log statements to a variety of output targets.</value>
+    <value>log4net est un outil pour aider le programmeur à produire des instructions de journal vers une variété de cibles de sortie.</value>
   </data>
 </root>
