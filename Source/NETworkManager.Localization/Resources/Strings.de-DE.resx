@@ -3171,6 +3171,6 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
     <value>Lokales Interface</value>
   </data>
   <data name="Library_log4net_Description" xml:space="preserve">
-    <value>log4net is a tool to help the programmer output log statements to a variety of output targets.</value>
+    <value>log4net ist ein Tool, das den Programmierer bei der Ausgabe von Log-Statements an eine Vielzahl von Ausgabezielen unterstützt.</value>
   </data>
 </root>
