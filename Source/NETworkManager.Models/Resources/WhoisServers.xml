@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Whois servers by domain from IANA
-Generated 02/21/2022 03:25:53-->
+Generated 09/18/2022 01:47:42-->
 <WhoisServers>
   <WhoisServer>
     <TLD>AAA</TLD>
@@ -356,7 +356,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>AUDIO</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.audio</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>AUSPOST</TLD>
@@ -996,7 +996,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>CHRISTMAS</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.christmas</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>CHROME</TLD>
@@ -1407,7 +1407,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>DIET</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.diet</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>DIGITAL</TLD>
@@ -1449,7 +1449,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>DM</TLD>
-    <Server>whois.nic.dm</Server>
+    <Server>whois.dmdomains.dm</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>DNP</TLD>
@@ -1783,8 +1783,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>FJ</TLD>
-    <Server>
-    </Server>
+    <Server>www.whois.fj</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>FK</TLD>
@@ -1811,7 +1810,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>FLOWERS</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.flowers</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>FLY</TLD>
@@ -1948,7 +1947,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>GAME</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.game</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>GAMES</TLD>
@@ -2089,7 +2088,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>GODADDY</TLD>
-    <Server>whois.afilias-srs.net</Server>
+    <Server>whois.nic.godaddy</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>GOLD</TLD>
@@ -2207,7 +2206,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>GUITARS</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.guitars</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>GURU</TLD>
@@ -2282,7 +2281,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>HIPHOP</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.hiphop</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>HISAMITSU</TLD>
@@ -2360,7 +2359,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>HOSTING</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.hosting</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>HOT</TLD>
@@ -2727,6 +2726,10 @@ Generated 02/21/2022 03:25:53-->
     <Server>whois.nic.kia</Server>
   </WhoisServer>
   <WhoisServer>
+    <TLD>KIDS</TLD>
+    <Server>whois.afilias-srs.net</Server>
+  </WhoisServer>
+  <WhoisServer>
     <TLD>KIM</TLD>
     <Server>whois.nic.kim</Server>
   </WhoisServer>
@@ -3023,7 +3026,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>LOL</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.lol</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>LONDON</TLD>
@@ -3318,7 +3321,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>MOM</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.mom</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>MONASH</TLD>
@@ -3534,7 +3537,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>NGO</TLD>
-    <Server>whois.publicinterestregistry.net</Server>
+    <Server>whois.nic.ngo</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>NHK</TLD>
@@ -3687,7 +3690,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ONG</TLD>
-    <Server>whois.publicinterestregistry.net</Server>
+    <Server>whois.nic.ong</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ONL</TLD>
@@ -3716,7 +3719,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ORG</TLD>
-    <Server>whois.pir.org</Server>
+    <Server>whois.publicinterestregistry.org</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ORGANIC</TLD>
@@ -3849,7 +3852,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>PICS</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.pics</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>PICTET</TLD>
@@ -3879,7 +3882,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>PIONEER</TLD>
-    <Server>whois.nic.gmo</Server>
+    <Server>whois.nic.pioneer</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>PIZZA</TLD>
@@ -3887,8 +3890,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>PK</TLD>
-    <Server>
-    </Server>
+    <Server>whois.pknic.net.pk</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>PL</TLD>
@@ -4241,8 +4243,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>RW</TLD>
-    <Server>
-    </Server>
+    <Server>whois.ricta.org.rw</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>RWE</TLD>
@@ -5162,7 +5163,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>VEGAS</TLD>
-    <Server>whois.afilias-srs.net</Server>
+    <Server>whois.nic.vegas</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>VENTURES</TLD>
@@ -5514,7 +5515,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--4GBRIM</TLD>
-    <Server>whois.afilias-srs.net</Server>
+    <Server>whois.nic.xn--4gbrim</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--54B7FTA0CC</TLD>
@@ -5604,7 +5605,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--C1AVG</TLD>
-    <Server>whois.publicinterestregistry.net</Server>
+    <Server>whois.nic.xn--c1avg</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--C2BR7G</TLD>
@@ -5744,7 +5745,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--I1B6B1A6A2E</TLD>
-    <Server>whois.publicinterestregistry.net</Server>
+    <Server>whois.nic.xn--i1b6b1a6a2e</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--IMR513N</TLD>
@@ -5929,7 +5930,7 @@ Generated 02/21/2022 03:25:53-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--NQV7F</TLD>
-    <Server>whois.publicinterestregistry.net</Server>
+    <Server>whois.nic.xn--nqv7f</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--NQV7FS00EMA</TLD>
