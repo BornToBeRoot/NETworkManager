@@ -18,9 +18,10 @@ permalink: /Features
 - [DNS Lookup](Documentation/Application/DNSLookup)
 - [Remote Desktop](Documentation/Application/RemoteDesktop)
 - [PowerShell](Documentation/Application/PowerShell)
-- [PuTTY](Documentation/Application/PuTTY) ([requires PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html){:target="\_blank"})
-- [TigerVNC](Documentation/Application/TigerVNC) ([requires TigerVNC](https://tigervnc.org/){:target="\_blank"})
-- [Web Console](Documentation/Application/WebConsole) ([requires Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="\_blank"})
+- [PuTTY](Documentation/Application/PuTTY) (requires [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html){:target="\_blank"})
+- [AWS Session Manager](Documentation/Application/AWSSessionManager) (requires [AWS CLI](https://aws.amazon.com/de/cli/){:target="\_blank"} and [AWS Session Manager plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html){:target="\_blank"})
+- [TigerVNC](Documentation/Application/TigerVNC) (requires [TigerVNC](https://tigervnc.org/){:target="\_blank"})
+- [Web Console](Documentation/Application/WebConsole) (requires [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="\_blank"})
 - [SNMP](Documentation/Application/SNMP) - Get, Walk, Set
 - [Discovery Protocol](Documentation/Application/DiscoveryProtocol) - LLDP, CDP
 - [Wake on LAN](Documentation/Application/WakeOnLAN)
