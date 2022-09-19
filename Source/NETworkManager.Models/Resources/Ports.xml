@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 02/21/2022 03:26:03-->
+Generated 09/18/2022 01:47:34-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -8561,13 +8561,13 @@ Generated 02/21/2022 03:26:03-->
     <Number>853</Number>
     <Protocol>tcp</Protocol>
     <Name>domain-s</Name>
-    <Description>DNS query-response protocol run over TLS/DTLS</Description>
+    <Description>DNS query-response protocol run over TLS</Description>
   </Port>
   <Port>
     <Number>853</Number>
     <Protocol>udp</Protocol>
     <Name>domain-s</Name>
-    <Description>DNS query-response protocol run over TLS/DTLS</Description>
+    <Description>DNS query-response protocol run over DTLS or QUIC</Description>
   </Port>
   <Port>
     <Number>854</Number>
@@ -36853,6 +36853,18 @@ Generated 02/21/2022 03:26:03-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>3301</Number>
+    <Protocol>tcp</Protocol>
+    <Name>tarantool</Name>
+    <Description>Tarantool in-memory computing platform</Description>
+  </Port>
+  <Port>
+    <Number>3301</Number>
+    <Protocol>udp</Protocol>
+    <Name>tarantool</Name>
+    <Description>Tarantool in-memory computing platform</Description>
+  </Port>
+  <Port>
     <Number>3302</Number>
     <Protocol>tcp</Protocol>
     <Name>mcs-fastmail</Name>
@@ -44859,13 +44871,13 @@ Generated 02/21/2022 03:26:03-->
   <Port>
     <Number>3974</Number>
     <Protocol>tcp</Protocol>
-    <Name>citysearch</Name>
+    <Name>xk22</Name>
     <Description>Remote Applicant Tracking Service</Description>
   </Port>
   <Port>
     <Number>3974</Number>
     <Protocol>udp</Protocol>
-    <Name>citysearch</Name>
+    <Name>xk22</Name>
     <Description>Remote Applicant Tracking Service</Description>
   </Port>
   <Port>
@@ -47901,26 +47913,26 @@ Generated 02/21/2022 03:26:03-->
   <Port>
     <Number>4325</Number>
     <Protocol>tcp</Protocol>
-    <Name>geognosisman</Name>
-    <Description>Cadcorp GeognoSIS Manager Service</Description>
+    <Name>geognosisadmin</Name>
+    <Description>Cadcorp GeognoSIS Administrator</Description>
   </Port>
   <Port>
     <Number>4325</Number>
     <Protocol>udp</Protocol>
     <Name>geognosisman</Name>
-    <Description>Cadcorp GeognoSIS Manager Service</Description>
+    <Description>Cadcorp GeognoSIS Administrator</Description>
   </Port>
   <Port>
     <Number>4326</Number>
     <Protocol>tcp</Protocol>
     <Name>geognosis</Name>
-    <Description>Cadcorp GeognoSIS Service</Description>
+    <Description>Cadcorp GeognoSIS</Description>
   </Port>
   <Port>
     <Number>4326</Number>
     <Protocol>udp</Protocol>
     <Name>geognosis</Name>
-    <Description>Cadcorp GeognoSIS Service</Description>
+    <Description>Cadcorp GeognoSIS</Description>
   </Port>
   <Port>
     <Number>4327</Number>
@@ -50821,6 +50833,18 @@ Generated 02/21/2022 03:26:03-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>4792</Number>
+    <Protocol>tcp</Protocol>
+    <Name>unified-bus</Name>
+    <Description>IP Routable Unified Bus</Description>
+  </Port>
+  <Port>
+    <Number>4792</Number>
+    <Protocol>udp</Protocol>
+    <Name>unified-bus</Name>
+    <Description>IP Routable Unified Bus</Description>
+  </Port>
+  <Port>
     <Number>4800</Number>
     <Protocol>tcp</Protocol>
     <Name>iims</Name>
@@ -53543,6 +53567,30 @@ Generated 02/21/2022 03:26:03-->
     <Protocol>udp</Protocol>
     <Name>mnet-discovery</Name>
     <Description>m-net discovery</Description>
+  </Port>
+  <Port>
+    <Number>5242</Number>
+    <Protocol>tcp</Protocol>
+    <Name>attune</Name>
+    <Description>ATTUne API</Description>
+  </Port>
+  <Port>
+    <Number>5242</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>5243</Number>
+    <Protocol>tcp</Protocol>
+    <Name>xycstatus</Name>
+    <Description>xyClient Status API and rendevous point</Description>
+  </Port>
+  <Port>
+    <Number>5243</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>5245</Number>
@@ -56527,6 +56575,18 @@ Generated 02/21/2022 03:26:03-->
     <Description>Support Automation</Description>
   </Port>
   <Port>
+    <Number>5820</Number>
+    <Protocol>tcp</Protocol>
+    <Name>autopassdaemon</Name>
+    <Description>AutoPass licensing</Description>
+  </Port>
+  <Port>
+    <Number>5820</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>5841</Number>
     <Protocol>tcp</Protocol>
     <Name>shiprush-d-ch</Name>
@@ -56611,16 +56671,142 @@ Generated 02/21/2022 03:26:03-->
     <Description>Remote Framebuffer</Description>
   </Port>
   <Port>
+    <Number>5903</Number>
+    <Protocol>tcp</Protocol>
+    <Name>ff-ice</Name>
+    <Description>Flight &amp; Flow Info for Collaborative Env</Description>
+  </Port>
+  <Port>
+    <Number>5903</Number>
+    <Protocol>udp</Protocol>
+    <Name>ff-ice</Name>
+    <Description>Flight &amp; Flow Info for Collaborative Env</Description>
+  </Port>
+  <Port>
+    <Number>5903</Number>
+    <Protocol>sctp</Protocol>
+    <Name>ff-ice</Name>
+    <Description>Flight &amp; Flow Info for Collaborative Env</Description>
+  </Port>
+  <Port>
+    <Number>5904</Number>
+    <Protocol>tcp</Protocol>
+    <Name>ag-swim</Name>
+    <Description>Air-Ground SWIM</Description>
+  </Port>
+  <Port>
+    <Number>5904</Number>
+    <Protocol>udp</Protocol>
+    <Name>ag-swim</Name>
+    <Description>Air-Ground SWIM</Description>
+  </Port>
+  <Port>
+    <Number>5904</Number>
+    <Protocol>sctp</Protocol>
+    <Name>ag-swim</Name>
+    <Description>Air-Ground SWIM</Description>
+  </Port>
+  <Port>
+    <Number>5905</Number>
+    <Protocol>tcp</Protocol>
+    <Name>asmgcs</Name>
+    <Description>Adv Surface Mvmnt and Guidance Cont Sys</Description>
+  </Port>
+  <Port>
+    <Number>5905</Number>
+    <Protocol>udp</Protocol>
+    <Name>asmgcs</Name>
+    <Description>Adv Surface Mvmnt and Guidance Cont Sys</Description>
+  </Port>
+  <Port>
+    <Number>5905</Number>
+    <Protocol>sctp</Protocol>
+    <Name>asmgcs</Name>
+    <Description>Adv Surface Mvmnt and Guidance Cont Sys</Description>
+  </Port>
+  <Port>
+    <Number>5906</Number>
+    <Protocol>tcp</Protocol>
+    <Name>rpas-c2</Name>
+    <Description>Remotely Piloted Vehicle C&amp;C</Description>
+  </Port>
+  <Port>
+    <Number>5906</Number>
+    <Protocol>udp</Protocol>
+    <Name>rpas-c2</Name>
+    <Description>Remotely Piloted Vehicle C&amp;C</Description>
+  </Port>
+  <Port>
+    <Number>5906</Number>
+    <Protocol>sctp</Protocol>
+    <Name>rpas-c2</Name>
+    <Description>Remotely Piloted Vehicle C&amp;C</Description>
+  </Port>
+  <Port>
+    <Number>5907</Number>
+    <Protocol>tcp</Protocol>
+    <Name>dsd</Name>
+    <Description>Distress and Safety Data App</Description>
+  </Port>
+  <Port>
+    <Number>5907</Number>
+    <Protocol>udp</Protocol>
+    <Name>dsd</Name>
+    <Description>Distress and Safety Data App</Description>
+  </Port>
+  <Port>
+    <Number>5907</Number>
+    <Protocol>sctp</Protocol>
+    <Name>dsd</Name>
+    <Description>Distress and Safety Data App</Description>
+  </Port>
+  <Port>
+    <Number>5908</Number>
+    <Protocol>tcp</Protocol>
+    <Name>ipsma</Name>
+    <Description>IPS Management Application</Description>
+  </Port>
+  <Port>
+    <Number>5908</Number>
+    <Protocol>udp</Protocol>
+    <Name>ipsma</Name>
+    <Description>IPS Management Application</Description>
+  </Port>
+  <Port>
+    <Number>5908</Number>
+    <Protocol>sctp</Protocol>
+    <Name>ipsma</Name>
+    <Description>IPS Management Application</Description>
+  </Port>
+  <Port>
+    <Number>5909</Number>
+    <Protocol>tcp</Protocol>
+    <Name>agma</Name>
+    <Description>Air-ground media advisory</Description>
+  </Port>
+  <Port>
+    <Number>5909</Number>
+    <Protocol>udp</Protocol>
+    <Name>agma</Name>
+    <Description>Air-ground media advisory</Description>
+  </Port>
+  <Port>
+    <Number>5909</Number>
+    <Protocol>sctp</Protocol>
+    <Name>agma</Name>
+    <Description>Air-ground media advisory</Description>
+  </Port>
+  <Port>
     <Number>5910</Number>
     <Protocol>tcp</Protocol>
-    <Name>cm</Name>
-    <Description>Context Management</Description>
+    <Name>ats-atn</Name>
+    <Description>Air Traffic Services applications using ATN</Description>
   </Port>
   <Port>
     <Number>5910</Number>
     <Protocol>udp</Protocol>
-    <Name>cm</Name>
-    <Description>Context Management</Description>
+    <Name>ats-atn</Name>
+    <Description>Air Traffic Services applications using ATN</Description>
   </Port>
   <Port>
     <Number>5910</Number>
@@ -56631,14 +56817,14 @@ Generated 02/21/2022 03:26:03-->
   <Port>
     <Number>5911</Number>
     <Protocol>tcp</Protocol>
-    <Name>cpdlc</Name>
-    <Description>Controller Pilot Data Link Communication</Description>
+    <Name>ats-acars</Name>
+    <Description>Air Traffic Services applications using ACARS</Description>
   </Port>
   <Port>
     <Number>5911</Number>
     <Protocol>udp</Protocol>
-    <Name>cpdlc</Name>
-    <Description>Controller Pilot Data Link Communication</Description>
+    <Name>ats-acars</Name>
+    <Description>Air Traffic Services applications using ACARS</Description>
   </Port>
   <Port>
     <Number>5911</Number>
@@ -56649,14 +56835,14 @@ Generated 02/21/2022 03:26:03-->
   <Port>
     <Number>5912</Number>
     <Protocol>tcp</Protocol>
-    <Name>fis</Name>
-    <Description>Flight Information Services</Description>
+    <Name>ais-met</Name>
+    <Description>Aeronautical Information Service/Meteorological applications using ACARS</Description>
   </Port>
   <Port>
     <Number>5912</Number>
     <Protocol>udp</Protocol>
-    <Name>fis</Name>
-    <Description>Flight Information Services</Description>
+    <Name>ais-met</Name>
+    <Description>Aeronautical Information Service/Meteorological applications using ACARS</Description>
   </Port>
   <Port>
     <Number>5912</Number>
@@ -56667,14 +56853,14 @@ Generated 02/21/2022 03:26:03-->
   <Port>
     <Number>5913</Number>
     <Protocol>tcp</Protocol>
-    <Name>ads-c</Name>
-    <Description>Automatic Dependent Surveillance</Description>
+    <Name>aoc-acars</Name>
+    <Description>Airline operational communications applications using ACARS</Description>
   </Port>
   <Port>
     <Number>5913</Number>
     <Protocol>udp</Protocol>
-    <Name>ads-c</Name>
-    <Description>Automatic Dependent Surveillance</Description>
+    <Name>aoc-acars</Name>
+    <Description>Airline operational communications applications using ACARS</Description>
   </Port>
   <Port>
     <Number>5913</Number>
@@ -60789,6 +60975,18 @@ Generated 02/21/2022 03:26:03-->
     <Description>conductor for multiplex</Description>
   </Port>
   <Port>
+    <Number>6980</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>6980</Number>
+    <Protocol>udp</Protocol>
+    <Name>qolyester</Name>
+    <Description>QoS-extended OLSR protocol</Description>
+  </Port>
+  <Port>
     <Number>6997</Number>
     <Protocol>tcp</Protocol>
     <Name>MobilitySrv</Name>
@@ -62681,14 +62879,14 @@ Generated 02/21/2022 03:26:03-->
   <Port>
     <Number>7680</Number>
     <Protocol>tcp</Protocol>
-    <Name>pando-pub</Name>
-    <Description>Pando Media Public Distribution</Description>
+    <Name>ms-do</Name>
+    <Description>Microsoft Delivery Optimization Peer-to-Peer</Description>
   </Port>
   <Port>
     <Number>7680</Number>
     <Protocol>udp</Protocol>
-    <Name>pando-pub</Name>
-    <Description>Pando Media Public Distribution</Description>
+    <Name>ms-do</Name>
+    <Description>Microsoft Delivery Optimization Peer-to-Peer</Description>
   </Port>
   <Port>
     <Number>7683</Number>
@@ -62725,6 +62923,18 @@ Generated 02/21/2022 03:26:03-->
     <Protocol>udp</Protocol>
     <Name>collaber</Name>
     <Description>Collaber Network Service</Description>
+  </Port>
+  <Port>
+    <Number>7690</Number>
+    <Protocol>tcp</Protocol>
+    <Name>sovd</Name>
+    <Description>Service-Oriented Vehicle Diagnostics</Description>
+  </Port>
+  <Port>
+    <Number>7690</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>7697</Number>
@@ -64697,14 +64907,14 @@ Generated 02/21/2022 03:26:03-->
   <Port>
     <Number>8276</Number>
     <Protocol>tcp</Protocol>
-    <Name>pando-sec</Name>
-    <Description>Pando Media Controlled Distribution</Description>
+    <Name>ms-mcc</Name>
+    <Description>Microsoft Connected Cache</Description>
   </Port>
   <Port>
     <Number>8276</Number>
     <Protocol>udp</Protocol>
-    <Name>pando-sec</Name>
-    <Description>Pando Media Controlled Distribution</Description>
+    <Name>ms-mcc</Name>
+    <Description>Microsoft Connected Cache</Description>
   </Port>
   <Port>
     <Number>8280</Number>
@@ -67240,6 +67450,18 @@ Generated 02/21/2022 03:26:03-->
   </Port>
   <Port>
     <Number>9339</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>9340</Number>
+    <Protocol>tcp</Protocol>
+    <Name>gribi</Name>
+    <Description>gRPC Routing Information Base Interface</Description>
+  </Port>
+  <Port>
+    <Number>9340</Number>
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
@@ -70991,6 +71213,18 @@ Generated 02/21/2022 03:26:03-->
     </Description>
   </Port>
   <Port>
+    <Number>17010</Number>
+    <Protocol>tcp</Protocol>
+    <Name>ncpu</Name>
+    <Description>Plan 9 cpu port</Description>
+  </Port>
+  <Port>
+    <Number>17010</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>17184</Number>
     <Protocol>tcp</Protocol>
     <Name>vestasdlp</Name>
@@ -72063,6 +72297,12 @@ Generated 02/21/2022 03:26:03-->
     <Protocol>udp</Protocol>
     <Name>tvpm</Name>
     <Description>TVNC Pro Multiplexing</Description>
+  </Port>
+  <Port>
+    <Number>21801</Number>
+    <Protocol>tcp</Protocol>
+    <Name>sal</Name>
+    <Description>Safe AutoLogon</Description>
   </Port>
   <Port>
     <Number>21845</Number>

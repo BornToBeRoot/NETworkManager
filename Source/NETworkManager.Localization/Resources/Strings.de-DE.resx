@@ -3170,4 +3170,7 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
   <data name="LocalInterface" xml:space="preserve">
     <value>Lokales Interface</value>
   </data>
+  <data name="Library_log4net_Description" xml:space="preserve">
+    <value>log4net ist ein Tool, das den Programmierer bei der Ausgabe von Log-Statements an eine Vielzahl von Ausgabezielen unterstützt.</value>
+  </data>
 </root>
