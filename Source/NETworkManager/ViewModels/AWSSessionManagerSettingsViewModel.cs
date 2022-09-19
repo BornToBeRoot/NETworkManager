@@ -2,13 +2,15 @@
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
-using NETworkManager.Models.PowerShell;
 using System.Threading.Tasks;
+using NETworkManager.Models.Network;
+using NETworkManager.Views;
+using NETworkManager.Models.AWS;
+using System.ComponentModel;
 
 namespace NETworkManager.ViewModels
 {
@@ -18,6 +20,22 @@ namespace NETworkManager.ViewModels
         private readonly IDialogCoordinator _dialogCoordinator;
 
         private readonly bool _isLoading;
+
+        public ICollectionView AWSProfiles { get; }
+
+        private AWSProfileInfo _selectedAWSProfile = new AWSProfileInfo();
+        public AWSProfileInfo SelectedAWSProfile
+        {
+            get => _selectedAWSProfile;
+            set
+            {
+                if (value == _selectedAWSProfile)
+                    return;
+
+                _selectedAWSProfile = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _applicationFilePath;
         public string ApplicationFilePath
@@ -29,59 +47,11 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PowerShell_ApplicationFilePath = value;
+                    SettingsManager.Current.AWSSessionManager_ApplicationFilePath = value;
 
                 IsConfigured = !string.IsNullOrEmpty(value);
 
                 _applicationFilePath = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _additionalCommandLine;
-        public string AdditionalCommandLine
-        {
-            get => _additionalCommandLine;
-            set
-            {
-                if(value == _additionalCommandLine)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.PowerShell_AdditionalCommandLine = value;
-
-                _additionalCommandLine = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private List<PowerShell.ExecutionPolicy> _executionPolicies = new List<PowerShell.ExecutionPolicy>();
-        public List<PowerShell.ExecutionPolicy> ExecutionPolicies
-        {
-            get => _executionPolicies;
-            set
-            {
-                if (value == _executionPolicies)
-                    return;
-
-                _executionPolicies = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private PowerShell.ExecutionPolicy _executionPolicy;
-        public PowerShell.ExecutionPolicy ExecutionPolicy
-        {
-            get => _executionPolicy;
-            set
-            {
-                if (value == _executionPolicy)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.PowerShell_ExecutionPolicy = value;
-
-                _executionPolicy = value;
                 OnPropertyChanged();
             }
         }
@@ -115,21 +85,33 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            ApplicationFilePath = SettingsManager.Current.PowerShell_ApplicationFilePath;
-            IsConfigured = File.Exists(ApplicationFilePath);
-            AdditionalCommandLine = SettingsManager.Current.PowerShell_AdditionalCommandLine;
-
-            LoadExecutionPolicies();
-        }
-
-        private void LoadExecutionPolicies()
-        {
-            ExecutionPolicies = System.Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
-            ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy);
+            ApplicationFilePath = SettingsManager.Current.AWSSessionManager_ApplicationFilePath;
+            IsConfigured = File.Exists(ApplicationFilePath);            
         }
         #endregion
 
         #region ICommands & Actions
+        public ICommand AddAWSProfileCommand => new RelayCommand(p => AddAWSProfileAction());
+
+        private void AddAWSProfileAction()
+        {
+            AddAWSProfile();
+        }
+
+        public ICommand EditAWSProfileCommand => new RelayCommand(p => EditAWSProfileAction());
+
+        private void EditAWSProfileAction()
+        {
+            EditAWSProfile();
+        }
+
+        public ICommand DeleteAWSProfileCommand => new RelayCommand(p => DeleteAWSProfileAction());
+
+        private void DeleteAWSProfileAction()
+        {
+            DeleteAWSProfile();
+        }
+
         public ICommand BrowseFileCommand => new RelayCommand(p => BrowseFileAction());
 
         private void BrowseFileAction()
@@ -151,7 +133,90 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        #region Methods
+        #region Methods        
+        public async Task AddAWSProfile()
+        {
+            /*
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.AddDNSServer
+            };
+
+            var dnsServerViewModel = new DNSServerViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerInfo(instance.Name, instance.DNSServers.Replace(" ", "").Split(';').ToList(), instance.Port));
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            });
+
+            customDialog.Content = new DNSServerDialog
+            {
+                DataContext = dnsServerViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            */
+        }
+        
+        public async Task EditAWSProfile()
+        {
+            /*
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.EditDNSServer
+            };
+
+            var dnsServerViewModel = new DNSServerViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
+                SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerInfo(instance.Name, instance.DNSServers.Replace(" ", "").Split(';').ToList(), instance.Port));
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, true, SelectedDNSServer);
+
+            customDialog.Content = new DNSServerDialog
+            {
+                DataContext = dnsServerViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            */
+        }
+                
+        public async Task DeleteAWSProfile()
+        {
+            /*
+            var customDialog = new CustomDialog
+            {
+                Title = Localization.Resources.Strings.DeleteDNSServer
+            };
+
+            var confirmDeleteViewModel = new ConfirmDeleteViewModel(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+
+                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
+            }, instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            }, Localization.Resources.Strings.DeleteDNSServerMessage);
+
+            customDialog.Content = new ConfirmDeleteDialog
+            {
+                DataContext = confirmDeleteViewModel
+            };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            */
+        }
+        
+
         private async Task Configure()
         {
             try

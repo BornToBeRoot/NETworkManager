@@ -6,11 +6,139 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AWSSessionManagerSettingsViewModel}">
     <StackPanel>
+        <TextBlock Text="{x:Static localization:Strings.AWSSessionManager}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.SyncInstanceIDsFromAWS}" IsOn="{Binding SyncInstanceIDsFromAWS}" Margin="0,0,0,10"/>
+        <TextBlock Text="{x:Static localization:Strings.Profiles}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />        
+        <DataGrid x:Name="DataGridAWSProfiles" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding AWSProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedAWSProfile}" Height="200" Margin="0,0,0,10">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
+                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                    <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditAWSProfileCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteAWSProfileCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.Enabled}" Binding="{Binding IsEnabled}" MinWidth="80" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Profile}" Binding="{Binding Profile}" MinWidth="200" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Region}" Binding="{Binding Region}" MinWidth="200" Width="Auto" />
+            </DataGrid.Columns>
+            <DataGrid.InputBindings>
+                <KeyBinding Command="{Binding EditAWSProfileCommand}" Key="F2" />
+                <KeyBinding Command="{Binding DeleteAWSProfileCommand}" Key="Delete" />
+            </DataGrid.InputBindings>
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1" >
+                            <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,20">
+            <Button Command="{Binding DeleteAWSProfileCommand}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=DataGridAWSProfiles, Path=SelectedItems.Count}" Value="1" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding EditDNSServerCommand}" Margin="10,0,0,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=DataGridAWSProfiles, Path=SelectedItems.Count}" Value="1" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.EditDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding AddDNSServerCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}" Style="{StaticResource DefaultTextBlock}" TextAlignment="Center" Margin="10,5" />
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </StackPanel>
         <TextBlock Text="{x:Static localization:Strings.PowerShell}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.FilePath}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox x:Name="TextBoxApplicationFilePath" mah:TextBoxHelper.Watermark="{x:Static localization:Strings.PowerShellLocationDots}" Style="{StaticResource BrowseFolderTextBox}" mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True" Drop="TextBoxApplicationFilePath_Drop" PreviewDragOver="TextBoxApplicationFilePath_PreviewDragOver" Margin="0,0,0,10">
@@ -23,10 +151,6 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Content="{x:Static localization:Strings.Configure}" Command="{Binding ConfigureCommand}" IsEnabled="{Binding IsConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.AdditionalCommandLine}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" Text="{Binding AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.ExecutionPolicy}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <ComboBox Width="250" ItemsSource="{Binding ExecutionPolicies}" SelectedItem="{Binding ExecutionPolicy}" HorizontalAlignment="Left" />
+        <Button Content="{x:Static localization:Strings.Configure}" Command="{Binding ConfigureCommand}" IsEnabled="{Binding IsConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />        
     </StackPanel>
 </UserControl>

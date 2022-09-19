@@ -1024,6 +1024,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS Session Manager ähnelt.
+        /// </summary>
+        public static string AWSSessionManager {
+            get {
+                return ResourceManager.GetString("AWSSessionManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die back ähnelt.
         /// </summary>
         public static string Back {
@@ -2667,6 +2676,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnableCredentialSecuritySupportProvider {
             get {
                 return ResourceManager.GetString("EnableCredentialSecuritySupportProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enabled ähnelt.
+        /// </summary>
+        public static string Enabled {
+            get {
+                return ResourceManager.GetString("Enabled", resourceCulture);
             }
         }
         
@@ -6030,6 +6048,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Region ähnelt.
+        /// </summary>
+        public static string Region {
+            get {
+                return ResourceManager.GetString("Region", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Release ähnelt.
         /// </summary>
         public static string Release {
@@ -7848,6 +7875,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sync Instance IDs from AWS ähnelt.
+        /// </summary>
+        public static string SyncInstanceIDsFromAWS {
+            get {
+                return ResourceManager.GetString("SyncInstanceIDsFromAWS", resourceCulture);
             }
         }
         
