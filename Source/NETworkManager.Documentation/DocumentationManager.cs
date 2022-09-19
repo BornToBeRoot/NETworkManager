@@ -1,7 +1,6 @@
 ﻿using NETworkManager.Models;
 using NETworkManager.Utilities;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 
@@ -33,7 +32,7 @@ namespace NETworkManager.Documentation
             new DocumentationInfo(DocumentationIdentifier.ApplicationRemoteDesktop, @"Documentation/Application/RemoteDesktop"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPowerShell, @"Documentation/Application/PowerShell"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPutty, @"Documentation/Application/PuTTY"),
-            new DocumentationInfo(DocumentationIdentifier.ApplicationPutty, @"Documentation/Application/AWSSessionManager"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationAWSSessionManager, @"Documentation/Application/AWSSessionManager"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationTigerVNC, @"Documentation/Application/TigerVNC"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationWebConsole, @"Documentation/Application/WebConsole"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationSnmp, @"Documentation/Application/SNMP"),
@@ -120,6 +119,8 @@ namespace NETworkManager.Documentation
                     return DocumentationIdentifier.ApplicationPowerShell;
                 case ApplicationName.PuTTY:
                     return DocumentationIdentifier.ApplicationPutty;
+                case ApplicationName.AWSSessionManager:
+                    return DocumentationIdentifier.ApplicationAWSSessionManager;
                 case ApplicationName.TigerVNC:
                     return DocumentationIdentifier.ApplicationTigerVNC;
                 case ApplicationName.WebConsole:

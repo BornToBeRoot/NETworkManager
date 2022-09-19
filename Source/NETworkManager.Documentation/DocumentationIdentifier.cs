@@ -66,6 +66,11 @@
         ApplicationPutty,
 
         /// <summary>
+        /// AWS Session Manager documentation page.
+        /// </summary>
+        ApplicationAWSSessionManager,
+
+        /// <summary>
         /// TigerVNC documentation page.
         /// </summary>
         ApplicationTigerVNC,
