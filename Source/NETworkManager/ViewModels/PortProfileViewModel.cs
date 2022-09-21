@@ -25,7 +25,7 @@ namespace NETworkManager.ViewModels
                 _name = value;
 
                 if (!_isLoading)
-                    CheckInfoChanged();
+                    Validate();
 
                 OnPropertyChanged();
             }
@@ -43,7 +43,7 @@ namespace NETworkManager.ViewModels
                 _ports = value;
 
                 if (!_isLoading)
-                    CheckInfoChanged();
+                    Validate();
 
                 OnPropertyChanged();
             }
@@ -103,6 +103,9 @@ namespace NETworkManager.ViewModels
             _isLoading = false;
         }
 
-        public void CheckInfoChanged() => InfoChanged = _info.Name != Name || _previousPortAsString != Ports;
+        public void Validate()
+        {
+            InfoChanged = _info.Name != Name || _previousPortAsString != Ports;
+        }
     }
 }
