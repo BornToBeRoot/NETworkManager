@@ -22,7 +22,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Amazon;
 using Amazon.EC2;
-using Amazon.EC2.Model;
+using Amazon.Runtime;
+using Amazon.Runtime.CredentialManagement;
 
 namespace NETworkManager.ViewModels
 {
@@ -68,7 +69,7 @@ namespace NETworkManager.ViewModels
         #region Profiles
 
         public ICollectionView Profiles { get; }
-                
+
         private ProfileInfo _selectedProfile = new ProfileInfo();
         public ProfileInfo SelectedProfile
         {
@@ -82,7 +83,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         private string _search;
         public string Search
         {
@@ -172,14 +173,14 @@ namespace NETworkManager.ViewModels
             InterTabClient = new DragablzInterTabClient(ApplicationName.PowerShell);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
-                        
+
             Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>
             {
-                if (!(o is ProfileInfo info))
+                if (o is not ProfileInfo info)
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
@@ -188,7 +189,7 @@ namespace NETworkManager.ViewModels
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
-                
+
                 //if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
                 //    return !string.IsNullOrEmpty(info.Tags) && info.PowerShell_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
                 //
@@ -197,59 +198,85 @@ namespace NETworkManager.ViewModels
                 return info.PowerShell_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PowerShell_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
-            Test();
+            //Test();
 
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PowerShell_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
-            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;    
-                
+            ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
+
             _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
             LoadSettings();
 
+            SyncInstanceIDsFromAWS();
+
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
 
             _isLoading = false;
         }
-               
-        private async Task Test()
+
+        private async Task SyncInstanceIDsFromAWS()
         {
-            AWSConfigs.AWSProfileName = "default";
-            AWSConfigs.AWSRegion = "eu-central-1";
-
-            AmazonEC2Client client = new();
-
-            DescribeInstancesResponse response = await client.DescribeInstancesAsync();
-
-            ProfileManager.AddGroup(new GroupInfo()
+            if (!SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
             {
-                Name = "~AWS [default/eu-central-1]",
-                IsDynamic = true
-            });
+                Debug.WriteLine("Sync with AWS is disabled!");
+                return;
+            }
 
-            foreach(var reservation in response.Reservations)
+            foreach (var profile in SettingsManager.Current.AWSSessionManager_AWSProfiles)
             {
-                foreach (var instance in reservation.Instances)
+                if(!profile.IsEnabled)
                 {
-                    Debug.WriteLine("TEST: " + instance.InstanceId);
+                    Debug.WriteLine($"Sync for profile {profile.Profile}\\{profile.Region} is disabled!");
+                    continue;
+                }
 
-                    ProfileManager.AddProfile(new ProfileInfo()
+                CredentialProfileStoreChain credentialProfileStoreChain = new();
+
+                credentialProfileStoreChain.TryGetAWSCredentials(profile.Profile, out AWSCredentials credentials);
+
+                Debug.WriteLine($"Sync profile {profile.Profile}\\{profile.Region}...");
+                Debug.WriteLine("Using credentials: " + credentials.GetCredentials().AccessKey);
+
+                using AmazonEC2Client client = new(credentials, RegionEndpoint.GetBySystemName(profile.Region));
+
+                var response = await client.DescribeInstancesAsync();
+
+                // Create a new group info for profiles
+                var groupInfo = new GroupInfo()
+                {
+                    Name = $"~ [{profile.Profile}\\{profile.Region}]",
+                    IsDynamic = true,
+                };
+
+                foreach (var reservation in response.Reservations)
+                {
+                    foreach (var instance in reservation.Instances)
                     {
-                        Name = $"{instance.Tags.FirstOrDefault(x => x.Key == "Name")?.Value} ({instance.InstanceId})",
-                        Host = instance.InstanceId,
-                        Group = "~AWS [default/eu-central-1]",
-                        IsDynamic = true,
-                        PowerShell_Enabled = true,
-                        PowerShell_EnableRemoteConsole = false,
-                        PowerShell_InheritHost = true,
-                        PowerShell_Host = instance.InstanceId,
-                        PowerShell_OverrideAdditionalCommandLine = true,
-                        PowerShell_AdditionalCommandLine = $"aws ssm start-session --target {instance.InstanceId}",
-                        PowerShell_ExecutionPolicy = PowerShell.ExecutionPolicy.RemoteSigned,
-                    });
-                }            
+                        Debug.WriteLine("TEST: " + instance.InstanceId);
+
+                        groupInfo.Profiles.Add(new ProfileInfo()
+                        {
+                            Name = $"{instance.Tags.FirstOrDefault(x => x.Key == "Name")?.Value} ({instance.InstanceId})",
+                            Host = instance.InstanceId,
+                            Group = $"~ [{profile.Profile}\\{profile.Region}]",
+                            IsDynamic = true,
+                            PowerShell_Enabled = true,
+                            PowerShell_EnableRemoteConsole = false,
+                            PowerShell_InheritHost = true,
+                            PowerShell_Host = instance.InstanceId,
+                            PowerShell_OverrideAdditionalCommandLine = true,
+                            PowerShell_AdditionalCommandLine = $"aws ssm start-session --target {instance.InstanceId}",
+                            PowerShell_ExecutionPolicy = PowerShell.ExecutionPolicy.RemoteSigned,
+                            // AWSSessionManager_Profile = profile.Profile
+                            // AWSSessionManager_Region = $"ec2.{profile.Region}.amazonaws.com"
+                        });
+                    }
+                }
+
+                ProfileManager.AddGroup(groupInfo);
             }
         }
 
@@ -430,7 +457,7 @@ namespace NETworkManager.ViewModels
             };
 
             ConfigurationManager.Current.FixAirspace = true;
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         private void ConnectProfile()
@@ -468,7 +495,7 @@ namespace NETworkManager.ViewModels
         {
             if (string.IsNullOrEmpty(host))
                 return;
-            
+
             SettingsManager.Current.PowerShell_HostHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.PowerShell_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries));
         }
 
