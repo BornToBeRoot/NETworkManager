@@ -278,7 +278,7 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.AddDNSServer
             };
 
-            var dnsServerViewModel = new DNSServerViewModel(instance =>
+            var viewModel = new DNSServerViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -290,7 +290,7 @@ namespace NETworkManager.ViewModels
 
             customDialog.Content = new DNSServerDialog
             {
-                DataContext = dnsServerViewModel
+                DataContext = viewModel
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -303,7 +303,7 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.EditDNSServer
             };
 
-            var dnsServerViewModel = new DNSServerViewModel(instance =>
+            var viewModel = new DNSServerViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -316,7 +316,7 @@ namespace NETworkManager.ViewModels
 
             customDialog.Content = new DNSServerDialog
             {
-                DataContext = dnsServerViewModel
+                DataContext = viewModel
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
@@ -329,7 +329,7 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.DeleteDNSServer
             };
 
-            var confirmDeleteViewModel = new ConfirmDeleteViewModel(instance =>
+            var viewModel = new ConfirmDeleteViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -341,7 +341,7 @@ namespace NETworkManager.ViewModels
 
             customDialog.Content = new ConfirmDeleteDialog
             {
-                DataContext = confirmDeleteViewModel
+                DataContext = viewModel
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
