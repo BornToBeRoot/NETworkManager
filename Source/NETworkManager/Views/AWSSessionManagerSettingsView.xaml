@@ -13,7 +13,7 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AWSSessionManagerSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.AWSSessionManager}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.SyncInstanceIDsFromAWS}" IsOn="{Binding SyncInstanceIDsFromAWS}" Margin="0,0,0,10"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.SyncInstanceIDsFromAWS}" IsOn="{Binding EnableSyncInstanceIDsFromAWS}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.Profiles}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />        
         <DataGrid x:Name="DataGridAWSProfiles" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding AWSProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedAWSProfile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
@@ -91,7 +91,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Command="{Binding EditDNSServerCommand}" Margin="10,0,0,0">
+            <Button Command="{Binding EditAWSProfileCommand}" Margin="10,0,0,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                         <Setter Property="IsEnabled" Value="False"/>
@@ -122,7 +122,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Command="{Binding AddDNSServerCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+            <Button Command="{Binding AddAWSProfileCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>

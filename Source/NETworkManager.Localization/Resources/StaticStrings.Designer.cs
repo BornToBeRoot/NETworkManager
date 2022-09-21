@@ -70,6 +70,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die default ähnelt.
+        /// </summary>
+        public static string ExampleAWSProfile {
+            get {
+                return ResourceManager.GetString("ExampleAWSProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die eu-central-1 ähnelt.
+        /// </summary>
+        public static string ExampleAWSRegion {
+            get {
+                return ResourceManager.GetString("ExampleAWSRegion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 9600 ähnelt.
         /// </summary>
         public static string ExampleBaud9600 {

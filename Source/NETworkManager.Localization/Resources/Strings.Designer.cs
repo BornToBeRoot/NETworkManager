@@ -376,6 +376,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add AWS profile ähnelt.
+        /// </summary>
+        public static string AddAWSProfile {
+            get {
+                return ResourceManager.GetString("AddAWSProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Add credentials ähnelt.
         /// </summary>
         public static string AddCredentials {
@@ -2032,6 +2041,26 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete AWS profile ähnelt.
+        /// </summary>
+        public static string DeleteAWSProfile {
+            get {
+                return ResourceManager.GetString("DeleteAWSProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The selected AWS profile is permanently deleted.
+        ///
+        ///The profile is not removed from the ~\.aws\credentials file. ähnelt.
+        /// </summary>
+        public static string DeleteAWSProfileMessage {
+            get {
+                return ResourceManager.GetString("DeleteAWSProfileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The selected credential will be deleted permanently. ähnelt.
         /// </summary>
         public static string DeleteCredentialMessage {
@@ -2568,6 +2597,15 @@ namespace NETworkManager.Localization.Resources {
         public static string DynamicIPv4DNSServer {
             get {
                 return ResourceManager.GetString("DynamicIPv4DNSServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Edit AWS profile ähnelt.
+        /// </summary>
+        public static string EditAWSProfile {
+            get {
+                return ResourceManager.GetString("EditAWSProfile", resourceCulture);
             }
         }
         

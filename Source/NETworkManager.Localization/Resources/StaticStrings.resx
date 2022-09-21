@@ -300,4 +300,10 @@
   <data name="ExampleInstanceId" xml:space="preserve">
     <value>i-0b22a22eec53b9321</value>
   </data>
+  <data name="ExampleAWSProfile" xml:space="preserve">
+    <value>default</value>
+  </data>
+  <data name="ExampleAWSRegion" xml:space="preserve">
+    <value>eu-central-1</value>
+  </data>
 </root>

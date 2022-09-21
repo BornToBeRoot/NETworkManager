@@ -4,13 +4,12 @@ using NETworkManager.Utilities;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows.Input;
 using System.Threading.Tasks;
-using NETworkManager.Models.Network;
 using NETworkManager.Views;
 using NETworkManager.Models.AWS;
 using System.ComponentModel;
+using System.Windows.Data;
 
 namespace NETworkManager.ViewModels
 {
@@ -20,6 +19,23 @@ namespace NETworkManager.ViewModels
         private readonly IDialogCoordinator _dialogCoordinator;
 
         private readonly bool _isLoading;
+
+        private bool _enableSyncInstanceIDsFromAWS;
+        public bool EnableSyncInstanceIDsFromAWS
+        {
+            get => _enableSyncInstanceIDsFromAWS;
+            set
+            {
+                if (value == _enableSyncInstanceIDsFromAWS)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS = value;
+
+                _enableSyncInstanceIDsFromAWS = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICollectionView AWSProfiles { get; }
 
@@ -78,6 +94,10 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
+            AWSProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_AWSProfiles);
+            AWSProfiles.SortDescriptions.Add(new SortDescription(nameof(AWSProfileInfo.Profile), ListSortDirection.Ascending));
+            AWSProfiles.SortDescriptions.Add(new SortDescription(nameof(AWSProfileInfo.Region), ListSortDirection.Ascending));
+
             LoadSettings();
 
             _isLoading = false;
@@ -85,6 +105,7 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
+            EnableSyncInstanceIDsFromAWS = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
             ApplicationFilePath = SettingsManager.Current.AWSSessionManager_ApplicationFilePath;
             IsConfigured = File.Exists(ApplicationFilePath);            
         }
@@ -135,88 +156,81 @@ namespace NETworkManager.ViewModels
 
         #region Methods        
         public async Task AddAWSProfile()
-        {
-            /*
+        {            
             var customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.AddDNSServer
+                Title = Localization.Resources.Strings.AddAWSProfile
             };
 
-            var dnsServerViewModel = new DNSServerViewModel(instance =>
+            var viewModel = new AWSProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerInfo(instance.Name, instance.DNSServers.Replace(" ", "").Split(';').ToList(), instance.Port));
+                SettingsManager.Current.AWSSessionManager_AWSProfiles.Add(new AWSProfileInfo(instance.IsEnabled, instance.Profile, instance.Region));                
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             });
 
-            customDialog.Content = new DNSServerDialog
+            customDialog.Content = new AWSProfileDialog
             {
-                DataContext = dnsServerViewModel
+                DataContext = viewModel
             };
 
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-            */
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
         }
         
         public async Task EditAWSProfile()
-        {
-            /*
+        {            
             var customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.EditDNSServer
+                Title = Localization.Resources.Strings.EditAWSProfile
             };
 
-            var dnsServerViewModel = new DNSServerViewModel(instance =>
+            var viewModel = new AWSProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
-                SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerInfo(instance.Name, instance.DNSServers.Replace(" ", "").Split(';').ToList(), instance.Port));
+                SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
+                SettingsManager.Current.AWSSessionManager_AWSProfiles.Add(new AWSProfileInfo(instance.IsEnabled, instance.Profile, instance.Region));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, true, SelectedDNSServer);
+            }, true, SelectedAWSProfile);
 
-            customDialog.Content = new DNSServerDialog
+            customDialog.Content = new AWSProfileDialog
             {
-                DataContext = dnsServerViewModel
+                DataContext = viewModel
             };
 
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-            */
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
         }
                 
         public async Task DeleteAWSProfile()
-        {
-            /*
+        {            
             var customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.DeleteDNSServer
+                Title = Localization.Resources.Strings.DeleteAWSProfile
             };
 
-            var confirmDeleteViewModel = new ConfirmDeleteViewModel(instance =>
+            var viewModel = new ConfirmDeleteViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
+                SettingsManager.Current.AWSSessionManager_AWSProfiles.Remove(SelectedAWSProfile);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Localization.Resources.Strings.DeleteDNSServerMessage);
+            }, Localization.Resources.Strings.DeleteAWSProfileMessage);
 
             customDialog.Content = new ConfirmDeleteDialog
             {
-                DataContext = confirmDeleteViewModel
+                DataContext = viewModel
             };
 
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-            */
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
         }
         
-
         private async Task Configure()
         {
             try

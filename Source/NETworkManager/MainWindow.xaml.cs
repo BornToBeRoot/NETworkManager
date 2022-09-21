@@ -33,6 +33,7 @@ using System.Net.NetworkInformation;
 using System.IO;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Network;
+using NETworkManager.Models.AWS;
 
 namespace NETworkManager
 {
@@ -393,6 +394,7 @@ namespace NETworkManager
                     SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());
                     SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.GetDefaultList());
                     SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(DNSServer.GetDefaultList());
+                    SettingsManager.Current.AWSSessionManager_AWSProfiles = new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
 
                     // Check if PuTTY is installed
                     foreach(var file in Models.PuTTY.PuTTY.GetDefaultInstallationPaths)

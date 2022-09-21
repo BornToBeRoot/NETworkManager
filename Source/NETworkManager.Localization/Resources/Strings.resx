@@ -3149,4 +3149,18 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="SyncInstanceIDsFromAWS" xml:space="preserve">
     <value>Sync Instance IDs from AWS</value>
   </data>
+  <data name="AddAWSProfile" xml:space="preserve">
+    <value>Add AWS profile</value>
+  </data>
+  <data name="DeleteAWSProfile" xml:space="preserve">
+    <value>Delete AWS profile</value>
+  </data>
+  <data name="DeleteAWSProfileMessage" xml:space="preserve">
+    <value>The selected AWS profile is permanently deleted.
+
+The profile is not removed from the ~\.aws\credentials file.</value>
+  </data>
+  <data name="EditAWSProfile" xml:space="preserve">
+    <value>Edit AWS profile</value>
+  </data>
 </root>

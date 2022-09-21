@@ -2,13 +2,13 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
 using NETworkManager.Models;
+using NETworkManager.Models.AWS;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PuTTY;
@@ -1591,7 +1591,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private DNSServerInfo _dnsLookup_SelectedDNSServer = new DNSServerInfo();
+        private DNSServerInfo _dnsLookup_SelectedDNSServer = new();
         public DNSServerInfo DNSLookup_SelectedDNSServer
         {
             get => _dnsLookup_SelectedDNSServer;
@@ -2814,6 +2814,36 @@ namespace NETworkManager.Settings
             }
         }
 
+        private bool _awsSessionManager_EnableSyncInstanceIDsFromAWS = GlobalStaticConfiguration.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
+        public bool AWSSessionManager_EnableSyncInstanceIDsFromAWS
+        {
+            get => _awsSessionManager_EnableSyncInstanceIDsFromAWS;
+            set
+            {
+                if (value == _awsSessionManager_EnableSyncInstanceIDsFromAWS)
+                    return;
+
+                _awsSessionManager_EnableSyncInstanceIDsFromAWS = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<AWSProfileInfo> _awsSessionManager_AWSProfiles = new();
+        public ObservableCollection<AWSProfileInfo> AWSSessionManager_AWSProfiles
+        {
+            get => _awsSessionManager_AWSProfiles;
+            set
+            {
+                if (value == _awsSessionManager_AWSProfiles)
+                    return;
+
+                _awsSessionManager_AWSProfiles = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         private string _awsSessionManager_ApplicationFilePath = GlobalStaticConfiguration.AWSSessionManager_ApplicationFileLocationPowerShell;
         public string AWSSessionManager_ApplicationFilePath
         {
@@ -2824,21 +2854,6 @@ namespace NETworkManager.Settings
                     return;
 
                 _awsSessionManager_ApplicationFilePath = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _awsSessionManager_EnableSyncFromAWS = GlobalStaticConfiguration.AWSSessionManager_EnableSyncFromAWS;
-        public bool AWSSessionManager_EnableSyncFromAWS
-        {
-            get => _awsSessionManager_EnableSyncFromAWS;
-            set
-            {
-                if (value == _awsSessionManager_EnableSyncFromAWS)
-                    return;
-
-                _awsSessionManager_EnableSyncFromAWS = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -3819,6 +3834,7 @@ namespace NETworkManager.Settings
 
             // AWSSessionManager
             AWSSessionManager_InstanceIDHistory.CollectionChanged += CollectionChanged;
+            AWSSessionManager_AWSProfiles.CollectionChanged += CollectionChanged;
 
             // TigerVNC
             TigerVNC_HostHistory.CollectionChanged += CollectionChanged;
