@@ -70,6 +70,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die i-0b22a22eec53b9321 ähnelt.
+        /// </summary>
+        public static string ExampleAWSInstanceId {
+            get {
+                return ResourceManager.GetString("ExampleAWSInstanceId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die default ähnelt.
         /// </summary>
         public static string ExampleAWSProfile {
@@ -174,15 +183,6 @@ namespace NETworkManager.Localization.Resources {
         public static string ExampleHostRange {
             get {
                 return ResourceManager.GetString("ExampleHostRange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die i-0b22a22eec53b9321 ähnelt.
-        /// </summary>
-        public static string ExampleInstanceId {
-            get {
-                return ResourceManager.GetString("ExampleInstanceId", resourceCulture);
             }
         }
         

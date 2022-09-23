@@ -1853,6 +1853,64 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
+        #region AWS Session Manager
+        private bool _awsSessionManager_Enabled;
+        public bool AWSSessionManager_Enabled
+        {
+            get => _awsSessionManager_Enabled;
+            set
+            {
+                if (value == _awsSessionManager_Enabled)
+                    return;
+
+                _awsSessionManager_Enabled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _awsSessionManager_InstanceID;
+        public string AWSSessionManager_InstanceID
+        {
+            get => _awsSessionManager_InstanceID;
+            set
+            {
+                if (value == _awsSessionManager_InstanceID)
+                    return;
+
+                _awsSessionManager_InstanceID = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _awsSessionManager_Profile;
+        public string AWSSessionManager_Profile
+        {
+            get => _awsSessionManager_Profile;
+            set
+            {
+                if (value == _awsSessionManager_Profile)
+                    return;
+
+                _awsSessionManager_Profile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _awsSessionManager_Region;
+        public string AWSSessionManager_Region
+        {
+            get => _awsSessionManager_Region;
+            set
+            {
+                if (value == _awsSessionManager_Region)
+                    return;
+
+                _awsSessionManager_Region = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         #region TigerVNC
         private bool _tigerVNC_Enabled;
         public bool TigerVNC_Enabled
@@ -1864,7 +1922,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _tigerVNC_Enabled = value;
-
                 OnPropertyChanged();
             }
         }
@@ -2136,7 +2193,7 @@ namespace NETworkManager.ViewModels
             PortScanner_Ports = profileInfo.PortScanner_Ports;
 
             // Ping Monitor
-            PingMonitor_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.PingMonitor: profileInfo.PingMonitor_Enabled;
+            PingMonitor_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.PingMonitor : profileInfo.PingMonitor_Enabled;
             PingMonitor_InheritHost = profileInfo.PingMonitor_InheritHost;
             PingMonitor_Host = profileInfo.PingMonitor_Host;
 
@@ -2257,6 +2314,12 @@ namespace NETworkManager.ViewModels
             PuTTY_LogFileName = profileInfo.PuTTY_LogFileName;
             PuTTY_OverrideAdditionalCommandLine = profileInfo.PuTTY_OverrideAdditionalCommandLine;
             PuTTY_AdditionalCommandLine = profileInfo.PuTTY_AdditionalCommandLine;
+
+            // AWS Session Manager
+            AWSSessionManager_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.AWSSessionManager : profileInfo.AWSSessionManager_Enabled;
+            AWSSessionManager_InstanceID = profileInfo.AWSSessionManager_InstanceID;
+            AWSSessionManager_Profile = profileInfo.AWSSessionManager_Profile;
+            AWSSessionManager_Region = profileInfo.AWSSessionManager_Region;
 
             // TigerVNC
             TigerVNC_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.TigerVNC : profileInfo.TigerVNC_Enabled;

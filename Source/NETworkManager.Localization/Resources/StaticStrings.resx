@@ -297,7 +297,7 @@
   <data name="ExamplePublicIPv6AddressAPI" xml:space="preserve">
     <value>https://api6.ipify.org</value>
   </data>
-  <data name="ExampleInstanceId" xml:space="preserve">
+  <data name="ExampleAWSInstanceId" xml:space="preserve">
     <value>i-0b22a22eec53b9321</value>
   </data>
   <data name="ExampleAWSProfile" xml:space="preserve">

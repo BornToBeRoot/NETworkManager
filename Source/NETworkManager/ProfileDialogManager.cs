@@ -5,7 +5,6 @@ using NETworkManager.ViewModels;
 using NETworkManager.Views;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
@@ -350,6 +349,11 @@ namespace NETworkManager
                 PuTTY_LogFileName = instance.PuTTY_LogFileName,
                 PuTTY_OverrideAdditionalCommandLine = instance.PuTTY_OverrideAdditionalCommandLine,
                 PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
+
+                AWSSessionManager_Enabled = instance.AWSSessionManager_Enabled,
+                AWSSessionManager_InstanceID = instance.AWSSessionManager_InstanceID,
+                AWSSessionManager_Profile = instance.AWSSessionManager_Profile,
+                AWSSessionManager_Region = instance.AWSSessionManager_Region,
 
                 TigerVNC_Enabled = instance.TigerVNC_Enabled,
                 TigerVNC_InheritHost = instance.TigerVNC_InheritHost,
