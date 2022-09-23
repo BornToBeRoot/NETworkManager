@@ -3163,4 +3163,10 @@ The profile is not removed from the ~\.aws\credentials file.</value>
   <data name="EditAWSProfile" xml:space="preserve">
     <value>Edit AWS profile</value>
   </data>
+  <data name="SyncAllInstanceIDsFromAWS" xml:space="preserve">
+    <value>Sync all Instance IDs from AWS</value>
+  </data>
+  <data name="SyncGroupInstanceIDsFromAWS" xml:space="preserve">
+    <value>Sync group Instance IDs from AWS</value>
+  </data>
 </root>

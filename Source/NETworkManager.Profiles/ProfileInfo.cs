@@ -3,6 +3,7 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using System.Security;
+using System.Security.RightsManagement;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Profiles
@@ -25,7 +26,7 @@ namespace NETworkManager.Profiles
         /// <summary>
         /// Name of the group. Profiles are grouped based on the name.
         /// </summary>
-         public string Group { get; set; }
+        public string Group { get; set; }
 
         /// <summary>
         /// Tags to classify the profiles and to filter by it.
@@ -163,6 +164,11 @@ namespace NETworkManager.Profiles
         public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
         public string PuTTY_AdditionalCommandLine { get; set; }
 
+        public bool AWSSessionManager_Enabled { get; set; }
+        public string AWSSessionManager_InstanceID { get; set; }
+        public string AWSSessionManager_Profile { get; set; }
+        public string AWSSessionManager_Region { get; set; }
+
         public bool TigerVNC_Enabled { get; set; }
         public bool TigerVNC_InheritHost { get; set; } = true;
         public string TigerVNC_Host { get; set; }
@@ -195,7 +201,7 @@ namespace NETworkManager.Profiles
         /// </summary>
         public ProfileInfo(ProfileInfo profile)
         {
-            Name = profile.Name;            
+            Name = profile.Name;
             Host = profile.Host;
             Group = profile.Group;
             Tags = profile.Tags;
@@ -250,7 +256,7 @@ namespace NETworkManager.Profiles
             RemoteDesktop_OverrideColorDepth = profile.RemoteDesktop_OverrideColorDepth;
             RemoteDesktop_ColorDepth = profile.RemoteDesktop_ColorDepth;
             RemoteDesktop_OverridePort = profile.RemoteDesktop_OverridePort;
-            RemoteDesktop_Port  = profile.RemoteDesktop_Port;
+            RemoteDesktop_Port = profile.RemoteDesktop_Port;
             RemoteDesktop_OverrideCredSspSupport = profile.RemoteDesktop_OverrideCredSspSupport;
             RemoteDesktop_EnableCredSspSupport = profile.RemoteDesktop_EnableCredSspSupport;
             RemoteDesktop_OverrideAuthenticationLevel = profile.RemoteDesktop_OverrideAuthenticationLevel;

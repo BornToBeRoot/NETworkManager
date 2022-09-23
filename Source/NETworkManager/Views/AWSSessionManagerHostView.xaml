@@ -77,7 +77,7 @@
                                 <Grid Height="32">
                                     <Grid.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.PowerShell_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                            <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.AWSSessionManager_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                 <MenuItem.Icon>
                                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                         <Rectangle.OpacityMask>
@@ -87,7 +87,7 @@
                                                 </MenuItem.Icon>
                                             </MenuItem>
                                             <Separator />
-                                            <MenuItem Header="{x:Static localization:Strings.Resize}" Command="{Binding Data.PowerShell_ResizeWindowCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                            <MenuItem Header="{x:Static localization:Strings.Resize}" Command="{Binding Data.AWSSessionManager_ResizeWindowCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                 <MenuItem.Icon>
                                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                         <Rectangle.OpacityMask>
@@ -208,6 +208,8 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <ToggleButton Grid.Column="0" Grid.Row="0" IsChecked="{Binding ExpandProfileView}">
                                 <ToggleButton.Style>
@@ -242,7 +244,24 @@
                                     <KeyBinding Command="{Binding ConnectProfileCommand}" Key="Enter" />
                                 </TextBox.InputBindings>
                             </TextBox>
-                            <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
+                            <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding SyncAllInstanceIDsFromAWSCommand}" ToolTip="{x:Static localization:Strings.SyncAllInstanceIDsFromAWS}">
+                                <Rectangle Width="16" Height="16">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Unicons Kind=Sync}" />
+                                    </Rectangle.OpacityMask>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                            </Button>
+                            <Button Grid.Column="6" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
                                 <Rectangle Width="16" Height="16">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
@@ -258,7 +277,7 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                            </Button>
+                            </Button>                            
                         </Grid>
                         <ListBox Grid.Row="2" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
                             <ListBox.Resources>
@@ -332,14 +351,16 @@
                                                                     </Grid.ColumnDefinitions>
                                                                     <Rectangle Grid.Column="0" Grid.ColumnSpan="4" Fill="Transparent" />
                                                                     <TextBlock Grid.Column="0" Text="{Binding (CollectionViewGroup.Name)}" Style="{DynamicResource ProfileGroupTextBlock}" />
-                                                                    <Button Grid.Column="2" ToolTip="{x:Static localization:Strings.EditGroupDots}" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                                                    <Button Grid.Column="2" Visibility="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                                                         <Button.Style>
                                                                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                                                                 <Setter Property="Command" Value="{Binding DataContext.EditGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
                                                                                 <Setter Property="CommandParameter" Value="{Binding (CollectionViewGroup.Name)}" />
+                                                                                <Setter Property="ToolTip" Value="{x:Static localization:Strings.EditGroupDots}" />
                                                                                 <Style.Triggers>
                                                                                     <DataTrigger Binding="{Binding (CollectionViewGroup.Name), Converter={StaticResource IsDynamicProfileToBooleanConverter}}" Value="True">
-                                                                                        <Setter Property="Command" Value="{Binding DataContext.SyncGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
+                                                                                        <Setter Property="Command" Value="{Binding DataContext.SyncGroupInstanceIDsFromAWSCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
+                                                                                        <Setter Property="ToolTip" Value="{x:Static localization:Strings.SyncGroupInstanceIDsFromAWS}" />
                                                                                     </DataTrigger>
                                                                                 </Style.Triggers>
                                                                             </Style>

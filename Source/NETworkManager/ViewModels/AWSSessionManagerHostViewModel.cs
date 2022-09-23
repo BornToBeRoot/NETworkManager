@@ -128,7 +128,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.PowerShell_ExpandProfileView = value;
+                    SettingsManager.Current.AWSSessionManager_ExpandProfileView = value;
 
                 _expandProfileView = value;
 
@@ -149,7 +149,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
-                    SettingsManager.Current.PowerShell_ProfileWidth = value.Value;
+                    SettingsManager.Current.AWSSessionManager_ProfileWidth = value.Value;
 
                 _profileWidth = value;
 
@@ -170,7 +170,7 @@ namespace NETworkManager.ViewModels
             // Check if putty is available...
             CheckIfConfigured();
 
-            InterTabClient = new DragablzInterTabClient(ApplicationName.PowerShell);
+            InterTabClient = new DragablzInterTabClient(ApplicationName.AWSSessionManager);
 
             TabItems = new ObservableCollection<DragablzTabItem>();
 
@@ -184,24 +184,24 @@ namespace NETworkManager.ViewModels
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
-                    return info.PowerShell_Enabled;
+                    return info.AWSSessionManager_Enabled;
 
                 var search = Search.Trim();
 
                 // Search by: Tag=xxx (exact match, ignore case)
 
                 //if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                //    return !string.IsNullOrEmpty(info.Tags) && info.PowerShell_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+                //    return !string.IsNullOrEmpty(info.Tags) && info.AWSSessionManager_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
                 //
 
-                // Search by: Name, TigerVNC_Host
-                return info.PowerShell_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PowerShell_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+                // Search by: Name, AWSSessionManager_Host
+                return info.AWSSessionManager_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.AWSSessionManager_InstanceID.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
             //Test();
 
             // This will select the first entry as selected item...
-            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.PowerShell_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.AWSSessionManager_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
             ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
@@ -210,14 +210,14 @@ namespace NETworkManager.ViewModels
 
             LoadSettings();
 
-            SyncInstanceIDsFromAWS();
+            SyncAllInstanceIDsFromAWS();
 
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
 
             _isLoading = false;
         }
 
-        private async Task SyncInstanceIDsFromAWS()
+        private async Task SyncAllInstanceIDsFromAWS()
         {
             if (!SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
             {
@@ -227,7 +227,7 @@ namespace NETworkManager.ViewModels
 
             foreach (var profile in SettingsManager.Current.AWSSessionManager_AWSProfiles)
             {
-                if(!profile.IsEnabled)
+                if (!profile.IsEnabled)
                 {
                     Debug.WriteLine($"Sync for profile {profile.Profile}\\{profile.Region} is disabled!");
                     continue;
@@ -244,10 +244,12 @@ namespace NETworkManager.ViewModels
 
                 var response = await client.DescribeInstancesAsync();
 
+                var groupName = $"~ [{profile.Profile}\\{profile.Region}]";
+
                 // Create a new group info for profiles
                 var groupInfo = new GroupInfo()
                 {
-                    Name = $"~ [{profile.Profile}\\{profile.Region}]",
+                    Name = groupName,
                     IsDynamic = true,
                 };
 
@@ -263,6 +265,13 @@ namespace NETworkManager.ViewModels
                             Host = instance.InstanceId,
                             Group = $"~ [{profile.Profile}\\{profile.Region}]",
                             IsDynamic = true,
+
+                            AWSSessionManager_Enabled = true,
+                            AWSSessionManager_InstanceID = instance.InstanceId,
+                            AWSSessionManager_Profile = profile.Profile,
+                            AWSSessionManager_Region = profile.Region
+
+                            /*
                             PowerShell_Enabled = true,
                             PowerShell_EnableRemoteConsole = false,
                             PowerShell_InheritHost = true,
@@ -270,29 +279,38 @@ namespace NETworkManager.ViewModels
                             PowerShell_OverrideAdditionalCommandLine = true,
                             PowerShell_AdditionalCommandLine = $"aws ssm start-session --target {instance.InstanceId}",
                             PowerShell_ExecutionPolicy = PowerShell.ExecutionPolicy.RemoteSigned,
+                            */
                             // AWSSessionManager_Profile = profile.Profile
                             // AWSSessionManager_Region = $"ec2.{profile.Region}.amazonaws.com"
                         });
                     }
                 }
 
+                if (ProfileManager.GroupExists(groupName))
+                    ProfileManager.RemoveGroup(ProfileManager.GetGroup(groupName));
+
                 ProfileManager.AddGroup(groupInfo);
             }
         }
 
+        private async Task SyncGroupInstanceIDsFromAWS(string group)
+        {
+            Debug.WriteLine("GROUP SYNC: " + group);
+        }
+
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))
+            if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath))
                 CheckIfConfigured();
         }
 
         private void LoadSettings()
         {
-            ExpandProfileView = SettingsManager.Current.PowerShell_ExpandProfileView;
+            ExpandProfileView = SettingsManager.Current.AWSSessionManager_ExpandProfileView;
 
-            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.PowerShell_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.AWSSessionManager_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
-            _tempProfileWidth = SettingsManager.Current.PowerShell_ProfileWidth;
+            _tempProfileWidth = SettingsManager.Current.AWSSessionManager_ProfileWidth;
         }
         #endregion
 
@@ -304,7 +322,7 @@ namespace NETworkManager.ViewModels
             ((args.DragablzItem.Content as DragablzTabItem)?.View as PowerShellControl)?.CloseTab();
         }
 
-        private bool PowerShell_Connected_CanExecute(object view)
+        private bool AWSSessionManager_Connected_CanExecute(object view)
         {
             if (view is PowerShellControl control)
                 return control.IsConnected;
@@ -312,9 +330,9 @@ namespace NETworkManager.ViewModels
             return false;
         }
 
-        public ICommand PowerShell_ReconnectCommand => new RelayCommand(PowerShell_ReconnectAction);
+        public ICommand AWSSessionManager_ReconnectCommand => new RelayCommand(AWSSessionManager_ReconnectAction);
 
-        private void PowerShell_ReconnectAction(object view)
+        private void AWSSessionManager_ReconnectAction(object view)
         {
             if (view is PowerShellControl control)
             {
@@ -323,9 +341,9 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public ICommand PowerShell_ResizeWindowCommand => new RelayCommand(PowerShell_ResizeWindowAction, PowerShell_Connected_CanExecute);
+        public ICommand AWSSessionManager_ResizeWindowCommand => new RelayCommand(AWSSessionManager_ResizeWindowAction, AWSSessionManager_Connected_CanExecute);
 
-        private void PowerShell_ResizeWindowAction(object view)
+        private void AWSSessionManager_ResizeWindowAction(object view)
         {
             if (view is PowerShellControl control)
                 control.ResizeEmbeddedWindow();
@@ -396,6 +414,20 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
         }
 
+        public ICommand SyncAllInstanceIDsFromAWSCommand => new RelayCommand(p => SyncAllInstanceIDsFromAWSAction());
+
+        private void SyncAllInstanceIDsFromAWSAction()
+        {
+            SyncAllInstanceIDsFromAWS();
+        }
+
+        public ICommand SyncGroupInstanceIDsFromAWSCommand => new RelayCommand(SyncGroupInstanceIDsFromAWSAction);
+
+        private void SyncGroupInstanceIDsFromAWSAction(object group)
+        {
+            SyncGroupInstanceIDsFromAWS((string)group);
+        }
+
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
@@ -414,7 +446,7 @@ namespace NETworkManager.ViewModels
         #region Methods
         private void CheckIfConfigured()
         {
-            IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) && File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath);
+            IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) && File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
         }
 
         private async Task Connect(string host = null)
@@ -469,7 +501,7 @@ namespace NETworkManager.ViewModels
         {
             var info = new ProcessStartInfo
             {
-                FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
+                FileName = SettingsManager.Current.AWSSessionManager_ApplicationFilePath,
                 Arguments = PowerShell.BuildCommandLine(NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile))
             };
 

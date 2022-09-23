@@ -7917,6 +7917,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sync all Instance IDs from AWS ähnelt.
+        /// </summary>
+        public static string SyncAllInstanceIDsFromAWS {
+            get {
+                return ResourceManager.GetString("SyncAllInstanceIDsFromAWS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sync group Instance IDs from AWS ähnelt.
+        /// </summary>
+        public static string SyncGroupInstanceIDsFromAWS {
+            get {
+                return ResourceManager.GetString("SyncGroupInstanceIDsFromAWS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Sync Instance IDs from AWS ähnelt.
         /// </summary>
         public static string SyncInstanceIDsFromAWS {
