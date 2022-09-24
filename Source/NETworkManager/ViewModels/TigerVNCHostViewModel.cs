@@ -380,14 +380,12 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfileExternal()
         {
-            var info = new ProcessStartInfo
+            Process.Start(new ProcessStartInfo()
             {
                 FileName = SettingsManager.Current.TigerVNC_ApplicationFilePath,
                 Arguments = TigerVNC.BuildCommandLine(NETworkManager.Profiles.Application.TigerVNC.CreateSessionInfo(SelectedProfile))
-            };
-
-            Process.Start(info);
-        }
+            });
+        }        
 
         private void Connect(TigerVNCSessionInfo sessionInfo, string header = null)
         {

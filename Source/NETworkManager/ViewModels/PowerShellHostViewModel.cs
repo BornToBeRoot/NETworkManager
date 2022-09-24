@@ -466,13 +466,11 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfileExternal()
         {
-            ProcessStartInfo info = new()
+            Process.Start(new ProcessStartInfo()
             {
                 FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
                 Arguments = PowerShell.BuildCommandLine(NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile))
-            };
-
-            Process.Start(info);
+            });
         }
 
         private void Connect(PowerShellSessionInfo sessionInfo, string header = null)
