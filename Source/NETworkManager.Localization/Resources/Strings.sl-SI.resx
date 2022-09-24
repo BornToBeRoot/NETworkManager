@@ -3150,12 +3150,12 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Želite prepisati obstoječo datoteko z nastavitvami?</value>
   </data>
   <data name="LocalConnection" xml:space="preserve">
-    <value>Local connection</value>
+    <value>Lokalna povezava</value>
   </data>
   <data name="LocalInterface" xml:space="preserve">
-    <value>Local interface</value>
+    <value>Lokalni vmesnik</value>
   </data>
   <data name="Library_log4net_Description" xml:space="preserve">
-    <value>log4net is a tool to help the programmer output log statements to a variety of output targets.</value>
+    <value>log4net je orodje, ki programerju pomaga pri izpisovanju dnevniških stavkov v različne izhodne cilje.</value>
   </data>
 </root>
