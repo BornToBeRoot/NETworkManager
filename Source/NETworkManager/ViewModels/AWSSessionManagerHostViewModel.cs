@@ -13,7 +13,6 @@ using System.Diagnostics;
 using System.IO;
 using NETworkManager.Utilities;
 using System.Windows;
-using NETworkManager.Models.PowerShell;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
 using NETworkManager.Models;
@@ -214,6 +213,7 @@ namespace NETworkManager.ViewModels
             SyncAllInstanceIDsFromAWS();
 
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
+            SettingsManager.Current.AWSSessionManager_AWSProfiles.CollectionChanged += AWSSessionManager_AWSProfiles_CollectionChanged;
 
             _isLoading = false;
         }
@@ -302,8 +302,25 @@ namespace NETworkManager.ViewModels
 
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            // ToDo.... disable -> delete
+            if(e.PropertyName == nameof(SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS))
+            {
+                if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
+                    SyncAllInstanceIDsFromAWS();               
+            }
+
+            //if (e.PropertyName == nameof(SettingsManager.Current.AWSSessionManager_AWSProfiles))
+            //    SyncAllInstanceIDsFromAWS();
+            // Does not fire event OnPropertyChange if collection changes...
+
             if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath))
                 CheckIfConfigured();
+        }
+
+        // ToDo ->  Detect diff / only sync diff
+        private void AWSSessionManager_AWSProfiles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            
         }
 
         private void LoadSettings()

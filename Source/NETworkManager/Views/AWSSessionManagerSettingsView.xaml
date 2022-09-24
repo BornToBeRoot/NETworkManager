@@ -14,7 +14,15 @@
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.AWSSessionManager}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.SyncInstanceIDsFromAWS}" IsOn="{Binding EnableSyncInstanceIDsFromAWS}" Margin="0,0,0,10"/>
-        <TextBlock Text="{x:Static localization:Strings.Profiles}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />        
+        
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="{x:Static localization:Strings.ProfilesAndRegions}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_AWSSessionManagerProfilesAndRegions}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
         <DataGrid x:Name="DataGridAWSProfiles" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding AWSProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedAWSProfile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />

@@ -3169,4 +3169,10 @@ The profile is not removed from the ~\.aws\credentials file.</value>
   <data name="SyncGroupInstanceIDsFromAWS" xml:space="preserve">
     <value>Sync group Instance IDs from AWS</value>
   </data>
+  <data name="ProfilesAndRegions" xml:space="preserve">
+    <value>Profiles and regions</value>
+  </data>
+  <data name="HelpMessage_AWSSessionManagerProfilesAndRegions" xml:space="preserve">
+    <value>To synchronize instance IDs from AWS, the AWS CLI must be configured on the system. The instance IDs can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in ~/.aws/credentials must be configured along with the region to query.</value>
+  </data>
 </root>

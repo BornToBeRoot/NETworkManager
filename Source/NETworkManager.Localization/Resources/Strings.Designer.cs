@@ -3431,6 +3431,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die To synchronize instance IDs from AWS, the AWS CLI must be configured on the system. The instance IDs can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in ~/.aws/credentials must be configured along with the region to query. ähnelt.
+        /// </summary>
+        public static string HelpMessage_AWSSessionManagerProfilesAndRegions {
+            get {
+                return ResourceManager.GetString("HelpMessage_AWSSessionManagerProfilesAndRegions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The background job will save settings, profiles and credentials every x-minutes.
         ///
         ///Value 0 will disable this feature.
@@ -5640,6 +5649,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Profiles {
             get {
                 return ResourceManager.GetString("Profiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Profiles and regions ähnelt.
+        /// </summary>
+        public static string ProfilesAndRegions {
+            get {
+                return ResourceManager.GetString("ProfilesAndRegions", resourceCulture);
             }
         }
         
