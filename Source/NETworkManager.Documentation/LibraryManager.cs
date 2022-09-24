@@ -46,6 +46,7 @@ namespace NETworkManager.Documentation
             new LibraryInfo("Microsoft.Windows.CsWinRT", "https://github.com/microsoft/cswinrt/tree/master/", Localization.Resources.Strings.Library_CsWinRT_Description, Localization.Resources.Strings.License_MITLicense, "https://github.com/microsoft/CsWinRT/blob/master/LICENSE"),
             new LibraryInfo("Microsoft.Xaml.Behaviors.Wpf", "https://github.com/microsoft/XamlBehaviorsWpf", Localization.Resources.Strings.Library_XamlBehaviorsWpf_Description, Localization.Resources.Strings.License_MITLicense, "https://github.com/microsoft/XamlBehaviorsWpf/blob/master/LICENSE"),
             new LibraryInfo("log4net", "https://logging.apache.org/log4net/", Localization.Resources.Strings.Library_log4net_Description,Localization.Resources.Strings.License_ApacheLicense2dot0, "https://github.com/apache/logging-log4net/blob/master/LICENSE"),
+            new LibraryInfo("AWSSDK.EC2", "https://github.com/aws/aws-sdk-net/", Localization.Resources.Strings.Library_AWSSDKdotEC2_Description,Localization.Resources.Strings.License_ApacheLicense2dot0, "https://aws.amazon.com/apache-2-0/"),
         };
     }
 }

@@ -17,6 +17,7 @@
 		<FrameworkReference Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms" TargetingPackVersion="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
+		<None Remove="Licenses\AWSSDK.EC2.txt" />
 		<None Remove="Licenses\log4net.txt" />
 		<None Remove="Licenses\Microsoft.PowerShell.SDK.txt" />
 		<None Remove="Licenses\Microsoft.Web.WebView2.txt" />
@@ -53,6 +54,9 @@
 		</Content>
 		<Content Include="Licenses\LoadingIndicators.WPF.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="Licenses\AWSSDK.EC2.txt">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Licenses\log4net.txt">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

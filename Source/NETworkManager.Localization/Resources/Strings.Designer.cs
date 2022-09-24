@@ -4084,6 +4084,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS SDK for .NET to work with Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS). ähnelt.
+        /// </summary>
+        public static string Library_AWSSDKdotEC2_Description {
+            get {
+                return ResourceManager.GetString("Library_AWSSDKdotEC2_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Shared Controlz for WPF and ... more ähnelt.
         /// </summary>
         public static string Library_ControlzEx_Description {

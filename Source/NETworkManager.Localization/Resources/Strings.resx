@@ -3175,4 +3175,7 @@ The profile is not removed from the ~\.aws\credentials file.</value>
   <data name="HelpMessage_AWSSessionManagerProfilesAndRegions" xml:space="preserve">
     <value>To synchronize instance IDs from AWS, the AWS CLI must be configured on the system. The instance IDs can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in ~/.aws/credentials must be configured along with the region to query.</value>
   </data>
+  <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
+    <value>AWS SDK for .NET to work with Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS).</value>
+  </data>
 </root>
