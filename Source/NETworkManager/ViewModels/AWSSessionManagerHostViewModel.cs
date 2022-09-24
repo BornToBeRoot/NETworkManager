@@ -24,6 +24,7 @@ using Amazon;
 using Amazon.EC2;
 using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
+using NETworkManager.Models.AWS;
 
 namespace NETworkManager.ViewModels
 {
@@ -295,6 +296,7 @@ namespace NETworkManager.ViewModels
 
         private async Task SyncGroupInstanceIDsFromAWS(string group)
         {
+            // ToDo
             Debug.WriteLine("GROUP SYNC: " + group);
         }
 
@@ -319,12 +321,12 @@ namespace NETworkManager.ViewModels
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
         {
-            ((args.DragablzItem.Content as DragablzTabItem)?.View as PowerShellControl)?.CloseTab();
+            ((args.DragablzItem.Content as DragablzTabItem)?.View as AWSSessionManagerControl)?.CloseTab();
         }
 
         private bool AWSSessionManager_Connected_CanExecute(object view)
         {
-            if (view is PowerShellControl control)
+            if (view is AWSSessionManagerControl control)
                 return control.IsConnected;
 
             return false;
@@ -334,7 +336,7 @@ namespace NETworkManager.ViewModels
 
         private void AWSSessionManager_ReconnectAction(object view)
         {
-            if (view is PowerShellControl control)
+            if (view is AWSSessionManagerControl control)
             {
                 if (control.ReconnectCommand.CanExecute(null))
                     control.ReconnectCommand.Execute(null);
@@ -345,7 +347,7 @@ namespace NETworkManager.ViewModels
 
         private void AWSSessionManager_ResizeWindowAction(object view)
         {
-            if (view is PowerShellControl control)
+            if (view is AWSSessionManagerControl control)
                 control.ResizeEmbeddedWindow();
         }
 
@@ -449,31 +451,30 @@ namespace NETworkManager.ViewModels
             IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) && File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
         }
 
-        private async Task Connect(string host = null)
+        private async Task Connect()
         {
             var customDialog = new CustomDialog
             {
                 Title = Localization.Resources.Strings.Connect
             };
 
-            var connectViewModel = new PowerShellConnectViewModel(async instance =>
+            var connectViewModel = new AWSSessionManagerConnectViewModel(async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
 
                 // Create profile info
-                var info = new PowerShellSessionInfo
+                var info = new AWSSessionManagerSessionInfo
                 {
-                    EnableRemoteConsole = instance.EnableRemoteConsole,
-                    Host = instance.Host,
-                    AdditionalCommandLine = instance.AdditionalCommandLine,
-                    ExecutionPolicy = instance.ExecutionPolicy
+                    InstanceID = instance.InstanceID,
+                    Profile = instance.Profile,
+                    Region = instance.Region
                 };
 
                 // Add to history
                 // Note: The history can only be updated after the values have been read.
                 //       Otherwise, in some cases, incorrect values are taken over.
-                AddHostToHistory(instance.Host);
+                //AddHostToHistory(instance.Host);
 
                 // Connect
                 Connect(info);
@@ -481,9 +482,9 @@ namespace NETworkManager.ViewModels
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
                 ConfigurationManager.Current.FixAirspace = false;
-            }, host);
+            });
 
-            customDialog.Content = new PowerShellConnectDialog
+            customDialog.Content = new AWSSessionManagerConnectDialog
             {
                 DataContext = connectViewModel
             };
@@ -493,33 +494,26 @@ namespace NETworkManager.ViewModels
         }
 
         private void ConnectProfile()
-        {
-            Connect(NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+        {            
+            Connect(NETworkManager.Profiles.Application.AWSSessionManager.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
         }
 
         private void ConnectProfileExternal()
         {
-            var info = new ProcessStartInfo
+            Process.Start(new ProcessStartInfo()
             {
                 FileName = SettingsManager.Current.AWSSessionManager_ApplicationFilePath,
-                Arguments = PowerShell.BuildCommandLine(NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile))
-            };
-
-            Process.Start(info);
+                Arguments = AWSSessionManager.BuildCommandLine(NETworkManager.Profiles.Application.AWSSessionManager.CreateSessionInfo(SelectedProfile))
+            });
         }
 
-        private void Connect(PowerShellSessionInfo sessionInfo, string header = null)
+        private void Connect(AWSSessionManagerSessionInfo sessionInfo, string header = null)
         {
-            sessionInfo.ApplicationFilePath = SettingsManager.Current.PowerShell_ApplicationFilePath;
+            sessionInfo.ApplicationFilePath = SettingsManager.Current.AWSSessionManager_ApplicationFilePath;
 
-            TabItems.Add(new DragablzTabItem(header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Localization.Resources.Strings.PowerShell), new PowerShellControl(sessionInfo)));
+            TabItems.Add(new DragablzTabItem(header ?? sessionInfo.InstanceID, new AWSSessionManagerControl(sessionInfo)));
 
             SelectedTabIndex = TabItems.Count - 1;
-        }
-
-        public void AddTab(string host)
-        {
-            Connect(host);
         }
 
         // Modify history list

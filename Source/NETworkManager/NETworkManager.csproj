@@ -99,6 +99,9 @@
 		</EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
+		<Page Update="Controls\AWSSessionManagerControl.xaml">
+		  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+		</Page>
 		<Page Update="Resources\Styles\WindowStyles.xaml">
 			<CopyToOutputDirectory></CopyToOutputDirectory>
 		</Page>

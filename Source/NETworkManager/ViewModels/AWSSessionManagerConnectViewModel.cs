@@ -29,91 +29,68 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _host;
-        public string Host
+        private string _instanceID;
+        public string InstanceID
         {
-            get => _host;
+            get => _instanceID;
             set
             {
-                if (value == _host)
+                if (value == _instanceID)
                     return;
-                                
-                _host = value;
+
+                _instanceID = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICollectionView HostHistoryView { get; }
+        public ICollectionView InstanceIDHistoryView { get; }
 
-        private string _additionalCommandLine;
-        public string AdditionalCommandLine
+        private string _profile;
+        public string Profile
         {
-            get => _additionalCommandLine;
+            get => _profile;
             set
             {
-                if (value == _additionalCommandLine)
+                if (value == _profile)
                     return;
 
-                _additionalCommandLine = value;
+                _profile = value;
                 OnPropertyChanged();
             }
         }
 
-        private List<PowerShell.ExecutionPolicy> _executionPolicies = new List<PowerShell.ExecutionPolicy>();
-        public List<PowerShell.ExecutionPolicy> ExecutionPolicies
+        public ICollectionView ProfileHistoryView { get; }
+
+        private string _region;
+        public string Region
         {
-            get => _executionPolicies;
+            get => _region;
             set
             {
-                if (value == _executionPolicies)
+                if (value == _region)
                     return;
 
-                _executionPolicies = value;
+                _instanceID = value;
                 OnPropertyChanged();
             }
         }
 
-        private PowerShell.ExecutionPolicy _executionPolicy;
-        public PowerShell.ExecutionPolicy ExecutionPolicy
-        {
-            get => _executionPolicy;
-            set
-            {
-                if (value == _executionPolicy)
-                    return;
+        public ICollectionView RegionHistoryView { get; }
 
-                _executionPolicy = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public AWSSessionManagerConnectViewModel(Action<AWSSessionManagerConnectViewModel> connectCommand, Action<AWSSessionManagerConnectViewModel> cancelHandler, string host = null)
+        public AWSSessionManagerConnectViewModel(Action<AWSSessionManagerConnectViewModel> connectCommand, Action<AWSSessionManagerConnectViewModel> cancelHandler)
         {
             ConnectCommand = new RelayCommand(p => connectCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            if (!string.IsNullOrEmpty(host))
-            {
-                Host = host;
-                EnableRemoteConsole = true;
-            }
 
-            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PowerShell_HostHistory);
+            //HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PowerShell_HostHistory);
 
             LoadSettings();
         }
 
         private void LoadSettings()
         {
-            AdditionalCommandLine = SettingsManager.Current.PowerShell_AdditionalCommandLine;
-            
-            LoadExecutionPolicies();
-        }
-
-        private void LoadExecutionPolicies()
-        {
-            ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
-            ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy);
+             //   AdditionalCommandLine = SettingsManager.Current.PowerShell_AdditionalCommandLine;
         }
     }
 }

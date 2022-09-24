@@ -38,17 +38,6 @@ namespace NETworkManager.Views
                 _viewModel.ConnectProfileCommand.Execute(null);
         }
 
-        public async Task AddTab(string host)
-        {
-            // Wait for the interface to load, before displaying the dialog to connect a new profile... 
-            // MahApps will throw an exception... 
-            while (!_loaded)
-                await Task.Delay(100);
-
-            if (_viewModel.IsConfigured)
-                _viewModel.AddTab(host);
-        }
-
         public void OnViewHide()
         {
             _viewModel.OnViewHide();
