@@ -244,7 +244,7 @@
                                     <KeyBinding Command="{Binding ConnectProfileCommand}" Key="Enter" />
                                 </TextBox.InputBindings>
                             </TextBox>
-                            <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding SyncAllInstanceIDsFromAWSCommand}" ToolTip="{x:Static localization:Strings.SyncAllInstanceIDsFromAWS}">
+                            <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding SyncAllInstanceIDsFromAWSCommand}" Visibility="{Binding IsSyncing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ToolTip="{x:Static localization:Strings.SyncAllInstanceIDsFromAWS}">
                                 <Rectangle Width="16" Height="16">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Unicons Kind=Sync}" />
@@ -261,6 +261,7 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
+                            <mah:ProgressRing Grid.Column="4" Grid.Row="0" Width="16" Height="16" IsActive="{Binding IsSyncing}"/>
                             <Button Grid.Column="6" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
                                 <Rectangle Width="16" Height="16">
                                     <Rectangle.OpacityMask>
