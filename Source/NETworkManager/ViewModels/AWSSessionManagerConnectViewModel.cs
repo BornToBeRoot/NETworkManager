@@ -1,12 +1,9 @@
 ﻿using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
-using NETworkManager.Models.PowerShell;
 
 namespace NETworkManager.ViewModels
 {
@@ -14,20 +11,6 @@ namespace NETworkManager.ViewModels
     {
         public ICommand ConnectCommand { get; }
         public ICommand CancelCommand { get; }
-
-        private bool _enableRemoteConsole;
-        public bool EnableRemoteConsole
-        {
-            get => _enableRemoteConsole;
-            set
-            {
-                if (value == _enableRemoteConsole)
-                    return;
-
-                _enableRemoteConsole = value;
-                OnPropertyChanged();
-            }
-        }
 
         private string _instanceID;
         public string InstanceID
@@ -70,7 +53,7 @@ namespace NETworkManager.ViewModels
                 if (value == _region)
                     return;
 
-                _instanceID = value;
+                _region = value;
                 OnPropertyChanged();
             }
         }
@@ -82,15 +65,17 @@ namespace NETworkManager.ViewModels
             ConnectCommand = new RelayCommand(p => connectCommand(this));
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-
-            //HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PowerShell_HostHistory);
+            InstanceIDHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_InstanceIDHistory);
+            ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_ProfileHistory);
+            RegionHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_RegionHistory);
 
             LoadSettings();
         }
 
         private void LoadSettings()
         {
-             //   AdditionalCommandLine = SettingsManager.Current.PowerShell_AdditionalCommandLine;
+            Profile = SettingsManager.Current.AWSSessionManager_DefaultProfile;
+            Region = SettingsManager.Current.AWSSessionManager_DefaultRegion;                
         }
     }
 }

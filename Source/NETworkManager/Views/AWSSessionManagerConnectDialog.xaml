@@ -24,14 +24,19 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="34" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.InstanceId}" />
-            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSInstanceId}" IsEnabled="{Binding EnableRemoteConsole}" Style="{StaticResource EditableComboBox}">
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InstanceId}" />
+            <ComboBox x:Name="ComboBoxInstanceID" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding InstanceIDHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSInstanceId}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
-                    <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="InstanceID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
@@ -39,6 +44,39 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Profile}" />
+            <ComboBox x:Name="ComboBoxProfile" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding ProfileHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSProfile}" Style="{StaticResource EditableComboBox}">
+                <ComboBox.Text>
+                    <Binding Path="Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <!--
+                        <Binding.ValidationRules>
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>-->
+                    </Binding>
+                </ComboBox.Text>
+            </ComboBox>
+            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="2" ToolTip="{x:Static localization:Strings.HelpMessage_AWSCLIDefaultsAreUsedIfNotSet}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Region}" />
+            <ComboBox x:Name="ComboBoxRegion" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding RegionHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSRegion}" Style="{StaticResource EditableComboBox}">
+                <ComboBox.Text>
+                    <Binding Path="Region" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <!--<Binding.ValidationRules>
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>-->
+                    </Binding>
+                </ComboBox.Text>
+            </ComboBox>
+            <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="4" ToolTip="{x:Static localization:Strings.HelpMessage_AWSCLIDefaultsAreUsedIfNotSet}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
         </Grid>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Connect}" Command="{Binding ConnectCommand}" IsDefault="True" Margin="0,0,10,0">
@@ -46,15 +84,9 @@
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
                         <Setter Property="IsEnabled" Value="True" />
                         <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding EnableRemoteConsole}" Value="True" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}" Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>                                                 
+                            <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxInstanceID}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>                            
                         </Style.Triggers>
                     </Style>
                 </Button.Style>

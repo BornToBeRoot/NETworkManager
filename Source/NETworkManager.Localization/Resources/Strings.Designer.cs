@@ -3449,7 +3449,18 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Default AWS CLI profile which is used by manually created profiles to connect to an instance. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If not set, the default AWS CLI settings are used. ähnelt.
+        /// </summary>
+        public static string HelpMessage_AWSCLIDefaultsAreUsedIfNotSet {
+            get {
+                return ResourceManager.GetString("HelpMessage_AWSCLIDefaultsAreUsedIfNotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default AWS CLI profile which is used by manually created profiles to connect to an instance.
+        ///
+        ///If not set, the default AWS CLI settings are used. ähnelt.
         /// </summary>
         public static string HelpMessage_AWSSessionManagerDefaultProfile {
             get {
@@ -3458,7 +3469,9 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Default AWS CLI region which is used by manually created profiles to connect to an instance. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default AWS CLI region which is used by manually created profiles to connect to an instance.
+        ///
+        ///If not set, the default AWS CLI settings are used. ähnelt.
         /// </summary>
         public static string HelpMessage_AWSSessionManagerDefaultRegion {
             get {

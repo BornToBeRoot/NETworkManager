@@ -2799,21 +2799,6 @@ namespace NETworkManager.Settings
         #endregion
 
         #region AWSSessionManager
-        private ObservableCollection<string> _awsSessionManager_InstanceIDHistory = new();
-        public ObservableCollection<string> AWSSessionManager_InstanceIDHistory
-        {
-            get => _awsSessionManager_InstanceIDHistory;
-            set
-            {
-                if (value == _awsSessionManager_InstanceIDHistory)
-                    return;
-
-                _awsSessionManager_InstanceIDHistory = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
         private bool _awsSessionManager_EnableSyncInstanceIDsFromAWS = GlobalStaticConfiguration.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
         public bool AWSSessionManager_EnableSyncInstanceIDsFromAWS
         {
@@ -2884,6 +2869,51 @@ namespace NETworkManager.Settings
                     return;
 
                 _awsSessionManager_ApplicationFilePath = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _awsSessionManager_InstanceIDHistory = new();
+        public ObservableCollection<string> AWSSessionManager_InstanceIDHistory
+        {
+            get => _awsSessionManager_InstanceIDHistory;
+            set
+            {
+                if (value == _awsSessionManager_InstanceIDHistory)
+                    return;
+
+                _awsSessionManager_InstanceIDHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _awsSessionManager_ProfileHistory = new();
+        public ObservableCollection<string> AWSSessionManager_ProfileHistory
+        {
+            get => _awsSessionManager_ProfileHistory;
+            set
+            {
+                if (value == _awsSessionManager_ProfileHistory)
+                    return;
+
+                _awsSessionManager_ProfileHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _awsSessionManager_RegionHistory = new();
+        public ObservableCollection<string> AWSSessionManager_RegionHistory
+        {
+            get => _awsSessionManager_RegionHistory;
+            set
+            {
+                if (value == _awsSessionManager_RegionHistory)
+                    return;
+
+                _awsSessionManager_RegionHistory = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

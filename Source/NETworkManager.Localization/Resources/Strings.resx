@@ -3185,12 +3185,19 @@ The profile is not removed from the ~\.aws\credentials file.</value>
     <value>Default region</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>Default AWS CLI profile which is used by manually created profiles to connect to an instance.</value>
+    <value>Default AWS CLI profile which is used by manually created profiles to connect to an instance.
+
+If not set, the default AWS CLI settings are used.</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>Default AWS CLI region which is used by manually created profiles to connect to an instance.</value>
+    <value>Default AWS CLI region which is used by manually created profiles to connect to an instance.
+
+If not set, the default AWS CLI settings are used.</value>
   </data>
   <data name="ProfileViewName_AWSSessionManager" xml:space="preserve">
     <value>AWS Session Manager</value>
+  </data>
+  <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
+    <value>If not set, the default AWS CLI settings are used.</value>
   </data>
 </root>

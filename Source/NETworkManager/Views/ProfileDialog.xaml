@@ -254,7 +254,7 @@
                                 <mah:ProgressRing Grid.Column="3" Grid.Row="2" Width="24" Height="24" Margin="10,0,0,0" Visibility="{Binding IsResolveHostnameRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                                 <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="2" ToolTip="{x:Static localization:Strings.WarningMessage_CouldNotResolvIPAddressForHostname}" Visibility="{Binding ShowCouldNotResolveHostnameWarning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource WarnImageRectangle}" Margin="10,0,0,0">
                                     <Rectangle.Resources>
-                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WarnToolTip}" />
                                     </Rectangle.Resources>
                                 </Rectangle>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Group}" />
