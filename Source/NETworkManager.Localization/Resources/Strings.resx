@@ -3200,4 +3200,7 @@ If not set, the default AWS CLI settings are used.</value>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
     <value>If not set, the default AWS CLI settings are used.</value>
   </data>
+  <data name="GroupNameCannotStartWithX" xml:space="preserve">
+    <value>Group name cannot start with "{0}"!</value>
+  </data>
 </root>

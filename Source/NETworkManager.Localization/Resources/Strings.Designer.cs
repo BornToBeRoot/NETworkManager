@@ -3413,6 +3413,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Group name cannot start with &quot;{0}&quot;! ähnelt.
+        /// </summary>
+        public static string GroupNameCannotStartWithX {
+            get {
+                return ResourceManager.GetString("GroupNameCannotStartWithX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Groups ähnelt.
         /// </summary>
         public static string Groups {
