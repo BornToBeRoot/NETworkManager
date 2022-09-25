@@ -4,7 +4,7 @@
     {
         public static string BuildCommandLine(AWSSessionManagerSessionInfo sessionInfo)
         {
-            var commandLine = $"-NoExit -NoLogo -NoProfile -Command \"aws ssm start-session --target {sessionInfo.InstanceID}";
+            var commandLine = $"-NoExit -NoLogo -NoProfile -Command \"Set-Location -Path ~; Clear-Host; aws ssm start-session --target {sessionInfo.InstanceID}";
 
             // Add profile
             if (!string.IsNullOrEmpty(sessionInfo.Profile))
