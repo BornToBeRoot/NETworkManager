@@ -391,6 +391,7 @@ namespace NETworkManager
                     SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
 
                     // Generate lists at runtime
+                    SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetList());
                     SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());
                     SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.GetDefaultList());
                     SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(DNSServer.GetDefaultList());
@@ -1053,13 +1054,7 @@ namespace NETworkManager
 
                 SettingsManager.HotKeysChanged = false;
             }
-
-            // Save the settings
-            /* Disabled (07.09.2021) - because settings are saved on app shutdown
-            if (SettingsManager.Current.SettingsChanged)
-                SettingsManager.Save();
-            */
-
+         
             // Refresh the view
             ChangeApplicationView(SelectedApplication.Name, true);
         }

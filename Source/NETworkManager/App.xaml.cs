@@ -108,14 +108,16 @@ namespace NETworkManager
                 _log.Info("Default application settings have been initialized.");
             }
 
-            // Check to perform settings updates
+            // Perform settings update if settings version is lower than application version            
             if (!SettingsManager.Current.FirstRun && !string.IsNullOrEmpty(SettingsManager.Current.Version))
             {
-                if (Version.Parse(SettingsManager.Current.Version) < AssemblyManager.Current.Version)
-                {
-                    _log.Info($"Application settings are on version {SettingsManager.Current.Version} and will be upgraded to {AssemblyManager.Current.Version}");
+                Version currentSettingsVersion = Version.Parse(SettingsManager.Current.Version);
 
-                    SettingsManager.Upgrade(AssemblyManager.Current.Version);
+                if (currentSettingsVersion < AssemblyManager.Current.Version)
+                {
+                    _log.Info($"Application settings are on version {currentSettingsVersion} and will be upgraded to {AssemblyManager.Current.Version}");
+
+                    SettingsManager.Upgrade(currentSettingsVersion, AssemblyManager.Current.Version);
 
                     _log.Info($"Application settings upgraded to version {AssemblyManager.Current.Version}");
                 }
