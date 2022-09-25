@@ -1,7 +1,9 @@
-﻿using System;
+﻿using NETworkManager.Models;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -15,7 +17,7 @@ namespace NETworkManager.Settings
         private static string SettingsFileExtension => ".xml";
 
         public static SettingsInfo Current { get; set; }
-                
+
         public static bool HotKeysChanged { get; set; }
         #endregion
 
@@ -158,7 +160,7 @@ namespace NETworkManager.Settings
         public static void Import(string filePath)
         {
             using var zipArchive = ZipFile.OpenRead(filePath);
-            
+
             zipArchive.GetEntry(GetSettingsFileName()).ExtractToFile(GetSettingsFilePath(), true);
         }
 
@@ -198,9 +200,27 @@ namespace NETworkManager.Settings
         #endregion
 
         #region Upgrade 
-        public static void Upgrade(Version targetVersion)
+        public static void Upgrade(Version fromVersion, Version toVersion)
         {
-            Debug.WriteLine("Perform update to: " + targetVersion.ToString());
+            Debug.WriteLine($"Perform update from {fromVersion} to {toVersion}");
+
+            // Update to 2022.8.18.0
+            /*
+            if (fromVersion < new Version(2022, 8, 18, 0))
+            {
+
+            }
+            */
+
+            // Latest
+            if(fromVersion < toVersion)
+            {
+                Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
+            }
+
+            // Set to latest version and save
+            Current.Version = toVersion.ToString();
+            Save();
         }
         #endregion
         #endregion

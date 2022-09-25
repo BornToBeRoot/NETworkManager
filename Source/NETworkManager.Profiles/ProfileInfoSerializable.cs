@@ -11,7 +11,7 @@
         {
 
         }
-
+                
         public ProfileInfoSerializable(ProfileInfo profile) : base(profile)
         {
             

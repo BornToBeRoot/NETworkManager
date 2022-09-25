@@ -269,20 +269,10 @@ namespace NETworkManager.ViewModels
 
                             AWSSessionManager_Enabled = true,
                             AWSSessionManager_InstanceID = instance.InstanceId,
+                            AWSSessionManager_OverrideProfile = true,
                             AWSSessionManager_Profile = profile.Profile,
+                            AWSSessionManager_OverrideRegion = true,
                             AWSSessionManager_Region = profile.Region
-
-                            /*
-                            PowerShell_Enabled = true,
-                            PowerShell_EnableRemoteConsole = false,
-                            PowerShell_InheritHost = true,
-                            PowerShell_Host = instance.InstanceId,
-                            PowerShell_OverrideAdditionalCommandLine = true,
-                            PowerShell_AdditionalCommandLine = $"aws ssm start-session --target {instance.InstanceId}",
-                            PowerShell_ExecutionPolicy = PowerShell.ExecutionPolicy.RemoteSigned,
-                            */
-                            // AWSSessionManager_Profile = profile.Profile
-                            // AWSSessionManager_Region = $"ec2.{profile.Region}.amazonaws.com"
                         });
                     }
                 }

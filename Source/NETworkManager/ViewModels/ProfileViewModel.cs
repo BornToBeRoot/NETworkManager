@@ -1882,6 +1882,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _awsSessionManager_OverrideProfile;
+        public bool AWSSessionManager_OverrideProfile
+        {
+            get => _awsSessionManager_OverrideProfile;
+            set
+            {
+                if (value == _awsSessionManager_OverrideProfile)
+                    return;
+
+                _awsSessionManager_OverrideProfile = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _awsSessionManager_Profile;
         public string AWSSessionManager_Profile
         {
@@ -1892,6 +1906,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _awsSessionManager_Profile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _awsSessionManager_OverrideRegion;
+        public bool AWSSessionManager_OverrideRegion
+        {
+            get => _awsSessionManager_OverrideRegion;
+            set
+            {
+                if (value == _awsSessionManager_OverrideRegion)
+                    return;
+
+                _awsSessionManager_OverrideRegion = value;
                 OnPropertyChanged();
             }
         }
@@ -2318,7 +2346,9 @@ namespace NETworkManager.ViewModels
             // AWS Session Manager
             AWSSessionManager_Enabled = editMode == ProfileEditMode.Add ? applicationName == ApplicationName.AWSSessionManager : profileInfo.AWSSessionManager_Enabled;
             AWSSessionManager_InstanceID = profileInfo.AWSSessionManager_InstanceID;
+            AWSSessionManager_OverrideProfile = profileInfo.AWSSessionManager_OverrideProfile;
             AWSSessionManager_Profile = profileInfo.AWSSessionManager_Profile;
+            AWSSessionManager_OverrideRegion = profileInfo.AWSSessionManager_OverrideRegion;
             AWSSessionManager_Region = profileInfo.AWSSessionManager_Region;
 
             // TigerVNC

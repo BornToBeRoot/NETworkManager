@@ -362,7 +362,9 @@ namespace NETworkManager
                 // AWS Session Manager
                 AWSSessionManager_Enabled = instance.AWSSessionManager_Enabled,
                 AWSSessionManager_InstanceID = instance.AWSSessionManager_InstanceID,
+                AWSSessionManager_OverrideProfile = instance.AWSSessionManager_OverrideProfile,
                 AWSSessionManager_Profile = instance.AWSSessionManager_Profile,
+                AWSSessionManager_OverrideRegion = instance.AWSSessionManager_OverrideRegion,
                 AWSSessionManager_Region = instance.AWSSessionManager_Region,
 
                 // TigerVNC
