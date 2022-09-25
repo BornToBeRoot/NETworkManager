@@ -53,6 +53,40 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private string _defaultProfile;
+        public string DefaultProfile
+        {
+            get => _defaultProfile;
+            set
+            {
+                if (value == _defaultProfile)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.AWSSessionManager_DefaultProfile = value;
+
+                _defaultProfile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _defaultRegion;
+        public string DefaultRegion
+        {
+            get => _defaultRegion;
+            set
+            {
+                if (value == _defaultRegion)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.AWSSessionManager_DefaultRegion = value;
+
+                _defaultRegion = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _applicationFilePath;
         public string ApplicationFilePath
         {
@@ -106,6 +140,8 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             EnableSyncInstanceIDsFromAWS = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
+            DefaultProfile = SettingsManager.Current.AWSSessionManager_DefaultProfile;
+            DefaultRegion = SettingsManager.Current.AWSSessionManager_DefaultRegion;
             ApplicationFilePath = SettingsManager.Current.AWSSessionManager_ApplicationFilePath;
             IsConfigured = File.Exists(ApplicationFilePath);            
         }

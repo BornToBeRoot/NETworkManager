@@ -234,6 +234,7 @@ namespace NETworkManager
                 Group = instance.Group.Trim(),
                 Tags = instance.Tags?.Trim(),
 
+                // Network Interface
                 NetworkInterface_Enabled = instance.NetworkInterface_Enabled,
                 NetworkInterface_EnableStaticIPAddress = instance.NetworkInterface_EnableStaticIPAddress,
                 NetworkInterface_IPAddress = instance.NetworkInterface_IPAddress?.Trim(),
@@ -243,27 +244,33 @@ namespace NETworkManager
                 NetworkInterface_PrimaryDNSServer = instance.NetworkInterface_PrimaryDNSServer?.Trim(),
                 NetworkInterface_SecondaryDNSServer = instance.NetworkInterface_SecondaryDNSServer?.Trim(),
 
+                // IP Scanner
                 IPScanner_Enabled = instance.IPScanner_Enabled,
                 IPScanner_InheritHost = instance.IPScanner_InheritHost,
                 IPScanner_HostOrIPRange = instance.IPScanner_InheritHost ? instance.Host?.Trim() : instance.IPScanner_HostOrIPRange?.Trim(),
 
+                // Port Scanner
                 PortScanner_Enabled = instance.PortScanner_Enabled,
                 PortScanner_InheritHost = instance.PortScanner_InheritHost,
                 PortScanner_Host = instance.PortScanner_InheritHost ? instance.Host?.Trim() : instance.PortScanner_Host?.Trim(),
                 PortScanner_Ports = instance.PortScanner_Ports?.Trim(),
 
+                // Ping Monitor
                 PingMonitor_Enabled = instance.PingMonitor_Enabled,
                 PingMonitor_InheritHost = instance.PingMonitor_InheritHost,
                 PingMonitor_Host = instance.PingMonitor_InheritHost ? instance.Host?.Trim() : instance.PingMonitor_Host?.Trim(),
 
+                // Traceroute
                 Traceroute_Enabled = instance.Traceroute_Enabled,
                 Traceroute_InheritHost = instance.Traceroute_InheritHost,
                 Traceroute_Host = instance.Traceroute_InheritHost ? instance.Host?.Trim() : instance.Traceroute_Host?.Trim(),
 
+                // DNS Lookup
                 DNSLookup_Enabled = instance.DNSLookup_Enabled,
                 DNSLookup_InheritHost = instance.Traceroute_InheritHost,
                 DNSLookup_Host = instance.DNSLookup_InheritHost ? instance.Host?.Trim() : instance.DNSLookup_Host?.Trim(),
 
+                // Remote Desktop
                 RemoteDesktop_Enabled = instance.RemoteDesktop_Enabled,
                 RemoteDesktop_InheritHost = instance.RemoteDesktop_InheritHost,
                 RemoteDesktop_Host = instance.RemoteDesktop_InheritHost ? instance.Host?.Trim() : instance.RemoteDesktop_Host?.Trim(),
@@ -318,6 +325,7 @@ namespace NETworkManager
                 RemoteDesktop_MenuAndWindowAnimation = instance.RemoteDesktop_MenuAndWindowAnimation,
                 RemoteDesktop_VisualStyles = instance.RemoteDesktop_VisualStyles,
 
+                // PowerShell
                 PowerShell_Enabled = instance.PowerShell_Enabled,
                 PowerShell_EnableRemoteConsole = instance.PowerShell_EnableRemoteConsole,
                 PowerShell_InheritHost = instance.PowerShell_InheritHost,
@@ -327,6 +335,7 @@ namespace NETworkManager
                 PowerShell_OverrideExecutionPolicy = instance.PowerShell_OverrideExecutionPolicy,
                 PowerShell_ExecutionPolicy = instance.PowerShell_ExecutionPolicy,
 
+                // PuTTY
                 PuTTY_Enabled = instance.PuTTY_Enabled,
                 PuTTY_ConnectionMode = instance.PuTTY_ConnectionMode,
                 PuTTY_InheritHost = instance.PuTTY_InheritHost,
@@ -350,26 +359,31 @@ namespace NETworkManager
                 PuTTY_OverrideAdditionalCommandLine = instance.PuTTY_OverrideAdditionalCommandLine,
                 PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
 
+                // AWS Session Manager
                 AWSSessionManager_Enabled = instance.AWSSessionManager_Enabled,
                 AWSSessionManager_InstanceID = instance.AWSSessionManager_InstanceID,
                 AWSSessionManager_Profile = instance.AWSSessionManager_Profile,
                 AWSSessionManager_Region = instance.AWSSessionManager_Region,
 
+                // TigerVNC
                 TigerVNC_Enabled = instance.TigerVNC_Enabled,
                 TigerVNC_InheritHost = instance.TigerVNC_InheritHost,
                 TigerVNC_Host = instance.TigerVNC_InheritHost ? instance.Host?.Trim() : instance.TigerVNC_Host?.Trim(),
                 TigerVNC_OverridePort = instance.TigerVNC_OverridePort,
                 TigerVNC_Port = instance.TigerVNC_Port,
 
+                // WebConsole
                 WebConsole_Enabled = instance.WebConsole_Enabled,
                 WebConsole_Url = instance.WebConsole_Url,
 
+                // Wake on LAN
                 WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
                 WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),
                 WakeOnLAN_Broadcast = instance.WakeOnLAN_Broadcast?.Trim(),
                 WakeOnLAN_OverridePort = instance.WakeOnLAN_OverridePort,
                 WakeOnLAN_Port = instance.WakeOnLAN_Port,
 
+                // Whois
                 Whois_Enabled = instance.Whois_Enabled,
                 Whois_InheritHost = instance.Whois_InheritHost,
                 Whois_Domain = instance.Whois_InheritHost ? instance.Host?.Trim() : instance.Whois_Domain?.Trim()
@@ -404,6 +418,7 @@ namespace NETworkManager
 
                 Profiles = profiles,
 
+                // Remote Desktop
                 RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,
                 RemoteDesktop_Username = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Username : string.Empty, // Remove sensitive info on disable
                 RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials ? instance.RemoteDesktop_Password : new SecureString(), // Remove sensitive info on disable
@@ -455,11 +470,13 @@ namespace NETworkManager
                 RemoteDesktop_MenuAndWindowAnimation = instance.RemoteDesktop_MenuAndWindowAnimation,
                 RemoteDesktop_VisualStyles = instance.RemoteDesktop_VisualStyles,
 
+                // PowerShell
                 PowerShell_OverrideAdditionalCommandLine = instance.PowerShell_OverrideAdditionalCommandLine,
                 PowerShell_AdditionalCommandLine = instance.PowerShell_AdditionalCommandLine,
                 PowerShell_OverrideExecutionPolicy = instance.PowerShell_OverrideExecutionPolicy,
                 PowerShell_ExecutionPolicy = instance.PowerShell_ExecutionPolicy,
 
+                // PuTTY
                 PuTTY_OverrideUsername = instance.PuTTY_OverrideUsername,
                 PuTTY_Username = instance.PuTTY_Username?.Trim(),
                 PuTTY_OverridePrivateKeyFile = instance.PuTTY_OverridePrivateKeyFile,
@@ -477,6 +494,13 @@ namespace NETworkManager
                 PuTTY_OverrideAdditionalCommandLine = instance.PuTTY_OverrideAdditionalCommandLine,
                 PuTTY_AdditionalCommandLine = instance.PuTTY_AdditionalCommandLine?.Trim(),
 
+                // AWS Session Manager
+                AWSSessionManager_OverrideProfile = instance.AWSSessionManager_OverrideProfile,
+                AWSSessionManager_Profile = instance.AWSSessionManager_Profile,
+                AWSSessionManager_OverrideRegion = instance.AWSSessionManager_OverrideRegion,
+                AWSSessionManager_Region = instance.AWSSessionManager_Region,
+
+                // TigerVNC
                 TigerVNC_OverridePort = instance.TigerVNC_OverridePort,
                 TigerVNC_Port = instance.TigerVNC_Port
             };

@@ -2844,6 +2844,36 @@ namespace NETworkManager.Settings
             }
         }
 
+        private string _awsSessionManager_DefaultProfile;
+        public string AWSSessionManager_DefaultProfile
+        {
+            get => _awsSessionManager_DefaultProfile;
+            set
+            {
+                if (value == _awsSessionManager_DefaultProfile)
+                    return;
+
+                _awsSessionManager_DefaultProfile = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _awsSessionManager_DefaultRegion;
+        public string AWSSessionManager_DefaultRegion
+        {
+            get => _awsSessionManager_DefaultRegion;
+            set
+            {
+                if (value == _awsSessionManager_DefaultRegion)
+                    return;
+
+                _awsSessionManager_DefaultRegion = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         private string _awsSessionManager_ApplicationFilePath = GlobalStaticConfiguration.AWSSessionManager_ApplicationFileLocationPowerShell;
         public string AWSSessionManager_ApplicationFilePath
         {

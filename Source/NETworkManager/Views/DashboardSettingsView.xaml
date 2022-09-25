@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:mahAppsControls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
         xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
@@ -18,7 +18,7 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" mahAppsControls:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}" Style="{StaticResource DefaultTextBox}">
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="PublicIPv4Address" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -36,7 +36,7 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" mahAppsControls:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv6Address}" Style="{StaticResource DefaultTextBox}">
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv6Address}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="PublicIPv6Address" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -47,7 +47,7 @@
             </TextBox.Text>
         </TextBox>       
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mahAppsControls:ToggleSwitch IsOn="{Binding CheckPublicIPAddress}" Header="{x:Static localization:Strings.CheckPublicIPAddress}" />
+            <mah:ToggleSwitch IsOn="{Binding CheckPublicIPAddress}" Header="{x:Static localization:Strings.CheckPublicIPAddress}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckPublicIPAddress}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
@@ -55,14 +55,14 @@
             </Rectangle>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mahAppsControls:ToggleSwitch IsOn="{Binding UsePublicIPAddressCustomAPI}" Header="{x:Static localization:Strings.UseCustomIPv4AddressAPI}" IsEnabled="{Binding CheckPublicIPAddress}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch IsOn="{Binding UsePublicIPAddressCustomAPI}" Header="{x:Static localization:Strings.UseCustomIPv4AddressAPI}" IsEnabled="{Binding CheckPublicIPAddress}" Margin="0,0,0,10" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CustomPublicIPAddressAPI}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <TextBox Width="250" HorizontalAlignment="Left" mahAppsControls:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePublicIPv4AddressAPI}" Margin="0,0,0,10">
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePublicIPv4AddressAPI}" Margin="0,0,0,10">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                     <Setter Property="IsEnabled" Value="False" />
@@ -89,14 +89,14 @@
             </TextBox.Text>
         </TextBox>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mahAppsControls:ToggleSwitch IsOn="{Binding UsePublicIPv6AddressCustomAPI}" Header="{x:Static localization:Strings.UseCustomIPv6AddressAPI}" IsEnabled="{Binding CheckPublicIPAddress}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch IsOn="{Binding UsePublicIPv6AddressCustomAPI}" Header="{x:Static localization:Strings.UseCustomIPv6AddressAPI}" IsEnabled="{Binding CheckPublicIPAddress}" Margin="0,0,0,10" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CustomPublicIPAddressAPI}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <TextBox Width="250" HorizontalAlignment="Left" mahAppsControls:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePublicIPv6AddressAPI}" Margin="0,0,0,10">
+        <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePublicIPv6AddressAPI}" Margin="0,0,0,10">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                     <Setter Property="IsEnabled" Value="False" />

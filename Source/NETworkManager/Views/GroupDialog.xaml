@@ -102,6 +102,10 @@
                                                         <Setter Property="Visibility" Value="Hidden" />
                                                         <!--  <Setter Property="IsChecked" Value="{Binding DataContext.PuTTY_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" /> -->
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (profiles:GroupViewInfo.Name)}" Value="{x:Static profiles:GroupViewName.AWSSessionManager}">
+                                                        <Setter Property="Visibility" Value="Hidden" />
+                                                        <!--  <Setter Property="IsChecked" Value="{Binding DataContext.PuTTY_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" /> -->
+                                                    </DataTrigger>
                                                     <DataTrigger Binding="{Binding (profiles:GroupViewInfo.Name)}" Value="{x:Static profiles:GroupViewName.TigerVNC}">
                                                         <Setter Property="Visibility" Value="Hidden" />
                                                         <!-- <Setter Property="IsChecked" Value="{Binding DataContext.TigerVNC_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" /> -->
@@ -566,6 +570,56 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <TabItem Header="{x:Static localization:Strings.AWSSessionManager}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                        <StackPanel Margin="0,0,0,20">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
+                                <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                <CheckBox Grid.Column="0" Grid.Row="4" Content="{x:Static localization:Strings.Profile}" IsChecked="{Binding AWSSessionManager_OverrideProfile}" Style="{StaticResource DefaultCheckBox}" />
+                                <TextBox x:Name="TextBoxAWSSessionManagerProfile" Grid.Column="2" Grid.Row="4" IsEnabled="{Binding AWSSessionManager_OverrideProfile}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSProfile}">
+                                    <TextBox.Text>
+                                        <Binding Path="AWSSessionManager_Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />                                                
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <CheckBox Grid.Column="0" Grid.Row="6" Content="{x:Static localization:Strings.Region}" IsChecked="{Binding AWSSessionManager_OverrideRegion}" Style="{StaticResource DefaultCheckBox}" />
+                                <TextBox x:Name="TextBoxAWSSessionManagerRegion" Grid.Column="2" Grid.Row="6" IsEnabled="{Binding AWSSessionManager_OverrideRegion}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSRegion}">
+                                    <TextBox.Text>
+                                        <Binding Path="AWSSessionManager_Region" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <!-- Add region validator -->
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
                 <TabItem Header="{x:Static localization:Strings.TigerVNC}">
                     <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
                         <StackPanel Margin="0,0,0,20">
@@ -620,7 +674,6 @@
                             <!-- Remote Desktop -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding RemoteDesktop_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding RemoteDesktop_UseCredentials}" Value="True" />
                                     <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopUsername, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
@@ -630,7 +683,6 @@
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding RemoteDesktop_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding RemoteDesktop_UseCredentials}" Value="True" />
                                     <Condition Binding="{Binding RemoteDesktop_IsPasswordEmpty}" Value="True" />
                                 </MultiDataTrigger.Conditions>
@@ -640,7 +692,6 @@
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding RemoteDesktop_Enabled}" Value="True"/>
                                     <Condition Binding="{Binding RemoteDesktop_OverridePort}" Value="True"/>
                                     <Condition Binding="{Binding ElementName=TextBoxRemoteDesktopPort, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
@@ -651,7 +702,6 @@
                             <!-- PuTTY -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
                                     <Condition Binding="{Binding PuTTY_OverrideUsername}" Value="True" />
                                     <Condition Binding="{Binding ElementName=TextBoxPuTTYUsername, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
@@ -661,7 +711,6 @@
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
                                     <Condition Binding="{Binding PuTTY_OverridePrivateKeyFile}" Value="True" />
                                     <Condition Binding="{Binding ElementName=TextBoxPuTTYPrivateKeyFile, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
@@ -671,7 +720,6 @@
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
                                     <Condition Binding="{Binding PuTTY_OverrideLogPath}" Value="True" />
                                     <Condition Binding="{Binding ElementName=TextBoxPuTTYLogPath, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
@@ -681,9 +729,27 @@
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding PuTTY_Enabled}" Value="True" />
                                     <Condition Binding="{Binding PuTTY_OverrideLogFileName}" Value="True" />
                                     <Condition Binding="{Binding ElementName=TextBoxPuTTYLogFileName, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- AWS Session Manager -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding AWSSessionManager_OverrideProfile}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxAWSSessionManagerProfile, Path=(Validation.HasError)}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding AWSSessionManager_OverrideRegion}" Value="True"/>
+                                    <Condition Binding="{Binding ElementName=TextBoxAWSSessionManagerRegion, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
@@ -692,7 +758,7 @@
                             <!-- TigerVNC -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding TigerVNC_Enabled}" Value="True"/>
+                                    <Condition Binding="{Binding TigerVNC_OverridePort}" Value="True"/>
                                     <Condition Binding="{Binding ElementName=TextBoxTigerVNCPort, Path=(Validation.HasError)}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>

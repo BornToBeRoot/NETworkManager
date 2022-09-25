@@ -3169,13 +3169,28 @@ The profile is not removed from the ~\.aws\credentials file.</value>
   <data name="SyncGroupInstanceIDsFromAWS" xml:space="preserve">
     <value>Sync group Instance IDs from AWS</value>
   </data>
-  <data name="ProfilesAndRegions" xml:space="preserve">
-    <value>Profiles and regions</value>
+  <data name="ProfilesAndRegionsToSync" xml:space="preserve">
+    <value>Profiles and regions to sync</value>
   </data>
-  <data name="HelpMessage_AWSSessionManagerProfilesAndRegions" xml:space="preserve">
+  <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
     <value>To synchronize instance IDs from AWS, the AWS CLI must be configured on the system. The instance IDs can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in ~/.aws/credentials must be configured along with the region to query.</value>
   </data>
   <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
     <value>AWS SDK for .NET to work with Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS).</value>
+  </data>
+  <data name="DefaultProfile" xml:space="preserve">
+    <value>Default profile</value>
+  </data>
+  <data name="DefaultRegion" xml:space="preserve">
+    <value>Default region</value>
+  </data>
+  <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
+    <value>Default AWS CLI profile which is used by manually created profiles to connect to an instance.</value>
+  </data>
+  <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
+    <value>Default AWS CLI region which is used by manually created profiles to connect to an instance.</value>
+  </data>
+  <data name="ProfileViewName_AWSSessionManager" xml:space="preserve">
+    <value>AWS Session Manager</value>
   </data>
 </root>

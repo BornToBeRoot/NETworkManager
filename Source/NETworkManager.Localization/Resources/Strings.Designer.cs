@@ -2032,6 +2032,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default profile ähnelt.
+        /// </summary>
+        public static string DefaultProfile {
+            get {
+                return ResourceManager.GetString("DefaultProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default region ähnelt.
+        /// </summary>
+        public static string DefaultRegion {
+            get {
+                return ResourceManager.GetString("DefaultRegion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Delete ähnelt.
         /// </summary>
         public static string Delete {
@@ -3431,11 +3449,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default AWS CLI profile which is used by manually created profiles to connect to an instance. ähnelt.
+        /// </summary>
+        public static string HelpMessage_AWSSessionManagerDefaultProfile {
+            get {
+                return ResourceManager.GetString("HelpMessage_AWSSessionManagerDefaultProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default AWS CLI region which is used by manually created profiles to connect to an instance. ähnelt.
+        /// </summary>
+        public static string HelpMessage_AWSSessionManagerDefaultRegion {
+            get {
+                return ResourceManager.GetString("HelpMessage_AWSSessionManagerDefaultRegion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die To synchronize instance IDs from AWS, the AWS CLI must be configured on the system. The instance IDs can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in ~/.aws/credentials must be configured along with the region to query. ähnelt.
         /// </summary>
-        public static string HelpMessage_AWSSessionManagerProfilesAndRegions {
+        public static string HelpMessage_AWSSessionManagerProfilesAndRegionsToSync {
             get {
-                return ResourceManager.GetString("HelpMessage_AWSSessionManagerProfilesAndRegions", resourceCulture);
+                return ResourceManager.GetString("HelpMessage_AWSSessionManagerProfilesAndRegionsToSync", resourceCulture);
             }
         }
         
@@ -5662,11 +5698,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Profiles and regions ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Profiles and regions to sync ähnelt.
         /// </summary>
-        public static string ProfilesAndRegions {
+        public static string ProfilesAndRegionsToSync {
             get {
-                return ResourceManager.GetString("ProfilesAndRegions", resourceCulture);
+                return ResourceManager.GetString("ProfilesAndRegionsToSync", resourceCulture);
             }
         }
         
@@ -5676,6 +5712,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ProfilesReloaded {
             get {
                 return ResourceManager.GetString("ProfilesReloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS Session Manager ähnelt.
+        /// </summary>
+        public static string ProfileViewName_AWSSessionManager {
+            get {
+                return ResourceManager.GetString("ProfileViewName_AWSSessionManager", resourceCulture);
             }
         }
         

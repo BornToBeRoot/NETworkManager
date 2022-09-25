@@ -4,7 +4,17 @@
     {
         public static string BuildCommandLine(AWSSessionManagerSessionInfo sessionInfo)
         {
-            return $"-NoExit -NoLogo -NoProfile -Command \"aws ssm start-session --target {sessionInfo.InstanceID} --profile {sessionInfo.Profile} --region {sessionInfo.Region}\"";           
+            var commandLine = $"-NoExit -NoLogo -NoProfile -Command \"aws ssm start-session --target {sessionInfo.InstanceID}";
+
+            // Add profile
+            if (!string.IsNullOrEmpty(sessionInfo.Profile))
+                commandLine += $" --profile {sessionInfo.Profile}";
+
+            // Add region
+            if (!string.IsNullOrEmpty(sessionInfo.Region))
+                commandLine += $" --region {sessionInfo.Region}";
+
+            return $"{commandLine}\"";
         }
     }
 }
