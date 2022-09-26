@@ -109,15 +109,21 @@ namespace NETworkManager
             }
 
             // Perform settings update if settings version is lower than application version            
-            if (!SettingsManager.Current.FirstRun && !string.IsNullOrEmpty(SettingsManager.Current.Version))
+            if (SettingsManager.Current.FirstRun || string.IsNullOrEmpty(SettingsManager.Current.Version))
             {
-                Version currentSettingsVersion = Version.Parse(SettingsManager.Current.Version);
+                _log.Info($"Application settings version is empty and will be set to {AssemblyManager.Current.Version}.");
 
-                if (currentSettingsVersion < AssemblyManager.Current.Version)
+                SettingsManager.Current.Version = AssemblyManager.Current.Version.ToString();
+            }
+            else
+            {
+                Version settingsVersion = Version.Parse(SettingsManager.Current.Version);
+
+                if (settingsVersion < AssemblyManager.Current.Version)
                 {
-                    _log.Info($"Application settings are on version {currentSettingsVersion} and will be upgraded to {AssemblyManager.Current.Version}");
+                    _log.Info($"Application settings are on version {settingsVersion} and will be upgraded to {AssemblyManager.Current.Version}");
 
-                    SettingsManager.Upgrade(currentSettingsVersion, AssemblyManager.Current.Version);
+                    SettingsManager.Upgrade(settingsVersion, AssemblyManager.Current.Version);
 
                     _log.Info($"Application settings upgraded to version {AssemblyManager.Current.Version}");
                 }
@@ -125,12 +131,6 @@ namespace NETworkManager
                 {
                     _log.Info($"Application settings are already on version {AssemblyManager.Current.Version}.");
                 }
-            }
-            else
-            {
-                _log.Info($"Application settings version is empty and will be set to {AssemblyManager.Current.Version}.");
-
-                SettingsManager.Current.Version = AssemblyManager.Current.Version.ToString();
             }
 
             // Init the location with the culture code...
