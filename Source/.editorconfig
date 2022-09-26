@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CA1416: Plattformkompatibilität überprüfen
+dotnet_diagnostic.CA1416.severity = silent
