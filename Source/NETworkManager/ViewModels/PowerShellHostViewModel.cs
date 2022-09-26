@@ -212,9 +212,8 @@ namespace NETworkManager.ViewModels
         public PowerShellHostViewModel(IDialogCoordinator instance)
         {
             _dialogCoordinator = instance;
-
-            // Check if putty is available...
-            CheckIfConfigured();
+            
+            CheckSettings();
 
             InterTabClient = new DragablzInterTabClient(ApplicationName.PowerShell);
 
@@ -262,7 +261,7 @@ namespace NETworkManager.ViewModels
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))
-                CheckIfConfigured();
+                CheckSettings();
         }
 
         private void LoadSettings()
@@ -411,7 +410,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void CheckIfConfigured()
+        private void CheckSettings()
         {
             IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) && File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath);
         }

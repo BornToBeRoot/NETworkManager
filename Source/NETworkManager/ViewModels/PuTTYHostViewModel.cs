@@ -213,9 +213,8 @@ namespace NETworkManager.ViewModels
         public PuTTYHostViewModel(IDialogCoordinator instance)
         {
             _dialogCoordinator = instance;
-
-            // Check if putty is available...
-            CheckIfConfigured();
+                        
+            CheckSettings();
 
             // Create default PuTTY profile for NETworkManager 
             if (IsConfigured)
@@ -267,7 +266,7 @@ namespace NETworkManager.ViewModels
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.PuTTY_ApplicationFilePath))
-                CheckIfConfigured();
+                CheckSettings();
         }
 
         private void LoadSettings()
@@ -427,7 +426,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void CheckIfConfigured()
+        private void CheckSettings()
         {
             IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) && File.Exists(SettingsManager.Current.PuTTY_ApplicationFilePath);
         }
