@@ -25,6 +25,7 @@ using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
 using NETworkManager.Models.AWS;
 using System.Text.RegularExpressions;
+using Microsoft.Win32;
 
 namespace NETworkManager.ViewModels
 {
@@ -40,16 +41,44 @@ namespace NETworkManager.ViewModels
         private readonly bool _isLoading = true;
         private bool _isViewActive = true;
 
-        private bool _isConfigured;
-        public bool IsConfigured
+        private bool _isAWSCLIInstalled;
+        public bool IsAWSCLIInstalled
         {
-            get => _isConfigured;
+            get => _isAWSCLIInstalled;
             set
             {
-                if (value == _isConfigured)
+                if (value == _isAWSCLIInstalled)
                     return;
 
-                _isConfigured = value;
+                _isAWSCLIInstalled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isAWSSessionManagerPluginInstalled;
+        public bool IsAWSSessionManagerPluginInstalled
+        {
+            get => _isAWSSessionManagerPluginInstalled;
+            set
+            {
+                if (value == _isAWSSessionManagerPluginInstalled)
+                    return;
+
+                _isAWSSessionManagerPluginInstalled = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isPowerShellConfigured;
+        public bool IsPowerShellConfigured
+        {
+            get => _isPowerShellConfigured;
+            set
+            {
+                if (value == _isPowerShellConfigured)
+                    return;
+
+                _isPowerShellConfigured = value;
                 OnPropertyChanged();
             }
         }
@@ -181,9 +210,9 @@ namespace NETworkManager.ViewModels
         public AWSSessionManagerHostViewModel(IDialogCoordinator instance)
         {
             _dialogCoordinator = instance;
-
-            // Check if putty is available...
-            CheckIfConfigured();
+                        
+            CheckInstallationStatus();
+            CheckSettings();
 
             InterTabClient = new DragablzInterTabClient(ApplicationName.AWSSessionManager);
 
@@ -359,7 +388,7 @@ namespace NETworkManager.ViewModels
             // Does not fire event OnPropertyChange if collection changes...
 
             if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath))
-                CheckIfConfigured();
+                CheckSettings();
         }
 
         // ToDo ->  Detect diff / only sync diff
@@ -379,6 +408,13 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommand & Actions
+        public ICommand CheckInstallationStatusCommand => new RelayCommand(p => CheckInstallationStatusAction());
+
+        private void CheckInstallationStatusAction()
+        {
+            CheckInstallationStatus();
+        }
+
         public ItemActionCallback CloseItemCommand => CloseItemAction;
 
         private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
@@ -415,7 +451,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
 
-        private bool Connect_CanExecute(object obj) => IsConfigured;
+        private bool Connect_CanExecute(object obj) => IsPowerShellConfigured;
 
         private void ConnectAction()
         {
@@ -509,10 +545,20 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        #region Methods
-        private void CheckIfConfigured()
+        #region Methods        
+        private void CheckInstallationStatus()
         {
-            IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) && File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
+            // Maybe also check DisplayVersion?
+            RegistryKey awsCLIRegistryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{01CCB9EC-7FA4-494D-9EEC-395C080CAA7C}", false);
+            IsAWSCLIInstalled = awsCLIRegistryKey != null && awsCLIRegistryKey.GetValue("DisplayName") != null;
+
+            RegistryKey awsSessionManagerPluginRegistryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{13DD0F7B-C2A8-4F22-BF55-CD0D719DBA46}", false);
+            IsAWSSessionManagerPluginInstalled = awsSessionManagerPluginRegistryKey != null && awsSessionManagerPluginRegistryKey.GetValue("DisplayName") != null;
+        }
+        
+        private void CheckSettings()
+        {
+            IsPowerShellConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) && File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
         }
 
         private async Task Connect()

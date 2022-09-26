@@ -3209,4 +3209,16 @@ If not set, the default AWS CLI settings are used.</value>
   <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
     <value>An AWS region named "{0}" does not exist!</value>
   </data>
+  <data name="AWSCLIv2IsInstalled" xml:space="preserve">
+    <value>AWS CLI v2 is installed!</value>
+  </data>
+  <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
+    <value>AWS CLI v2 is not installed!</value>
+  </data>
+  <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
+    <value>AWS Session Manager Plugin is installed!</value>
+  </data>
+  <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
+    <value>AWS Session Manager Plugin is not installed!</value>
+  </data>
 </root>

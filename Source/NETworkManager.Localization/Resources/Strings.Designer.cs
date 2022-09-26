@@ -1042,11 +1042,47 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS CLI v2 is installed! ähnelt.
+        /// </summary>
+        public static string AWSCLIv2IsInstalled {
+            get {
+                return ResourceManager.GetString("AWSCLIv2IsInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS CLI v2 is not installed! ähnelt.
+        /// </summary>
+        public static string AWSCLIv2IsNotInstalled {
+            get {
+                return ResourceManager.GetString("AWSCLIv2IsNotInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die AWS Session Manager ähnelt.
         /// </summary>
         public static string AWSSessionManager {
             get {
                 return ResourceManager.GetString("AWSSessionManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS Session Manager Plugin is installed! ähnelt.
+        /// </summary>
+        public static string AWSSessionManagerPluginIsInstalled {
+            get {
+                return ResourceManager.GetString("AWSSessionManagerPluginIsInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS Session Manager Plugin is not installed! ähnelt.
+        /// </summary>
+        public static string AWSSessionManagerPluginIsNotInstalled {
+            get {
+                return ResourceManager.GetString("AWSSessionManagerPluginIsNotInstalled", resourceCulture);
             }
         }
         

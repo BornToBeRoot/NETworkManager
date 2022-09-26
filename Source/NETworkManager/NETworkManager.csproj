@@ -29,6 +29,7 @@
 		<None Remove="log4net.config" />
 		<None Remove="NETworkManager.ico" />
 		<None Remove="SplashScreen.png" />
+		<None Include="..\.editorconfig" Link=".editorconfig" />
 		<None Include="NETworkManager.ico">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
