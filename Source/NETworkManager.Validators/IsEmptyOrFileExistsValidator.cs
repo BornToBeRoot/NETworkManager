@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Validators
 {
-    public class EmptyOrFileExistsValidator : ValidationRule
+    public class IsEmptyOrFileExistsValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

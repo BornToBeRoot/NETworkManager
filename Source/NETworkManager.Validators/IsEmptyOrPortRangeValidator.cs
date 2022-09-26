@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Validators
 {
-    public class EmptyOrPortRangeValidator : ValidationRule
+    public class IsEmptyOrPortRangeValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

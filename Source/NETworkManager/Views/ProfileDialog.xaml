@@ -329,7 +329,7 @@
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_Gateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validators:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:IsEmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -358,7 +358,7 @@
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_PrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validators:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:IsEmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -368,7 +368,7 @@
                                     <TextBox.Text>
                                         <Binding Path="NetworkInterface_SecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validators:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:IsEmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -486,7 +486,7 @@
                                     <TextBox.Text>
                                         <Binding Path="PortScanner_Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validators:EmptyOrPortRangeValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:IsEmptyOrPortRangeValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
