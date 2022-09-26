@@ -601,7 +601,6 @@
                                     <TextBox.Text>
                                         <Binding Path="AWSSessionManager_Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                                 <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
@@ -612,9 +611,7 @@
                                     <TextBox.Text>
                                         <Binding Path="AWSSessionManager_Region" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
-                                                <!-- Add region validator -->
+                                                <validators:IsEmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>

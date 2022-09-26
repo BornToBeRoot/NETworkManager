@@ -619,6 +619,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die An AWS region named &quot;{0}&quot; does not exist! ähnelt.
+        /// </summary>
+        public static string AnAWSRegionNamedXDoesNotExist {
+            get {
+                return ResourceManager.GetString("AnAWSRegionNamedXDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die An error occurred while exporting the data. See error message for details: ähnelt.
         /// </summary>
         public static string AnErrorOccurredWhileExportingTheData {

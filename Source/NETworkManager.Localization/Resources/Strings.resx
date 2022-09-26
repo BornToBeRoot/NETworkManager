@@ -3206,4 +3206,7 @@ If not set, the default AWS CLI settings are used.</value>
   <data name="SyncOnlyRunningInstancesFromAWS" xml:space="preserve">
     <value>Sync only running instances from AWS</value>
   </data>
+  <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
+    <value>An AWS region named "{0}" does not exist!</value>
+  </data>
 </root>

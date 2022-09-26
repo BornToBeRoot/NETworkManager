@@ -48,11 +48,9 @@
             <ComboBox x:Name="ComboBoxProfile" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding ProfileHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSProfile}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <!--
-                        <Binding.ValidationRules>
-                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <Binding.ValidationRules>                            
                             <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>-->
+                        </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
@@ -65,10 +63,9 @@
             <ComboBox x:Name="ComboBoxRegion" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding RegionHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSRegion}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Region" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <!--<Binding.ValidationRules>
-                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>-->
+                        <Binding.ValidationRules>
+                            <validators:IsEmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>

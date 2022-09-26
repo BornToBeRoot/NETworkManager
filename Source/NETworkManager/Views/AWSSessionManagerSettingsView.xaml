@@ -155,12 +155,12 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSProfile}" Style="{StaticResource DefaultTextBox}">
+        <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSProfile}" Style="{StaticResource DefaultTextBox}" >
             <TextBox.Text>
                 <Binding Path="DefaultProfile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                    <!--<Binding.ValidationRules>
-                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules> -->
+                    <Binding.ValidationRules>
+                        <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
@@ -176,9 +176,9 @@
             <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSRegion}" Style="{StaticResource DefaultTextBox}">
                 <TextBox.Text>
                     <Binding Path="DefaultRegion" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <!-- <Binding.ValidationRules>
-                        Add region validator
-                    </Binding.ValidationRules> -->
+                        <Binding.ValidationRules>
+                            <validators:IsEmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
