@@ -311,11 +311,17 @@ namespace NETworkManager.ViewModels
             {
                 foreach (var instance in reservation.Instances)
                 {
+                    if (SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS && instance.State.Name.Value != "running")
+                        continue;
+
                     Debug.WriteLine("Found Instance: " + instance.InstanceId);
+
+                    var tagName = instance.Tags.FirstOrDefault(x => x.Key == "Name");
+                    var name = tagName.Value == null ? instance.InstanceId : $"{tagName.Value} ({instance.InstanceId})";
 
                     groupInfo.Profiles.Add(new ProfileInfo()
                     {
-                        Name = $"{instance.Tags.FirstOrDefault(x => x.Key == "Name")?.Value} ({instance.InstanceId})",
+                        Name = name,
                         Host = instance.InstanceId,
                         Group = $"~ [{profile}\\{region}]",
                         IsDynamic = true,

@@ -50,7 +50,7 @@ namespace NETworkManager.Settings
 
         public string Version
         {
-            get  => _version;
+            get => _version;
             set
             {
                 if (value == _version)
@@ -2824,6 +2824,21 @@ namespace NETworkManager.Settings
                     return;
 
                 _awsSessionManager_AWSProfiles = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool awsSessionManager_SyncOnlyRunningInstancesFromAWS = GlobalStaticConfiguration.AWSSessionManager_SyncOnlyRunningInstancesFromAWS;
+        public bool AWSSessionManager_SyncOnlyRunningInstancesFromAWS
+        {
+            get => awsSessionManager_SyncOnlyRunningInstancesFromAWS;
+            set
+            {
+                if (value == awsSessionManager_SyncOnlyRunningInstancesFromAWS)
+                    return;
+
+                awsSessionManager_SyncOnlyRunningInstancesFromAWS = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

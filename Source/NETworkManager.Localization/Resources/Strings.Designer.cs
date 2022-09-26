@@ -8038,6 +8038,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sync only running instances from AWS ähnelt.
+        /// </summary>
+        public static string SyncOnlyRunningInstancesFromAWS {
+            get {
+                return ResourceManager.GetString("SyncOnlyRunningInstancesFromAWS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Tags ähnelt.
         /// </summary>
         public static string Tags {

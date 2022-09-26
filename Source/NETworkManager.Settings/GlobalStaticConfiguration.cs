@@ -137,7 +137,8 @@ namespace NETworkManager.Settings
         // Application: AWSSessionManager
         public static string AWSSessionManager_ApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");
         public static bool AWSSessionManager_EnableSyncInstanceIDsFromAWS => false;
-        
+        public static bool AWSSessionManager_SyncOnlyRunningInstancesFromAWS => true;
+
         // Application: TigerVNC
         public static int TigerVNC_DefaultVNCPort => 5900;
 

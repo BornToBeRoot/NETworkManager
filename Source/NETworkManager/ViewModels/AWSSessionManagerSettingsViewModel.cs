@@ -53,6 +53,23 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _syncOnlyRunningInstancesFromAWS;
+        public bool SyncOnlyRunningInstancesFromAWS
+        {
+            get => _syncOnlyRunningInstancesFromAWS;
+            set
+            {
+                if (value == _syncOnlyRunningInstancesFromAWS)
+                    return;
+
+                if(!_isLoading)
+                    SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS = value;
+
+                _syncOnlyRunningInstancesFromAWS = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _defaultProfile;
         public string DefaultProfile
         {
@@ -140,6 +157,7 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             EnableSyncInstanceIDsFromAWS = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
+            SyncOnlyRunningInstancesFromAWS = SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS;
             DefaultProfile = SettingsManager.Current.AWSSessionManager_DefaultProfile;
             DefaultRegion = SettingsManager.Current.AWSSessionManager_DefaultRegion;
             ApplicationFilePath = SettingsManager.Current.AWSSessionManager_ApplicationFilePath;
