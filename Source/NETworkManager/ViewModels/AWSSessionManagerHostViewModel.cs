@@ -210,7 +210,7 @@ namespace NETworkManager.ViewModels
         public AWSSessionManagerHostViewModel(IDialogCoordinator instance)
         {
             _dialogCoordinator = instance;
-                        
+
             CheckInstallationStatus();
             CheckSettings();
 
@@ -254,7 +254,8 @@ namespace NETworkManager.ViewModels
 
             LoadSettings();
 
-            SyncAllInstanceIDsFromAWS();
+            if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
+                SyncAllInstanceIDsFromAWS();
 
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
             SettingsManager.Current.AWSSessionManager_AWSProfiles.CollectionChanged += AWSSessionManager_AWSProfiles_CollectionChanged;
@@ -264,12 +265,6 @@ namespace NETworkManager.ViewModels
 
         private async Task SyncAllInstanceIDsFromAWS()
         {
-            if (!SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
-            {
-                Debug.WriteLine("Sync with AWS is disabled!");
-                return;
-            }
-
             IsSyncing = true;
 
             foreach (var profile in SettingsManager.Current.AWSSessionManager_AWSProfiles)
@@ -366,35 +361,85 @@ namespace NETworkManager.ViewModels
             }
 
             // Replace or add group
+            var profilesChangedCurrentState = ProfileManager.ProfilesChanged;
+            ProfileManager.ProfilesChanged = false;
+
             if (ProfileManager.GroupExists(groupName))
                 ProfileManager.ReplaceGroup(ProfileManager.GetGroup(groupName), groupInfo);
             else
                 ProfileManager.AddGroup(groupInfo);
 
+            ProfileManager.ProfilesChanged = profilesChangedCurrentState;
+
             Debug.WriteLine("Sync done!");
+        }
+
+        private void RemoveDynamicGroups()
+        {
+            foreach (var profile in SettingsManager.Current.AWSSessionManager_AWSProfiles)
+            {
+                if (!profile.IsEnabled)
+                    continue;
+
+                RemoveDynamicGroup(profile.Profile, profile.Region);
+            }
+        }
+
+        private void RemoveDynamicGroup(string profile, string region)
+        {
+            string groupName = $"~ [{profile}\\{region}]";
+
+            Debug.WriteLine("Remove dynamic group: " + groupName);
+
+            var profilesChangedCurrentState = ProfileManager.ProfilesChanged;
+            ProfileManager.ProfilesChanged = false;
+
+            if (ProfileManager.GroupExists(groupName))
+                ProfileManager.RemoveGroup(ProfileManager.GetGroup(groupName));
+
+            ProfileManager.ProfilesChanged = profilesChangedCurrentState;
         }
 
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            // ToDo.... disable -> delete
-            if (e.PropertyName == nameof(SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS))
+            if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_EnableSyncInstanceIDsFromAWS))
+            {
+                if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
+                    SyncAllInstanceIDsFromAWS();
+                else
+                    RemoveDynamicGroups();
+            }
+
+            if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_SyncOnlyRunningInstancesFromAWS))
             {
                 if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
                     SyncAllInstanceIDsFromAWS();
             }
 
-            //if (e.PropertyName == nameof(SettingsManager.Current.AWSSessionManager_AWSProfiles))
-            //    SyncAllInstanceIDsFromAWS();
-            // Does not fire event OnPropertyChange if collection changes...
-
             if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath))
                 CheckSettings();
         }
 
-        // ToDo ->  Detect diff / only sync diff
         private void AWSSessionManager_AWSProfiles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            // Remove groups
+            if (e.OldItems != null)
+            {
+                foreach (AWSProfileInfo profile in e.OldItems)
+                {
+                    RemoveDynamicGroup(profile.Profile, profile.Region);
+                }
+            }
 
+            // Sync new groups
+            if (e.NewItems != null)
+            {
+                foreach (AWSProfileInfo profile in e.NewItems)
+                {
+                    if (profile.IsEnabled)
+                        SyncInstanceIDsFromAWS(profile.Profile, profile.Region);
+                }
+            }
         }
 
         private void LoadSettings()
@@ -555,7 +600,7 @@ namespace NETworkManager.ViewModels
             RegistryKey awsSessionManagerPluginRegistryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{13DD0F7B-C2A8-4F22-BF55-CD0D719DBA46}", false);
             IsAWSSessionManagerPluginInstalled = awsSessionManagerPluginRegistryKey != null && awsSessionManagerPluginRegistryKey.GetValue("DisplayName") != null;
         }
-        
+
         private void CheckSettings()
         {
             IsPowerShellConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) && File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
