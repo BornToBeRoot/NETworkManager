@@ -1352,8 +1352,8 @@ namespace NETworkManager
         }
 
         private void OpenDocumentationAction()
-        {
-            DocumentationManager.OpenDocumentation(ShowSettingsView ? DocumentationIdentifier.Default : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
+        {            
+            DocumentationManager.OpenDocumentation(ShowSettingsView ? DocumentationManager.GetIdentifierBySettingsName(_settingsView.GetSelectedSettingsViewName()) : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
         }
 
         public ICommand OpenApplicationListCommand
