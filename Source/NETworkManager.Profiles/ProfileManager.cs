@@ -34,11 +34,11 @@ namespace NETworkManager.Profiles
         /// Profile file extension for encrypted files.
         /// </summary>
         public static string ProfileFileExtensionEncrypted => ".encrypted";
-
+                
         /// <summary>
         /// ObservableCollection of all profile files.
         /// </summary>
-        public static ObservableCollection<ProfileFileInfo> ProfileFiles { get; set; } = new ObservableCollection<ProfileFileInfo>();
+        public static ObservableCollection<ProfileFileInfo> ProfileFiles { get; set; } = new();
 
         /// <summary>
         /// 
@@ -63,7 +63,7 @@ namespace NETworkManager.Profiles
         /// <summary>
         /// 
         /// </summary>
-        public static List<GroupInfo> Groups { get; set; } = new List<GroupInfo>();
+        public static List<GroupInfo> Groups { get; set; } = new();
 
         /// <summary>
         /// 

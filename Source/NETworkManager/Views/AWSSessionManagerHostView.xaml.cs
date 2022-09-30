@@ -51,5 +51,10 @@ namespace NETworkManager.Views
         {
             _viewModel.FocusEmbeddedWindow();
         }
+
+        public void OnProfileLoaded()
+        {
+            _viewModel.OnProfileLoaded();
+        }
     }
 }

@@ -293,8 +293,6 @@ namespace NETworkManager.ViewModels
                 return info.AWSSessionManager_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.AWSSessionManager_InstanceID.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
-            //Test();
-
             // This will select the first entry as selected item...
             SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.AWSSessionManager_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
 
@@ -305,9 +303,6 @@ namespace NETworkManager.ViewModels
 
             LoadSettings();
 
-            if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
-                SyncAllInstanceIDsFromAWS();
-
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
             SettingsManager.Current.AWSSessionManager_AWSProfiles.CollectionChanged += AWSSessionManager_AWSProfiles_CollectionChanged;
 
@@ -316,6 +311,12 @@ namespace NETworkManager.ViewModels
 
         private async Task SyncAllInstanceIDsFromAWS()
         {
+            if(Application.Current.MainWindow == null || ((MainWindow)Application.Current.MainWindow).IsProfileFileLocked)
+            {
+                // Log
+                return;
+            }
+
             IsSyncing = true;
 
             foreach (var profile in SettingsManager.Current.AWSSessionManager_AWSProfiles)
@@ -610,7 +611,7 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
         }
 
-        private bool SyncInstanceIDsFromAWS_CanExecute(object obj) => !IsSyncing;
+        private bool SyncInstanceIDsFromAWS_CanExecute(object obj) => !IsSyncing && SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
 
         public ICommand SyncAllInstanceIDsFromAWSCommand => new RelayCommand(p => SyncAllInstanceIDsFromAWSAction(), SyncInstanceIDsFromAWS_CanExecute);
 
@@ -838,11 +839,20 @@ namespace NETworkManager.ViewModels
             _isViewActive = true;
 
             RefreshProfiles();
+
+            if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
+                SyncAllInstanceIDsFromAWS();
         }
 
         public void OnViewHide()
         {
             _isViewActive = false;
+        }
+
+        public void OnProfileLoaded()
+        {
+            if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
+                SyncAllInstanceIDsFromAWS();
         }
 
         public void RefreshProfiles()

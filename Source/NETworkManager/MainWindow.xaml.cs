@@ -428,10 +428,13 @@ namespace NETworkManager
 
         private void AfterContentRendered()
         {
+            // Profiles must be loaded before applications so that dynamic profiles(e.g., AWS Session Manager) can be added.
+            //LoadProfiles();
+
             // Load application list, filter, sort, etc.
             LoadApplicationList();
 
-            // Load profiles    
+            // Load profiles
             LoadProfiles();
 
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
@@ -1046,6 +1049,8 @@ namespace NETworkManager
         {
             if (info.IsEncrypted && !info.IsPasswordValid)
             {
+                IsProfileFileLocked = true;
+
                 var customDialog = new CustomDialog
                 {
                     Title = Localization.Resources.Strings.MasterPassword
@@ -1064,9 +1069,7 @@ namespace NETworkManager
                     await this.HideMetroDialogAsync(customDialog);
                     ConfigurationManager.Current.FixAirspace = false;
 
-                    ProfileManager.Unload();
-
-                    IsProfileFileLocked = true;
+                    ProfileManager.Unload();                   
                 });
 
                 customDialog.Content = new CredentialsPasswordDialog
@@ -1090,6 +1093,15 @@ namespace NETworkManager
                 ProfileManager.Switch(info);
 
                 IsProfileFileLocked = false;
+
+                // Update some views after the profile is loaded
+                switch(SelectedApplication.Name)
+                {
+                    case ApplicationName.AWSSessionManager:
+                        // Log
+                        _awsSessionManagerHostView?.OnProfileLoaded();
+                        break;
+                }
             }
             catch (System.Security.Cryptography.CryptographicException)
             {
@@ -1099,8 +1111,6 @@ namespace NETworkManager
                 ConfigurationManager.Current.FixAirspace = true;
 
                 await this.ShowMessageAsync(Localization.Resources.Strings.WrongPassword, Localization.Resources.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, settings);
-
-                IsProfileFileLocked = true;
 
                 ConfigurationManager.Current.FixAirspace = false;
             }
