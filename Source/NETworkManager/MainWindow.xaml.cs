@@ -454,36 +454,12 @@ namespace NETworkManager
         {
             _isApplicationListLoading = true;
 
-            // Create a new list if empty
-            if (SettingsManager.Current.General_ApplicationList.Count == 0)
-            {
-                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetList());
-            }
-            else // Check for missing applications and add them
-            {
-                foreach (ApplicationInfo info in ApplicationManager.GetList())
-                {
-                    bool isInList = false;
-
-                    foreach (ApplicationInfo info2 in SettingsManager.Current.General_ApplicationList)
-                    {
-                        if (info.Name == info2.Name)
-                            isInList = true;
-                    }
-
-                    if (!isInList)
-                        SettingsManager.Current.General_ApplicationList.Add(info);
-                }
-            }
-
             Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
-
-            // Always have the same order, even if it is translated...
             Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
 
             Applications.Filter = o =>
             {
-                if (!(o is ApplicationInfo info))
+                if (o is not ApplicationInfo info)
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
