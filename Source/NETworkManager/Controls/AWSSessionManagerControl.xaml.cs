@@ -145,7 +145,7 @@ namespace NETworkManager.Controls
 
                             if (_process.HasExited)
                                 break;
-                            
+
 
                             _appWin = _process.MainWindowHandle;
 
@@ -167,7 +167,7 @@ namespace NETworkManager.Controls
                         long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
                         style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
                         NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
-                        
+
                         IsConnected = true;
 
                         // Resize embedded application & refresh

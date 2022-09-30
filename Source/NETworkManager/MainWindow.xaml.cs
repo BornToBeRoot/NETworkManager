@@ -1570,6 +1570,9 @@ namespace NETworkManager
                 case ApplicationName.PuTTY:
                     _puttyHostView?.FocusEmbeddedWindow();
                     break;
+                case ApplicationName.AWSSessionManager:
+                    _awsSessionManagerHostView?.FocusEmbeddedWindow();
+                    break;
             }
         }
         #endregion

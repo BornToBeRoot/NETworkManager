@@ -97,16 +97,37 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private int _selectedTabIndex;
-        public int SelectedTabIndex
+        private bool _disableFocusEmbeddedWindowOnSelectedTabItemChange;
+
+        private DragablzTabItem _selectedTabItem;
+        public DragablzTabItem SelectedTabItem
         {
-            get => _selectedTabIndex;
+            get => _selectedTabItem;
             set
             {
-                if (value == _selectedTabIndex)
+                if (value == _selectedTabItem)
                     return;
 
-                _selectedTabIndex = value;
+                _selectedTabItem = value;
+
+                // Focus embedded window on switching tab
+                if (!_disableFocusEmbeddedWindowOnSelectedTabItemChange)
+                    FocusEmbeddedWindow();
+
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _headerContextMenuIsOpen;
+        public bool HeaderContextMenuIsOpen
+        {
+            get => _headerContextMenuIsOpen;
+            set
+            {
+                if (value == _headerContextMenuIsOpen)
+                    return;
+
+                _headerContextMenuIsOpen = value;
                 OnPropertyChanged();
             }
         }
@@ -144,6 +165,21 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _textBoxSearchIsFocused;
+        public bool TextBoxSearchIsFocused
+        {
+            get => _textBoxSearchIsFocused;
+            set
+            {
+                if (value == _textBoxSearchIsFocused)
+                    return;
+
+                _textBoxSearchIsFocused = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool _isSearching;
         public bool IsSearching
@@ -200,6 +236,21 @@ namespace NETworkManager.ViewModels
                 if (_canProfileWidthChange)
                     ResizeProfile(true);
 
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _profileContextMenuIsOpen;
+        public bool ProfileContextMenuIsOpen
+        {
+            get => _profileContextMenuIsOpen;
+            set
+            {
+
+                if (value == _profileContextMenuIsOpen)
+                    return;
+
+                _profileContextMenuIsOpen = value;
                 OnPropertyChanged();
             }
         }
@@ -575,6 +626,26 @@ namespace NETworkManager.ViewModels
             SyncGroupInstanceIDsFromAWS((string)group);
         }
 
+        public ICommand TextBoxSearchGotFocusCommand
+        {
+            get { return new RelayCommand(p => TextBoxSearchGotFocusAction()); }
+        }
+
+        private void TextBoxSearchGotFocusAction()
+        {
+            TextBoxSearchIsFocused = true;
+        }
+
+        public ICommand TextBoxSearchLostFocusCommand
+        {
+            get { return new RelayCommand(p => TextBoxSearchLostFocusAction()); }
+        }
+
+        private void TextBoxSearchLostFocusAction()
+        {
+            TextBoxSearchIsFocused = false;
+        }
+
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
@@ -670,7 +741,10 @@ namespace NETworkManager.ViewModels
 
             TabItems.Add(new DragablzTabItem(header ?? sessionInfo.InstanceID, new AWSSessionManagerControl(sessionInfo)));
 
-            SelectedTabIndex = TabItems.Count - 1;
+            // Select the added tab
+            _disableFocusEmbeddedWindowOnSelectedTabItemChange = true;
+            SelectedTabItem = TabItems.Last();
+            _disableFocusEmbeddedWindowOnSelectedTabItemChange = false;
         }
 
         // Modify history list
@@ -744,6 +818,19 @@ namespace NETworkManager.ViewModels
             }
 
             _canProfileWidthChange = true;
+        }
+
+        public void FocusEmbeddedWindow()
+        {
+            /* Don't continue if
+               - Search TextBox is focused
+               - Header ContextMenu is opened
+               - Profile ContextMenu is opened
+            */
+            if (TextBoxSearchIsFocused || HeaderContextMenuIsOpen || ProfileContextMenuIsOpen)
+                return;
+
+            (SelectedTabItem?.View as AWSSessionManagerControl)?.FocusEmbeddedWindow();
         }
 
         public void OnViewVisible()

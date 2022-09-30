@@ -1,7 +1,6 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models;
 using NETworkManager.ViewModels;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,7 +8,7 @@ namespace NETworkManager.Views
 {
     public partial class AWSSessionManagerHostView
     {
-        private readonly AWSSessionManagerHostViewModel _viewModel = new AWSSessionManagerHostViewModel(DialogCoordinator.Instance);
+        private readonly AWSSessionManagerHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
         private bool _loaded;
 
@@ -18,7 +17,7 @@ namespace NETworkManager.Views
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = ApplicationName.PowerShell.ToString();
+            InterTabController.Partition = ApplicationName.AWSSessionManager.ToString();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -46,6 +45,11 @@ namespace NETworkManager.Views
         public void OnViewVisible()
         {
             _viewModel.OnViewVisible();
+        }
+
+        public void FocusEmbeddedWindow()
+        {
+            _viewModel.FocusEmbeddedWindow();
         }
     }
 }
