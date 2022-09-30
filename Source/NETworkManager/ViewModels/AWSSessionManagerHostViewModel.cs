@@ -330,7 +330,7 @@ namespace NETworkManager.ViewModels
                 await SyncInstanceIDsFromAWS(profile.Profile, profile.Region);
             }
 
-            //await Task.Delay(2000);
+            await Task.Delay(2000);
 
             IsSyncing = false;
         }
@@ -356,7 +356,7 @@ namespace NETworkManager.ViewModels
                 Debug.WriteLine("Could not get profile and region from from group...");
             }
 
-            //await Task.Delay(2000);
+            await Task.Delay(2000);
 
             IsSyncing = false;
         }
