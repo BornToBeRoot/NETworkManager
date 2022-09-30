@@ -38,7 +38,8 @@
                 <TextBox.Text>
                     <Binding Path="Profile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />                            
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -48,7 +49,7 @@
                 <TextBox.Text>
                     <Binding Path="Region" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />                            
+                            <validators:IsEmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

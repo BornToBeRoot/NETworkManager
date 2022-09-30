@@ -26,6 +26,7 @@ using Amazon.Runtime.CredentialManagement;
 using NETworkManager.Models.AWS;
 using System.Text.RegularExpressions;
 using Microsoft.Win32;
+using NETworkManager.Documentation;
 
 namespace NETworkManager.ViewModels
 {
@@ -311,6 +312,12 @@ namespace NETworkManager.ViewModels
 
         private async Task SyncAllInstanceIDsFromAWS()
         {
+            if(!IsAWSCLIInstalled || !IsAWSSessionManagerPluginInstalled)
+            {
+                // Log
+                return;
+            }
+
             if(Application.Current.MainWindow == null || ((MainWindow)Application.Current.MainWindow).IsProfileFileLocked)
             {
                 // Log
@@ -364,7 +371,7 @@ namespace NETworkManager.ViewModels
         private async Task SyncInstanceIDsFromAWS(string profile, string region)
         {
             CredentialProfileStoreChain credentialProfileStoreChain = new();
-
+            
             credentialProfileStoreChain.TryGetAWSCredentials(profile, out AWSCredentials credentials);
 
             Debug.WriteLine($"Sync profile {profile}\\{region}...");
@@ -652,6 +659,16 @@ namespace NETworkManager.ViewModels
         private void ClearSearchAction()
         {
             Search = string.Empty;
+        }
+
+        public ICommand OpenDocumentationCommand
+        {
+            get { return new RelayCommand(p => OpenDocumentationAction()); }
+        }
+
+        private void OpenDocumentationAction()
+        {
+            DocumentationManager.OpenDocumentation(DocumentationIdentifier.ApplicationAWSSessionManager);
         }
 
         public ICommand OpenSettingsCommand => new RelayCommand(p => OpenSettingsAction());
