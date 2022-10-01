@@ -375,7 +375,7 @@ namespace NETworkManager.ViewModels
             credentialProfileStoreChain.TryGetAWSCredentials(profile, out AWSCredentials credentials);
 
             Debug.WriteLine($"Sync profile {profile}\\{region}...");
-            Debug.WriteLine("Using credentials: " + credentials.GetCredentials().AccessKey);
+            //Debug.WriteLine("Using credentials: " + credentials.GetCredentials().AccessKey);
 
             using AmazonEC2Client client = new(credentials, RegionEndpoint.GetBySystemName(region));
 

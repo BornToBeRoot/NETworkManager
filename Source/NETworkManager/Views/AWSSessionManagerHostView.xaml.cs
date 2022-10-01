@@ -47,14 +47,14 @@ namespace NETworkManager.Views
             _viewModel.OnViewVisible();
         }
 
-        public void FocusEmbeddedWindow()
-        {
-            _viewModel.FocusEmbeddedWindow();
-        }
-
         public void OnProfileLoaded()
         {
             _viewModel.OnProfileLoaded();
+        }
+
+        public void FocusEmbeddedWindow()
+        {
+            _viewModel.FocusEmbeddedWindow();
         }
     }
 }
