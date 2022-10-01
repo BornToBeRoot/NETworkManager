@@ -575,34 +575,14 @@ namespace NETworkManager
         private ListenersView _listenersView;
         private ARPTableView _arpTableView;
 
-        //private ApplicationName _currentApplicationViewName = ApplicationName.None;
 
-        /*
-        private void ChangeApplicationView(ApplicationName name, bool refresh = false)
-        {
-            if (!refresh && _currentApplicationViewName == name)
-                return;
-
-            // Stop some functions on the old view
-            switch (_currentApplicationViewName)
-            {
-
-            }
-
-            // Create new view / start some functions
-            switch (name)
-            {
-
-                case ApplicationName.None:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(name), name, null);
-            }
-
-            _currentApplicationViewName = name;
-        }
-        */
-        private void OnApplicationViewVisible(ApplicationName name)
+        /// <summary>
+        /// Method when the application view becomes visible (again). Either when switching the applications 
+        /// or after opening and closing the settings.
+        /// </summary>
+        /// <param name="name">Name of the application</param>
+        /// <param name="fromSettings">Indicates whether the settings were previously open</param>
+        private void OnApplicationViewVisible(ApplicationName name, bool fromSettings = false)
         {
             switch (name)
             {
@@ -698,7 +678,7 @@ namespace NETworkManager
                     if (_awsSessionManagerHostView == null)
                         _awsSessionManagerHostView = new AWSSessionManagerHostView();
                     else
-                        _awsSessionManagerHostView.OnViewVisible();
+                        _awsSessionManagerHostView.OnViewVisible(fromSettings);
 
                     ContentControlApplication.Content = _awsSessionManagerHostView;
                     break;
@@ -1037,7 +1017,7 @@ namespace NETworkManager
             }
 
             // Refresh the application view
-            OnApplicationViewVisible(SelectedApplication.Name);
+            OnApplicationViewVisible(SelectedApplication.Name, true);
         }
         #endregion
 

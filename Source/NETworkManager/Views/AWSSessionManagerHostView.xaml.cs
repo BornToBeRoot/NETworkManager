@@ -42,9 +42,9 @@ namespace NETworkManager.Views
             _viewModel.OnViewHide();
         }
 
-        public void OnViewVisible()
+        public void OnViewVisible(bool fromSettings)
         {
-            _viewModel.OnViewVisible();
+            _viewModel.OnViewVisible(fromSettings);
         }
 
         public void OnProfileLoaded()

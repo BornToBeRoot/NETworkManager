@@ -508,8 +508,8 @@ namespace NETworkManager.ViewModels
         }
 
         private async Task SyncAllInstanceIDsFromAWS()
-        {
-            _log.Info("Sync all Instance IDs from AWS...");
+        {            
+            _log.Info("Sync all EC2 Instance(s) from AWS...");
 
             // Check if prerequisites are met
             if (!IsAWSCLIInstalled || !IsAWSSessionManagerPluginInstalled)
@@ -539,7 +539,7 @@ namespace NETworkManager.ViewModels
             {
                 if (!profile.IsEnabled)
                 {
-                    _log.Info($"AWS profile \"[{profile.Profile}\\{profile.Region}]\" is disabled! Skip...");
+                    _log.Info($"Sync EC2 Instance(s) for AWS profile \"[{profile.Profile}\\{profile.Region}]\" is disabled! Skip...");
                     continue;
                 }
 
@@ -555,7 +555,7 @@ namespace NETworkManager.ViewModels
 
         private async Task SyncGroupInstanceIDsFromAWS(string group)
         {
-            _log.Info($"Sync Instance IDs for group \"{group}\"...");
+            _log.Info($"Sync group \"{group}\"...");
 
             IsSyncing = true;
 
@@ -576,14 +576,14 @@ namespace NETworkManager.ViewModels
 
             await Task.Delay(2000);
 
-            _log.Info($"Group Instance IDs synced from AWS!");
+            _log.Info($"Group synced!");
 
             IsSyncing = false;
         }
 
         private async Task SyncInstanceIDsFromAWS(string profile, string region)
         {
-            _log.Info($"Sync Instance IDs from AWS profile \"{profile}\" and AWS region \"{region}\"...");
+            _log.Info($"Sync EC2 Instance(s) for AWS profile \"[{profile}\\{region}]\"...");
 
             CredentialProfileStoreChain credentialProfileStoreChain = new();
             credentialProfileStoreChain.TryGetAWSCredentials(profile, out AWSCredentials credentials);
@@ -604,7 +604,7 @@ namespace NETworkManager.ViewModels
             }
             catch (AmazonEC2Exception ex)
             {
-                _log.Error($"Could not get EC2 instances from AWS! See error for more details: \"{ex.Message}\"");
+                _log.Error($"Could not get EC2 Instance(s) from AWS! Error message: \"{ex.Message}\"");
                 return;
             }
 
@@ -644,18 +644,29 @@ namespace NETworkManager.ViewModels
                 }
             }
 
-            // Replace or add group
+            // Remove, replace or add group
             var profilesChangedCurrentState = ProfileManager.ProfilesChanged;
             ProfileManager.ProfilesChanged = false;
 
-            if (ProfileManager.GroupExists(groupName))
-                ProfileManager.ReplaceGroup(ProfileManager.GetGroup(groupName), groupInfo);
+            if (groupInfo.Profiles.Count == 0)
+            {
+                if (ProfileManager.GroupExists(groupName))
+                    ProfileManager.RemoveGroup(ProfileManager.GetGroup(groupName));
+
+                _log.Info("No EC2 Instance(s) found!");             
+            }
             else
-                ProfileManager.AddGroup(groupInfo);
+            {
+
+                if (ProfileManager.GroupExists(groupName))
+                    ProfileManager.ReplaceGroup(ProfileManager.GetGroup(groupName), groupInfo);
+                else
+                    ProfileManager.AddGroup(groupInfo);
+
+                _log.Info($"Found {groupInfo.Profiles.Count} EC2 Instance(s) and added them to the group \"{groupName}\"!");
+            }
 
             ProfileManager.ProfilesChanged = profilesChangedCurrentState;
-
-            _log.Info($"Found {groupInfo.Profiles.Count} instance and added them to the group \"{groupName}\"!");
         }
 
         private void RemoveDynamicGroups()
@@ -673,7 +684,7 @@ namespace NETworkManager.ViewModels
         {
             string groupName = $"~ [{profile}\\{region}]";
 
-            Debug.WriteLine("Remove dynamic group: " + groupName);
+            //Debug.WriteLine("Remove dynamic group: " + groupName);
 
             var profilesChangedCurrentState = ProfileManager.ProfilesChanged;
             ProfileManager.ProfilesChanged = false;
@@ -840,13 +851,13 @@ namespace NETworkManager.ViewModels
             (SelectedTabItem?.View as AWSSessionManagerControl)?.FocusEmbeddedWindow();
         }
 
-        public void OnViewVisible()
+        public void OnViewVisible(bool fromSettings)
         {
             _isViewActive = true;
 
             RefreshProfiles();
 
-            if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
+            if (!fromSettings && SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
                 SyncAllInstanceIDsFromAWS();
         }
 
