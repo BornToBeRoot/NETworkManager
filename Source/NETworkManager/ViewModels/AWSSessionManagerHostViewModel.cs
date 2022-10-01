@@ -310,197 +310,6 @@ namespace NETworkManager.ViewModels
             _isLoading = false;
         }
 
-        private async Task SyncAllInstanceIDsFromAWS()
-        {
-            if(!IsAWSCLIInstalled || !IsAWSSessionManagerPluginInstalled)
-            {
-                // Log
-                return;
-            }
-
-            if(Application.Current.MainWindow == null || ((MainWindow)Application.Current.MainWindow).IsProfileFileLocked)
-            {
-                // Log
-                return;
-            }
-
-            IsSyncing = true;
-
-            foreach (var profile in SettingsManager.Current.AWSSessionManager_AWSProfiles)
-            {
-                if (!profile.IsEnabled)
-                {
-                    Debug.WriteLine($"Sync for profile {profile.Profile}\\{profile.Region} is disabled!");
-                    continue;
-                }
-
-                await SyncInstanceIDsFromAWS(profile.Profile, profile.Region);
-            }
-
-            await Task.Delay(2000);
-
-            IsSyncing = false;
-        }
-
-        private async Task SyncGroupInstanceIDsFromAWS(string group)
-        {
-            IsSyncing = true;
-
-            Debug.WriteLine("Sync group: " + group);
-
-            // Extract "profile\region" from "~ [profile\region]"
-            Regex regex = new(@"\[(.*?)\]");
-            var result = regex.Match(group);
-
-            if (result.Success)
-            {
-                // Split "profile\region" into profile and region
-                var groupData = result.Groups[1].Value.Split(@"\");
-                await SyncInstanceIDsFromAWS(groupData[0], groupData[1]);
-            }
-            else
-            {
-                Debug.WriteLine("Could not get profile and region from from group...");
-            }
-
-            await Task.Delay(2000);
-
-            IsSyncing = false;
-        }
-
-        private async Task SyncInstanceIDsFromAWS(string profile, string region)
-        {
-            CredentialProfileStoreChain credentialProfileStoreChain = new();
-            
-            credentialProfileStoreChain.TryGetAWSCredentials(profile, out AWSCredentials credentials);
-
-            Debug.WriteLine($"Sync profile {profile}\\{region}...");
-            //Debug.WriteLine("Using credentials: " + credentials.GetCredentials().AccessKey);
-
-            using AmazonEC2Client client = new(credentials, RegionEndpoint.GetBySystemName(region));
-
-            var response = await client.DescribeInstancesAsync();
-
-            var groupName = $"~ [{profile}\\{region}]";
-
-            // Create a new group info for profiles
-            var groupInfo = new GroupInfo()
-            {
-                Name = groupName,
-                IsDynamic = true,
-            };
-
-            foreach (var reservation in response.Reservations)
-            {
-                foreach (var instance in reservation.Instances)
-                {
-                    if (SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS && instance.State.Name.Value != "running")
-                        continue;
-
-                    Debug.WriteLine("Found Instance: " + instance.InstanceId);
-
-                    var tagName = instance.Tags.FirstOrDefault(x => x.Key == "Name");
-                    var name = tagName.Value == null ? instance.InstanceId : $"{tagName.Value} ({instance.InstanceId})";
-
-                    groupInfo.Profiles.Add(new ProfileInfo()
-                    {
-                        Name = name,
-                        Host = instance.InstanceId,
-                        Group = $"~ [{profile}\\{region}]",
-                        IsDynamic = true,
-
-                        AWSSessionManager_Enabled = true,
-                        AWSSessionManager_InstanceID = instance.InstanceId,
-                        AWSSessionManager_OverrideProfile = true,
-                        AWSSessionManager_Profile = profile,
-                        AWSSessionManager_OverrideRegion = true,
-                        AWSSessionManager_Region = region
-                    });
-                }
-            }
-
-            // Replace or add group
-            var profilesChangedCurrentState = ProfileManager.ProfilesChanged;
-            ProfileManager.ProfilesChanged = false;
-
-            if (ProfileManager.GroupExists(groupName))
-                ProfileManager.ReplaceGroup(ProfileManager.GetGroup(groupName), groupInfo);
-            else
-                ProfileManager.AddGroup(groupInfo);
-
-            ProfileManager.ProfilesChanged = profilesChangedCurrentState;
-
-            Debug.WriteLine("Sync done!");
-        }
-
-        private void RemoveDynamicGroups()
-        {
-            foreach (var profile in SettingsManager.Current.AWSSessionManager_AWSProfiles)
-            {
-                if (!profile.IsEnabled)
-                    continue;
-
-                RemoveDynamicGroup(profile.Profile, profile.Region);
-            }
-        }
-
-        private void RemoveDynamicGroup(string profile, string region)
-        {
-            string groupName = $"~ [{profile}\\{region}]";
-
-            Debug.WriteLine("Remove dynamic group: " + groupName);
-
-            var profilesChangedCurrentState = ProfileManager.ProfilesChanged;
-            ProfileManager.ProfilesChanged = false;
-
-            if (ProfileManager.GroupExists(groupName))
-                ProfileManager.RemoveGroup(ProfileManager.GetGroup(groupName));
-
-            ProfileManager.ProfilesChanged = profilesChangedCurrentState;
-        }
-
-        private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_EnableSyncInstanceIDsFromAWS))
-            {
-                if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
-                    SyncAllInstanceIDsFromAWS();
-                else
-                    RemoveDynamicGroups();
-            }
-
-            if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_SyncOnlyRunningInstancesFromAWS))
-            {
-                if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
-                    SyncAllInstanceIDsFromAWS();
-            }
-
-            if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath))
-                CheckSettings();
-        }
-
-        private void AWSSessionManager_AWSProfiles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            // Remove groups
-            if (e.OldItems != null)
-            {
-                foreach (AWSProfileInfo profile in e.OldItems)
-                {
-                    RemoveDynamicGroup(profile.Profile, profile.Region);
-                }
-            }
-
-            // Sync new groups
-            if (e.NewItems != null)
-            {
-                foreach (AWSProfileInfo profile in e.NewItems)
-                {
-                    if (profile.IsEnabled)
-                        SyncInstanceIDsFromAWS(profile.Profile, profile.Region);
-                }
-            }
-        }
-
         private void LoadSettings()
         {
             ExpandProfileView = SettingsManager.Current.AWSSessionManager_ExpandProfileView;
@@ -693,6 +502,155 @@ namespace NETworkManager.ViewModels
         private void CheckSettings()
         {
             IsPowerShellConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) && File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
+        }
+
+        private async Task SyncAllInstanceIDsFromAWS()
+        {
+            if (!IsAWSCLIInstalled || !IsAWSSessionManagerPluginInstalled)
+            {
+                // Log
+                return;
+            }
+
+            if (Application.Current.MainWindow == null || ((MainWindow)Application.Current.MainWindow).IsProfileFileLocked)
+            {
+                // Log
+                return;
+            }
+
+            IsSyncing = true;
+
+            foreach (var profile in SettingsManager.Current.AWSSessionManager_AWSProfiles)
+            {
+                if (!profile.IsEnabled)
+                {
+                    Debug.WriteLine($"Sync for profile {profile.Profile}\\{profile.Region} is disabled!");
+                    continue;
+                }
+
+                await SyncInstanceIDsFromAWS(profile.Profile, profile.Region);
+            }
+
+            await Task.Delay(2000);
+
+            IsSyncing = false;
+        }
+
+        private async Task SyncGroupInstanceIDsFromAWS(string group)
+        {
+            IsSyncing = true;
+
+            Debug.WriteLine("Sync group: " + group);
+
+            // Extract "profile\region" from "~ [profile\region]"
+            Regex regex = new(@"\[(.*?)\]");
+            var result = regex.Match(group);
+
+            if (result.Success)
+            {
+                // Split "profile\region" into profile and region
+                var groupData = result.Groups[1].Value.Split(@"\");
+                await SyncInstanceIDsFromAWS(groupData[0], groupData[1]);
+            }
+            else
+            {
+                Debug.WriteLine("Could not get profile and region from from group...");
+            }
+
+            await Task.Delay(2000);
+
+            IsSyncing = false;
+        }
+
+        private async Task SyncInstanceIDsFromAWS(string profile, string region)
+        {
+            CredentialProfileStoreChain credentialProfileStoreChain = new();
+
+            credentialProfileStoreChain.TryGetAWSCredentials(profile, out AWSCredentials credentials);
+
+            Debug.WriteLine($"Sync profile {profile}\\{region}...");
+            //Debug.WriteLine("Using credentials: " + credentials.GetCredentials().AccessKey);
+
+            using AmazonEC2Client client = new(credentials, RegionEndpoint.GetBySystemName(region));
+
+            var response = await client.DescribeInstancesAsync();
+
+            var groupName = $"~ [{profile}\\{region}]";
+
+            // Create a new group info for profiles
+            var groupInfo = new GroupInfo()
+            {
+                Name = groupName,
+                IsDynamic = true,
+            };
+
+            foreach (var reservation in response.Reservations)
+            {
+                foreach (var instance in reservation.Instances)
+                {
+                    if (SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS && instance.State.Name.Value != "running")
+                        continue;
+
+                    Debug.WriteLine("Found Instance: " + instance.InstanceId);
+
+                    var tagName = instance.Tags.FirstOrDefault(x => x.Key == "Name");
+                    var name = tagName.Value == null ? instance.InstanceId : $"{tagName.Value} ({instance.InstanceId})";
+
+                    groupInfo.Profiles.Add(new ProfileInfo()
+                    {
+                        Name = name,
+                        Host = instance.InstanceId,
+                        Group = $"~ [{profile}\\{region}]",
+                        IsDynamic = true,
+
+                        AWSSessionManager_Enabled = true,
+                        AWSSessionManager_InstanceID = instance.InstanceId,
+                        AWSSessionManager_OverrideProfile = true,
+                        AWSSessionManager_Profile = profile,
+                        AWSSessionManager_OverrideRegion = true,
+                        AWSSessionManager_Region = region
+                    });
+                }
+            }
+
+            // Replace or add group
+            var profilesChangedCurrentState = ProfileManager.ProfilesChanged;
+            ProfileManager.ProfilesChanged = false;
+
+            if (ProfileManager.GroupExists(groupName))
+                ProfileManager.ReplaceGroup(ProfileManager.GetGroup(groupName), groupInfo);
+            else
+                ProfileManager.AddGroup(groupInfo);
+
+            ProfileManager.ProfilesChanged = profilesChangedCurrentState;
+
+            Debug.WriteLine("Sync done!");
+        }
+
+        private void RemoveDynamicGroups()
+        {
+            foreach (var profile in SettingsManager.Current.AWSSessionManager_AWSProfiles)
+            {
+                if (!profile.IsEnabled)
+                    continue;
+
+                RemoveDynamicGroup(profile.Profile, profile.Region);
+            }
+        }
+
+        private void RemoveDynamicGroup(string profile, string region)
+        {
+            string groupName = $"~ [{profile}\\{region}]";
+
+            Debug.WriteLine("Remove dynamic group: " + groupName);
+
+            var profilesChangedCurrentState = ProfileManager.ProfilesChanged;
+            ProfileManager.ProfilesChanged = false;
+
+            if (ProfileManager.GroupExists(groupName))
+                ProfileManager.RemoveGroup(ProfileManager.GetGroup(groupName));
+
+            ProfileManager.ProfilesChanged = profilesChangedCurrentState;
         }
 
         private async Task Connect()
@@ -895,6 +853,48 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Event
+        private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_EnableSyncInstanceIDsFromAWS))
+            {
+                if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
+                    SyncAllInstanceIDsFromAWS();
+                else
+                    RemoveDynamicGroups();
+            }
+
+            if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_SyncOnlyRunningInstancesFromAWS))
+            {
+                if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
+                    SyncAllInstanceIDsFromAWS();
+            }
+
+            if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath))
+                CheckSettings();
+        }
+
+        private void AWSSessionManager_AWSProfiles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            // Remove groups
+            if (e.OldItems != null)
+            {
+                foreach (AWSProfileInfo profile in e.OldItems)
+                {
+                    RemoveDynamicGroup(profile.Profile, profile.Region);
+                }
+            }
+
+            // Sync new groups
+            if (e.NewItems != null)
+            {
+                foreach (AWSProfileInfo profile in e.NewItems)
+                {
+                    if (profile.IsEnabled)
+                        SyncInstanceIDsFromAWS(profile.Profile, profile.Region);
+                }
+            }
+        }
+
         private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
         {
             RefreshProfiles();
