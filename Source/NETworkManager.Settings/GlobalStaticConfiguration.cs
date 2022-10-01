@@ -16,8 +16,8 @@ namespace NETworkManager.Settings
     public static class GlobalStaticConfiguration
     {
         // Type to search (average type speed --> 187 chars/min)
-        public static TimeSpan SearchDispatcherTimerTimeSpan => new TimeSpan(0, 0, 0, 0, 750);
-        public static TimeSpan CredentialsUILockTime => new TimeSpan(0, 0, 120);
+        public static TimeSpan SearchDispatcherTimerTimeSpan => new(0, 0, 0, 0, 750);
+        public static TimeSpan CredentialsUILockTime => new(0, 0, 120);
 
         // Filter
         public static string ApplicationFileExtensionFilter => "Application (*.exe)|*.exe";
@@ -133,6 +133,11 @@ namespace NETworkManager.Settings
         public static int PuTTY_RloginPort => 513;
         public static int PuTTY_BaudRate => 9600;
         public static int PuTTY_Raw => 0;
+
+        // Application: AWSSessionManager
+        public static string AWSSessionManager_ApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");
+        public static bool AWSSessionManager_EnableSyncInstanceIDsFromAWS => false;
+        public static bool AWSSessionManager_SyncOnlyRunningInstancesFromAWS => true;
 
         // Application: TigerVNC
         public static int TigerVNC_DefaultVNCPort => 5900;

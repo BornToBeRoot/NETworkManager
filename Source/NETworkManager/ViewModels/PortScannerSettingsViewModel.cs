@@ -168,7 +168,6 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-
         #region Methods       
         public async Task AddPortProfile()
         {

@@ -49,7 +49,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _disableFocusEmbeddedWindowOnSelectedTabItemChange;
+        private bool _disableFocusEmbeddedWindow;
 
         private DragablzTabItem _selectedTabItem;
         public DragablzTabItem SelectedTabItem
@@ -63,7 +63,7 @@ namespace NETworkManager.ViewModels
                 _selectedTabItem = value;
 
                 // Focus embedded window on switching tab
-                if (!_disableFocusEmbeddedWindowOnSelectedTabItemChange)
+                if (!_disableFocusEmbeddedWindow)
                     FocusEmbeddedWindow();
 
                 OnPropertyChanged();
@@ -213,9 +213,8 @@ namespace NETworkManager.ViewModels
         public PuTTYHostViewModel(IDialogCoordinator instance)
         {
             _dialogCoordinator = instance;
-
-            // Check if putty is available...
-            CheckIfConfigured();
+                        
+            CheckSettings();
 
             // Create default PuTTY profile for NETworkManager 
             if (IsConfigured)
@@ -267,7 +266,7 @@ namespace NETworkManager.ViewModels
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.PuTTY_ApplicationFilePath))
-                CheckIfConfigured();
+                CheckSettings();
         }
 
         private void LoadSettings()
@@ -361,21 +360,23 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.PuTTY);
         }
 
-        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
+        private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
 
         private void EditProfileAction()
         {
             ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
         private void CopyAsProfileAction()
         {
             ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
 
         private void DeleteProfileAction()
         {
@@ -425,7 +426,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void CheckIfConfigured()
+        private void CheckSettings()
         {
             IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) && File.Exists(SettingsManager.Current.PuTTY_ApplicationFilePath);
         }
@@ -512,9 +513,9 @@ namespace NETworkManager.ViewModels
             TabItems.Add(new DragablzTabItem(header ?? profileInfo.HostOrSerialLine, new PuTTYControl(profileInfo)));
 
             // Select the added tab
-            _disableFocusEmbeddedWindowOnSelectedTabItemChange = true;
+            _disableFocusEmbeddedWindow = true;
             SelectedTabItem = TabItems.Last();
-            _disableFocusEmbeddedWindowOnSelectedTabItemChange = false;
+            _disableFocusEmbeddedWindow = false;
         }
 
         public void AddTab(string host)

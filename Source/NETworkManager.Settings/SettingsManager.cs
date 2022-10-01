@@ -1,7 +1,10 @@
-﻿using System;
+﻿using log4net;
+using NETworkManager.Models;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -10,12 +13,14 @@ namespace NETworkManager.Settings
     public static class SettingsManager
     {
         #region Variables
+        private static readonly ILog _log = LogManager.GetLogger(typeof(SettingsManager));
+
         private static string SettingsFolderName => "Settings";
         private static string SettingsFileName => "Settings";
         private static string SettingsFileExtension => ".xml";
 
         public static SettingsInfo Current { get; set; }
-                
+
         public static bool HotKeysChanged { get; set; }
         #endregion
 
@@ -158,7 +163,7 @@ namespace NETworkManager.Settings
         public static void Import(string filePath)
         {
             using var zipArchive = ZipFile.OpenRead(filePath);
-            
+
             zipArchive.GetEntry(GetSettingsFileName()).ExtractToFile(GetSettingsFilePath(), true);
         }
 
@@ -198,9 +203,32 @@ namespace NETworkManager.Settings
         #endregion
 
         #region Upgrade 
-        public static void Upgrade(Version targetVersion)
+        public static void Upgrade(Version fromVersion, Version toVersion)
         {
-            Debug.WriteLine("Perform update to: " + targetVersion.ToString());
+            _log.Info($"Start settings upgrade from {fromVersion} to {toVersion}...");
+
+            // Update to 2022.8.18.0
+            /*
+            if (fromVersion < new Version(2022, 8, 18, 0))
+            {
+                _log.Info($"Apply update to 2022.8.18.0");
+            }
+            */
+
+            // Latest
+            if (fromVersion < toVersion)
+            {
+                _log.Info($"Apply upgrade to {toVersion}...");
+
+                _log.Info($"Add AWS Session Manager to application list...");
+                Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
+            }
+
+            // Set to latest version and save
+            Current.Version = toVersion.ToString();
+            Save();
+
+            _log.Info("Settings upgrade finished!");
         }
         #endregion
         #endregion

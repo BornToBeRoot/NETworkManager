@@ -31,6 +31,7 @@ namespace NETworkManager.Settings
             new SettingsViewInfo(SettingsViewName.RemoteDesktop, ApplicationManager.GetIcon(ApplicationName.RemoteDesktop), SettingsViewGroup.Applications),
             new SettingsViewInfo(SettingsViewName.PowerShell, ApplicationManager.GetIcon(ApplicationName.PowerShell), SettingsViewGroup.Applications),
             new SettingsViewInfo(SettingsViewName.PuTTY, ApplicationManager.GetIcon(ApplicationName.PuTTY), SettingsViewGroup.Applications),
+            new SettingsViewInfo(SettingsViewName.AWSSessionManager, ApplicationManager.GetIcon(ApplicationName.AWSSessionManager), SettingsViewGroup.Applications),
             new SettingsViewInfo(SettingsViewName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC), SettingsViewGroup.Applications),
             new SettingsViewInfo(SettingsViewName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP), SettingsViewGroup.Applications),
             new SettingsViewInfo(SettingsViewName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN), SettingsViewGroup.Applications),

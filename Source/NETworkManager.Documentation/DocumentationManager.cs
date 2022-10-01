@@ -1,9 +1,10 @@
 ﻿using NETworkManager.Models;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
+using Windows.Devices.Geolocation;
 
 namespace NETworkManager.Documentation
 {
@@ -20,7 +21,7 @@ namespace NETworkManager.Documentation
         /// <summary>
         /// List with all known documentation entries.
         /// </summary>
-        private static List<DocumentationInfo> List => new List<DocumentationInfo>
+        private static List<DocumentationInfo> List => new()
         {
             new DocumentationInfo(DocumentationIdentifier.ApplicationDashboard, @"Documentation/Application/Dashboard"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"Documentation/Application/NetworkInterface"),
@@ -33,6 +34,7 @@ namespace NETworkManager.Documentation
             new DocumentationInfo(DocumentationIdentifier.ApplicationRemoteDesktop, @"Documentation/Application/RemoteDesktop"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPowerShell, @"Documentation/Application/PowerShell"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationPutty, @"Documentation/Application/PuTTY"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationAWSSessionManager, @"Documentation/Application/AWSSessionManager"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationTigerVNC, @"Documentation/Application/TigerVNC"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationWebConsole, @"Documentation/Application/WebConsole"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationSnmp, @"Documentation/Application/SNMP"),
@@ -119,6 +121,8 @@ namespace NETworkManager.Documentation
                     return DocumentationIdentifier.ApplicationPowerShell;
                 case ApplicationName.PuTTY:
                     return DocumentationIdentifier.ApplicationPutty;
+                case ApplicationName.AWSSessionManager:
+                    return DocumentationIdentifier.ApplicationAWSSessionManager;
                 case ApplicationName.TigerVNC:
                     return DocumentationIdentifier.ApplicationTigerVNC;
                 case ApplicationName.WebConsole:
@@ -143,6 +147,48 @@ namespace NETworkManager.Documentation
                     return DocumentationIdentifier.ApplicationArpTable;
                 case ApplicationName.None:
                     return DocumentationIdentifier.Default;
+                default:
+                    return DocumentationIdentifier.Default;
+            }
+        }
+
+        /// <summary>
+        /// Method to get the <see cref="DocumentationIdentifier"/> from an <see cref="SettingsViewName"/>.
+        /// </summary>
+        /// <param name="name"><see cref="SettingsViewName"/> from which you want to get the <see cref="DocumentationIdentifier"/>.</param>
+        /// <returns><see cref="DocumentationIdentifier"/> of the application or settings page.</returns>
+        public static DocumentationIdentifier GetIdentifierBySettingsName(SettingsViewName name)
+        {
+            switch (name)
+            {
+                case SettingsViewName.Dashboard:
+                    return GetIdentifierByAppliactionName(ApplicationName.Dashboard);
+                case SettingsViewName.IPScanner:
+                    return GetIdentifierByAppliactionName(ApplicationName.IPScanner);
+                case SettingsViewName.PortScanner:
+                    return GetIdentifierByAppliactionName(ApplicationName.PortScanner);
+                case SettingsViewName.PingMonitor:
+                    return GetIdentifierByAppliactionName(ApplicationName.PingMonitor);
+                case SettingsViewName.Traceroute:
+                    return GetIdentifierByAppliactionName(ApplicationName.Traceroute);
+                case SettingsViewName.DNSLookup:
+                    return GetIdentifierByAppliactionName(ApplicationName.DNSLookup);
+                case SettingsViewName.RemoteDesktop:
+                    return GetIdentifierByAppliactionName(ApplicationName.RemoteDesktop);
+                case SettingsViewName.PowerShell:
+                    return GetIdentifierByAppliactionName(ApplicationName.PowerShell);
+                case SettingsViewName.PuTTY:
+                    return GetIdentifierByAppliactionName(ApplicationName.PuTTY);
+                case SettingsViewName.AWSSessionManager:
+                    return GetIdentifierByAppliactionName(ApplicationName.AWSSessionManager);
+                case SettingsViewName.TigerVNC:
+                    return GetIdentifierByAppliactionName(ApplicationName.TigerVNC);
+                case SettingsViewName.SNMP:
+                    return GetIdentifierByAppliactionName(ApplicationName.SNMP);
+                case SettingsViewName.WakeOnLAN:
+                    return GetIdentifierByAppliactionName(ApplicationName.WakeOnLAN);
+                case SettingsViewName.Whois:
+                    return GetIdentifierByAppliactionName(ApplicationName.Whois);
                 default:
                     return DocumentationIdentifier.Default;
             }

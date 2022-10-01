@@ -49,7 +49,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _disableFocusEmbeddedWindowOnSelectedTabItemChange;
+        private bool _disableFocusEmbeddedWindow;
 
         private DragablzTabItem _selectedTabItem;
         public DragablzTabItem SelectedTabItem
@@ -63,7 +63,7 @@ namespace NETworkManager.ViewModels
                 _selectedTabItem = value;
 
                 // Focus embedded window on switching tab
-                if (!_disableFocusEmbeddedWindowOnSelectedTabItemChange)
+                if (!_disableFocusEmbeddedWindow)
                     FocusEmbeddedWindow();
 
                 OnPropertyChanged();
@@ -212,9 +212,8 @@ namespace NETworkManager.ViewModels
         public PowerShellHostViewModel(IDialogCoordinator instance)
         {
             _dialogCoordinator = instance;
-
-            // Check if putty is available...
-            CheckIfConfigured();
+            
+            CheckSettings();
 
             InterTabClient = new DragablzInterTabClient(ApplicationName.PowerShell);
 
@@ -240,7 +239,7 @@ namespace NETworkManager.ViewModels
                     return !string.IsNullOrEmpty(info.Tags) && info.PowerShell_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
                 */
 
-                // Search by: Name, TigerVNC_Host
+                // Search by: Name, PowerShell_Host
                 return info.PowerShell_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PowerShell_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
             };
 
@@ -262,7 +261,7 @@ namespace NETworkManager.ViewModels
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath))
-                CheckIfConfigured();
+                CheckSettings();
         }
 
         private void LoadSettings()
@@ -345,21 +344,23 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.PowerShell);
         }
 
-        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
+        private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
 
         private void EditProfileAction()
         {
             ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
         private void CopyAsProfileAction()
         {
             ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
 
         private void DeleteProfileAction()
         {
@@ -409,7 +410,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void CheckIfConfigured()
+        private void CheckSettings()
         {
             IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) && File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath);
         }
@@ -464,13 +465,11 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfileExternal()
         {
-            ProcessStartInfo info = new()
+            Process.Start(new ProcessStartInfo()
             {
                 FileName = SettingsManager.Current.PowerShell_ApplicationFilePath,
                 Arguments = PowerShell.BuildCommandLine(NETworkManager.Profiles.Application.PowerShell.CreateSessionInfo(SelectedProfile))
-            };
-
-            Process.Start(info);
+            });
         }
 
         private void Connect(PowerShellSessionInfo sessionInfo, string header = null)
@@ -480,9 +479,9 @@ namespace NETworkManager.ViewModels
             TabItems.Add(new DragablzTabItem(header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Localization.Resources.Strings.PowerShell), new PowerShellControl(sessionInfo)));
 
             // Select the added tab
-            _disableFocusEmbeddedWindowOnSelectedTabItemChange = true;
+            _disableFocusEmbeddedWindow = true;
             SelectedTabItem = TabItems.Last();
-            _disableFocusEmbeddedWindowOnSelectedTabItemChange = false;
+            _disableFocusEmbeddedWindow = false;
         }
 
         public void AddTab(string host)

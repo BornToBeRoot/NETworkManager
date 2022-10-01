@@ -51,7 +51,7 @@
             <TextBox.Text>
                 <Binding Path="PrivateKeyFile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <validators:EmptyOrFileExistsValidator ValidatesOnTargetUpdated="True" />
+                        <validators:IsEmptyOrFileExistsValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

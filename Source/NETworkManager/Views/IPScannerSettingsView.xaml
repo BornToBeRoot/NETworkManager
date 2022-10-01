@@ -87,9 +87,9 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (utilities:CustomCommandInfo.Name)}" Width="1*" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.FilePath}" Binding="{Binding (utilities:CustomCommandInfo.FilePath)}" Width="2*" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Arguments}" Binding="{Binding (utilities:CustomCommandInfo.Arguments)}" Width="3*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (utilities:CustomCommandInfo.Name)}" MinWidth="200" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.FilePath}" Binding="{Binding (utilities:CustomCommandInfo.FilePath)}" MinWidth="150" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Arguments}" Binding="{Binding (utilities:CustomCommandInfo.Arguments)}" MinWidth="200" Width="*" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditCustomCommandCommand}" Key="F2" />

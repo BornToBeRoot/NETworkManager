@@ -55,7 +55,7 @@ namespace NETworkManager.Controls
 
             InterTabController.Partition = applicationName.ToString();
 
-            Title = $"NETworkManager {AssemblyManager.Current.Version.Major}.{AssemblyManager.Current.Version.Minor}.{AssemblyManager.Current.Version.Build} - {ApplicationNameTranslator.GetInstance().Translate(applicationName)}";
+            Title = $"NETworkManager {AssemblyManager.Current.Version} - {ApplicationNameTranslator.GetInstance().Translate(applicationName)}";
 
             SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
         }
@@ -91,6 +91,9 @@ namespace NETworkManager.Controls
                     break;
                 case ApplicationName.PuTTY:
                     ((PuTTYControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                    break;
+                case ApplicationName.AWSSessionManager:
+                    ((AWSSessionManagerControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
                 case ApplicationName.TigerVNC:
                     ((TigerVNCControl)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
@@ -252,6 +255,35 @@ namespace NETworkManager.Controls
         }
         #endregion
 
+        #region AWSSessionManager Commands
+        private bool AWSSessionManager_Disconnected_CanExecute(object view)
+        {
+            if (view is AWSSessionManagerControl control)
+                return !control.IsConnected;
+
+            return false;
+        }
+
+        public ICommand AWSSessionManager_ReconnectCommand => new RelayCommand(AWSSessionManager_ReconnectAction);
+
+        private void AWSSessionManager_ReconnectAction(object view)
+        {
+            if (view is AWSSessionManagerControl control)
+            {
+                if (control.ReconnectCommand.CanExecute(null))
+                    control.ReconnectCommand.Execute(null);
+            }
+        }
+
+        public ICommand AWSSessionManager_ResizeWindowCommand => new RelayCommand(AWSSessionManager_ResizeWindowAction, AWSSessionManager_Disconnected_CanExecute);
+
+        private void AWSSessionManager_ResizeWindowAction(object view)
+        {
+            if (view is PowerShellControl control)
+                control.ResizeEmbeddedWindow();
+        }
+        #endregion
+
         #region TigerVNC Commands
         public ICommand TigerVNC_ReconnectCommand => new RelayCommand(TigerVNC_ReconnectAction);
 
@@ -296,6 +328,9 @@ namespace NETworkManager.Controls
                 case ApplicationName.PuTTY:
                     ((PuTTYControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
                     break;
+                case ApplicationName.AWSSessionManager:
+                    ((AWSSessionManagerControl)((DragablzTabItem)TabsContainer?.SelectedItem)?.View)?.FocusEmbeddedWindow();
+                    break;
             }
         }
 
@@ -304,6 +339,7 @@ namespace NETworkManager.Controls
         {
 
         }
+
         private void MetroWindow_Activated(object sender, EventArgs e)
         {
             FocusEmbeddedWindow();

@@ -1122,6 +1122,64 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
+        #region AWS Session Manager
+        private bool _awsSessionManager_OverrideProfile;
+        public bool AWSSessionManager_OverrideProfile
+        {
+            get => _awsSessionManager_OverrideProfile;
+            set
+            {
+                if (value == _awsSessionManager_OverrideProfile)
+                    return;
+
+                _awsSessionManager_OverrideProfile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _awsSessionManager_Profile;
+        public string AWSSessionManager_Profile
+        {
+            get => _awsSessionManager_Profile;
+            set
+            {
+                if (value == _awsSessionManager_Profile)
+                    return;
+
+                _awsSessionManager_Profile = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _awsSessionManager_OverrideRegion;
+        public bool AWSSessionManager_OverrideRegion
+        {
+            get => _awsSessionManager_OverrideRegion;
+            set
+            {
+                if (value == _awsSessionManager_OverrideRegion)
+                    return;
+
+                _awsSessionManager_OverrideRegion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _awsSessionManager_Region;
+        public string AWSSessionManager_Region
+        {
+            get => _awsSessionManager_Region;
+            set
+            {
+                if (value == _awsSessionManager_Region)
+                    return;
+
+                _awsSessionManager_Region = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         #region TigerVNC
         private bool _tigerVNC_OverridePort;
         public bool TigerVNC_OverridePort
@@ -1243,6 +1301,13 @@ namespace NETworkManager.ViewModels
             PuTTY_LogFileName = groupInfo.PuTTY_LogFileName;
             PuTTY_OverrideAdditionalCommandLine = groupInfo.PuTTY_OverrideAdditionalCommandLine;
             PuTTY_AdditionalCommandLine = groupInfo.PuTTY_AdditionalCommandLine;
+
+            // AWS Session Manager
+            AWSSessionManager_OverrideProfile = groupInfo.AWSSessionManager_OverrideProfile;
+            AWSSessionManager_Profile = groupInfo.AWSSessionManager_Profile;
+            AWSSessionManager_OverrideRegion = groupInfo.AWSSessionManager_OverrideRegion;
+            AWSSessionManager_Region = groupInfo.AWSSessionManager_Region;
+                
 
             // TigerVNC
             TigerVNC_OverridePort = groupInfo.TigerVNC_OverridePort;

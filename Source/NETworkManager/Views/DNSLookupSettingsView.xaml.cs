@@ -8,7 +8,7 @@ namespace NETworkManager.Views
 {
     public partial class DNSLookupSettingsView
     {
-        private readonly DNSLookupSettingsViewModel _viewModel = new DNSLookupSettingsViewModel(DialogCoordinator.Instance);
+        private readonly DNSLookupSettingsViewModel _viewModel = new(DialogCoordinator.Instance);
 
         public DNSLookupSettingsView()
         {

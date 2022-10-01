@@ -33,6 +33,7 @@ using System.Net.NetworkInformation;
 using System.IO;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Network;
+using NETworkManager.Models.AWS;
 
 namespace NETworkManager
 {
@@ -159,8 +160,11 @@ namespace NETworkManager
                 if (Equals(value, _selectedApplication))
                     return;
 
+                if (_selectedApplication != null)
+                    OnApplicationViewHide(_selectedApplication.Name);
+
                 if (value != null)
-                    ChangeApplicationView(value.Name);
+                    OnApplicationViewVisible(value.Name);
 
                 _selectedApplication = value;
                 OnPropertyChanged();
@@ -390,14 +394,16 @@ namespace NETworkManager
                     SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
 
                     // Generate lists at runtime
+                    SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetList());
                     SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());
                     SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.GetDefaultList());
                     SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(DNSServer.GetDefaultList());
+                    SettingsManager.Current.AWSSessionManager_AWSProfiles = new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
 
                     // Check if PuTTY is installed
-                    foreach(var file in Models.PuTTY.PuTTY.GetDefaultInstallationPaths)
+                    foreach (var file in Models.PuTTY.PuTTY.GetDefaultInstallationPaths)
                     {
-                        if(File.Exists(file))
+                        if (File.Exists(file))
                         {
                             SettingsManager.Current.PuTTY_ApplicationFilePath = file;
                             break;
@@ -428,7 +434,7 @@ namespace NETworkManager
             // Load application list, filter, sort, etc.
             LoadApplicationList();
 
-            // Load profiles    
+            // Load profiles
             LoadProfiles();
 
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
@@ -446,78 +452,6 @@ namespace NETworkManager
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
                 CheckForUpdates();
         }
-
-        private void LoadApplicationList()
-        {
-            _isApplicationListLoading = true;
-
-            // Create a new list if empty
-            if (SettingsManager.Current.General_ApplicationList.Count == 0)
-            {
-                SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetList());
-            }
-            else // Check for missing applications and add them
-            {
-                foreach (ApplicationInfo info in ApplicationManager.GetList())
-                {
-                    bool isInList = false;
-
-                    foreach (ApplicationInfo info2 in SettingsManager.Current.General_ApplicationList)
-                    {
-                        if (info.Name == info2.Name)
-                            isInList = true;
-                    }
-
-                    if (!isInList)
-                        SettingsManager.Current.General_ApplicationList.Add(info);
-                }
-            }
-
-            Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
-
-            Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending)); // Always have the same order, even if it is translated...
-            Applications.Filter = o =>
-            {
-                if (!(o is ApplicationInfo info))
-                    return false;
-
-                if (string.IsNullOrEmpty(Search))
-                    return info.IsVisible;
-
-                var regex = new Regex(@" |-");
-
-                var search = regex.Replace(Search, "");
-
-                // Search by TranslatedName and Name
-                return info.IsVisible && (regex.Replace(ApplicationNameTranslator.GetInstance().Translate(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
-            };
-
-            SettingsManager.Current.General_ApplicationList.CollectionChanged += (sender, args) => Applications.Refresh();
-
-            _isApplicationListLoading = false;
-
-            // Select the application
-            SelectedApplication = Applications.SourceCollection.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != ApplicationName.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
-
-            // Scroll into view
-            if (SelectedApplication != null)
-                ListViewApplication.ScrollIntoView(SelectedApplication);
-        }
-
-        private void LoadProfiles()
-        {
-            _isProfileLoading = true;
-            ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
-            ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
-            _isProfileLoading = false;
-
-            ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
-            ProfileManager.OnSwitchProfileFileViaUIEvent += ProfileManager_OnSwitchProfileFileViaUIEvent;
-
-            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
-            SelectedProfileFile ??= ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
-        }
-
         private async void MetroWindowMain_Closing(object sender, CancelEventArgs e)
         {
             // Force restart --> e.g. Import or reset settings
@@ -581,7 +515,42 @@ namespace NETworkManager
         }
         #endregion
 
-        #region Application Views
+        #region Application
+        private void LoadApplicationList()
+        {
+            _isApplicationListLoading = true;
+
+            Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
+            Applications.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
+
+            Applications.Filter = o =>
+            {
+                if (o is not ApplicationInfo info)
+                    return false;
+
+                if (string.IsNullOrEmpty(Search))
+                    return info.IsVisible;
+
+                var regex = new Regex(@" |-");
+
+                var search = regex.Replace(Search, "");
+
+                // Search by TranslatedName and Name
+                return info.IsVisible && (regex.Replace(ApplicationNameTranslator.GetInstance().Translate(info.Name), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || regex.Replace(info.Name.ToString(), "").IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0);
+            };
+
+            SettingsManager.Current.General_ApplicationList.CollectionChanged += (sender, args) => Applications.Refresh();
+
+            _isApplicationListLoading = false;
+
+            // Select the application
+            SelectedApplication = Applications.SourceCollection.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == (CommandLineManager.Current.Application != ApplicationName.None ? CommandLineManager.Current.Application : SettingsManager.Current.General_DefaultApplicationViewName));
+
+            // Scroll into view
+            if (SelectedApplication != null)
+                ListViewApplication.ScrollIntoView(SelectedApplication);
+        }
+
         private DashboardView _dashboardView;
         private NetworkInterfaceView _networkInterfaceView;
         private WiFiView _wiFiView;
@@ -593,6 +562,7 @@ namespace NETworkManager
         private RemoteDesktopHostView _remoteDesktopHostView;
         private PowerShellHostView _powerShellHostView;
         private PuTTYHostView _puttyHostView;
+        private AWSSessionManagerHostView _awsSessionManagerHostView;
         private TigerVNCHostView _tigerVNCHostView;
         private WebConsoleHostView _webConsoleHostView;
         private SNMPHostView _snmpHostView;
@@ -605,82 +575,15 @@ namespace NETworkManager
         private ListenersView _listenersView;
         private ARPTableView _arpTableView;
 
-        private ApplicationName _currentApplicationViewName = ApplicationName.None;
 
-        private void ChangeApplicationView(ApplicationName name, bool refresh = false)
+        /// <summary>
+        /// Method when the application view becomes visible (again). Either when switching the applications 
+        /// or after opening and closing the settings.
+        /// </summary>
+        /// <param name="name">Name of the application</param>
+        /// <param name="fromSettings">Indicates whether the settings were previously open</param>
+        private void OnApplicationViewVisible(ApplicationName name, bool fromSettings = false)
         {
-            if (!refresh && _currentApplicationViewName == name)
-                return;
-
-            // Stop some functions on the old view
-            switch (_currentApplicationViewName)
-            {
-                case ApplicationName.Dashboard:
-                    _dashboardView?.OnViewHide();
-                    break;
-                case ApplicationName.NetworkInterface:
-                    _networkInterfaceView?.OnViewHide();
-                    break;
-                case ApplicationName.WiFi:
-                    _wiFiView?.OnViewHide();
-                    break;
-                case ApplicationName.IPScanner:
-                    _ipScannerHostView?.OnViewHide();
-                    break;
-                case ApplicationName.PortScanner:
-                    _portScannerHostView?.OnViewHide();
-                    break;
-                case ApplicationName.PingMonitor:
-                    _pingMonitorHostView?.OnViewHide();
-                    break;
-                case ApplicationName.Traceroute:
-                    _tracerouteHostView?.OnViewHide();
-                    break;
-                case ApplicationName.DNSLookup:
-                    _dnsLookupHostView?.OnViewHide();
-                    break;
-                case ApplicationName.RemoteDesktop:
-                    _remoteDesktopHostView?.OnViewHide();
-                    break;
-                case ApplicationName.PowerShell:
-                    _powerShellHostView?.OnViewHide();
-                    break;
-                case ApplicationName.PuTTY:
-                    _puttyHostView?.OnViewHide();
-                    break;
-                case ApplicationName.TigerVNC:
-                    _tigerVNCHostView?.OnViewHide();
-                    break;
-                case ApplicationName.WebConsole:
-                    _webConsoleHostView?.OnViewHide();
-                    break;
-                case ApplicationName.SNMP:
-                    _snmpHostView?.OnViewHide();
-                    break;
-                case ApplicationName.DiscoveryProtocol:
-                    _discoveryProtocolView?.OnViewHide();
-                    break;
-                case ApplicationName.WakeOnLAN:
-                    _wakeOnLanView?.OnViewHide();
-                    break;
-                //case ApplicationName.SubnetCalculator:
-                //    _subnetCalculatorHostView?.OnViewHide();
-                //    break;
-                //case ApplicationName.Lookup:
-                //    _lookupHostView?.OnViewHide();
-                //    break;
-                case ApplicationName.Connections:
-                    _connectionsView?.OnViewHide();
-                    break;
-                case ApplicationName.Listeners:
-                    _listenersView?.OnViewHide();
-                    break;
-                case ApplicationName.ARPTable:
-                    _arpTableView?.OnViewHide();
-                    break;
-            }
-
-            // Create new view / start some functions
             switch (name)
             {
                 case ApplicationName.Dashboard:
@@ -771,6 +674,14 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _puttyHostView;
                     break;
+                case ApplicationName.AWSSessionManager:
+                    if (_awsSessionManagerHostView == null)
+                        _awsSessionManagerHostView = new AWSSessionManagerHostView();
+                    else
+                        _awsSessionManagerHostView.OnViewVisible(fromSettings);
+
+                    ContentControlApplication.Content = _awsSessionManagerHostView;
+                    break;
                 case ApplicationName.TigerVNC:
                     if (_tigerVNCHostView == null)
                         _tigerVNCHostView = new TigerVNCHostView();
@@ -859,13 +770,80 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _arpTableView;
                     break;
-                case ApplicationName.None:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(name), name, null);
             }
+        }
 
-            _currentApplicationViewName = name;
+        private void OnApplicationViewHide(ApplicationName name)
+        {
+            switch (name)
+            {
+                case ApplicationName.Dashboard:
+                    _dashboardView?.OnViewHide();
+                    break;
+                case ApplicationName.NetworkInterface:
+                    _networkInterfaceView?.OnViewHide();
+                    break;
+                case ApplicationName.WiFi:
+                    _wiFiView?.OnViewHide();
+                    break;
+                case ApplicationName.IPScanner:
+                    _ipScannerHostView?.OnViewHide();
+                    break;
+                case ApplicationName.PortScanner:
+                    _portScannerHostView?.OnViewHide();
+                    break;
+                case ApplicationName.PingMonitor:
+                    _pingMonitorHostView?.OnViewHide();
+                    break;
+                case ApplicationName.Traceroute:
+                    _tracerouteHostView?.OnViewHide();
+                    break;
+                case ApplicationName.DNSLookup:
+                    _dnsLookupHostView?.OnViewHide();
+                    break;
+                case ApplicationName.RemoteDesktop:
+                    _remoteDesktopHostView?.OnViewHide();
+                    break;
+                case ApplicationName.PowerShell:
+                    _powerShellHostView?.OnViewHide();
+                    break;
+                case ApplicationName.PuTTY:
+                    _puttyHostView?.OnViewHide();
+                    break;
+                case ApplicationName.AWSSessionManager:
+                    _awsSessionManagerHostView?.OnViewHide();
+                    break;
+                case ApplicationName.TigerVNC:
+                    _tigerVNCHostView?.OnViewHide();
+                    break;
+                case ApplicationName.WebConsole:
+                    _webConsoleHostView?.OnViewHide();
+                    break;
+                case ApplicationName.SNMP:
+                    _snmpHostView?.OnViewHide();
+                    break;
+                case ApplicationName.DiscoveryProtocol:
+                    _discoveryProtocolView?.OnViewHide();
+                    break;
+                case ApplicationName.WakeOnLAN:
+                    _wakeOnLanView?.OnViewHide();
+                    break;
+                //case ApplicationName.Lookup:
+                //    _lookupHostView?.OnViewHide();
+                //    break;
+                //case ApplicationName.SubnetCalculator:
+                //    _subnetCalculatorHostView?.OnViewHide();
+                //    break;
+                case ApplicationName.Connections:
+                    _connectionsView?.OnViewHide();
+                    break;
+                case ApplicationName.Listeners:
+                    _listenersView?.OnViewHide();
+                    break;
+                case ApplicationName.ARPTable:
+                    _arpTableView?.OnViewHide();
+                    break;
+            }
         }
 
         private void ClearSearchOnApplicationListMinimize()
@@ -887,7 +865,7 @@ namespace NETworkManager
 
         private void EventSystem_RedirectDataToApplicationEvent(object sender, EventArgs e)
         {
-            if (!(e is EventSystemRedirectArgs data))
+            if (e is not EventSystemRedirectArgs data)
                 return;
 
             // Change view
@@ -896,6 +874,12 @@ namespace NETworkManager
             // Crate a new tab / perform action
             switch (data.Application)
             {
+                case ApplicationName.Dashboard:
+                    break;
+                case ApplicationName.NetworkInterface:
+                    break;
+                case ApplicationName.WiFi:
+                    break;
                 case ApplicationName.IPScanner:
                     _ipScannerHostView.AddTab(data.Args);
                     break;
@@ -920,13 +904,17 @@ namespace NETworkManager
                 case ApplicationName.PuTTY:
                     _puttyHostView.AddTab(data.Args);
                     break;
+                case ApplicationName.AWSSessionManager:
+                    break;
                 case ApplicationName.TigerVNC:
                     _tigerVNCHostView.AddTab(data.Args);
+                    break;
+                case ApplicationName.WebConsole:
                     break;
                 case ApplicationName.SNMP:
                     _snmpHostView.AddTab(data.Args);
                     break;
-                case ApplicationName.NetworkInterface:
+                case ApplicationName.DiscoveryProtocol:
                     break;
                 case ApplicationName.WakeOnLAN:
                     break;
@@ -1028,27 +1016,32 @@ namespace NETworkManager
                 SettingsManager.HotKeysChanged = false;
             }
 
-            // Save the settings
-            /* Disabled (07.09.2021) - because settings are saved on app shutdown
-            if (SettingsManager.Current.SettingsChanged)
-                SettingsManager.Save();
-            */
-
-            // Refresh the view
-            ChangeApplicationView(SelectedApplication.Name, true);
-        }
-
-        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-
+            // Refresh the application view
+            OnApplicationViewVisible(SelectedApplication.Name, true);
         }
         #endregion
 
         #region Profiles
+        private void LoadProfiles()
+        {
+            _isProfileLoading = true;
+            ProfileFiles = new CollectionViewSource { Source = ProfileManager.ProfileFiles }.View;
+            ProfileFiles.SortDescriptions.Add(new SortDescription(nameof(ProfileFileInfo.Name), ListSortDirection.Ascending));
+            _isProfileLoading = false;
+
+            ProfileManager.OnLoadedProfileFileChangedEvent += ProfileManager_OnLoadedProfileFileChangedEvent;
+            ProfileManager.OnSwitchProfileFileViaUIEvent += ProfileManager_OnSwitchProfileFileViaUIEvent;
+
+            SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
+            SelectedProfileFile ??= ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
+        }
+
         private async Task LoadProfile(ProfileFileInfo info)
         {
             if (info.IsEncrypted && !info.IsPasswordValid)
             {
+                IsProfileFileLocked = true;
+
                 var customDialog = new CustomDialog
                 {
                     Title = Localization.Resources.Strings.MasterPassword
@@ -1068,8 +1061,6 @@ namespace NETworkManager
                     ConfigurationManager.Current.FixAirspace = false;
 
                     ProfileManager.Unload();
-
-                    IsProfileFileLocked = true;
                 });
 
                 customDialog.Content = new CredentialsPasswordDialog
@@ -1093,6 +1084,8 @@ namespace NETworkManager
                 ProfileManager.Switch(info);
 
                 IsProfileFileLocked = false;
+
+                OnProfilesLoaded(SelectedApplication.Name);
             }
             catch (System.Security.Cryptography.CryptographicException)
             {
@@ -1102,8 +1095,6 @@ namespace NETworkManager
                 ConfigurationManager.Current.FixAirspace = true;
 
                 await this.ShowMessageAsync(Localization.Resources.Strings.WrongPassword, Localization.Resources.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, settings);
-
-                IsProfileFileLocked = true;
 
                 ConfigurationManager.Current.FixAirspace = false;
             }
@@ -1129,6 +1120,16 @@ namespace NETworkManager
             }
         }
 
+        private void OnProfilesLoaded(ApplicationName name)
+        {
+            switch (name)
+            {
+                case ApplicationName.AWSSessionManager:
+                    _awsSessionManagerHostView?.OnProfileLoaded();
+                    break;
+            }
+        }
+
         /// <summary>
         /// Update the view when the loaded profile file changed
         /// </summary>
@@ -1151,6 +1152,27 @@ namespace NETworkManager
         private void ProfileManager_OnSwitchProfileFileViaUIEvent(object sender, ProfileFileInfoArgs e)
         {
             SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Equals(e.ProfileFileInfo));
+        }
+        #endregion
+
+        #region Update check
+        private void CheckForUpdates()
+        {
+            var updater = new Updater();
+
+            updater.UpdateAvailable += Updater_UpdateAvailable;
+            updater.Error += Updater_Error;
+            updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version);
+        }
+
+        private static void Updater_Error(object sender, EventArgs e)
+        {
+            //  Log
+        }
+
+        private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
+        {
+            IsUpdateAvailable = true;
         }
         #endregion
 
@@ -1183,28 +1205,7 @@ namespace NETworkManager
         }
         #endregion
 
-        #region Update check
-        private void CheckForUpdates()
-        {
-            var updater = new Updater();
-
-            updater.UpdateAvailable += Updater_UpdateAvailable;
-            updater.Error += Updater_Error;
-            updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version);
-        }
-
-        private static void Updater_Error(object sender, EventArgs e)
-        {
-            //  Log
-        }
-
-        private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
-        {
-            IsUpdateAvailable = true;
-        }
-        #endregion
-
-        #region HotKeys (Register / Unregister)
+        #region Global HotKeys
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
         [DllImport("user32.dll")]
@@ -1346,7 +1347,7 @@ namespace NETworkManager
 
         private void OpenDocumentationAction()
         {
-            DocumentationManager.OpenDocumentation(ShowSettingsView ? DocumentationIdentifier.Default : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
+            DocumentationManager.OpenDocumentation(ShowSettingsView ? DocumentationManager.GetIdentifierBySettingsName(_settingsView.GetSelectedSettingsViewName()) : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
         }
 
         public ICommand OpenApplicationListCommand
@@ -1427,7 +1428,7 @@ namespace NETworkManager
 
         public void RestartApplication(bool asAdmin = false)
         {
-            ExternalProcessStarter.RunProcess(ConfigurationManager.Current.ApplicationFullName, $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Process.GetCurrentProcess().Id} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{_currentApplicationViewName}", asAdmin);
+            ExternalProcessStarter.RunProcess(ConfigurationManager.Current.ApplicationFullName, $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Process.GetCurrentProcess().Id} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{SelectedApplication.Name}", asAdmin);
 
             CloseApplication();
         }
@@ -1508,6 +1509,13 @@ namespace NETworkManager
         }
         #endregion
 
+        #region Events
+        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+
+        }
+        #endregion
+
         #region Bugfixes
         private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
         {
@@ -1522,7 +1530,7 @@ namespace NETworkManager
         }
 
         private async void FocusEmbeddedWindow()
-        {         
+        {
             // Delay the focus to prevent blocking the ui
             do
             {
@@ -1548,6 +1556,9 @@ namespace NETworkManager
                     break;
                 case ApplicationName.PuTTY:
                     _puttyHostView?.FocusEmbeddedWindow();
+                    break;
+                case ApplicationName.AWSSessionManager:
+                    _awsSessionManagerHostView?.FocusEmbeddedWindow();
                     break;
             }
         }

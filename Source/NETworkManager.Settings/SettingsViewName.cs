@@ -21,6 +21,7 @@
         RemoteDesktop,
         PowerShell,
         PuTTY,
+        AWSSessionManager,
         TigerVNC,
         SNMP,
         WakeOnLAN,

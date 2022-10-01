@@ -13,9 +13,6 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
-        //public ObservableCollection<ApplicationViewInfo> ApplicationViewCollection { get; set; }
-        public ICollectionView Applications { get; private set; }
-
         private ApplicationInfo _defaultApplicationSelectedItem;
         public ApplicationInfo DefaultApplicationSelectedItem
         {
@@ -154,10 +151,8 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            //ApplicationViewCollection = new ObservableCollection<ApplicationViewInfo>(SettingsManager.Current.General_ApplicationList);
-            Applications = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
-
             ApplicationsVisible = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
+            ApplicationsVisible.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
             ApplicationsVisible.Filter = o =>
             {
                 if (!(o is ApplicationInfo info))
@@ -167,7 +162,7 @@ namespace NETworkManager.ViewModels
             };
 
             ApplicationsHidden = new CollectionViewSource { Source = SettingsManager.Current.General_ApplicationList }.View;
-
+            ApplicationsHidden.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
             ApplicationsHidden.Filter = o =>
             {
                 if (!(o is ApplicationInfo info))
@@ -178,7 +173,7 @@ namespace NETworkManager.ViewModels
 
             ValidateHideVisibleApplications();
 
-            DefaultApplicationSelectedItem = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
+            DefaultApplicationSelectedItem = ApplicationsVisible.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
             BackgroundJobInterval = SettingsManager.Current.General_BackgroundJobInterval;
             HistoryListEntries = SettingsManager.Current.General_HistoryListEntries;
         }
@@ -192,9 +187,8 @@ namespace NETworkManager.ViewModels
 
         private void VisibleToHideApplicationAction()
         {
+            /*
             var index = 0;
-
-            var newDefaultApplication = DefaultApplicationSelectedItem.Name == VisibleApplicationSelectedItem.Name;
 
             for (var i = 0; i < SettingsManager.Current.General_ApplicationList.Count; i++)
             {
@@ -205,14 +199,17 @@ namespace NETworkManager.ViewModels
 
                 break;
             }
+            */
+
+            var newDefaultApplication = DefaultApplicationSelectedItem.Name == VisibleApplicationSelectedItem.Name;
 
             // Remove and add will fire a collection changed event --> detected in MainWindow
-            var info = SettingsManager.Current.General_ApplicationList[index];
+            var info = SettingsManager.Current.General_ApplicationList.First(x => VisibleApplicationSelectedItem.Name.Equals(x.Name));
 
             info.IsVisible = false;
 
-            SettingsManager.Current.General_ApplicationList.RemoveAt(index);
-            SettingsManager.Current.General_ApplicationList.Insert(index, info);
+            SettingsManager.Current.General_ApplicationList.Remove(info);
+            SettingsManager.Current.General_ApplicationList.Add(info);
 
             if (newDefaultApplication)
                 DefaultApplicationSelectedItem = ApplicationsVisible.Cast<ApplicationInfo>().FirstOrDefault();
@@ -227,6 +224,7 @@ namespace NETworkManager.ViewModels
 
         private void HideToVisibleApplicationAction()
         {
+            /*
             var index = 0;
 
             for (var i = 0; i < SettingsManager.Current.General_ApplicationList.Count; i++)
@@ -237,14 +235,15 @@ namespace NETworkManager.ViewModels
                     break;
                 }
             }
+            */
 
             // Remove and add will fire a collection changed event --> detected in MainWindow
-            var info = SettingsManager.Current.General_ApplicationList[index];
+            var info = SettingsManager.Current.General_ApplicationList.First(x => HiddenApplicationSelectedItem.Name.Equals(x.Name));
 
             info.IsVisible = true;
 
-            SettingsManager.Current.General_ApplicationList.RemoveAt(index);
-            SettingsManager.Current.General_ApplicationList.Insert(index, info);
+            SettingsManager.Current.General_ApplicationList.Remove(info);
+            SettingsManager.Current.General_ApplicationList.Add(info);
 
             ValidateHideVisibleApplications();
         }

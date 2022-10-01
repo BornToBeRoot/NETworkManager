@@ -13,7 +13,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolTip}">
-                    <Border x:Name="Root" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Opacity="0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Padding="5">
+                    <Border x:Name="Root" Background="{TemplateBinding Background}" MaxWidth="400" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Opacity="0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Padding="5">
                         <Border.Resources>
                             <Storyboard x:Key="Visible State" />
                             <Storyboard x:Key="Normal State" />

@@ -22,6 +22,7 @@ namespace NETworkManager.Profiles
             new ProfileViewInfo(ProfileViewName.RemoteDesktop, ApplicationManager.GetIcon(ApplicationName.RemoteDesktop)),
             new ProfileViewInfo(ProfileViewName.PowerShell, ApplicationManager.GetIcon(ApplicationName.PowerShell)),
             new ProfileViewInfo(ProfileViewName.PuTTY, ApplicationManager.GetIcon(ApplicationName.PuTTY)),
+            new ProfileViewInfo(ProfileViewName.AWSSessionManager, ApplicationManager.GetIcon(ApplicationName.AWSSessionManager)),
             new ProfileViewInfo(ProfileViewName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC)),
             new ProfileViewInfo(ProfileViewName.WebConsole, ApplicationManager.GetIcon(ApplicationName.WebConsole)),
             new ProfileViewInfo(ProfileViewName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN)),            

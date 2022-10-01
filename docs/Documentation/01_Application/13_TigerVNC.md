@@ -3,7 +3,7 @@ layout: default
 title: TigerVNC
 parent: Application
 grand_parent: Documentation
-nav_order: 12
+nav_order: 13
 description: ""
 permalink: /Documentation/Application/TigerVNC
 ---

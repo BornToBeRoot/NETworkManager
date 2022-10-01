@@ -670,7 +670,7 @@
                                             <TextBox.Text>
                                                 <Binding Path="ConfigGateway" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
-                                                        <validators:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                        <validators:IsEmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                                     </Binding.ValidationRules>
                                                 </Binding>
                                             </TextBox.Text>
@@ -705,7 +705,7 @@
                                             <TextBox.Text>
                                                 <Binding Path="ConfigPrimaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
-                                                        <validators:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                        <validators:IsEmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                                     </Binding.ValidationRules>
                                                 </Binding>
                                             </TextBox.Text>
@@ -715,7 +715,7 @@
                                             <TextBox.Text>
                                                 <Binding Path="ConfigSecondaryDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                     <Binding.ValidationRules>
-                                                        <validators:EmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
+                                                        <validators:IsEmptyOrIPv4AddressValidator ValidatesOnTargetUpdated="True" />
                                                     </Binding.ValidationRules>
                                                 </Binding>
                                             </TextBox.Text>

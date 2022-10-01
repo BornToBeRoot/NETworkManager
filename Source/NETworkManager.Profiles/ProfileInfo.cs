@@ -2,8 +2,8 @@
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
-using System.Collections.Generic;
 using System.Security;
+using System.Security.RightsManagement;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Profiles
@@ -26,12 +26,17 @@ namespace NETworkManager.Profiles
         /// <summary>
         /// Name of the group. Profiles are grouped based on the name.
         /// </summary>
-         public string Group { get; set; }
+        public string Group { get; set; }
 
         /// <summary>
         /// Tags to classify the profiles and to filter by it.
         /// </summary>
         public string Tags { get; set; }
+
+        /// <summary>
+        /// Dynamic profiles (e.g. AWS) are not save to file.
+        /// </summary>
+        public bool IsDynamic { get; set; }
 
         public bool NetworkInterface_Enabled { get; set; }
         public bool NetworkInterface_EnableStaticIPAddress { get; set; }
@@ -159,6 +164,13 @@ namespace NETworkManager.Profiles
         public bool PuTTY_OverrideAdditionalCommandLine { get; set; }
         public string PuTTY_AdditionalCommandLine { get; set; }
 
+        public bool AWSSessionManager_Enabled { get; set; }
+        public string AWSSessionManager_InstanceID { get; set; }
+        public bool AWSSessionManager_OverrideProfile { get; set; }
+        public string AWSSessionManager_Profile { get; set; }
+        public bool AWSSessionManager_OverrideRegion { get; set; }
+        public string AWSSessionManager_Region { get; set; }
+
         public bool TigerVNC_Enabled { get; set; }
         public bool TigerVNC_InheritHost { get; set; } = true;
         public string TigerVNC_Host { get; set; }
@@ -191,11 +203,14 @@ namespace NETworkManager.Profiles
         /// </summary>
         public ProfileInfo(ProfileInfo profile)
         {
-            Name = profile.Name;            
+            Name = profile.Name;
             Host = profile.Host;
             Group = profile.Group;
             Tags = profile.Tags;
 
+            IsDynamic = profile.IsDynamic;
+
+            // Network Interface
             NetworkInterface_Enabled = profile.NetworkInterface_Enabled;
             NetworkInterface_EnableStaticIPAddress = profile.NetworkInterface_EnableStaticIPAddress;
             NetworkInterface_IPAddress = profile.NetworkInterface_IPAddress;
@@ -205,27 +220,33 @@ namespace NETworkManager.Profiles
             NetworkInterface_PrimaryDNSServer = profile.NetworkInterface_PrimaryDNSServer;
             NetworkInterface_SecondaryDNSServer = profile.NetworkInterface_SecondaryDNSServer;
 
+            // IP Scanner
             IPScanner_Enabled = profile.IPScanner_Enabled;
             IPScanner_InheritHost = profile.IPScanner_InheritHost;
             IPScanner_HostOrIPRange = profile.IPScanner_HostOrIPRange;
 
+            // Port Scanner
             PortScanner_Enabled = profile.PortScanner_Enabled;
             PortScanner_InheritHost = profile.PortScanner_InheritHost;
             PortScanner_Host = profile.PortScanner_Host;
             PortScanner_Ports = profile.PortScanner_Ports;
 
+            // Ping Monitor
             PingMonitor_Enabled = profile.PingMonitor_Enabled;
             PingMonitor_InheritHost = profile.PingMonitor_InheritHost;
             PingMonitor_Host = profile.PingMonitor_Host;
 
+            // Traceroute
             Traceroute_Enabled = profile.Traceroute_Enabled;
             Traceroute_InheritHost = profile.Traceroute_InheritHost;
             Traceroute_Host = profile.Traceroute_Host;
 
+            // DNS Lookup
             DNSLookup_Enabled = profile.DNSLookup_Enabled;
             DNSLookup_InheritHost = profile.DNSLookup_InheritHost;
             DNSLookup_Host = profile.DNSLookup_Host;
 
+            // Remote Desktop
             RemoteDesktop_Enabled = profile.RemoteDesktop_Enabled;
             RemoteDesktop_InheritHost = profile.RemoteDesktop_InheritHost;
             RemoteDesktop_Host = profile.RemoteDesktop_Host;
@@ -244,7 +265,7 @@ namespace NETworkManager.Profiles
             RemoteDesktop_OverrideColorDepth = profile.RemoteDesktop_OverrideColorDepth;
             RemoteDesktop_ColorDepth = profile.RemoteDesktop_ColorDepth;
             RemoteDesktop_OverridePort = profile.RemoteDesktop_OverridePort;
-            RemoteDesktop_Port  = profile.RemoteDesktop_Port;
+            RemoteDesktop_Port = profile.RemoteDesktop_Port;
             RemoteDesktop_OverrideCredSspSupport = profile.RemoteDesktop_OverrideCredSspSupport;
             RemoteDesktop_EnableCredSspSupport = profile.RemoteDesktop_EnableCredSspSupport;
             RemoteDesktop_OverrideAuthenticationLevel = profile.RemoteDesktop_OverrideAuthenticationLevel;
@@ -285,7 +306,8 @@ namespace NETworkManager.Profiles
             RemoteDesktop_MenuAndWindowAnimation = profile.RemoteDesktop_MenuAndWindowAnimation;
             RemoteDesktop_OverrideVisualStyles = profile.RemoteDesktop_OverrideVisualStyles;
             RemoteDesktop_VisualStyles = profile.RemoteDesktop_VisualStyles;
-
+            
+            // PowerShell
             PowerShell_Enabled = profile.PowerShell_Enabled;
             PowerShell_EnableRemoteConsole = profile.PowerShell_EnableRemoteConsole;
             PowerShell_InheritHost = profile.PowerShell_InheritHost;
@@ -295,6 +317,7 @@ namespace NETworkManager.Profiles
             PowerShell_OverrideExecutionPolicy = profile.PowerShell_OverrideExecutionPolicy;
             PowerShell_ExecutionPolicy = profile.PowerShell_ExecutionPolicy;
 
+            // PuTTY
             PuTTY_Enabled = profile.PuTTY_Enabled;
             PuTTY_ConnectionMode = profile.PuTTY_ConnectionMode;
             PuTTY_InheritHost = profile.PuTTY_InheritHost;
@@ -318,24 +341,36 @@ namespace NETworkManager.Profiles
             PuTTY_OverrideAdditionalCommandLine = profile.PuTTY_OverrideAdditionalCommandLine;
             PuTTY_AdditionalCommandLine = profile.PuTTY_AdditionalCommandLine;
 
+            // AWS Session Manager
+            AWSSessionManager_Enabled = profile.AWSSessionManager_Enabled;
+            AWSSessionManager_InstanceID = profile.AWSSessionManager_InstanceID;
+            AWSSessionManager_OverrideProfile = profile.AWSSessionManager_OverrideProfile;
+            AWSSessionManager_Profile = profile.AWSSessionManager_Profile;
+            AWSSessionManager_OverrideRegion = profile.AWSSessionManager_OverrideRegion;
+            AWSSessionManager_Region = profile.AWSSessionManager_Region;
+
+            // TigerVNC
             TigerVNC_Enabled = profile.TigerVNC_Enabled;
             TigerVNC_InheritHost = profile.TigerVNC_InheritHost;
             TigerVNC_Host = profile.TigerVNC_Host;
             TigerVNC_OverridePort = profile.TigerVNC_OverridePort;
             TigerVNC_Port = profile.TigerVNC_Port;
 
+            // WebConsole
             WebConsole_Enabled = profile.WebConsole_Enabled;
             WebConsole_Url = profile.WebConsole_Url;
 
+            // Wake on LAN
             WakeOnLAN_Enabled = profile.WakeOnLAN_Enabled;
             WakeOnLAN_MACAddress = profile.WakeOnLAN_MACAddress;
             WakeOnLAN_Broadcast = profile.WakeOnLAN_Broadcast;
             WakeOnLAN_OverridePort = profile.WakeOnLAN_OverridePort;
             WakeOnLAN_Port = profile.WakeOnLAN_Port;
 
+            // Whois
             Whois_Enabled = profile.Whois_Enabled;
             Whois_InheritHost = profile.Whois_InheritHost;
             Whois_Domain = profile.Whois_Domain;
-        }
+        }        
     }
 }

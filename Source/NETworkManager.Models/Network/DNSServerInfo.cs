@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NETworkManager.Models.AWS;
+using System.Collections.Generic;
 
 namespace NETworkManager.Models.Network
 {
@@ -48,7 +49,7 @@ namespace NETworkManager.Models.Network
             UseWindowsDNSServer = false;
             Name = name;
             Servers = servers;
-            Port = port;
+            Port = port;            
         }
     }
 }

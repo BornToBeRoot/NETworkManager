@@ -21,7 +21,7 @@ namespace NETworkManager.Converters
         /// <returns>Translated <see cref="GroupViewName"/>.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is GroupViewName name))
+            if (value is not GroupViewName name)
                 return "-/-";
 
             return GroupViewNameTranslator.GetInstance().Translate(name);

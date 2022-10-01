@@ -28,6 +28,7 @@
 		<EmbeddedResource Include="Resources\PSDiscoveryProtocol.psm1" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="AWSSDK.Core" Version="3.7.12.22" />
 		<PackageReference Include="DnsClient" Version="1.6.1" />
 		<PackageReference Include="IPNetwork2" Version="2.6.472" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.4.0" />

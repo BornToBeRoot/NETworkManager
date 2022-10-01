@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CSV" xml:space="preserve">
     <value>CSV</value>
@@ -296,5 +296,14 @@
   </data>
   <data name="ExamplePublicIPv6AddressAPI" xml:space="preserve">
     <value>https://api6.ipify.org</value>
+  </data>
+  <data name="ExampleAWSInstanceId" xml:space="preserve">
+    <value>i-0b22a22eec53b9321</value>
+  </data>
+  <data name="ExampleAWSProfile" xml:space="preserve">
+    <value>default</value>
+  </data>
+  <data name="ExampleAWSRegion" xml:space="preserve">
+    <value>eu-central-1</value>
   </data>
 </root>

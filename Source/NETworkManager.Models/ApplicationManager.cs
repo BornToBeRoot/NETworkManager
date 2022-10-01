@@ -75,6 +75,9 @@ namespace NETworkManager.Models
                 case ApplicationName.PuTTY:
                     canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.TerminalSolid });
                     break;
+                case ApplicationName.AWSSessionManager:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Aws });
+                    break;
                 case ApplicationName.TigerVNC:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.EyeOutline });
                     break;

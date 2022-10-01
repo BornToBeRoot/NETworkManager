@@ -2,13 +2,13 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
 using NETworkManager.Models;
+using NETworkManager.Models.AWS;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PuTTY;
@@ -50,7 +50,7 @@ namespace NETworkManager.Settings
 
         public string Version
         {
-            get  => _version;
+            get => _version;
             set
             {
                 if (value == _version)
@@ -108,7 +108,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableSetCollection<ApplicationInfo> _general_ApplicationList = new ObservableSetCollection<ApplicationInfo>();
+        private ObservableSetCollection<ApplicationInfo> _general_ApplicationList = new();
         public ObservableSetCollection<ApplicationInfo> General_ApplicationList
         {
             get => _general_ApplicationList;
@@ -256,9 +256,9 @@ namespace NETworkManager.Settings
                 if (value == _appearance_UseCustomTheme)
                     return;
 
-                _appearance_UseCustomTheme= value;
+                _appearance_UseCustomTheme = value;
                 OnPropertyChanged();
-                SettingsChanged= true;
+                SettingsChanged = true;
             }
         }
 
@@ -1061,7 +1061,7 @@ namespace NETworkManager.Settings
         #endregion
 
         #region Port Scanner
-        private ObservableCollection<string> _portScanner_HostsHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _portScanner_HostsHistory = new();
         public ObservableCollection<string> PortScanner_HostsHistory
         {
             get => _portScanner_HostsHistory;
@@ -1076,7 +1076,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _portScanner_PortsHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _portScanner_PortsHistory = new();
         public ObservableCollection<string> PortScanner_PortsHistory
         {
             get => _portScanner_PortsHistory;
@@ -1091,7 +1091,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<PortProfileInfo> _portScanner_PortProfiles = new ObservableCollection<PortProfileInfo>();
+        private ObservableCollection<PortProfileInfo> _portScanner_PortProfiles = new();
         public ObservableCollection<PortProfileInfo> PortScanner_PortProfiles
         {
             get => _portScanner_PortProfiles;
@@ -1242,7 +1242,7 @@ namespace NETworkManager.Settings
         #endregion
 
         #region Ping Monitor
-        private ObservableCollection<string> _pingMonitor_HostHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _pingMonitor_HostHistory = new();
         public ObservableCollection<string> PingMonitor_HostHistory
         {
             get => _pingMonitor_HostHistory;
@@ -1409,7 +1409,7 @@ namespace NETworkManager.Settings
         #endregion
 
         #region Traceroute
-        private ObservableCollection<string> _traceroute_HostHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _traceroute_HostHistory = new();
         public ObservableCollection<string> Traceroute_HostHistory
         {
             get => _traceroute_HostHistory;
@@ -1561,7 +1561,7 @@ namespace NETworkManager.Settings
         #endregion
 
         #region DNS Lookup
-        private ObservableCollection<string> _dnsLookup_HostHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _dnsLookup_HostHistory = new();
         public ObservableCollection<string> DNSLookup_HostHistory
         {
             get => _dnsLookup_HostHistory;
@@ -1576,7 +1576,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<DNSServerInfo> _dnsLookup_DNSServers = new ObservableCollection<DNSServerInfo>();
+        private ObservableCollection<DNSServerInfo> _dnsLookup_DNSServers = new();
         public ObservableCollection<DNSServerInfo> DNSLookup_DNSServers
         {
             get => _dnsLookup_DNSServers;
@@ -1591,7 +1591,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private DNSServerInfo _dnsLookup_SelectedDNSServer = new DNSServerInfo();
+        private DNSServerInfo _dnsLookup_SelectedDNSServer = new();
         public DNSServerInfo DNSLookup_SelectedDNSServer
         {
             get => _dnsLookup_SelectedDNSServer;
@@ -1833,7 +1833,7 @@ namespace NETworkManager.Settings
         #endregion
 
         #region Remote Desktop 
-        private ObservableCollection<string> _remoteDesktop_HostHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _remoteDesktop_HostHistory = new();
         public ObservableCollection<string> RemoteDesktop_HostHistory
         {
             get => _remoteDesktop_HostHistory;
@@ -2330,7 +2330,7 @@ namespace NETworkManager.Settings
         #endregion
 
         #region PowerShell
-        private ObservableCollection<string> _powerShell_HostHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _powerShell_HostHistory = new();
         public ObservableCollection<string> PowerShell_HostHistory
         {
             get => _powerShell_HostHistory;
@@ -2422,7 +2422,7 @@ namespace NETworkManager.Settings
         #endregion
 
         #region PuTTY
-        private ObservableCollection<string> _puTTY_HostHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _puTTY_HostHistory = new();
         public ObservableCollection<string> PuTTY_HostHistory
         {
             get => _puTTY_HostHistory;
@@ -2572,7 +2572,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _puTTY_SerialLineHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _puTTY_SerialLineHistory = new();
         public ObservableCollection<string> PuTTY_SerialLineHistory
         {
             get => _puTTY_SerialLineHistory;
@@ -2587,7 +2587,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _puTTY_PortHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _puTTY_PortHistory = new();
         public ObservableCollection<string> PuTTY_PortHistory
         {
             get => _puTTY_PortHistory;
@@ -2602,7 +2602,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _puTTY_BaudHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _puTTY_BaudHistory = new();
         public ObservableCollection<string> PuTTY_BaudHistory
         {
             get => _puTTY_BaudHistory;
@@ -2617,7 +2617,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _puTTY_UsernameHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _puTTY_UsernameHistory = new();
         public ObservableCollection<string> PuTTY_UsernameHistory
         {
             get => _puTTY_UsernameHistory;
@@ -2632,7 +2632,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _puTTY_PrivateKeyFileHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _puTTY_PrivateKeyFileHistory = new();
         public ObservableCollection<string> PuTTY_PrivateKeyFileHistory
         {
             get => _puTTY_PrivateKeyFileHistory;
@@ -2647,7 +2647,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _puTTY_ProfileHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _puTTY_ProfileHistory = new();
         public ObservableCollection<string> PuTTY_ProfileHistory
         {
             get => _puTTY_ProfileHistory;
@@ -2798,8 +2798,175 @@ namespace NETworkManager.Settings
         }
         #endregion
 
+        #region AWSSessionManager
+        private bool _awsSessionManager_EnableSyncInstanceIDsFromAWS = GlobalStaticConfiguration.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
+        public bool AWSSessionManager_EnableSyncInstanceIDsFromAWS
+        {
+            get => _awsSessionManager_EnableSyncInstanceIDsFromAWS;
+            set
+            {
+                if (value == _awsSessionManager_EnableSyncInstanceIDsFromAWS)
+                    return;
+
+                _awsSessionManager_EnableSyncInstanceIDsFromAWS = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<AWSProfileInfo> _awsSessionManager_AWSProfiles = new();
+        public ObservableCollection<AWSProfileInfo> AWSSessionManager_AWSProfiles
+        {
+            get => _awsSessionManager_AWSProfiles;
+            set
+            {
+                if (value == _awsSessionManager_AWSProfiles)
+                    return;
+
+                _awsSessionManager_AWSProfiles = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool awsSessionManager_SyncOnlyRunningInstancesFromAWS = GlobalStaticConfiguration.AWSSessionManager_SyncOnlyRunningInstancesFromAWS;
+        public bool AWSSessionManager_SyncOnlyRunningInstancesFromAWS
+        {
+            get => awsSessionManager_SyncOnlyRunningInstancesFromAWS;
+            set
+            {
+                if (value == awsSessionManager_SyncOnlyRunningInstancesFromAWS)
+                    return;
+
+                awsSessionManager_SyncOnlyRunningInstancesFromAWS = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _awsSessionManager_DefaultProfile;
+        public string AWSSessionManager_DefaultProfile
+        {
+            get => _awsSessionManager_DefaultProfile;
+            set
+            {
+                if (value == _awsSessionManager_DefaultProfile)
+                    return;
+
+                _awsSessionManager_DefaultProfile = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _awsSessionManager_DefaultRegion;
+        public string AWSSessionManager_DefaultRegion
+        {
+            get => _awsSessionManager_DefaultRegion;
+            set
+            {
+                if (value == _awsSessionManager_DefaultRegion)
+                    return;
+
+                _awsSessionManager_DefaultRegion = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _awsSessionManager_ApplicationFilePath = GlobalStaticConfiguration.AWSSessionManager_ApplicationFileLocationPowerShell;
+        public string AWSSessionManager_ApplicationFilePath
+        {
+            get => _awsSessionManager_ApplicationFilePath;
+            set
+            {
+                if (value == _awsSessionManager_ApplicationFilePath)
+                    return;
+
+                _awsSessionManager_ApplicationFilePath = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _awsSessionManager_InstanceIDHistory = new();
+        public ObservableCollection<string> AWSSessionManager_InstanceIDHistory
+        {
+            get => _awsSessionManager_InstanceIDHistory;
+            set
+            {
+                if (value == _awsSessionManager_InstanceIDHistory)
+                    return;
+
+                _awsSessionManager_InstanceIDHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _awsSessionManager_ProfileHistory = new();
+        public ObservableCollection<string> AWSSessionManager_ProfileHistory
+        {
+            get => _awsSessionManager_ProfileHistory;
+            set
+            {
+                if (value == _awsSessionManager_ProfileHistory)
+                    return;
+
+                _awsSessionManager_ProfileHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ObservableCollection<string> _awsSessionManager_RegionHistory = new();
+        public ObservableCollection<string> AWSSessionManager_RegionHistory
+        {
+            get => _awsSessionManager_RegionHistory;
+            set
+            {
+                if (value == _awsSessionManager_RegionHistory)
+                    return;
+
+                _awsSessionManager_RegionHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _awsSessionManager_ExpandProfileView = true;
+        public bool AWSSessionManager_ExpandProfileView
+        {
+            get => _awsSessionManager_ExpandProfileView;
+            set
+            {
+                if (value == _awsSessionManager_ExpandProfileView)
+                    return;
+
+                _awsSessionManager_ExpandProfileView = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private double _awsSessionManager_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+        public double AWSSessionManager_ProfileWidth
+        {
+            get => _awsSessionManager_ProfileWidth;
+            set
+            {
+                if (Math.Abs(value - _awsSessionManager_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+                    return;
+
+                _awsSessionManager_ProfileWidth = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region TigerVNC
-        private ObservableCollection<string> _tigerVNC_HostHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _tigerVNC_HostHistory = new();
         public ObservableCollection<string> TigerVNC_HostHistory
         {
             get => _tigerVNC_HostHistory;
@@ -2814,7 +2981,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<int> _tigerVNC_PortHistory = new ObservableCollection<int>();
+        private ObservableCollection<int> _tigerVNC_PortHistory = new();
         public ObservableCollection<int> TigerVNC_PortHistory
         {
             get => _tigerVNC_PortHistory;
@@ -2891,7 +3058,7 @@ namespace NETworkManager.Settings
         #endregion
 
         #region WebConsole
-        private ObservableCollection<string> _webConsole_UrlHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _webConsole_UrlHistory = new();
         public ObservableCollection<string> WebConsole_UrlHistory
         {
             get => _webConsole_UrlHistory;
@@ -2998,7 +3165,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _snmp_HostHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _snmp_HostHistory = new();
         public ObservableCollection<string> SNMP_HostHistory
         {
             get => _snmp_HostHistory;
@@ -3013,7 +3180,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _snmp_OIDHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _snmp_OIDHistory = new();
         public ObservableCollection<string> SNMP_OIDHistory
         {
             get => _snmp_OIDHistory;
@@ -3231,7 +3398,7 @@ namespace NETworkManager.Settings
         #region Subnet Calculator
 
         #region Calculator
-        private ObservableCollection<string> _subnetCalculator_Calculator_SubnetHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _subnetCalculator_Calculator_SubnetHistory = new();
         public ObservableCollection<string> SubnetCalculator_Calculator_SubnetHistory
         {
             get => _subnetCalculator_Calculator_SubnetHistory;
@@ -3248,7 +3415,7 @@ namespace NETworkManager.Settings
         #endregion
 
         #region Subnetting
-        private ObservableCollection<string> _subnetCalculator_Subnetting_SubnetHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _subnetCalculator_Subnetting_SubnetHistory = new();
         public ObservableCollection<string> SubnetCalculator_Subnetting_SubnetHistory
         {
             get => _subnetCalculator_Subnetting_SubnetHistory;
@@ -3263,7 +3430,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory = new();
         public ObservableCollection<string> SubnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory
         {
             get => _subnetCalculator_Subnetting_NewSubnetmaskOrCIDRHistory;
@@ -3310,7 +3477,7 @@ namespace NETworkManager.Settings
         #endregion
 
         #region WideSubnet
-        private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet1 = new ObservableCollection<string>();
+        private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet1 = new();
         public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet1
         {
             get => _subnetCalculator_WideSubnet_Subnet1;
@@ -3325,7 +3492,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet2 = new ObservableCollection<string>();
+        private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet2 = new();
         public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet2
         {
             get => _subnetCalculator_WideSubnet_Subnet2;
@@ -3344,7 +3511,7 @@ namespace NETworkManager.Settings
         #endregion
 
         #region Lookup
-        private ObservableCollection<string> _lookup_OUI_MACAddressOrVendorHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _lookup_OUI_MACAddressOrVendorHistory = new();
         public ObservableCollection<string> Lookup_OUI_MACAddressOrVendorHistory
         {
             get => _lookup_OUI_MACAddressOrVendorHistory;
@@ -3389,7 +3556,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<string> _lookup_Port_PortsHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _lookup_Port_PortsHistory = new();
         public ObservableCollection<string> Lookup_Port_PortsHistory
         {
             get => _lookup_Port_PortsHistory;
@@ -3436,7 +3603,7 @@ namespace NETworkManager.Settings
         #endregion
 
         #region Whois
-        private ObservableCollection<string> _whois_DomainHistory = new ObservableCollection<string>();
+        private ObservableCollection<string> _whois_DomainHistory = new();
         public ObservableCollection<string> Whois_DomainHistory
         {
             get => _whois_DomainHistory;
@@ -3739,6 +3906,10 @@ namespace NETworkManager.Settings
             PuTTY_UsernameHistory.CollectionChanged += CollectionChanged;
             PuTTY_PrivateKeyFileHistory.CollectionChanged += CollectionChanged;
             PuTTY_ProfileHistory.CollectionChanged += CollectionChanged;
+
+            // AWSSessionManager
+            AWSSessionManager_InstanceIDHistory.CollectionChanged += CollectionChanged;
+            AWSSessionManager_AWSProfiles.CollectionChanged += CollectionChanged;
 
             // TigerVNC
             TigerVNC_HostHistory.CollectionChanged += CollectionChanged;

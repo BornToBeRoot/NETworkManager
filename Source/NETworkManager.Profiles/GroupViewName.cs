@@ -6,6 +6,7 @@
         RemoteDesktop,
         PowerShell,
         PuTTY,
+        AWSSessionManager,
         TigerVNC
     }
 }

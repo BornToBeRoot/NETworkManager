@@ -376,6 +376,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add AWS profile ähnelt.
+        /// </summary>
+        public static string AddAWSProfile {
+            get {
+                return ResourceManager.GetString("AddAWSProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Add credentials ähnelt.
         /// </summary>
         public static string AddCredentials {
@@ -610,6 +619,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die An AWS region named &quot;{0}&quot; does not exist! ähnelt.
+        /// </summary>
+        public static string AnAWSRegionNamedXDoesNotExist {
+            get {
+                return ResourceManager.GetString("AnAWSRegionNamedXDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die An error occurred while exporting the data. See error message for details: ähnelt.
         /// </summary>
         public static string AnErrorOccurredWhileExportingTheData {
@@ -642,6 +660,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ApplicationName_ARPTable {
             get {
                 return ResourceManager.GetString("ApplicationName_ARPTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS Session Manager ähnelt.
+        /// </summary>
+        public static string ApplicationName_AWSSessionManager {
+            get {
+                return ResourceManager.GetString("ApplicationName_AWSSessionManager", resourceCulture);
             }
         }
         
@@ -1011,6 +1038,51 @@ namespace NETworkManager.Localization.Resources {
         public static string AverageTime {
             get {
                 return ResourceManager.GetString("AverageTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS CLI v2 is installed! ähnelt.
+        /// </summary>
+        public static string AWSCLIv2IsInstalled {
+            get {
+                return ResourceManager.GetString("AWSCLIv2IsInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS CLI v2 is not installed! ähnelt.
+        /// </summary>
+        public static string AWSCLIv2IsNotInstalled {
+            get {
+                return ResourceManager.GetString("AWSCLIv2IsNotInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS Session Manager ähnelt.
+        /// </summary>
+        public static string AWSSessionManager {
+            get {
+                return ResourceManager.GetString("AWSSessionManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS Session Manager Plugin is installed! ähnelt.
+        /// </summary>
+        public static string AWSSessionManagerPluginIsInstalled {
+            get {
+                return ResourceManager.GetString("AWSSessionManagerPluginIsInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS Session Manager Plugin is not installed! ähnelt.
+        /// </summary>
+        public static string AWSSessionManagerPluginIsNotInstalled {
+            get {
+                return ResourceManager.GetString("AWSSessionManagerPluginIsNotInstalled", resourceCulture);
             }
         }
         
@@ -2005,11 +2077,49 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default profile ähnelt.
+        /// </summary>
+        public static string DefaultProfile {
+            get {
+                return ResourceManager.GetString("DefaultProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default region ähnelt.
+        /// </summary>
+        public static string DefaultRegion {
+            get {
+                return ResourceManager.GetString("DefaultRegion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Delete ähnelt.
         /// </summary>
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete AWS profile ähnelt.
+        /// </summary>
+        public static string DeleteAWSProfile {
+            get {
+                return ResourceManager.GetString("DeleteAWSProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The selected AWS profile is permanently deleted.
+        ///
+        ///The profile is not removed from the ~\.aws\credentials file. ähnelt.
+        /// </summary>
+        public static string DeleteAWSProfileMessage {
+            get {
+                return ResourceManager.GetString("DeleteAWSProfileMessage", resourceCulture);
             }
         }
         
@@ -2554,6 +2664,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Edit AWS profile ähnelt.
+        /// </summary>
+        public static string EditAWSProfile {
+            get {
+                return ResourceManager.GetString("EditAWSProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Edit credentials ähnelt.
         /// </summary>
         public static string EditCredentials {
@@ -2658,6 +2777,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnableCredentialSecuritySupportProvider {
             get {
                 return ResourceManager.GetString("EnableCredentialSecuritySupportProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enabled ähnelt.
+        /// </summary>
+        public static string Enabled {
+            get {
+                return ResourceManager.GetString("Enabled", resourceCulture);
             }
         }
         
@@ -3330,6 +3458,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Group name cannot start with &quot;{0}&quot;! ähnelt.
+        /// </summary>
+        public static string GroupNameCannotStartWithX {
+            get {
+                return ResourceManager.GetString("GroupNameCannotStartWithX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Groups ähnelt.
         /// </summary>
         public static string Groups {
@@ -3362,6 +3499,46 @@ namespace NETworkManager.Localization.Resources {
         public static string Help {
             get {
                 return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If not set, the default AWS CLI settings are used. ähnelt.
+        /// </summary>
+        public static string HelpMessage_AWSCLIDefaultsAreUsedIfNotSet {
+            get {
+                return ResourceManager.GetString("HelpMessage_AWSCLIDefaultsAreUsedIfNotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default AWS CLI profile which is used by manually created profiles to connect to an instance.
+        ///
+        ///If not set, the default AWS CLI settings are used. ähnelt.
+        /// </summary>
+        public static string HelpMessage_AWSSessionManagerDefaultProfile {
+            get {
+                return ResourceManager.GetString("HelpMessage_AWSSessionManagerDefaultProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default AWS CLI region which is used by manually created profiles to connect to an instance.
+        ///
+        ///If not set, the default AWS CLI settings are used. ähnelt.
+        /// </summary>
+        public static string HelpMessage_AWSSessionManagerDefaultRegion {
+            get {
+                return ResourceManager.GetString("HelpMessage_AWSSessionManagerDefaultRegion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die To synchronize instance IDs from AWS, the AWS CLI must be configured on the system. The instance IDs can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in ~/.aws/credentials must be configured along with the region to query. ähnelt.
+        /// </summary>
+        public static string HelpMessage_AWSSessionManagerProfilesAndRegionsToSync {
+            get {
+                return ResourceManager.GetString("HelpMessage_AWSSessionManagerProfilesAndRegionsToSync", resourceCulture);
             }
         }
         
@@ -3722,6 +3899,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Instance ID ähnelt.
+        /// </summary>
+        public static string InstanceId {
+            get {
+                return ResourceManager.GetString("InstanceId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Interface ähnelt.
         /// </summary>
         public static string Interface {
@@ -3997,6 +4183,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Library_AirspaceFixer_Description {
             get {
                 return ResourceManager.GetString("Library_AirspaceFixer_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS SDK for .NET to work with Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS). ähnelt.
+        /// </summary>
+        public static string Library_AWSSDKdotEC2_Description {
+            get {
+                return ResourceManager.GetString("Library_AWSSDKdotEC2_Description", resourceCulture);
             }
         }
         
@@ -5570,11 +5765,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Profiles and regions to sync ähnelt.
+        /// </summary>
+        public static string ProfilesAndRegionsToSync {
+            get {
+                return ResourceManager.GetString("ProfilesAndRegionsToSync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Profiles reloaded ähnelt.
         /// </summary>
         public static string ProfilesReloaded {
             get {
                 return ResourceManager.GetString("ProfilesReloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die AWS Session Manager ähnelt.
+        /// </summary>
+        public static string ProfileViewName_AWSSessionManager {
+            get {
+                return ResourceManager.GetString("ProfileViewName_AWSSessionManager", resourceCulture);
             }
         }
         
@@ -6008,6 +6221,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Refresh {
             get {
                 return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Region ähnelt.
+        /// </summary>
+        public static string Region {
+            get {
+                return ResourceManager.GetString("Region", resourceCulture);
             }
         }
         
@@ -7366,24 +7588,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Dashboard ähnelt.
-        /// </summary>
-        public static string SettingsViewName_Dashboard {
-            get {
-                return ResourceManager.GetString("SettingsViewName_Dashboard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DNS Lookup ähnelt.
-        /// </summary>
-        public static string SettingsViewName_DNSLookup {
-            get {
-                return ResourceManager.GetString("SettingsViewName_DNSLookup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die General ähnelt.
         /// </summary>
         public static string SettingsViewName_General {
@@ -7402,56 +7606,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die HTTP Headers ähnelt.
-        /// </summary>
-        public static string SettingsViewName_HTTPHeaders {
-            get {
-                return ResourceManager.GetString("SettingsViewName_HTTPHeaders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die IP Scanner ähnelt.
-        /// </summary>
-        public static string SettingsViewName_IPScanner {
-            get {
-                return ResourceManager.GetString("SettingsViewName_IPScanner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Language ähnelt.
         /// </summary>
         public static string SettingsViewName_Language {
             get {
                 return ResourceManager.GetString("SettingsViewName_Language", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ping Monitor ähnelt.
-        /// </summary>
-        public static string SettingsViewName_PingMonitor {
-            get {
-                return ResourceManager.GetString("SettingsViewName_PingMonitor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Port Scanner ähnelt.
-        /// </summary>
-        public static string SettingsViewName_PortScanner {
-            get {
-                return ResourceManager.GetString("SettingsViewName_PortScanner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die PowerShell ähnelt.
-        /// </summary>
-        public static string SettingsViewName_PowerShell {
-            get {
-                return ResourceManager.GetString("SettingsViewName_PowerShell", resourceCulture);
             }
         }
         
@@ -7465,38 +7624,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die PuTTY ähnelt.
-        /// </summary>
-        public static string SettingsViewName_PuTTY {
-            get {
-                return ResourceManager.GetString("SettingsViewName_PuTTY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Remote Desktop ähnelt.
-        /// </summary>
-        public static string SettingsViewName_RemoteDesktop {
-            get {
-                return ResourceManager.GetString("SettingsViewName_RemoteDesktop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Settings ähnelt.
         /// </summary>
         public static string SettingsViewName_Settings {
             get {
                 return ResourceManager.GetString("SettingsViewName_Settings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die SNMP ähnelt.
-        /// </summary>
-        public static string SettingsViewName_SNMP {
-            get {
-                return ResourceManager.GetString("SettingsViewName_SNMP", resourceCulture);
             }
         }
         
@@ -7510,47 +7642,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die TigerVNC ähnelt.
-        /// </summary>
-        public static string SettingsViewName_TigerVNC {
-            get {
-                return ResourceManager.GetString("SettingsViewName_TigerVNC", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Traceroute ähnelt.
-        /// </summary>
-        public static string SettingsViewName_Traceroute {
-            get {
-                return ResourceManager.GetString("SettingsViewName_Traceroute", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Update ähnelt.
         /// </summary>
         public static string SettingsViewName_Update {
             get {
                 return ResourceManager.GetString("SettingsViewName_Update", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Wake On LAN ähnelt.
-        /// </summary>
-        public static string SettingsViewName_WakeOnLAN {
-            get {
-                return ResourceManager.GetString("SettingsViewName_WakeOnLAN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Whois ähnelt.
-        /// </summary>
-        public static string SettingsViewName_Whois {
-            get {
-                return ResourceManager.GetString("SettingsViewName_Whois", resourceCulture);
             }
         }
         
@@ -7956,6 +8052,42 @@ namespace NETworkManager.Localization.Resources {
         public static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sync all Instance IDs from AWS ähnelt.
+        /// </summary>
+        public static string SyncAllInstanceIDsFromAWS {
+            get {
+                return ResourceManager.GetString("SyncAllInstanceIDsFromAWS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sync group Instance IDs from AWS ähnelt.
+        /// </summary>
+        public static string SyncGroupInstanceIDsFromAWS {
+            get {
+                return ResourceManager.GetString("SyncGroupInstanceIDsFromAWS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sync Instance IDs from AWS ähnelt.
+        /// </summary>
+        public static string SyncInstanceIDsFromAWS {
+            get {
+                return ResourceManager.GetString("SyncInstanceIDsFromAWS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sync only running instances from AWS ähnelt.
+        /// </summary>
+        public static string SyncOnlyRunningInstancesFromAWS {
+            get {
+                return ResourceManager.GetString("SyncOnlyRunningInstancesFromAWS", resourceCulture);
             }
         }
         

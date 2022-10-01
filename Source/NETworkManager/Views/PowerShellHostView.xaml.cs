@@ -9,7 +9,7 @@ namespace NETworkManager.Views
 {
     public partial class PowerShellHostView
     {
-        private readonly PowerShellHostViewModel _viewModel = new PowerShellHostViewModel(DialogCoordinator.Instance);
+        private readonly PowerShellHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
         private bool _loaded;
 

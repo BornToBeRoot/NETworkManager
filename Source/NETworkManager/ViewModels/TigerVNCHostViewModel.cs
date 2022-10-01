@@ -164,8 +164,7 @@ namespace NETworkManager.ViewModels
         {
             _dialogCoordinator = instance;
 
-            // Check if putty is available...
-            CheckIfConfigured();
+            CheckSettings();
 
             InterTabClient = new DragablzInterTabClient(ApplicationName.TigerVNC);
 
@@ -213,7 +212,7 @@ namespace NETworkManager.ViewModels
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(SettingsInfo.TigerVNC_ApplicationFilePath))
-                CheckIfConfigured();
+                CheckSettings();
         }
 
         private void LoadSettings()
@@ -280,21 +279,23 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.TigerVNC);
         }
 
-        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction());
+        private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;
+
+        public ICommand EditProfileCommand => new RelayCommand(p => EditProfileAction(), ModifyProfile_CanExecute);
 
         private void EditProfileAction()
         {
             ProfileDialogManager.ShowEditProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction());
+        public ICommand CopyAsProfileCommand => new RelayCommand(p => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
         private void CopyAsProfileAction()
         {
             ProfileDialogManager.ShowCopyAsProfileDialog(this, _dialogCoordinator, SelectedProfile);
         }
 
-        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction());
+        public ICommand DeleteProfileCommand => new RelayCommand(p => DeleteProfileAction(), ModifyProfile_CanExecute);
 
         private void DeleteProfileAction()
         {
@@ -324,7 +325,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void CheckIfConfigured()
+        private void CheckSettings()
         {
             IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.TigerVNC_ApplicationFilePath) && File.Exists(SettingsManager.Current.TigerVNC_ApplicationFilePath);
         }
@@ -378,14 +379,12 @@ namespace NETworkManager.ViewModels
 
         private void ConnectProfileExternal()
         {
-            var info = new ProcessStartInfo
+            Process.Start(new ProcessStartInfo()
             {
                 FileName = SettingsManager.Current.TigerVNC_ApplicationFilePath,
                 Arguments = TigerVNC.BuildCommandLine(NETworkManager.Profiles.Application.TigerVNC.CreateSessionInfo(SelectedProfile))
-            };
-
-            Process.Start(info);
-        }
+            });
+        }        
 
         private void Connect(TigerVNCSessionInfo sessionInfo, string header = null)
         {

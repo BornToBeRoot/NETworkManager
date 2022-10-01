@@ -39,8 +39,8 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:PortProfileInfo.Name)}" Width="1*" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Ports}" Binding="{Binding (network:PortProfileInfo.Ports)}" Width="2*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:PortProfileInfo.Name)}" MinWidth="200" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Ports}" Binding="{Binding (network:PortProfileInfo.Ports)}" MinWidth="200" Width="*" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditPortProfileCommand}" Key="F2" />

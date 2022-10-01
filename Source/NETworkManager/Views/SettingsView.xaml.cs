@@ -1,4 +1,5 @@
 ﻿using NETworkManager.Models;
+using NETworkManager.Settings;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views
@@ -31,6 +32,11 @@ namespace NETworkManager.Views
         public void Refresh()
         {
             ProfilesView.Refresh();
+        }
+
+        public SettingsViewName GetSelectedSettingsViewName()
+        {
+            return _viewModel.SelectedSettingsView.Name;
         }
     }
 }

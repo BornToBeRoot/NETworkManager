@@ -102,6 +102,7 @@ namespace NETworkManager.ViewModels
         private RemoteDesktopSettingsView _remoteDesktopSettingsView;
         private PowerShellSettingsView _powerShellSettingsView;
         private PuTTYSettingsView _puTTYSettingsView;
+        private AWSSessionManagerSettingsView _awsSessionManagerSettingsView;
         private TigerVNCSettingsView _tigerVNCSettingsView;
         private SNMPSettingsView _snmpSettingsView;
         private WakeOnLANSettingsView _wakeOnLANSettingsView;
@@ -281,6 +282,12 @@ namespace NETworkManager.ViewModels
                         _puTTYSettingsView = new PuTTYSettingsView();
 
                     SettingsContent = _puTTYSettingsView;
+                    break;
+                case SettingsViewName.AWSSessionManager:
+                    if (_awsSessionManagerSettingsView == null)
+                        _awsSessionManagerSettingsView = new AWSSessionManagerSettingsView();
+
+                    SettingsContent = _awsSessionManagerSettingsView;
                     break;
                 case SettingsViewName.TigerVNC:
                     if (_tigerVNCSettingsView == null)

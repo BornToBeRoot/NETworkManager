@@ -25,7 +25,7 @@ namespace NETworkManager.ViewModels
                 _name = value;
 
                 if (!_isLoading)
-                    CheckInfoChanged();
+                    Validate();
 
                 OnPropertyChanged();
             }
@@ -43,7 +43,7 @@ namespace NETworkManager.ViewModels
                 _dnsServers = value;
 
                 if (!_isLoading)
-                    CheckInfoChanged();
+                    Validate();
 
                 OnPropertyChanged();
             }
@@ -61,7 +61,7 @@ namespace NETworkManager.ViewModels
                 _port = value;
 
                 if (!_isLoading)
-                    CheckInfoChanged();
+                    Validate();
 
                 OnPropertyChanged();
             }
@@ -123,6 +123,9 @@ namespace NETworkManager.ViewModels
             _isLoading = false;
         }
 
-        public void CheckInfoChanged() => InfoChanged = _info.Name != Name || _previousDNSServerAsString != DNSServers || _info.Port != Port;
+        public void Validate()
+        {
+            InfoChanged = _info.Name != Name || _previousDNSServerAsString != DNSServers || _info.Port != Port;
+        }
     }
 }
