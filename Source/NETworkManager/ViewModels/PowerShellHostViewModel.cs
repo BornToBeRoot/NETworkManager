@@ -49,7 +49,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _disableFocusEmbeddedWindowOnSelectedTabItemChange;
+        private bool _disableFocusEmbeddedWindow;
 
         private DragablzTabItem _selectedTabItem;
         public DragablzTabItem SelectedTabItem
@@ -63,7 +63,7 @@ namespace NETworkManager.ViewModels
                 _selectedTabItem = value;
 
                 // Focus embedded window on switching tab
-                if (!_disableFocusEmbeddedWindowOnSelectedTabItemChange)
+                if (!_disableFocusEmbeddedWindow)
                     FocusEmbeddedWindow();
 
                 OnPropertyChanged();
@@ -479,9 +479,9 @@ namespace NETworkManager.ViewModels
             TabItems.Add(new DragablzTabItem(header ?? (sessionInfo.EnableRemoteConsole ? sessionInfo.Host : Localization.Resources.Strings.PowerShell), new PowerShellControl(sessionInfo)));
 
             // Select the added tab
-            _disableFocusEmbeddedWindowOnSelectedTabItemChange = true;
+            _disableFocusEmbeddedWindow = true;
             SelectedTabItem = TabItems.Last();
-            _disableFocusEmbeddedWindowOnSelectedTabItemChange = false;
+            _disableFocusEmbeddedWindow = false;
         }
 
         public void AddTab(string host)
