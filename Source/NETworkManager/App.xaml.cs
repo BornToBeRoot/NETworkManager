@@ -83,7 +83,7 @@ namespace NETworkManager
             // Load settings
             try
             {
-                _log.Info("Load application settings...");
+                _log.Info("Application settings are being loaded...");
 
                 SettingsManager.Load();
 

@@ -27,14 +27,17 @@ using NETworkManager.Models.AWS;
 using System.Text.RegularExpressions;
 using Microsoft.Win32;
 using NETworkManager.Documentation;
+using log4net;
+using Amazon.EC2.Model;
 
 namespace NETworkManager.ViewModels
 {
     public class AWSSessionManagerHostViewModel : ViewModelBase, IProfileManager
     {
         #region Variables
+        private static readonly ILog _log = LogManager.GetLogger(typeof(AWSSessionManagerHostViewModel));
         private readonly IDialogCoordinator _dialogCoordinator;
-        private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
+        private readonly DispatcherTimer _searchDispatcherTimer = new();
 
         public IInterTabClient InterTabClient { get; }
         public ObservableCollection<DragablzTabItem> TabItems { get; }
@@ -506,15 +509,27 @@ namespace NETworkManager.ViewModels
 
         private async Task SyncAllInstanceIDsFromAWS()
         {
+            _log.Info("Sync all Instance IDs from AWS...");
+
+            // Check if prerequisites are met
             if (!IsAWSCLIInstalled || !IsAWSSessionManagerPluginInstalled)
             {
-                // Log
+                _log.Warn($"Prerequisites not met! AWS CLI installed {IsAWSCLIInstalled}. AWS Session Manager plugin installed {IsAWSSessionManagerPluginInstalled}");
                 return;
             }
 
-            if (Application.Current.MainWindow == null || ((MainWindow)Application.Current.MainWindow).IsProfileFileLocked)
+            // Check if profile file is unlocked
+            if (Application.Current.MainWindow != null)
             {
-                // Log
+                if (((MainWindow)Application.Current.MainWindow).IsProfileFileLocked)
+                {
+                    _log.Warn("The profile file is locked! The profile file must first be unlocked to synchronize the instance IDs and add them as a profile.");
+                    return;
+                }
+            }
+            else
+            {
+                _log.Warn("MainWindow is null!");
                 return;
             }
 
@@ -524,7 +539,7 @@ namespace NETworkManager.ViewModels
             {
                 if (!profile.IsEnabled)
                 {
-                    Debug.WriteLine($"Sync for profile {profile.Profile}\\{profile.Region} is disabled!");
+                    _log.Info($"AWS profile \"[{profile.Profile}\\{profile.Region}]\" is disabled! Skip...");
                     continue;
                 }
 
@@ -533,14 +548,16 @@ namespace NETworkManager.ViewModels
 
             await Task.Delay(2000);
 
+            _log.Info("All Instance IDs synced from AWS!");
+
             IsSyncing = false;
         }
 
         private async Task SyncGroupInstanceIDsFromAWS(string group)
         {
-            IsSyncing = true;
+            _log.Info($"Sync Instance IDs for group \"{group}\"...");
 
-            Debug.WriteLine("Sync group: " + group);
+            IsSyncing = true;
 
             // Extract "profile\region" from "~ [profile\region]"
             Regex regex = new(@"\[(.*?)\]");
@@ -554,26 +571,42 @@ namespace NETworkManager.ViewModels
             }
             else
             {
-                Debug.WriteLine("Could not get profile and region from from group...");
+                _log.Error($"Could not extract AWS profile and AWS region from \"{group}\"!");
             }
 
             await Task.Delay(2000);
+
+            _log.Info($"Group Instance IDs synced from AWS!");
 
             IsSyncing = false;
         }
 
         private async Task SyncInstanceIDsFromAWS(string profile, string region)
         {
-            CredentialProfileStoreChain credentialProfileStoreChain = new();
+            _log.Info($"Sync Instance IDs from AWS profile \"{profile}\" and AWS region \"{region}\"...");
 
+            CredentialProfileStoreChain credentialProfileStoreChain = new();
             credentialProfileStoreChain.TryGetAWSCredentials(profile, out AWSCredentials credentials);
 
-            Debug.WriteLine($"Sync profile {profile}\\{region}...");
-            //Debug.WriteLine("Using credentials: " + credentials.GetCredentials().AccessKey);
+            if (credentials == null)
+            {
+                _log.Error($"Could not detect AWS credentials for AWS profile \"{profile}\"! You can configure them in the file \"%USERPROFILE%\\.aws\\config\" or via aws cli with the command \"aws configure --profile <NAME>\" ");
+                return;
+            }
 
             using AmazonEC2Client client = new(credentials, RegionEndpoint.GetBySystemName(region));
 
-            var response = await client.DescribeInstancesAsync();
+            DescribeInstancesResponse response = null;
+
+            try
+            {
+                response = await client.DescribeInstancesAsync();
+            }
+            catch (AmazonEC2Exception ex)
+            {
+                _log.Error($"Could not get EC2 instances from AWS! See error for more details: \"{ex.Message}\"");
+                return;
+            }
 
             var groupName = $"~ [{profile}\\{region}]";
 
@@ -590,8 +623,6 @@ namespace NETworkManager.ViewModels
                 {
                     if (SettingsManager.Current.AWSSessionManager_SyncOnlyRunningInstancesFromAWS && instance.State.Name.Value != "running")
                         continue;
-
-                    Debug.WriteLine("Found Instance: " + instance.InstanceId);
 
                     var tagName = instance.Tags.FirstOrDefault(x => x.Key == "Name");
                     var name = tagName.Value == null ? instance.InstanceId : $"{tagName.Value} ({instance.InstanceId})";
@@ -624,7 +655,7 @@ namespace NETworkManager.ViewModels
 
             ProfileManager.ProfilesChanged = profilesChangedCurrentState;
 
-            Debug.WriteLine("Sync done!");
+            _log.Info($"Found {groupInfo.Profiles.Count} instance and added them to the group \"{groupName}\"!");
         }
 
         private void RemoveDynamicGroups()
