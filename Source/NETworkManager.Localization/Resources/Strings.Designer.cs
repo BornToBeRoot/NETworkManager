@@ -3534,7 +3534,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die To synchronize EC2 instances from AWS, the AWS CLI must be configured on the system. The EC2 instances can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in ~/.aws/credentials must be configured along with the region to query. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die To synchronize EC2 instances from AWS, the AWS CLI must be configured on the system. The EC2 instances can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in the file &quot;~/.aws/credentials&quot; must be configured along with the region to query. ähnelt.
         /// </summary>
         public static string HelpMessage_AWSSessionManagerProfilesAndRegionsToSync {
             get {
