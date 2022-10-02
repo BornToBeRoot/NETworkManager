@@ -2736,68 +2736,26 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="SettingsViewName_Autostart" xml:space="preserve">
     <value>Autostart</value>
   </data>
-  <data name="SettingsViewName_Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
-  </data>
-  <data name="SettingsViewName_DNSLookup" xml:space="preserve">
-    <value>DNS-Lookup</value>
-  </data>
   <data name="SettingsViewName_General" xml:space="preserve">
     <value>Allgemein</value>
   </data>
   <data name="SettingsViewName_HotKeys" xml:space="preserve">
     <value>HotKeys</value>
   </data>
-  <data name="SettingsViewName_HTTPHeaders" xml:space="preserve">
-    <value>HTTP-Headers</value>
-  </data>
-  <data name="SettingsViewName_IPScanner" xml:space="preserve">
-    <value>IP-Scanner</value>
-  </data>
   <data name="SettingsViewName_Language" xml:space="preserve">
     <value>Sprache</value>
-  </data>
-  <data name="SettingsViewName_PingMonitor" xml:space="preserve">
-    <value>Ping-Monitor</value>
-  </data>
-  <data name="SettingsViewName_PortScanner" xml:space="preserve">
-    <value>Port-Scanner</value>
-  </data>
-  <data name="SettingsViewName_PowerShell" xml:space="preserve">
-    <value>PowerShell</value>
   </data>
   <data name="SettingsViewName_Profiles" xml:space="preserve">
     <value>Profile</value>
   </data>
-  <data name="SettingsViewName_PuTTY" xml:space="preserve">
-    <value>PuTTY</value>
-  </data>
-  <data name="SettingsViewName_RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
-  </data>
   <data name="SettingsViewName_Settings" xml:space="preserve">
     <value>Einstellungen</value>
-  </data>
-  <data name="SettingsViewName_SNMP" xml:space="preserve">
-    <value>SNMP</value>
   </data>
   <data name="SettingsViewName_Status" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="SettingsViewName_TigerVNC" xml:space="preserve">
-    <value>TigerVNC</value>
-  </data>
-  <data name="SettingsViewName_Traceroute" xml:space="preserve">
-    <value>Traceroute</value>
-  </data>
   <data name="SettingsViewName_Update" xml:space="preserve">
     <value>Update</value>
-  </data>
-  <data name="SettingsViewName_WakeOnLAN" xml:space="preserve">
-    <value>Wake on LAN</value>
-  </data>
-  <data name="SettingsViewName_Whois" xml:space="preserve">
-    <value>Whois</value>
   </data>
   <data name="SettingsViewName_Window" xml:space="preserve">
     <value>Fenster</value>
@@ -3164,6 +3122,12 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
   <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
     <value>Existierende Einstellungsdatei überschreiben?</value>
   </data>
+  <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
+    <value>AWS Session Manager</value>
+  </data>
+  <data name="InstanceId" xml:space="preserve">
+    <value>Instanz ID</value>
+  </data>
   <data name="LocalConnection" xml:space="preserve">
     <value>Lokale Verbindung</value>
   </data>
@@ -3172,5 +3136,89 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
   </data>
   <data name="Library_log4net_Description" xml:space="preserve">
     <value>log4net ist ein Tool, das den Programmierer bei der Ausgabe von Log-Statements an eine Vielzahl von Ausgabezielen unterstützt.</value>
+  </data>
+  <data name="AWSSessionManager" xml:space="preserve">
+    <value>AWS Session Manager</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Aktiviert</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
+    <value>EC2-Instanzen von AWS synchronisieren</value>
+  </data>
+  <data name="AddAWSProfile" xml:space="preserve">
+    <value>AWS-Profil hinzufügen</value>
+  </data>
+  <data name="DeleteAWSProfile" xml:space="preserve">
+    <value>AWS-Profil löschen</value>
+  </data>
+  <data name="DeleteAWSProfileMessage" xml:space="preserve">
+    <value>Das ausgewählte AWS-Profil wird dauerhaft gelöscht.
+
+Das Profil wird nicht aus der Datei ~\.aws\credentials entfernt.</value>
+  </data>
+  <data name="EditAWSProfile" xml:space="preserve">
+    <value>AWS-Profil bearbeiten</value>
+  </data>
+  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
+    <value>Alle EC2-Instanzen von AWS synchronisieren</value>
+  </data>
+  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
+    <value>EC2-Instanzen der Gruppe von AWS synchronisieren</value>
+  </data>
+  <data name="ProfilesAndRegionsToSync" xml:space="preserve">
+    <value>Zu synchronisierende Profile und Regionen</value>
+  </data>
+  <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
+    <value>Um EC2-Instanzen von AWS zu synchronisieren, muss die AWS CLI auf dem System konfiguriert werden. Die EC2-Instanzen können für mehrere AWS-Konten (Profile) und mehrere Regionen abgefragt werden. Dazu muss das in der Datei "~/.aws/credentials" gespeicherte Profil zusammen mit der abzufragenden Region konfiguriert werden.</value>
+  </data>
+  <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
+    <value>AWS SDK für .NET für die Nutzung der Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS).</value>
+  </data>
+  <data name="DefaultProfile" xml:space="preserve">
+    <value>Standard-Profil</value>
+  </data>
+  <data name="DefaultRegion" xml:space="preserve">
+    <value>Standard-Region</value>
+  </data>
+  <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
+    <value>Standardprofil, das von manuell erstellten Profilen für die Verbindung mit einer EC2-Instanz über AWS CLI verwendet wird.
+
+Wenn nicht festgelegt, werden die Standardeinstellungen für AWS CLI verwendet.</value>
+  </data>
+  <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
+    <value>Standardregion, die von manuell erstellten Profilen für die Verbindung mit einer EC2-Instanz über AWS CLI verwendet wird.
+
+Wenn nicht festgelegt, werden die Standardeinstellungen für AWS CLI verwendet.</value>
+  </data>
+  <data name="ProfileViewName_AWSSessionManager" xml:space="preserve">
+    <value>AWS Session Manager</value>
+  </data>
+  <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
+    <value>Ist diese Einstellung nicht gesetzt, werden die Standardeinstellungen der AWS CLI verwendet.</value>
+  </data>
+  <data name="GroupNameCannotStartWithX" xml:space="preserve">
+    <value>Der Gruppenname darf nicht mit "{0}" beginnen!</value>
+  </data>
+  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
+    <value>Nur laufende EC2-Instanzen von AWS synchronisieren</value>
+  </data>
+  <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
+    <value>Eine AWS-Region mit dem Namen "{0}" existiert nicht!</value>
+  </data>
+  <data name="AWSCLIv2IsInstalled" xml:space="preserve">
+    <value>AWS CLI v2 ist installiert!</value>
+  </data>
+  <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
+    <value>AWS CLI v2 ist nicht installiert!</value>
+  </data>
+  <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
+    <value>AWS Session Manager Plugin ist installiert!</value>
+  </data>
+  <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
+    <value>AWS Session Manager Plugin ist nicht installiert!</value>
   </data>
 </root>
