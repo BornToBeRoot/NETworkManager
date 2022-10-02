@@ -74,7 +74,7 @@
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowLastSeparator="False">
             <StackPanel Orientation="Horizontal">
-                <Button Command="{Binding OpenWebsiteCommand}" Opacity="1" Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseUrl}" Cursor="Hand">
+                <Button Command="{Binding OpenWebsiteCommand}" Opacity="1" Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
                             <Rectangle.OpacityMask>

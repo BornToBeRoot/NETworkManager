@@ -8,6 +8,7 @@ using System.Windows.Data;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Utilities;
 using NETworkManager.Documentation;
+using NETworkManager.Properties;
 
 namespace NETworkManager.ViewModels
 {
@@ -15,7 +16,7 @@ namespace NETworkManager.ViewModels
     {
         #region Variables
         public string Version => $"{Strings.Version} {AssemblyManager.Current.Version}";
-        public string DevelopedByText => string.Format(Strings.DevelopedAndMaintainedByX + " ", Properties.Resources.NETworkManager_GitHub_User);
+        public string DevelopedByText => string.Format(Strings.DevelopedAndMaintainedByX + " ", Resources.NETworkManager_GitHub_User);
 
         private bool _isUpdateCheckRunning;
         public bool IsUpdateCheckRunning
@@ -31,16 +32,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _updateAvailable;
-        public bool UpdateAvailable
+        private bool _isUpdateAvailable;
+        public bool IsUpdateAvailable
         {
-            get => _updateAvailable;
+            get => _isUpdateAvailable;
             set
             {
-                if (value == _updateAvailable)
+                if (value == _isUpdateAvailable)
                     return;
 
-                _updateAvailable = value;
+                _isUpdateAvailable = value;
                 OnPropertyChanged();
             }
         }
@@ -55,6 +56,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _updateText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _updateReleaseUrl;
+        public string UpdateReleaseUrl
+        {
+            get => _updateReleaseUrl;
+            set
+            {
+                if (value == _updateReleaseUrl)
+                    return;
+
+                _updateReleaseUrl = value;
                 OnPropertyChanged();
             }
         }
@@ -186,7 +201,7 @@ namespace NETworkManager.ViewModels
         #region Methods
         private void CheckForUpdates()
         {
-            UpdateAvailable = false;
+            IsUpdateAvailable = false;
             ShowUpdaterMessage = false;
 
             IsUpdateCheckRunning = true;
@@ -197,17 +212,18 @@ namespace NETworkManager.ViewModels
             updater.NoUpdateAvailable += Updater_NoUpdateAvailable;
             updater.Error += Updater_Error;
 
-            updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version);
+            updater.CheckOnGitHub(Resources.NETworkManager_GitHub_User, Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version, SettingsManager.Current.Update_CheckForPreReleases);
         }
         #endregion
 
         #region Events
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
-            UpdateText = string.Format(Strings.VersionxxIsAvailable, e.Version);
+            UpdateText = string.Format(Strings.VersionxxIsAvailable, e.Release.TagName);
+            UpdateReleaseUrl = e.Release.Prerelease ? e.Release.HtmlUrl : Resources.NETworkManager_LatestReleaseUrl;
 
             IsUpdateCheckRunning = false;
-            UpdateAvailable = true;
+            IsUpdateAvailable = true;
         }
 
         private void Updater_NoUpdateAvailable(object sender, EventArgs e)

@@ -17,5 +17,6 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
+        <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.CheckForPreReleases}" IsOn="{Binding CheckForPreReleases}" />
     </StackPanel>
 </UserControl>

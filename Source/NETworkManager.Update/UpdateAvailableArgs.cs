@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit;
+using System;
 
 namespace NETworkManager.Update
 {
@@ -8,17 +9,17 @@ namespace NETworkManager.Update
     public class UpdateAvailableArgs : EventArgs
     {
         /// <summary>
-        /// Version of the program update.
+        /// Release of the program update.
         /// </summary>
-        public Version Version { get; private set; }
+        public Release Release { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateAvailableArgs"/> class and passes the <see cref="Version"/> as paramter.
+        /// Initializes a new instance of the <see cref="UpdateAvailableArgs"/> class and passes the <see cref="Release"/> as paramter.
         /// </summary>
-        /// <param name="version">Version of the program update.</param>
-        public UpdateAvailableArgs(Version version)
+        /// <param name="release">Release of the program update.</param>
+        public UpdateAvailableArgs(Release release)
         {
-            Version = version;
+            Release = release;
         }
     }
 }

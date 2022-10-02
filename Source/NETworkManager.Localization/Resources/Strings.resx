@@ -3221,4 +3221,7 @@ If not set, the default AWS CLI settings are used.</value>
   <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
     <value>AWS Session Manager Plugin is not installed!</value>
   </data>
+  <data name="CheckForPreReleases" xml:space="preserve">
+    <value>Check for pre-releases</value>
+  </data>
 </root>

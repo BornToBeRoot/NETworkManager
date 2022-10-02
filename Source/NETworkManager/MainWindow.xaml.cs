@@ -254,6 +254,20 @@ namespace NETworkManager
             }
         }
 
+        private string _updateReleaseUrl;
+        public string UpdateReleaseUrl
+        {
+            get => _updateReleaseUrl;
+            set
+            {
+                if (value == _updateReleaseUrl)
+                    return;
+
+                _updateReleaseUrl = value;
+                OnPropertyChanged();
+            }
+        }
+
         private ICollectionView _profileFiles;
         public ICollectionView ProfileFiles
         {
@@ -1162,7 +1176,7 @@ namespace NETworkManager
 
             updater.UpdateAvailable += Updater_UpdateAvailable;
             updater.Error += Updater_Error;
-            updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version);
+            updater.CheckOnGitHub(Properties.Resources.NETworkManager_GitHub_User, Properties.Resources.NETworkManager_GitHub_Repo, AssemblyManager.Current.Version, SettingsManager.Current.Update_CheckForPreReleases);
         }
 
         private static void Updater_Error(object sender, EventArgs e)
@@ -1172,6 +1186,7 @@ namespace NETworkManager
 
         private void Updater_UpdateAvailable(object sender, UpdateAvailableArgs e)
         {
+            UpdateReleaseUrl = e.Release.Prerelease ? e.Release.HtmlUrl : Properties.Resources.NETworkManager_LatestReleaseUrl;
             IsUpdateAvailable = true;
         }
         #endregion

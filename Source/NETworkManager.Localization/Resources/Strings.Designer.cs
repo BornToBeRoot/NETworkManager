@@ -1348,6 +1348,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check for pre-releases ähnelt.
+        /// </summary>
+        public static string CheckForPreReleases {
+            get {
+                return ResourceManager.GetString("CheckForPreReleases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Check for updates ähnelt.
         /// </summary>
         public static string CheckForUpdates {
