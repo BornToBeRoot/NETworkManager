@@ -30,6 +30,8 @@ permalink: /Changelog/next-release
   - Detect if PuTTY is installed at first run [#1542](https://github.com/BornToBeRoot/NETworkManager/pull/1542){:target="\_blank"}
 - Discovery Protocol
   - Add local connection & local interface to output [#1533](https://github.com/BornToBeRoot/NETworkManager/pull/1533){:target="\_blank"}
+- Settings > Update
+  - Option to check for pre-releases added [#1574](https://github.com/BornToBeRoot/NETworkManager/pull/1574){:target="\_blank"}
 - Profiles > Group Dialog
   - Remove checkboxes in group dialog [#1530](https://github.com/BornToBeRoot/NETworkManager/pull/1530){:target="\_blank"}
 - log4net added for error handling (Log file: `%LocalAppData%\NETworkManager\NETworkManager.log`) [#1539](https://github.com/BornToBeRoot/NETworkManager/pull/1539){:target="\_blank"}
