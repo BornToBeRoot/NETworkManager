@@ -417,6 +417,21 @@ namespace NETworkManager.Settings
             }
         }
 
+        private bool _update_CheckForPreReleases;
+        public bool Update_CheckForPreReleases
+        {
+            get => _update_CheckForPreReleases;
+            set
+            {
+                if (value == _update_CheckForPreReleases)
+                    return;
+
+                _update_CheckForPreReleases = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         // Profiles
         private string _profiles_CustomProfilesLocation;
         public string Profiles_CustomProfilesLocation

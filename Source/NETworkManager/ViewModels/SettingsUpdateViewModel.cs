@@ -1,5 +1,4 @@
 ﻿using NETworkManager.Settings;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels
 {
@@ -24,6 +23,23 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private bool _checkForPreReleases;
+        public bool CheckForPreReleases
+        {
+            get => _checkForPreReleases;
+            set
+            {
+                if (value == _checkForPreReleases)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.Update_CheckForPreReleases = value;
+
+                _checkForPreReleases = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, LoadSettings
@@ -39,6 +55,7 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             CheckForUpdatesAtStartup = SettingsManager.Current.Update_CheckForUpdatesAtStartup;
+            CheckForPreReleases = SettingsManager.Current.Update_CheckForPreReleases;
         }
         #endregion
     }

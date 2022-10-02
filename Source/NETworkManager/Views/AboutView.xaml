@@ -155,9 +155,9 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" x:Name="ButtonCheckForUpdates" HorizontalAlignment="Left" Command="{Binding CheckForUpdatesCommand}" IsEnabled="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultButton}" Content="{x:Static localization:Strings.CheckForUpdates}" />
-                <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{Binding UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <StackPanel.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_LatestReleaseUrl}" />
+                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}" CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel.InputBindings>
                     <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
                         <Rectangle.OpacityMask>
