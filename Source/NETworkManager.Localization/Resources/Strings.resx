@@ -3146,8 +3146,8 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="Region" xml:space="preserve">
     <value>Region</value>
   </data>
-  <data name="SyncInstanceIDsFromAWS" xml:space="preserve">
-    <value>Sync Instance IDs from AWS</value>
+  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
+    <value>Synchronize EC2 instances from AWS</value>
   </data>
   <data name="AddAWSProfile" xml:space="preserve">
     <value>Add AWS profile</value>
@@ -3163,17 +3163,17 @@ The profile is not removed from the ~\.aws\credentials file.</value>
   <data name="EditAWSProfile" xml:space="preserve">
     <value>Edit AWS profile</value>
   </data>
-  <data name="SyncAllInstanceIDsFromAWS" xml:space="preserve">
-    <value>Sync all Instance IDs from AWS</value>
+  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
+    <value>Synchronize all EC2 instances from AWS</value>
   </data>
-  <data name="SyncGroupInstanceIDsFromAWS" xml:space="preserve">
-    <value>Sync group Instance IDs from AWS</value>
+  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
+    <value>Synchronize group EC2 instances from AWS</value>
   </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Profiles and regions to sync</value>
+    <value>Profiles and regions to synchronize</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>To synchronize instance IDs from AWS, the AWS CLI must be configured on the system. The instance IDs can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in ~/.aws/credentials must be configured along with the region to query.</value>
+    <value>To synchronize EC2 instances from AWS, the AWS CLI must be configured on the system. The EC2 instances can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in ~/.aws/credentials must be configured along with the region to query.</value>
   </data>
   <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
     <value>AWS SDK for .NET to work with Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS).</value>
@@ -3185,12 +3185,12 @@ The profile is not removed from the ~\.aws\credentials file.</value>
     <value>Default region</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>Default AWS CLI profile which is used by manually created profiles to connect to an instance.
+    <value>Default profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
 
 If not set, the default AWS CLI settings are used.</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>Default AWS CLI region which is used by manually created profiles to connect to an instance.
+    <value>Default region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
 
 If not set, the default AWS CLI settings are used.</value>
   </data>
@@ -3203,8 +3203,8 @@ If not set, the default AWS CLI settings are used.</value>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
     <value>Group name cannot start with "{0}"!</value>
   </data>
-  <data name="SyncOnlyRunningInstancesFromAWS" xml:space="preserve">
-    <value>Sync only running instances from AWS</value>
+  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
+    <value>Synchronize only running EC2 instances from AWS</value>
   </data>
   <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
     <value>An AWS region named "{0}" does not exist!</value>

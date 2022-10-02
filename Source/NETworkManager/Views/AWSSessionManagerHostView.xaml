@@ -260,7 +260,7 @@
                                     </interactivity:EventTrigger>
                                 </interactivity:Interaction.Triggers>
                             </TextBox>
-                            <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding SyncAllInstanceIDsFromAWSCommand}" Visibility="{Binding IsSyncing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ToolTip="{x:Static localization:Strings.SyncAllInstanceIDsFromAWS}">
+                            <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding SyncAllInstanceIDsFromAWSCommand}" Visibility="{Binding IsSyncing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ToolTip="{x:Static localization:Strings.SyncAllEC2InstancesFromAWS}">
                                 <Rectangle Width="16" Height="16">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Unicons Kind=Sync}" />
@@ -377,7 +377,7 @@
                                                                                 <Style.Triggers>
                                                                                     <DataTrigger Binding="{Binding (CollectionViewGroup.Name), Converter={StaticResource IsDynamicProfileToBooleanConverter}}" Value="True">
                                                                                         <Setter Property="Command" Value="{Binding DataContext.SyncGroupInstanceIDsFromAWSCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" />
-                                                                                        <Setter Property="ToolTip" Value="{x:Static localization:Strings.SyncGroupInstanceIDsFromAWS}" />
+                                                                                        <Setter Property="ToolTip" Value="{x:Static localization:Strings.SyncGroupEC2InstancesFromAWS}" />
                                                                                     </DataTrigger>
                                                                                 </Style.Triggers>
                                                                             </Style>

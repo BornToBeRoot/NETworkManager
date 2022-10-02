@@ -3512,7 +3512,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Default AWS CLI profile which is used by manually created profiles to connect to an instance.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
         ///
         ///If not set, the default AWS CLI settings are used. ähnelt.
         /// </summary>
@@ -3523,7 +3523,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Default AWS CLI region which is used by manually created profiles to connect to an instance.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Default region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
         ///
         ///If not set, the default AWS CLI settings are used. ähnelt.
         /// </summary>
@@ -3534,7 +3534,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die To synchronize instance IDs from AWS, the AWS CLI must be configured on the system. The instance IDs can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in ~/.aws/credentials must be configured along with the region to query. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die To synchronize EC2 instances from AWS, the AWS CLI must be configured on the system. The EC2 instances can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in ~/.aws/credentials must be configured along with the region to query. ähnelt.
         /// </summary>
         public static string HelpMessage_AWSSessionManagerProfilesAndRegionsToSync {
             get {
@@ -5765,7 +5765,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Profiles and regions to sync ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Profiles and regions to synchronize ähnelt.
         /// </summary>
         public static string ProfilesAndRegionsToSync {
             get {
@@ -8056,38 +8056,38 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sync all Instance IDs from AWS ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Synchronize all EC2 instances from AWS ähnelt.
         /// </summary>
-        public static string SyncAllInstanceIDsFromAWS {
+        public static string SyncAllEC2InstancesFromAWS {
             get {
-                return ResourceManager.GetString("SyncAllInstanceIDsFromAWS", resourceCulture);
+                return ResourceManager.GetString("SyncAllEC2InstancesFromAWS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sync group Instance IDs from AWS ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Synchronize EC2 instances from AWS ähnelt.
         /// </summary>
-        public static string SyncGroupInstanceIDsFromAWS {
+        public static string SyncEC2InstancesFromAWS {
             get {
-                return ResourceManager.GetString("SyncGroupInstanceIDsFromAWS", resourceCulture);
+                return ResourceManager.GetString("SyncEC2InstancesFromAWS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sync Instance IDs from AWS ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Synchronize group EC2 instances from AWS ähnelt.
         /// </summary>
-        public static string SyncInstanceIDsFromAWS {
+        public static string SyncGroupEC2InstancesFromAWS {
             get {
-                return ResourceManager.GetString("SyncInstanceIDsFromAWS", resourceCulture);
+                return ResourceManager.GetString("SyncGroupEC2InstancesFromAWS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sync only running instances from AWS ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Synchronize only running EC2 instances from AWS ähnelt.
         /// </summary>
-        public static string SyncOnlyRunningInstancesFromAWS {
+        public static string SyncOnlyRunningEC2InstancesFromAWS {
             get {
-                return ResourceManager.GetString("SyncOnlyRunningInstancesFromAWS", resourceCulture);
+                return ResourceManager.GetString("SyncOnlyRunningEC2InstancesFromAWS", resourceCulture);
             }
         }
         
