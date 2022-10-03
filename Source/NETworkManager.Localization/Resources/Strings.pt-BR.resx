@@ -3146,8 +3146,8 @@ Habilite a criptografia do arquivo de perfil em Configurações &gt; Perfil para
   <data name="Region" xml:space="preserve">
     <value>Região</value>
   </data>
-  <data name="SyncInstanceIDsFromAWS" xml:space="preserve">
-    <value>Sincronizar IDs da instância do AWS</value>
+  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
+    <value>Sincronizar instâncias EC2 do AWS</value>
   </data>
   <data name="AddAWSProfile" xml:space="preserve">
     <value>Adicionar perfil AWS</value>
@@ -3163,17 +3163,17 @@ O perfil não foi removido do arquivo ~\.aws\credentials.</value>
   <data name="EditAWSProfile" xml:space="preserve">
     <value>Editar perfil AWS</value>
   </data>
-  <data name="SyncAllInstanceIDsFromAWS" xml:space="preserve">
-    <value>Sincronizar todos os IDs das instâncias do AWS</value>
+  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
+    <value>Sincronizar todas as instâncias EC2 do AWS</value>
   </data>
-  <data name="SyncGroupInstanceIDsFromAWS" xml:space="preserve">
-    <value>Sincronizar IDs das instâncias do grupo do AWS</value>
+  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
+    <value>Sincronizar todas as instâncias EC2 de grupo do AWS</value>
   </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
     <value>Perfis e regiões para sincronizar</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Para sincronizar os IDs da instância do AWS, o CLI do AWS deve ser configurado no sistema. Os IDs da instância podem ser consultados de múltiplas contas AWS (perfis) e múltiplas regiões. Para fazer isto, o perfil armazenado em ~\.aws\credentials deve ser configurado junto com a região a ser consultada.</value>
+    <value>Para sincronizar instâncias EC2 do AWS, o CLI do AWS deve ser configurado no sistema. As instâncias EC2 podem ser consultados de múltiplas contas AWS (perfis) e múltiplas regiões. Para fazer isto, o perfil armazenado em ~\.aws\credentials deve ser configurado junto com a região a ser consultada.</value>
   </data>
   <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
     <value>AWS SDK para .NET para funcionar com Amazon Elastic Compute Cloud (Amazon EC2) no Amazon Web Services (AWS).</value>
@@ -3185,12 +3185,12 @@ O perfil não foi removido do arquivo ~\.aws\credentials.</value>
     <value>Região padrão</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>O perfil CLI padrão do AWS que é usado para criar perfis manualmente para conectar a uma instância.
+    <value>O perfil padrão que é usado para criar perfis para conectar a uma instância EC2 pelo CLI do AWS.
 
 Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>A região CLI padrão do AWS que é usada para criar perfis manualmente para conectar a uma instância.
+    <value>A região padrão que é usada para criar perfis manualmente para conectar a uma instância EC2 pelo CLI do AWS.
 
 Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
   </data>
@@ -3203,8 +3203,8 @@ Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
     <value>O nome do grupo não pode iniciar com "{0}"!</value>
   </data>
-  <data name="SyncOnlyRunningInstancesFromAWS" xml:space="preserve">
-    <value>Sincronizar somente instâncias em execução do AWS</value>
+  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
+    <value>Sincronizar somente instâncias EC2 em execução do AWS</value>
   </data>
   <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
     <value>Uma região AWS nomeada "{0}" não existe!</value>
@@ -3220,5 +3220,8 @@ Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
   </data>
   <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
     <value>O plugin do Gerenciador de sessão AWS não está instalado!</value>
+  </data>
+  <data name="CheckForPreReleases" xml:space="preserve">
+    <value>Verificar por pré-lançamentos</value>
   </data>
 </root>
