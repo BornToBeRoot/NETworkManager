@@ -87,6 +87,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _isSyncEnabled;
+        public bool IsSyncEnabled
+        {
+            get => _isSyncEnabled;
+            set
+            {
+                if (value == _isSyncEnabled)
+                    return;
+
+                _isSyncEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _isSyncing;
         public bool IsSyncing
         {
@@ -315,6 +329,8 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
+            IsSyncEnabled = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
+
             ExpandProfileView = SettingsManager.Current.AWSSessionManager_ExpandProfileView;
 
             ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.AWSSessionManager_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
@@ -903,6 +919,8 @@ namespace NETworkManager.ViewModels
                     SyncAllInstanceIDsFromAWS();
                 else
                     RemoveDynamicGroups();
+                
+                IsSyncEnabled = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
             }
 
             if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_SyncOnlyRunningInstancesFromAWS))

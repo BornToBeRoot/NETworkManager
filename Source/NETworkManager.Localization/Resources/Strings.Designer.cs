@@ -8092,6 +8092,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sync is disabled! ähnelt.
+        /// </summary>
+        public static string SyncIsDisabled {
+            get {
+                return ResourceManager.GetString("SyncIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Synchronize only running EC2 instances from AWS ähnelt.
         /// </summary>
         public static string SyncOnlyRunningEC2InstancesFromAWS {
