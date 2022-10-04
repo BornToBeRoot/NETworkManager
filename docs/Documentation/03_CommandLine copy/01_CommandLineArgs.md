@@ -57,11 +57,6 @@ Start a specific application on startup.
   - `Listeners`
   - `ARPTable`
 
-**Default**
-```
-None
-```
-
 **Example**
 ```
 NETworkManager.exe --application:PingMonitor
