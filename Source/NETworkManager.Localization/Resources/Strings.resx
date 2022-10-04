@@ -3224,4 +3224,7 @@ If not set, the default AWS CLI settings are used.</value>
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>Check for pre-releases</value>
   </data>
+  <data name="SyncIsDisabled" xml:space="preserve">
+    <value>Sync is disabled!</value>
+  </data>
 </root>
