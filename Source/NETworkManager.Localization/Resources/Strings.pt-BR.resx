@@ -3224,4 +3224,7 @@ Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>Verificar por pré-lançamentos</value>
   </data>
+  <data name="SyncIsDisabled" xml:space="preserve">
+    <value>Sincronização desativada!</value>
+  </data>
 </root>
