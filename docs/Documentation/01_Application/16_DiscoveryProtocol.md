@@ -11,4 +11,4 @@ permalink: /Documentation/Application/DiscoveryProtocol
 
 # Discovery Protocol
 
-![DiscoveryProtocol](15_DiscoveryProtocol.png)
+![DiscoveryProtocol](16_DiscoveryProtocol.png)

@@ -9,4 +9,4 @@ permalink: /Documentation/Application/ARPTable
 ---
 # ARP Table
 
-![ARPTable](22_ARPTable.png)
+![ARPTable](23_ARPTable.png)

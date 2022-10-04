@@ -12,8 +12,8 @@ permalink: /Documentation/Application/Lookup
 
 ## OUI
 
-![Lookup_OUI](19_Lookup_OUI.png)
+![Lookup_OUI](20_Lookup_OUI.png)
 
 ## Port
 
-![Lookup_Port](19_Lookup_Port.png)
+![Lookup_Port](20_Lookup_Port.png)

@@ -10,4 +10,4 @@ permalink: /Documentation/Application/Connections
 
 # Connections
 
-![Connections](20_Connections.png)
+![Connections](21_Connections.png)

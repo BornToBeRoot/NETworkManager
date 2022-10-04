@@ -10,7 +10,7 @@ permalink: /Documentation/Application/SNMP
 
 # SNMP
 
-![SNMP](14_SNMP.png)
+![SNMP](15_SNMP.png)
 
 ## Settings
 

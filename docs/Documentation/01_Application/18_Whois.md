@@ -10,6 +10,6 @@ permalink: /Documentation/Application/Whois
 
 # Whois
 
-![Whois](17_Whois.png)
+![Whois](18_Whois.png)
 
 ## Profile

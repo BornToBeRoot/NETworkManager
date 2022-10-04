@@ -10,6 +10,6 @@ permalink: /Documentation/Application/WebConsole
 
 # Web Console
 
-![WebConsole](13_WebConsole.png)
+![WebConsole](14_WebConsole.png)
 
 ## Profile

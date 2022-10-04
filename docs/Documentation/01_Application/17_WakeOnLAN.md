@@ -10,7 +10,7 @@ permalink: /Documentation/Application/WakeOnLAN
 
 # Wake on LAN
 
-![WakeOnLAN](16_WakeOnLAN.png)
+![WakeOnLAN](17_WakeOnLAN.png)
 
 ## Profile
 
