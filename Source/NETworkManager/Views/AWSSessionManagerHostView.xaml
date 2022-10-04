@@ -260,24 +260,31 @@
                                     </interactivity:EventTrigger>
                                 </interactivity:Interaction.Triggers>
                             </TextBox>
-                            <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding SyncAllInstanceIDsFromAWSCommand}" Visibility="{Binding IsSyncing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ToolTip="{x:Static localization:Strings.SyncAllEC2InstancesFromAWS}">
-                                <Rectangle Width="16" Height="16">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Unicons Kind=Sync}" />
-                                    </Rectangle.OpacityMask>
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}">
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                </Rectangle>
-                            </Button>
-                            <mah:ProgressRing Grid.Column="4" Grid.Row="0" Width="16" Height="16" IsActive="{Binding IsSyncing}"/>
+                            <Rectangle Grid.Column="4" Grid.Row="0" Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}" Visibility="{Binding IsSyncEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ToolTip="{x:Static localization:Strings.SyncIsDisabled}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Unicons Kind=SyncSlash}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <Grid Grid.Column="4" Grid.Row="0" Visibility="{Binding IsSyncEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding SyncAllInstanceIDsFromAWSCommand}" Visibility="{Binding IsSyncing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ToolTip="{x:Static localization:Strings.SyncAllEC2InstancesFromAWS}">
+                                    <Rectangle Width="16" Height="16">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Unicons Kind=Sync}" />
+                                        </Rectangle.OpacityMask>
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                </Button>
+                                <mah:ProgressRing Width="16" Height="16" IsActive="{Binding IsSyncing}"/>
+                            </Grid>
                             <Button Grid.Column="6" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding AddProfileCommand}" ToolTip="{x:Static localization:Strings.AddProfileDots}">
                                 <Rectangle Width="16" Height="16">
                                     <Rectangle.OpacityMask>
