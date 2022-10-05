@@ -445,11 +445,11 @@ namespace NETworkManager
 
         private void AfterContentRendered()
         {
+            // Load the profiles before the applications are loaded so that we can use them (e.g. for synchronization)
+            LoadProfiles();
+
             // Load application list, filter, sort, etc.
             LoadApplicationList();
-
-            // Load profiles
-            LoadProfiles();
 
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
@@ -1200,7 +1200,6 @@ namespace NETworkManager
             base.OnSourceInitialized(e);
 
             _hwndSoure = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
-
             _hwndSoure?.AddHook(HwndHook);
 
             RegisterHotKeys();
