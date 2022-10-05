@@ -324,6 +324,8 @@ namespace NETworkManager.ViewModels
             SettingsManager.Current.PropertyChanged += Current_PropertyChanged;
             SettingsManager.Current.AWSSessionManager_AWSProfiles.CollectionChanged += AWSSessionManager_AWSProfiles_CollectionChanged;
 
+            SyncAllInstanceIDsFromAWS();
+
             _isLoading = false;
         }
 
@@ -446,7 +448,7 @@ namespace NETworkManager.ViewModels
             ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
         }
 
-        private bool SyncInstanceIDsFromAWS_CanExecute(object obj) => !IsSyncing && SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
+        private bool SyncInstanceIDsFromAWS_CanExecute(object obj) => !IsSyncing && IsSyncEnabled;
 
         public ICommand SyncAllInstanceIDsFromAWSCommand => new RelayCommand(p => SyncAllInstanceIDsFromAWSAction(), SyncInstanceIDsFromAWS_CanExecute);
 
@@ -523,14 +525,27 @@ namespace NETworkManager.ViewModels
             IsPowerShellConfigured = !string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) && File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
         }
 
-        private async Task SyncAllInstanceIDsFromAWS()
-        {            
-            _log.Info("Sync all EC2 Instance(s) from AWS...");
+        private bool IsConfigured => IsAWSCLIInstalled && IsAWSSessionManagerPluginInstalled && IsPowerShellConfigured;
 
-            // Check if prerequisites are met
-            if (!IsAWSCLIInstalled || !IsAWSSessionManagerPluginInstalled)
+        private async Task SyncAllInstanceIDsFromAWS()
+        {
+            if (!IsSyncEnabled)
             {
-                _log.Warn($"Prerequisites not met! AWS CLI installed {IsAWSCLIInstalled}. AWS Session Manager plugin installed {IsAWSSessionManagerPluginInstalled}");
+                _log.Info("Sync all EC2 instances from AWS is disabled in the settings.");
+                return;
+            }
+
+            _log.Info("Sync all EC2 instance(s) from AWS...");
+
+            if (!IsConfigured)
+            {
+                _log.Warn($"Preconditions not met! AWS CLI installed {IsAWSCLIInstalled}. AWS Session Manager plugin installed {IsAWSSessionManagerPluginInstalled}. PowerShell configured {IsPowerShellConfigured}.");
+                return;
+            }
+
+            if (IsSyncing)
+            {
+                _log.Info("Skip... Sync is already running!");
                 return;
             }
 
@@ -545,7 +560,7 @@ namespace NETworkManager.ViewModels
             }
             else
             {
-                _log.Warn("MainWindow is null!");
+                _log.Warn("Cannot find MainWindow because it is null!");
                 return;
             }
 
@@ -555,7 +570,7 @@ namespace NETworkManager.ViewModels
             {
                 if (!profile.IsEnabled)
                 {
-                    _log.Info($"Sync EC2 Instance(s) for AWS profile \"[{profile.Profile}\\{profile.Region}]\" is disabled! Skip...");
+                    _log.Info($"Skip AWS profile \"[{profile.Profile}\\{profile.Region}]\" because it is disabled!");
                     continue;
                 }
 
@@ -669,7 +684,7 @@ namespace NETworkManager.ViewModels
                 if (ProfileManager.GroupExists(groupName))
                     ProfileManager.RemoveGroup(ProfileManager.GetGroup(groupName));
 
-                _log.Info("No EC2 Instance(s) found!");             
+                _log.Info("No EC2 Instance(s) found!");
             }
             else
             {
@@ -873,7 +888,9 @@ namespace NETworkManager.ViewModels
 
             RefreshProfiles();
 
-            if (!fromSettings && SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
+            // Do not synchronize If the view becomes visible again
+            // after the settings have been opened
+            if (!fromSettings)
                 SyncAllInstanceIDsFromAWS();
         }
 
@@ -884,8 +901,7 @@ namespace NETworkManager.ViewModels
 
         public void OnProfileLoaded()
         {
-            if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
-                SyncAllInstanceIDsFromAWS();
+            SyncAllInstanceIDsFromAWS();
         }
 
         public void RefreshProfiles()
@@ -915,19 +931,16 @@ namespace NETworkManager.ViewModels
         {
             if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_EnableSyncInstanceIDsFromAWS))
             {
-                if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
+                IsSyncEnabled = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
+
+                if (IsSyncEnabled)
                     SyncAllInstanceIDsFromAWS();
                 else
                     RemoveDynamicGroups();
-                
-                IsSyncEnabled = SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
             }
 
             if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_SyncOnlyRunningInstancesFromAWS))
-            {
-                if (SettingsManager.Current.AWSSessionManager_EnableSyncInstanceIDsFromAWS)
-                    SyncAllInstanceIDsFromAWS();
-            }
+                SyncAllInstanceIDsFromAWS();
 
             if (e.PropertyName == nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath))
                 CheckSettings();
