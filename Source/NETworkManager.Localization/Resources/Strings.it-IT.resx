@@ -3252,4 +3252,7 @@ Se non viene impostata, verranno usate le impostazioni predefinite della CLI AWS
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>Controlla disponibilità pre-release</value>
   </data>
+  <data name="SyncIsDisabled" xml:space="preserve">
+    <value>La sincronizzazione è disabilitata!</value>
+  </data>
 </root>
