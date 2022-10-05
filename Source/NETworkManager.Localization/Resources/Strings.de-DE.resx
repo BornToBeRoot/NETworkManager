@@ -3224,4 +3224,7 @@ Wenn nicht festgelegt, werden die Standardeinstellungen für AWS CLI verwendet.<
   <data name="CheckForPreReleases" xml:space="preserve">
     <value>Nach Vorabversionen suchen</value>
   </data>
+  <data name="SyncIsDisabled" xml:space="preserve">
+    <value>Synchronisation ist deaktiviert!</value>
+  </data>
 </root>
