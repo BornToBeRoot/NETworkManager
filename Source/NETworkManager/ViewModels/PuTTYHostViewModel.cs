@@ -213,12 +213,8 @@ namespace NETworkManager.ViewModels
         public PuTTYHostViewModel(IDialogCoordinator instance)
         {
             _dialogCoordinator = instance;
-                        
-            CheckSettings();
 
-            // Create default PuTTY profile for NETworkManager 
-            if (IsConfigured)
-                PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
+            CheckSettings();
 
             InterTabClient = new DragablzInterTabClient(ApplicationName.PuTTY);
 
@@ -230,7 +226,7 @@ namespace NETworkManager.ViewModels
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>
             {
-                if (!(o is ProfileInfo info))
+                if (o is not ProfileInfo info)
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
@@ -267,6 +263,13 @@ namespace NETworkManager.ViewModels
         {
             if (e.PropertyName == nameof(SettingsInfo.PuTTY_ApplicationFilePath))
                 CheckSettings();
+
+            // Update PuTTY profile "NETworkManager" if application theme has changed
+            if (e.PropertyName == nameof(SettingsInfo.Appearance_Theme))
+            {
+                if (IsConfigured)
+                    PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
+            }
         }
 
         private void LoadSettings()
@@ -429,6 +432,10 @@ namespace NETworkManager.ViewModels
         private void CheckSettings()
         {
             IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) && File.Exists(SettingsManager.Current.PuTTY_ApplicationFilePath);
+
+            // Create default PuTTY profile for NETworkManager 
+            if (IsConfigured)
+                PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
         }
 
         private async Task Connect(string host = null)
