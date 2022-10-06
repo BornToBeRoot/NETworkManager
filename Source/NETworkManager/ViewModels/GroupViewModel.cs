@@ -810,6 +810,34 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region PowerShell
+        private bool _powerShell_OverrideCommand;
+        public bool PowerShell_OverrideCommand
+        {
+            get => _powerShell_OverrideCommand;
+            set
+            {
+                if (value == _powerShell_OverrideCommand)
+                    return;
+
+                _powerShell_OverrideCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _powerShell_Command;
+        public string PowerShell_Command
+        {
+            get => _powerShell_Command;
+            set
+            {
+                if (value == _powerShell_Command)
+                    return;
+
+                _powerShell_Command = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _powerShell_OverrideAdditionalCommandLine;
         public bool PowerShell_OverrideAdditionalCommandLine
         {
@@ -1278,6 +1306,8 @@ namespace NETworkManager.ViewModels
             RemoteDesktop_VisualStyles = groupInfo.RemoteDesktop_VisualStyles;
 
             // PowerShell
+            PowerShell_OverrideCommand = groupInfo.PowerShell_OverrideCommand;
+            PowerShell_Command = groupInfo.PowerShell_Command;
             PowerShell_OverrideAdditionalCommandLine = groupInfo.PowerShell_OverrideAdditionalCommandLine;
             PowerShell_AdditionalCommandLine = groupInfo.PowerShell_AdditionalCommandLine;
             PowerShell_ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();

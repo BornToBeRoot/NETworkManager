@@ -82,6 +82,8 @@ namespace NETworkManager.Profiles
         public bool RemoteDesktop_OverrideVisualStyles { get; set; }
         public bool RemoteDesktop_VisualStyles { get; set; }
 
+        public bool PowerShell_OverrideCommand { get; set; }
+        public string PowerShell_Command { get; set; }
         public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
         public string PowerShell_AdditionalCommandLine { get; set; }
         public bool PowerShell_OverrideExecutionPolicy { get; set; }
@@ -195,6 +197,8 @@ namespace NETworkManager.Profiles
             RemoteDesktop_VisualStyles = group.RemoteDesktop_VisualStyles;
 
             // PowerShell
+            PowerShell_OverrideCommand = group.PowerShell_OverrideCommand;
+            PowerShell_Command = group.PowerShell_Command;
             PowerShell_OverrideAdditionalCommandLine = group.PowerShell_OverrideAdditionalCommandLine;
             PowerShell_AdditionalCommandLine = group.PowerShell_AdditionalCommandLine;
             PowerShell_OverrideExecutionPolicy = group.PowerShell_OverrideExecutionPolicy;

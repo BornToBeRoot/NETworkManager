@@ -7,7 +7,7 @@
         xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"        
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PowerShellSettingsViewModel}">
     <StackPanel>
@@ -24,7 +24,9 @@
             </TextBox.Text>
         </TextBox>
         <Button Content="{x:Static localization:Strings.Configure}" Command="{Binding ConfigureCommand}" IsEnabled="{Binding IsConfigured}" Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.AdditionalCommandLine}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Command}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="250" Text="{Binding Command, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.AdditionalCommandLine}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />        
         <TextBox Width="250" Text="{Binding AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.ExecutionPolicy}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
         <ComboBox Width="250" ItemsSource="{Binding ExecutionPolicies}" SelectedItem="{Binding ExecutionPolicy}" HorizontalAlignment="Left" />

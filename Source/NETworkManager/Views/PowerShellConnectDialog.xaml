@@ -7,7 +7,12 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:PowerShellConnectViewModel}">
+    <UserControl.Resources>
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />        
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+    </UserControl.Resources>
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -36,8 +41,19 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.RemoteConsole}" />
             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OffContent="" OnContent="" IsOn="{Binding EnableRemoteConsole}" />
-            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
-            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}" IsEnabled="{Binding EnableRemoteConsole}" Style="{StaticResource EditableComboBox}">
+            <TextBlock Grid.Column="0" Grid.Row="2">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
+                        <Setter Property="Text" Value="{x:Static localization:Strings.Command}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding EnableRemoteConsole}" Value="True">
+                                <Setter Property="Text" Value="{x:Static localization:Strings.Host}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}" IsEnabled="{Binding EnableRemoteConsole}" Visibility="{Binding EnableRemoteConsole, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -47,6 +63,7 @@
                     </Binding>
                 </ComboBox.Text>
             </ComboBox>
+            <TextBox x:Name="TextBoxCommand" Grid.Column="2" Grid.Row="2" Text="{Binding Command, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding EnableRemoteConsole, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource DefaultTextBox}" />
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.AdditionalCommandLine}" />
             <TextBox x:Name="TextBoxAdditionalCommandLine" Grid.Column="2" Grid.Row="4" Text="{Binding AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBox}" />
             <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.ExecutionPolicy}" />

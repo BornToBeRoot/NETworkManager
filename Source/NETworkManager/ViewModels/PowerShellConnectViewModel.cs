@@ -45,6 +45,20 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView HostHistoryView { get; }
 
+        private string _command;
+        public string Command
+        {
+            get => _command;
+            set
+            {
+                if (value == _command)
+                    return;
+
+                _command = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _additionalCommandLine;
         public string AdditionalCommandLine
         {
@@ -105,13 +119,9 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
+            Command = SettingsManager.Current.PowerShell_Command;
             AdditionalCommandLine = SettingsManager.Current.PowerShell_AdditionalCommandLine;
-            
-            LoadExecutionPolicies();
-        }
-
-        private void LoadExecutionPolicies()
-        {
+                        
             ExecutionPolicies = Enum.GetValues(typeof(PowerShell.ExecutionPolicy)).Cast<PowerShell.ExecutionPolicy>().ToList();
             ExecutionPolicy = ExecutionPolicies.FirstOrDefault(x => x == SettingsManager.Current.PowerShell_ExecutionPolicy);
         }

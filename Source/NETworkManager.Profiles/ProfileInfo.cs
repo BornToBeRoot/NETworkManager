@@ -3,7 +3,6 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using System.Security;
-using System.Security.RightsManagement;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Profiles
@@ -136,6 +135,8 @@ namespace NETworkManager.Profiles
         public bool PowerShell_EnableRemoteConsole { get; set; } = true;
         public bool PowerShell_InheritHost { get; set; } = true;
         public string PowerShell_Host { get; set; }
+        public bool PowerShell_OverrideCommand { get; set; }
+        public string PowerShell_Command { get; set; }
         public bool PowerShell_OverrideAdditionalCommandLine { get; set; }
         public string PowerShell_AdditionalCommandLine { get; set; }
         public bool PowerShell_OverrideExecutionPolicy { get; set; }
@@ -312,6 +313,8 @@ namespace NETworkManager.Profiles
             PowerShell_EnableRemoteConsole = profile.PowerShell_EnableRemoteConsole;
             PowerShell_InheritHost = profile.PowerShell_InheritHost;
             PowerShell_Host = profile.PowerShell_Host;
+            PowerShell_OverrideCommand = profile.PowerShell_OverrideCommand;
+            PowerShell_Command = profile.PowerShell_Command;
             PowerShell_OverrideAdditionalCommandLine = profile.PowerShell_OverrideAdditionalCommandLine;
             PowerShell_AdditionalCommandLine = profile.PowerShell_AdditionalCommandLine;
             PowerShell_OverrideExecutionPolicy = profile.PowerShell_OverrideExecutionPolicy;

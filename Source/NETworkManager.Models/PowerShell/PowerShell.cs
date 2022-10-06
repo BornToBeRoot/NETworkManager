@@ -6,8 +6,11 @@
         {
             var command = $"-NoExit -ExecutionPolicy {sessionInfo.ExecutionPolicy} {sessionInfo.AdditionalCommandLine}";
 
+            // Connect to remote host or execute local command if configured
             if (sessionInfo.EnableRemoteConsole)
-                command += $" -Command \"Enter-PSSession -ComputerName {sessionInfo.Host}\"";
+                command += $" -Command \"& {{Enter-PSSession -ComputerName {sessionInfo.Host}}}\"";
+            else if(!string.IsNullOrEmpty(sessionInfo.Command))
+                command += $" -Command \"& {{{sessionInfo.Command}}}\"";
 
             return command;
         }

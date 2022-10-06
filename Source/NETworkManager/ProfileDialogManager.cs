@@ -330,6 +330,8 @@ namespace NETworkManager
                 PowerShell_EnableRemoteConsole = instance.PowerShell_EnableRemoteConsole,
                 PowerShell_InheritHost = instance.PowerShell_InheritHost,
                 PowerShell_Host = instance.PowerShell_InheritHost ? instance.Host?.Trim() : instance.PowerShell_Host?.Trim(),
+                PowerShell_OverrideCommand = instance.PowerShell_OverrideCommand,
+                PowerShell_Command = instance.PowerShell_Command,
                 PowerShell_OverrideAdditionalCommandLine = instance.PowerShell_OverrideAdditionalCommandLine,
                 PowerShell_AdditionalCommandLine = instance.PowerShell_AdditionalCommandLine,
                 PowerShell_OverrideExecutionPolicy = instance.PowerShell_OverrideExecutionPolicy,
@@ -473,6 +475,8 @@ namespace NETworkManager
                 RemoteDesktop_VisualStyles = instance.RemoteDesktop_VisualStyles,
 
                 // PowerShell
+                PowerShell_OverrideCommand = instance.PowerShell_OverrideCommand,
+                PowerShell_Command = instance.PowerShell_Command,
                 PowerShell_OverrideAdditionalCommandLine = instance.PowerShell_OverrideAdditionalCommandLine,
                 PowerShell_AdditionalCommandLine = instance.PowerShell_AdditionalCommandLine,
                 PowerShell_OverrideExecutionPolicy = instance.PowerShell_OverrideExecutionPolicy,

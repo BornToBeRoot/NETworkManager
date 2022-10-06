@@ -3227,4 +3227,7 @@ If not set, the default AWS CLI settings are used.</value>
   <data name="SyncIsDisabled" xml:space="preserve">
     <value>Synchronization is disabled!</value>
   </data>
+  <data name="Command" xml:space="preserve">
+    <value>Command</value>
+  </data>
 </root>

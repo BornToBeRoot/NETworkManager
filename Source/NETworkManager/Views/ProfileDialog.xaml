@@ -962,6 +962,8 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
@@ -1012,10 +1014,25 @@
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4" Text="{x:Static localization:Strings.OverrideDefaultSettings}" Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0"/>
                                 <Separator Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
-                                <CheckBox Grid.Column="0" Grid.Row="10" Content="{x:Static localization:Strings.AdditionalCommandLine}" IsChecked="{Binding PowerShell_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultCheckBox}" />
-                                <TextBox x:Name="TextBoxAdditionalCommandLine" Grid.Column="2" Grid.Row="10" Text="{Binding PowerShell_AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding PowerShell_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
-                                <CheckBox Grid.Column="0" Grid.Row="12" Content="{x:Static localization:Strings.ExecutionPolicy}" IsChecked="{Binding PowerShell_OverrideExecutionPolicy}" Style="{StaticResource DefaultCheckBox}" />
-                                <ComboBox x:Name="ComboBoxTypes" Grid.Column="2" Grid.Row="12" ItemsSource="{Binding PowerShell_ExecutionPolicies}" SelectedItem="{Binding PowerShell_ExecutionPolicy}" IsEnabled="{Binding PowerShell_OverrideExecutionPolicy}" />
+                                <CheckBox Grid.Column="0" Grid.Row="10" Content="{x:Static localization:Strings.Command}" IsChecked="{Binding PowerShell_OverrideCommand}" IsEnabled="{Binding PowerShell_EnableRemoteConsole, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource DefaultCheckBox}" />
+                                <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding PowerShell_Command, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">      
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding PowerShell_EnableRemoteConsole}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding PowerShell_OverrideCommand}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                                <CheckBox Grid.Column="0" Grid.Row="12" Content="{x:Static localization:Strings.AdditionalCommandLine}" IsChecked="{Binding PowerShell_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultCheckBox}" />
+                                <TextBox Grid.Column="2" Grid.Row="12" Text="{Binding PowerShell_AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding PowerShell_OverrideAdditionalCommandLine}" Style="{StaticResource DefaultTextBox}" />
+                                <CheckBox Grid.Column="0" Grid.Row="14" Content="{x:Static localization:Strings.ExecutionPolicy}" IsChecked="{Binding PowerShell_OverrideExecutionPolicy}" Style="{StaticResource DefaultCheckBox}" />
+                                <ComboBox Grid.Column="2" Grid.Row="14" ItemsSource="{Binding PowerShell_ExecutionPolicies}" SelectedItem="{Binding PowerShell_ExecutionPolicy}" IsEnabled="{Binding PowerShell_OverrideExecutionPolicy}" />
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
