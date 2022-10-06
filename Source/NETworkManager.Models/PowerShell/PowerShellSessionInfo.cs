@@ -7,6 +7,7 @@ namespace NETworkManager.Models.PowerShell
         public string ApplicationFilePath { get; set; }
         public bool EnableRemoteConsole { get; set; }
         public string Host { get; set; }
+        public string Command { get; set; }
         public string AdditionalCommandLine { get; set; }
         public ExecutionPolicy ExecutionPolicy { get; set; }
 

@@ -119,6 +119,7 @@ namespace NETworkManager.Settings
 
         // Application: PowerShell
         public static string PowerShell_ApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");
+        public static string PowerShell_Command => "Set-Location ~";
         public static PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy => PowerShell.ExecutionPolicy.RemoteSigned;
 
         // Application: PuTTY

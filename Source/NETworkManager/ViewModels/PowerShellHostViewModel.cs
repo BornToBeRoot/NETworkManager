@@ -225,7 +225,7 @@ namespace NETworkManager.ViewModels
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>
             {
-                if (!(o is ProfileInfo info))
+                if (o is not ProfileInfo info)
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
@@ -432,6 +432,7 @@ namespace NETworkManager.ViewModels
                 {
                     EnableRemoteConsole = instance.EnableRemoteConsole,
                     Host = instance.Host,
+                    Command = instance.Command,
                     AdditionalCommandLine = instance.AdditionalCommandLine,
                     ExecutionPolicy = instance.ExecutionPolicy
                 };

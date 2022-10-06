@@ -1099,7 +1099,9 @@ namespace NETworkManager
 
                 IsProfileFileLocked = false;
 
-                OnProfilesLoaded(SelectedApplication.Name);
+                // Null if profile is loaded before application is loaded
+                if (SelectedApplication != null)
+                    OnProfilesLoaded(SelectedApplication.Name);
             }
             catch (System.Security.Cryptography.CryptographicException)
             {

@@ -2375,6 +2375,21 @@ namespace NETworkManager.Settings
             }
         }
 
+        private string _powerShell_Command = GlobalStaticConfiguration.PowerShell_Command;
+        public string PowerShell_Command
+        {
+            get => _powerShell_Command;
+            set
+            {
+                if (value == _powerShell_Command)
+                    return;
+
+                _powerShell_Command = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         private string _powerShell_AdditionalCommandLine;
         public string PowerShell_AdditionalCommandLine
         {

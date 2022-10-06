@@ -1510,6 +1510,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Command ähnelt.
+        /// </summary>
+        public static string Command {
+            get {
+                return ResourceManager.GetString("Command", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Command Line Arguments ähnelt.
         /// </summary>
         public static string CommandLineArguments {
@@ -8092,7 +8101,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sync is disabled! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Synchronization is disabled! ähnelt.
         /// </summary>
         public static string SyncIsDisabled {
             get {

@@ -38,6 +38,23 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private string _command;
+        public string Command
+        {
+            get => _command;
+            set
+            {
+                if (value == _command)
+                    return;
+
+                if (!_isLoading)
+                    SettingsManager.Current.PowerShell_Command = value;
+
+                _command = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _additionalCommandLine;
         public string AdditionalCommandLine
         {
@@ -117,6 +134,7 @@ namespace NETworkManager.ViewModels
         {
             ApplicationFilePath = SettingsManager.Current.PowerShell_ApplicationFilePath;
             IsConfigured = File.Exists(ApplicationFilePath);
+            Command = SettingsManager.Current.PowerShell_Command;
             AdditionalCommandLine = SettingsManager.Current.PowerShell_AdditionalCommandLine;
 
             LoadExecutionPolicies();
