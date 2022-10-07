@@ -310,7 +310,7 @@
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                 <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Aws}" />
                                                 </Rectangle.OpacityMask>
                                             </Rectangle>
                                         </MenuItem.Icon>
@@ -319,7 +319,7 @@
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                 <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Aws}" />
                                                 </Rectangle.OpacityMask>
                                             </Rectangle>
                                         </MenuItem.Icon>
@@ -454,7 +454,6 @@
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                         <Setter Property="Command" Value="{Binding AddProfileCommand}" />
-
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Search, Converter={StaticResource NullOrEmptyToBoolConverter}}" Value="False">
                                                 <Setter Property="Command" Value="{Binding ClearSearchCommand}" />
@@ -613,7 +612,6 @@
                 </Button>
             </StackPanel>
         </StackPanel>
-
     </Grid>
 </UserControl>
 
