@@ -3255,4 +3255,7 @@ Se non viene impostata, verranno usate le impostazioni predefinite della CLI AWS
   <data name="SyncIsDisabled" xml:space="preserve">
     <value>La sincronizzazione è disabilitata!</value>
   </data>
+  <data name="Command" xml:space="preserve">
+    <value>Comando</value>
+  </data>
 </root>
