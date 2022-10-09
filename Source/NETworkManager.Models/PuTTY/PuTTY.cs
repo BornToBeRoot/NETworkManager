@@ -11,15 +11,28 @@ namespace NETworkManager.Models.PuTTY
     /// </summary>
     public partial class PuTTY
     {
+        /// <summary>
+        /// Name of the PuTTY folder.
+        /// </summary>
         private static string _puttyFolder => "PuTTY";
+
+        /// <summary>
+        /// Name of the PuTTY executable.
+        /// </summary>
         private static string _puttyFile => "putty.exe";
 
+        /// <summary>
+        /// Default PuTTY installation paths.
+        /// </summary>
         public static readonly List<string> GetDefaultInstallationPaths = new()
         {
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), _puttyFolder, _puttyFile),
             Path.Combine(Environment.GetFolderPath( Environment.SpecialFolder.ProgramFilesX86), _puttyFolder, _puttyFile)
         };
 
+        /// <summary>
+        /// Default SZ registry keys for PuTTY profile NETworkManager.
+        /// </summary>
         private static readonly List<Tuple<string, string>> DefaultProfileRegkeysSZBase = new()
         {
             new Tuple<string, string>("Colour1", "255,255,255"),
@@ -46,6 +59,10 @@ namespace NETworkManager.Models.PuTTY
             new Tuple<string, string>("Font", "Consolas")
         };
 
+        /// <summary>
+        /// SZ registry keys for PuTTY profile NETworkManager if app theme is dark.
+        /// </summary>
+        /// <returns>List with SZ registry keys.</returns>
         private static List<Tuple<string, string>> GetProfileRegkeysSZDark()
         {
             return DefaultProfileRegkeysSZBase.Concat(
@@ -56,6 +73,10 @@ namespace NETworkManager.Models.PuTTY
                 }).ToList();
         }
 
+        /// <summary>
+        /// SZ registry keys for PuTTY profile NETworkManager if app theme is white.
+        /// </summary>
+        /// <returns>List with DWORD registry keys.</returns>
         private static List<Tuple<string, string>> GetProfileRegkeysSZWhite()
         {
             return DefaultProfileRegkeysSZBase.Concat(
@@ -66,6 +87,9 @@ namespace NETworkManager.Models.PuTTY
                 }).ToList();
         }
 
+        /// <summary>
+        /// Default DWORD registry keys for PuTTY profile NETworkManager.
+        /// </summary>
         private static readonly List<Tuple<string, int>> DefaultProfileRegkeysDword = new()
         {
             new Tuple<string, int>("CurType", 2),
@@ -150,20 +174,21 @@ namespace NETworkManager.Models.PuTTY
         }
 
         /// <summary>
-        /// 
+        /// Write the default PuTTY profile NETworkManager to the registry.
+        /// HKCU\Software\SimonTatham\PuTTY\Sessions\NETworkManager
         /// </summary>
-        public static void WriteDefaultProfileToRegistry(string AccentName)
+        /// <param name="theme">Current application theme to adjust the PuTTY colors</param>
+        public static void WriteDefaultProfileToRegistry(string theme)
         {
             string profilePath = @"Software\SimonTatham\PuTTY\Sessions\NETworkManager";
 
             RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(profilePath, true);
 
-            if (registryKey == null)
-                registryKey = Registry.CurrentUser.CreateSubKey(profilePath);
+            registryKey ??= Registry.CurrentUser.CreateSubKey(profilePath);
 
             if (registryKey != null)
             {
-                foreach (Tuple<string, string> key in AccentName == "Dark" ? GetProfileRegkeysSZDark() : GetProfileRegkeysSZWhite())
+                foreach (Tuple<string, string> key in theme == "Dark" ? GetProfileRegkeysSZDark() : GetProfileRegkeysSZWhite())
                     registryKey.SetValue(key.Item1, key.Item2);
 
                 foreach (var key in DefaultProfileRegkeysDword)
