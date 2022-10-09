@@ -3230,4 +3230,7 @@ If not set, the default AWS CLI settings are used.</value>
   <data name="Command" xml:space="preserve">
     <value>Command</value>
   </data>
+  <data name="ModifyWindowsPowerShellGlobalProfileToMatchAppTheme" xml:space="preserve">
+    <value>Modify the Windows PowerShell global profile to match the application theme</value>
+  </data>
 </root>

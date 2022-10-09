@@ -98,7 +98,22 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _windowsPowerShellModifyGlobalProfile;
+        public bool WindowsPowerShellModifyGlobalProfile
+        {
+            get => _windowsPowerShellModifyGlobalProfile;
+            set
+            {
+                if (value == _windowsPowerShellModifyGlobalProfile)
+                    return;
 
+                if (!_isLoading)
+                    SettingsManager.Current.Appearance_WindowsPowerShellModifyGlobalProfile = value;
+
+                _windowsPowerShellModifyGlobalProfile = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Constructor, LoadSettings
@@ -118,11 +133,10 @@ namespace NETworkManager.ViewModels
         private void LoadSettings()
         {
             SelectedTheme = Themes.Cast<ThemeColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Theme);
-            SelectedAccent = Accents.Cast<AccentColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Accent);
-            
-            UseCustomTheme = SettingsManager.Current.Appearance_UseCustomTheme;
-            
+            SelectedAccent = Accents.Cast<AccentColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Accent);            
+            UseCustomTheme = SettingsManager.Current.Appearance_UseCustomTheme;            
             SelectedCustomTheme = CustomThemes.Cast<ThemeInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_CustomThemeName) ?? CustomThemes.Cast<ThemeInfo>().FirstOrDefault();
+            WindowsPowerShellModifyGlobalProfile = SettingsManager.Current.Appearance_WindowsPowerShellModifyGlobalProfile;
         }
         #endregion
     }

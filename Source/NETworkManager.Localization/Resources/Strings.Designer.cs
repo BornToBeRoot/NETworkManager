@@ -4790,6 +4790,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Modify the Windows PowerShell global profile to match the application theme ähnelt.
+        /// </summary>
+        public static string ModifyWindowsPowerShellGlobalProfileToMatchAppTheme {
+            get {
+                return ResourceManager.GetString("ModifyWindowsPowerShellGlobalProfileToMatchAppTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Move ähnelt.
         /// </summary>
         public static string Move {

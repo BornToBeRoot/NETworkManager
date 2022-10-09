@@ -64,5 +64,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.PowerShell}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ModifyWindowsPowerShellGlobalProfileToMatchAppTheme}" IsOn="{Binding WindowsPowerShellModifyGlobalProfile}" Margin="0,0,0,10"/>
     </StackPanel>
 </UserControl>

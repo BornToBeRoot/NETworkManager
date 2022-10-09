@@ -277,6 +277,21 @@ namespace NETworkManager.Settings
             }
         }
 
+        private bool _appearance_WindowsPowerShellModifyGlobalProfile;
+        public bool Appearance_WindowsPowerShellModifyGlobalProfile
+        {
+            get => _appearance_WindowsPowerShellModifyGlobalProfile;
+            set
+            {
+                if (value == _appearance_WindowsPowerShellModifyGlobalProfile)
+                    return;
+
+                _appearance_WindowsPowerShellModifyGlobalProfile = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         // Localization
         private string _localization_CultureCode;
         public string Localization_CultureCode
