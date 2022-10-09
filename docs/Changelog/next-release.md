@@ -30,6 +30,8 @@ permalink: /Changelog/next-release
   - Detect if PuTTY is installed at first run [#1542](https://github.com/BornToBeRoot/NETworkManager/pull/1542){:target="\_blank"}
 - Discovery Protocol
   - Add local connection & local interface to output [#1533](https://github.com/BornToBeRoot/NETworkManager/pull/1533){:target="\_blank"}
+- Settings > Language
+  - Improve application restart [#1599](https://github.com/BornToBeRoot/NETworkManager/pull/1599){:target="\_blank"}
 - Settings > Update
   - Option to check for pre-releases added [#1574](https://github.com/BornToBeRoot/NETworkManager/pull/1574){:target="\_blank"}
 - Profiles > Group Dialog
@@ -52,6 +54,6 @@ permalink: /Changelog/next-release
   - Reselect group/profile on refresh (e.g. if profiles page is opened again) [#1516](https://github.com/BornToBeRoot/NETworkManager/pull/1516){:target="\_blank"}
 
 ## Other
-- Code cleanup [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
+- Code cleanup [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"} [#1599](https://github.com/BornToBeRoot/NETworkManager/pull/1599){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="_blank"}

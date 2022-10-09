@@ -16,8 +16,6 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView Languages { get; }
 
-        private string _cultureCode = string.Empty;
-
         private LocalizationInfo _selectedLanguage;
         public LocalizationInfo SelectedLangauge
         {
@@ -32,8 +30,6 @@ namespace NETworkManager.ViewModels
                     LocalizationManager.GetInstance().Change(value);
 
                     SettingsManager.Current.Localization_CultureCode = value.Code;
-
-                    RestartRequired = (value.Code != _cultureCode);
                 }
 
                 _selectedLanguage = value;
@@ -54,20 +50,6 @@ namespace NETworkManager.ViewModels
 
                 Languages.Refresh();
 
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _restartRequired;
-        public bool RestartRequired
-        {
-            get => _restartRequired;
-            set
-            {
-                if (value == _restartRequired)
-                    return;
-
-                _restartRequired = value;
                 OnPropertyChanged();
             }
         }
@@ -98,14 +80,7 @@ namespace NETworkManager.ViewModels
 
             SelectedLangauge = Languages.Cast<LocalizationInfo>().FirstOrDefault(x => x.Code == LocalizationManager.GetInstance().Current.Code);
 
-            LoadSettings();
-
             _isLoading = false;
-        }
-
-        private void LoadSettings()
-        {
-            _cultureCode = SettingsManager.Current.Localization_CultureCode;
         }
         #endregion
 

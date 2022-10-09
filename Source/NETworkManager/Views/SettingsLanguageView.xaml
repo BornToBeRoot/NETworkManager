@@ -17,9 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="10" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="10" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />            
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -125,19 +123,6 @@
                 </Button>
                 <TextBlock Text="{x:Static localization:Strings.SearchedLanguageNotFound}" Style="{DynamicResource MessageTextBlock}" />
             </StackPanel>
-        </Grid>       
-        <Grid Grid.Row="4" Visibility="{Binding RestartRequired, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="5" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Rectangle Width="24" Height="24" Fill="{DynamicResource MahApps.Brushes.Accent}">
-                <Rectangle.OpacityMask>
-                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationVariant}" />
-                </Rectangle.OpacityMask>
-            </Rectangle>
-            <TextBlock Grid.Column="2" Text="{x:Static localization:Strings.RestartTheApplicationToChangeTheLanguage}" VerticalAlignment="Center" Style="{StaticResource AccentTextBlock}" />
-        </Grid>        
+        </Grid>              
     </Grid>
 </UserControl>
