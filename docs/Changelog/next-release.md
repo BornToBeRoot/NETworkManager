@@ -54,6 +54,6 @@ permalink: /Changelog/next-release
   - Reselect group/profile on refresh (e.g. if profiles page is opened again) [#1516](https://github.com/BornToBeRoot/NETworkManager/pull/1516){:target="\_blank"}
 
 ## Other
-- Code cleanup [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
+- Code cleanup [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"} [#1599](https://github.com/BornToBeRoot/NETworkManager/pull/1599){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="_blank"}
