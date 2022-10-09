@@ -366,10 +366,6 @@ namespace NETworkManager
             // Set window title
             Title = $"NETworkManager {AssemblyManager.Current.Version}";
 
-            // NotifyIcon for autostart
-            if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)
-                InitNotifyIcon();
-
             // Load settings
             ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
 
@@ -461,6 +457,10 @@ namespace NETworkManager
 
             // Load application list, filter, sort, etc.
             LoadApplicationList();
+
+            // Init notify icon
+            if (SettingsManager.Current.TrayIcon_AlwaysShowIcon)
+                InitNotifyIcon();
 
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
@@ -991,18 +991,6 @@ namespace NETworkManager
         {
             ShowSettingsView = false;
 
-            // Enable/disable tray icon
-            if (!_isInTray)
-            {
-                if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && _notifyIcon == null)
-                    InitNotifyIcon();
-
-                if (_notifyIcon != null)
-                    _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
-
-                MetroMainWindow.HideOverlay();
-            }
-
             // Change HotKeys
             if (SettingsManager.HotKeysChanged)
             {
@@ -1217,15 +1205,15 @@ namespace NETworkManager
         *  1  | ShowWindowAction()
         */
 
-        private readonly List<int> _registeredHotKeys = new List<int>();
+        private readonly List<int> _registeredHotKeys = new();
 
         private void RegisterHotKeys()
         {
-            if (!SettingsManager.Current.HotKey_ShowWindowEnabled)
-                return;
-
-            RegisterHotKey(new WindowInteropHelper(this).Handle, 1, SettingsManager.Current.HotKey_ShowWindowModifier, SettingsManager.Current.HotKey_ShowWindowKey);
-            _registeredHotKeys.Add(1);
+            if (SettingsManager.Current.HotKey_ShowWindowEnabled)
+            {
+                RegisterHotKey(new WindowInteropHelper(this).Handle, 1, SettingsManager.Current.HotKey_ShowWindowModifier, SettingsManager.Current.HotKey_ShowWindowKey);
+                _registeredHotKeys.Add(1);
+            }
         }
 
         private void UnregisterHotKeys()
@@ -1254,7 +1242,7 @@ namespace NETworkManager
             _notifyIcon.Text = Title;
             _notifyIcon.Click += NotifyIcon_Click;
             _notifyIcon.MouseDown += NotifyIcon_MouseDown;
-            _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+            _notifyIcon.Visible = true;
         }
 
         private void NotifyIcon_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -1493,6 +1481,15 @@ namespace NETworkManager
         {
             if (e.PropertyName == nameof(SettingsInfo.Localization_CultureCode))
                 IsRestartRequired = true;
+
+            if (e.PropertyName == nameof(SettingsInfo.TrayIcon_AlwaysShowIcon))
+            {
+                if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && _notifyIcon == null)
+                    InitNotifyIcon();
+
+                if (_notifyIcon != null)
+                    _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+            }
         }
         #endregion
 
