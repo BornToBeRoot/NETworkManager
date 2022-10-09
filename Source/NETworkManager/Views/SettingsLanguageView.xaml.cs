@@ -4,7 +4,7 @@ namespace NETworkManager.Views
 {
     public partial class SettingsLanguageView
     {
-        private readonly SettingsLanguageViewModel _viewModel = new SettingsLanguageViewModel();
+        private readonly SettingsLanguageViewModel _viewModel = new();
 
         public SettingsLanguageView()
         {

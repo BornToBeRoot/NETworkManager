@@ -38,7 +38,7 @@
                     </Rectangle>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="{x:Static localization:Strings.Settings}" Command="{Binding OpenSettingsCommand}">
+            <MenuItem Header="{x:Static localization:Strings.Settings}" Command="{Binding OpenSettingsFromTrayCommand}">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
@@ -74,6 +74,16 @@
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowLastSeparator="False">
             <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding RestartApplicationCommand}" Opacity="1" Visibility="{Binding IsRestartRequired, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Cursor="Hand">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restart}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Text="{x:Static localization:Strings.RestartRequired}" Style="{StaticResource LinkTextBlock}"  VerticalAlignment="Center" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
                 <Button Command="{Binding OpenWebsiteCommand}" Opacity="1" Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
