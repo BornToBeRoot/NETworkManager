@@ -560,10 +560,7 @@
   </data>
   <data name="RestartRequired" xml:space="preserve">
     <value>Restart required</value>
-  </data>
-  <data name="RestartRequiredSettingsChangedMessage" xml:space="preserve">
-    <value>Some settings are applied only after restarting the application!</value>
-  </data>
+  </data> 
   <data name="SaveSettingsInApplicationFolder" xml:space="preserve">
     <value>Save settings in the application folder</value>
   </data>

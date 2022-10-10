@@ -60,9 +60,6 @@ namespace NETworkManager
         private bool _isInTray;
         private bool _closeApplication;
 
-        // Indicates a restart message, when settings changed
-        private string _cultureCode;
-
         private bool _expandApplicationView;
         public bool ExpandApplicationView
         {
@@ -240,6 +237,20 @@ namespace NETworkManager
             }
         }
 
+        private bool _isRestartRequired;
+        public bool IsRestartRequired
+        {
+            get => _isRestartRequired;
+            set
+            {
+                if (value == _isRestartRequired)
+                    return;
+
+                _isRestartRequired = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _isUpdateAvailable;
         public bool IsUpdateAvailable
         {
@@ -355,10 +366,6 @@ namespace NETworkManager
             // Set window title
             Title = $"NETworkManager {AssemblyManager.Current.Version}";
 
-            // NotifyIcon for autostart
-            if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray || SettingsManager.Current.TrayIcon_AlwaysShowIcon)
-                InitNotifyIcon();
-
             // Load settings
             ExpandApplicationView = SettingsManager.Current.ExpandApplicationView;
 
@@ -450,6 +457,10 @@ namespace NETworkManager
 
             // Load application list, filter, sort, etc.
             LoadApplicationList();
+
+            // Init notify icon
+            if (SettingsManager.Current.TrayIcon_AlwaysShowIcon)
+                InitNotifyIcon();
 
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
@@ -955,10 +966,6 @@ namespace NETworkManager
         #region Settings
         private void OpenSettings()
         {
-            // Save current language code
-            if (string.IsNullOrEmpty(_cultureCode))
-                _cultureCode = SettingsManager.Current.Localization_CultureCode;
-
             // Init settings view
             if (_settingsView == null)
             {
@@ -973,9 +980,6 @@ namespace NETworkManager
 
             // Show the view (this will hide other content)
             ShowSettingsView = true;
-
-            // Bring window to front
-            ShowWindowAction();
         }
 
         private void EventSystem_RedirectToSettingsEvent(object sender, EventArgs e)
@@ -986,40 +990,6 @@ namespace NETworkManager
         private async Task CloseSettings()
         {
             ShowSettingsView = false;
-
-            // Enable/disable tray icon
-            if (!_isInTray)
-            {
-                if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && _notifyIcon == null)
-                    InitNotifyIcon();
-
-                if (_notifyIcon != null)
-                    _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
-
-                MetroMainWindow.HideOverlay();
-            }
-
-            // Ask the user to restart (if he has changed the language)
-            if (_cultureCode != SettingsManager.Current.Localization_CultureCode)
-            {
-                ShowWindowAction();
-
-                var settings = AppearanceManager.MetroDialog;
-
-                settings.AffirmativeButtonText = Localization.Resources.Strings.RestartNow;
-                settings.NegativeButtonText = Localization.Resources.Strings.OK;
-                settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
-
-                ConfigurationManager.Current.FixAirspace = true;
-
-                if (await this.ShowMessageAsync(Localization.Resources.Strings.RestartRequired, Localization.Resources.Strings.RestartRequiredSettingsChangedMessage, MessageDialogStyle.AffirmativeAndNegative, settings) == MessageDialogResult.Affirmative)
-                {
-                    RestartApplication();
-                    return;
-                }
-
-                ConfigurationManager.Current.FixAirspace = false;
-            }
 
             // Change HotKeys
             if (SettingsManager.HotKeysChanged)
@@ -1235,15 +1205,15 @@ namespace NETworkManager
         *  1  | ShowWindowAction()
         */
 
-        private readonly List<int> _registeredHotKeys = new List<int>();
+        private readonly List<int> _registeredHotKeys = new();
 
         private void RegisterHotKeys()
         {
-            if (!SettingsManager.Current.HotKey_ShowWindowEnabled)
-                return;
-
-            RegisterHotKey(new WindowInteropHelper(this).Handle, 1, SettingsManager.Current.HotKey_ShowWindowModifier, SettingsManager.Current.HotKey_ShowWindowKey);
-            _registeredHotKeys.Add(1);
+            if (SettingsManager.Current.HotKey_ShowWindowEnabled)
+            {
+                RegisterHotKey(new WindowInteropHelper(this).Handle, 1, SettingsManager.Current.HotKey_ShowWindowModifier, SettingsManager.Current.HotKey_ShowWindowKey);
+                _registeredHotKeys.Add(1);
+            }
         }
 
         private void UnregisterHotKeys()
@@ -1272,7 +1242,7 @@ namespace NETworkManager
             _notifyIcon.Text = Title;
             _notifyIcon.Click += NotifyIcon_Click;
             _notifyIcon.MouseDown += NotifyIcon_MouseDown;
-            _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+            _notifyIcon.Visible = true;
         }
 
         private void NotifyIcon_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -1349,6 +1319,13 @@ namespace NETworkManager
             OpenStatusWindow(true);
         }
 
+        public ICommand RestartApplicationCommand => new RelayCommand(p => RestartApplicationAction());
+
+        private void RestartApplicationAction()
+        {
+            RestartApplication();
+        }
+
         public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
 
         private static void OpenWebsiteAction(object url)
@@ -1356,20 +1333,14 @@ namespace NETworkManager
             ExternalProcessStarter.OpenUrl((string)url);
         }
 
-        public ICommand OpenDocumentationCommand
-        {
-            get { return new RelayCommand(p => OpenDocumentationAction()); }
-        }
+        public ICommand OpenDocumentationCommand => new RelayCommand(p => OpenDocumentationAction());
 
         private void OpenDocumentationAction()
         {
             DocumentationManager.OpenDocumentation(ShowSettingsView ? DocumentationManager.GetIdentifierBySettingsName(_settingsView.GetSelectedSettingsViewName()) : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
         }
 
-        public ICommand OpenApplicationListCommand
-        {
-            get { return new RelayCommand(p => OpenApplicationListAction()); }
-        }
+        public ICommand OpenApplicationListCommand => new RelayCommand(p => OpenApplicationListAction());
 
         private void OpenApplicationListAction()
         {
@@ -1377,40 +1348,38 @@ namespace NETworkManager
             TextBoxSearch.Focus();
         }
 
-        public ICommand UnlockProfileCommand
-        {
-            get { return new RelayCommand(p => UnlockProfileAction()); }
-        }
+        public ICommand UnlockProfileCommand => new RelayCommand(p => UnlockProfileAction());
 
         private void UnlockProfileAction()
         {
             LoadProfile(SelectedProfileFile);
         }
 
-        public ICommand OpenSettingsCommand
-        {
-            get { return new RelayCommand(p => OpenSettingsAction()); }
-        }
+        public ICommand OpenSettingsCommand => new RelayCommand(p => OpenSettingsAction());
 
         private void OpenSettingsAction()
         {
             OpenSettings();
         }
 
-        public ICommand CloseSettingsCommand
+        public ICommand OpenSettingsFromTrayCommand => new RelayCommand(p => OpenSettingsFromTrayAction());
+
+        private void OpenSettingsFromTrayAction()
         {
-            get { return new RelayCommand(p => CloseSettingsAction()); }
+            // Bring window to front
+            ShowWindowAction();
+
+            OpenSettings();
         }
+
+        public ICommand CloseSettingsCommand => new RelayCommand(p => CloseSettingsAction());
 
         private void CloseSettingsAction()
         {
             CloseSettings();
         }
 
-        public ICommand ShowWindowCommand
-        {
-            get { return new RelayCommand(p => ShowWindowAction()); }
-        }
+        public ICommand ShowWindowCommand => new RelayCommand(p => ShowWindowAction());
 
         private void ShowWindowAction()
         {
@@ -1421,10 +1390,7 @@ namespace NETworkManager
                 BringWindowToFront();
         }
 
-        public ICommand CloseApplicationCommand
-        {
-            get { return new RelayCommand(p => CloseApplicationAction()); }
-        }
+        public ICommand CloseApplicationCommand => new RelayCommand(p => CloseApplicationAction());
 
         private void CloseApplicationAction()
         {
@@ -1449,20 +1415,14 @@ namespace NETworkManager
             CloseApplication();
         }
 
-        public ICommand ApplicationListMouseEnterCommand
-        {
-            get { return new RelayCommand(p => ApplicationListMouseEnterAction()); }
-        }
+        public ICommand ApplicationListMouseEnterCommand => new RelayCommand(p => ApplicationListMouseEnterAction());
 
         private void ApplicationListMouseEnterAction()
         {
             IsMouseOverApplicationList = true;
         }
 
-        public ICommand ApplicationListMouseLeaveCommand
-        {
-            get { return new RelayCommand(p => ApplicationListMouseLeaveAction()); }
-        }
+        public ICommand ApplicationListMouseLeaveCommand => new RelayCommand(p => ApplicationListMouseLeaveAction());
 
         private void ApplicationListMouseLeaveAction()
         {
@@ -1473,20 +1433,14 @@ namespace NETworkManager
             IsMouseOverApplicationList = false;
         }
 
-        public ICommand TextBoxSearchGotFocusCommand
-        {
-            get { return new RelayCommand(p => TextBoxSearchGotFocusAction()); }
-        }
+        public ICommand TextBoxSearchGotFocusCommand => new RelayCommand(p => TextBoxSearchGotFocusAction());
 
         private void TextBoxSearchGotFocusAction()
         {
             IsTextBoxSearchFocused = true;
         }
 
-        public ICommand TextBoxSearchLostFocusCommand
-        {
-            get { return new RelayCommand(p => TextBoxSearchLostFocusAction()); }
-        }
+        public ICommand TextBoxSearchLostFocusCommand => new RelayCommand(p => TextBoxSearchLostFocusAction());
 
         private void TextBoxSearchLostFocusAction()
         {
@@ -1496,10 +1450,7 @@ namespace NETworkManager
             IsTextBoxSearchFocused = false;
         }
 
-        public ICommand ClearSearchCommand
-        {
-            get { return new RelayCommand(p => ClearSearchAction()); }
-        }
+        public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
         {
@@ -1528,7 +1479,17 @@ namespace NETworkManager
         #region Events
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName == nameof(SettingsInfo.Localization_CultureCode))
+                IsRestartRequired = true;
 
+            if (e.PropertyName == nameof(SettingsInfo.TrayIcon_AlwaysShowIcon))
+            {
+                if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && _notifyIcon == null)
+                    InitNotifyIcon();
+
+                if (_notifyIcon != null)
+                    _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+            }
         }
         #endregion
 

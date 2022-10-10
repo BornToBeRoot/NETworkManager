@@ -7170,15 +7170,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Some settings are applied only after restarting the application! ähnelt.
-        /// </summary>
-        public static string RestartRequiredSettingsChangedMessage {
-            get {
-                return ResourceManager.GetString("RestartRequiredSettingsChangedMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Restart session ähnelt.
         /// </summary>
         public static string RestartSession {
