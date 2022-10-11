@@ -90,7 +90,7 @@ namespace NETworkManager.Models.PuTTY
         /// <summary>
         /// Default DWORD registry keys for PuTTY profile NETworkManager.
         /// </summary>
-        private static readonly List<Tuple<string, int>> DefaultProfileRegkeysDword = new()
+        private static readonly List<Tuple<string, int>> DefaultProfileRegkeysDwordBase = new()
         {
             new Tuple<string, int>("CurType", 2),
             new Tuple<string, int>("FontHeight", 12),
@@ -99,10 +99,35 @@ namespace NETworkManager.Models.PuTTY
         };
 
         /// <summary>
+        /// Write the default PuTTY profile NETworkManager to the registry.
+        /// HKCU\Software\SimonTatham\PuTTY\Sessions\NETworkManager
+        /// </summary>
+        /// <param name="theme">Current application theme to adjust the PuTTY colors</param>
+        public static void WriteDefaultProfileToRegistry(string theme)
+        {
+            string profilePath = @"Software\SimonTatham\PuTTY\Sessions\NETworkManager";
+
+            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(profilePath, true);
+
+            registryKey ??= Registry.CurrentUser.CreateSubKey(profilePath);
+
+            if (registryKey != null)
+            {
+                foreach (var key in theme == "Dark" ? GetProfileRegkeysSZDark() : GetProfileRegkeysSZWhite())
+                    registryKey.SetValue(key.Item1, key.Item2);
+
+                foreach (var key in DefaultProfileRegkeysDwordBase)
+                    registryKey.SetValue(key.Item1, key.Item2);
+            }
+
+            registryKey.Close();
+        }
+
+        /// <summary>
         /// Build command line arguments based on a <see cref="PuTTYSessionInfo"/>.
         /// </summary>
         /// <param name="sessionInfo">Instance of <see cref="PuTTYSessionInfo"/>.</param>
-        /// <returns>Command line arguments like "-ssh -l root -i C:\data\key.ppk"</returns>
+        /// <returns>Command line arguments like "-ssh -l root -i C:\data\key.ppk".</returns>
         public static string BuildCommandLine(PuTTYSessionInfo sessionInfo)
         {
             var command = string.Empty;
@@ -171,31 +196,6 @@ namespace NETworkManager.Models.PuTTY
                 command += $" -P {sessionInfo.PortOrBaud} {sessionInfo.HostOrSerialLine}";
 
             return command;
-        }
-
-        /// <summary>
-        /// Write the default PuTTY profile NETworkManager to the registry.
-        /// HKCU\Software\SimonTatham\PuTTY\Sessions\NETworkManager
-        /// </summary>
-        /// <param name="theme">Current application theme to adjust the PuTTY colors</param>
-        public static void WriteDefaultProfileToRegistry(string theme)
-        {
-            string profilePath = @"Software\SimonTatham\PuTTY\Sessions\NETworkManager";
-
-            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(profilePath, true);
-
-            registryKey ??= Registry.CurrentUser.CreateSubKey(profilePath);
-
-            if (registryKey != null)
-            {
-                foreach (Tuple<string, string> key in theme == "Dark" ? GetProfileRegkeysSZDark() : GetProfileRegkeysSZWhite())
-                    registryKey.SetValue(key.Item1, key.Item2);
-
-                foreach (var key in DefaultProfileRegkeysDword)
-                    registryKey.SetValue(key.Item1, key.Item2);
-            }
-
-            registryKey.Close();
         }
     }
 }
