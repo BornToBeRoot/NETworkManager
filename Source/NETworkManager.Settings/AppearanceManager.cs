@@ -38,7 +38,7 @@ namespace NETworkManager.Settings
         /// <summary>
         /// Containes the default settings for a new <see cref="BaseMetroDialog"/> 
         /// </summary>
-        public static MetroDialogSettings MetroDialog = new MetroDialogSettings();
+        public static MetroDialogSettings MetroDialog = new();
 
         /// <summary>
         /// Load the MahApps.Metro themes and accents when needed.
