@@ -4,7 +4,6 @@ using NETworkManager.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using Windows.Devices.Geolocation;
 
 namespace NETworkManager.Documentation
 {
@@ -23,6 +22,16 @@ namespace NETworkManager.Documentation
         /// </summary>
         private static List<DocumentationInfo> List => new()
         {
+            new DocumentationInfo(DocumentationIdentifier.SettingsGeneral, @"Documentation/Settings/General"),
+            new DocumentationInfo(DocumentationIdentifier.SettingsWindow, @"Documentation/Settings/Window"),
+            new DocumentationInfo(DocumentationIdentifier.SettingsAppearance, @"Documentation/Settings/Appearance"),
+            new DocumentationInfo(DocumentationIdentifier.SettingsLanguage, @"Documentation/Settings/Language"),
+            new DocumentationInfo(DocumentationIdentifier.SettingsStatus, @"Documentation/Settings/Status"),
+            new DocumentationInfo(DocumentationIdentifier.SettingsHotKeys, @"Documentation/Settings/HotKeys"),
+            new DocumentationInfo(DocumentationIdentifier.SettingsAutostart, @"Documentation/Settings/Autostart"),
+            new DocumentationInfo(DocumentationIdentifier.SettingsUpdate, @"Documentation/Settings/Update"),
+            new DocumentationInfo(DocumentationIdentifier.SettingsProfiles, @"Documentation/Settings/Profiles"),
+            new DocumentationInfo(DocumentationIdentifier.SettingsSettings, @"Documentation/Settings/Settings"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationDashboard, @"Documentation/Application/Dashboard"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationNetworkInterface, @"Documentation/Application/NetworkInterface"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationWiFi, @"Documentation/Application/WiFi"),
@@ -97,59 +106,34 @@ namespace NETworkManager.Documentation
         /// <returns><see cref="DocumentationIdentifier"/> of the application.</returns>
         public static DocumentationIdentifier GetIdentifierByAppliactionName(ApplicationName name)
         {
-            switch (name)
+            return name switch
             {
-                case ApplicationName.Dashboard:
-                    return DocumentationIdentifier.ApplicationDashboard;
-                case ApplicationName.NetworkInterface:
-                    return DocumentationIdentifier.ApplicationNetworkInterface;
-                case ApplicationName.WiFi:
-                    return DocumentationIdentifier.ApplicationWiFi;
-                case ApplicationName.IPScanner:
-                    return DocumentationIdentifier.ApplicationIPScanner;
-                case ApplicationName.PortScanner:
-                    return DocumentationIdentifier.ApplicationPortScanner;
-                case ApplicationName.PingMonitor:
-                    return DocumentationIdentifier.ApplicationPingMonitor;
-                case ApplicationName.Traceroute:
-                    return DocumentationIdentifier.ApplicationTraceroute;
-                case ApplicationName.DNSLookup:
-                    return DocumentationIdentifier.ApplicationDnsLookup;
-                case ApplicationName.RemoteDesktop:
-                    return DocumentationIdentifier.ApplicationRemoteDesktop;
-                case ApplicationName.PowerShell:
-                    return DocumentationIdentifier.ApplicationPowerShell;
-                case ApplicationName.PuTTY:
-                    return DocumentationIdentifier.ApplicationPutty;
-                case ApplicationName.AWSSessionManager:
-                    return DocumentationIdentifier.ApplicationAWSSessionManager;
-                case ApplicationName.TigerVNC:
-                    return DocumentationIdentifier.ApplicationTigerVNC;
-                case ApplicationName.WebConsole:
-                    return DocumentationIdentifier.ApplicationWebConsole;
-                case ApplicationName.SNMP:
-                    return DocumentationIdentifier.ApplicationSnmp;
-                case ApplicationName.DiscoveryProtocol:
-                    return DocumentationIdentifier.ApplicationDiscoveryProtocol;
-                case ApplicationName.WakeOnLAN:
-                    return DocumentationIdentifier.ApplicationWakeOnLan;
-                case ApplicationName.Whois:
-                    return DocumentationIdentifier.ApplicationWhois;
-                case ApplicationName.SubnetCalculator:
-                    return DocumentationIdentifier.ApplicationSubnetCalculator;
-                case ApplicationName.Lookup:
-                    return DocumentationIdentifier.ApplicationLookup;
-                case ApplicationName.Connections:
-                    return DocumentationIdentifier.ApplicationConnections;
-                case ApplicationName.Listeners:
-                    return DocumentationIdentifier.ApplicationListeners;
-                case ApplicationName.ARPTable:
-                    return DocumentationIdentifier.ApplicationArpTable;
-                case ApplicationName.None:
-                    return DocumentationIdentifier.Default;
-                default:
-                    return DocumentationIdentifier.Default;
-            }
+                ApplicationName.Dashboard => DocumentationIdentifier.ApplicationDashboard,
+                ApplicationName.NetworkInterface => DocumentationIdentifier.ApplicationNetworkInterface,
+                ApplicationName.WiFi => DocumentationIdentifier.ApplicationWiFi,
+                ApplicationName.IPScanner => DocumentationIdentifier.ApplicationIPScanner,
+                ApplicationName.PortScanner => DocumentationIdentifier.ApplicationPortScanner,
+                ApplicationName.PingMonitor => DocumentationIdentifier.ApplicationPingMonitor,
+                ApplicationName.Traceroute => DocumentationIdentifier.ApplicationTraceroute,
+                ApplicationName.DNSLookup => DocumentationIdentifier.ApplicationDnsLookup,
+                ApplicationName.RemoteDesktop => DocumentationIdentifier.ApplicationRemoteDesktop,
+                ApplicationName.PowerShell => DocumentationIdentifier.ApplicationPowerShell,
+                ApplicationName.PuTTY => DocumentationIdentifier.ApplicationPutty,
+                ApplicationName.AWSSessionManager => DocumentationIdentifier.ApplicationAWSSessionManager,
+                ApplicationName.TigerVNC => DocumentationIdentifier.ApplicationTigerVNC,
+                ApplicationName.WebConsole => DocumentationIdentifier.ApplicationWebConsole,
+                ApplicationName.SNMP => DocumentationIdentifier.ApplicationSnmp,
+                ApplicationName.DiscoveryProtocol => DocumentationIdentifier.ApplicationDiscoveryProtocol,
+                ApplicationName.WakeOnLAN => DocumentationIdentifier.ApplicationWakeOnLan,
+                ApplicationName.Whois => DocumentationIdentifier.ApplicationWhois,
+                ApplicationName.SubnetCalculator => DocumentationIdentifier.ApplicationSubnetCalculator,
+                ApplicationName.Lookup => DocumentationIdentifier.ApplicationLookup,
+                ApplicationName.Connections => DocumentationIdentifier.ApplicationConnections,
+                ApplicationName.Listeners => DocumentationIdentifier.ApplicationListeners,
+                ApplicationName.ARPTable => DocumentationIdentifier.ApplicationArpTable,
+                ApplicationName.None => DocumentationIdentifier.Default,
+                _ => DocumentationIdentifier.Default,
+            };
         }
 
         /// <summary>
@@ -161,6 +145,26 @@ namespace NETworkManager.Documentation
         {
             switch (name)
             {
+                case SettingsViewName.General:
+                    return DocumentationIdentifier.SettingsGeneral;
+                case SettingsViewName.Window:
+                    return DocumentationIdentifier.SettingsWindow;
+                case SettingsViewName.Appearance:
+                    return DocumentationIdentifier.SettingsAppearance;
+                case SettingsViewName.Language:
+                    return DocumentationIdentifier.SettingsLanguage;
+                case SettingsViewName.Status:
+                    return DocumentationIdentifier.SettingsStatus;
+                case SettingsViewName.HotKeys:
+                    return DocumentationIdentifier.SettingsHotKeys;
+                case SettingsViewName.Autostart:
+                    return DocumentationIdentifier.SettingsAutostart;
+                case SettingsViewName.Update:
+                    return DocumentationIdentifier.SettingsUpdate;
+                case SettingsViewName.Profiles:
+                    return DocumentationIdentifier.SettingsProfiles;
+                case SettingsViewName.Settings:
+                    return DocumentationIdentifier.SettingsSettings;
                 case SettingsViewName.Dashboard:
                     return GetIdentifierByAppliactionName(ApplicationName.Dashboard);
                 case SettingsViewName.IPScanner:
@@ -188,7 +192,7 @@ namespace NETworkManager.Documentation
                 case SettingsViewName.WakeOnLAN:
                     return GetIdentifierByAppliactionName(ApplicationName.WakeOnLAN);
                 case SettingsViewName.Whois:
-                    return GetIdentifierByAppliactionName(ApplicationName.Whois);
+                    return GetIdentifierByAppliactionName(ApplicationName.Whois);            
                 default:
                     return DocumentationIdentifier.Default;
             }

@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Update
+title: Settings
 parent: Settings
 grand_parent: Documentation
-nav_order: 7
+nav_order: 10
 description: ""
-permalink: /Documentation/Settings/Update
+permalink: /Documentation/Settings/Settings
 ---
 
-# Update
+# Settings

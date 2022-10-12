@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Settings
+title: HotKeys
 parent: Settings
 grand_parent: Documentation
-nav_order: 9
+nav_order: 6
 description: ""
-permalink: /Documentation/Settings/Settings
+permalink: /Documentation/Settings/HotKeys
 ---
 
-# Settings
+# HotKeys
