@@ -33,10 +33,14 @@ permalink: /Changelog/next-release
 - Settings > Language
   - Improve application restart [#1599](https://github.com/BornToBeRoot/NETworkManager/pull/1599){:target="\_blank"}
 - Settings > Update
+  - Disable ToggleSwitch `Start minimized in tray` if Autostart is disabled [#1607](https://github.com/BornToBeRoot/NETworkManager/pull/1607){:target="\_blank"}
+- Settings > Update
   - Option to check for pre-releases added [#1574](https://github.com/BornToBeRoot/NETworkManager/pull/1574){:target="\_blank"}
 - Profiles > Group Dialog
   - Remove checkboxes in group dialog [#1530](https://github.com/BornToBeRoot/NETworkManager/pull/1530){:target="\_blank"}
 - log4net added for error handling (Log file: `%LocalAppData%\NETworkManager\NETworkManager.log`) [#1539](https://github.com/BornToBeRoot/NETworkManager/pull/1539){:target="\_blank"}
+- Help Button
+  - Add links to settings pages under https://borntoberoot.net/NETworkManager/Documentation/Settings [#1607](https://github.com/BornToBeRoot/NETworkManager/pull/1607){:target="\_blank"}
 
 ## Bugfixes
 - Dashboard / Status Window
