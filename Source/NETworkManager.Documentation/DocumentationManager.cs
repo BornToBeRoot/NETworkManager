@@ -143,59 +143,34 @@ namespace NETworkManager.Documentation
         /// <returns><see cref="DocumentationIdentifier"/> of the application or settings page.</returns>
         public static DocumentationIdentifier GetIdentifierBySettingsName(SettingsViewName name)
         {
-            switch (name)
+            return name switch
             {
-                case SettingsViewName.General:
-                    return DocumentationIdentifier.SettingsGeneral;
-                case SettingsViewName.Window:
-                    return DocumentationIdentifier.SettingsWindow;
-                case SettingsViewName.Appearance:
-                    return DocumentationIdentifier.SettingsAppearance;
-                case SettingsViewName.Language:
-                    return DocumentationIdentifier.SettingsLanguage;
-                case SettingsViewName.Status:
-                    return DocumentationIdentifier.SettingsStatus;
-                case SettingsViewName.HotKeys:
-                    return DocumentationIdentifier.SettingsHotKeys;
-                case SettingsViewName.Autostart:
-                    return DocumentationIdentifier.SettingsAutostart;
-                case SettingsViewName.Update:
-                    return DocumentationIdentifier.SettingsUpdate;
-                case SettingsViewName.Profiles:
-                    return DocumentationIdentifier.SettingsProfiles;
-                case SettingsViewName.Settings:
-                    return DocumentationIdentifier.SettingsSettings;
-                case SettingsViewName.Dashboard:
-                    return GetIdentifierByAppliactionName(ApplicationName.Dashboard);
-                case SettingsViewName.IPScanner:
-                    return GetIdentifierByAppliactionName(ApplicationName.IPScanner);
-                case SettingsViewName.PortScanner:
-                    return GetIdentifierByAppliactionName(ApplicationName.PortScanner);
-                case SettingsViewName.PingMonitor:
-                    return GetIdentifierByAppliactionName(ApplicationName.PingMonitor);
-                case SettingsViewName.Traceroute:
-                    return GetIdentifierByAppliactionName(ApplicationName.Traceroute);
-                case SettingsViewName.DNSLookup:
-                    return GetIdentifierByAppliactionName(ApplicationName.DNSLookup);
-                case SettingsViewName.RemoteDesktop:
-                    return GetIdentifierByAppliactionName(ApplicationName.RemoteDesktop);
-                case SettingsViewName.PowerShell:
-                    return GetIdentifierByAppliactionName(ApplicationName.PowerShell);
-                case SettingsViewName.PuTTY:
-                    return GetIdentifierByAppliactionName(ApplicationName.PuTTY);
-                case SettingsViewName.AWSSessionManager:
-                    return GetIdentifierByAppliactionName(ApplicationName.AWSSessionManager);
-                case SettingsViewName.TigerVNC:
-                    return GetIdentifierByAppliactionName(ApplicationName.TigerVNC);
-                case SettingsViewName.SNMP:
-                    return GetIdentifierByAppliactionName(ApplicationName.SNMP);
-                case SettingsViewName.WakeOnLAN:
-                    return GetIdentifierByAppliactionName(ApplicationName.WakeOnLAN);
-                case SettingsViewName.Whois:
-                    return GetIdentifierByAppliactionName(ApplicationName.Whois);            
-                default:
-                    return DocumentationIdentifier.Default;
-            }
+                SettingsViewName.General => DocumentationIdentifier.SettingsGeneral,
+                SettingsViewName.Window => DocumentationIdentifier.SettingsWindow,
+                SettingsViewName.Appearance => DocumentationIdentifier.SettingsAppearance,
+                SettingsViewName.Language => DocumentationIdentifier.SettingsLanguage,
+                SettingsViewName.Status => DocumentationIdentifier.SettingsStatus,
+                SettingsViewName.HotKeys => DocumentationIdentifier.SettingsHotKeys,
+                SettingsViewName.Autostart => DocumentationIdentifier.SettingsAutostart,
+                SettingsViewName.Update => DocumentationIdentifier.SettingsUpdate,
+                SettingsViewName.Profiles => DocumentationIdentifier.SettingsProfiles,
+                SettingsViewName.Settings => DocumentationIdentifier.SettingsSettings,
+                SettingsViewName.Dashboard => GetIdentifierByAppliactionName(ApplicationName.Dashboard),
+                SettingsViewName.IPScanner => GetIdentifierByAppliactionName(ApplicationName.IPScanner),
+                SettingsViewName.PortScanner => GetIdentifierByAppliactionName(ApplicationName.PortScanner),
+                SettingsViewName.PingMonitor => GetIdentifierByAppliactionName(ApplicationName.PingMonitor),
+                SettingsViewName.Traceroute => GetIdentifierByAppliactionName(ApplicationName.Traceroute),
+                SettingsViewName.DNSLookup => GetIdentifierByAppliactionName(ApplicationName.DNSLookup),
+                SettingsViewName.RemoteDesktop => GetIdentifierByAppliactionName(ApplicationName.RemoteDesktop),
+                SettingsViewName.PowerShell => GetIdentifierByAppliactionName(ApplicationName.PowerShell),
+                SettingsViewName.PuTTY => GetIdentifierByAppliactionName(ApplicationName.PuTTY),
+                SettingsViewName.AWSSessionManager => GetIdentifierByAppliactionName(ApplicationName.AWSSessionManager),
+                SettingsViewName.TigerVNC => GetIdentifierByAppliactionName(ApplicationName.TigerVNC),
+                SettingsViewName.SNMP => GetIdentifierByAppliactionName(ApplicationName.SNMP),
+                SettingsViewName.WakeOnLAN => GetIdentifierByAppliactionName(ApplicationName.WakeOnLAN),
+                SettingsViewName.Whois => GetIdentifierByAppliactionName(ApplicationName.Whois),
+                _ => DocumentationIdentifier.Default,
+            };
         }
     }
 }
