@@ -278,8 +278,8 @@ namespace NETworkManager.ViewModels
             {
                 Groups?.Refresh();
 
-                // Set group again after refresh or first if null
-                SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Name == _selectedGroup.Name) ?? Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
+                // Set group again after refresh or first if null (_selectedGroup can be null in some cases)
+                SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Name == _selectedGroup?.Name) ?? Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
             }));
 
             _profileInfoOnRefresh = null;
