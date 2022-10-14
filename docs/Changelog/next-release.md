@@ -53,6 +53,8 @@ permalink: /Changelog/next-release
   - "Unlock profile" dialog is now displayed correctly if an embedded window is already open [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
 - PowerShell & TigerVNC
   - Embedded window is now resized correctly after the inital connect [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
+- Export dialog
+  - The "Export" button was disabled if the path contained special characters [#1611](https://github.com/BornToBeRoot/NETworkManager/pull/1611){:target="\_blank"}
 - Settings > Profiles
   - App crash fixed when a profile file is deleted and an encrypted but locked profile file is selected [#1512](https://github.com/BornToBeRoot/NETworkManager/pull/1512){:target="\_blank"}
   - Reselect group/profile on refresh (e.g. if profiles page is opened again) [#1516](https://github.com/BornToBeRoot/NETworkManager/pull/1516){:target="\_blank"}
