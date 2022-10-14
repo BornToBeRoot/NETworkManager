@@ -56,6 +56,7 @@ permalink: /Changelog/next-release
 - Settings > Profiles
   - App crash fixed when a profile file is deleted and an encrypted but locked profile file is selected [#1512](https://github.com/BornToBeRoot/NETworkManager/pull/1512){:target="\_blank"}
   - Reselect group/profile on refresh (e.g. if profiles page is opened again) [#1516](https://github.com/BornToBeRoot/NETworkManager/pull/1516){:target="\_blank"}
+  - App crash fixed when no group is selected and the profile file changes [#1610](https://github.com/BornToBeRoot/NETworkManager/pull/1610){:target="\_blank"}
 
 ## Other
 - Code cleanup [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"} [#1599](https://github.com/BornToBeRoot/NETworkManager/pull/1600){:target="\_blank"} [#1600](https://github.com/BornToBeRoot/NETworkManager/pull/1599){:target="\_blank"}
