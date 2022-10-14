@@ -47,6 +47,8 @@ permalink: /Changelog/next-release
   - Handle null exception properly [#1510](https://github.com/BornToBeRoot/NETworkManager/pull/1510){:target="\_blank"}
 - Traceroute
   - Hops were skipped if they did not respond to ping [#1528](https://github.com/BornToBeRoot/NETworkManager/pull/1528){:target="\_blank"}
+- Ping Monitor
+  - Allow export of all results only (hide other option in dialog as it has no effect) [#1611](https://github.com/BornToBeRoot/NETworkManager/pull/1611){:target="\_blank"}
 - Ping Monitor, Traceroute & SNMP
   - IPv6 is now resolved when selected in the settings [#1529](https://github.com/BornToBeRoot/NETworkManager/pull/1529){:target="\_blank"}
 - Remote Desktop, PowerShell, PuTTY & TigerVNC
