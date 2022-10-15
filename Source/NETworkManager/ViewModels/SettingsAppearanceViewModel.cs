@@ -98,19 +98,19 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _windowsPowerShellModifyGlobalProfile;
-        public bool WindowsPowerShellModifyGlobalProfile
+        private bool _powerShellModifyGlobalProfile;
+        public bool PowerShellModifyGlobalProfile
         {
-            get => _windowsPowerShellModifyGlobalProfile;
+            get => _powerShellModifyGlobalProfile;
             set
             {
-                if (value == _windowsPowerShellModifyGlobalProfile)
+                if (value == _powerShellModifyGlobalProfile)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Appearance_WindowsPowerShellModifyGlobalProfile = value;
+                    SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile = value;
 
-                _windowsPowerShellModifyGlobalProfile = value;
+                _powerShellModifyGlobalProfile = value;
                 OnPropertyChanged();
             }
         }
@@ -136,7 +136,7 @@ namespace NETworkManager.ViewModels
             SelectedAccent = Accents.Cast<AccentColorInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_Accent);            
             UseCustomTheme = SettingsManager.Current.Appearance_UseCustomTheme;            
             SelectedCustomTheme = CustomThemes.Cast<ThemeInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_CustomThemeName) ?? CustomThemes.Cast<ThemeInfo>().FirstOrDefault();
-            WindowsPowerShellModifyGlobalProfile = SettingsManager.Current.Appearance_WindowsPowerShellModifyGlobalProfile;
+            PowerShellModifyGlobalProfile = SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile;
         }
         #endregion
     }

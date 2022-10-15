@@ -560,7 +560,7 @@
   </data>
   <data name="RestartRequired" xml:space="preserve">
     <value>Restart required</value>
-  </data> 
+  </data>
   <data name="SaveSettingsInApplicationFolder" xml:space="preserve">
     <value>Save settings in the application folder</value>
   </data>
@@ -3227,7 +3227,13 @@ If not set, the default AWS CLI settings are used.</value>
   <data name="Command" xml:space="preserve">
     <value>Command</value>
   </data>
-  <data name="ModifyWindowsPowerShellGlobalProfileToMatchAppTheme" xml:space="preserve">
-    <value>Modify the Windows PowerShell global profile to match the application theme</value>
+  <data name="ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme" xml:space="preserve">
+    <value>Modify the PowerShell console global profile(s) to match the application theme</value>
+  </data>
+  <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
+    <value>The color of the PowerShell console can be changed to the application theme under General &gt; Appearance</value>
+  </data>
+  <data name="HelpMessage_ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme" xml:space="preserve">
+    <value />
   </data>
 </root>

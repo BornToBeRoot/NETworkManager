@@ -42,6 +42,7 @@ namespace NETworkManager.Settings
                     return;
 
                 _firstRun = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -57,6 +58,7 @@ namespace NETworkManager.Settings
                     return;
 
                 _version = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -277,16 +279,16 @@ namespace NETworkManager.Settings
             }
         }
 
-        private bool _appearance_WindowsPowerShellModifyGlobalProfile;
-        public bool Appearance_WindowsPowerShellModifyGlobalProfile
+        private bool _appearance_PowerShellModifyGlobalProfile;
+        public bool Appearance_PowerShellModifyGlobalProfile
         {
-            get => _appearance_WindowsPowerShellModifyGlobalProfile;
+            get => _appearance_PowerShellModifyGlobalProfile;
             set
             {
-                if (value == _appearance_WindowsPowerShellModifyGlobalProfile)
+                if (value == _appearance_PowerShellModifyGlobalProfile)
                     return;
 
-                _appearance_WindowsPowerShellModifyGlobalProfile = value;
+                _appearance_PowerShellModifyGlobalProfile = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

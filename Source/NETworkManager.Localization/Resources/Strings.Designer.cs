@@ -3626,6 +3626,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        /// </summary>
+        public static string HelpMessage_ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme {
+            get {
+                return ResourceManager.GetString("HelpMessage_ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Application that is displayed at startup. ähnelt.
         /// </summary>
         public static string HelpMessage_ParameterApplication {
@@ -4790,11 +4799,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Modify the Windows PowerShell global profile to match the application theme ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Modify the PowerShell console global profile(s) to match the application theme ähnelt.
         /// </summary>
-        public static string ModifyWindowsPowerShellGlobalProfileToMatchAppTheme {
+        public static string ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme {
             get {
-                return ResourceManager.GetString("ModifyWindowsPowerShellGlobalProfileToMatchAppTheme", resourceCulture);
+                return ResourceManager.GetString("ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme", resourceCulture);
             }
         }
         
@@ -5649,6 +5658,15 @@ namespace NETworkManager.Localization.Resources {
         public static string PowerShell {
             get {
                 return ResourceManager.GetString("PowerShell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The color of the PowerShell console can be changed to the application theme under General &gt; Appearance ähnelt.
+        /// </summary>
+        public static string PowerShellConsoleColorCanBeChangedUnderGeneralApperance {
+            get {
+                return ResourceManager.GetString("PowerShellConsoleColorCanBeChangedUnderGeneralApperance", resourceCulture);
             }
         }
         

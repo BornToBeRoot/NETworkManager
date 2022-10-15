@@ -34,6 +34,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.AWS;
+using NETworkManager.Models.PowerShell;
 
 namespace NETworkManager
 {
@@ -465,6 +466,8 @@ namespace NETworkManager
             // Hide to tray after the window shows up... not nice, but otherwise the hotkeys do not work
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
+
+            //PowerShell.WriteDefaultProfileToRegistry("Dark");
 
             // Init status window
             _statusWindow = new StatusWindow(this);
