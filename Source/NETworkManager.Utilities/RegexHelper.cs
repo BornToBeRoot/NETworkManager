@@ -85,6 +85,6 @@ namespace NETworkManager.Utilities
         public const string FilePath = @"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+$";
 
         // Match any fullname (like "c:\temp\test.txt") --> https://www.codeproject.com/Tips/216238/Regular-Expression-to-Validate-File-Path-and-Exten
-        public const string FullName = @"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+\.[a-zA-z0-9]{1,4}$";
+        public const string FullName = @"^(?:[\w]\:|\\)(\\[a-zA-Z0-9_\-\s\.()~!@#$%^&=+';,{}\[\]]+)+\.[a-zA-z0-9]{1,4}$";
     }
 }

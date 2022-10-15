@@ -20,7 +20,7 @@
         <StackPanel>
             <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.StartWithWindows}" IsOn="{Binding StartWithWindows}" IsEnabled="{Binding ConfiguringAutostart, Converter={StaticResource BooleanReverseConverter}}" Margin="0,0,0,10"/>
             <mahAppsControls:MetroProgressBar IsIndeterminate="True" Foreground="{DynamicResource MahApps.Brushes.Accent}" Visibility="{Binding ConfiguringAutostart, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10"/>
-            <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.StartMinimizedInTray}" IsOn="{Binding StartMinimizedInTray}" />
+            <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.StartMinimizedInTray}" IsOn="{Binding StartMinimizedInTray}" IsEnabled="{Binding StartWithWindows}" />
         </StackPanel>
     </StackPanel>
 </UserControl>

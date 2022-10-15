@@ -293,12 +293,12 @@ namespace NETworkManager.ViewModels
 
             var extension = Path.GetExtension(FilePath).Replace(".", "");
 
-            if (extension.Equals(ExportManager.GetFileExtensionAsString(fileType), StringComparison.CurrentCultureIgnoreCase))
+            var newExtension = ExportManager.GetFileExtensionAsString(fileType);
+
+            if (extension.Equals(newExtension, StringComparison.CurrentCultureIgnoreCase))
                 return;
 
-            FilePath = FilePath.Substring(0, FilePath.Length - extension.Length);
-
-            FilePath += ExportManager.GetFileExtensionAsString(fileType).ToLower();
+            FilePath = FilePath[..^extension.Length] + newExtension.ToLower();
         }
     }
 }
