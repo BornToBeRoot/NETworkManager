@@ -85,7 +85,10 @@ namespace NETworkManager
             {
                 _log.Info("Application settings are being loaded...");
 
-                SettingsManager.Load();
+                if (CommandLineManager.Current.ResetSettings)
+                    SettingsManager.InitDefault();
+                else
+                    SettingsManager.Load();
 
                 _log.Info("Application settings have been loaded.");
             }

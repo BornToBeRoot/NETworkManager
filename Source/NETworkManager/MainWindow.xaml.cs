@@ -1186,7 +1186,7 @@ namespace NETworkManager
             // Single instance or Hotkey --> Show window
             if (msg == SingleInstance.WM_SHOWME || msg == WmHotkey && wParam.ToInt32() == 1)
             {
-                ShowWindowAction();
+                ShowWindow();
                 handled = true;
             }
 
@@ -1205,7 +1205,7 @@ namespace NETworkManager
 
         /* ID | Command
         *  ---|-------------------
-        *  1  | ShowWindowAction()
+        *  1  | ShowWindow()
         */
 
         private readonly List<int> _registeredHotKeys = new();
@@ -1283,35 +1283,6 @@ namespace NETworkManager
             if (sender is ContextMenu menu)
                 menu.DataContext = this;
         }
-
-        private void HideWindowToTray()
-        {
-            if (_notifyIcon == null)
-                InitNotifyIcon();
-
-            _isInTray = true;
-
-            _notifyIcon.Visible = true;
-
-            Hide();
-        }
-
-        private void ShowWindowFromTray()
-        {
-            _isInTray = false;
-
-            Show();
-
-            _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
-        }
-
-        private void BringWindowToFront()
-        {
-            if (WindowState == WindowState.Minimized)
-                WindowState = WindowState.Normal;
-
-            Activate();
-        }
         #endregion
 
         #region ICommands & Actions
@@ -1370,7 +1341,7 @@ namespace NETworkManager
         private void OpenSettingsFromTrayAction()
         {
             // Bring window to front
-            ShowWindowAction();
+            ShowWindow();
 
             OpenSettings();
         }
@@ -1386,11 +1357,7 @@ namespace NETworkManager
 
         private void ShowWindowAction()
         {
-            if (_isInTray)
-                ShowWindowFromTray();
-
-            if (!IsActive)
-                BringWindowToFront();
+            ShowWindow();
         }
 
         public ICommand CloseApplicationCommand => new RelayCommand(p => CloseApplicationAction());
@@ -1461,6 +1428,46 @@ namespace NETworkManager
         }
         #endregion
 
+        #region Methods
+        private void ShowWindow()
+        {
+            if (_isInTray)
+                ShowWindowFromTray();
+
+            if (!IsActive)
+                BringWindowToFront();
+        }
+
+        private void HideWindowToTray()
+        {
+            if (_notifyIcon == null)
+                InitNotifyIcon();
+
+            _isInTray = true;
+
+            _notifyIcon.Visible = true;
+
+            Hide();
+        }
+
+        private void ShowWindowFromTray()
+        {
+            _isInTray = false;
+
+            Show();
+
+            _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+        }
+
+        private void BringWindowToFront()
+        {
+            if (WindowState == WindowState.Minimized)
+                WindowState = WindowState.Normal;
+
+            Activate();
+        }
+        #endregion
+
         #region Status window
         private void OpenStatusWindow(bool activate)
         {
@@ -1469,13 +1476,14 @@ namespace NETworkManager
 
         private void OnNetworkHasChanged()
         {
-            if (!SettingsManager.Current.Status_ShowWindowOnNetworkChange)
-                return;
-
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            // Show status window on network change
+            if (SettingsManager.Current.Status_ShowWindowOnNetworkChange)
             {
-                OpenStatusWindow(false);
-            }));
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+                {
+                    OpenStatusWindow(false);
+                }));
+            }
         }
         #endregion
 
@@ -1493,6 +1501,8 @@ namespace NETworkManager
                 if (_notifyIcon != null)
                     _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
             }
+
+
         }
         #endregion
 

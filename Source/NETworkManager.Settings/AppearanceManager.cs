@@ -93,7 +93,7 @@ namespace NETworkManager.Settings
 
             foreach (var file in Directory.GetFiles(Path.Combine(ConfigurationManager.Current.ExecutionPath, ThemeFolderName)))
             {
-                LibraryTheme libraryTheme = new LibraryTheme(new Uri(file), MahAppsLibraryThemeProvider.DefaultInstance);
+                LibraryTheme libraryTheme = new(new Uri(file), MahAppsLibraryThemeProvider.DefaultInstance);
 
                 customThemes.Add(new ThemeInfo(libraryTheme.Name, libraryTheme.DisplayName));
 

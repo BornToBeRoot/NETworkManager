@@ -1,10 +1,10 @@
 ﻿using log4net;
 using NETworkManager.Models;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Management.Automation.Runspaces;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -76,7 +76,7 @@ namespace NETworkManager.Settings
         {
             var filePath = GetSettingsFilePath();
 
-            if (File.Exists(filePath) && !CommandLineManager.Current.ResetSettings)
+            if (File.Exists(filePath))
             {
                 Current = DeserializeFromFile(filePath);
 
@@ -84,7 +84,7 @@ namespace NETworkManager.Settings
             }
             else
             {
-                Current = new SettingsInfo();
+                InitDefault();
             }
         }
 
@@ -191,15 +191,9 @@ namespace NETworkManager.Settings
             {
                 SettingsChanged = true
             };
-        }
 
-        public static void Reset()
-        {
-            InitDefault();
-
-            // Save manually, settings are not saved on a forced restart...
             Save();
-        }
+        }        
         #endregion
 
         #region Upgrade 
