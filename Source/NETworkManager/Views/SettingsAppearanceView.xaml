@@ -33,26 +33,26 @@
                     <ItemsPresenter />
                 </ControlTemplate>
             </ListBox.Template>
-            <!-- /BUGFIX-->   
-        </ListView>        
+            <!-- /BUGFIX-->
+        </ListView>
         <TextBlock Text="{x:Static localization:Strings.Accent}" Style="{StaticResource HeaderTextBlock}" />
-        <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Accents}" SelectedItem="{Binding SelectedAccent}" IsEnabled="{Binding UseCustomTheme, Converter={StaticResource BooleanReverseConverter}}" VerticalAlignment="Top" BorderThickness="0" SelectionMode="Single" Margin="0,0,0,20">           
+        <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Accents}" SelectedItem="{Binding SelectedAccent}" IsEnabled="{Binding UseCustomTheme, Converter={StaticResource BooleanReverseConverter}}" VerticalAlignment="Top" BorderThickness="0" SelectionMode="Single" Margin="0,0,0,20">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Rectangle Width="48" Height="48" Margin="-1,2" Fill="{Binding Color}" ToolTip="{Binding Name,Converter={StaticResource AccentToStringConverter}}"/>
                 </DataTemplate>
-            </ListView.ItemTemplate>                        
+            </ListView.ItemTemplate>
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
-            <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->            
+            <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
             <ListBox.Template>
                 <ControlTemplate>
                     <ItemsPresenter />
                 </ControlTemplate>
-            </ListBox.Template>            
+            </ListBox.Template>
             <!-- /BUGFIX-->
         </ListView>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.CustomThemes}" />
@@ -64,7 +64,14 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.PowerShell}" />        
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme}" IsOn="{Binding PowerShellModifyGlobalProfile}" Margin="0,0,0,10"/>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.PowerShell}" />
+        <StackPanel Orientation="Horizontal">
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme}" IsOn="{Binding PowerShellModifyGlobalProfile}"/>
+            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme}" Style="{StaticResource HelpImageRectangle}" VerticalAlignment="Top" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
     </StackPanel>
 </UserControl>
