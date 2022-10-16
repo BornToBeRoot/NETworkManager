@@ -17,7 +17,7 @@
         <converters:SettingsViewNameToTranslatedStringConverter x:Key="SettingsViewNameToTranslatedStringConverter" />        
     </UserControl.Resources>
     <Grid>
-        <TabControl Style="{StaticResource DefaultTabControl}">
+        <TabControl Style="{StaticResource DefaultTabControl}" SelectedIndex="{Binding SelectedTabIndex}">
             <TabItem Header="{x:Static localization:Strings.Settings}">
                 <Grid>
                     <Grid.ColumnDefinitions>

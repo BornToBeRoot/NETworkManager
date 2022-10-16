@@ -258,20 +258,7 @@ namespace NETworkManager.ViewModels
 
             _isLoading = false;
         }
-
-        private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(SettingsInfo.PuTTY_ApplicationFilePath))
-                CheckSettings();
-
-            // Update PuTTY profile "NETworkManager" if application theme has changed
-            if (e.PropertyName == nameof(SettingsInfo.Appearance_Theme))
-            {
-                if (IsConfigured)
-                    PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
-            }
-        }
-
+             
         private void LoadSettings()
         {
             ExpandProfileView = SettingsManager.Current.PuTTY_ExpandProfileView;
@@ -281,6 +268,12 @@ namespace NETworkManager.ViewModels
             _tempProfileWidth = SettingsManager.Current.PuTTY_ProfileWidth;
         }
         #endregion
+
+        private void WriteDefaultProfileToRegistry()
+        {
+            if (IsConfigured)
+                PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
+        }
 
         #region ICommand & Actions
         public ItemActionCallback CloseItemCommand => CloseItemAction;
@@ -433,9 +426,8 @@ namespace NETworkManager.ViewModels
         {
             IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) && File.Exists(SettingsManager.Current.PuTTY_ApplicationFilePath);
 
-            // Create default PuTTY profile for NETworkManager 
-            if (IsConfigured)
-                PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
+            // Create default PuTTY profile for NETworkManager
+            WriteDefaultProfileToRegistry();            
         }
 
         private async Task Connect(string host = null)
@@ -685,6 +677,16 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Event
+        private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SettingsInfo.PuTTY_ApplicationFilePath))
+                CheckSettings();
+
+            // Update PuTTY profile "NETworkManager" if application theme has changed
+            if (e.PropertyName == nameof(SettingsInfo.Appearance_Theme))
+                WriteDefaultProfileToRegistry();
+        }
+
         private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
         {
             RefreshProfiles();

@@ -560,7 +560,7 @@
   </data>
   <data name="RestartRequired" xml:space="preserve">
     <value>Restart required</value>
-  </data> 
+  </data>
   <data name="SaveSettingsInApplicationFolder" xml:space="preserve">
     <value>Save settings in the application folder</value>
   </data>
@@ -3226,5 +3226,20 @@ If not set, the default AWS CLI settings are used.</value>
   </data>
   <data name="Command" xml:space="preserve">
     <value>Command</value>
+  </data>
+  <data name="ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme" xml:space="preserve">
+    <value>Modify the PowerShell console global profile(s) to match the application theme</value>
+  </data>
+  <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
+    <value>The color of the PowerShell console can be changed to the application theme under General &gt; Appearance</value>
+  </data>
+  <data name="HelpMessage_ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme" xml:space="preserve">
+    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
+
+Only the PowerShell consoles configured in the PowerShell and AWS Session Manager settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+
+Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
+
+If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
   </data>
 </root>

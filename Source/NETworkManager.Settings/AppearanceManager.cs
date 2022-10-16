@@ -38,7 +38,7 @@ namespace NETworkManager.Settings
         /// <summary>
         /// Containes the default settings for a new <see cref="BaseMetroDialog"/> 
         /// </summary>
-        public static MetroDialogSettings MetroDialog = new MetroDialogSettings();
+        public static MetroDialogSettings MetroDialog = new();
 
         /// <summary>
         /// Load the MahApps.Metro themes and accents when needed.
@@ -93,7 +93,7 @@ namespace NETworkManager.Settings
 
             foreach (var file in Directory.GetFiles(Path.Combine(ConfigurationManager.Current.ExecutionPath, ThemeFolderName)))
             {
-                LibraryTheme libraryTheme = new LibraryTheme(new Uri(file), MahAppsLibraryThemeProvider.DefaultInstance);
+                LibraryTheme libraryTheme = new(new Uri(file), MahAppsLibraryThemeProvider.DefaultInstance);
 
                 customThemes.Add(new ThemeInfo(libraryTheme.Name, libraryTheme.DisplayName));
 

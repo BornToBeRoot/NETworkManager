@@ -11,56 +11,6 @@
         Default,
 
         /// <summary>
-        /// Settings\General documentation page.
-        /// </summary>
-        SettingsGeneral,
-
-        /// <summary>
-        /// Settings\Window documentation page.
-        /// </summary>
-        SettingsWindow,
-
-        /// <summary>
-        /// Settings\Appearance documentation page.
-        /// </summary>
-        SettingsAppearance,
-
-        /// <summary>
-        /// Settings\Language documentation page.
-        /// </summary>
-        SettingsLanguage,
-
-        /// <summary>
-        /// Settings\Status documentation page.
-        /// </summary>
-        SettingsStatus,
-
-        /// <summary>
-        /// Settings\HotKeys documentation page.
-        /// </summary>
-        SettingsHotKeys,
-
-        /// <summary>
-        /// Settings\Autostart documentation page.
-        /// </summary>
-        SettingsAutostart,
-
-        /// <summary>
-        /// Settings\Update documentation page.
-        /// </summary>
-        SettingsUpdate,
-
-        /// <summary>
-        /// Settings\Profiles documentation page.
-        /// </summary>
-        SettingsProfiles,
-
-        /// <summary>
-        /// Settings\Settings documentation page.
-        /// </summary>
-        SettingsSettings,
-
-        /// <summary>
         /// Dashboard documentation page.
         /// </summary>
         ApplicationDashboard,
@@ -174,6 +124,61 @@
         /// ARP Table documentation page.
         /// </summary>
         ApplicationArpTable,
+
+        /// <summary>
+        /// Settings\General documentation page.
+        /// </summary>
+        SettingsGeneral,
+
+        /// <summary>
+        /// Settings\Window documentation page.
+        /// </summary>
+        SettingsWindow,
+
+        /// <summary>
+        /// Settings\Appearance documentation page.
+        /// </summary>
+        SettingsAppearance,
+
+        /// <summary>
+        /// Settings\Language documentation page.
+        /// </summary>
+        SettingsLanguage,
+
+        /// <summary>
+        /// Settings\Status documentation page.
+        /// </summary>
+        SettingsStatus,
+
+        /// <summary>
+        /// Settings\HotKeys documentation page.
+        /// </summary>
+        SettingsHotKeys,
+
+        /// <summary>
+        /// Settings\Autostart documentation page.
+        /// </summary>
+        SettingsAutostart,
+
+        /// <summary>
+        /// Settings\Update documentation page.
+        /// </summary>
+        SettingsUpdate,
+
+        /// <summary>
+        /// Settings\Profiles documentation page.
+        /// </summary>
+        SettingsProfiles,
+
+        /// <summary>
+        /// Settings\Settings documentation page.
+        /// </summary>
+        SettingsSettings,
+
+        /// <summary>
+        /// Profiles documentation page.
+        /// </summary>
+        Profiles,
 
         /// <summary>
         /// Command line arguments.

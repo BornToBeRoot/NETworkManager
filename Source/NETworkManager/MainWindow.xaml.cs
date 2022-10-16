@@ -34,6 +34,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.AWS;
+using NETworkManager.Models.PowerShell;
 
 namespace NETworkManager
 {
@@ -472,6 +473,9 @@ namespace NETworkManager
             // Detect if network address or status changed...
             NetworkChange.NetworkAvailabilityChanged += (sender, args) => OnNetworkHasChanged();
             NetworkChange.NetworkAddressChanged += (sender, args) => OnNetworkHasChanged();
+
+            // Set PowerShell global profile
+            WriteDefaultPowerShellProfileToRegistry();
 
             // Search for updates... 
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
@@ -1183,7 +1187,7 @@ namespace NETworkManager
             // Single instance or Hotkey --> Show window
             if (msg == SingleInstance.WM_SHOWME || msg == WmHotkey && wParam.ToInt32() == 1)
             {
-                ShowWindowAction();
+                ShowWindow();
                 handled = true;
             }
 
@@ -1202,7 +1206,7 @@ namespace NETworkManager
 
         /* ID | Command
         *  ---|-------------------
-        *  1  | ShowWindowAction()
+        *  1  | ShowWindow()
         */
 
         private readonly List<int> _registeredHotKeys = new();
@@ -1280,35 +1284,6 @@ namespace NETworkManager
             if (sender is ContextMenu menu)
                 menu.DataContext = this;
         }
-
-        private void HideWindowToTray()
-        {
-            if (_notifyIcon == null)
-                InitNotifyIcon();
-
-            _isInTray = true;
-
-            _notifyIcon.Visible = true;
-
-            Hide();
-        }
-
-        private void ShowWindowFromTray()
-        {
-            _isInTray = false;
-
-            Show();
-
-            _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
-        }
-
-        private void BringWindowToFront()
-        {
-            if (WindowState == WindowState.Minimized)
-                WindowState = WindowState.Normal;
-
-            Activate();
-        }
         #endregion
 
         #region ICommands & Actions
@@ -1337,7 +1312,7 @@ namespace NETworkManager
 
         private void OpenDocumentationAction()
         {
-            DocumentationManager.OpenDocumentation(ShowSettingsView ? DocumentationManager.GetIdentifierBySettingsName(_settingsView.GetSelectedSettingsViewName()) : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
+            DocumentationManager.OpenDocumentation(ShowSettingsView ? _settingsView.GetDocumentationIdentifier() : DocumentationManager.GetIdentifierByAppliactionName(SelectedApplication.Name));
         }
 
         public ICommand OpenApplicationListCommand => new RelayCommand(p => OpenApplicationListAction());
@@ -1367,7 +1342,7 @@ namespace NETworkManager
         private void OpenSettingsFromTrayAction()
         {
             // Bring window to front
-            ShowWindowAction();
+            ShowWindow();
 
             OpenSettings();
         }
@@ -1383,11 +1358,7 @@ namespace NETworkManager
 
         private void ShowWindowAction()
         {
-            if (_isInTray)
-                ShowWindowFromTray();
-
-            if (!IsActive)
-                BringWindowToFront();
+            ShowWindow();
         }
 
         public ICommand CloseApplicationCommand => new RelayCommand(p => CloseApplicationAction());
@@ -1458,6 +1429,65 @@ namespace NETworkManager
         }
         #endregion
 
+        #region Methods
+        private void ShowWindow()
+        {
+            if (_isInTray)
+                ShowWindowFromTray();
+
+            if (!IsActive)
+                BringWindowToFront();
+        }
+
+        private void HideWindowToTray()
+        {
+            if (_notifyIcon == null)
+                InitNotifyIcon();
+
+            _isInTray = true;
+
+            _notifyIcon.Visible = true;
+
+            Hide();
+        }
+
+        private void ShowWindowFromTray()
+        {
+            _isInTray = false;
+
+            Show();
+
+            _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+        }
+
+        private void BringWindowToFront()
+        {
+            if (WindowState == WindowState.Minimized)
+                WindowState = WindowState.Normal;
+
+            Activate();
+        }
+
+        private void WriteDefaultPowerShellProfileToRegistry()
+        {
+            if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
+                return;
+
+            HashSet<string> paths = new();
+
+            // PowerShell
+            if (!string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) && File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath))
+                paths.Add(SettingsManager.Current.PowerShell_ApplicationFilePath);
+
+            // AWS Session Manager
+            if (!string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) && File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath))
+                paths.Add(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
+
+            foreach (var path in paths)
+                PowerShell.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme, path);
+        }
+        #endregion
+
         #region Status window
         private void OpenStatusWindow(bool activate)
         {
@@ -1466,13 +1496,14 @@ namespace NETworkManager
 
         private void OnNetworkHasChanged()
         {
-            if (!SettingsManager.Current.Status_ShowWindowOnNetworkChange)
-                return;
-
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            // Show status window on network change
+            if (SettingsManager.Current.Status_ShowWindowOnNetworkChange)
             {
-                OpenStatusWindow(false);
-            }));
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+                {
+                    OpenStatusWindow(false);
+                }));
+            }
         }
         #endregion
 
@@ -1490,6 +1521,9 @@ namespace NETworkManager
                 if (_notifyIcon != null)
                     _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
             }
+
+            if (e.PropertyName == nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile) || e.PropertyName == nameof(SettingsInfo.Appearance_Theme) || e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath) || e.PropertyName == nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath))
+                WriteDefaultPowerShellProfileToRegistry();
         }
         #endregion
 

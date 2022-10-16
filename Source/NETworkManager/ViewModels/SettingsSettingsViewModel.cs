@@ -360,7 +360,7 @@ namespace NETworkManager.ViewModels
             if (await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.ResetSettingsQuestion, message, MessageDialogStyle.AffirmativeAndNegative, settings) != MessageDialogResult.Affirmative)
                 return;
 
-            SettingsManager.Reset();
+            SettingsManager.InitDefault();
 
             message = Localization.Resources.Strings.SettingsSuccessfullyReset;
             message += Environment.NewLine + Environment.NewLine + Localization.Resources.Strings.TheApplicationWillBeRestarted;

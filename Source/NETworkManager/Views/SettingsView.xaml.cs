@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models;
+﻿using NETworkManager.Documentation;
+using NETworkManager.Models;
 using NETworkManager.Settings;
 using NETworkManager.ViewModels;
 
@@ -34,9 +35,9 @@ namespace NETworkManager.Views
             ProfilesView.Refresh();
         }
 
-        public SettingsViewName GetSelectedSettingsViewName()
+        public DocumentationIdentifier GetDocumentationIdentifier()
         {
-            return _viewModel.SelectedSettingsView.Name;
-        }
+            return _viewModel.GetDocumentationIdentifier();
+        }        
     }
 }

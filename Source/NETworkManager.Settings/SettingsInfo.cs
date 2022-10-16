@@ -42,6 +42,7 @@ namespace NETworkManager.Settings
                     return;
 
                 _firstRun = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -57,6 +58,7 @@ namespace NETworkManager.Settings
                     return;
 
                 _version = value;
+                OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
@@ -272,6 +274,21 @@ namespace NETworkManager.Settings
                     return;
 
                 _appearance_CustomThemeName = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _appearance_PowerShellModifyGlobalProfile;
+        public bool Appearance_PowerShellModifyGlobalProfile
+        {
+            get => _appearance_PowerShellModifyGlobalProfile;
+            set
+            {
+                if (value == _appearance_PowerShellModifyGlobalProfile)
+                    return;
+
+                _appearance_PowerShellModifyGlobalProfile = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }

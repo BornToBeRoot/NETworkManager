@@ -55,7 +55,7 @@
             </Rectangle>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mah:ToggleSwitch IsOn="{Binding UsePublicIPAddressCustomAPI}" Header="{x:Static localization:Strings.UseCustomIPv4AddressAPI}" IsEnabled="{Binding CheckPublicIPAddress}" Margin="0,0,0,10" />
+            <mah:ToggleSwitch IsOn="{Binding UsePublicIPv4AddressCustomAPI}" Header="{x:Static localization:Strings.UseCustomIPv4AddressAPI}" IsEnabled="{Binding CheckPublicIPAddress}" Margin="0,0,0,10" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CustomPublicIPAddressAPI}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />

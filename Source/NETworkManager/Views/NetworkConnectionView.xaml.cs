@@ -6,7 +6,7 @@ namespace NETworkManager.Views
 {
     public partial class NetworkConnectionView
     {
-        private readonly NetworkConnectionViewModel _viewModel = new NetworkConnectionViewModel();
+        private readonly NetworkConnectionViewModel _viewModel = new();
 
         public NetworkConnectionView()
         {
