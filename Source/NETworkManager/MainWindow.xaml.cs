@@ -467,14 +467,15 @@ namespace NETworkManager
             if (CommandLineManager.Current.Autostart && SettingsManager.Current.Autostart_StartMinimizedInTray)
                 HideWindowToTray();
 
-            //PowerShell.WriteDefaultProfileToRegistry("Dark");
-
             // Init status window
             _statusWindow = new StatusWindow(this);
 
             // Detect if network address or status changed...
             NetworkChange.NetworkAvailabilityChanged += (sender, args) => OnNetworkHasChanged();
             NetworkChange.NetworkAddressChanged += (sender, args) => OnNetworkHasChanged();
+
+            // Set PowerShell global profile
+            WriteDefaultPowerShellProfileToRegistry();
 
             // Search for updates... 
             if (SettingsManager.Current.Update_CheckForUpdatesAtStartup)
@@ -1466,6 +1467,25 @@ namespace NETworkManager
 
             Activate();
         }
+
+        private void WriteDefaultPowerShellProfileToRegistry()
+        {
+            if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
+                return;
+
+            HashSet<string> paths = new();
+
+            // PowerShell
+            if (!string.IsNullOrEmpty(SettingsManager.Current.PowerShell_ApplicationFilePath) && File.Exists(SettingsManager.Current.PowerShell_ApplicationFilePath))
+                paths.Add(SettingsManager.Current.PowerShell_ApplicationFilePath);
+
+            // AWS Session Manager
+            if (!string.IsNullOrEmpty(SettingsManager.Current.AWSSessionManager_ApplicationFilePath) && File.Exists(SettingsManager.Current.AWSSessionManager_ApplicationFilePath))
+                paths.Add(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
+
+            foreach (var path in paths)
+                PowerShell.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme, path);
+        }
         #endregion
 
         #region Status window
@@ -1502,7 +1522,8 @@ namespace NETworkManager
                     _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
             }
 
-
+            if (e.PropertyName == nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile) || e.PropertyName == nameof(SettingsInfo.Appearance_Theme) || e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath) || e.PropertyName == nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath))
+                WriteDefaultPowerShellProfileToRegistry();
         }
         #endregion
 

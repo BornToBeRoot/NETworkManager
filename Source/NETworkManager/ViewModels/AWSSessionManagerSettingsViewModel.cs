@@ -289,7 +289,7 @@ namespace NETworkManager.ViewModels
         {
             try
             {
-                Process.Start(SettingsManager.Current.PowerShell_ApplicationFilePath);
+                Process.Start(SettingsManager.Current.AWSSessionManager_ApplicationFilePath);
             }
             catch (Exception ex)
             {

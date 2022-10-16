@@ -113,11 +113,11 @@ namespace NETworkManager.Models.PuTTY
 
             if (registryKey != null)
             {
-                foreach (var key in theme == "Dark" ? GetProfileRegkeysSZDark() : GetProfileRegkeysSZWhite())
-                    registryKey.SetValue(key.Item1, key.Item2);
+                foreach (var item in theme == "Dark" ? GetProfileRegkeysSZDark() : GetProfileRegkeysSZWhite())
+                    registryKey.SetValue(item.Item1, item.Item2);
 
-                foreach (var key in DefaultProfileRegkeysDwordBase)
-                    registryKey.SetValue(key.Item1, key.Item2);
+                foreach (var item in DefaultProfileRegkeysDwordBase)
+                    registryKey.SetValue(item.Item1, item.Item2);
             }
 
             registryKey.Close();

@@ -258,17 +258,7 @@ namespace NETworkManager.ViewModels
 
             _isLoading = false;
         }
-
-        private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(SettingsInfo.PuTTY_ApplicationFilePath))
-                CheckSettings();
-
-            // Update PuTTY profile "NETworkManager" if application theme has changed
-            if (e.PropertyName == nameof(SettingsInfo.Appearance_Theme))
-                WriteDefaultProfileToRegistry();
-        }
-
+             
         private void LoadSettings()
         {
             ExpandProfileView = SettingsManager.Current.PuTTY_ExpandProfileView;
@@ -687,6 +677,16 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Event
+        private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SettingsInfo.PuTTY_ApplicationFilePath))
+                CheckSettings();
+
+            // Update PuTTY profile "NETworkManager" if application theme has changed
+            if (e.PropertyName == nameof(SettingsInfo.Appearance_Theme))
+                WriteDefaultProfileToRegistry();
+        }
+
         private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
         {
             RefreshProfiles();

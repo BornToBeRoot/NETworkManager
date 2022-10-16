@@ -34,36 +34,50 @@ namespace NETworkManager.Models.PowerShell
                     new Tuple<string, int>("ColorTable07", 13421772), // HEX: cccccc
                 }).ToList();
         }
-
-        /*
         private static List<Tuple<string, int>> GetProfileRegkeysDwordWhite()
         {
-            return DefaultProfileRegkeysDword.Concat(
+            return DefaultProfileRegkeysDwordBase.Concat(
                 new[] {
-                    // new Tuple<string, string>("Colour0", "68,68,68"),
-                    //new Tuple<string, int>("Colour0", "0,0,0"),          // Foreground
-                    //new Tuple<string, int>("Colour2", "255,255,255")     // Background
+                    new Tuple<string, int>("DefaultBackground", 16777215 ), // HEX: FFFFFF
+                    new Tuple<string, int>("ColorTable00", 16777215), // HEX: FFFFFF
+                    new Tuple<string, int>("ColorTable07", 2434341), // HEX: 252525
                 }).ToList();
         }
-        */
+
+        private static List<string> DefaultProfileRegkeysDwordDelete = new()
+        {
+            "ScreenColors"
+        };
 
         public static void WriteDefaultProfileToRegistry(string theme, string powerShellPath)
-        {            
-            //string profilePath = @"Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe";
-            string profilePath = @"Console\C:_Program Files_PowerShell_7_pwsh.exe";
+        {
+            var registryPath = @"Console\";
 
-            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(profilePath, true);
+            var systemRoot = Environment.ExpandEnvironmentVariables("%SystemRoot%");
 
-            registryKey ??= Registry.CurrentUser.CreateSubKey(profilePath);
+            // Windows PowerShell --> HKCU:\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe
+            if (powerShellPath.StartsWith(systemRoot))
+                registryPath += "%SystemRoot%" + powerShellPath.Substring(systemRoot.Length, powerShellPath.Length - systemRoot.Length).Replace(@"\", "_");
+            // PWSH -->  HKCU:\Console\C:_Program Files_PowerShell_7_pwsh.exe
+            else
+                registryPath += powerShellPath.Replace(@"\", "_");
+
+            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(registryPath, true);
+
+            registryKey ??= Registry.CurrentUser.CreateSubKey(registryPath);
 
             if (registryKey != null)
             {
-                //foreach (Tuple<string, string> key in theme == "Dark" ? GetProfileRegkeysDwordDark() : GetProfileRegkeysDwordWhite())
-                foreach (var key in GetProfileRegkeysDwordDark())
-                    registryKey.SetValue(key.Item1, key.Item2);
+                foreach (var item in theme == "Dark" ? GetProfileRegkeysDwordDark() : GetProfileRegkeysDwordWhite())
+                    registryKey.SetValue(item.Item1, item.Item2);
 
-                foreach (var key in DefaultProfileRegkeysSZBase)
-                    registryKey.SetValue(key.Item1, key.Item2);
+                foreach (var item in DefaultProfileRegkeysSZBase)
+                    registryKey.SetValue(item.Item1, item.Item2);
+
+                foreach (var item in DefaultProfileRegkeysDwordDelete)
+                {
+                    registryKey.DeleteValue(item, false);
+                }
             }
 
             registryKey.Close();
