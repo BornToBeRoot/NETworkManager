@@ -15,17 +15,19 @@ permalink: /Changelog/next-release
 - [Microsoft Edge - WebView2 Runtime (Evergreen)](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="_blank"}
 
 ## What's new?
-- AWS Systems Manger Session Manager [#1544](https://github.com/BornToBeRoot/NETworkManager/pull/1544){:target="\_blank"}
+- AWS (Systems Manager) Session Manager [#1544](https://github.com/BornToBeRoot/NETworkManager/pull/1544){:target="\_blank"}
+- PowerShell & AWS Session Manager
+  - Added an option under `Settings > General > Appearance` to modify the global PowerShell profile(s) to match the application theme. This customizes the background of the embedded powershell and integrates it better into the application. [#1613](https://github.com/BornToBeRoot/NETworkManager/pull/1613){:target="\_blank"}
+- PowerShell & PuTTY
+  - Focus embedded window when the application has received the focus [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
+  - Focus embedded window when application is selected again [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
+  - Focus embedded window when switching tabs [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
 
 ## Improvements
 - IPScanner, PortScanner, DNSServers
   - Generate default lists at first run [#1544](https://github.com/BornToBeRoot/NETworkManager/pull/1544){:target="\_blank"}
 - Port Scanner
   - Add more port profiles (LDAP, HTTP proxy, Filetransfer) [#1526](https://github.com/BornToBeRoot/NETworkManager/pull/1526){:target="\_blank"}
-- PowerShell & PuTTY
-  - Focus embedded window when the application has received the focus [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
-  - Focus embedded window when application is selected again [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
-  - Focus embedded window when switching tabs [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
 - PuTTY
   - Detect if PuTTY is installed at first run [#1542](https://github.com/BornToBeRoot/NETworkManager/pull/1542){:target="\_blank"}
 - Discovery Protocol
@@ -45,6 +47,7 @@ permalink: /Changelog/next-release
 ## Bugfixes
 - Dashboard / Status Window
   - Handle null exception properly [#1510](https://github.com/BornToBeRoot/NETworkManager/pull/1510){:target="\_blank"}
+  - Cannot set custom IPv4 API [#1613](https://github.com/BornToBeRoot/NETworkManager/pull/1613){:target="\_blank"}
 - Traceroute
   - Hops were skipped if they did not respond to ping [#1528](https://github.com/BornToBeRoot/NETworkManager/pull/1528){:target="\_blank"}
 - Ping Monitor
