@@ -561,9 +561,6 @@
   <data name="RestartRequired" xml:space="preserve">
     <value>Necessario riavvio</value>
   </data>
-  <data name="RestartRequiredSettingsChangedMessage" xml:space="preserve">
-    <value>Alcune impostazioni verranno applicate solo dopo aver riavviato l'applicazione!</value>
-  </data>
   <data name="SaveSettingsInApplicationFolder" xml:space="preserve">
     <value>Salva le impostazioni nella cartella dell'applicazione</value>
   </data>
@@ -3257,5 +3254,23 @@ Se non viene impostata, verranno usate le impostazioni predefinite della CLI AWS
   </data>
   <data name="Command" xml:space="preserve">
     <value>Comando</value>
+  </data>
+  <data name="ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme" xml:space="preserve">
+    <value>Modifica i profili globali della console di PowerShell in modo che corrispondano al tema dell'applicazione</value>
+  </data>
+  <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
+    <value>Il colore della console di PowerShell può essere modificato nel tema dell'applicazione in Generali -&gt; Aspetto</value>
+  </data>
+  <data name="HelpMessage_ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme" xml:space="preserve">
+    <value>Se si abilita questa opzione, le impostazioni della console di PowerShell predefinite nel registro in HKCU:\Console vengono sovrascritte in modo che la finestra della console di PowerShell corrisponda al tema dell'applicazione. Si tratta di un'impostazione di sistema globale che potrebbe influire sull'aspetto della normale finestra di PowerShell.
+
+Vengono modificate solo le console PowerShell configurate nelle impostazioni di PowerShell e AWS Session Manager. 
+Sono supportati sia Windows PowerShell che PWSH (PowerShell 7 e versioni successive).
+
+Fai clic nell'angolo in alto a destra su 'Guida/documentazione' (a sinistra di 'Riduci ad icona') o per maggiori dettagli accedi a  https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance . 
+Ecco i valori documentati che verranno adeguati.
+
+Se l'opzione viene nuovamente disabilitata, i valori non verranno più modificati. 
+Tuttavia, NON verranno ripristinati i valori originali.</value>
   </data>
 </root>
