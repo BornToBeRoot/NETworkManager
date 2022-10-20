@@ -9,14 +9,17 @@ permalink: /Documentation/Application/NetworkInterface
 ---
 
 # Network Interface
+
 The tool **Network Interface** detects all network adapter of the computer with the most important information (like IP addresses, DNS servers etc.). The bandwidth of the connected network adapter can be monitored and the configuration can be changed via profiles.
 
 ## Information
+
 In the Information view, you can see all the important details of the selected network adapter such as the configured IP addresses, DNS servers, MAC address, and more. If information such as IPv6 configuration is not available, it is hidden in the view.
 
 ![NetworkInterface_Information](02_NetworkInterface_Information.png)
 
 ## Bandwidth
+
 The bandwidth of the selected network adapter is monitored as long as the **Network Interface** tool is selected. If you switch to another tool, monitoring is paused and resets and resumes when you switch again.
 
 You can see the current download and upload speed in Bit/s (B/s). Depending on the bandwith you are using its automatically adjusting to KBit/s (KB/s), MBit/s (MB/s) or GBit/s (GB/s). It also displays since when the bandwidth is measured and how much has been downloaded and uploaded since then.

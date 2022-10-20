@@ -66,8 +66,8 @@
         </ComboBox>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.PowerShell}" />
         <StackPanel Orientation="Horizontal">
-            <mah:ToggleSwitch Header="{x:Static localization:Strings.ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme}" IsOn="{Binding PowerShellModifyGlobalProfile}"/>
-            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme}" Style="{StaticResource HelpImageRectangle}" VerticalAlignment="Top" Margin="10,0,0,0">
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.ApplyThemeToPowerShellConsole}" IsOn="{Binding PowerShellModifyGlobalProfile}"/>
+            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_ApplyThemeToPowerShellConsole}" Style="{StaticResource HelpImageRectangle}" VerticalAlignment="Top" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>

@@ -907,6 +907,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Apply theme to PowerShell console ähnelt.
+        /// </summary>
+        public static string ApplyThemeToPowerShellConsole {
+            get {
+                return ResourceManager.GetString("ApplyThemeToPowerShellConsole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Apply Windows key combinations ähnelt.
         /// </summary>
         public static string ApplyWindowsKeyCombinations {
@@ -3521,6 +3530,19 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
+        ///
+        ///Only the PowerShell consoles configured in the PowerShell and AWS Session Manager settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+        ///
+        ///Click in the upper right corner on the help  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        public static string HelpMessage_ApplyThemeToPowerShellConsole {
+            get {
+                return ResourceManager.GetString("HelpMessage_ApplyThemeToPowerShellConsole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die If not set, the default AWS CLI settings are used. ähnelt.
         /// </summary>
         public static string HelpMessage_AWSCLIDefaultsAreUsedIfNotSet {
@@ -3622,19 +3644,6 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_CustomPublicIPAddressAPI {
             get {
                 return ResourceManager.GetString("HelpMessage_CustomPublicIPAddressAPI", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
-        ///
-        ///Only the PowerShell consoles configured in the PowerShell and AWS Session Manager settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
-        ///
-        ///Click in the upper right corner on the help  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
-        /// </summary>
-        public static string HelpMessage_ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme {
-            get {
-                return ResourceManager.GetString("HelpMessage_ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme", resourceCulture);
             }
         }
         
@@ -4799,15 +4808,6 @@ namespace NETworkManager.Localization.Resources {
         public static string Model {
             get {
                 return ResourceManager.GetString("Model", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Modify the PowerShell console global profile(s) to match the application theme ähnelt.
-        /// </summary>
-        public static string ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme {
-            get {
-                return ResourceManager.GetString("ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme", resourceCulture);
             }
         }
         
