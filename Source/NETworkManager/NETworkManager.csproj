@@ -41,7 +41,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AirspaceFixer" Version="1.0.6" />
-		<PackageReference Include="AWSSDK.EC2" Version="3.7.95.5" />
+		<PackageReference Include="AWSSDK.EC2" Version="3.7.95.6" />
 		<PackageReference Include="DnsClient" Version="1.6.1" />
 		<PackageReference Include="Dragablz" Version="0.0.3.234" />
 		<PackageReference Include="IPNetwork2" Version="2.6.472" />
