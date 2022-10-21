@@ -3227,13 +3227,13 @@ If not set, the default AWS CLI settings are used.</value>
   <data name="Command" xml:space="preserve">
     <value>Command</value>
   </data>
-  <data name="ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme" xml:space="preserve">
-    <value>Modify the PowerShell console global profile(s) to match the application theme</value>
+  <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
+    <value>Apply theme to PowerShell console</value>
   </data>
   <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
     <value>The color of the PowerShell console can be changed to the application theme under General &gt; Appearance</value>
   </data>
-  <data name="HelpMessage_ModifyPowerShellConsoleGlobalProfilesToMatchAppTheme" xml:space="preserve">
+  <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
 
 Only the PowerShell consoles configured in the PowerShell and AWS Session Manager settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.

@@ -4,7 +4,7 @@ title: Autostart
 parent: Settings
 grand_parent: Documentation
 nav_order: 7
-description: ""
+description: "Documentation of the autostart settings"
 permalink: /Documentation/Settings/Autostart
 ---
 

@@ -4,7 +4,7 @@ title: Command line arguments
 parent: Command line
 grand_parent: Documentation
 nav_order: 1
-description: "Documentation of the command line arguments."
+description: "Documentation of the command line arguments"
 permalink: /Documentation/CommandLine/CommandLineArguments
 ---
 
@@ -32,7 +32,7 @@ NETworkManager.exe --reset-settings
 ### `--application:`
 Start a specific application on startup.
 
-**Possible values**
+**Possible values:**
   - `Dashboard`
   - `NetworkInterface`
   - `WiFi`

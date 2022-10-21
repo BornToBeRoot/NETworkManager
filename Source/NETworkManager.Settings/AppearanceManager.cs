@@ -122,7 +122,7 @@ namespace NETworkManager.Settings
         }
 
         /// <summary>
-        /// Method to changer the application theme based on the name in <see cref="ThemeInfo"/>.
+        /// Method to change the application theme based on the name in <see cref="ThemeInfo"/>.
         /// </summary>
         /// <param name="themeInfo">Theme as <see cref="ThemeInfo"/> to apply.</param>
         public static void ChangeTheme(ThemeInfo themeInfo)
