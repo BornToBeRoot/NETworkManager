@@ -55,7 +55,7 @@
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.0" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.6" />
+		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.7" />
 		<Reference Include="AxMSTSCLib">
 			<HintPath>$(TargetDir)\AxMSTSCLib.dll</HintPath>
 		</Reference>
