@@ -656,7 +656,8 @@ namespace NETworkManager.ViewModels
                         continue;
 
                     var tagName = instance.Tags.FirstOrDefault(x => x.Key == "Name");
-                    var name = tagName.Value == null ? instance.InstanceId : $"{tagName.Value} ({instance.InstanceId})";
+
+                    var name = (tagName == null || tagName.Value == null) ? instance.InstanceId : $"{tagName.Value} ({instance.InstanceId})";
 
                     groupInfo.Profiles.Add(new ProfileInfo()
                     {
