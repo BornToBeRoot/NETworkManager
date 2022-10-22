@@ -106,4 +106,4 @@ The following registry keys are created, modified or deleted in the registry pro
 
 If disabled, the Powershell console global profile(s) are no longer modified. But the original values are not restored.
 
-> **NOTE:** Colors may not be set correctly when `Use custom themes`(#use-custom-themes) is enabled.
+> **NOTE:** Colors may not be set correctly when [`Use custom themes`](#use-custom-themes) is enabled.
