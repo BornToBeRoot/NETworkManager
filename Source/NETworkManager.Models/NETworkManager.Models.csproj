@@ -29,7 +29,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AWSSDK.Core" Version="3.7.100" />
-		<PackageReference Include="DnsClient" Version="1.6.1" />
+		<PackageReference Include="DnsClient" Version="1.7.0" />
 		<PackageReference Include="IPNetwork2" Version="2.6.472" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.0" />
 		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
