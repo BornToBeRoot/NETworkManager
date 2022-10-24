@@ -21,6 +21,6 @@
 		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="DnsClient" Version="1.6.1" />
+		<PackageReference Include="DnsClient" Version="1.7.0" />
 	</ItemGroup>
 </Project>
