@@ -45,7 +45,7 @@
 		<PackageReference Include="DnsClient" Version="1.6.1" />
 		<PackageReference Include="Dragablz" Version="0.0.3.234" />
 		<PackageReference Include="IPNetwork2" Version="2.6.472" />
-		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.4.0" />
+		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.0" />
 		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 		<PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
 		<PackageReference Include="log4net" Version="2.0.15" />
