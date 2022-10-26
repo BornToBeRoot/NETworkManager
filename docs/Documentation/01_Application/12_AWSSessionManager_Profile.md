@@ -2,8 +2,7 @@
 layout: default
 title: Profile
 parent: AWS Session Manager
-grand_parent: Documentation
-nav_order: 12
+nav_order: 2
 description: ""
 permalink: /Documentation/Application/AWSSessionManager-Profile
 ---

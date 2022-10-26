@@ -2,7 +2,7 @@
 layout: default
 title: AWS Session Manager
 parent: Application
-grand_parent: Documentation
+has_children: true
 nav_order: 12
 description: ""
 permalink: /Documentation/Application/AWSSessionManager
