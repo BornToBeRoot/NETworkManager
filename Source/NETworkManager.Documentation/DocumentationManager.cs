@@ -55,8 +55,8 @@ namespace NETworkManager.Documentation
             new DocumentationInfo(DocumentationIdentifier.SettingsUpdate, @"Documentation/Settings/Update"),
             new DocumentationInfo(DocumentationIdentifier.SettingsProfiles, @"Documentation/Settings/Profiles"),
             new DocumentationInfo(DocumentationIdentifier.SettingsSettings, @"Documentation/Settings/Settings"),
-            new DocumentationInfo(DocumentationIdentifier.Profiles, @"Documentation/Profiles/Profiles"),
-            new DocumentationInfo(DocumentationIdentifier.CommandLineArguments, @"Documentation/CommandLine/CommandLineArguments"),
+            new DocumentationInfo(DocumentationIdentifier.Profiles, @"Documentation/Profiles"),
+            new DocumentationInfo(DocumentationIdentifier.CommandLineArguments, @"Documentation/CommandLineArguments"),
         };
 
         /// <summary>
