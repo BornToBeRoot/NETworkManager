@@ -10,7 +10,7 @@ permalink: /Documentation/Settings/Appearance
 
 # Appearance
 
-## Theme
+### Theme
 
 Theme of the application which is based on [`MahApps.Metro themes`](https://mahapps.com/docs/themes/usage){:target="\_blank"}
 
@@ -23,7 +23,7 @@ Theme of the application which is based on [`MahApps.Metro themes`](https://maha
 - `Dark`
 - `Light`
 
-## Accent
+### Accent
 
 Accent of the application which is based on [`MahApps.Metro themes`](https://mahapps.com/docs/themes/usage){:target="\_blank"}
 
@@ -60,7 +60,7 @@ Accent of the application which is based on [`MahApps.Metro themes`](https://mah
 {: .note }
 If you add, change or delete a theme in the folder, you must restart the application for the changes to be applied.
 
-## Use custom themes
+### Use custom themes
 
 Enables or disables the custom themes.
 
@@ -73,7 +73,7 @@ Custom themes can be placed in the `Themes` folder in the application folder (e.
 {: .note }
 Custom themes override the [`Accent`](#accent) and [`Theme`](#theme) settings.
 
-## Apply theme to PowerShell console
+### Apply theme to PowerShell console
 
 Apply the current application theme to the PowerShell console global profile(s).
 

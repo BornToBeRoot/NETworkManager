@@ -2,9 +2,9 @@
 layout: default
 title: AWS Session Manager
 parent: Application
-has_children: true
+grand_parent: Documentation
 nav_order: 12
-description: ""
+description: "Documentation of the AWS Session Manager"
 permalink: /Documentation/Application/AWSSessionManager
 ---
 
@@ -62,8 +62,9 @@ To connect to the instances, the AWS Systems Manager Session Manager must be con
   }
 }
 ```
+
 {: .note }
-This is an example and may not be suitable for a production environment. 
+This is an example and may not be suitable for a production environment.
 
 ```bash
 aws ssm create-document \
@@ -90,7 +91,7 @@ IAM role / Instance profile
 }
 ```
 
-Instanc policy
+Instance policy
 
 ```json
 {
@@ -146,8 +147,9 @@ Instanc policy
   ]
 }
 ```
+
 {: .note }
-This is an example and may not be suitable for a production environment. 
+This is an example and may not be suitable for a production environment.
 
 ### Setup AWS IAM user to sync and connect
 
@@ -206,7 +208,7 @@ Connect policy
 ```
 
 {: .note }
-This is an example and may not be suitable for a production environment. 
+This is an example and may not be suitable for a production environment.
 
 ## Connect
 
@@ -272,9 +274,34 @@ If enabled, EC2 instances are synced from AWS. In addition, the [profiles and re
 
 ### Profiles and regions to synchronize
 
+Here you can specify a combination of AWS CLI profile and AWS region from where the EC2 instances should be synchronized. Multiple AWS accounts and regions are supported.
+
 **Type:** `List<NETworkManager.Models.AWS.AWSProfileInfo>`
 
+| Property  | Type      |
+| --------- | --------- |
+| `Enabled` | `Boolean` |
+| `Profile` | `String`  |
+| `Region`  | `String`  |
+
 **Default:**
+
+| Enabled    | Profile   | Region         |
+| ---------- | --------- | -------------- |
+| `Disabled` | `default` | `eu-central-1` |
+| `Disabled` | `default` | `us-east-1`    |
+
+**Example:**
+
+| Enabled    | Profile | Region         |
+| ---------- | ------- | -------------- |
+| `Disabled` | `dev`   | `eu-central-1` |
+| `Disabled` | `dev`   | `us-east-1`    |
+| `Disabled` | `prod`  | `eu-central-1` |
+| `Disabled` | `prod`  | `us-east-1`    |
+
+{: .note }
+Only enabled profiles are synchronized and [`Synchronize EC2 instances from AWS`](#synchronize-ec2-instances-from-aws) must be enabled!
 
 ### Synchronize only running EC2 instances from AWS
 

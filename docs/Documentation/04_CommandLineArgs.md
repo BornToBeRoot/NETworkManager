@@ -1,11 +1,10 @@
 ---
 layout: default
 title: Command line arguments
-parent: Command line
-grand_parent: Documentation
-nav_order: 1
+parent: Documentation
+nav_order: 4
 description: "Documentation of the command line arguments"
-permalink: /Documentation/CommandLine/CommandLineArguments
+permalink: /Documentation/CommandLineArguments
 ---
 
 # Command line arguments
@@ -16,7 +15,7 @@ Publicly available command line arguments.
 ### `--help`
 Displays the help dialog.
 
-**Example**
+**Example:**
 ```
 NETworkManager.exe --help
 ```
@@ -24,7 +23,7 @@ NETworkManager.exe --help
 ### `--reset-settings`
 Resets all application settings.
 
-**Example**
+**Example:**
 ```
 NETworkManager.exe --reset-settings
 ```
@@ -57,7 +56,7 @@ Start a specific application on startup.
   - `Listeners`
   - `ARPTable`
 
-**Example**
+**Example:**
 ```
 NETworkManager.exe --application:PingMonitor
 ```
@@ -68,7 +67,7 @@ Internally used command line arguments.
 ### `--autostart`
 Indicates whether the application was started by autostart.
 
-**Example**
+**Example:**
 ```
 NETworkManager.exe --autostart
 ```
@@ -76,7 +75,7 @@ NETworkManager.exe --autostart
 ### `--restart-pid:`
 Passed when the application is restarted to wait for the old process to end.
 
-**Example**
+**Example:**
 ```
 NETworkManager.exe --restart-pid:35674
 ```

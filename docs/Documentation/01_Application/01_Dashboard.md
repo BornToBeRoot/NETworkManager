@@ -48,7 +48,10 @@ Override the default IPv4 address API to resolve the public IP address. The API 
 
 **Default:** `Disabled | Empty`
 
-**Examples Values:** [`api.ipify.org`](https://api.ipify.org/){:target="\_blank"}, [`ip4.seeip.org`](https://ip4.seeip.org/){:target="\_blank"}, [`api.my-ip.io/ip`](https://api.my-ip.io/ip){:target="\_blank"}
+**Example:** 
+- [`api.ipify.org`](https://api.ipify.org/){:target="\_blank"}
+- [`ip4.seeip.org`](https://ip4.seeip.org/){:target="\_blank"}
+- [`api.my-ip.io/ip`](https://api.my-ip.io/ip){:target="\_blank"}
 
 ### Use custom IPv6 address API
 
@@ -58,4 +61,5 @@ Override the default IPv6 address API to resolve the public IP address. The API 
 
 **Default:** `Disabled | Empty`
 
-**Examples Values:** [`api6.ipify.org`](https://api6.ipify.org/){:target="\_blank"}
+**Example:**
+- [`api6.ipify.org`](https://api6.ipify.org/){:target="\_blank"}
