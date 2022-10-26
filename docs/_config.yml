@@ -21,3 +21,7 @@ gh_edit_source: docs
 gh_edit_view_mode: "tree"
 plugins:
   - jemoji
+callouts:
+  note:
+    title: Note
+    color: yellow
