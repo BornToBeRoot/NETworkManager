@@ -57,7 +57,8 @@ Accent of the application which is based on [`MahApps.Metro themes`](https://mah
 - `Taupe`
 - `Sienna`
 
-> **NOTE:** If you add, change or delete a theme in the folder, you must restart the application for the changes to be applied.
+{: .note }
+If you add, change or delete a theme in the folder, you must restart the application for the changes to be applied.
 
 ### Use custom themes
 
@@ -69,7 +70,8 @@ Enables or disables the custom themes.
 
 Custom themes can be placed in the `Themes` folder in the application folder (e.g. `C:\Program Files\NETworkManager\Themes`). The file name has the format `<THEME>.<ACCENT>.xaml`. For instructions on how to create custom themes, see the [MahApp.Metro documentation](https://mahapps.com/docs/themes/thememanager#creating-custom-themes){:target="\_blank"}.
 
-> **NOTE:** Custom themes override the [`Accent`](#accent) and [`Theme`](#theme) settings.
+{: .note }
+Custom themes override the [`Accent`](#accent) and [`Theme`](#theme) settings.
 
 ### Apply theme to PowerShell console
 
@@ -106,4 +108,5 @@ The following registry keys are created, modified or deleted in the registry pro
 
 If disabled, the Powershell console global profile(s) are no longer modified. But the original values are not restored.
 
-> **NOTE:** Colors may not be set correctly when [`Use custom themes`](#use-custom-themes) is enabled.
+{: .note }
+Colors may not be set correctly when [`Use custom themes`](#use-custom-themes) is enabled.
