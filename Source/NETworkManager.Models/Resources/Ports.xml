@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 09/18/2022 01:47:34-->
+Generated 10/28/2022 22:35:03-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -70219,6 +70219,18 @@ Generated 09/18/2022 01:47:34-->
     <Protocol>udp</Protocol>
     <Name>italk</Name>
     <Description>Italk Chat System</Description>
+  </Port>
+  <Port>
+    <Number>12546</Number>
+    <Protocol>tcp</Protocol>
+    <Name>carb-repl-ctrl</Name>
+    <Description>Carbonite Server Replication Control</Description>
+  </Port>
+  <Port>
+    <Number>12546</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>12753</Number>
