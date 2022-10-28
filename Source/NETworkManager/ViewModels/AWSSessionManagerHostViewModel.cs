@@ -511,13 +511,25 @@ namespace NETworkManager.ViewModels
 
         #region Methods        
         private void CheckInstallationStatus()
-        {
-            // Maybe also check DisplayVersion?
-            RegistryKey awsCLIRegistryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{01CCB9EC-7FA4-494D-9EEC-395C080CAA7C}", false);
-            IsAWSCLIInstalled = awsCLIRegistryKey != null && awsCLIRegistryKey.GetValue("DisplayName") != null;
+        {            
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"))
+            {
+                foreach (string subkeyName in key.GetSubKeyNames())
+                {
+                    using RegistryKey subKey = key.OpenSubKey(subkeyName);
 
-            RegistryKey awsSessionManagerPluginRegistryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{13DD0F7B-C2A8-4F22-BF55-CD0D719DBA46}", false);
-            IsAWSSessionManagerPluginInstalled = awsSessionManagerPluginRegistryKey != null && awsSessionManagerPluginRegistryKey.GetValue("DisplayName") != null;
+                    var displayName = subKey.GetValue("DisplayName");
+
+                    if (displayName == null)
+                        continue;
+
+                    if (displayName.Equals("AWS Command Line Interface v2"))
+                        IsAWSCLIInstalled = true;
+
+                    if (displayName.Equals( "Session Manager Plugin"))
+                        IsAWSSessionManagerPluginInstalled = true;
+                }
+            }
         }
 
         private void CheckSettings()
