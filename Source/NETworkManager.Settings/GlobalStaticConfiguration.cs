@@ -118,7 +118,6 @@ namespace NETworkManager.Settings
         public static NetworkConnectionType RemoteDesktop_NetworkConnectionType => NetworkConnectionType.DetectAutomatically;
 
         // Application: PowerShell
-        public static string PowerShell_ApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");
         public static string PowerShell_Command => "Set-Location ~";
         public static PowerShell.ExecutionPolicy PowerShell_ExecutionPolicy => PowerShell.ExecutionPolicy.RemoteSigned;
 
@@ -136,7 +135,6 @@ namespace NETworkManager.Settings
         public static int PuTTY_Raw => 0;
 
         // Application: AWSSessionManager
-        public static string AWSSessionManager_ApplicationFileLocationPowerShell => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe");
         public static bool AWSSessionManager_EnableSyncInstanceIDsFromAWS => false;
         public static bool AWSSessionManager_SyncOnlyRunningInstancesFromAWS => true;
 

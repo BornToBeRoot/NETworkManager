@@ -1,12 +1,20 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace NETworkManager.Models.PowerShell
 {
     public static partial class PowerShell
     {
+
+        public static readonly List<string> GetDefaultIntallationPaths = new()
+        {
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "PowerShell", "7", "pwsh.exe"),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "PowerShell", "7", "pwsh.exe"),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe")
+        };
 
         /// <summary>
         /// Default SZ registry keys for the global PowerShell profile.

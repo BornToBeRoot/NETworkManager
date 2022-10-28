@@ -2377,7 +2377,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private string _powerShell_ApplicationFilePath = GlobalStaticConfiguration.PowerShell_ApplicationFileLocationPowerShell;
+        private string _powerShell_ApplicationFilePath;
         public string PowerShell_ApplicationFilePath
         {
             get => _powerShell_ApplicationFilePath;
@@ -2921,7 +2921,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private string _awsSessionManager_ApplicationFilePath = GlobalStaticConfiguration.AWSSessionManager_ApplicationFileLocationPowerShell;
+        private string _awsSessionManager_ApplicationFilePath;
         public string AWSSessionManager_ApplicationFilePath
         {
             get => _awsSessionManager_ApplicationFilePath;

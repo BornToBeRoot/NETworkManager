@@ -422,6 +422,17 @@ namespace NETworkManager
                     SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(DNSServer.GetDefaultList());
                     SettingsManager.Current.AWSSessionManager_AWSProfiles = new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
 
+                    // Check if PowerShell is installed
+                    foreach(var file in Models.PowerShell.PowerShell.GetDefaultIntallationPaths)
+                    {
+                        if(File.Exists(file))
+                        {
+                            SettingsManager.Current.PowerShell_ApplicationFilePath = file;
+                            SettingsManager.Current.AWSSessionManager_ApplicationFilePath = file;
+                            break;
+                        }
+                    }
+
                     // Check if PuTTY is installed
                     foreach (var file in Models.PuTTY.PuTTY.GetDefaultInstallationPaths)
                     {

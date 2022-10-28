@@ -28,6 +28,8 @@ permalink: /Changelog/next-release
   - Generate default lists at first run [#1544](https://github.com/BornToBeRoot/NETworkManager/pull/1544){:target="\_blank"}
 - Port Scanner
   - Add more port profiles (LDAP, HTTP proxy, Filetransfer) [#1526](https://github.com/BornToBeRoot/NETworkManager/pull/1526){:target="\_blank"}
+- PowerShell
+  - Change default path on new installations to `pwsh.exe` (Windows PowerShell is used as fallback if `pwsh.exe` is not available) [#1663](https://github.com/BornToBeRoot/NETworkManager/pull/1663){:target="\_blank"}
 - PuTTY
   - Detect if PuTTY is installed at first run [#1542](https://github.com/BornToBeRoot/NETworkManager/pull/1542){:target="\_blank"}
 - Discovery Protocol

@@ -337,7 +337,7 @@ Path to the PowerShell console where the AWS CLI is available and which should b
 
 **Type:** `String`
 
-**Default:** `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`
+**Default:** `C:\Program Files\PowerShell\7\pwsh.exe`, `C:\Program Files (x86)\PowerShell\7\pwsh.exe` or `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`
 
 **Possible values:**
 
