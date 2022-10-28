@@ -27,7 +27,7 @@ namespace NETworkManager.Models.PuTTY
         public static readonly List<string> GetDefaultInstallationPaths = new()
         {
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), _puttyFolder, _puttyFile),
-            Path.Combine(Environment.GetFolderPath( Environment.SpecialFolder.ProgramFilesX86), _puttyFolder, _puttyFile)
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), _puttyFolder, _puttyFile)
         };
 
         /// <summary>

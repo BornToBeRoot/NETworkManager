@@ -1,5 +1,6 @@
 ﻿using log4net;
 using NETworkManager.Models;
+using NETworkManager.Models.PowerShell;
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -216,6 +217,19 @@ namespace NETworkManager.Settings
 
                 _log.Info($"Add AWS Session Manager to application list...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
+
+                var powerShellPath = "";
+                foreach(var file in PowerShell.GetDefaultIntallationPaths)
+                {
+                    if(File.Exists(file))
+                    {
+                        powerShellPath = file;
+                        break;
+                    }
+                }
+
+                _log.Info($"Set AWS Session Manager application file path to \"{powerShellPath}\"...");
+                Current.AWSSessionManager_ApplicationFilePath = powerShellPath;
             }
 
             // Set to latest version and save
