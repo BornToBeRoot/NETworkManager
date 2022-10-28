@@ -561,9 +561,6 @@
   <data name="RestartRequired" xml:space="preserve">
     <value>Redémarrage requis</value>
   </data>
-  <data name="RestartRequiredSettingsChangedMessage" xml:space="preserve">
-    <value>Certains paramètres ne sont appliqués qu'après redémarrage de l'application!</value>
-  </data>
   <data name="SaveSettingsInApplicationFolder" xml:space="preserve">
     <value>Enregistrer les paramètres dans le dossier d'application</value>
   </data>
@@ -2733,68 +2730,26 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="SettingsViewName_Autostart" xml:space="preserve">
     <value>Démarrage auto</value>
   </data>
-  <data name="SettingsViewName_Dashboard" xml:space="preserve">
-    <value>Tableau de bord</value>
-  </data>
-  <data name="SettingsViewName_DNSLookup" xml:space="preserve">
-    <value>Recherche DNS</value>
-  </data>
   <data name="SettingsViewName_General" xml:space="preserve">
     <value>Général</value>
   </data>
   <data name="SettingsViewName_HotKeys" xml:space="preserve">
     <value>Raccourcis</value>
   </data>
-  <data name="SettingsViewName_HTTPHeaders" xml:space="preserve">
-    <value>En-têtes HTTP</value>
-  </data>
-  <data name="SettingsViewName_IPScanner" xml:space="preserve">
-    <value>Scanner IP</value>
-  </data>
   <data name="SettingsViewName_Language" xml:space="preserve">
     <value>Langage</value>
-  </data>
-  <data name="SettingsViewName_PingMonitor" xml:space="preserve">
-    <value>Ping Moniteur</value>
-  </data>
-  <data name="SettingsViewName_PortScanner" xml:space="preserve">
-    <value>Port Scanner</value>
-  </data>
-  <data name="SettingsViewName_PowerShell" xml:space="preserve">
-    <value>PowerShell</value>
   </data>
   <data name="SettingsViewName_Profiles" xml:space="preserve">
     <value>Profils</value>
   </data>
-  <data name="SettingsViewName_PuTTY" xml:space="preserve">
-    <value>PuTTY</value>
-  </data>
-  <data name="SettingsViewName_RemoteDesktop" xml:space="preserve">
-    <value>Bureau à distance</value>
-  </data>
   <data name="SettingsViewName_Settings" xml:space="preserve">
     <value>Paramètres</value>
-  </data>
-  <data name="SettingsViewName_SNMP" xml:space="preserve">
-    <value>SNMP</value>
   </data>
   <data name="SettingsViewName_Status" xml:space="preserve">
     <value>Statut</value>
   </data>
-  <data name="SettingsViewName_TigerVNC" xml:space="preserve">
-    <value>TigerVNC</value>
-  </data>
-  <data name="SettingsViewName_Traceroute" xml:space="preserve">
-    <value>Traceroute</value>
-  </data>
   <data name="SettingsViewName_Update" xml:space="preserve">
     <value>Mise à jour</value>
-  </data>
-  <data name="SettingsViewName_WakeOnLAN" xml:space="preserve">
-    <value>Wake On LAN</value>
-  </data>
-  <data name="SettingsViewName_Whois" xml:space="preserve">
-    <value>Whois</value>
   </data>
   <data name="SettingsViewName_Window" xml:space="preserve">
     <value>Fenêtre</value>
@@ -3161,6 +3116,12 @@ Activez le cryptage des fichiers de profil dans Paramètres&gt; Profil pour stoc
   <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
     <value>Overwrite existing settings file?</value>
   </data>
+  <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
+    <value>AWS Session Manager</value>
+  </data>
+  <data name="InstanceId" xml:space="preserve">
+    <value>Instance ID</value>
+  </data>
   <data name="LocalConnection" xml:space="preserve">
     <value>Connexion locale</value>
   </data>
@@ -3169,5 +3130,113 @@ Activez le cryptage des fichiers de profil dans Paramètres&gt; Profil pour stoc
   </data>
   <data name="Library_log4net_Description" xml:space="preserve">
     <value>log4net est un outil pour aider le programmeur à produire des instructions de journal vers une variété de cibles de sortie.</value>
+  </data>
+  <data name="AWSSessionManager" xml:space="preserve">
+    <value>AWS Session Manager</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
+    <value>Synchronize EC2 instances from AWS</value>
+  </data>
+  <data name="AddAWSProfile" xml:space="preserve">
+    <value>Add AWS profile</value>
+  </data>
+  <data name="DeleteAWSProfile" xml:space="preserve">
+    <value>Delete AWS profile</value>
+  </data>
+  <data name="DeleteAWSProfileMessage" xml:space="preserve">
+    <value>The selected AWS profile is permanently deleted.
+
+The profile is not removed from the ~\.aws\credentials file.</value>
+  </data>
+  <data name="EditAWSProfile" xml:space="preserve">
+    <value>Edit AWS profile</value>
+  </data>
+  <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
+    <value>Synchronize all EC2 instances from AWS</value>
+  </data>
+  <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
+    <value>Synchronize group EC2 instances from AWS</value>
+  </data>
+  <data name="ProfilesAndRegionsToSync" xml:space="preserve">
+    <value>Profiles and regions to synchronize</value>
+  </data>
+  <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
+    <value>To synchronize EC2 instances from AWS, the AWS CLI must be configured on the system. The EC2 instances can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in the file "~/.aws/credentials" must be configured along with the region to query.</value>
+  </data>
+  <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
+    <value>AWS SDK for .NET to work with Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS).</value>
+  </data>
+  <data name="DefaultProfile" xml:space="preserve">
+    <value>Default profile</value>
+  </data>
+  <data name="DefaultRegion" xml:space="preserve">
+    <value>Default region</value>
+  </data>
+  <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
+    <value>Default profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
+
+If not set, the default AWS CLI settings are used.</value>
+  </data>
+  <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
+    <value>Default region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
+
+If not set, the default AWS CLI settings are used.</value>
+  </data>
+  <data name="ProfileViewName_AWSSessionManager" xml:space="preserve">
+    <value>AWS Session Manager</value>
+  </data>
+  <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
+    <value>If not set, the default AWS CLI settings are used.</value>
+  </data>
+  <data name="GroupNameCannotStartWithX" xml:space="preserve">
+    <value>Group name cannot start with "{0}"!</value>
+  </data>
+  <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
+    <value>Synchronize only running EC2 instances from AWS</value>
+  </data>
+  <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
+    <value>An AWS region named "{0}" does not exist!</value>
+  </data>
+  <data name="AWSCLIv2IsInstalled" xml:space="preserve">
+    <value>AWS CLI v2 is installed!</value>
+  </data>
+  <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
+    <value>AWS CLI v2 is not installed!</value>
+  </data>
+  <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
+    <value>AWS Session Manager Plugin is installed!</value>
+  </data>
+  <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
+    <value>AWS Session Manager Plugin is not installed!</value>
+  </data>
+  <data name="CheckForPreReleases" xml:space="preserve">
+    <value>Check for pre-releases</value>
+  </data>
+  <data name="SyncIsDisabled" xml:space="preserve">
+    <value>Synchronization is disabled!</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>Command</value>
+  </data>
+  <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
+    <value>Apply theme to PowerShell console</value>
+  </data>
+  <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
+    <value>The color of the PowerShell console can be changed to the application theme under General &gt; Appearance</value>
+  </data>
+  <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
+    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
+
+Only the PowerShell consoles configured in the PowerShell and AWS Session Manager settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+
+Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
+
+If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
   </data>
 </root>
