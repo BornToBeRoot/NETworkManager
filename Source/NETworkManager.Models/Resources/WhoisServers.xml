@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Whois servers by domain from IANA
-Generated 09/18/2022 01:47:42-->
+Generated 10/28/2022 22:35:11-->
 <WhoisServers>
   <WhoisServer>
     <TLD>AAA</TLD>
@@ -745,10 +745,6 @@ Generated 09/18/2022 01:47:42-->
     </Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>BUGATTI</TLD>
-    <Server>whois.afilias-srs.net</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>BUILD</TLD>
     <Server>whois.nic.build</Server>
   </WhoisServer>
@@ -827,10 +823,6 @@ Generated 09/18/2022 01:47:42-->
   <WhoisServer>
     <TLD>CAMP</TLD>
     <Server>whois.nic.camp</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>CANCERRESEARCH</TLD>
-    <Server>whois.nic.cancerresearch</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>CANON</TLD>
@@ -2261,7 +2253,7 @@ Generated 09/18/2022 01:47:42-->
   </WhoisServer>
   <WhoisServer>
     <TLD>HELP</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.help</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>HELSINKI</TLD>
