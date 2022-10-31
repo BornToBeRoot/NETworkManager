@@ -38,6 +38,11 @@ See the AWS documentation for installation instructions.
 
 To connect to the instances, the AWS Systems Manager Session Manager must be configured in AWS. See their documentation for instructions on [how to set up the Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started.html).
 
+<details>
+    <summary>Test</summary>
+    This is a test
+</details>
+
 ```json
 {
   "schemaVersion": "1.0",

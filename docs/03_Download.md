@@ -8,14 +8,14 @@ permalink: /Download
 
 # Download
 
-Version: **2022.8.18.0** <br>
-Date: **18.8.2022**
+Version: **2022.10.31.0** <br>
+Date: **31.10.2022**
 
 | Download                                                                                                                                                                                                             | Checksum [SHA256]                                                  |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.8.18.0/NETworkManager_2022.8.18.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn">Setup</button></a>       | `F705C66072E98E011CAA1EAC3C8B085DBB58CF9476EF9E50490CE526522BA6AA` |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.8.18.0/NETworkManager_2022.8.18.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn">Portable</button></a> | `56CFA317D1123C191C443F7950A0096D0CA1F1A6D93EEB9B6C9128EFF6C3EF07` |
-| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.8.18.0/NETworkManager_2022.8.18.0_Archive.zip' target='_blank'><button type="button" name="button" class="btn">Archive</button></a>   | `1C778ED1EF28A18315B8B5581F3BF9D14F282CE6D4521FE98F0057DAE2AFC30A` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.10.31.0/NETworkManager_2022.10.31.0_Setup.exe' target='_blank'><button type="button" name="button" class="btn">Setup</button></a>       | `18A9528247BFA1880AF61CEAA1401FCA7C8271BC6635B40BA72D77AB065867A0` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.10.31.0/NETworkManager_2022.10.31.0_Portable.zip' target='_blank'><button type="button" name="button" class="btn">Portable</button></a> | `7B5822191C1D8EB0DE8F223AA1AC581CFEB4ED726F652A3A8A7D0941A51BE68F` |
+| <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.10.31.0/NETworkManager_2022.10.31.0_Archive.zip' target='_blank'><button type="button" name="button" class="btn">Archive</button></a>   | `4F1B60B42A1D935B56C0F044755DD5B3EB3DAE35C75961D0CD7FFFFB87596847` |
 
 ## System requirements
 
