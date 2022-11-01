@@ -8,7 +8,9 @@ permalink: /
 
 # What is NETworkManager
 
-NETworkManager is a powerful tool for managing networks and troubleshooting network problems! You can connect to remote systems via Remote Desktop, PowerShell, PuTTY, TigerVNC or AWS Systems Manager Session Manager. It includes a variety of tools like a WiFi analyzer, IP scanner, port scanner, ping monitor, traceroute, DNS lookup or an LLDP/CDP capture (and many [more](./Features)). You can use profiles, save them encrypted and use them in the various tools. And the best part... it's open source!
+### NETworkManager is a powerful tool for managing networks and troubleshooting network problems!
+
+You can connect to remote systems via Remote Desktop, PowerShell, PuTTY, TigerVNC or AWS (Systems Manager) Session Manager and it includes a variety of features such as a WiFi analyzer, IP scanner, port scanner, ping monitor, traceroute, DNS lookup, or an LLDP/CDP capture (and many [more](./Features)). You can use profiles to store your hosts, save them encrypted and use them in the various features. Most of the features supports tabs. And the best part... it's open source!
 
 <div align="center">
   <p>

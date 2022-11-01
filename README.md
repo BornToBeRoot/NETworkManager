@@ -1,7 +1,10 @@
 <div align="center">
   <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Images/NETworkManager_128x128.png?raw=true" />
   <h1>NETworkManager</h1>
-  <h3>A powerful tool for managing networks and troubleshoot network problems!</h3> 
+  <h3>A powerful tool for managing networks and troubleshoot network problems!</h3>
+  <p>
+    You can connect to remote systems via Remote Desktop, PowerShell, PuTTY, TigerVNC or AWS (Systems Manager) Session Manager and it includes a variety of features such as a WiFi analyzer, IP scanner, port scanner, ping monitor, traceroute, DNS lookup, or an LLDP/CDP capture (and many <a href="https://borntoberoot.net/NETworkManager/Features">more</a>). You can use profiles to store your hosts, save them encrypted and use them in the various features. Most of the features supports tabs.<br />And the best part... it's open source!
+  </p>
   <br />
   <p>   
     <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
@@ -37,41 +40,11 @@
     </a>     
   </p>
   <p>
-    <a href="#features">Features</a> • <a href="#download">Download</a> • <a href="#changelog">Changelog</a> • <a href="#documentation">Documentation</a> • <a href="#contributing">Contributing</a> • <a href="#build">Build</a> • <a href="#license">License</a> • <a href="#code-of-conduct">Code of Conduct</a>
+    <a href="#package-download">Download</a> • <a href="#page_with_curl-changelog">Changelog</a> • <a href="#book-documentation">Documentation</a> • <a href="#sparkles-contributing">Contributing</a> • <a href="#wrench-build">Build</a> • <a href="#memo-license">License</a>
   </p>
 </div>
 
 <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/docs/Preview.gif?raw=true" />
-
-## :rocket: Features
-
-The tool has the following features:
-
-- [Dashboard](Documentation/Application/Dashboard)
-- [Network Interface](Documentation/Application/NetworkInterface) - Information, Bandwidth, Configure
-- [WiFi](Documentation/Application/WiFi) - Networks, Channels
-- [IP Scanner](Documentation/Application/IPScanner)
-- [Port Scanner](Documentation/Application/PortScanner)
-- [Ping Monitor](Documentation/Application/PingMonitor)
-- [Traceroute](Documentation/Application/Traceroute)
-- [DNS Lookup](Documentation/Application/DNSLookup)
-- [Remote Desktop](Documentation/Application/RemoteDesktop)
-- [PowerShell](Documentation/Application/PowerShell)
-- [PuTTY](Documentation/Application/PuTTY) (requires [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html){:target="\_blank"})
-- [AWS Session Manager](Documentation/Application/AWSSessionManager) (requires [AWS CLI](https://aws.amazon.com/cli/){:target="\_blank"} and [AWS Session Manager plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html){:target="\_blank"})
-- [TigerVNC](Documentation/Application/TigerVNC) (requires [TigerVNC](https://tigervnc.org/){:target="\_blank"})
-- [Web Console](Documentation/Application/WebConsole) (requires [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="\_blank"})
-- [SNMP](Documentation/Application/SNMP) - Get, Walk, Set
-- [Discovery Protocol](Documentation/Application/DiscoveryProtocol) - LLDP, CDP
-- [Wake on LAN](Documentation/Application/WakeOnLAN)
-- [Whois](Documentation/Application/Whois)
-- [Subnet Calculator](Documentation/Application/SubnetCalculator) - Calculator, Subnetting, Supernetting
-- [Lookup](Documentation/Application/Lookup) - OUI, Port
-- [Connections](Documentation/Application/Connections)
-- [Listeners](Documentation/Application/Listeners)
-- [ARP Table](Documentation/Application/ARPTable)
-
-You can store hosts in profiles and use them across all features. Individual settings such as the path to an SSH key can be stored here to override the group settings or global settings. The profile files can be stored encrypted on disk and protected with a master password to provide an additional layer of security for credentials.
 
 ## :package: Download
 
@@ -92,18 +65,19 @@ Get-EvergreenApp -Name NETworkManager | Save-EvergreenApp -Path C:\Users\$env:Us
 
 ## :page_with_curl: Changelog
 
-- [Changelog](https://borntoberoot.net/NETworkManager/Changelog)
+You can find the changelog [here](https://borntoberoot.net/NETworkManager/Changelog).
 
 ## :book: Documentation
 
-- [Documentation](https://borntoberoot.net/NETworkManager/Documentation/Application)
+You can find the documentation [here](https://borntoberoot.net/NETworkManager/Documentation).
 
 ## :sparkles: Contributing
+
+
 
 - [How to contribute, add a translation, write documentation or report a bug?](https://github.com/BornToBeRoot/NETworkManager/blob/main/CONTRIBUTING.md)
 - [List of contributors](https://github.com/BornToBeRoot/NETworkManager/blob/main/Contributors.md)
 - [How to report a security vulnerability?](https://github.com/BornToBeRoot/NETworkManager/blob/main/SECURITY.md)
-
 
 This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/main/CODE_OF_CONDUCT.md) defined by the [Contributor Covenant](http://contributor-covenant.org/).
 
