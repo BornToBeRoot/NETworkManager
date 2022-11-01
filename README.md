@@ -73,7 +73,7 @@ The documentation is provided via GitHub pages and can be found [here](https://b
 
 ## ✨ Contributing
 
-Here you will find ways to contribute to NETworkManager:s
+Here you will find ways to contribute:
 
 - [Request a feature, report a bug or ask a question](CONTRIBUTING.md#contributing)
 - [Add a feature or fix a bug](CONTRIBUTING.md#code)
