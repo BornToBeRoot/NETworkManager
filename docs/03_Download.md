@@ -27,7 +27,7 @@ Date: **31.10.2022**
 
 It is also available via the package managers [Chocolatey](https://chocolatey.org/packages/NETworkManager){:target="\_blank"} and [WinGet](https://github.com/microsoft/winget-pkgs/tree/master/manifests/b/BornToBeRoot/NETworkManager/){:target="\_blank"}:
 
-```PowerShell
+```
 # Chocolatey
 choco install networkmanager
 
@@ -37,7 +37,7 @@ winget install BornToBeRoot.NETworkManager
 
 The latest version can also be viewed and downloaded via the PowerShell module [Evergreen](https://github.com/aaronparker/evergreen){:target="\_blank"}:
 
-```PowerShell
+```
 # Evergreen
 Get-EvergreenApp -Name NETworkManager
 
