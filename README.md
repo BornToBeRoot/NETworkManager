@@ -36,27 +36,16 @@
       <img alt="Bug report" src="https://img.shields.io/badge/github-bug_report-red.svg?style=for-the-badge&logo=github" />
     </a>     
   </p>
+  <p>
+    <a href="#features">Features</a> • <a href="#download">Download</a> • <a href="#changelog">Changelog</a> • <a href="#documentation">Documentation</a> • <a href="#contributing">Contributing</a> • <a href="#build">Build</a> • <a href="#license">License</a> • <a href="#code-of-conduct">Code of Conduct</a>
+  </p>
 </div>
-
-[Features](#features)
-•
-[Download](#download)
-•
-[Changelog](#changelog)
-•
-[Documentation](#documentation)
-•
-[Contributing](#contributing)
-•
-[Build](#build)
-•
-[License](#license)
-•
-[Code of Conduct](#code-of-conduct)
 
 <img alt="NETworkManager Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/docs/Preview.gif?raw=true" />
 
-## Features
+## :rocket: Features
+
+The tool has the following features:
 
 - [Dashboard](Documentation/Application/Dashboard)
 - [Network Interface](Documentation/Application/NetworkInterface) - Information, Bandwidth, Configure
@@ -82,25 +71,43 @@
 - [Listeners](Documentation/Application/Listeners)
 - [ARP Table](Documentation/Application/ARPTable)
 
-## Download
+You can store hosts in profiles and use them across all features. Individual settings such as the path to an SSH key can be stored here to override the group settings or global settings. The profile files can be stored encrypted on disk and protected with a master password to provide an additional layer of security for credentials.
 
-- [Download](https://borntoberoot.net/NETworkManager/Download)
+## :package: Download
 
-## Changelog
+On the [download page](https://borntoberoot.net/NETworkManager/Download) you can download a setup, a portable version or a ZIP archive of the software. The files are provided via [GitHub releases](https://github.com/BornToBeRoot/NETworkManager/releases/latest).
+
+In addition the software is available via [Chocolatey](https://chocolatey.org/packages/NETworkManager), [WinGet](https://github.com/microsoft/winget-pkgs/tree/master/manifests/b/BornToBeRoot/NETworkManager/) and [Evergreen](https://stealthpuppy.com/evergreen/apps/).
+
+```PowerShell
+# Chocolatey
+choco install networkmanager
+
+#WinGet
+winget install BornToBeRoot.NETworkManager
+
+#Evergreen
+Get-EvergreenApp -Name NETworkManager | Save-EvergreenApp -Path C:\Users\$env:Username\Downloads\
+```
+
+## :page_with_curl: Changelog
 
 - [Changelog](https://borntoberoot.net/NETworkManager/Changelog)
 
-## Documentation
+## :book: Documentation
 
 - [Documentation](https://borntoberoot.net/NETworkManager/Documentation/Application)
 
-## Contributing
+## :sparkles: Contributing
 
 - [How to contribute, add a translation, write documentation or report a bug?](https://github.com/BornToBeRoot/NETworkManager/blob/main/CONTRIBUTING.md)
 - [List of contributors](https://github.com/BornToBeRoot/NETworkManager/blob/main/Contributors.md)
 - [How to report a security vulnerability?](https://github.com/BornToBeRoot/NETworkManager/blob/main/SECURITY.md)
 
-## Build
+
+This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/main/CODE_OF_CONDUCT.md) defined by the [Contributor Covenant](http://contributor-covenant.org/).
+
+## :wrench: Build
 
 **Requirements**
 
@@ -123,10 +130,6 @@ You can also copy & paste this command in your PowerShell console :smile:
 git clone https://github.com/BornToBeRoot/NETworkManager; Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; .\NETworkManager\build.ps1
 ```
 
-## Code of Conduct
-
-This project has adopted the [code of conduct](https://github.com/BornToBeRoot/NETworkManager/blob/main/CODE_OF_CONDUCT.md) defined by the [Contributor Covenant](http://contributor-covenant.org/).
-
-## License
+## :memo: License
 
 NETworkManager is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE). The licenses of the used libraries can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/main/Source/NETworkManager.Documentation/Licenses).
