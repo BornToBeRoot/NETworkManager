@@ -41,17 +41,17 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AirspaceFixer" Version="1.0.6" />
-		<PackageReference Include="AWSSDK.EC2" Version="3.7.101.2" />
+		<PackageReference Include="AWSSDK.EC2" Version="3.7.102" />
 		<PackageReference Include="DnsClient" Version="1.7.0" />
 		<PackageReference Include="Dragablz" Version="0.0.3.234" />
-		<PackageReference Include="IPNetwork2" Version="2.6.472" />
+		<PackageReference Include="IPNetwork2" Version="2.6.476" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.0" />
 		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 		<PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
 		<PackageReference Include="log4net" Version="2.0.15" />
 		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
 		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
-		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1370.28" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1418.22" />
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.0" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
