@@ -6,7 +6,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators
 {
-    public class StringNotEndWithSemicolonValidator : ValidationRule
+    public class NotEndWithSemicolonValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

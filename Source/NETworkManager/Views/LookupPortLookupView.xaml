@@ -51,7 +51,8 @@
                         <Binding Path="PortOrService" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <validators:StringNotEndWithSemicolonValidator ValidatesOnTargetUpdated="True" />
+                                <validators:ContainsTextValidator ValidatesOnTargetUpdated="True" />
+                                <validators:NotEndWithSemicolonValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>

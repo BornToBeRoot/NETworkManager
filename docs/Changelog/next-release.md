@@ -13,13 +13,14 @@ permalink: /Changelog/next-release
 
 - Windows 10 / Server x64 (1809 or later)
 - [.NET Desktop Runtime 6.x (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0){:target="\_blank"}
-- [Microsoft Edge - WebView2 Runtime (Evergreen)](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="\_blank"}
 
 ## What's new?
 
 ## Improvements
 
 ## Bugfixes
+- Lookup - OUI, Lookup
+  - Input cannot end with ";" [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
 
 ## Other
 
