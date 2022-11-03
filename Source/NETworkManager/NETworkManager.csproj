@@ -44,7 +44,7 @@
 		<PackageReference Include="AWSSDK.EC2" Version="3.7.102" />
 		<PackageReference Include="DnsClient" Version="1.7.0" />
 		<PackageReference Include="Dragablz" Version="0.0.3.234" />
-		<PackageReference Include="IPNetwork2" Version="2.6.476" />
+		<PackageReference Include="IPNetwork2" Version="2.6.482" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.0" />
 		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 		<PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
