@@ -3242,4 +3242,7 @@ Click in the upper right corner on the help / documentation button (left of the 
 
 If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
   </data>
+  <data name="InputCannotEndWithSemicolon" xml:space="preserve">
+    <value>Input cannot end with a ";"!</value>
+  </data>
 </root>

@@ -86,5 +86,8 @@ namespace NETworkManager.Utilities
 
         // Match any fullname (like "c:\temp\test.txt") --> https://www.codeproject.com/Tips/216238/Regular-Expression-to-Validate-File-Path-and-Exten
         public const string FullName = @"^(?:[\w]\:|\\)(\\[a-zA-Z0-9_\-\s\.()~!@#$%^&=+';,{}\[\]]+)+\.[a-zA-z0-9]{1,4}$";
+
+        // Match a string that doesn't end with ";" (like "80; ldap; ssh; 443")
+        public const string StringNotEndWithSemicolon = @"^.*[^;]$";
     }
 }
