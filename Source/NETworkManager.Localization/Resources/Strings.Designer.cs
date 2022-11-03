@@ -3939,6 +3939,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input cannot end with a &quot;;&quot;! ähnelt.
+        /// </summary>
+        public static string InputCannotEndWithSemicolon {
+            get {
+                return ResourceManager.GetString("InputCannotEndWithSemicolon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input does not contain any text! ähnelt.
+        /// </summary>
+        public static string InputDoesNotContainAnyText {
+            get {
+                return ResourceManager.GetString("InputDoesNotContainAnyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Instance ID ähnelt.
         /// </summary>
         public static string InstanceId {
