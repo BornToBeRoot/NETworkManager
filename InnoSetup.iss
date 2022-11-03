@@ -6,7 +6,7 @@
 #define MyAppPublisher "BornToBeRoot"
 #define MyAppURL "https://github.com/BornToBeRoot/NETworkManager/"
 #define MyAppExeName "NETworkManager.exe"
-#define MyAppCopyright "Copyright (C) 2016-2021 BornToBeRoot"
+#define MyAppCopyright "Copyright (C) 2016-2022 BornToBeRoot"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
