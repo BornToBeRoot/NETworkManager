@@ -3242,4 +3242,10 @@ Klicken Sie in der oberen rechten Ecke auf die Hilfe-/Dokumentationsschaltfläch
 
 Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert. Die ursprünglichen Werte werden jedoch NICHT wiederhergestellt.</value>
   </data>
+  <data name="InputCannotEndWithSemicolon" xml:space="preserve">
+    <value>Eingabe darf nicht mit einem ";" enden!</value>
+  </data>
+  <data name="InputDoesNotContainAnyText" xml:space="preserve">
+    <value>Eingabe enthält keinen Text!</value>
+  </data>
 </root>
