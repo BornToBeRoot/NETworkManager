@@ -27,7 +27,7 @@ namespace NETworkManager.Models
 
             foreach (var name in GetNames().Where(x => x != ApplicationName.None))
                 list.Add(new ApplicationInfo(name));
-            
+
             return list;
         }
 
@@ -99,6 +99,9 @@ namespace NETworkManager.Models
                 case ApplicationName.SubnetCalculator:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Calculator });
                     break;
+                case ApplicationName.BitCalculator:
+                    canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.TypeBit });
+                    break;
                 case ApplicationName.Lookup:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.DatabaseSearch });
                     break;
@@ -114,7 +117,7 @@ namespace NETworkManager.Models
                 case ApplicationName.None:
                 default:
                     canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.SmileyFrown });
-                    break;                    
+                    break;
             }
 
             return canvas;

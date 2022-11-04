@@ -194,7 +194,7 @@ namespace NETworkManager.Settings
             };
 
             Save();
-        }        
+        }
         #endregion
 
         #region Upgrade 
@@ -210,18 +210,19 @@ namespace NETworkManager.Settings
             }
             */
 
-            // Latest
-            if (fromVersion < toVersion)
+            // Update to 2022.10.31.0
+            var version202210310 = new Version(2022, 10, 31, 0);
+            if (fromVersion < version202210310)
             {
-                _log.Info($"Apply upgrade to {toVersion}...");
+                _log.Info($"Apply upgrade to {version202210310}...");
 
-                _log.Info($"Add AWS Session Manager to application list...");
+                _log.Info($"Add ApplicationName.AWSSessionManager to application list...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
 
                 var powerShellPath = "";
-                foreach(var file in PowerShell.GetDefaultIntallationPaths)
+                foreach (var file in PowerShell.GetDefaultIntallationPaths)
                 {
-                    if(File.Exists(file))
+                    if (File.Exists(file))
                     {
                         powerShellPath = file;
                         break;
@@ -230,6 +231,15 @@ namespace NETworkManager.Settings
 
                 _log.Info($"Set AWS Session Manager application file path to \"{powerShellPath}\"...");
                 Current.AWSSessionManager_ApplicationFilePath = powerShellPath;
+            }
+
+            // Update to latest
+            if (fromVersion < toVersion)
+            {
+                _log.Info($"Apply upgrade to {toVersion}...");
+
+                _log.Info($"Add ApplicationName.BitCalculator to application list...");
+                Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.BitCalculator));
             }
 
             // Set to latest version and save
