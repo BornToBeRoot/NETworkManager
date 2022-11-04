@@ -3,7 +3,7 @@ layout: default
 title: Lookup
 parent: Application
 grand_parent: Documentation
-nav_order: 20
+nav_order: 21
 description: ""
 permalink: /Documentation/Application/Lookup
 ---
@@ -12,8 +12,8 @@ permalink: /Documentation/Application/Lookup
 
 ## OUI
 
-![Lookup_OUI](20_Lookup_OUI.png)
+![Lookup_OUI](21_Lookup_OUI.png)
 
 ## Port
 
-![Lookup_Port](20_Lookup_Port.png)
+![Lookup_Port](21_Lookup_Port.png)
