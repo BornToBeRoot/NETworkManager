@@ -3228,18 +3228,24 @@ Se não definidas, as configurações CLI padrão do AWS serão usadas.</value>
     <value>Comando</value>
   </data>
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>Apply theme to PowerShell console</value>
+    <value>Aplicar tema ao console do PowerShell</value>
   </data>
   <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
-    <value>The color of the PowerShell console can be changed to the application theme under General &gt; Appearance</value>
+    <value>A cor do console do PowerShell pode ser alterada para o tema do aplicativo em Geral &gt; Aparência</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
+    <value>Se você habilitar essa opção, as configurações padrão do console do PowerShell no registro em HKCU:\Console serão substituídas para que a janela do console do PowerShell corresponda ao tema do aplicativo. Esta é uma configuração global do sistema que pode afetar a aparência da janela normal do PowerShell.
 
-Only the PowerShell consoles configured in the PowerShell and AWS Session Manager settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+Somente os consoles do PowerShell configurados nas configurações do PowerShell e do AWS Session Manager são modificados. Há suporte para Windows PowerShell e PWSH (PowerShell 7 e superior).
 
-Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
+Clique no canto superior direito no botão de ajuda/documentação (à esquerda do botão minimizar) ou navegue até https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance para obter mais detalhes. Aqui estão os valores documentados que serão ajustados.
 
-If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
+Se a opção for desativada novamente, os valores não serão mais modificados. No entanto, os valores originais NÃO são restaurados.</value>
+  </data>
+  <data name="InputCannotEndWithSemicolon" xml:space="preserve">
+    <value>A entrada não pode terminar com ";"!</value>
+  </data>
+  <data name="InputDoesNotContainAnyText" xml:space="preserve">
+    <value>A entrada não contém nenhum texto!</value>
   </data>
 </root>
