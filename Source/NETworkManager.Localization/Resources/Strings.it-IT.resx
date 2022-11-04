@@ -3274,4 +3274,10 @@ Ecco i valori documentati che verranno adeguati.
 Se l'opzione viene nuovamente disabilitata, i valori non vengono più modificati. 
 Tuttavia, i valori originali NON vengono ripristinati.</value>
   </data>
+  <data name="InputCannotEndWithSemicolon" xml:space="preserve">
+    <value>L'input non può terminare con un ";"!</value>
+  </data>
+  <data name="InputDoesNotContainAnyText" xml:space="preserve">
+    <value>L'input non contiene testo!</value>
+  </data>
 </root>
