@@ -106,6 +106,11 @@
         ApplicationSubnetCalculator,
 
         /// <summary>
+        /// Bit Calculator documentation page.
+        /// </summary>
+        ApplicationBitCalculator,
+
+        /// <summary>
         /// Lookup documentation page.
         /// </summary>
         ApplicationLookup,

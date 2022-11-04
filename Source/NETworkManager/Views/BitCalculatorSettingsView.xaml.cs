@@ -2,11 +2,11 @@
 
 namespace NETworkManager.Views
 {
-    public partial class WakeOnLANSettingsView
+    public partial class BitCalculatorSettingsView
     {
-        private readonly WakeOnLANSettingsViewModel _viewModel = new();
+        private readonly BitCalculatorSettingsViewModel _viewModel = new();
 
-        public WakeOnLANSettingsView()
+        public BitCalculatorSettingsView()
         {
             InitializeComponent();
             DataContext = _viewModel;

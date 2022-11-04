@@ -5,11 +5,11 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Views
 {
-    public partial class WakeOnLANView
+    public partial class BitCalculatorView
     {
-        private readonly WakeOnLANViewModel _viewModel = new(DialogCoordinator.Instance);
+        private readonly BitCalculatorViewModel _viewModel = new(DialogCoordinator.Instance);
 
-        public WakeOnLANView()
+        public BitCalculatorView()
         {
             InitializeComponent();
             DataContext = _viewModel;
