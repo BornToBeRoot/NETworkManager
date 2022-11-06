@@ -1,7 +1,6 @@
 ﻿// Source: http://sanity-free.org/143/csharp_dotnet_single_instance_application.html
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace NETworkManager.Utilities

@@ -1,5 +1,7 @@
-﻿using NETworkManager.Settings;
-using NETworkManager.Utilities;
+﻿using NETworkManager.Models.Network;
+using NETworkManager.Settings;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -8,24 +10,26 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
-        /*
-        private int _defaultPort;
-        public int DefaultPort
+        public List<BitCaluclatorNotation> Notations { get; set; }
+
+        private BitCaluclatorNotation _notation;
+        public BitCaluclatorNotation Notation
         {
-            get => _defaultPort;
+            get => _notation;
             set
             {
-                if (value == _defaultPort)
+                if (value == _notation)
                     return;
 
-                if (!_isLoading)
-                    SettingsManager.Current.WakeOnLAN_Port = value;
 
-                _defaultPort = value;
+                if (!_isLoading)
+                    SettingsManager.Current.BitCalculator_Notation = value;
+
+
+                _notation = value;
                 OnPropertyChanged();
             }
         }
-        */
         #endregion
 
         #region Constructor, load settings
@@ -40,7 +44,8 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-          //  DefaultPort = SettingsManager.Current.WakeOnLAN_Port;
+            Notations = System.Enum.GetValues(typeof(BitCaluclatorNotation)).Cast<BitCaluclatorNotation>().OrderBy(x => x.ToString()).ToList();
+            Notation = Notations.First(x => x == SettingsManager.Current.BitCalculator_Notation);
         }
         #endregion
     }

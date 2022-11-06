@@ -14,19 +14,105 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"             
              dialogs:DialogParticipation.Register="{Binding}"
-             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:BitCalculatorViewModel}">    
-        <TabControl Grid.Row="0" Style="{StaticResource DefaultTabControl}">
-            <TabItem Header="{x:Static localization:Strings.BitCalculator}">
-                <Grid Margin="10">
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:BitCalculatorViewModel}">
+    <UserControl.Resources>
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+    </UserControl.Resources>
+    <TabControl Grid.Row="0" Style="{StaticResource DefaultTabControl}">
+        <TabItem Header="{x:Static localization:Strings.BitCalculator}">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.BitCalculator}" />
+                <Grid Grid.Row="1" Margin="0,0,0,20">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>                                      
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Input}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                        <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleBits}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+                            <ComboBox.Text>
+                                <Binding Path="Input" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                        <validators:NumberValidator ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
+                        <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.Unit}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
+                        <ComboBox x:Name="ComboBoxTypes" Grid.Column="6" Grid.Row="0" ItemsSource="{Binding QueryTypes}" SelectedItem="{Binding QueryType}" />
+                        <Button Grid.Column="8" Grid.Row="0" Command="{Binding LookupCommand}" IsDefault="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}" Value="True" >
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxTypes}" Value="True" >
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsLookupRunning}" Value="True">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Resources>
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Calculator}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1" FontSize="14" Text="{x:Static localization:Strings.Calculate}" Margin="10,5" TextAlignment="Center" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                    <!--
+                    <mahAppsControls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True">
+                        <mahAppsControls:MetroProgressBar.Style>
+                            <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsLookupRunning}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </mahAppsControls:MetroProgressBar.Style>
+                    </mahAppsControls:MetroProgressBar>
+                    <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+                    -->
                 </Grid>
+                <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}" />
+                <Grid Grid.Row="3">
 
-            </TabItem>
-        </TabControl>    
+                </Grid>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </UserControl>

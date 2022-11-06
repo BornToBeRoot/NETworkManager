@@ -3957,6 +3957,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input ähnelt.
+        /// </summary>
+        public static string Input {
+            get {
+                return ResourceManager.GetString("Input", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Input cannot end with a &quot;;&quot;! ähnelt.
         /// </summary>
         public static string InputCannotEndWithSemicolon {
@@ -5106,6 +5115,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NoPTRDNSRecordResolvedForXXXMessage {
             get {
                 return ResourceManager.GetString("NoPTRDNSRecordResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Notation ähnelt.
+        /// </summary>
+        public static string Notation {
+            get {
+                return ResourceManager.GetString("Notation", resourceCulture);
             }
         }
         
@@ -8614,6 +8632,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Unit ähnelt.
+        /// </summary>
+        public static string Unit {
+            get {
+                return ResourceManager.GetString("Unit", resourceCulture);
             }
         }
         

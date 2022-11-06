@@ -3206,4 +3206,13 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="BitCalculator" xml:space="preserve">
     <value>Bit Calculator</value>
   </data>
+  <data name="Notation" xml:space="preserve">
+    <value>Notation</value>
+  </data>
+  <data name="Input" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
 </root>

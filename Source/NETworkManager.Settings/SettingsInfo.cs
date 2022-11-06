@@ -3557,6 +3557,23 @@ namespace NETworkManager.Settings
 
         #endregion
 
+        #region Bit Calculator
+        private BitCaluclatorNotation _bitCalculator_Notation = GlobalStaticConfiguration.BitCalculator_Notation;
+        public BitCaluclatorNotation BitCalculator_Notation
+        {
+            get => _bitCalculator_Notation;
+            set
+            {
+                if (value == _bitCalculator_Notation)
+                    return;
+
+                _bitCalculator_Notation = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region Lookup
         private ObservableCollection<string> _lookup_OUI_MACAddressOrVendorHistory = new();
         public ObservableCollection<string> Lookup_OUI_MACAddressOrVendorHistory
