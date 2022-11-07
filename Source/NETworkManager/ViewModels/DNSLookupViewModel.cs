@@ -52,7 +52,7 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView DNSServers { get; }
 
-        private DNSServerInfo _dnsServer = new DNSServerInfo();
+        private DNSServerInfo _dnsServer = new();
         public DNSServerInfo DNSServer
         {
             get => _dnsServer;
@@ -69,7 +69,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private List<QueryType> _queryTypes = new List<QueryType>();
+        private List<QueryType> _queryTypes = new();
         public List<QueryType> QueryTypes
         {
             get => _queryTypes;
@@ -183,7 +183,7 @@ namespace NETworkManager.ViewModels
                 _statusMessage = value;
                 OnPropertyChanged();
             }
-        }        
+        }
         #endregion
 
         #region Contructor, load settings
@@ -234,7 +234,7 @@ namespace NETworkManager.ViewModels
         private void LoadTypes()
         {
             // Filter by common types...
-            QueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes ? System.Enum.GetValues(typeof(QueryType)).Cast<QueryType>().Where(x => (x == QueryType.A || x == QueryType.AAAA || x == QueryType.ANY || x == QueryType.CNAME || x == QueryType.MX || x == QueryType.NS || x == QueryType.PTR || x == QueryType.SOA || x == QueryType.TXT)).OrderBy(x => x.ToString()).ToList() : System.Enum.GetValues(typeof(QueryType)).Cast<QueryType>().OrderBy(x => x.ToString()).ToList();
+            QueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes ? Enum.GetValues(typeof(QueryType)).Cast<QueryType>().Where(x => (x == QueryType.A || x == QueryType.AAAA || x == QueryType.ANY || x == QueryType.CNAME || x == QueryType.MX || x == QueryType.NS || x == QueryType.PTR || x == QueryType.SOA || x == QueryType.TXT)).OrderBy(x => x.ToString()).ToList() : System.Enum.GetValues(typeof(QueryType)).Cast<QueryType>().OrderBy(x => x.ToString()).ToList();
             QueryType = QueryTypes.FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_QueryType);
 
             // Fallback

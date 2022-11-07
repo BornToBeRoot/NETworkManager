@@ -5,7 +5,7 @@ namespace NETworkManager.Views
 {
     public partial class SubnetCalculatorWideSubnetView
     {
-        private readonly SubnetCalculatorWideSubnetViewModel _viewModel = new SubnetCalculatorWideSubnetViewModel(DialogCoordinator.Instance);
+        private readonly SubnetCalculatorWideSubnetViewModel _viewModel = new(DialogCoordinator.Instance);
 
         public SubnetCalculatorWideSubnetView()
         {

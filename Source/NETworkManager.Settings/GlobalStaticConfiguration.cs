@@ -169,6 +169,7 @@ namespace NETworkManager.Settings
         public static ExportManager.ExportFileType SubnetCalculator_Subnetting_ExportFileType => ExportManager.ExportFileType.CSV;
 
         // Application: Bit Calculator
+        public static BitCaluclatorUnit BitCalculator_Unit => BitCaluclatorUnit.bytes;
         public static BitCaluclatorNotation BitCalculator_Notation => BitCaluclatorNotation.Binary;
 
         // Application: Lookup
