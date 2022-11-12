@@ -295,7 +295,7 @@ namespace NETworkManager.ViewModels
 
             var newExtension = ExportManager.GetFileExtensionAsString(fileType);
 
-            if (extension.Equals(newExtension, StringComparison.CurrentCultureIgnoreCase))
+            if (extension.Equals(newExtension, StringComparison.OrdinalIgnoreCase))
                 return;
 
             FilePath = FilePath[..^extension.Length] + newExtension.ToLower();
