@@ -16,17 +16,17 @@ Date: 31.10.2022 <br />
   <p>
     <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.10.31.0/NETworkManager_2022.10.31.0_Setup.exe' target="_blank">
       <span class="fs-5">
-        <button style="width:200px;" type="button" name="button" class="btn">:package: Setup</button>
+        <button style="width:125;" type="button" name="button" class="btn">:package: Setup</button>
       </span>
     </a>    
     <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.10.31.0/NETworkManager_2022.10.31.0_Portable.zip' target="_blank">
       <span class="fs-5">
-        <button style="width:200px;" type="button" name="button" class="btn">:package: Portable</button>
+        <button style="width:125px;" type="button" name="button" class="btn">:package: Portable</button>
       </span>
     </a> 
     <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.10.31.0/NETworkManager_2022.10.31.0_Archive.zip' target="_blank">
       <span class="fs-5">
-        <button style="width:200px;" type="button" name="button" class="btn">:package: Archive</button>
+        <button style="width:125px;" type="button" name="button" class="btn">:package: Archive</button>
       </span>
     </a> 
   </p>  
