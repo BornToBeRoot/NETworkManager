@@ -11,6 +11,7 @@ permalink: /Download
 ## 2022.10.31.0
 
 <div align="center">
+  <br />
   <p>
     <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.10.31.0/NETworkManager_2022.10.31.0_Setup.exe' target="_blank">
       <span class="fs-5">
