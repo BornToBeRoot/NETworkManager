@@ -27,6 +27,7 @@ permalink: /Features
 - [Wake on LAN](Documentation/Application/WakeOnLAN)
 - [Whois](Documentation/Application/Whois)
 - [Subnet Calculator](Documentation/Application/SubnetCalculator) - Calculator, Subnetting, Supernetting
+- [Bit Calculator](Documentation/Application/BitCalculator)
 - [Lookup](Documentation/Application/Lookup) - OUI, Port
 - [Connections](Documentation/Application/Connections)
 - [Listeners](Documentation/Application/Listeners)
