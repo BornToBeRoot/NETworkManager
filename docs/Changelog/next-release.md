@@ -16,7 +16,7 @@ permalink: /Changelog/next-release
 
 ## What's new?
 
-New App
+New Feature
 {: .label .label-green }
 
 - Bit Calculator [#1684](https://github.com/BornToBeRoot/NETworkManager/pull/1684){:target="\_blank"} (See [documentation](https://borntoberoot.net/NETworkManager/Documentation/Application/BitCalculator) for more details)
