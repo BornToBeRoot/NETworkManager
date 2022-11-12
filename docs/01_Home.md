@@ -16,12 +16,12 @@ You can connect to remote systems via Remote Desktop, PowerShell, PuTTY, TigerVN
   <p>
     <a href='./Download'>
       <span class="fs-5">
-        <button style="width:175px;" type="button" name="button" class="btn">:package: Download</button>
+        <button type="button" name="button" class="btn">:package: Download</button>
       </span>
     </a>    
     <a href='https://github.com/BornToBeRoot/NETworkManager' target="_blank">
       <span class="fs-5">
-        <button style="width:175px;" type="button" name="button" class="btn">:octocat: Github</button>
+        <button type="button" name="button" class="btn">:octocat: Github</button>
       </span>
     </a> 
   </p>  
