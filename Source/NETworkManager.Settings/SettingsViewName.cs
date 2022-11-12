@@ -25,6 +25,7 @@
         TigerVNC,
         SNMP,
         WakeOnLAN,
-        Whois
+        //Whois,
+        BitCalculator
     }
 }

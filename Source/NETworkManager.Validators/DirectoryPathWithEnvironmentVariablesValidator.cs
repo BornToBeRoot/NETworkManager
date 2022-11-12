@@ -22,7 +22,7 @@ namespace NETworkManager.Validators
         {
             var path = Environment.ExpandEnvironmentVariables((string)value);
 
-            return new Regex(RegexHelper.FilePath, RegexOptions.IgnoreCase).IsMatch(path) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidFilePath);
+            return new Regex(RegexHelper.FilePathRegex, RegexOptions.IgnoreCase).IsMatch(path) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.EnterValidFilePath);
         }
     }
 }

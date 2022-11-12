@@ -2676,51 +2676,6 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="ProfileViewName_General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="ProfileViewName_DNSLookup" xml:space="preserve">
-    <value>DNS Lookup</value>
-  </data>
-  <data name="ProfileViewName_HTTPHeaders" xml:space="preserve">
-    <value>HTTP Headers</value>
-  </data>
-  <data name="ProfileViewName_IP Scanner" xml:space="preserve">
-    <value>IP Scanner</value>
-  </data>
-  <data name="ProfileViewName_NetworkInterface" xml:space="preserve">
-    <value>Network Interface</value>
-  </data>
-  <data name="ProfileViewName_Ping" xml:space="preserve">
-    <value>Ping</value>
-  </data>
-  <data name="ProfileViewName_PingMonitor" xml:space="preserve">
-    <value>Ping Monitor</value>
-  </data>
-  <data name="ProfileViewName_PortScanner" xml:space="preserve">
-    <value>Port Scanner</value>
-  </data>
-  <data name="ProfileViewName_PowerShell" xml:space="preserve">
-    <value>PowerShell</value>
-  </data>
-  <data name="ProfileViewName_PuTTY" xml:space="preserve">
-    <value>PuTTY</value>
-  </data>
-  <data name="ProfileViewName_RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
-  </data>
-  <data name="ProfileViewName_TigerVNC" xml:space="preserve">
-    <value>TigerVNC</value>
-  </data>
-  <data name="ProfileViewName_Traceroute" xml:space="preserve">
-    <value>Traceroute</value>
-  </data>
-  <data name="ProfileViewName_WakeOnLAN" xml:space="preserve">
-    <value>Wake on LAN</value>
-  </data>
-  <data name="ProfileViewName_WebConsole" xml:space="preserve">
-    <value>Web Console</value>
-  </data>
-  <data name="ProfileViewName_Whois" xml:space="preserve">
-    <value>Whois</value>
-  </data>
   <data name="SettingsViewGroup_Applications" xml:space="preserve">
     <value>Applications</value>
   </data>
@@ -3191,9 +3146,6 @@ If not set, the default AWS CLI settings are used.</value>
 
 If not set, the default AWS CLI settings are used.</value>
   </data>
-  <data name="ProfileViewName_AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
-  </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
     <value>If not set, the default AWS CLI settings are used.</value>
   </data>
@@ -3247,5 +3199,56 @@ If the option is disabled again, the values are no longer modified. However, the
   </data>
   <data name="InputDoesNotContainAnyText" xml:space="preserve">
     <value>Input does not contain any text!</value>
+  </data>
+  <data name="ApplicationName_BitCalculator" xml:space="preserve">
+    <value>Bit Calculator</value>
+  </data>
+  <data name="BitCalculator" xml:space="preserve">
+    <value>Bit Calculator</value>
+  </data>
+  <data name="Notation" xml:space="preserve">
+    <value>Notation</value>
+  </data>
+  <data name="Input" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="Bits" xml:space="preserve">
+    <value>Bits</value>
+  </data>
+  <data name="Gigabits" xml:space="preserve">
+    <value>Gigabits</value>
+  </data>
+  <data name="Gigabytes" xml:space="preserve">
+    <value>Gigabytes</value>
+  </data>
+  <data name="Kilobits" xml:space="preserve">
+    <value>Kilobits</value>
+  </data>
+  <data name="Kilobytes" xml:space="preserve">
+    <value>Kilobytes</value>
+  </data>
+  <data name="Megabits" xml:space="preserve">
+    <value>Megabits</value>
+  </data>
+  <data name="Megabytes" xml:space="preserve">
+    <value>Megabytes</value>
+  </data>
+  <data name="Petabits" xml:space="preserve">
+    <value>Petabits</value>
+  </data>
+  <data name="Petabytes" xml:space="preserve">
+    <value>Petabytes</value>
+  </data>
+  <data name="Terabits" xml:space="preserve">
+    <value>Terabits</value>
+  </data>
+  <data name="Terabytes" xml:space="preserve">
+    <value>Terabytes</value>
+  </data>
+  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
+    <value>Enter a number and select a unit to calculate the units...</value>
   </data>
 </root>

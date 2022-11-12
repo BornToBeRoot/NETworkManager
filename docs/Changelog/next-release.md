@@ -16,9 +16,15 @@ permalink: /Changelog/next-release
 
 ## What's new?
 
+New Feature
+{: .label .label-green }
+
+- Bit Calculator [#1684](https://github.com/BornToBeRoot/NETworkManager/pull/1684){:target="\_blank"} (See [documentation](https://borntoberoot.net/NETworkManager/Documentation/Application/BitCalculator) for more details)
+
 ## Improvements
 
 ## Bugfixes
+
 - Lookup - OUI, Lookup
   - Input cannot end with ";" [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
 

@@ -306,4 +306,7 @@
   <data name="ExampleAWSRegion" xml:space="preserve">
     <value>eu-central-1</value>
   </data>
+  <data name="ExampleBits" xml:space="preserve">
+    <value>1024</value>
+  </data>
 </root>

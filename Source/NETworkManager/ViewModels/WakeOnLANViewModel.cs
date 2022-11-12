@@ -226,7 +226,7 @@ namespace NETworkManager.ViewModels
                 _expandProfileView = value;
 
                 if (_canProfileWidthChange)
-                    ResizeClient(false);
+                    ResizeProfile(false);
 
                 OnPropertyChanged();
             }
@@ -247,7 +247,7 @@ namespace NETworkManager.ViewModels
                 _profileWidth = value;
 
                 if (_canProfileWidthChange)
-                    ResizeClient(true);
+                    ResizeProfile(true);
 
                 OnPropertyChanged();
             }
@@ -427,7 +427,7 @@ namespace NETworkManager.ViewModels
             IsSearching = false;
         }
 
-        private void ResizeClient(bool dueToChangedSize)
+        private void ResizeProfile(bool dueToChangedSize)
         {
             _canProfileWidthChange = false;
 

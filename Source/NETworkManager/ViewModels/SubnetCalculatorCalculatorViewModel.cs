@@ -161,7 +161,6 @@ namespace NETworkManager.ViewModels
         #region Constructor, load settings
         public SubnetCalculatorCalculatorViewModel()
         {
-            // Set collection view
             SubnetHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory);
         }
         #endregion
@@ -192,7 +191,7 @@ namespace NETworkManager.ViewModels
             FirstIPAddress = subnet.FirstUsable;
             LastIPAddress = subnet.LastUsable;
             Hosts = subnet.Usable;
-            
+
             IsResultVisible = true;
 
             AddSubnetToHistory(Subnet);

@@ -6,7 +6,7 @@ namespace NETworkManager.Views
 {
     public partial class SubnetCalculatorSubnettingView
     {
-        private readonly SubnetCalculatorSubnettingViewModel _viewModel = new SubnetCalculatorSubnettingViewModel(DialogCoordinator.Instance);
+        private readonly SubnetCalculatorSubnettingViewModel _viewModel = new(DialogCoordinator.Instance);
 
         public SubnetCalculatorSubnettingView()
         {

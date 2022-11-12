@@ -3557,6 +3557,54 @@ namespace NETworkManager.Settings
 
         #endregion
 
+        #region Bit Calculator
+        private ObservableCollection<string> _bitCalculator_InputHistory = new();
+        public ObservableCollection<string> BitCalculator_InputHistory
+        {
+            get => _bitCalculator_InputHistory;
+            set
+            {
+                if (value == _bitCalculator_InputHistory)
+                    return;
+
+                _bitCalculator_InputHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private BitCaluclatorUnit _bitCalculator_Unit = GlobalStaticConfiguration.BitCalculator_Unit;
+            public BitCaluclatorUnit BitCalculator_Unit
+        {
+            get => _bitCalculator_Unit;
+            set
+            {
+                if (value == _bitCalculator_Unit)
+                    return;
+
+                _bitCalculator_Unit = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+
+        private BitCaluclatorNotation _bitCalculator_Notation = GlobalStaticConfiguration.BitCalculator_Notation;
+        public BitCaluclatorNotation BitCalculator_Notation
+        {
+            get => _bitCalculator_Notation;
+            set
+            {
+                if (value == _bitCalculator_Notation)
+                    return;
+
+                _bitCalculator_Notation = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region Lookup
         private ObservableCollection<string> _lookup_OUI_MACAddressOrVendorHistory = new();
         public ObservableCollection<string> Lookup_OUI_MACAddressOrVendorHistory

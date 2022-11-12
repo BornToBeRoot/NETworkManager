@@ -86,7 +86,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<IPNetworkInfo> _subnetsResult = new ObservableCollection<IPNetworkInfo>();
+        private ObservableCollection<IPNetworkInfo> _subnetsResult = new();
         public ObservableCollection<IPNetworkInfo> SubnetsResult
         {
             get => _subnetsResult;

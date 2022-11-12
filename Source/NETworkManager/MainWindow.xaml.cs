@@ -423,9 +423,9 @@ namespace NETworkManager
                     SettingsManager.Current.AWSSessionManager_AWSProfiles = new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
 
                     // Check if PowerShell is installed
-                    foreach(var file in Models.PowerShell.PowerShell.GetDefaultIntallationPaths)
+                    foreach (var file in Models.PowerShell.PowerShell.GetDefaultIntallationPaths)
                     {
-                        if(File.Exists(file))
+                        if (File.Exists(file))
                         {
                             SettingsManager.Current.PowerShell_ApplicationFilePath = file;
                             SettingsManager.Current.AWSSessionManager_ApplicationFilePath = file;
@@ -609,6 +609,7 @@ namespace NETworkManager
         private DiscoveryProtocolView _discoveryProtocolView;
         private WakeOnLANView _wakeOnLanView;
         private SubnetCalculatorHostView _subnetCalculatorHostView;
+        private BitCalculatorView _bitCalculatorView;
         private LookupHostView _lookupHostView;
         private WhoisHostView _whoisHostView;
         private ConnectionsView _connectionsView;
@@ -773,16 +774,24 @@ namespace NETworkManager
                 case ApplicationName.SubnetCalculator:
                     if (_subnetCalculatorHostView == null)
                         _subnetCalculatorHostView = new SubnetCalculatorHostView();
-                    //else
-                    //    _subnetCalculatorHostView.OnViewVisible();
+                    else
+                        _subnetCalculatorHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _subnetCalculatorHostView;
+                    break;
+                case ApplicationName.BitCalculator:
+                    if (_bitCalculatorView == null)
+                        _bitCalculatorView = new BitCalculatorView();
+                    else
+                        _bitCalculatorView.OnViewVisible();
+
+                    ContentControlApplication.Content = _bitCalculatorView;
                     break;
                 case ApplicationName.Lookup:
                     if (_lookupHostView == null)
                         _lookupHostView = new LookupHostView();
-                    //else
-                    //    _lookupHostView.OnViewVisible();
+                    else
+                        _lookupHostView.OnViewVisible();
 
                     ContentControlApplication.Content = _lookupHostView;
                     break;
@@ -868,12 +877,15 @@ namespace NETworkManager
                 case ApplicationName.WakeOnLAN:
                     _wakeOnLanView?.OnViewHide();
                     break;
-                //case ApplicationName.Lookup:
-                //    _lookupHostView?.OnViewHide();
-                //    break;
-                //case ApplicationName.SubnetCalculator:
-                //    _subnetCalculatorHostView?.OnViewHide();
-                //    break;
+                case ApplicationName.Lookup:
+                    _lookupHostView?.OnViewHide();
+                    break;
+                case ApplicationName.SubnetCalculator:
+                    _subnetCalculatorHostView?.OnViewHide();
+                    break;
+                case ApplicationName.BitCalculator:
+                    _bitCalculatorView?.OnViewHide();
+                    break;
                 case ApplicationName.Connections:
                     _connectionsView?.OnViewHide();
                     break;
@@ -961,6 +973,8 @@ namespace NETworkManager
                 case ApplicationName.Whois:
                     break;
                 case ApplicationName.SubnetCalculator:
+                    break;
+                case ApplicationName.BitCalculator:
                     break;
                 case ApplicationName.Lookup:
                     break;

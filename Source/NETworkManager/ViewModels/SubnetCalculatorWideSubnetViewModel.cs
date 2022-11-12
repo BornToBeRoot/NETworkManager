@@ -221,7 +221,7 @@ namespace NETworkManager.ViewModels
             var subnet1 = IPNetwork.Parse(Subnet1);
             var subnet2 = IPNetwork.Parse(Subnet2);
 
-            var subnet = IPNetwork.WideSubnet(new [] {subnet1, subnet2}); //IPNetwork.WideSubnet(new[] { subnet1, subnet2 });
+            var subnet = IPNetwork.WideSubnet(new [] {subnet1, subnet2});
 
             NetworkAddress = subnet.Network;
             Broadcast = subnet.Broadcast;

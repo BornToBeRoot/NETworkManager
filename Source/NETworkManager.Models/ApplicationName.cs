@@ -106,6 +106,11 @@
         SubnetCalculator,
 
         /// <summary>
+        /// Bit calculator application.
+        /// </summary>
+        BitCalculator,
+
+        /// <summary>
         /// Lookup application.
         /// </summary>
         Lookup,

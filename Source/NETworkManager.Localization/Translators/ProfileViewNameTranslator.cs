@@ -20,9 +20,11 @@ namespace NETworkManager.Localization.Translators
         /// <returns>Translated <see cref="ProfileViewName"/>.</returns>
         public string Translate(string value)
         {
+            // Get the translation for the profile page
             var translation = Resources.Strings.ResourceManager.GetString(_identifier + value, LocalizationManager.GetInstance().Culture);
 
-            return string.IsNullOrEmpty(translation) ? value : translation;
+            // If empty, try to get application name
+            return string.IsNullOrEmpty(translation) ? ApplicationNameTranslator.GetInstance().Translate(value) : translation;
         }
 
         /// <summary>

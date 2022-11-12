@@ -122,7 +122,8 @@ namespace NETworkManager.ViewModels
         private TigerVNCSettingsView _tigerVNCSettingsView;
         private SNMPSettingsView _snmpSettingsView;
         private WakeOnLANSettingsView _wakeOnLANSettingsView;
-        private WhoisSettingsView _whoisSettingsView;
+        //private WhoisSettingsView _whoisSettingsView;
+        private BitCalculatorSettingsView _bitCalculatorSettingsView;
         #endregion
 
         #region Contructor, load settings
@@ -300,25 +301,29 @@ namespace NETworkManager.ViewModels
 
                     SettingsContent = _wakeOnLANSettingsView;
                     break;
+                /*
                 case SettingsViewName.Whois:
                     _whoisSettingsView ??= new WhoisSettingsView();
 
                     SettingsContent = _whoisSettingsView;
+                    break;
+                */
+                case SettingsViewName.BitCalculator:
+                    _bitCalculatorSettingsView ??= new BitCalculatorSettingsView();
+
+                    SettingsContent = _bitCalculatorSettingsView;
                     break;
             }
         }
 
         public DocumentationIdentifier GetDocumentationIdentifier()
         {
-            switch(SelectedTabIndex)
+            return SelectedTabIndex switch
             {
-                case 0:
-                    return DocumentationManager.GetIdentifierBySettingsName(SelectedSettingsView.Name);
-                case 1:
-                    return DocumentationIdentifier.Profiles;
-                default:
-                    return DocumentationIdentifier.Default;
-            }
+                0 => DocumentationManager.GetIdentifierBySettingsName(SelectedSettingsView.Name),
+                1 => DocumentationIdentifier.Profiles,
+                _ => DocumentationIdentifier.Default,
+            };
         }
         #endregion
     }

@@ -41,6 +41,7 @@ namespace NETworkManager.Documentation
             new DocumentationInfo(DocumentationIdentifier.ApplicationWakeOnLan, @"Documentation/Application/WakeOnLAN"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationWhois, @"Documentation/Application/Whois"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationSubnetCalculator, @"Documentation/Application/SubnetCalculator"),
+            new DocumentationInfo(DocumentationIdentifier.ApplicationBitCalculator, @"Documentation/Application/BitCalculator"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationLookup, @"Documentation/Application/Lookup"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationConnections, @"Documentation/Application/Connection"),
             new DocumentationInfo(DocumentationIdentifier.ApplicationListeners, @"Documentation/Application/Listeners"),
@@ -128,6 +129,7 @@ namespace NETworkManager.Documentation
                 ApplicationName.WakeOnLAN => DocumentationIdentifier.ApplicationWakeOnLan,
                 ApplicationName.Whois => DocumentationIdentifier.ApplicationWhois,
                 ApplicationName.SubnetCalculator => DocumentationIdentifier.ApplicationSubnetCalculator,
+                ApplicationName.BitCalculator => DocumentationIdentifier.ApplicationBitCalculator,
                 ApplicationName.Lookup => DocumentationIdentifier.ApplicationLookup,
                 ApplicationName.Connections => DocumentationIdentifier.ApplicationConnections,
                 ApplicationName.Listeners => DocumentationIdentifier.ApplicationListeners,
@@ -169,7 +171,8 @@ namespace NETworkManager.Documentation
                 SettingsViewName.TigerVNC => GetIdentifierByAppliactionName(ApplicationName.TigerVNC),
                 SettingsViewName.SNMP => GetIdentifierByAppliactionName(ApplicationName.SNMP),
                 SettingsViewName.WakeOnLAN => GetIdentifierByAppliactionName(ApplicationName.WakeOnLAN),
-                SettingsViewName.Whois => GetIdentifierByAppliactionName(ApplicationName.Whois),
+                //SettingsViewName.Whois => GetIdentifierByAppliactionName(ApplicationName.Whois),
+                SettingsViewName.BitCalculator => GetIdentifierByAppliactionName(ApplicationName.BitCalculator),
                 _ => DocumentationIdentifier.Default,
             };
         }

@@ -673,6 +673,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bit Calculator ähnelt.
+        /// </summary>
+        public static string ApplicationName_BitCalculator {
+            get {
+                return ResourceManager.GetString("ApplicationName_BitCalculator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Connections ähnelt.
         /// </summary>
         public static string ApplicationName_Connections {
@@ -1155,6 +1164,24 @@ namespace NETworkManager.Localization.Resources {
         public static string BeaconInterval {
             get {
                 return ResourceManager.GetString("BeaconInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bit Calculator ähnelt.
+        /// </summary>
+        public static string BitCalculator {
+            get {
+                return ResourceManager.GetString("BitCalculator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bits ähnelt.
+        /// </summary>
+        public static string Bits {
+            get {
+                return ResourceManager.GetString("Bits", resourceCulture);
             }
         }
         
@@ -2880,6 +2907,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a number and select a unit to calculate the units... ähnelt.
+        /// </summary>
+        public static string EnterANumberAndSelectAUnitToCalculateTheUnits {
+            get {
+                return ResourceManager.GetString("EnterANumberAndSelectAUnitToCalculateTheUnits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Enter a subnet to calculate it... ähnelt.
         /// </summary>
         public static string EnterASubnetToCalculateIt {
@@ -3458,6 +3494,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Gigabits ähnelt.
+        /// </summary>
+        public static string Gigabits {
+            get {
+                return ResourceManager.GetString("Gigabits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Gigabytes ähnelt.
+        /// </summary>
+        public static string Gigabytes {
+            get {
+                return ResourceManager.GetString("Gigabytes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Got &quot;{0}&quot; as public ip address from &quot;{1}&quot;! ähnelt.
         /// </summary>
         public static string GotXXXAsPublicIPAddressFromXXXMessage {
@@ -3939,6 +3993,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input ähnelt.
+        /// </summary>
+        public static string Input {
+            get {
+                return ResourceManager.GetString("Input", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Input cannot end with a &quot;;&quot;! ähnelt.
         /// </summary>
         public static string InputCannotEndWithSemicolon {
@@ -4196,6 +4259,24 @@ namespace NETworkManager.Localization.Resources {
         public static string KeyMustHave8CharactersOrMore {
             get {
                 return ResourceManager.GetString("KeyMustHave8CharactersOrMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Kilobits ähnelt.
+        /// </summary>
+        public static string Kilobits {
+            get {
+                return ResourceManager.GetString("Kilobits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Kilobytes ähnelt.
+        /// </summary>
+        public static string Kilobytes {
+            get {
+                return ResourceManager.GetString("Kilobytes", resourceCulture);
             }
         }
         
@@ -4722,6 +4803,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Megabits ähnelt.
+        /// </summary>
+        public static string Megabits {
+            get {
+                return ResourceManager.GetString("Megabits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Megabytes ähnelt.
+        /// </summary>
+        public static string Megabytes {
+            get {
+                return ResourceManager.GetString("Megabytes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Menu and window animation ähnelt.
         /// </summary>
         public static string MenuAndWindowAnimation {
@@ -5088,6 +5187,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NoPTRDNSRecordResolvedForXXXMessage {
             get {
                 return ResourceManager.GetString("NoPTRDNSRecordResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Notation ähnelt.
+        /// </summary>
+        public static string Notation {
+            get {
+                return ResourceManager.GetString("Notation", resourceCulture);
             }
         }
         
@@ -5540,6 +5648,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Petabits ähnelt.
+        /// </summary>
+        public static string Petabits {
+            get {
+                return ResourceManager.GetString("Petabits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Petabytes ähnelt.
+        /// </summary>
+        public static string Petabytes {
+            get {
+                return ResourceManager.GetString("Petabytes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Phy kind ähnelt.
         /// </summary>
         public static string PhyKind {
@@ -5850,155 +5976,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die AWS Session Manager ähnelt.
-        /// </summary>
-        public static string ProfileViewName_AWSSessionManager {
-            get {
-                return ResourceManager.GetString("ProfileViewName_AWSSessionManager", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DNS Lookup ähnelt.
-        /// </summary>
-        public static string ProfileViewName_DNSLookup {
-            get {
-                return ResourceManager.GetString("ProfileViewName_DNSLookup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die General ähnelt.
         /// </summary>
         public static string ProfileViewName_General {
             get {
                 return ResourceManager.GetString("ProfileViewName_General", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die HTTP Headers ähnelt.
-        /// </summary>
-        public static string ProfileViewName_HTTPHeaders {
-            get {
-                return ResourceManager.GetString("ProfileViewName_HTTPHeaders", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die IP Scanner ähnelt.
-        /// </summary>
-        public static string ProfileViewName_IP_Scanner {
-            get {
-                return ResourceManager.GetString("ProfileViewName_IP Scanner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Network Interface ähnelt.
-        /// </summary>
-        public static string ProfileViewName_NetworkInterface {
-            get {
-                return ResourceManager.GetString("ProfileViewName_NetworkInterface", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ping ähnelt.
-        /// </summary>
-        public static string ProfileViewName_Ping {
-            get {
-                return ResourceManager.GetString("ProfileViewName_Ping", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ping Monitor ähnelt.
-        /// </summary>
-        public static string ProfileViewName_PingMonitor {
-            get {
-                return ResourceManager.GetString("ProfileViewName_PingMonitor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Port Scanner ähnelt.
-        /// </summary>
-        public static string ProfileViewName_PortScanner {
-            get {
-                return ResourceManager.GetString("ProfileViewName_PortScanner", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die PowerShell ähnelt.
-        /// </summary>
-        public static string ProfileViewName_PowerShell {
-            get {
-                return ResourceManager.GetString("ProfileViewName_PowerShell", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die PuTTY ähnelt.
-        /// </summary>
-        public static string ProfileViewName_PuTTY {
-            get {
-                return ResourceManager.GetString("ProfileViewName_PuTTY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Remote Desktop ähnelt.
-        /// </summary>
-        public static string ProfileViewName_RemoteDesktop {
-            get {
-                return ResourceManager.GetString("ProfileViewName_RemoteDesktop", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die TigerVNC ähnelt.
-        /// </summary>
-        public static string ProfileViewName_TigerVNC {
-            get {
-                return ResourceManager.GetString("ProfileViewName_TigerVNC", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Traceroute ähnelt.
-        /// </summary>
-        public static string ProfileViewName_Traceroute {
-            get {
-                return ResourceManager.GetString("ProfileViewName_Traceroute", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Wake on LAN ähnelt.
-        /// </summary>
-        public static string ProfileViewName_WakeOnLAN {
-            get {
-                return ResourceManager.GetString("ProfileViewName_WakeOnLAN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Web Console ähnelt.
-        /// </summary>
-        public static string ProfileViewName_WebConsole {
-            get {
-                return ResourceManager.GetString("ProfileViewName_WebConsole", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Whois ähnelt.
-        /// </summary>
-        public static string ProfileViewName_Whois {
-            get {
-                return ResourceManager.GetString("ProfileViewName_Whois", resourceCulture);
             }
         }
         
@@ -8339,6 +8321,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Terabits ähnelt.
+        /// </summary>
+        public static string Terabits {
+            get {
+                return ResourceManager.GetString("Terabits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Terabytes ähnelt.
+        /// </summary>
+        public static string Terabytes {
+            get {
+                return ResourceManager.GetString("Terabytes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die The application can be started without parameters! ähnelt.
         /// </summary>
         public static string TheApplicationCanBeStartedWithoutParameters {
@@ -8740,6 +8740,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Unit ähnelt.
+        /// </summary>
+        public static string Unit {
+            get {
+                return ResourceManager.GetString("Unit", resourceCulture);
             }
         }
         

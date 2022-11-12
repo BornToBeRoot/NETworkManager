@@ -82,12 +82,15 @@ namespace NETworkManager.Utilities
         public const string PortRegex = @"^" + PortValues + @"$";
                 
         // Match any filepath (like "c:\temp\") --> https://www.codeproject.com/Tips/216238/Regular-Expression-to-Validate-File-Path-and-Exten
-        public const string FilePath = @"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+$";
+        public const string FilePathRegex = @"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+$";
 
         // Match any fullname (like "c:\temp\test.txt") --> https://www.codeproject.com/Tips/216238/Regular-Expression-to-Validate-File-Path-and-Exten
-        public const string FullName = @"^(?:[\w]\:|\\)(\\[a-zA-Z0-9_\-\s\.()~!@#$%^&=+';,{}\[\]]+)+\.[a-zA-z0-9]{1,4}$";
+        public const string FullNameRegex = @"^(?:[\w]\:|\\)(\\[a-zA-Z0-9_\-\s\.()~!@#$%^&=+';,{}\[\]]+)+\.[a-zA-z0-9]{1,4}$";
 
         // Match a string that doesn't end with ";" (like "80; ldap; ssh; 443")
-        public const string StringNotEndWithSemicolon = @"^.*[^;]$";
+        public const string StringNotEndWithSemicolonRegex = @"^.*[^;]$";
+
+        // Match a number (like 12, 12.4, 12,3) 
+        public const string NumberRegex = @"^\d+((\.|,)\d+)?$";
     }
 }

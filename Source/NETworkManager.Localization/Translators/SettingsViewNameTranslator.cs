@@ -20,7 +20,7 @@ namespace NETworkManager.Localization.Translators
         /// <returns>Translated <see cref="SettingsViewName"/>.</returns>
         public string Translate(string value)
         {
-            // Get translation for settings page
+            // Get the translation for the settings page
             var translation = Resources.Strings.ResourceManager.GetString(_identifier + value, LocalizationManager.GetInstance().Culture);
 
             // If empty, try to get application name

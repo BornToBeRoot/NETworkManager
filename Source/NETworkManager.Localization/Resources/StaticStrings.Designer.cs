@@ -106,6 +106,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1024 ähnelt.
+        /// </summary>
+        public static string ExampleBits {
+            get {
+                return ResourceManager.GetString("ExampleBits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Windows-Testuser ähnelt.
         /// </summary>
         public static string ExampleCredentialName {
