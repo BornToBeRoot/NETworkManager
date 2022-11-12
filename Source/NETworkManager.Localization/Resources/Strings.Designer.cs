@@ -1177,6 +1177,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bits ähnelt.
+        /// </summary>
+        public static string Bits {
+            get {
+                return ResourceManager.GetString("Bits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Black ähnelt.
         /// </summary>
         public static string Black {
@@ -2898,6 +2907,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a number and select a unit to calculate the units... ähnelt.
+        /// </summary>
+        public static string EnterANumberAndSelectAUnitToCalculateTheUnits {
+            get {
+                return ResourceManager.GetString("EnterANumberAndSelectAUnitToCalculateTheUnits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Enter a subnet to calculate it... ähnelt.
         /// </summary>
         public static string EnterASubnetToCalculateIt {
@@ -3472,6 +3490,24 @@ namespace NETworkManager.Localization.Resources {
         public static string GHz5 {
             get {
                 return ResourceManager.GetString("GHz5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Gigabits ähnelt.
+        /// </summary>
+        public static string Gigabits {
+            get {
+                return ResourceManager.GetString("Gigabits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Gigabytes ähnelt.
+        /// </summary>
+        public static string Gigabytes {
+            get {
+                return ResourceManager.GetString("Gigabytes", resourceCulture);
             }
         }
         
@@ -4227,6 +4263,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Kilobits ähnelt.
+        /// </summary>
+        public static string Kilobits {
+            get {
+                return ResourceManager.GetString("Kilobits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Kilobytes ähnelt.
+        /// </summary>
+        public static string Kilobytes {
+            get {
+                return ResourceManager.GetString("Kilobytes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Language ähnelt.
         /// </summary>
         public static string Language {
@@ -4745,6 +4799,24 @@ namespace NETworkManager.Localization.Resources {
         public static string MeasuredTime {
             get {
                 return ResourceManager.GetString("MeasuredTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Megabits ähnelt.
+        /// </summary>
+        public static string Megabits {
+            get {
+                return ResourceManager.GetString("Megabits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Megabytes ähnelt.
+        /// </summary>
+        public static string Megabytes {
+            get {
+                return ResourceManager.GetString("Megabytes", resourceCulture);
             }
         }
         
@@ -5572,6 +5644,24 @@ namespace NETworkManager.Localization.Resources {
         public static string PersistentBitmapCaching {
             get {
                 return ResourceManager.GetString("PersistentBitmapCaching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Petabits ähnelt.
+        /// </summary>
+        public static string Petabits {
+            get {
+                return ResourceManager.GetString("Petabits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Petabytes ähnelt.
+        /// </summary>
+        public static string Petabytes {
+            get {
+                return ResourceManager.GetString("Petabytes", resourceCulture);
             }
         }
         
@@ -8227,6 +8317,24 @@ namespace NETworkManager.Localization.Resources {
         public static string TelnetPort {
             get {
                 return ResourceManager.GetString("TelnetPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Terabits ähnelt.
+        /// </summary>
+        public static string Terabits {
+            get {
+                return ResourceManager.GetString("Terabits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Terabytes ähnelt.
+        /// </summary>
+        public static string Terabytes {
+            get {
+                return ResourceManager.GetString("Terabytes", resourceCulture);
             }
         }
         

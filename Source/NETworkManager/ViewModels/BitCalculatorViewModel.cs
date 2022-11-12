@@ -10,12 +10,14 @@ using System.Windows.Data;
 using MahApps.Metro.Controls;
 using System.Windows.Input;
 using System.Windows;
+using log4net;
 
 namespace NETworkManager.ViewModels
 {
     public class BitCalculatorViewModel : ViewModelBase
     {
         #region  Variables 
+        private static readonly ILog _log = LogManager.GetLogger(typeof(BitCalculatorViewModel));
         private readonly IDialogCoordinator _dialogCoordinator;
 
         private readonly bool _isLoading = true;
@@ -68,20 +70,6 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _isStatusMessageDisplayed;
-        public bool IsStatusMessageDisplayed
-        {
-            get => _isStatusMessageDisplayed;
-            set
-            {
-                if (value == _isStatusMessageDisplayed)
-                    return;
-
-                _isStatusMessageDisplayed = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _isCalculationRunning;
         public bool IsCalculationRunning
         {
@@ -111,16 +99,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private string _statusMessage;
-        public string StatusMessage
+        private BitCaluclatorInfo _result = new();
+        public BitCaluclatorInfo Result
         {
-            get => _statusMessage;
+            get => _result;
             set
             {
-                if (value == _statusMessage)
+                if (value == _result)
                     return;
 
-                _statusMessage = value;
+                _result = value;
                 OnPropertyChanged();
             }
         }
@@ -160,15 +148,25 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        private void Calculate()
+        private async void Calculate()
         {
+            IsResultVisible = false;
+            IsCalculationRunning = true;
+
+            if (double.TryParse(Input.Replace('.', ','), out double input))
+            {
+                Result = await BitCaluclator.CalculateAsync(input, Unit, SettingsManager.Current.BitCalculator_Notation);
+            }
+            else
+            {
+                _log.Error($"Could not parse input \"{Input}\" into double!");
+            }
+
             IsResultVisible = true;
 
-            MessageBox.Show(Input);
-
-            IsResultVisible = false;
-
             AddInputToHistory(Input);
+
+            IsCalculationRunning = false;
         }
 
         private void AddInputToHistory(string input)

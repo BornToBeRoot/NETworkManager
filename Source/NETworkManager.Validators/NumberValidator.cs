@@ -1,5 +1,7 @@
-﻿using System.Globalization;
-using System.Linq;
+﻿using NETworkManager.Localization.Resources;
+using NETworkManager.Utilities;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace NETworkManager.Validators
@@ -8,7 +10,7 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return ((string)value).All(char.IsNumber) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.OnlyNumbersCanBeEntered);
+            return Regex.IsMatch(((string)value).Trim(), RegexHelper.NumberRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Strings.OnlyNumbersCanBeEntered);
         }
     }
 }

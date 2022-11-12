@@ -15,7 +15,8 @@
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:BitCalculatorViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
-        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />        
     </UserControl.Resources>
     <TabControl Grid.Row="0" Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.BitCalculator}">
@@ -23,14 +24,11 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-
                 <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.BitCalculator}" />
                 <Grid Grid.Row="1" Margin="0,0,0,20">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
@@ -88,7 +86,7 @@
                                 </Grid>
                             </Button.Content>
                         </Button>
-                    </Grid>                    
+                    </Grid>
                     <mahAppsControls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource MahApps.Brushes.Accent}" IsIndeterminate="True">
                         <mahAppsControls:MetroProgressBar.Style>
                             <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
@@ -100,12 +98,66 @@
                             </Style>
                         </mahAppsControls:MetroProgressBar.Style>
                     </mahAppsControls:MetroProgressBar>
-                    <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />                    
                 </Grid>
                 <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}" />
-                <Grid Grid.Row="3">
-
-                </Grid>
+                <StackPanel Grid.Row="2">
+                    <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                    <ScrollViewer Style="{DynamicResource DefaultScrollViewer}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Grid>
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                                    <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <GridSplitter Grid.Column="1" Grid.RowSpan="14" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False"/>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Bits}" />
+                            <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Result.Bits}" />
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Bytes}" />
+                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Result.Bytes}" />
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Kilobits}" />
+                            <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Result.Kilobits}" />
+                            <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Kilobytes}" />
+                            <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Result.Kilobytes}" />
+                            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Megabits}" />
+                            <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding Result.Megabits}" />
+                            <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.Megabytes}" />
+                            <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding Result.Megabytes}" />
+                            <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.Gigabits}" />
+                            <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Result.Gigabits}" />
+                            <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Gigabytes}" />
+                            <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Result.Gigabytes}" />
+                            <TextBlock Grid.Column="0" Grid.Row="8" Text="{x:Static localization:Strings.Terabits}" />
+                            <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding Result.Terabits}" />
+                            <TextBlock Grid.Column="0" Grid.Row="9" Text="{x:Static localization:Strings.Terabytes}" />
+                            <TextBox Grid.Column="2" Grid.Row="9" Text="{Binding Result.Terabytes}" />
+                            <TextBlock Grid.Column="0" Grid.Row="10" Text="{x:Static localization:Strings.Petabits}" />
+                            <TextBox Grid.Column="2" Grid.Row="10" Text="{Binding Result.Petabits}" />
+                            <TextBlock Grid.Column="0" Grid.Row="11" Text="{x:Static localization:Strings.Petabytes}" />
+                            <TextBox Grid.Column="2" Grid.Row="11" Text="{Binding Result.Petabytes}" />
+                        </Grid>
+                    </ScrollViewer>
+                </StackPanel>
+                <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Text="{x:Static localization:Strings.EnterANumberAndSelectAUnitToCalculateTheUnits}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="10,0" />
             </Grid>
         </TabItem>
     </TabControl>

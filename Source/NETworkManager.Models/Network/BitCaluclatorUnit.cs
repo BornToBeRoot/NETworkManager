@@ -6,63 +6,63 @@
     public enum BitCaluclatorUnit
     {
         /// <summary>
-        /// 
+        /// Unit bits.
         /// </summary>
-        bits,
+        Bits,
 
         /// <summary>
-        /// 
+        /// Unit bytes.
         /// </summary>
-        bytes,
+        Bytes,
 
         /// <summary>
-        /// 
+        /// Unit kilobits
         /// </summary>
-        kilobits,
+        Kilobits,
 
         /// <summary>
-        /// 
+        /// Unit kilobytes
         /// </summary>
-        kilobytes,
+        Kilobytes,
 
         /// <summary>
-        /// 
+        /// Unit megabits
         /// </summary>
-        megabits,
+        Megabits,
 
         /// <summary>
-        /// 
+        /// Unit megabytes
         /// </summary>
-        megabytes,
+        Megabytes,
 
         /// <summary>
-        /// 
+        /// Unit gigabits
         /// </summary>
-        gigabits,
+        Gigabits,
 
         /// <summary>
-        /// 
+        /// Unit gigabytes
         /// </summary>
-        gigabytes,
+        Gigabytes,
 
         /// <summary>
-        /// 
+        /// Unit terabits
         /// </summary>
-        terabit,
+        Terabits,
 
         /// <summary>
-        /// 
+        /// Unit terabytes
         /// </summary>
-        terabyte,
+        Terabytes,
 
         /// <summary>
-        /// 
+        /// Unit petabits
         /// </summary>
-        petabit,
+        Petabits,
 
         /// <summary>
-        /// 
+        /// Unit petabytes
         /// </summary>
-        petabyte
+        Petabytes
     }
 }
