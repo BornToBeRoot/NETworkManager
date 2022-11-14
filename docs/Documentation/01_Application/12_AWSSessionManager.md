@@ -23,6 +23,7 @@ The following prerequisites must be met to use AWS Systems Manager Session Manag
 1. [Setup AWS CLI & Session Manager plugin](#setup-aws-cli--session-manager-plugin)
 2. [Setup AWS Systems Manager Session Manager](#setup-aws-systems-manager-session-manager)
 3. [Setup AWS IAM user to sync and connect](#setup-aws-iam-user-to-sync-and-connect)
+4. [Verify the connection](#verify-the-connection)
 
 ### Setup AWS CLI & Session Manager plugin
 
@@ -38,10 +39,18 @@ See the AWS documentation for installation instructions.
 
 To connect to the instances, the AWS Systems Manager Session Manager must be configured in AWS. See their documentation for instructions on [how to set up the Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started.html).
 
+Below you will find an example configuration:
+
 <details>
-    <summary>Test</summary>
-    This is a test
-</details>
+    <summary>Example <code>SSM-SessionManagerRunShell</code> document</summary>
+
+{: .note }
+Here you can find an example of how to configure the AWS Systems Manager Session Manager.
+
+{: warning}
+This is an example and may not be suitable for a production environment.
+
+Create a JOSN file with the name `SessionManagerRunShell.json` and the following content:
 
 ```json
 {
@@ -68,8 +77,7 @@ To connect to the instances, the AWS Systems Manager Session Manager must be con
 }
 ```
 
-{: .note }
-This is an example and may not be suitable for a production environment.
+Create the document in AWS SSM via AWS CLI:
 
 ```bash
 aws ssm create-document \
@@ -79,7 +87,18 @@ aws ssm create-document \
     --document-format JSON
 ```
 
-IAM role / Instance profile
+</details>
+
+<details>
+    <summary>Example IAM role / instance profile</summary>
+
+{: .note }
+Here you can find an example of how to configure the IAM role / instance profile to access the instance with AWS Systems Manager Session Manager.
+
+{: warning}
+This is an example and may not be suitable for a production environment.
+
+Create a new IAM role/instance profile with the following content:
 
 ```json
 {
@@ -96,7 +115,7 @@ IAM role / Instance profile
 }
 ```
 
-Instance policy
+Add an (inline) policy to the role with the following content:
 
 ```json
 {
@@ -153,12 +172,22 @@ Instance policy
 }
 ```
 
-{: .note }
-This is an example and may not be suitable for a production environment.
+</details>
 
 ### Setup AWS IAM user to sync and connect
 
-Sync policy
+For the snychronization of the EC2 instances and to connect to them via AWS Systems Manager Session Manager, a separate user with minimal privileges should be set up. For the synchronization from AWS EC2 the permissions `ec2:DescribeInstances` and `ec2:DescribeInstanceStatus` are required. Additionally, the user must be able to connect to the instances via AWS Systems Manager Session Manager. Below are examples of both policies:
+
+<details>
+    <summary>Example sync policy</summary>
+
+{: .note }
+Here you can find an example of a user policy to synchronize the instances from AWS EC2 for NETworkManger.
+
+{: warning}
+This is an example and may not be suitable for a production environment.
+
+Add an (inline) policy to the user with the following content:
 
 ```json
 {
@@ -174,7 +203,18 @@ Sync policy
 }
 ```
 
-Connect policy
+</details>
+
+<details>
+    <summary>Example connect policy</summary>
+
+{: .note }
+Here is an example of a user policy that allows access to EC2 instances via AWS Systems Manger Session Manager.
+
+{: warning}
+This is an example and may not be suitable for a production environment.
+
+Add an (inline) policy to the user with the following content:
 
 ```json
 {
@@ -212,8 +252,20 @@ Connect policy
 }
 ```
 
-{: .note }
-This is an example and may not be suitable for a production environment.
+</details>
+
+API keys must be generated for the user and the AWS CLI must be configured (See [`aws configure`](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html) and [`~\.aws\credentials`](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) file).
+
+{: warning}
+Sensitive data like the API keys are stored in plain text in the file `~\.aws\credentials`!
+
+### Verify the connection
+
+You can verify the connection to the EC2 instance through AWS Systems Manager Session Manager by opening a PowerShell and connecting to the instance through AWS CLI:
+
+```
+aws ssm start-session --target instance-id <INSTANCE_ID>
+```
 
 ## Connect
 
