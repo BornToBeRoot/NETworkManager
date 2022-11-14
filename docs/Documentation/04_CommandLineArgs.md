@@ -51,6 +51,7 @@ Start a specific application on startup.
   - `WakeOnLAN`
   - `Whois`
   - `SubnetCalculator`
+  - `BitCalculator`
   - `Lookup`
   - `Connections`
   - `Listeners`
