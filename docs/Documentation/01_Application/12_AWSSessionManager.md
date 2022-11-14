@@ -42,50 +42,50 @@ To connect to the instances, the AWS Systems Manager Session Manager must be con
 Below you will find an example configuration:
 
 <details>
-    <summary>Example <code>SSM-SessionManagerRunShell</code> document</summary>
+  <summary>Example <code>SSM-SessionManagerRunShell</code> document</summary>
 
-{: .note }
-Here you can find an example of how to configure the AWS Systems Manager Session Manager.
+  {: .note }
+  Here you can find an example of how to configure the AWS Systems Manager Session Manager.
 
-{: warning}
-This is an example and may not be suitable for a production environment.
+  {: warning}
+  This is an example and may not be suitable for a production environment.
 
-Create a JOSN file with the name `SessionManagerRunShell.json` and the following content:
+  Create a JOSN file with the name `SessionManagerRunShell.json` and the following content:
 
-```json
-{
-  "schemaVersion": "1.0",
-  "description": "Document to hold regional settings for Session Manager",
-  "sessionType": "Standard_Stream",
-  "inputs": {
-    "s3BucketName": "<S3_BUCKET>",
-    "s3KeyPrefix": "<S3_BUCKET_PREFIX>",
-    "s3EncryptionEnabled": true,
-    "cloudWatchLogGroupName": "<CLOUDWATCH_GROUPNAME>",
-    "cloudWatchEncryptionEnabled": true,
-    "cloudWatchStreamingEnabled": false,
-    "kmsKeyId": "<KMS_KEY_ARN>",
-    "runAsEnabled": true,
-    "runAsDefaultUser": "<SSM_RUNASUSER>",
-    "idleSessionTimeout": "20",
-    "maxSessionDuration": "60",
-    "shellProfile": {
-      "windows": "<LINUX_COMMANDS>",
-      "linux": "<WINDOWS_COMMANDS>"
+  ```json
+  {
+    "schemaVersion": "1.0",
+    "description": "Document to hold regional settings for Session Manager",
+    "sessionType": "Standard_Stream",
+    "inputs": {
+      "s3BucketName": "<S3_BUCKET>",
+      "s3KeyPrefix": "<S3_BUCKET_PREFIX>",
+      "s3EncryptionEnabled": true,
+      "cloudWatchLogGroupName": "<CLOUDWATCH_GROUPNAME>",
+      "cloudWatchEncryptionEnabled": true,
+      "cloudWatchStreamingEnabled": false,
+      "kmsKeyId": "<KMS_KEY_ARN>",
+      "runAsEnabled": true,
+      "runAsDefaultUser": "<SSM_RUNASUSER>",
+      "idleSessionTimeout": "20",
+      "maxSessionDuration": "60",
+      "shellProfile": {
+        "windows": "<LINUX_COMMANDS>",
+        "linux": "<WINDOWS_COMMANDS>"
+      }
     }
   }
-}
-```
+  ```
 
-Create the document in AWS SSM via AWS CLI:
+  Create the document in AWS SSM via AWS CLI:
 
-```bash
-aws ssm create-document \
-    --name SSM-SessionManagerRunShell \
-    --content "file://SessionManagerRunShell.json" \
-    --document-type "Session" \
-    --document-format JSON
-```
+  ```bash
+  aws ssm create-document \
+      --name SSM-SessionManagerRunShell \
+      --content "file://SessionManagerRunShell.json" \
+      --document-type "Session" \
+      --document-format JSON
+  ```
 
 </details>
 
