@@ -22,6 +22,9 @@ gh_edit_view_mode: "tree"
 plugins:
   - jemoji
 callouts:
+  information:
+    title: information
+    color: blue
   note:
     title: Note
     color: yellow

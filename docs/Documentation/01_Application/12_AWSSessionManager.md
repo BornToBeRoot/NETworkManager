@@ -50,11 +50,8 @@ Below you will find an example configuration:
 <details markdown="block">
   <summary>Example <code>SSM-SessionManagerRunShell</code> document</summary>
 
-{: .note }
-Here you can find an example of how to configure the AWS Systems Manager Session Manager.
-
 {: .warning }
-This is an example and may not be suitable for a production environment.
+This is an example of the AWS Systems Manager Session Manager configuration and may not be suitable for a production environment.
 
 Create a JOSN file with the name `SessionManagerRunShell.json` and the following content:
 
@@ -98,11 +95,8 @@ aws ssm create-document \
 <details markdown="block">
   <summary>Example IAM role / instance profile</summary>
 
-{: .note }
-Here you can find an example of how to configure the IAM role / instance profile to access the instance with AWS Systems Manager Session Manager.
-
 {: .warning }
-This is an example and may not be suitable for a production environment.
+This is an example of an IAM role/instance profile that allows access from AWS Systems Manager Session Manager to the instance and may not be suitable for a production environment.
 
 Create a new IAM role/instance profile with the following content:
 
@@ -187,11 +181,8 @@ For the snychronization of the EC2 instances and to connect to them via AWS Syst
 <details markdown="block">
   <summary>Example sync policy</summary>
 
-{: .note }
-Here you can find an example of a user policy to synchronize the instances from AWS EC2 for NETworkManger.
-
-{: .warning }
-This is an example and may not be suitable for a production environment.
+{: .information }
+This is an example of an IAM user policy to synchronize instances of AWS EC2 for NETworkManager.
 
 Add an (inline) policy to the user with the following content:
 
@@ -214,11 +205,8 @@ Add an (inline) policy to the user with the following content:
 <details markdown="block">
   <summary>Example connect policy</summary>
 
-{: .note }
-Here is an example of a user policy that allows access to EC2 instances via AWS Systems Manger Session Manager.
-
 {: .warning }
-This is an example and may not be suitable for a production environment.
+This is an example of an IAM user policy that allows access to EC2 instances through AWS Systems Manager Session Manager and may not be suitable for a production environment.
 
 Add an (inline) policy to the user with the following content:
 
