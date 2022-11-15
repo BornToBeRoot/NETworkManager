@@ -248,7 +248,7 @@ Add an (inline) policy to the user with the following content:
 
 </details>
 
-API keys must be generated for the user and the AWS CLI must be configured (See [`aws configure`](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html){:target="\_blank"} and [`~\.aws\credentials`](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html){:target="\_blank"} file).
+API keys must be generated for the user and the AWS CLI must be configured (See [`aws configure`](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html){:target="\_blank"} and [`~\.aws\credentials`](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html){:target="\_blank"} file for more details).
 
 {: .warning }
 Sensitive data like the API keys are stored in plain text in the file `~\.aws\credentials`!
