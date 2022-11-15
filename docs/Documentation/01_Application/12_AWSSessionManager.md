@@ -53,7 +53,7 @@ Below you will find an example configuration:
 {: .note }
 Here you can find an example of how to configure the AWS Systems Manager Session Manager.
 
-{: warning}
+{: .warning }
 This is an example and may not be suitable for a production environment.
 
 Create a JOSN file with the name `SessionManagerRunShell.json` and the following content:
@@ -101,7 +101,7 @@ aws ssm create-document \
 {: .note }
 Here you can find an example of how to configure the IAM role / instance profile to access the instance with AWS Systems Manager Session Manager.
 
-{: warning}
+{: .warning }
 This is an example and may not be suitable for a production environment.
 
 Create a new IAM role/instance profile with the following content:
@@ -190,7 +190,7 @@ For the snychronization of the EC2 instances and to connect to them via AWS Syst
 {: .note }
 Here you can find an example of a user policy to synchronize the instances from AWS EC2 for NETworkManger.
 
-{: warning}
+{: .warning }
 This is an example and may not be suitable for a production environment.
 
 Add an (inline) policy to the user with the following content:
@@ -217,7 +217,7 @@ Add an (inline) policy to the user with the following content:
 {: .note }
 Here is an example of a user policy that allows access to EC2 instances via AWS Systems Manger Session Manager.
 
-{: warning}
+{: .warning }
 This is an example and may not be suitable for a production environment.
 
 Add an (inline) policy to the user with the following content:
@@ -262,7 +262,7 @@ Add an (inline) policy to the user with the following content:
 
 API keys must be generated for the user and the AWS CLI must be configured (See [`aws configure`](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html){:target="\_blank"} and [`~\.aws\credentials`](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html){:target="\_blank"} file).
 
-{: warning}
+{: .warning }
 Sensitive data like the API keys are stored in plain text in the file `~\.aws\credentials`!
 
 ### Verify the connection
