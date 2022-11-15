@@ -10,6 +10,12 @@ permalink: /Documentation/Application/AWSSessionManager
 
 # AWS Session Manager
 
+New Feature
+{: .label .label-green }
+
+2022.10.31.0
+{: .label .label-purple }
+
 With AWS (Systems Manager) Session Manager, you can connect to and manage an EC2 instance without opening inbound ports, running a bastion host, or managing SSH keys. Here you can find more information about [AWS Systems Manager](https://aws.amazon.com/systems-manager/){:target="\_blank"} and the documentation for [AWS Systems Manager Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html){:target="\_blank"}.
 
 This feature allows you to use the `aws ssm start-session --target <INSTANCE_ID>` command with tabs. You can create profiles for your instances or synchronize them from AWS EC2 to connect to them directly.
@@ -41,55 +47,55 @@ To connect to the instances, the AWS Systems Manager Session Manager must be con
 
 Below you will find an example configuration:
 
-<details>
+<details markdown="block">
   <summary>Example <code>SSM-SessionManagerRunShell</code> document</summary>
 
-  {: .note }
-  Here you can find an example of how to configure the AWS Systems Manager Session Manager.
+{: .note }
+Here you can find an example of how to configure the AWS Systems Manager Session Manager.
 
-  {: warning}
-  This is an example and may not be suitable for a production environment.
+{: warning}
+This is an example and may not be suitable for a production environment.
 
-  Create a JOSN file with the name `SessionManagerRunShell.json` and the following content:
+Create a JOSN file with the name `SessionManagerRunShell.json` and the following content:
 
-  ```json
-  {
-    "schemaVersion": "1.0",
-    "description": "Document to hold regional settings for Session Manager",
-    "sessionType": "Standard_Stream",
-    "inputs": {
-      "s3BucketName": "<S3_BUCKET>",
-      "s3KeyPrefix": "<S3_BUCKET_PREFIX>",
-      "s3EncryptionEnabled": true,
-      "cloudWatchLogGroupName": "<CLOUDWATCH_GROUPNAME>",
-      "cloudWatchEncryptionEnabled": true,
-      "cloudWatchStreamingEnabled": false,
-      "kmsKeyId": "<KMS_KEY_ARN>",
-      "runAsEnabled": true,
-      "runAsDefaultUser": "<SSM_RUNASUSER>",
-      "idleSessionTimeout": "20",
-      "maxSessionDuration": "60",
-      "shellProfile": {
-        "windows": "<LINUX_COMMANDS>",
-        "linux": "<WINDOWS_COMMANDS>"
-      }
+```json
+{
+  "schemaVersion": "1.0",
+  "description": "Document to hold regional settings for Session Manager",
+  "sessionType": "Standard_Stream",
+  "inputs": {
+    "s3BucketName": "<S3_BUCKET>",
+    "s3KeyPrefix": "<S3_BUCKET_PREFIX>",
+    "s3EncryptionEnabled": true,
+    "cloudWatchLogGroupName": "<CLOUDWATCH_GROUPNAME>",
+    "cloudWatchEncryptionEnabled": true,
+    "cloudWatchStreamingEnabled": false,
+    "kmsKeyId": "<KMS_KEY_ARN>",
+    "runAsEnabled": true,
+    "runAsDefaultUser": "<SSM_RUNASUSER>",
+    "idleSessionTimeout": "20",
+    "maxSessionDuration": "60",
+    "shellProfile": {
+      "windows": "<LINUX_COMMANDS>",
+      "linux": "<WINDOWS_COMMANDS>"
     }
   }
-  ```
+}
+```
 
-  Create the document in AWS SSM via AWS CLI:
+Create the document in AWS SSM via AWS CLI:
 
-  ```bash
-  aws ssm create-document \
-      --name SSM-SessionManagerRunShell \
-      --content "file://SessionManagerRunShell.json" \
-      --document-type "Session" \
-      --document-format JSON
-  ```
+```bash
+aws ssm create-document \
+    --name SSM-SessionManagerRunShell \
+    --content "file://SessionManagerRunShell.json" \
+    --document-type "Session" \
+    --document-format JSON
+```
 
 </details>
 
-<details>
+<details markdown="block">
     <summary>Example IAM role / instance profile</summary>
 
 {: .note }
@@ -178,7 +184,7 @@ Add an (inline) policy to the role with the following content:
 
 For the snychronization of the EC2 instances and to connect to them via AWS Systems Manager Session Manager, a separate user with minimal privileges should be set up. For the synchronization from AWS EC2 the permissions `ec2:DescribeInstances` and `ec2:DescribeInstanceStatus` are required. Additionally, the user must be able to connect to the instances via AWS Systems Manager Session Manager. Below are examples of both policies:
 
-<details>
+<details markdown="block">
     <summary>Example sync policy</summary>
 
 {: .note }
@@ -205,7 +211,7 @@ Add an (inline) policy to the user with the following content:
 
 </details>
 
-<details>
+<details markdown="block">
     <summary>Example connect policy</summary>
 
 {: .note }
