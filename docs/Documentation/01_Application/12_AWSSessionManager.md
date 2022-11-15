@@ -43,7 +43,7 @@ See the AWS documentation for installation instructions.
 
 ### Setup AWS Systems Manager Session Manager
 
-To connect to the instances, the AWS Systems Manager Session Manager must be configured in AWS. See their documentation for instructions on [how to set up the Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started.html).
+To connect to the instances, the AWS Systems Manager Session Manager must be configured in AWS. See their documentation for instructions on [how to set up the Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started.html){:target="\_blank"}.
 
 Below you will find an example configuration:
 
@@ -96,7 +96,7 @@ aws ssm create-document \
 </details>
 
 <details markdown="block">
-    <summary>Example IAM role / instance profile</summary>
+  <summary>Example IAM role / instance profile</summary>
 
 {: .note }
 Here you can find an example of how to configure the IAM role / instance profile to access the instance with AWS Systems Manager Session Manager.
@@ -185,7 +185,7 @@ Add an (inline) policy to the role with the following content:
 For the snychronization of the EC2 instances and to connect to them via AWS Systems Manager Session Manager, a separate user with minimal privileges should be set up. For the synchronization from AWS EC2 the permissions `ec2:DescribeInstances` and `ec2:DescribeInstanceStatus` are required. Additionally, the user must be able to connect to the instances via AWS Systems Manager Session Manager. Below are examples of both policies:
 
 <details markdown="block">
-    <summary>Example sync policy</summary>
+  <summary>Example sync policy</summary>
 
 {: .note }
 Here you can find an example of a user policy to synchronize the instances from AWS EC2 for NETworkManger.
@@ -212,7 +212,7 @@ Add an (inline) policy to the user with the following content:
 </details>
 
 <details markdown="block">
-    <summary>Example connect policy</summary>
+  <summary>Example connect policy</summary>
 
 {: .note }
 Here is an example of a user policy that allows access to EC2 instances via AWS Systems Manger Session Manager.
@@ -260,7 +260,7 @@ Add an (inline) policy to the user with the following content:
 
 </details>
 
-API keys must be generated for the user and the AWS CLI must be configured (See [`aws configure`](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html) and [`~\.aws\credentials`](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) file).
+API keys must be generated for the user and the AWS CLI must be configured (See [`aws configure`](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html){:target="\_blank"} and [`~\.aws\credentials`](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html){:target="\_blank"} file).
 
 {: warning}
 Sensitive data like the API keys are stored in plain text in the file `~\.aws\credentials`!
