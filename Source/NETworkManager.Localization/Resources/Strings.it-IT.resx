@@ -2697,51 +2697,6 @@ Vedi messaggio errore: "{0}"</value>
   <data name="ProfileViewName_General" xml:space="preserve">
     <value>Generale</value>
   </data>
-  <data name="ProfileViewName_DNSLookup" xml:space="preserve">
-    <value>Intestazioni HTTP</value>
-  </data>
-  <data name="ProfileViewName_HTTPHeaders" xml:space="preserve">
-    <value>Consultazione DNS</value>
-  </data>
-  <data name="ProfileViewName_IP Scanner" xml:space="preserve">
-    <value>Scansione IP</value>
-  </data>
-  <data name="ProfileViewName_NetworkInterface" xml:space="preserve">
-    <value>Interfacce di rete</value>
-  </data>
-  <data name="ProfileViewName_Ping" xml:space="preserve">
-    <value>Ping</value>
-  </data>
-  <data name="ProfileViewName_PingMonitor" xml:space="preserve">
-    <value>Monitor ping</value>
-  </data>
-  <data name="ProfileViewName_PortScanner" xml:space="preserve">
-    <value>Scansione porte</value>
-  </data>
-  <data name="ProfileViewName_PowerShell" xml:space="preserve">
-    <value>PowerShell</value>
-  </data>
-  <data name="ProfileViewName_PuTTY" xml:space="preserve">
-    <value>PuTTY</value>
-  </data>
-  <data name="ProfileViewName_RemoteDesktop" xml:space="preserve">
-    <value>Desktop remoto</value>
-  </data>
-  <data name="ProfileViewName_TigerVNC" xml:space="preserve">
-    <value>TigerVNC</value>
-  </data>
-  <data name="ProfileViewName_Traceroute" xml:space="preserve">
-    <value>Traceroute</value>
-  </data>
-  <data name="ProfileViewName_WakeOnLAN" xml:space="preserve">
-    <value>Wake On LAN</value>
-  </data>
-  <data name="ProfileViewName_WebConsole" xml:space="preserve">
-    <value>Console web</value>
-  </data>
-  <data name="ProfileViewName_Whois" xml:space="preserve">
-    <value>Whois</value>
-  </data>
   <data name="SettingsViewGroup_Applications" xml:space="preserve">
     <value>Applicazioni</value>
   </data>
@@ -3219,9 +3174,6 @@ Se non viene impostato, verranno usate le impostazioni predefinite della CLI AWS
 
 Se non viene impostata, verranno usate le impostazioni predefinite della CLI AWS.</value>
   </data>
-  <data name="ProfileViewName_AWSSessionManager" xml:space="preserve">
-    <value>Gestione sessioni AWS</value>
-  </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
     <value>Se non viene impostata, verranno usate le impostazioni CLI AWS predefinite.</value>
   </data>
@@ -3279,5 +3231,56 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
   </data>
   <data name="InputDoesNotContainAnyText" xml:space="preserve">
     <value>L'input non contiene testo!</value>
+  </data>
+  <data name="ApplicationName_BitCalculator" xml:space="preserve">
+    <value>Calcolatorebit</value>
+  </data>
+  <data name="BitCalculator" xml:space="preserve">
+    <value>Calcolatore bit</value>
+  </data>
+  <data name="Notation" xml:space="preserve">
+    <value>Notazione</value>
+  </data>
+  <data name="Input" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Unità</value>
+  </data>
+  <data name="Bits" xml:space="preserve">
+    <value>Bit</value>
+  </data>
+  <data name="Gigabits" xml:space="preserve">
+    <value>Gigabit</value>
+  </data>
+  <data name="Gigabytes" xml:space="preserve">
+    <value>Gigabyte</value>
+  </data>
+  <data name="Kilobits" xml:space="preserve">
+    <value>Kilobit</value>
+  </data>
+  <data name="Kilobytes" xml:space="preserve">
+    <value>Kilobyte</value>
+  </data>
+  <data name="Megabits" xml:space="preserve">
+    <value>Megabit</value>
+  </data>
+  <data name="Megabytes" xml:space="preserve">
+    <value>Megabyte</value>
+  </data>
+  <data name="Petabits" xml:space="preserve">
+    <value>Petabit</value>
+  </data>
+  <data name="Petabytes" xml:space="preserve">
+    <value>Petabyte</value>
+  </data>
+  <data name="Terabits" xml:space="preserve">
+    <value>Terabit</value>
+  </data>
+  <data name="Terabytes" xml:space="preserve">
+    <value>Terabyte</value>
+  </data>
+  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
+    <value>Inserisci un numero e seleziona un'unità per calcolare le unità...</value>
   </data>
 </root>
