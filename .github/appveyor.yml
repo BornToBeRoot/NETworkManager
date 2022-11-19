@@ -4,6 +4,8 @@ branches:
    - main
 configuration: Release
 platform: x64
+install:
+  - git submodule update --init
 before_build:
   - dotnet restore .\Source\NETworkManager.sln
 build_script:
