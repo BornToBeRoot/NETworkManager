@@ -1,4 +1,4 @@
-name: "CodeQL"
+name: "Code Scanning - Action"
 
 on:
   push:
@@ -10,9 +10,12 @@ on:
 
 jobs:
   analyze:
-    name: Analyze
-    # runs-on: windows-latest
+    name: Analyze 
     runs-on: windows-2022
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
     # Ignore dependabot, ImgBot and transifex-integration
     if: github.actor!= 'dependabot[bot]' &&
         github.actor!= 'imgbot[bot]' &&
@@ -25,15 +28,19 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+      with:
+        submodules: 'true'
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}        
 
     - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
+      uses: github/codeql-action/autobuild@v2
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:${{matrix.language}}"
