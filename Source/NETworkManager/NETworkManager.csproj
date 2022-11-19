@@ -43,7 +43,6 @@
 		<PackageReference Include="AirspaceFixer" Version="1.0.6" />
 		<PackageReference Include="AWSSDK.EC2" Version="3.7.108" />
 		<PackageReference Include="DnsClient" Version="1.7.0" />
-		<PackageReference Include="Dragablz" Version="0.0.3.234" />
 		<PackageReference Include="IPNetwork2" Version="2.6.508" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.1" />
 		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
@@ -70,6 +69,7 @@
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\3rdparty\Dragablz\Dragablz\Dragablz.csproj" />
 		<ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />
 		<ProjectReference Include="..\NETworkManager.Converters\NETworkManager.Converters.csproj" />
 		<ProjectReference Include="..\NETworkManager.Documentation\NETworkManager.Documentation.csproj" />
