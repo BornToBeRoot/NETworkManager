@@ -33,6 +33,7 @@ jobs:
         submodules: 'true'
 
     # Fix for .NET 7 (https://github.com/github/codeql-action/issues/1380)
+    # Required for Dragablz
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
