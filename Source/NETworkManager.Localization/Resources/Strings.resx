@@ -3251,4 +3251,7 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
     <value>Enter a number and select a unit to calculate the units...</value>
   </data>
+  <data name="SettingsViewName_Network" xml:space="preserve">
+    <value>Network</value>
+  </data>
 </root>

@@ -6,6 +6,7 @@
         Window,
         Appearance,
         Language,
+        Network,
         Status,
         HotKeys,
         Autostart,

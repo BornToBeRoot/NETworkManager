@@ -7655,6 +7655,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Network ähnelt.
+        /// </summary>
+        public static string SettingsViewName_Network {
+            get {
+                return ResourceManager.GetString("SettingsViewName_Network", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Profiles ähnelt.
         /// </summary>
         public static string SettingsViewName_Profiles {
