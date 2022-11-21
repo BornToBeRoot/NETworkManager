@@ -33,7 +33,7 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Pulse}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>

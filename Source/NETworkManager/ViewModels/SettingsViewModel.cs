@@ -103,6 +103,7 @@ namespace NETworkManager.ViewModels
         private SettingsWindowView _settingsWindowView;
         private SettingsAppearanceView _settingsApperanceView;
         private SettingsLanguageView _settingsLanguageView;
+        private SettingsNetworkView _settingsNetworkView;
         private SettingsStatusView _settingsStatusView;
         private SettingsHotKeysView _settingsHotKeysView;
         private SettingsAutostartView _settingsAutostartView;
@@ -202,6 +203,11 @@ namespace NETworkManager.ViewModels
                     _settingsLanguageView ??= new SettingsLanguageView();
 
                     SettingsContent = _settingsLanguageView;
+                    break;
+                case SettingsViewName.Network:
+                    _settingsNetworkView ??= new SettingsNetworkView();
+
+                    SettingsContent = _settingsNetworkView;
                     break;
                 case SettingsViewName.Status:
                     _settingsStatusView ??= new SettingsStatusView();

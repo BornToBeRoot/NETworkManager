@@ -10,15 +10,16 @@ namespace NETworkManager.Settings
         public static List<SettingsViewInfo> List => new List<SettingsViewInfo>
         {
             // General
-            new SettingsViewInfo(SettingsViewName.General, new PackIconMaterial{ Kind = PackIconMaterialKind.Layers }, SettingsViewGroup.General),
+            new SettingsViewInfo(SettingsViewName.General, new PackIconModern{ Kind = PackIconModernKind.Layer }, SettingsViewGroup.General),
             new SettingsViewInfo(SettingsViewName.Window, new PackIconPicolIcons { Kind = PackIconPicolIconsKind.BrowserWindow }, SettingsViewGroup.General),
             new SettingsViewInfo(SettingsViewName.Appearance, new PackIconMaterial { Kind = PackIconMaterialKind.Palette }, SettingsViewGroup.General),
             new SettingsViewInfo(SettingsViewName.Language, new PackIconMaterial { Kind = PackIconMaterialKind.Translate }, SettingsViewGroup.General),
-            new SettingsViewInfo(SettingsViewName.Status, new PackIconModern { Kind = PackIconModernKind.Network }, SettingsViewGroup.General),
+            new SettingsViewInfo(SettingsViewName.Network, new PackIconModern { Kind = PackIconModernKind.Network }, SettingsViewGroup.General),
+            new SettingsViewInfo(SettingsViewName.Status, new PackIconMaterial { Kind = PackIconMaterialKind.Pulse }, SettingsViewGroup.General),
             new SettingsViewInfo(SettingsViewName.HotKeys, new PackIconOcticons { Kind = PackIconOcticonsKind.Keyboard }, SettingsViewGroup.General),
             new SettingsViewInfo(SettingsViewName.Autostart, new PackIconMaterial { Kind = PackIconMaterialKind.Power }, SettingsViewGroup.General),
-            new SettingsViewInfo(SettingsViewName.Update, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Download }, SettingsViewGroup.General),            
-            new SettingsViewInfo(SettingsViewName.Profiles, new PackIconMaterial { Kind = PackIconMaterialKind.FormatListBulletedType }, SettingsViewGroup.General),
+            new SettingsViewInfo(SettingsViewName.Update, new PackIconMaterial { Kind = PackIconMaterialKind.RocketLaunchOutline }, SettingsViewGroup.General),            
+            new SettingsViewInfo(SettingsViewName.Profiles, new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.ServerSolid }, SettingsViewGroup.General),
             new SettingsViewInfo(SettingsViewName.Settings, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Cog }, SettingsViewGroup.General),
            
             // Applications
