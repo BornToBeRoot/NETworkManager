@@ -2669,51 +2669,6 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="ProfileViewName_General" xml:space="preserve">
     <value>Splošno</value>
   </data>
-  <data name="ProfileViewName_DNSLookup" xml:space="preserve">
-    <value>Iskanje DNS</value>
-  </data>
-  <data name="ProfileViewName_HTTPHeaders" xml:space="preserve">
-    <value>Glave HTTP</value>
-  </data>
-  <data name="ProfileViewName_IP Scanner" xml:space="preserve">
-    <value>Pregledovalnik IP</value>
-  </data>
-  <data name="ProfileViewName_NetworkInterface" xml:space="preserve">
-    <value>Omrežni vmesnik</value>
-  </data>
-  <data name="ProfileViewName_Ping" xml:space="preserve">
-    <value>Ping</value>
-  </data>
-  <data name="ProfileViewName_PingMonitor" xml:space="preserve">
-    <value>Spremljaj Ping</value>
-  </data>
-  <data name="ProfileViewName_PortScanner" xml:space="preserve">
-    <value>Pregledovalnik vrat</value>
-  </data>
-  <data name="ProfileViewName_PowerShell" xml:space="preserve">
-    <value>PowerShell</value>
-  </data>
-  <data name="ProfileViewName_PuTTY" xml:space="preserve">
-    <value>PuTTY</value>
-  </data>
-  <data name="ProfileViewName_RemoteDesktop" xml:space="preserve">
-    <value>Oddaljeno namizje</value>
-  </data>
-  <data name="ProfileViewName_TigerVNC" xml:space="preserve">
-    <value>TigerVNC</value>
-  </data>
-  <data name="ProfileViewName_Traceroute" xml:space="preserve">
-    <value>Sled poti</value>
-  </data>
-  <data name="ProfileViewName_WakeOnLAN" xml:space="preserve">
-    <value>Zbudi LAN</value>
-  </data>
-  <data name="ProfileViewName_WebConsole" xml:space="preserve">
-    <value>Spletna konzola</value>
-  </data>
-  <data name="ProfileViewName_Whois" xml:space="preserve">
-    <value>Whois</value>
-  </data>
   <data name="SettingsViewGroup_Applications" xml:space="preserve">
     <value>Programi</value>
   </data>
@@ -3105,10 +3060,10 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Želite prepisati obstoječo datoteko z nastavitvami?</value>
   </data>
   <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
+    <value>Upravitelj sej AWS</value>
   </data>
   <data name="InstanceId" xml:space="preserve">
-    <value>Instance ID</value>
+    <value>ID primerka</value>
   </data>
   <data name="LocalConnection" xml:space="preserve">
     <value>Lokalna povezava</value>
@@ -3120,111 +3075,162 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>log4net je orodje, ki programerju pomaga pri izpisovanju dnevniških stavkov v različne izhodne cilje.</value>
   </data>
   <data name="AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
+    <value>Upravitelj sej AWS</value>
   </data>
   <data name="Enabled" xml:space="preserve">
-    <value>Enabled</value>
+    <value>Omogočen</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>Regija</value>
   </data>
   <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize EC2 instances from AWS</value>
+    <value>Sinhroniziraj primerke EC2 iz AWS</value>
   </data>
   <data name="AddAWSProfile" xml:space="preserve">
-    <value>Add AWS profile</value>
+    <value>Dodaj profil AWS</value>
   </data>
   <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>Delete AWS profile</value>
+    <value>Izbriši profil AWS</value>
   </data>
   <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>The selected AWS profile is permanently deleted.
-
-The profile is not removed from the ~\.aws\credentials file.</value>
+    <value>Izbrani profil AWS je trajno izbrisan. Profil ni odstranjen iz datoteke ~\.aws\credentials.</value>
   </data>
   <data name="EditAWSProfile" xml:space="preserve">
-    <value>Edit AWS profile</value>
+    <value>Uredi profil AWS</value>
   </data>
   <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize all EC2 instances from AWS</value>
+    <value>Sinhroniziraj vse primerke EC2 iz AWS</value>
   </data>
   <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize group EC2 instances from AWS</value>
+    <value>Sinhroniziraj skupino primerkov EC2 iz AWS</value>
   </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Profiles and regions to synchronize</value>
+    <value>Profili in regije za sinhronizacijo</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>To synchronize EC2 instances from AWS, the AWS CLI must be configured on the system. The EC2 instances can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in the file "~/.aws/credentials" must be configured along with the region to query.</value>
+    <value>Za sinhronizacijo primerkov EC2 iz AWS mora biti v sistemu nastavljen AWS CLI. Po primerkih EC2 je mogoče poizvedovati za več računov (profilov) AWS in več regij. Da to lahko naredite, mora biti profil, shranjen v datoteki "~/.aws/credentials", nastavljen skupaj z regijo za poizvedbo.</value>
   </data>
   <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>AWS SDK for .NET to work with Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS).</value>
+    <value>AWS SDK za .NET za delo z Amazon Elastični računalniški oblak (Amazon EC2) v Amazon Spletne storitve (AWS).</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
-    <value>Default profile</value>
+    <value>Privzeti profil</value>
   </data>
   <data name="DefaultRegion" xml:space="preserve">
-    <value>Default region</value>
+    <value>Privzeta regija</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>Default profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
-
-If not set, the default AWS CLI settings are used.</value>
+    <value>Privzeti profil, ki ga uporabljajo ročno ustvarjeni profili za povezavo s primerkom EC2 prek AWS CLI. Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>Default region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
-
-If not set, the default AWS CLI settings are used.</value>
-  </data>
-  <data name="ProfileViewName_AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
+    <value>Privzeta regija, ki jo uporabljajo ročno ustvarjeni profili za povezavo s primerkom EC2 prek AWS CLI. Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
   </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>If not set, the default AWS CLI settings are used.</value>
+    <value>Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
   </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
-    <value>Group name cannot start with "{0}"!</value>
+    <value>Ime skupine se ne sme začeti z "{0}"!</value>
   </data>
   <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize only running EC2 instances from AWS</value>
+    <value>Sinhroniziraj samo delujoče primerke EC2 iz AWS</value>
   </data>
   <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>An AWS region named "{0}" does not exist!</value>
+    <value>Ne obstaja oimenovana regija AWS {0}!</value>
   </data>
   <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>AWS CLI v2 is installed!</value>
+    <value>AWS CLI v2 je nameščen!</value>
   </data>
   <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>AWS CLI v2 is not installed!</value>
+    <value>AWS CLI v2 ni nameščen!</value>
   </data>
   <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>AWS Session Manager Plugin is installed!</value>
+    <value>Vtičnik AWS Upravitelj sej je nameščen!</value>
   </data>
   <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>AWS Session Manager Plugin is not installed!</value>
+    <value>Vtičnik AWS Upravitelj sej ni nameščen!</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
-    <value>Check for pre-releases</value>
+    <value>Preveri obstoj predizdaj</value>
   </data>
   <data name="SyncIsDisabled" xml:space="preserve">
-    <value>Synchronization is disabled!</value>
+    <value>Sinhronizacija je onemogočena!</value>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>Command</value>
+    <value>Ukaz</value>
   </data>
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>Apply theme to PowerShell console</value>
+    <value>Uporabi temo za konzolo PowerShell</value>
   </data>
   <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
-    <value>The color of the PowerShell console can be changed to the application theme under General &gt; Appearance</value>
+    <value>Barvo konzole PowerShell lahko spremenite v temo aplikacije pod Splošno &gt; Videz</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
+    <value>Če omogočite to možnost, se privzete nastavitve konzole PowerShell v registru pod HKCU:\Console preglasijo, tako da se okno konzole PowerShell ujema s temo aplikacije. To je globalna sistemska nastavitev, ki lahko vpliva na videz običajnega okna PowerShell. 
 
-Only the PowerShell consoles configured in the PowerShell and AWS Session Manager settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+Spremenjene so samo konzole PowerShell, nastavljene v nastavitvah PowerShell in AWS Upravitelj sej. Podprti sta lupini Windows PowerShell in PWSH (PowerShell 7 in višje). 
 
-Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
+V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba za pomanjšanje) ali pojdite na do https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance za več podrobnosti. Tukaj so dokumentirane vrednosti, ki bodo prilagojene. 
 
-If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
+Če je možnost znova onemogočena, vrednosti niso več spremenjene. Vendar se izvirne vrednosti NE obnovijo.</value>
+  </data>
+  <data name="InputCannotEndWithSemicolon" xml:space="preserve">
+    <value>Vnos se ne sme končati z ";"!</value>
+  </data>
+  <data name="InputDoesNotContainAnyText" xml:space="preserve">
+    <value>Vnos ne vsebuje nobenega besedila!</value>
+  </data>
+  <data name="ApplicationName_BitCalculator" xml:space="preserve">
+    <value>Bitni kalkulator</value>
+  </data>
+  <data name="BitCalculator" xml:space="preserve">
+    <value>Bitni kalkulator</value>
+  </data>
+  <data name="Notation" xml:space="preserve">
+    <value>Zapisovanje</value>
+  </data>
+  <data name="Input" xml:space="preserve">
+    <value>Vnos</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Enota</value>
+  </data>
+  <data name="Bits" xml:space="preserve">
+    <value>bitov</value>
+  </data>
+  <data name="Gigabits" xml:space="preserve">
+    <value>gigabitov</value>
+  </data>
+  <data name="Gigabytes" xml:space="preserve">
+    <value>gigabajtov</value>
+  </data>
+  <data name="Kilobits" xml:space="preserve">
+    <value>kilobitov</value>
+  </data>
+  <data name="Kilobytes" xml:space="preserve">
+    <value>kilobajtov</value>
+  </data>
+  <data name="Megabits" xml:space="preserve">
+    <value>megabitov</value>
+  </data>
+  <data name="Megabytes" xml:space="preserve">
+    <value>megabajtov</value>
+  </data>
+  <data name="Petabits" xml:space="preserve">
+    <value>petabitov</value>
+  </data>
+  <data name="Petabytes" xml:space="preserve">
+    <value>petabajtov</value>
+  </data>
+  <data name="Terabits" xml:space="preserve">
+    <value>terabitov</value>
+  </data>
+  <data name="Terabytes" xml:space="preserve">
+    <value>terabajtov</value>
+  </data>
+  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
+    <value>Vnesite število in izberite enoto za izračun enot...</value>
+  </data>
+  <data name="SettingsViewName_Network" xml:space="preserve">
+    <value>Omrežje</value>
   </data>
 </root>
