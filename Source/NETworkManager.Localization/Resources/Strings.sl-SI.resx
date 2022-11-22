@@ -3105,10 +3105,10 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Želite prepisati obstoječo datoteko z nastavitvami?</value>
   </data>
   <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
+    <value>Upravitelj sej AWS</value>
   </data>
   <data name="InstanceId" xml:space="preserve">
-    <value>Instance ID</value>
+    <value>ID primerka</value>
   </data>
   <data name="LocalConnection" xml:space="preserve">
     <value>Lokalna povezava</value>
@@ -3120,111 +3120,111 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>log4net je orodje, ki programerju pomaga pri izpisovanju dnevniških stavkov v različne izhodne cilje.</value>
   </data>
   <data name="AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
+    <value>Upravitelj sej AWS</value>
   </data>
   <data name="Enabled" xml:space="preserve">
-    <value>Enabled</value>
+    <value>Omogočen</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>Regija</value>
   </data>
   <data name="SyncEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize EC2 instances from AWS</value>
+    <value>Sinhroniziraj primerke EC2 iz AWS</value>
   </data>
   <data name="AddAWSProfile" xml:space="preserve">
-    <value>Add AWS profile</value>
+    <value>Dodaj profil AWS</value>
   </data>
   <data name="DeleteAWSProfile" xml:space="preserve">
-    <value>Delete AWS profile</value>
+    <value>Izbriši profil AWS</value>
   </data>
   <data name="DeleteAWSProfileMessage" xml:space="preserve">
-    <value>The selected AWS profile is permanently deleted.
+    <value>Izbrani profil AWS je trajno izbrisan.
 
-The profile is not removed from the ~\.aws\credentials file.</value>
+Profil ni odstranjen iz datoteke ~\.aws\credentials.</value>
   </data>
   <data name="EditAWSProfile" xml:space="preserve">
-    <value>Edit AWS profile</value>
+    <value>Uredi profil AWS</value>
   </data>
   <data name="SyncAllEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize all EC2 instances from AWS</value>
+    <value>Sinhroniziraj vse primerke EC2 iz m AWS</value>
   </data>
   <data name="SyncGroupEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize group EC2 instances from AWS</value>
+    <value>Sinhroniziraj skupinske primerke EC2 iz AWS</value>
   </data>
   <data name="ProfilesAndRegionsToSync" xml:space="preserve">
-    <value>Profiles and regions to synchronize</value>
+    <value>Profili in regije za sinhronizacijo</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerProfilesAndRegionsToSync" xml:space="preserve">
-    <value>To synchronize EC2 instances from AWS, the AWS CLI must be configured on the system. The EC2 instances can be queried for multiple AWS accounts (profiles) and multiple regions. To do this, the profile stored in the file "~/.aws/credentials" must be configured along with the region to query.</value>
+    <value>Za sinhronizacijo instanc EC2 iz AWS mora biti v sistemu nastavljen AWS CLI. Po primerkih EC2 je mogoče poizvedovati za več računov (profilov) AWS in več regij. ČDa to lahko naredite, mora biti profil, shranjen v datoteki »~/.aws/credentials«, nastavljen skupaj z regijo za poizvedbo.</value>
   </data>
   <data name="Library_AWSSDKdotEC2_Description" xml:space="preserve">
-    <value>AWS SDK for .NET to work with Amazon Elastic Compute Cloud (Amazon EC2) in Amazon Web Services (AWS).</value>
+    <value>AWS SDK za .NET za delo z Amazon Elastični računalniški oblak (Amazon EC2) v 'Spletne storitve Amazon' (AWS).</value>
   </data>
   <data name="DefaultProfile" xml:space="preserve">
-    <value>Default profile</value>
+    <value>Privzeti profil</value>
   </data>
   <data name="DefaultRegion" xml:space="preserve">
-    <value>Default region</value>
+    <value>Privzeta regija</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerDefaultProfile" xml:space="preserve">
-    <value>Default profile which is used by manually created profiles to connect to an EC2 instance via AWS CLI.
+    <value>Privzeti profil, ki ga uporabljajo ročno ustvarjeni profili za povezavo z instanco EC2 prek AWS CLI.
 
-If not set, the default AWS CLI settings are used.</value>
+Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
   </data>
   <data name="HelpMessage_AWSSessionManagerDefaultRegion" xml:space="preserve">
-    <value>Default region which is used by manually created profiles to connect to an EC2 instance via AWS CLI .
+    <value>Privzeta regija, ki jo uporabljajo ročno ustvarjeni profili za povezavo z instanco EC2 prek AWS CLI.
 
-If not set, the default AWS CLI settings are used.</value>
+Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
   </data>
   <data name="ProfileViewName_AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
+    <value>Upravitelj sej AWS</value>
   </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
-    <value>If not set, the default AWS CLI settings are used.</value>
+    <value>Če ni nastavljeno, se uporabijo privzete nastavitve CLI AWS.</value>
   </data>
   <data name="GroupNameCannotStartWithX" xml:space="preserve">
-    <value>Group name cannot start with "{0}"!</value>
+    <value>Ime skupine se ne sme začeti z "{0}"!</value>
   </data>
   <data name="SyncOnlyRunningEC2InstancesFromAWS" xml:space="preserve">
-    <value>Synchronize only running EC2 instances from AWS</value>
+    <value>Sinhroniziraj samo delujoče primerke EC2 iz AWS</value>
   </data>
   <data name="AnAWSRegionNamedXDoesNotExist" xml:space="preserve">
-    <value>An AWS region named "{0}" does not exist!</value>
+    <value>Ne obstaja regija AWS z imenom "{0}"!</value>
   </data>
   <data name="AWSCLIv2IsInstalled" xml:space="preserve">
-    <value>AWS CLI v2 is installed!</value>
+    <value>AWS CLI v2 je nameščena!</value>
   </data>
   <data name="AWSCLIv2IsNotInstalled" xml:space="preserve">
-    <value>AWS CLI v2 is not installed!</value>
+    <value>AWS CLI v2 ni nameščena!</value>
   </data>
   <data name="AWSSessionManagerPluginIsInstalled" xml:space="preserve">
-    <value>AWS Session Manager Plugin is installed!</value>
+    <value>Vtičnik Upravitelj sej AWS je nameščen!</value>
   </data>
   <data name="AWSSessionManagerPluginIsNotInstalled" xml:space="preserve">
-    <value>AWS Session Manager Plugin is not installed!</value>
+    <value>Vtičnik Upravitelj sej AWS ni nameščen!</value>
   </data>
   <data name="CheckForPreReleases" xml:space="preserve">
-    <value>Check for pre-releases</value>
+    <value>Preveri obstoj predizdaje</value>
   </data>
   <data name="SyncIsDisabled" xml:space="preserve">
-    <value>Synchronization is disabled!</value>
+    <value>Sinhronizacija je onemogočena!</value>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>Command</value>
+    <value>Ukaz</value>
   </data>
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>Apply theme to PowerShell console</value>
+    <value>Uporabi temo za konzolo PowerShella</value>
   </data>
   <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
-    <value>The color of the PowerShell console can be changed to the application theme under General &gt; Appearance</value>
+    <value>Barvo konzole PowerShell lahko spremenite v temo aplikacije pod Splošno &gt; Videz</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
+    <value>Če omogočite to možnost, se privzete nastavitve konzole PowerShella v registru pod HKCU:\Console preglasijo, tako da se okno konzole PowerShella ujema s temo aplikacije. To je globalna sistemska nastavitev, ki lahko vpliva na videz običajnega okna PowerShella.
 
-Only the PowerShell consoles configured in the PowerShell and AWS Session Manager settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+Spremenjene so samo konzole PowerShella, nastavljene v nastavitvah PowerShella in Upravitelja sej AWS. Podprta sta lupini Windows PowerShell in PWSH (PowerShell 7 in višje).
 
-Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
+V zgornjem desnem kotu kliknite gumb za Pomoč/Dokumentacijo (levo od gumba za pomanjšanje) ali pojdite na https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance za več podrobnosti. Tukaj so dokumentirane vrednosti, ki bodo prilagojene.
 
-If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
+Če je možnost znova onemogočena, vrednosti niso več spremenjene. Vendar se izvirne vrednosti NE obnovijo.</value>
   </data>
 </root>
