@@ -3251,4 +3251,7 @@ Se a opção for desativada novamente, os valores não serão mais modificados. 
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
     <value>Digite um número e selecione uma unidade para calcular as unidades...</value>
   </data>
+  <data name="SettingsViewName_Network" xml:space="preserve">
+    <value>Rede</value>
+  </data>
 </root>
