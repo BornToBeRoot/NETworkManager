@@ -12,6 +12,7 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorCalculatorViewModel}">
     <UserControl.Resources>
         <converters:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
@@ -32,7 +33,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Subnet}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-            <ComboBox Grid.Column="2" x:Name="ComboBoxSubnet" ItemsSource="{Binding SubnetHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4IPv6Subnet}" Style="{StaticResource HistoryComboBox}" >
+            <ComboBox Grid.Column="2" x:Name="ComboBoxSubnet" ItemsSource="{Binding SubnetHistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4IPv6Subnet}" Style="{StaticResource HistoryComboBox}" >
                 <ComboBox.Text>
                     <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                         <Binding.ValidationRules>
@@ -59,22 +60,21 @@
                 </Button.Content>
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}" >
-                        <Setter Property="IsEnabled" Value="False" />
                         <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxSubnet}" Value="False"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="True" />
-                            </MultiDataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=ComboBoxSubnet, Path=(Validation.HasError)}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsCalculationRunning}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
             </Button>
         </Grid>
-        <StackPanel Grid.Row="2">
-            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-            <ScrollViewer Style="{DynamicResource DefaultScrollViewer}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+        <StackPanel Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
+            <ScrollViewer Style="{DynamicResource DefaultScrollViewer}">
                 <Grid>
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
@@ -99,21 +99,21 @@
                     </Grid.RowDefinitions>
                     <GridSplitter Grid.Column="1" Grid.RowSpan="14" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False"/>
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.NetworkAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Result.Network, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Result.Network, Mode=OneWay, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Broadcast}" />
-                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Result.Broadcast, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Result.Broadcast, Mode=OneWay, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPAddresses}" />
-                    <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Result.Total, Converter={StaticResource BigIntegerToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Result.Total, Mode=OneWay, Converter={StaticResource BigIntegerToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Subnetmask}" />
-                    <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Result.Netmask, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Result.Netmask, Mode=OneWay, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.CIDR}" />
-                    <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding Result.Cidr, StringFormat='/{0}'}" />
+                    <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding Result.Cidr, Mode=OneWay, StringFormat='/{0}'}" />
                     <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.FirstUsableIPAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding Result.FirstUsable, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding Result.FirstUsable, Mode=OneWay, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.LastUsableIPAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Result.LastUsable, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Result.LastUsable, Mode=OneWay, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Hosts}" />
-                    <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Result.Usable, Converter={StaticResource BigIntegerToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Result.Usable, Mode=OneWay, Converter={StaticResource BigIntegerToStringConverter}}" />
                 </Grid>
             </ScrollViewer>
         </StackPanel>

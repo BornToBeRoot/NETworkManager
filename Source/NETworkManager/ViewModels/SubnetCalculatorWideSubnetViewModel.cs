@@ -78,114 +78,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private IPAddress _networkAddress;
-        public IPAddress NetworkAddress
+        private IPNetwork _result;
+        public IPNetwork Result
         {
-            get => _networkAddress;
+            get => _result;
             set
             {
-                if (Equals(value, _networkAddress))
+                if (value == _result)
                     return;
 
-                _networkAddress = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private IPAddress _broadcast;
-        public IPAddress Broadcast
-        {
-            get => _broadcast;
-            set
-            {
-                if (Equals(value, _broadcast))
-                    return;
-
-                _broadcast = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private BigInteger _ipAddresses;
-        public BigInteger IPAddresses
-        {
-            get => _ipAddresses;
-            set
-            {
-                if (value == _ipAddresses)
-                    return;
-
-                _ipAddresses = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private IPAddress _subnetmask;
-        public IPAddress Subnetmask
-        {
-            get => _subnetmask;
-            set
-            {
-                if (Equals(value, _subnetmask))
-                    return;
-
-                _subnetmask = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _cidr;
-        public int CIDR
-        {
-            get => _cidr;
-            set
-            {
-                if (value == _cidr)
-                    return;
-
-                _cidr = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private IPAddress _firstIPAddress;
-        public IPAddress FirstIPAddress
-        {
-            get => _firstIPAddress;
-            set
-            {
-                if (Equals(value, _firstIPAddress))
-                    return;
-
-                _firstIPAddress = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private IPAddress _lastIPAddress;
-        public IPAddress LastIPAddress
-        {
-            get => _lastIPAddress;
-            set
-            {
-                if (Equals(value, _lastIPAddress))
-                    return;
-
-                _lastIPAddress = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private BigInteger _hosts;
-        public BigInteger Hosts
-        {
-            get => _hosts;
-            set
-            {
-                if (value == _hosts)
-                    return;
-
-                _hosts = value;
+                _result = value;
                 OnPropertyChanged();
             }
         }
@@ -221,16 +123,7 @@ namespace NETworkManager.ViewModels
             var subnet1 = IPNetwork.Parse(Subnet1);
             var subnet2 = IPNetwork.Parse(Subnet2);
 
-            var subnet = IPNetwork.WideSubnet(new [] {subnet1, subnet2});
-
-            NetworkAddress = subnet.Network;
-            Broadcast = subnet.Broadcast;
-            Subnetmask = subnet.Netmask;
-            CIDR = subnet.Cidr;
-            IPAddresses = subnet.Total;
-            FirstIPAddress = subnet.FirstUsable;
-            LastIPAddress = subnet.LastUsable;
-            Hosts = subnet.Usable;
+            Result = IPNetwork.WideSubnet(new [] {subnet1, subnet2});            
 
             IsResultVisible = true;
 

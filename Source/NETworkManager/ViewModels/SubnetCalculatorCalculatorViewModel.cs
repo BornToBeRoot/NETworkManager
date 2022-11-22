@@ -29,6 +29,20 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView SubnetHistoryView { get; }
 
+        private bool _isCalculationRunning;
+        public bool IsCalculationRunning
+        {
+            get => _isCalculationRunning;
+            set
+            {
+                if (value == _isCalculationRunning)
+                    return;
+
+                _isCalculationRunning = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _isResultVisible;
         public bool IsResultVisible
         {
@@ -80,13 +94,15 @@ namespace NETworkManager.ViewModels
         #region Methods
         private void Calculate()
         {
-            IsResultVisible = false;
+            IsCalculationRunning = true;
 
             Result = IPNetwork.Parse(Subnet);
 
             IsResultVisible = true;
 
             AddSubnetToHistory(Subnet);
+
+            IsCalculationRunning = false;
         }
 
         private void AddSubnetToHistory(string subnet)
