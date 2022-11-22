@@ -130,35 +130,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-
-        private bool _isStatusMessageDisplayed;
-        public bool IsStatusMessageDisplayed
-        {
-            get => _isStatusMessageDisplayed;
-            set
-            {
-                if (value == _isStatusMessageDisplayed)
-                    return;
-
-                _isStatusMessageDisplayed = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _statusMessage;
-        public string StatusMessage
-        {
-            get => _statusMessage;
-            set
-            {
-                if (value == _statusMessage)
-                    return;
-
-                _statusMessage = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #region Constructor, load settings
@@ -281,8 +252,7 @@ namespace NETworkManager.ViewModels
 
         #region Methods
         private async Task Calculate()
-        {
-            IsStatusMessageDisplayed = false;
+        {            
             IsCalculationRunning = true;
 
             SubnetsResult.Clear();
@@ -323,9 +293,8 @@ namespace NETworkManager.ViewModels
                 foreach (var network in subnet.Subnet(newCidr))
                 {
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-                    {
-                        //lock (SubnetsResult)
-                            SubnetsResult.Add(new IPNetworkInfo(network));
+                    {                        
+                        SubnetsResult.Add(new IPNetworkInfo(network));
                     }));
                 }
             });

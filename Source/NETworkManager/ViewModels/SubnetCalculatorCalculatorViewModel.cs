@@ -5,9 +5,9 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Linq;
 using NETworkManager.Utilities;
-using System.Numerics;
 using System.Windows;
 using MahApps.Metro.Controls;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.ViewModels
 {
@@ -30,6 +30,20 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView SubnetHistoryView { get; }
 
+        private bool _isCalculationRunning;
+        public bool IsCalculationRunning
+        {
+            get => _isCalculationRunning;
+            set
+            {
+                if (value == _isCalculationRunning)
+                    return;
+
+                _isCalculationRunning = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _isResultVisible;
         public bool IsResultVisible
         {
@@ -45,114 +59,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private IPAddress _networkAddress;
-        public IPAddress NetworkAddress
+        private IPNetworkInfo _result;
+        public IPNetworkInfo Result
         {
-            get => _networkAddress;
+            get => _result; 
             set
             {
-                if (Equals(value, _networkAddress))
+                if(value== _result) 
                     return;
 
-                _networkAddress = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private IPAddress _broadcast;
-        public IPAddress Broadcast
-        {
-            get => _broadcast;
-            set
-            {
-                if (Equals(value, _broadcast))
-                    return;
-
-                _broadcast = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private BigInteger _ipAddresses;
-        public BigInteger IPAddresses
-        {
-            get => _ipAddresses;
-            set
-            {
-                if (value == _ipAddresses)
-                    return;
-
-                _ipAddresses = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private IPAddress _subnetmask;
-        public IPAddress Subnetmask
-        {
-            get => _subnetmask;
-            set
-            {
-                if (Equals(value, _subnetmask))
-                    return;
-
-                _subnetmask = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _cidr;
-        public int CIDR
-        {
-            get => _cidr;
-            set
-            {
-                if (value == _cidr)
-                    return;
-
-                _cidr = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private IPAddress _firstIPAddress;
-        public IPAddress FirstIPAddress
-        {
-            get => _firstIPAddress;
-            set
-            {
-                if (Equals(value, _firstIPAddress))
-                    return;
-
-                _firstIPAddress = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private IPAddress _lastIPAddress;
-        public IPAddress LastIPAddress
-        {
-            get => _lastIPAddress;
-            set
-            {
-                if (Equals(value, _lastIPAddress))
-                    return;
-
-                _lastIPAddress = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private BigInteger _hosts;
-        public BigInteger Hosts
-        {
-            get => _hosts;
-            set
-            {
-                if (value == _hosts)
-                    return;
-
-                _hosts = value;
+                _result = value;
                 OnPropertyChanged();
             }
         }
@@ -179,22 +95,15 @@ namespace NETworkManager.ViewModels
         #region Methods
         private void Calculate()
         {
-            IsResultVisible = false;
+            IsCalculationRunning = true;
 
-            var subnet = IPNetwork.Parse(Subnet);
-
-            NetworkAddress = subnet.Network;
-            Broadcast = subnet.Broadcast;
-            Subnetmask = subnet.Netmask;
-            CIDR = subnet.Cidr;
-            IPAddresses = subnet.Total;
-            FirstIPAddress = subnet.FirstUsable;
-            LastIPAddress = subnet.LastUsable;
-            Hosts = subnet.Usable;
+            Result = new IPNetworkInfo(IPNetwork.Parse(Subnet));
 
             IsResultVisible = true;
 
             AddSubnetToHistory(Subnet);
+
+            IsCalculationRunning = false;
         }
 
         private void AddSubnetToHistory(string subnet)

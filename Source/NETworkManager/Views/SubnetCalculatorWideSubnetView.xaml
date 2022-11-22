@@ -46,7 +46,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.Subnet1}" />
-                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxSubnet1" Height="{Binding ElementName=ComboBoxSubnet2, Path=ActualHeight}" ItemsSource="{Binding Subnet1HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" Grid.Row="0" x:Name="ComboBoxSubnet1" ItemsSource="{Binding Subnet1HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet}" Style="{StaticResource HistoryComboBox}" Height="{Binding ElementName=ComboBoxSubnet2, Path=ActualHeight}">
                     <ComboBox.Text>
                         <Binding Path="Subnet1" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -57,7 +57,7 @@
                     </ComboBox.Text>
                 </ComboBox>
                 <TextBlock Grid.Column="0" Grid.Row="2" Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.Subnet2}" />
-                <ComboBox x:Name="ComboBoxSubnet2" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding Subnet2HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet2}" Style="{StaticResource HistoryComboBox}">
+                <ComboBox Grid.Column="2" Grid.Row="2" x:Name="ComboBoxSubnet2" ItemsSource="{Binding Subnet2HistoryView}" IsEnabled="{Binding IsCalculationRunning, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet2}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet2" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                             <Binding.ValidationRules>
@@ -139,21 +139,21 @@
                     </Grid.RowDefinitions>
                     <GridSplitter Grid.Column="1" Grid.RowSpan="14" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False"/>
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.NetworkAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding NetworkAddress, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Result.Network, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Broadcast}" />
-                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Broadcast, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Result.Broadcast, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPAddresses}" />
-                    <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding IPAddresses, Converter={StaticResource BigIntegerToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Result.Total, Converter={StaticResource BigIntegerToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Subnetmask}" />
-                    <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Subnetmask, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Result.Netmask, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.CIDR}" />
-                    <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding CIDR, StringFormat='/{0}'}" />
+                    <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding Result.Cidr, StringFormat='/{0}'}" />
                     <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.FirstUsableIPAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding FirstIPAddress, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding Result.FirstUsable, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.LastUsableIPAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding LastIPAddress, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Result.LastUsable, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Hosts}" />
-                    <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Hosts, Converter={StaticResource BigIntegerToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Result.Usable, Converter={StaticResource BigIntegerToStringConverter}}" />
                 </Grid>
             </ScrollViewer>
         </StackPanel>
