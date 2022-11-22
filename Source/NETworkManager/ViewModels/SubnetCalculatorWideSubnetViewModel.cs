@@ -9,6 +9,7 @@ using System.Numerics;
 using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.ViewModels
 {
@@ -78,8 +79,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private IPNetwork _result;
-        public IPNetwork Result
+        private IPNetworkInfo _result;
+        public IPNetworkInfo Result
         {
             get => _result;
             set
@@ -123,7 +124,7 @@ namespace NETworkManager.ViewModels
             var subnet1 = IPNetwork.Parse(Subnet1);
             var subnet2 = IPNetwork.Parse(Subnet2);
 
-            Result = IPNetwork.WideSubnet(new [] {subnet1, subnet2});            
+            Result = new IPNetworkInfo(IPNetwork.WideSubnet(new[] { subnet1, subnet2 }));
 
             IsResultVisible = true;
 

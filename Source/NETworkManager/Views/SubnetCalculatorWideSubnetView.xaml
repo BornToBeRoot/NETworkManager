@@ -139,21 +139,21 @@
                     </Grid.RowDefinitions>
                     <GridSplitter Grid.Column="1" Grid.RowSpan="14" Background="Transparent" HorizontalAlignment="Stretch" Focusable="False"/>
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.NetworkAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Result.Network, Mode=OneWay, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Result.Network, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Broadcast}" />
-                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Result.Broadcast, Mode=OneWay, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Result.Broadcast, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPAddresses}" />
-                    <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Result.Total, Mode=OneWay, Converter={StaticResource BigIntegerToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Result.Total, Converter={StaticResource BigIntegerToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.Subnetmask}" />
-                    <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Result.Netmask, Mode=OneWay, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding Result.Netmask, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.CIDR}" />
-                    <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding Result.Cidr, Mode=OneWay, StringFormat='/{0}'}" />
+                    <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding Result.Cidr, StringFormat='/{0}'}" />
                     <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.FirstUsableIPAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding Result.FirstUsable, Mode=OneWay, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="5" Text="{Binding Result.FirstUsable, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="6" Text="{x:Static localization:Strings.LastUsableIPAddress}" />
-                    <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Result.LastUsable, Mode=OneWay, Converter={StaticResource IPAddressToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="6" Text="{Binding Result.LastUsable, Converter={StaticResource IPAddressToStringConverter}}" />
                     <TextBlock Grid.Column="0" Grid.Row="7" Text="{x:Static localization:Strings.Hosts}" />
-                    <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Result.Usable, Mode=OneWay, Converter={StaticResource BigIntegerToStringConverter}}" />
+                    <TextBox Grid.Column="2" Grid.Row="7" Text="{Binding Result.Usable, Converter={StaticResource BigIntegerToStringConverter}}" />
                 </Grid>
             </ScrollViewer>
         </StackPanel>

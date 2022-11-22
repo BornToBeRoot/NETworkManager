@@ -7,6 +7,7 @@ using System.Linq;
 using NETworkManager.Utilities;
 using System.Windows;
 using MahApps.Metro.Controls;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.ViewModels
 {
@@ -58,8 +59,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private IPNetwork _result;
-        public IPNetwork Result
+        private IPNetworkInfo _result;
+        public IPNetworkInfo Result
         {
             get => _result; 
             set
@@ -96,7 +97,7 @@ namespace NETworkManager.ViewModels
         {
             IsCalculationRunning = true;
 
-            Result = IPNetwork.Parse(Subnet);
+            Result = new IPNetworkInfo(IPNetwork.Parse(Subnet));
 
             IsResultVisible = true;
 
