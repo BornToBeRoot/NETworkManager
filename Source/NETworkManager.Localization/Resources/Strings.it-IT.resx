@@ -3283,4 +3283,7 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
   <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
     <value>Inserisci un numero e seleziona un'unità per calcolare le unità...</value>
   </data>
+  <data name="SettingsViewName_Network" xml:space="preserve">
+    <value>Rete</value>
+  </data>
 </root>
