@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Report an issue
-labels: ":bug: bug"
+labels: ":mag: needs triage"
 ---
 
 **Describe your issue**:
