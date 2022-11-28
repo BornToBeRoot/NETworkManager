@@ -310,6 +310,157 @@ namespace NETworkManager.Settings
             }
         }
 
+        // Network
+        private bool _network_UseCustomDNSServer;
+        public bool Network_UseCustomDNSServer
+        {
+            get => _network_UseCustomDNSServer;
+            set
+            {
+                if (value == _network_UseCustomDNSServer)
+                    return;
+
+                _network_UseCustomDNSServer = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _network_CustomDNSServer;
+        public string Network_CustomDNSServer
+        {
+            get => _network_CustomDNSServer;
+            set
+            {
+                if (value == _network_CustomDNSServer)
+                    return;
+
+                _network_CustomDNSServer = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _network_CustomDNSPort = GlobalStaticConfiguration.Network_DNSPort;
+        public int Network_CustomDNSPort
+        {
+            get => _network_CustomDNSPort;
+            set
+            {
+                if (value == _network_CustomDNSPort)
+                    return;
+
+                _network_CustomDNSPort = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _network_UseCustomDNSSuffix;
+        public bool Network_UseCustomDNSSuffix
+        {
+            get => _network_UseCustomDNSSuffix;
+            set
+            {
+                if (value == _network_UseCustomDNSSuffix)
+                    return;
+
+                _network_UseCustomDNSSuffix = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _network_CustomDNSSuffix;
+        public string Network_CustomDNSSuffix
+        {
+            get => _network_CustomDNSSuffix;
+            set
+            {
+                if (value == _network_CustomDNSSuffix)
+                    return;
+
+                _network_CustomDNSSuffix = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _network_DNSRecursion = true;
+        public bool Network_DNSRecursion
+        {
+            get => _network_DNSRecursion;
+            set
+            {
+                if (value == _network_DNSRecursion)
+                    return;
+
+                _network_DNSRecursion = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _network_DNSUseCache;
+        public bool Network_DNSUseCache
+        {
+            get => _network_DNSUseCache;
+            set
+            {
+                if (value == _network_DNSUseCache)
+                    return;
+
+                _network_DNSUseCache = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _network_DNSUseTCPOnly = GlobalStaticConfiguration.Network_DNSUseTCPOnly;
+        public bool Network_DNSUseTCPOnly
+        {
+            get => _network_DNSUseTCPOnly;
+            set
+            {
+                if (value == _network_DNSUseTCPOnly)
+                    return;
+
+                _network_DNSUseTCPOnly = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _network_DNSTimeout = GlobalStaticConfiguration.Network_DNSTimeout;
+        public int Network_DNSTimeout
+        {
+            get => _network_DNSTimeout;
+            set
+            {
+                if (value == _network_DNSTimeout)
+                    return;
+
+                _network_DNSTimeout = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _network_DNSRetries = GlobalStaticConfiguration.Network_DNSRetries;
+        public int Network_DNSRetries
+        {
+            get => _network_DNSRetries;
+            set
+            {
+                if (value == _network_DNSRetries)
+                    return;
+
+                _network_DNSRetries = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         // Status
         private bool _status_ShowWindowOnNetworkChange = GlobalStaticConfiguration.Status_ShowWindowOnNetworkChange;
         public bool Status_ShowWindowOnNetworkChange
@@ -846,126 +997,6 @@ namespace NETworkManager.Settings
                     return;
 
                 _ipScanner_ResolveHostname = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _ipScanner_UseCustomDNSServer;
-        public bool IPScanner_UseCustomDNSServer
-        {
-            get => _ipScanner_UseCustomDNSServer;
-            set
-            {
-                if (value == _ipScanner_UseCustomDNSServer)
-                    return;
-
-                _ipScanner_UseCustomDNSServer = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private string _ipScanner_CustomDNSServer;
-        public string IPScanner_CustomDNSServer
-        {
-            get => _ipScanner_CustomDNSServer;
-            set
-            {
-                if (value == _ipScanner_CustomDNSServer)
-                    return;
-
-                _ipScanner_CustomDNSServer = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private int _ipScanner_CustomDNSPort = GlobalStaticConfiguration.IPScanner_DNSPort;
-        public int IPScanner_CustomDNSPort
-        {
-            get => _ipScanner_CustomDNSPort;
-            set
-            {
-                if (value == _ipScanner_CustomDNSPort)
-                    return;
-
-                _ipScanner_CustomDNSPort = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _ipScanner_DNSRecursion = true;
-        public bool IPScanner_DNSRecursion
-        {
-            get => _ipScanner_DNSRecursion;
-            set
-            {
-                if (value == _ipScanner_DNSRecursion)
-                    return;
-
-                _ipScanner_DNSRecursion = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _ipScanner_DNSUseCache;
-        public bool IPScanner_DNSUseCache
-        {
-            get => _ipScanner_DNSUseCache;
-            set
-            {
-                if (value == _ipScanner_DNSUseCache)
-                    return;
-
-                _ipScanner_DNSUseCache = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private bool _ipScanner_DNSUseTCPOnly = GlobalStaticConfiguration.IPScanner_DNSUseTCPOnly;
-        public bool IPScanner_DNSUseTCPOnly
-        {
-            get => _ipScanner_DNSUseTCPOnly;
-            set
-            {
-                if (value == _ipScanner_DNSUseTCPOnly)
-                    return;
-
-                _ipScanner_DNSUseTCPOnly = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private int _ipScanner_DNSTimeout = GlobalStaticConfiguration.IPScanner_DNSTimeout;
-        public int IPScanner_DNSTimeout
-        {
-            get => _ipScanner_DNSTimeout;
-            set
-            {
-                if (value == _ipScanner_DNSTimeout)
-                    return;
-
-                _ipScanner_DNSTimeout = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
-        private int _ipScanner_DNSRetries = GlobalStaticConfiguration.IPScanner_DNSRetries;
-        public int IPScanner_DNSRetries
-        {
-            get => _ipScanner_DNSRetries;
-            set
-            {
-                if (value == _ipScanner_DNSRetries)
-                    return;
-
-                _ipScanner_DNSRetries = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -1713,7 +1744,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private string _dnsLookup_CustomDNSSuffix = string.Empty;
+        private string _dnsLookup_CustomDNSSuffix;
         public string DNSLookup_CustomDNSSuffix
         {
             get => _dnsLookup_CustomDNSSuffix;

@@ -52,7 +52,7 @@ namespace NETworkManager.Models.Network
 		#region Methods   
 		private List<IPEndPoint> GetDnsServer()
 		{
-			List<IPEndPoint> dnsServers = new List<IPEndPoint>();
+			List<IPEndPoint> dnsServers = new();
 
 			if (UseCustomDNSServer)
 			{

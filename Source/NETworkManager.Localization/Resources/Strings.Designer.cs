@@ -6012,6 +6012,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Proxy ähnelt.
+        /// </summary>
+        public static string Proxy {
+            get {
+                return ResourceManager.GetString("Proxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die PTR dns record resolved for &quot;{0}&quot;! ähnelt.
         /// </summary>
         public static string PTRDNSRecordResolvedForXXXMessage {

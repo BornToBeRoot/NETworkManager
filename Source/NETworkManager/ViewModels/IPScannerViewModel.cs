@@ -323,7 +323,7 @@ namespace NETworkManager.ViewModels
 
         private async Task AddProfileSelectedHostAction()
         {
-            ProfileInfo profileInfo = new ProfileInfo()
+            ProfileInfo profileInfo = new()
             {
                 Name = string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.PingInfo.IPAddress.ToString() : SelectedResult.Hostname.TrimEnd('.'),
                 Host = SelectedResult.PingInfo.IPAddress.ToString()
@@ -493,23 +493,27 @@ namespace NETworkManager.ViewModels
                 ICMPBuffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
                 ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
                 ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
+                /*
                 UseCustomDNSServer = SettingsManager.Current.IPScanner_UseCustomDNSServer,
                 DNSUseTCPOnly = SettingsManager.Current.IPScanner_DNSUseTCPOnly,
                 DNSRecursion = SettingsManager.Current.IPScanner_DNSRecursion,
                 DNSUseCache = SettingsManager.Current.IPScanner_DNSUseCache,
                 DNSTimeout = TimeSpan.FromSeconds(SettingsManager.Current.IPScanner_DNSTimeout),
                 DNSRetries = SettingsManager.Current.IPScanner_DNSRetries,
+                */
                 DNSShowErrorMessage = SettingsManager.Current.IPScanner_DNSShowErrorMessage,
                 ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
                 ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses
             };
 
             // Set custom dns server...
+            /*
             if (ipScanner.ResolveHostname && ipScanner.UseCustomDNSServer)
             {
                 ipScanner.CustomDNSServer = IPAddress.Parse(SettingsManager.Current.IPScanner_CustomDNSServer);
                 ipScanner.CustomDNSPort = SettingsManager.Current.IPScanner_CustomDNSPort;
             }
+            */
 
             ipScanner.HostFound += HostFound;
             ipScanner.ScanComplete += ScanComplete;

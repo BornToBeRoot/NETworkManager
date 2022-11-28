@@ -372,7 +372,7 @@ namespace NETworkManager.ViewModels
             if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
             {
                 dnsLookup.UseCustomDNSSuffix = true;
-                dnsLookup.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix.TrimStart('.');
+                dnsLookup.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
             }
 
             dnsLookup.RecordReceived += DNSLookup_RecordReceived;

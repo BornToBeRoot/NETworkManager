@@ -3254,4 +3254,7 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="SettingsViewName_Network" xml:space="preserve">
     <value>Network</value>
   </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
 </root>
