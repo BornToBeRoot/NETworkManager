@@ -209,8 +209,7 @@ namespace NETworkManager.Models.Network
                 case WiFiPhyKind.Hrdsss:
                     return "802.11b";
                 case WiFiPhyKind.Erp:
-                    return "802.11g";
-                    break;
+                    return "802.11g";                    
                 case WiFiPhyKind.HT:
                     return "802.11n";
                 case WiFiPhyKind.Dmg:

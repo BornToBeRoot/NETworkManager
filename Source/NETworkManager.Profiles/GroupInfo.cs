@@ -21,7 +21,7 @@ namespace NETworkManager.Profiles
         public bool IsDynamic { get; set; }
 
         [XmlIgnore]
-        public new List<ProfileInfo> Profiles { get; set; }
+        public List<ProfileInfo> Profiles { get; set; }
 
         public bool RemoteDesktop_UseCredentials { get; set; }
         public string RemoteDesktop_Username { get; set; }

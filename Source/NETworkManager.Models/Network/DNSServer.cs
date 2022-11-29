@@ -11,10 +11,8 @@ namespace NETworkManager.Models.Network
         /// Method will return a default list of common dns servers.
         /// </summary>
         /// <returns>List of common dns servers.</returns>
-        public static List<DNSServerInfo> GetDefaultList()
+        public static List<DNSServerInfo> GetDefaultList() => new()
         {
-            return new List<DNSServerInfo>
-            {
                 new DNSServerInfo(), // Windows DNS server
                 new DNSServerInfo("Cloudflare", new List<string>{"1.1.1.1", "1.0.0.1"}),
                 new DNSServerInfo("DNS.Watch", new List<string>{"84.200.69.80", "84.200.70.40"}),
@@ -22,6 +20,5 @@ namespace NETworkManager.Models.Network
                 new DNSServerInfo("Level3", new List<string> {"209.244.0.3", "209.244.0.4"}),
                 new DNSServerInfo("Verisign", new List<string> {"64.6.64.6", "64.6.65.6"})
             };
-        }
     }
 }

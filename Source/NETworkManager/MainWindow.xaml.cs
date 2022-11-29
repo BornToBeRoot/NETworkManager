@@ -1016,7 +1016,7 @@ namespace NETworkManager
             OpenSettings();
         }
 
-        private async Task CloseSettings()
+        private void CloseSettings()
         {
             ShowSettingsView = false;
 

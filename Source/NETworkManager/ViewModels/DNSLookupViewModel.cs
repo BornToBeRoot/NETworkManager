@@ -351,7 +351,7 @@ namespace NETworkManager.ViewModels
 
             AddHostToHistory(Host);
 
-            var dnsLookup = new DNSLookup
+            DNSLookupSettings settings = new()
             {
                 AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix,
                 QueryClass = SettingsManager.Current.DNSLookup_QueryClass,
@@ -365,21 +365,23 @@ namespace NETworkManager.ViewModels
 
             if (!DNSServer.UseWindowsDNSServer)
             {
-                dnsLookup.UseCustomDNSServer = true;
-                dnsLookup.CustomDNSServer = DNSServer;                
+                settings.UseCustomDNSServer = true;
+                settings.CustomDNSServer = DNSServer;                
             }
 
             if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
             {
-                dnsLookup.UseCustomDNSSuffix = true;
-                dnsLookup.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
+                settings.UseCustomDNSSuffix = true;
+                settings.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
             }
 
-            dnsLookup.RecordReceived += DNSLookup_RecordReceived;
-            dnsLookup.LookupError += DNSLookup_LookupError;
-            dnsLookup.LookupComplete += DNSLookup_LookupComplete;
+            DNSLookup lookup = new(settings);
 
-            dnsLookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList());
+            lookup.RecordReceived += DNSLookup_RecordReceived;
+            lookup.LookupError += DNSLookup_LookupError;
+            lookup.LookupComplete += DNSLookup_LookupComplete;
+
+            lookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList());
         }
 
         private void LookupFinished()

@@ -8,132 +8,140 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network
 {
-	public class DNSLookup
-	{
-		#region Variables
-		public bool UseCustomDNSServer = false;
-		public DNSServerInfo CustomDNSServer;
-		public bool AddDNSSuffix = true;
-		public bool UseCustomDNSSuffix = false;
-		public string CustomDNSSuffix;
-		public QueryClass QueryClass = QueryClass.IN;
-		public QueryType QueryType = QueryType.ANY;
+    public class DNSLookup
+    {
+        #region Variables        
+        private DNSLookupSettings _settings;
+        #endregion
 
-		public bool UseCache = false;
-		public bool Recursion = true;
-		public bool UseTCPOnly = false;
-		public int Retries = 3;
-		public TimeSpan Timeout = TimeSpan.FromSeconds(2);
-		#endregion
+        #region Constructor
+        public DNSLookup(DNSLookupSettings settings)
+        {
+            _settings = settings;
+        }
 
-		#region Events
-		public event EventHandler<DNSLookupRecordArgs> RecordReceived;
+        #endregion
 
-		protected virtual void OnRecordReceived(DNSLookupRecordArgs e)
-		{
-			RecordReceived?.Invoke(this, e);
-		}
+        #region Events
+        public event EventHandler<DNSLookupRecordArgs> RecordReceived;
 
-		public event EventHandler<DNSLookupErrorArgs> LookupError;
+        protected virtual void OnRecordReceived(DNSLookupRecordArgs e)
+        {
+            RecordReceived?.Invoke(this, e);
+        }
 
-		protected virtual void OnLookupError(DNSLookupErrorArgs e)
-		{
-			LookupError?.Invoke(this, e);
-		}
+        public event EventHandler<DNSLookupErrorArgs> LookupError;
 
-		public event EventHandler LookupComplete;
+        protected virtual void OnLookupError(DNSLookupErrorArgs e)
+        {
+            LookupError?.Invoke(this, e);
+        }
 
-		protected virtual void OnLookupComplete()
-		{
-			LookupComplete?.Invoke(this, EventArgs.Empty);
-		}
-		#endregion
+        public event EventHandler LookupComplete;
 
-		#region Methods   
-		private List<IPEndPoint> GetDnsServer()
-		{
-			List<IPEndPoint> dnsServers = new();
+        protected virtual void OnLookupComplete()
+        {
+            LookupComplete?.Invoke(this, EventArgs.Empty);
+        }
+        #endregion
 
-			if (UseCustomDNSServer)
-			{
-				foreach (var dnsServer in CustomDNSServer.Servers)
-					dnsServers.Add(new IPEndPoint(IPAddress.Parse(dnsServer), CustomDNSServer.Port));
-			}
-			else
-			{
-				foreach (var dnsServer in NameServer.ResolveNameServers(true, false))
-				{
-					dnsServers.Add(new IPEndPoint(IPAddress.Parse(dnsServer.Address), dnsServer.Port));
-				}
-			}
+        #region Methods
+        /// <summary>
+        /// Get the DNS servers from Windows or get custom DNS servers from <see cref="DNSLookupSettings"/>.
+        /// </summary>
+        /// <returns>List of DNS servers as <see cref="IPEndPoint"/>.</returns>
+        private IEnumerable<IPEndPoint> GetDnsServer()
+        {
+            List<IPEndPoint> dnsServers = new();
 
-			return dnsServers;
-		}
+            if (_settings.UseCustomDNSServer)
+            {
+                foreach (var dnsServer in _settings.CustomDNSServer.Servers)
+                    dnsServers.Add(new IPEndPoint(IPAddress.Parse(dnsServer), _settings.CustomDNSServer.Port));
+            }
+            else
+            {
+                foreach (var dnsServer in NameServer.ResolveNameServers(true, false))
+                {
+                    dnsServers.Add(new IPEndPoint(IPAddress.Parse(dnsServer.Address), dnsServer.Port));
+                }
+            }
 
-		public void ResolveAsync(List<string> hosts)
-		{
-			Task.Run(() =>
-			{
-				// Get list of dns servers
-				List<IPEndPoint> dnsServers = GetDnsServer();
+            return dnsServers;
+        }
 
-				// Foreach host
-				foreach (var host in hosts)
-				{
-					var query = host;
+        /// <summary>
+		/// Resolve hostname, fqdn or ip address.
+		/// </summary>
+		/// <param name="hosts">List of hostnames, fqdns or ip addresses.</param>
+		public void ResolveAsync(IEnumerable<string> hosts)
+        {
+            Task.Run(() =>
+            {
+                // Get list of dns servers
+                IEnumerable<IPEndPoint> dnsServers = GetDnsServer();
 
-					// Append dns suffix to hostname
-					if (QueryType != QueryType.PTR && AddDNSSuffix && query.IndexOf(".", StringComparison.OrdinalIgnoreCase) == -1)
-					{
-						var dnsSuffix = UseCustomDNSSuffix ? CustomDNSSuffix : IPGlobalProperties.GetIPGlobalProperties().DomainName;
+                // Foreach host
+                foreach (var host in hosts)
+                {
+                    var query = host;
 
-						if (!string.IsNullOrEmpty(dnsSuffix))
-							query += $".{dnsSuffix}";
-					}
+                    // Append dns suffix to hostname
+                    if (_settings.QueryType != QueryType.PTR && _settings.AddDNSSuffix && query.IndexOf(".", StringComparison.OrdinalIgnoreCase) == -1)
+                    {
+                        var dnsSuffix = _settings.UseCustomDNSSuffix ? _settings.CustomDNSSuffix : IPGlobalProperties.GetIPGlobalProperties().DomainName;
 
-					// Foreach dns server
-					Parallel.ForEach(dnsServers, dnsServer =>
-					{
-						LookupClientOptions lookupClientOptions = new LookupClientOptions(dnsServer)
-						{
-							UseTcpOnly = UseTCPOnly,
-							UseCache = UseCache,
-							Recursion = Recursion,
-							Timeout = Timeout,
-							Retries = Retries,
-						};
+                        if (!string.IsNullOrEmpty(dnsSuffix))
+                            query += $".{dnsSuffix}";
+                    }
 
-						LookupClient dnsLookupClient = new LookupClient(lookupClientOptions);
+                    // Foreach dns server
+                    Parallel.ForEach(dnsServers, dnsServer =>
+                    {
+                        LookupClientOptions lookupClientOptions = new(dnsServer)
+                        {
+                            UseTcpOnly = _settings.UseTCPOnly,
+                            UseCache = _settings.UseCache,
+                            Recursion = _settings.Recursion,
+                            Timeout = _settings.Timeout,
+                            Retries = _settings.Retries,
+                        };
 
-						try
-						{
-							// PTR vs A, AAAA, CNAME etc.
-							var dnsResponse = QueryType == QueryType.PTR ? dnsLookupClient.QueryReverse(IPAddress.Parse(query)) : dnsLookupClient.Query(query, QueryType, QueryClass);
+                        LookupClient dnsLookupClient = new(lookupClientOptions);
 
-							// If there was an error... return
-							if (dnsResponse.HasError)
-							{
-								OnLookupError(new DNSLookupErrorArgs(dnsResponse.ErrorMessage, new IPEndPoint(IPAddress.Parse(dnsResponse.NameServer.Address), dnsResponse.NameServer.Port)));
-								return;
-							}
+                        try
+                        {
+                            // PTR vs A, AAAA, CNAME etc.
+                            var dnsResponse = _settings.QueryType == QueryType.PTR ? dnsLookupClient.QueryReverse(IPAddress.Parse(query)) : dnsLookupClient.Query(query, _settings.QueryType, _settings.QueryClass);
 
-							// Process the results...
-							ProcessDnsQueryResponse(dnsResponse);
-						}
-						catch (Exception ex)
-						{
-							OnLookupError(new DNSLookupErrorArgs(ex.Message, dnsServer));
-						}
-					});
-				}
+                            // If there was an error... return
+                            if (dnsResponse.HasError)
+                            {
+                                OnLookupError(new DNSLookupErrorArgs(dnsResponse.ErrorMessage, new IPEndPoint(IPAddress.Parse(dnsResponse.NameServer.Address), dnsResponse.NameServer.Port)));
+                                return;
+                            }
 
-				OnLookupComplete();
-			});
-		}
+                            // Process the results...
+                            ProcessDnsQueryResponse(dnsResponse);
+                        }
+                        catch (Exception ex)
+                        {
+                            OnLookupError(new DNSLookupErrorArgs(ex.Message, dnsServer));
+                        }
+                    });
+                }
 
-		private void ProcessDnsQueryResponse(IDnsQueryResponse dnsQueryResponse)
-		{
-			var dnsServer = new IPEndPoint(IPAddress.Parse(dnsQueryResponse.NameServer.Address), dnsQueryResponse.NameServer.Port);
+                OnLookupComplete();
+            });
+        }
+
+        /// <summary>
+        /// Process the dns query response.
+        /// </summary>
+        /// <param name="dnsQueryResponse"><see cref="IDnsQueryResponse"/> to process.</param>
+        private void ProcessDnsQueryResponse(IDnsQueryResponse dnsQueryResponse)
+        {
+            var dnsServer = new IPEndPoint(IPAddress.Parse(dnsQueryResponse.NameServer.Address), dnsQueryResponse.NameServer.Port);
 
             // A
             foreach (var record in dnsQueryResponse.Answers.ARecords())
@@ -169,6 +177,6 @@ namespace NETworkManager.Models.Network
 
             // ToDo: implement more
         }
-		#endregion
-	}
+        #endregion
+    }
 }
