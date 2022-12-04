@@ -11,57 +11,16 @@
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.DNS}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSServer}" IsOn="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
-        <StackPanel IsEnabled="{Binding UseCustomDNSServer}">
-            <TextBlock Text="{x:Static localization:Strings.DNSServer}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-            <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServer}" Style="{StaticResource DefaultTextBox}">
-                <TextBox.Text>
-                    <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <validators:MultipleIPAddressesValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-            <TextBlock Text="{x:Static localization:Strings.Port}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-            <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort53}" Style="{StaticResource DefaultTextBox}">
-                <TextBox.Text>
-                    <Binding Path="DNSPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <validators:PortValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-            <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSSuffix}" IsEnabled="{Binding AddDNSSuffix}" IsOn="{Binding UseCustomDNSSuffix}" Margin="0,0,0,10"/>
-            <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSuffix}" Margin="0,0,0,10">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding UseCustomDNSSuffix}" Value="True">
-                                <Setter Property="IsEnabled" Value="True" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Resources>
-                <TextBox.Text>
-                    <Binding Path="CustomDNSSuffix" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-            <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}" IsOn="{Binding DNSRecursion}" Margin="0,0,0,10"/>
-            <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCache}" IsOn="{Binding DNSUseCache}" Margin="0,0,0,10"/>
-            <mah:ToggleSwitch Header="{x:Static localization:Strings.UseOnlyTCP}" IsOn="{Binding DNSUseTCPOnly}" Margin="0,0,0,10" />
-            <TextBlock Text="{x:Static localization:Strings.Retries}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-            <mah:NumericUpDown Value="{Binding DNSRetries}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
-            <TextBlock Text="{x:Static localization:Strings.TimeoutS}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-            <mah:NumericUpDown Value="{Binding DNSTimeout}" Maximum="15" Minimum="1" Interval="1" Margin="0,0,0,20" />
-        </StackPanel>
+        <TextBlock Text="{x:Static localization:Strings.DNSServers}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServers}" Style="{StaticResource DefaultTextBox}">
+            <TextBox.Text>
+                <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validators:MultipleIPAddressesValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>        
         <!--
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Proxy}" />
         -->

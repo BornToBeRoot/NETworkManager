@@ -1493,6 +1493,8 @@ namespace NETworkManager
             Activate();
         }
 
+        
+
         private void WriteDefaultPowerShellProfileToRegistry()
         {
             if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
