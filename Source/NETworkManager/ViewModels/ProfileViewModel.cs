@@ -2420,7 +2420,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                foreach (var ipAddr in (await Dns.GetHostEntryAsync(Host)).AddressList)
+                foreach (var ipAddr in (await System.Net.Dns.GetHostEntryAsync(Host)).AddressList)
                 {
                     if (ipAddr.AddressFamily != AddressFamily.InterNetwork)
                         continue;

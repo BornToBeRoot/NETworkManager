@@ -35,6 +35,7 @@ using System.Collections.ObjectModel;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.AWS;
 using NETworkManager.Models.PowerShell;
+using System.Net;
 
 namespace NETworkManager
 {
@@ -364,6 +365,22 @@ namespace NETworkManager
             // Load and change appearance
             AppearanceManager.Load();
 
+            // Load DNS
+            DNSSettings dnsSettings = null;
+
+            if (SettingsManager.Current.Network_UseCustomDNSServer)
+            {
+                if (!string.IsNullOrEmpty(SettingsManager.Current.Network_CustomDNSServer))
+                {
+                    dnsSettings = new()
+                    {
+                        DNSServers = SettingsManager.Current.Network_CustomDNSServer.Split(";")
+                    };
+                }
+            }
+
+            DNS.GetInstance().Configure(dnsSettings);
+            
             // Set window title
             Title = $"NETworkManager {AssemblyManager.Current.Version}";
 
@@ -382,6 +399,11 @@ namespace NETworkManager
         protected override async void OnContentRendered(EventArgs e)
         {
             base.OnContentRendered(e);
+
+            Debug.WriteLine(await DNS.GetInstance().ResolveAAsync("heise.de"));
+            Debug.WriteLine(await DNS.GetInstance().ResolveAaaaAsync("heise.de"));
+            Debug.WriteLine(await DNS.GetInstance().ResolveCnameAsync("cloud.borntoberoot.net"));
+            Debug.WriteLine(await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse("1.1.1.1")));
 
             // Show a note if settings have been reset
             if (ConfigurationManager.Current.ShowSettingsResetNoteOnStartup)
@@ -1493,7 +1515,7 @@ namespace NETworkManager
             Activate();
         }
 
-        
+
 
         private void WriteDefaultPowerShellProfileToRegistry()
         {

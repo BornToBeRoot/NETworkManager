@@ -568,7 +568,7 @@ namespace NETworkManager.ViewModels
                 {
                     try
                     {
-                        string computerDNS = string.IsNullOrEmpty(ComputerIPv4) ? Dns.GetHostEntry(ComputerIPv6).HostName : Dns.GetHostEntry(ComputerIPv4).HostName;
+                        string computerDNS = string.IsNullOrEmpty(ComputerIPv4) ? System.Net.Dns.GetHostEntry(ComputerIPv6).HostName : System.Net.Dns.GetHostEntry(ComputerIPv4).HostName;
 
                         ComputerDNS = computerDNS;
                         ComputerDNSState = ConnectionState.OK;
@@ -662,7 +662,7 @@ namespace NETworkManager.ViewModels
                 {
                     try
                     {
-                        string routerDNS = string.IsNullOrEmpty(RouterIPv4) ? Dns.GetHostEntry(RouterIPv6).HostName : Dns.GetHostEntry(RouterIPv4).HostName;
+                        string routerDNS = string.IsNullOrEmpty(RouterIPv4) ? System.Net.Dns.GetHostEntry(RouterIPv6).HostName : System.Net.Dns.GetHostEntry(RouterIPv4).HostName;
 
                         RouterDNS = routerDNS;
                         RouterDNSState = ConnectionState.OK;
@@ -784,8 +784,8 @@ namespace NETworkManager.ViewModels
                     {
                         try
                         {
-                            string internetDNS = string.IsNullOrEmpty(InternetIPv4) ? Dns.GetHostEntry(InternetIPv6).HostName : Dns.GetHostEntry(InternetIPv4).HostName;
-                            
+                            string internetDNS = string.IsNullOrEmpty(InternetIPv4) ? System.Net.Dns.GetHostEntry(InternetIPv6).HostName : System.Net.Dns.GetHostEntry(InternetIPv4).HostName;
+
                             InternetDNS = internetDNS;
                             InternetDNSState = ConnectionState.OK;
                         }

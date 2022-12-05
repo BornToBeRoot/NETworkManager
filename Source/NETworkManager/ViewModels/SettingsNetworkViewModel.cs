@@ -24,7 +24,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        
+
         private string _customDNSServer;
         public string CustomDNSServer
         {
@@ -35,7 +35,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Network_CustomDNSServer = value;
+                    SettingsManager.Current.Network_CustomDNSServer = value.Replace(" ", "");
 
                 _customDNSServer = value;
                 OnPropertyChanged();
@@ -58,7 +58,7 @@ namespace NETworkManager.ViewModels
             UseCustomDNSServer = SettingsManager.Current.Network_UseCustomDNSServer;
 
             if (SettingsManager.Current.Network_CustomDNSServer != null)
-                CustomDNSServer = string.Join("; ", SettingsManager.Current.Network_CustomDNSServer);            
+                CustomDNSServer = string.Join("; ", SettingsManager.Current.Network_CustomDNSServer);
         }
         #endregion
     }
