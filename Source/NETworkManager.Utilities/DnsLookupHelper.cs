@@ -10,6 +10,7 @@ namespace NETworkManager.Utilities
     /// <summary>
     /// Class provides static helper methods for dns lookup.
     /// </summary>
+    [Obsolete("Will be replaced soon with NETworkManager.Utilities.DNS", false)]
     public static class DnsLookupHelper
     {
 
@@ -23,6 +24,7 @@ namespace NETworkManager.Utilities
         /// </summary>
         /// <param name="ipAddress"><see cref="IPAddress"/> to resolve.</param>
         /// <returns>Resolved hostname.</returns>
+        [Obsolete("Will be replaced soon with NETworkManager.Utilities.DNS", false)]
         public async static Task<string> ResolveHostname(IPAddress ipAddress)
         {
             string hostname = string.Empty;
@@ -48,6 +50,7 @@ namespace NETworkManager.Utilities
         /// <param name="hostname">Hostname to resolve.</param>
         /// <param name="preferIPv4">Prefer IPv4 address.</param>
         /// <returns>Resovled <see cref="IPAddress"/>.</returns>
+        [Obsolete("Will be replaced soon with NETworkManager.Utilities.DNS", false)]
         public async static Task<IPAddress> ResolveIPAddress(string hostname, bool preferIPv4 = true)
         {
             // Append dns suffix to hostname
