@@ -16,6 +16,8 @@ using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using NETworkManager.Models;
+using System.Collections;
+using ControlzEx.Standard;
 
 namespace NETworkManager.ViewModels
 {
@@ -362,14 +364,32 @@ namespace NETworkManager.ViewModels
             // Resolve hostname
             if (IPAddress.TryParse(host, out IPAddress ipAddress))
             {
-                hostname = await DnsLookupHelper.ResolveHostname(ipAddress);
+                var result = await DNS.GetInstance().ResolvePtrAsync(ipAddress);
+
+                // Hostname is not necessary for ping. Don't show an error message in the UI.
+                if (!result.HasError)
+                    hostname = result.Value;
             }
-            else // Resolve ip address
+            // Resolve ip address
+            else
             {
                 hostname = host;
-                ipAddress = await DnsLookupHelper.ResolveIPAddress(host, SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4);
+                var result = await DNSHelper.ResolveAorAaaaAsync(host, SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4);
+
+                if (!result.HasError)
+                {
+                    ipAddress = result.Value;
+                }
+                else
+                {
+                    StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, host) + Environment.NewLine + result.ErrorMessage;
+                    IsStatusMessageDisplayed = true;
+                    IsWorking = false;
+                    return;
+                }
             }
 
+            // Start ping is we got an ip address
             if (ipAddress != null)
             {
                 Hosts.Add(new PingMonitorView(_hostId, RemoveHost, new PingMonitorOptions(hostname, ipAddress)));
@@ -477,7 +497,7 @@ namespace NETworkManager.ViewModels
         {
             if (!_isViewActive)
                 return;
-                
+
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 Profiles.Refresh();

@@ -1,4 +1,5 @@
 ﻿using DnsClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,12 +12,12 @@ namespace NETworkManager.Utilities
         /// <summary>
         /// 
         /// </summary>
-        DNSSettings _settings;
+        private DNSSettings _settings { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        LookupClient _client;
+        private LookupClient _client { get; set; }
 
         /// <summary>
         /// 
@@ -26,19 +27,9 @@ namespace NETworkManager.Utilities
         {
             _settings = settings;
 
-            Update();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Update()
-        {
-            // Default settings
             if (_settings == null)
             {
-                _client = new LookupClient();
-
+                UpdateFromWindows();
                 return;
             }
 
@@ -59,13 +50,15 @@ namespace NETworkManager.Utilities
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        public async Task<IPAddress> ResolveAAsync(string query)
+        public void UpdateFromWindows()
         {
-            var result = await _client.QueryAsync(query, QueryType.A);
+            // Default (Windows) settings
+            if (_settings == null)
+            {
+                _client = new LookupClient();
 
-            return result.Answers.ARecords().FirstOrDefault().Address;
+                return;
+            }
         }
 
         /// <summary>
@@ -73,11 +66,21 @@ namespace NETworkManager.Utilities
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public async Task<IPAddress> ResolveAaaaAsync(string query)
+        public async Task<DNSResultIPAddress> ResolveAAsync(string query)
         {
-            var result = await _client.QueryAsync(query, QueryType.AAAA);
+            try
+            {
+                var result = await _client.QueryAsync(query, QueryType.A);
 
-            return result.Answers.AaaaRecords().FirstOrDefault().Address;
+                if (result.HasError)
+                    return new DNSResultIPAddress(result.HasError, $"{result.NameServer}: {result.ErrorMessage}");
+
+                return new DNSResultIPAddress(result.Answers.ARecords().FirstOrDefault().Address);
+            }
+            catch (DnsResponseException ex)
+            {
+                return new DNSResultIPAddress(true, ex.Message);
+            }
         }
 
         /// <summary>
@@ -85,11 +88,44 @@ namespace NETworkManager.Utilities
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public async Task<string> ResolveCnameAsync(string query)
+        public async Task<DNSResultIPAddress> ResolveAaaaAsync(string query)
         {
-            var result = await _client.QueryAsync(query, QueryType.CNAME);
 
-            return result.Answers.CnameRecords().FirstOrDefault().CanonicalName;
+            try
+            {
+                var result = await _client.QueryAsync(query, QueryType.AAAA);
+
+                if (result.HasError)
+                    return new DNSResultIPAddress(result.HasError, $"{result.NameServer}: {result.ErrorMessage}");
+
+                return new DNSResultIPAddress(result.Answers.AaaaRecords().FirstOrDefault().Address);
+            }
+            catch (DnsResponseException ex)
+            {
+                return new DNSResultIPAddress(true, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public async Task<DNSResultString> ResolveCnameAsync(string query)
+        {
+            try
+            {
+                var result = await _client.QueryAsync(query, QueryType.CNAME);
+
+                if (result.HasError)
+                    return new DNSResultString(result.HasError, $"{result.NameServer}: {result.ErrorMessage}");
+
+                return new DNSResultString(result.Answers.CnameRecords().FirstOrDefault().CanonicalName);
+            }
+            catch (DnsResponseException ex)
+            {
+                return new DNSResultString(true, ex.Message);
+            }
         }
 
         /// <summary>
@@ -97,11 +133,21 @@ namespace NETworkManager.Utilities
         /// </summary>
         /// <param name="ipAddress"></param>
         /// <returns></returns>
-        public async Task<string> ResolvePtrAsync(IPAddress ipAddress)
+        public async Task<DNSResultString> ResolvePtrAsync(IPAddress ipAddress)
         {
-            var result = await _client.QueryReverseAsync(ipAddress);
+            try
+            {
+                var result = await _client.QueryReverseAsync(ipAddress);
 
-            return result.Answers.PtrRecords().FirstOrDefault().PtrDomainName;
+                if (result.HasError)
+                    return new DNSResultString(result.HasError, $"{result.NameServer}: {result.ErrorMessage}");
+
+                return new DNSResultString(result.Answers.PtrRecords().FirstOrDefault().PtrDomainName);
+            }
+            catch (DnsResponseException ex)
+            {
+                return new DNSResultString(true, ex.Message);
+            }
         }
     }
 }
