@@ -20,8 +20,13 @@ New Feature
 {: .label .label-green }
 
 - Bit Calculator [#1684](https://github.com/BornToBeRoot/NETworkManager/pull/1684){:target="\_blank"} (See [documentation](https://borntoberoot.net/NETworkManager/Documentation/Application/BitCalculator) for more details)
+- Global application DNS settings under `Settings > Network > DNS` added [#1733](https://github.com/BornToBeRoot/NETworkManager/pull/1733){:target="\_blank"} 
 
 ## Improvements
+
+- Performance of DNS resolutions improved [#1733](https://github.com/BornToBeRoot/NETworkManager/pull/1733){:target="\_blank"}
+- Detect new DNS servers if they have been changed e.g. by a new network connection (LAN, WLAN) or VPN connection [#1733](https://github.com/BornToBeRoot/NETworkManager/pull/1733){:target="\_blank"}
+- Error messages for failed DNS resolution improved [#1733](https://github.com/BornToBeRoot/NETworkManager/pull/1733){:target="\_blank"}
 
 ## Bugfixes
 
@@ -29,7 +34,14 @@ New Feature
 - Lookup - OUI, Lookup
   - Input cannot end with ";" [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
 
+## Deprecated
+
+- IP Scanner
+  - Custom DNS server settings have been replaced by the global application DNS settings under `Settings > Network > DNS`. [#1733](https://github.com/BornToBeRoot/NETworkManager/pull/1733){:target="\_blank"}
+
 ## Other
 
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
+- Docs improved
+- Code cleanup
