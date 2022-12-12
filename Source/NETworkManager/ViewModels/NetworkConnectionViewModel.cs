@@ -456,28 +456,24 @@ namespace NETworkManager.ViewModels
 
         private async Task CheckConnectionAsync()
         {
-            // already in queue
+            // Already in queue
             if (tokenSource != null && tokenSource.IsCancellationRequested)
-            {
-                //Debug.WriteLine("Already canceled...");
+            {                
                 return;
             }
 
             // Cancel if running
             if (IsChecking)
             {
-                tokenSource.Cancel();
-                //Debug.WriteLine("Try to cancel...");
+                tokenSource.Cancel();                
 
                 while (IsChecking)
                 {
-                    //Debug.WriteLine("Waiting for cancel..");
                     await Task.Delay(250);
                 }
             }
 
             // Start check
-            //Debug.WriteLine("Starting a check...");
             IsChecking = true;
 
             tokenSource = new CancellationTokenSource();
@@ -487,7 +483,7 @@ namespace NETworkManager.ViewModels
             {
                 await Task.Run(async () =>
                  {
-                     List<Task> tasks = new List<Task>
+                     List<Task> tasks = new()
                      {
                          CheckConnectionComputerAsync(ct),
                          CheckConnectionRouterAsync(ct),
@@ -496,12 +492,10 @@ namespace NETworkManager.ViewModels
 
                      await Task.WhenAll(tasks);
                  }, tokenSource.Token);
-
-                //Debug.WriteLine("Check finished...");
             }
             catch (OperationCanceledException)
             {
-                //Debug.WriteLine("Check canceled...");
+                
             }
             finally
             {
@@ -512,9 +506,9 @@ namespace NETworkManager.ViewModels
 
         private Task CheckConnectionComputerAsync(CancellationToken ct)
         {
-            return Task.Run(() =>
+            return Task.Run(async () =>
             {
-                // Reset variables
+                // Init variables
                 IsComputerIPv4Checking = true;
                 ComputerIPv4 = "";
                 ComputerIPv4State = ConnectionState.None;
@@ -563,32 +557,45 @@ namespace NETworkManager.ViewModels
                 if (ct.IsCancellationRequested)
                     ct.ThrowIfCancellationRequested();
 
-                // Get local dns entry
-                if (!string.IsNullOrEmpty(ComputerIPv4) || !string.IsNullOrEmpty(ComputerIPv6))
+                // Try to resolve local DNS based on IPv4
+                if (ComputerIPv4State == ConnectionState.OK)
                 {
-                    try
-                    {
-                        string computerDNS = string.IsNullOrEmpty(ComputerIPv4) ? System.Net.Dns.GetHostEntry(ComputerIPv6).HostName : System.Net.Dns.GetHostEntry(ComputerIPv4).HostName;
+                    var dnsResult = await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse(ComputerIPv4));
 
-                        ComputerDNS = computerDNS;
-                        ComputerDNSState = ConnectionState.OK;
-                    }
-                    catch (SocketException)
+                    if(!dnsResult.HasError)
                     {
-                        ComputerDNS = "-/-";
-                        ComputerDNSState = ConnectionState.Warning;
+                        ComputerDNS = dnsResult.Value;
+                        ComputerDNSState = ConnectionState.OK;
                     }
                 }
 
+                // Try to resolve local DNS based on IPv6 if IPv4 failed
+                if(string.IsNullOrEmpty(ComputerDNS) && ComputerIPv6State == ConnectionState.OK)
+                {
+                    var dnsResult = await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse(ComputerIPv6));
+
+                    if (!dnsResult.HasError)
+                    {
+                        ComputerDNS = dnsResult.Value;
+                        ComputerDNSState = ConnectionState.OK;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(ComputerDNS))
+                {
+                    ComputerDNS = "-/-";
+                    ComputerDNSState = ConnectionState.Critical;
+                }
+
                 IsComputerDNSChecking = false;
-            });
+            }, ct);
         }
 
         private Task CheckConnectionRouterAsync(CancellationToken ct)
         {
-            return Task.Run(() =>
+            return Task.Run(async () =>
             {
-                // Reset variables
+                // Init variables
                 IsRouterIPv4Checking = true;
                 RouterIPv4 = "";
                 RouterIPv4State = ConnectionState.None;
@@ -656,33 +663,46 @@ namespace NETworkManager.ViewModels
 
                 if (ct.IsCancellationRequested)
                     ct.ThrowIfCancellationRequested();
-
-                // Detect router dns
-                if (!string.IsNullOrEmpty(RouterIPv4) || !string.IsNullOrEmpty(RouterIPv6))
+                                
+                // Try to resolve router DNS based on IPv4
+                if (RouterIPv4State == ConnectionState.OK)
                 {
-                    try
-                    {
-                        string routerDNS = string.IsNullOrEmpty(RouterIPv4) ? System.Net.Dns.GetHostEntry(RouterIPv6).HostName : System.Net.Dns.GetHostEntry(RouterIPv4).HostName;
+                    var dnsResult = await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse(RouterIPv4));
 
-                        RouterDNS = routerDNS;
-                        RouterDNSState = ConnectionState.OK;
-                    }
-                    catch (SocketException)
+                    if (!dnsResult.HasError)
                     {
-                        RouterDNS = "-/-";
-                        RouterDNSState = ConnectionState.Warning;
+                        RouterDNS = dnsResult.Value;
+                        RouterDNSState = ConnectionState.OK;
                     }
                 }
 
+                // Try to resolve router DNS based on IPv6 if IPv4 failed
+                if (string.IsNullOrEmpty(RouterDNS) && RouterIPv6State == ConnectionState.OK)
+                {
+                    var dnsResult = await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse(RouterIPv6));
+
+                    if (!dnsResult.HasError)
+                    {
+                        RouterDNS = dnsResult.Value;
+                        RouterDNSState = ConnectionState.OK;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(RouterDNS))
+                {
+                    RouterDNS = "-/-";
+                    RouterDNSState = ConnectionState.Critical;
+                }
+
                 IsRouterDNSChecking = false;
-            });
+            }, ct);
         }
 
         private Task CheckConnectionInternetAsync(CancellationToken ct)
         {
             return Task.Run(async () =>
                 {
-                    // Reset variables
+                    // Init variables
                     IsInternetIPv4Checking = true;
                     InternetIPv4 = "";
                     InternetIPv4State = ConnectionState.None;
@@ -778,26 +798,39 @@ namespace NETworkManager.ViewModels
 
                     if (ct.IsCancellationRequested)
                         ct.ThrowIfCancellationRequested();
-
-                    // Detect public dns
-                    if (!string.IsNullOrEmpty(InternetIPv4) || !string.IsNullOrEmpty(InternetIPv6))
+                                        
+                    // Try to resolve public DNS based on IPv4
+                    if (InternetIPv4State == ConnectionState.OK)
                     {
-                        try
-                        {
-                            string internetDNS = string.IsNullOrEmpty(InternetIPv4) ? System.Net.Dns.GetHostEntry(InternetIPv6).HostName : System.Net.Dns.GetHostEntry(InternetIPv4).HostName;
+                        var dnsResult = await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv4));
 
-                            InternetDNS = internetDNS;
-                            InternetDNSState = ConnectionState.OK;
-                        }
-                        catch (SocketException)
+                        if (!dnsResult.HasError)
                         {
-                            InternetDNS = "-/-";
-                            InternetDNSState = ConnectionState.Warning;
+                            InternetDNS = dnsResult.Value;
+                            InternetDNSState = ConnectionState.OK;
                         }
                     }
 
+                    // Try to resolve router DNS based on IPv6 if IPv4 failed
+                    if (string.IsNullOrEmpty(InternetDNS) && InternetIPv6State == ConnectionState.OK)
+                    {
+                        var dnsResult = await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv6));
+
+                        if (!dnsResult.HasError)
+                        {
+                            InternetDNS = dnsResult.Value;
+                            InternetDNSState = ConnectionState.OK;
+                        }
+                    }
+
+                    if (string.IsNullOrEmpty(InternetDNS))
+                    {
+                        InternetDNS = "-/-";
+                        InternetDNSState = ConnectionState.Critical;
+                    }
+                    
                     IsInternetDNSChecking = false;
-                });
+                }, ct);
         }
         #endregion
 
