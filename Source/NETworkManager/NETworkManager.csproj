@@ -41,9 +41,9 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AirspaceFixer" Version="1.0.6" />
-		<PackageReference Include="AWSSDK.EC2" Version="3.7.112.1" />
+		<PackageReference Include="AWSSDK.EC2" Version="3.7.112.4" />
 		<PackageReference Include="DnsClient" Version="1.7.0" />
-		<PackageReference Include="IPNetwork2" Version="2.6.508" />
+		<PackageReference Include="IPNetwork2" Version="2.6.533" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.1" />
 		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 		<PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
