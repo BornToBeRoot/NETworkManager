@@ -3257,4 +3257,7 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="Proxy" xml:space="preserve">
     <value>Proxy</value>
   </data>
+  <data name="ResolveIPAddressForThisHost" xml:space="preserve">
+    <value>Resolve IP address for this host (IPv4 is preferred)</value>
+  </data>
 </root>

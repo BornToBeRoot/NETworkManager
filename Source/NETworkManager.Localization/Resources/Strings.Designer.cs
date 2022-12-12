@@ -7084,6 +7084,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Resolve IP address for this host (IPv4 is preferred) ähnelt.
+        /// </summary>
+        public static string ResolveIPAddressForThisHost {
+            get {
+                return ResourceManager.GetString("ResolveIPAddressForThisHost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Resolve IPv4 address for this host ähnelt.
         /// </summary>
         public static string ResolveIPv4AddressForThisHost {

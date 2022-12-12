@@ -2418,22 +2418,12 @@ namespace NETworkManager.ViewModels
         {
             IsResolveHostnameRunning = true;
 
-            try
-            {
-                foreach (var ipAddr in (await System.Net.Dns.GetHostEntryAsync(Host)).AddressList)
-                {
-                    if (ipAddr.AddressFamily != AddressFamily.InterNetwork)
-                        continue;
+            var dnsResult = await DNSHelper.ResolveAorAaaaAsync(Host);
 
-                    Host = ipAddr.ToString();
-                    break;
-                }
-
-            }
-            catch (SocketException) // DNS Error
-            {
+            if (!dnsResult.HasError)
+                Host = dnsResult.Value.ToString();
+            else
                 ShowCouldNotResolveHostnameWarning = true;
-            }
 
             IsResolveHostnameRunning = false;
         }

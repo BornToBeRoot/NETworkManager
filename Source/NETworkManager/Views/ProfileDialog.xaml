@@ -222,7 +222,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <Button Grid.Column="3" Grid.Row="2" Command="{Binding ResolveHostCommand}" ToolTip="{x:Static localization:Strings.ResolveIPv4AddressForThisHost}" IsEnabled="{Binding Host, Converter={StaticResource StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter}}" Margin="10,0,0,0">
+                                <Button Grid.Column="3" Grid.Row="2" Command="{Binding ResolveHostCommand}" ToolTip="{x:Static localization:Strings.ResolveIPAddressForThisHost}" IsEnabled="{Binding Host, Converter={StaticResource StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter}}" Margin="10,0,0,0">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
                                             <Style.Triggers>
