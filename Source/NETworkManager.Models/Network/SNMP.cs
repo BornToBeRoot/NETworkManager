@@ -295,7 +295,7 @@ namespace NETworkManager.Models.Network
 
             if (privProvider == SNMPV3PrivacyProvider.DES)
                 return new DESPrivacyProvider(new OctetString(priv), authenticationProvider);
-
+            
             return new AESPrivacyProvider(new OctetString(priv), authenticationProvider);
         }
         #endregion

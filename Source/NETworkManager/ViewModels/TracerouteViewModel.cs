@@ -22,6 +22,7 @@ using NETworkManager.Views;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
+using Amazon.EC2.Model;
 
 namespace NETworkManager.ViewModels
 {
@@ -53,16 +54,16 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView HostHistoryView { get; }
 
-        private bool _isTraceRunning;
-        public bool IsTraceRunning
+        private bool _isRunning;
+        public bool IsRunning
         {
-            get => _isTraceRunning;
+            get => _isRunning;
             set
             {
-                if (value == _isTraceRunning)
+                if (value == _isRunning)
                     return;
 
-                _isTraceRunning = value;
+                _isRunning = value;
                 OnPropertyChanged();
             }
         }
@@ -203,7 +204,7 @@ namespace NETworkManager.ViewModels
 
         private void TraceAction()
         {
-            if (IsTraceRunning)
+            if (IsRunning)
                 StopTrace();
             else
                 StartTrace();
@@ -213,10 +214,10 @@ namespace NETworkManager.ViewModels
 
         private void RedirectDataToApplicationAction(object name)
         {
-            if (!(name is string appName))
+            if (name is not string appName)
                 return;
 
-            if (!System.Enum.TryParse(appName, out ApplicationName app))
+            if (!Enum.TryParse(appName, out ApplicationName app))
                 return;
 
             var host = !string.IsNullOrEmpty(SelectedTraceResult.Hostname) ? SelectedTraceResult.Hostname : SelectedTraceResult.IPAddress.ToString();
@@ -298,7 +299,7 @@ namespace NETworkManager.ViewModels
         private async Task StartTrace()
         {
             IsStatusMessageDisplayed = false;
-            IsTraceRunning = true;
+            IsRunning = true;
 
             TraceResults.Clear();
 
@@ -318,17 +319,19 @@ namespace NETworkManager.ViewModels
             // Try to parse the string into an IP-Address
             if (!IPAddress.TryParse(Host, out var ipAddress))
             {
-                ipAddress = await DnsLookupHelper.ResolveIPAddress(Host, SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4);
-            }
+                var result = await DNSHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4);
 
-            if (ipAddress == null)
-            {                
-                TracerouteFinished();
-
-                StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host);
-                IsStatusMessageDisplayed = true;
-
-                return;
+                if (!result.HasError)
+                {
+                    ipAddress = result.Value;
+                }
+                else
+                {
+                    StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host) + Environment.NewLine + result.ErrorMessage;
+                    IsStatusMessageDisplayed = true;
+                    IsRunning = false;
+                    return;
+                }
             }
 
             try
@@ -354,23 +357,16 @@ namespace NETworkManager.ViewModels
             }
             catch (Exception ex) // This will catch any exception
             {
-                TracerouteFinished();
-
                 StatusMessage = ex.Message;
                 IsStatusMessageDisplayed = true;
+                IsRunning = false;
             }
         }
 
         private void UserHasCanceled()
         {
             CancelTrace = false;
-
-            TracerouteFinished();
-        }
-
-        private void TracerouteFinished()
-        {
-            IsTraceRunning = false;
+            IsRunning = false;
         }
 
         private async Task Export()
@@ -423,7 +419,7 @@ namespace NETworkManager.ViewModels
 
         public void OnClose()
         {
-            if (IsTraceRunning)
+            if (IsRunning)
                 StopTrace();
         }
         #endregion
@@ -436,16 +432,15 @@ namespace NETworkManager.ViewModels
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 //lock (TraceResults)
-                    TraceResults.Add(tracerouteInfo);
+                TraceResults.Add(tracerouteInfo);
             }));
         }
 
         private void Traceroute_MaximumHopsReached(object sender, MaximumHopsReachedArgs e)
         {
-            TracerouteFinished();
-
             StatusMessage = string.Format(Localization.Resources.Strings.MaximumNumberOfHopsReached, e.Hops);
             IsStatusMessageDisplayed = true;
+            IsRunning = false;
         }
 
         private void Traceroute_UserHasCanceled(object sender, EventArgs e)
@@ -458,7 +453,7 @@ namespace NETworkManager.ViewModels
 
         private void Traceroute_TraceComplete(object sender, EventArgs e)
         {
-            TracerouteFinished();
+            IsRunning = false;
         }
 
         private void Current_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -467,7 +462,7 @@ namespace NETworkManager.ViewModels
             {
                 case nameof(SettingsInfo.Traceroute_ResolveHostname):
                     OnPropertyChanged(nameof(ResolveHostname));
-                    break;              
+                    break;
             }
         }
         #endregion               

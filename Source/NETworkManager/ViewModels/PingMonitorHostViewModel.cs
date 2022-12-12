@@ -48,16 +48,16 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView HostHistoryView { get; }
 
-        private bool _isWorking;
-        public bool IsWorking
+        private bool _isRunning;
+        public bool IsRunning
         {
-            get => _isWorking;
+            get => _isRunning;
             set
             {
-                if (value == _isWorking)
+                if (value == _isRunning)
                     return;
 
-                _isWorking = value;
+                _isRunning = value;
                 OnPropertyChanged();
             }
         }
@@ -354,24 +354,15 @@ namespace NETworkManager.ViewModels
         #region Methods
         public async Task AddHost(string host)
         {
-            IsWorking = true;
+            IsRunning = true;
             IsStatusMessageDisplayed = false;
 
             _hostId++;
 
             string hostname = string.Empty;
 
-            // Resolve hostname
-            if (IPAddress.TryParse(host, out IPAddress ipAddress))
-            {
-                var result = await DNS.GetInstance().ResolvePtrAsync(ipAddress);
-
-                // Hostname is not necessary for ping. Don't show an error message in the UI.
-                if (!result.HasError)
-                    hostname = result.Value;
-            }
-            // Resolve ip address
-            else
+            // Resolve ip address from hostname
+            if (!IPAddress.TryParse(host, out var ipAddress))
             {
                 hostname = host;
                 var result = await DNSHelper.ResolveAorAaaaAsync(host, SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4);
@@ -384,23 +375,23 @@ namespace NETworkManager.ViewModels
                 {
                     StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, host) + Environment.NewLine + result.ErrorMessage;
                     IsStatusMessageDisplayed = true;
-                    IsWorking = false;
+                    IsRunning = false;
                     return;
                 }
             }
-
-            // Start ping is we got an ip address
-            if (ipAddress != null)
-            {
-                Hosts.Add(new PingMonitorView(_hostId, RemoveHost, new PingMonitorOptions(hostname, ipAddress)));
-            }
+            // Resolve hostname from ip address
             else
             {
-                StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, host);
-                IsStatusMessageDisplayed = true;
+                var result = await DNS.GetInstance().ResolvePtrAsync(ipAddress);
+
+                // Hostname is not necessary for ping. Don't show an error message in the UI.
+                if (!result.HasError)
+                    hostname = result.Value;
             }
 
-            IsWorking = false;
+            Hosts.Add(new PingMonitorView(_hostId, RemoveHost, new PingMonitorOptions(hostname, ipAddress)));
+
+            IsRunning = false;
         }
 
         private void RemoveHost(int hostId)

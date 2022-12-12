@@ -81,10 +81,10 @@ namespace NETworkManager.Models.Network
                         // Create a range for each octet
                         if (Regex.IsMatch(octet, RegexHelper.SpecialRangeRegex))
                         {
-                            foreach (var numberOrRange in octet.Substring(1, octet.Length - 2).Split(','))
+                            foreach (var numberOrRange in octet[1..^1].Split(','))
                             {
                                 // 50-100
-                                if (numberOrRange.Contains("-"))
+                                if (numberOrRange.Contains('-'))
                                 {
                                     var rangeNumbers = numberOrRange.Split('-');
 
@@ -209,7 +209,7 @@ namespace NETworkManager.Models.Network
                 }
             });
 
-            if (exceptions.Count > 0)
+            if (!exceptions.IsEmpty)
                 throw new AggregateException(exceptions);
 
             return bag.ToList();

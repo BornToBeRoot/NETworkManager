@@ -173,7 +173,7 @@ namespace NETworkManager.ViewModels
                 _hostsScanned = value;
                 OnPropertyChanged();
             }
-        }      
+        }
 
         private bool _preparingScan;
         public bool PreparingScan
@@ -215,9 +215,9 @@ namespace NETworkManager.ViewModels
                 _statusMessage = value;
                 OnPropertyChanged();
             }
-        }               
+        }
 
-        public IEnumerable<CustomCommandInfo> CustomCommands => SettingsManager.Current.IPScanner_CustomCommands;   
+        public IEnumerable<CustomCommandInfo> CustomCommands => SettingsManager.Current.IPScanner_CustomCommands;
         #endregion
 
         #region Constructor, load settings, shutdown
@@ -404,7 +404,7 @@ namespace NETworkManager.ViewModels
         public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
 
         private void CopySelectedStatusAction()
-        {            
+        {
             ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedResult.PingInfo.Status));
         }
 
@@ -430,7 +430,7 @@ namespace NETworkManager.ViewModels
             IsStatusMessageDisplayed = false;
             IsScanRunning = true;
             PreparingScan = true;
-                       
+
             Results.Clear();
 
             // Change the tab title (not nice, but it works)
@@ -493,27 +493,10 @@ namespace NETworkManager.ViewModels
                 ICMPBuffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
                 ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
                 ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
-                /*
-                UseCustomDNSServer = SettingsManager.Current.IPScanner_UseCustomDNSServer,
-                DNSUseTCPOnly = SettingsManager.Current.IPScanner_DNSUseTCPOnly,
-                DNSRecursion = SettingsManager.Current.IPScanner_DNSRecursion,
-                DNSUseCache = SettingsManager.Current.IPScanner_DNSUseCache,
-                DNSTimeout = TimeSpan.FromSeconds(SettingsManager.Current.IPScanner_DNSTimeout),
-                DNSRetries = SettingsManager.Current.IPScanner_DNSRetries,
-                */
                 DNSShowErrorMessage = SettingsManager.Current.IPScanner_DNSShowErrorMessage,
                 ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
                 ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses
             };
-
-            // Set custom dns server...
-            /*
-            if (ipScanner.ResolveHostname && ipScanner.UseCustomDNSServer)
-            {
-                ipScanner.CustomDNSServer = IPAddress.Parse(SettingsManager.Current.IPScanner_CustomDNSServer);
-                ipScanner.CustomDNSPort = SettingsManager.Current.IPScanner_CustomDNSPort;
-            }
-            */
 
             ipScanner.HostFound += HostFound;
             ipScanner.ScanComplete += ScanComplete;
@@ -671,7 +654,7 @@ namespace NETworkManager.ViewModels
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
                 //lock (Results)
-                    Results.Add(ipScannerHostInfo);
+                Results.Add(ipScannerHostInfo);
             }));
         }
 
@@ -700,7 +683,7 @@ namespace NETworkManager.ViewModels
 
             ScanFinished();
         }
-       
+
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -710,7 +693,7 @@ namespace NETworkManager.ViewModels
                     break;
                 case nameof(SettingsInfo.IPScanner_ResolveHostname):
                     OnPropertyChanged(nameof(ResolveHostname));
-                    break;             
+                    break;
             }
         }
         #endregion
