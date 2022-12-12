@@ -365,15 +365,15 @@ namespace NETworkManager.ViewModels
             if (!IPAddress.TryParse(host, out var ipAddress))
             {
                 hostname = host;
-                var result = await DNSHelper.ResolveAorAaaaAsync(host, SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4);
+                var dnsResult = await DNSHelper.ResolveAorAaaaAsync(host, SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4);
 
-                if (!result.HasError)
+                if (!dnsResult.HasError)
                 {
-                    ipAddress = result.Value;
+                    ipAddress = dnsResult.Value;
                 }
                 else
                 {
-                    StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, host) + Environment.NewLine + result.ErrorMessage;
+                    StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, host) + Environment.NewLine + dnsResult.ErrorMessage;
                     IsStatusMessageDisplayed = true;
                     IsRunning = false;
                     return;
@@ -382,11 +382,11 @@ namespace NETworkManager.ViewModels
             // Resolve hostname from ip address
             else
             {
-                var result = await DNS.GetInstance().ResolvePtrAsync(ipAddress);
+                var dnsResult = await DNS.GetInstance().ResolvePtrAsync(ipAddress);
 
                 // Hostname is not necessary for ping. Don't show an error message in the UI.
-                if (!result.HasError)
-                    hostname = result.Value;
+                if (!dnsResult.HasError)
+                    hostname = dnsResult.Value;
             }
 
             Hosts.Add(new PingMonitorView(_hostId, RemoveHost, new PingMonitorOptions(hostname, ipAddress)));

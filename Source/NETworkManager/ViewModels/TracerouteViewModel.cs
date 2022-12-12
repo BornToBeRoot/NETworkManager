@@ -319,15 +319,15 @@ namespace NETworkManager.ViewModels
             // Try to parse the string into an IP-Address
             if (!IPAddress.TryParse(Host, out var ipAddress))
             {
-                var result = await DNSHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4);
+                var dnsResult = await DNSHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4);
 
-                if (!result.HasError)
+                if (!dnsResult.HasError)
                 {
-                    ipAddress = result.Value;
+                    ipAddress = dnsResult.Value;
                 }
                 else
                 {
-                    StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host) + Environment.NewLine + result.ErrorMessage;
+                    StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host) + Environment.NewLine + dnsResult.ErrorMessage;
                     IsStatusMessageDisplayed = true;
                     IsRunning = false;
                     return;
