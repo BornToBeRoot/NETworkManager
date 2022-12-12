@@ -1,4 +1,5 @@
 ﻿using NETworkManager.Models.Lookup;
+using NETworkManager.Utilities;
 using System;
 using System.Linq;
 using System.Net;
@@ -74,22 +75,18 @@ namespace NETworkManager.Models.Network
                         CancellationToken = cancellationToken,
                         MaxDegreeOfParallelism = PortThreads / HostThreads
                     };
-                    
-                    Parallel.ForEach(ipAddresses, hostParallelOptions, ipAddress =>
+
+                    Parallel.ForEach(ipAddresses, hostParallelOptions, async ipAddress =>
                     {
                         // Resolve Hostname (PTR)
                         var hostname = string.Empty;
 
                         if (ResolveHostname)
                         {
-                            try
-                            {
-                                Task.Run(() => { hostname = Dns.GetHostEntryAsync(ipAddress).Result.HostName; }, cancellationToken);
-                            }
-                            catch (SocketException)
-                            {
+                            var dnsResult = await DNS.GetInstance().ResolvePtrAsync(ipAddress);
 
-                            }
+                            if (!dnsResult.HasError)
+                                hostname = dnsResult.Value;
                         }
 
                         // Check each port
