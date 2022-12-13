@@ -9,3 +9,15 @@ permalink: /Documentation/Settings/Settings
 ---
 
 # Settings
+
+## Location
+
+## Import
+
+## Export
+
+## Reset
+
+Clicking the button restarts the application and resets the settings.
+
+Profiles are not affected by this.

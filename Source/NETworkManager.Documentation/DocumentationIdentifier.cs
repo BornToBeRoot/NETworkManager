@@ -151,6 +151,11 @@
         SettingsLanguage,
 
         /// <summary>
+        /// Settings\Network documentation page.
+        /// </summary>
+        SettingsNetwork,
+
+        /// <summary>
         /// Settings\Status documentation page.
         /// </summary>
         SettingsStatus,
