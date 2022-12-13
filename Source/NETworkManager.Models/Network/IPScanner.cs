@@ -1,8 +1,6 @@
-﻿using DnsClient;
-using NETworkManager.Models.Lookup;
+﻿using NETworkManager.Models.Lookup;
 using NETworkManager.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -21,21 +19,10 @@ namespace NETworkManager.Models.Network
         public byte[] ICMPBuffer = new byte[32];
         public int ICMPAttempts = 2;
         public bool ResolveHostname = true;
-
-        public bool UseCustomDNSServer = false;
-        public IPAddress CustomDNSServer;
-        public int CustomDNSPort = 53;
-        public bool DNSUseTCPOnly = false;
-        public bool DNSUseCache = true;
-        public bool DNSRecursion = true;
-        public TimeSpan DNSTimeout = TimeSpan.FromSeconds(2);
-        public int DNSRetries = 3;
         public bool DNSShowErrorMessage = false;
 
         public bool ResolveMACAddress = false;
         public bool ShowScanResultForAllIPAddresses = false;
-
-        private LookupClient DnsLookupClient;
         #endregion
 
         #region Events
@@ -76,18 +63,6 @@ namespace NETworkManager.Models.Network
             {
                 _progressValue = 0;
 
-                // Create dns client and set options
-
-                if (ResolveHostname)
-                {
-                    DnsLookupClient = UseCustomDNSServer ? new LookupClient(new IPEndPoint(CustomDNSServer, CustomDNSPort)) : new LookupClient();
-                    DnsLookupClient.UseCache = DNSUseCache;
-                    DnsLookupClient.Recursion = DNSRecursion;
-                    DnsLookupClient.Timeout = DNSTimeout;
-                    DnsLookupClient.Retries = DNSRetries;
-                    DnsLookupClient.UseTcpOnly = DNSUseTCPOnly;
-                }
-
                 // Modify the ThreadPool for better performance
                 ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);
                 ThreadPool.SetMinThreads(workerThreads + Threads, completionPortThreads + Threads);
@@ -100,7 +75,7 @@ namespace NETworkManager.Models.Network
                         MaxDegreeOfParallelism = Threads
                     };
 
-                    Parallel.ForEach(ipAddresses, parallelOptions, ipAddress =>
+                    Parallel.ForEach(ipAddresses, parallelOptions, async ipAddress =>
                      {
                          var pingInfo = new PingInfo();
                          var pingable = false;
@@ -144,19 +119,12 @@ namespace NETworkManager.Models.Network
 
                              if (ResolveHostname)
                              {
-                                 try
-                                 {
-                                     var dnsQueryResponse = DnsLookupClient.QueryReverse(ipAddress);
+                                 var dnsResponse = await DNS.GetInstance().ResolvePtrAsync(ipAddress);
 
-                                     if (dnsQueryResponse != null && !dnsQueryResponse.HasError)
-                                         hostname = dnsQueryResponse.Answers.PtrRecords().FirstOrDefault()?.PtrDomainName;
-                                     else
-                                         hostname = DNSShowErrorMessage ? dnsQueryResponse.ErrorMessage : "";
-                                 }
-                                 catch (Exception ex)
-                                 {
-                                     hostname = DNSShowErrorMessage ? ex.Message : "";
-                                 }
+                                 if (!dnsResponse.HasError)
+                                     hostname = dnsResponse.Value;
+                                 else
+                                     hostname = DNSShowErrorMessage ? dnsResponse.ErrorMessage : string.Empty;
                              }
 
                              // ARP

@@ -7,12 +7,12 @@ namespace NETworkManager.Profiles
         /// <summary>
         /// Override the default profiles to make it serializable.
         /// </summary>
-        public List<ProfileInfoSerializable> Profiles { get; set; }
+        public new List<ProfileInfoSerializable> Profiles { get; set; }
 
         /// <summary>
         /// Override the default remote desktop password to make it serializable.
         /// </summary>
-        public string RemoteDesktop_Password { get; set; }
+        public new string RemoteDesktop_Password { get; set; }
 
         public GroupInfoSerializable()
         {

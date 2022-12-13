@@ -62,7 +62,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxOID, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+            <ComboBox Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" x:Name="ComboBoxHost" Height="{Binding ElementName=ComboBoxOID, Path=ActualHeight}" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -72,11 +72,11 @@
                 </ComboBox.Text>
             </ComboBox>
             <TextBlock Grid.Column="6" Grid.Row="0" Text="{x:Static localization:Strings.Version}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="8" Grid.Row="0" ItemsSource="{Binding Versions}" SelectedItem="{Binding Version}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
-            <TextBlock Grid.Column="10" Grid.Row="0" Text="{x:Static localization:Strings.Mode}" Style="{StaticResource CenterTextBlock}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
-            <ComboBox Grid.Column="12" Grid.Row="0" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" />
+            <ComboBox Grid.Column="8" Grid.Row="0" ItemsSource="{Binding Versions}" SelectedItem="{Binding Version}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" />
+            <TextBlock Grid.Column="10" Grid.Row="0" Text="{x:Static localization:Strings.Mode}" Style="{StaticResource CenterTextBlock}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" />
+            <ComboBox Grid.Column="12" Grid.Row="0" ItemsSource="{Binding Modes}" SelectedItem="{Binding Mode}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" />
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.OID}" Style="{StaticResource CenterTextBlock}" />
-            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPOID}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
+            <ComboBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" x:Name="ComboBoxOID" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding OIDHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPOID}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                 <ComboBox.Text>
                     <Binding Path="OID" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -98,7 +98,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <PasswordBox Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="5" Name="PasswordBoxCommunity" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPCommunity}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
+            <PasswordBox Grid.Column="8" Grid.Row="2" Grid.ColumnSpan="5" Name="PasswordBoxCommunity" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPCommunity}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                 <PasswordBox.Style>
                     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
                         <Setter Property="Visibility" Value="Visible" />
@@ -125,7 +125,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox Grid.Column="8" Grid.Row="2" ItemsSource="{Binding Securitys}" SelectedItem="{Binding Security}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
+            <ComboBox Grid.Column="8" Grid.Row="2" ItemsSource="{Binding Securitys}" SelectedItem="{Binding Security}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -149,7 +149,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <TextBox Grid.Column="12" Grid.Row="2" x:Name="TextBoxUsername" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}">
+            <TextBox Grid.Column="12" Grid.Row="2" x:Name="TextBoxUsername" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -195,7 +195,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox Grid.Column="2" Grid.Row="3" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding AuthenticationProviders}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" SelectedItem="{Binding AuthenticationProvider}" Margin="0,10,0,0">
+            <ComboBox Grid.Column="2" Grid.Row="3" Height="{Binding ElementName=ButtonQuery, Path=ActualHeight}" ItemsSource="{Binding AuthenticationProviders}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" SelectedItem="{Binding AuthenticationProvider}" Margin="0,10,0,0">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -222,7 +222,7 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <PasswordBox Grid.Column="4" Grid.Row="3" Name="PasswordBoxAuth" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
+            <PasswordBox Grid.Column="4" Grid.Row="3" Name="PasswordBoxAuth" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
                 <PasswordBox.Style>
                     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -270,7 +270,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <ComboBox Grid.Column="8" Grid.Row="3" ItemsSource="{Binding PrivacyProviders}" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" SelectedItem="{Binding PrivacyProvider}" Margin="0,10,0,0">
+            <ComboBox Grid.Column="8" Grid.Row="3" ItemsSource="{Binding PrivacyProviders}" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" SelectedItem="{Binding PrivacyProvider}" Margin="0,10,0,0">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -288,7 +288,7 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <PasswordBox Grid.Column="10" Grid.ColumnSpan="3" Grid.Row="3" Name="PasswordBoxPriv" IsEnabled="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
+            <PasswordBox Grid.Column="10" Grid.ColumnSpan="3" Grid.Row="3" Name="PasswordBoxPriv" IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" Margin="0,10,0,0">
                 <PasswordBox.Style>
                     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource DefaultPasswordBox}">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -310,7 +310,7 @@
                 </interactivity:Interaction.Behaviors>
             </PasswordBox>           
         </Grid>
-        <Button x:Name="ButtonQuery" Grid.Column="2" Command="{Binding WorkCommand}" IsDefault="{Binding IsWorking, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsWorking}" VerticalAlignment="Bottom">
+        <Button x:Name="ButtonQuery" Grid.Column="2" Command="{Binding WorkCommand}" IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}" IsCancel="{Binding IsRunning}" VerticalAlignment="Bottom">
             <Button.Resources>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                     <Setter Property="IsDefault" Value="False" />
@@ -327,7 +327,7 @@
                                 <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsCommunityEmpty}" Value="False" />
-                                <Condition Binding="{Binding IsWorking}" Value="False" />
+                                <Condition Binding="{Binding IsRunning}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
                                 <Setter Property="IsEnabled" Value="True" />
@@ -339,7 +339,7 @@
                                 <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsCommunityEmpty}" Value="False" />
-                                <Condition Binding="{Binding IsWorking}" Value="False" />
+                                <Condition Binding="{Binding IsRunning}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
                                 <Setter Property="IsEnabled" Value="True" />
@@ -352,7 +352,7 @@
                                 <Condition Binding="{Binding ElementName=ComboBoxHost, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding ElementName=TextBoxUsername, Path=(Validation.HasError)}" Value="False" />
-                                <Condition Binding="{Binding IsWorking}" Value="False" />
+                                <Condition Binding="{Binding IsRunning}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
                                 <Setter Property="IsEnabled" Value="True" />
@@ -366,7 +366,7 @@
                                 <Condition Binding="{Binding ElementName=ComboBoxOID, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding ElementName=TextBoxUsername, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsAuthEmpty}" Value="False" />
-                                <Condition Binding="{Binding IsWorking}" Value="False" />
+                                <Condition Binding="{Binding IsRunning}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
                                 <Setter Property="IsEnabled" Value="True" />
@@ -381,13 +381,13 @@
                                 <Condition Binding="{Binding ElementName=TextBoxUsername, Path=(Validation.HasError)}" Value="False" />
                                 <Condition Binding="{Binding IsAuthEmpty}" Value="False" />
                                 <Condition Binding="{Binding IsPrivEmpty}" Value="False" />
-                                <Condition Binding="{Binding IsWorking}" Value="False" />
+                                <Condition Binding="{Binding IsRunning}" Value="False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
                                 <Setter Property="IsEnabled" Value="True" />
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
-                        <DataTrigger Binding="{Binding IsWorking}" Value="True">
+                        <DataTrigger Binding="{Binding IsRunning}" Value="True">
                             <Setter Property="IsEnabled" Value="False" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -431,7 +431,7 @@
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Setter Property="Grid.Row" Value="2" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsWorking}" Value="True">
+                        <DataTrigger Binding="{Binding IsRunning}" Value="True">
                             <Setter Property="Visibility" Value="Visible" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Mode}" Value="Set">

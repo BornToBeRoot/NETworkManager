@@ -7,41 +7,40 @@ namespace NETworkManager.ViewModels
         #region Variables
         private readonly bool _isLoading;
 
-        /*
-        private bool _checkForUpdatesAtStartup;
-        public bool CheckForUpdatesAtStartup
+        private bool _useCustomDNSServer;
+        public bool UseCustomDNSServer
         {
-            get => _checkForUpdatesAtStartup;
+            get => _useCustomDNSServer;
             set
             {
-                if (value == _checkForUpdatesAtStartup)
+                if (value == _useCustomDNSServer)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Update_CheckForUpdatesAtStartup = value;
+                    SettingsManager.Current.Network_UseCustomDNSServer = value;
 
-                _checkForUpdatesAtStartup = value;
+                _useCustomDNSServer = value;
                 OnPropertyChanged();
             }
         }
 
-        private bool _checkForPreReleases;
-        public bool CheckForPreReleases
+
+        private string _customDNSServer;
+        public string CustomDNSServer
         {
-            get => _checkForPreReleases;
+            get => _customDNSServer;
             set
             {
-                if (value == _checkForPreReleases)
+                if (value == _customDNSServer)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.Update_CheckForPreReleases = value;
+                    SettingsManager.Current.Network_CustomDNSServer = value.Replace(" ", "");
 
-                _checkForPreReleases = value;
+                _customDNSServer = value;
                 OnPropertyChanged();
             }
         }
-        */
         #endregion
 
         #region Constructor, LoadSettings
@@ -56,8 +55,10 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            //   CheckForUpdatesAtStartup = SettingsManager.Current.Update_CheckForUpdatesAtStartup;
-            //   CheckForPreReleases = SettingsManager.Current.Update_CheckForPreReleases;
+            UseCustomDNSServer = SettingsManager.Current.Network_UseCustomDNSServer;
+
+            if (SettingsManager.Current.Network_CustomDNSServer != null)
+                CustomDNSServer = string.Join("; ", SettingsManager.Current.Network_CustomDNSServer);
         }
         #endregion
     }

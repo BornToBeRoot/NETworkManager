@@ -32,7 +32,7 @@ namespace NETworkManager.Settings
         public static bool SplashScreen_Enabled => true;
         public static string Appearance_Theme => "Dark";
         public static string Appearance_Accent => "Lime";
-        public static bool Appearance_UseCustomTheme => false;
+        public static bool Appearance_UseCustomTheme => false;        
         public static bool Status_ShowWindowOnNetworkChange => true;
         public static int Status_WindowCloseTime => 10;
         public static string Status_IPAddressToDetectLocalIPAddressBasedOnRouting => "1.1.1.1";
@@ -67,11 +67,7 @@ namespace NETworkManager.Settings
         // Application: IP Scanner
         public static int IPScanner_Threads => 256;
         public static int IPScanner_ICMPAttempts => 2;
-        public static int IPScanner_ICMPBuffer => 32;
-        public static int IPScanner_DNSPort => 53;
-        public static bool IPScanner_DNSUseTCPOnly => false;
-        public static int IPScanner_DNSTimeout => 2;
-        public static int IPScanner_DNSRetries => 3;
+        public static int IPScanner_ICMPBuffer => 32;        
         public static bool IPScanner_DNSShowErrorMessage => false;
         public static int IPScanner_ICMPTimeout => 4000;
         public static ExportManager.ExportFileType IPScanner_ExportFileType => ExportManager.ExportFileType.CSV;
@@ -190,6 +186,5 @@ namespace NETworkManager.Settings
         // Application: ARP Table
         public static ExportManager.ExportFileType ARPTable_ExportFileType => ExportManager.ExportFileType.CSV;
         public static AutoRefreshTimeInfo ARPTable_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
-
     }
 }

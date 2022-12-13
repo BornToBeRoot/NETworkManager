@@ -46,7 +46,20 @@ namespace NETworkManager
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            _log.Info($"Starting NETworkManager...");
+            var startLog = $@"
+  _   _ _____ _____                    _    __  __                                   
+ | \ | | ____|_   _|_      _____  _ __| | _|  \/  | __ _ _ __   __ _  __ _  ___ _ __ 
+ |  \| |  _|   | | \ \ /\ / / _ \| '__| |/ / |\/| |/ _` | '_ \ / _` |/ _` |/ _ \ '__|
+ | |\  | |___  | |  \ V  V / (_) | |  |   <| |  | | (_| | | | | (_| | (_| |  __/ |   
+ |_| \_|_____| |_|   \_/\_/ \___/|_|  |_|\_\_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
+                                                                     |___/        
+            
+                                               by BornToBeRoot
+                                               GitHub.com/BornToBeRoot/NETworkManager
+
+                                               Version: {AssemblyManager.Current.Version}
+";
+            _log.Info(startLog);
 
             // Catch unhandled exception globally
             AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
@@ -88,9 +101,7 @@ namespace NETworkManager
                 if (CommandLineManager.Current.ResetSettings)
                     SettingsManager.InitDefault();
                 else
-                    SettingsManager.Load();
-
-                _log.Info("Application settings have been loaded.");
+                    SettingsManager.Load();                
             }
             catch (InvalidOperationException ex)
             {
@@ -107,8 +118,6 @@ namespace NETworkManager
 
                 SettingsManager.InitDefault();
                 ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
-
-                _log.Info("Default application settings have been initialized.");
             }
 
             // Perform settings update if settings version is lower than application version            
@@ -145,7 +154,7 @@ namespace NETworkManager
             // Show help window
             if (CommandLineManager.Current.Help)
             {
-                _log.Info("Set StartupUri to CommandLineWindow.xaml");
+                _log.Info("Set StartupUri to CommandLineWindow.xaml...");
                 StartupUri = new Uri("CommandLineWindow.xaml", UriKind.Relative);
 
                 return;
@@ -175,8 +184,6 @@ namespace NETworkManager
                     };
                     _dispatcherTimer.Tick += DispatcherTimer_Tick;
                     _dispatcherTimer.Start();
-
-                    _log.Info("Background job has been set up.");
                 }
                 else
                 {
@@ -191,7 +198,7 @@ namespace NETworkManager
                 }
 
                 // Show main window
-                _log.Info("Set StartupUri to MainWindow.xaml.");
+                _log.Info("Set StartupUri to MainWindow.xaml...");
                 StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
             }
             else
@@ -230,24 +237,25 @@ namespace NETworkManager
             if (_singleInstanceClose || CommandLineManager.Current.Help)
                 return;
 
-            _log.Info("Stop background job if it exists...");
-            _dispatcherTimer?.Stop();
+            _log.Info("Stop background job (if it exists)...");
+            _dispatcherTimer?.Stop();            
 
             Save();
+            _log.Info("Bye!");
         }
 
         private void Save()
         {
             if (SettingsManager.Current.SettingsChanged && !ConfigurationManager.Current.DisableSaveSettings)
             {
-                _log.Info("Save application settings.");
-                SettingsManager.Save();
+                _log.Info("Save application settings...");
+                SettingsManager.Save();                
             }
 
             if (ProfileManager.ProfilesChanged)
             {
-                _log.Info("Save current profiles.");
-                ProfileManager.Save();
+                _log.Info("Save current profiles...");
+                ProfileManager.Save();                
             }
         }
     }

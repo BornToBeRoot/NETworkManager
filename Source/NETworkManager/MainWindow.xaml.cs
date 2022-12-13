@@ -35,6 +35,7 @@ using System.Collections.ObjectModel;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.AWS;
 using NETworkManager.Models.PowerShell;
+using log4net;
 
 namespace NETworkManager
 {
@@ -49,7 +50,9 @@ namespace NETworkManager
         }
         #endregion
 
-        #region Variables        
+        #region Variables
+        private static readonly ILog _log = LogManager.GetLogger(typeof(MainWindow));
+
         private NotifyIcon _notifyIcon;
         private StatusWindow _statusWindow;
 
@@ -57,6 +60,7 @@ namespace NETworkManager
         private bool _isProfileLoading;
         private bool _isProfileUpdating;
         private bool _isApplicationListLoading;
+        private bool _isNetworkChanging;
 
         private bool _isInTray;
         private bool _closeApplication;
@@ -364,6 +368,9 @@ namespace NETworkManager
             // Load and change appearance
             AppearanceManager.Load();
 
+            // Load and configure DNS
+            ConfigureDNS();
+
             // Set window title
             Title = $"NETworkManager {AssemblyManager.Current.Version}";
 
@@ -481,7 +488,7 @@ namespace NETworkManager
             // Init status window
             _statusWindow = new StatusWindow(this);
 
-            // Detect if network address or status changed...
+            // Detect network changes...
             NetworkChange.NetworkAvailabilityChanged += (sender, args) => OnNetworkHasChanged();
             NetworkChange.NetworkAddressChanged += (sender, args) => OnNetworkHasChanged();
 
@@ -1016,7 +1023,7 @@ namespace NETworkManager
             OpenSettings();
         }
 
-        private async Task CloseSettings()
+        private void CloseSettings()
         {
             ShowSettingsView = false;
 
@@ -1493,6 +1500,43 @@ namespace NETworkManager
             Activate();
         }
 
+        private void ConfigureDNS()
+        {
+            _log.Info("Configure application DNS...");
+
+            DNSSettings dnsSettings = null;
+
+            if (SettingsManager.Current.Network_UseCustomDNSServer)
+            {
+                _log.Info($"Use custom DNS servers ({SettingsManager.Current.Network_CustomDNSServer})...");
+
+                if (!string.IsNullOrEmpty(SettingsManager.Current.Network_CustomDNSServer))
+                {
+                    dnsSettings = new()
+                    {
+                        DNSServers = SettingsManager.Current.Network_CustomDNSServer.Split(";")
+                    };
+                }
+                else
+                {
+                    _log.Info("Custom DNS servers could not be set! Fallback to Windows DNS servers.");
+                }
+            }
+            else
+            {
+                _log.Info("Use Windows DNS servers...");
+            }
+
+            DNS.GetInstance().Configure(dnsSettings);
+        }
+
+        private void UpdateDNS()
+        {
+            _log.Info("Update Windows DNS servers...");
+
+            DNS.GetInstance().UpdateFromWindows();
+        }
+
         private void WriteDefaultPowerShellProfileToRegistry()
         {
             if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
@@ -1519,25 +1563,43 @@ namespace NETworkManager
             _statusWindow.ShowWindow(activate);
         }
 
-        private void OnNetworkHasChanged()
+        private async void OnNetworkHasChanged()
         {
+            if(_isNetworkChanging)
+                return;
+
+            _isNetworkChanging = true;
+
+            // Wait 5 seconds, because the event may be triggered several times.
+            await Task.Delay(5000);
+
+            _log.Info("Network availability or address has changed!");
+
+            // Update DNS server if network changed
+            if (!SettingsManager.Current.Network_UseCustomDNSServer)
+                UpdateDNS();
+
             // Show status window on network change
             if (SettingsManager.Current.Status_ShowWindowOnNetworkChange)
             {
-                Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+                await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
                 {
                     OpenStatusWindow(false);
                 }));
             }
+
+            _isNetworkChanging = false;
         }
         #endregion
 
         #region Events
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            // Show restart required note for some settings
             if (e.PropertyName == nameof(SettingsInfo.Localization_CultureCode))
                 IsRestartRequired = true;
 
+            // Update TrayIcon if changed in the settings
             if (e.PropertyName == nameof(SettingsInfo.TrayIcon_AlwaysShowIcon))
             {
                 if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && _notifyIcon == null)
@@ -1547,6 +1609,11 @@ namespace NETworkManager
                     _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
             }
 
+            // Update DNS server if changed in the settings
+            if (e.PropertyName == nameof(SettingsInfo.Network_UseCustomDNSServer) || e.PropertyName == nameof(SettingsInfo.Network_CustomDNSServer))
+                ConfigureDNS();
+
+            // Update PowerShell profile if changed in the settings
             if (e.PropertyName == nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile) || e.PropertyName == nameof(SettingsInfo.Appearance_Theme) || e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath) || e.PropertyName == nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath))
                 WriteDefaultPowerShellProfileToRegistry();
         }

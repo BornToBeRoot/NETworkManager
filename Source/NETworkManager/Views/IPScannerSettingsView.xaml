@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
@@ -26,38 +25,7 @@
         <TextBlock  Text="{x:Static localization:Strings.Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding ICMPAttempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsOn="{Binding ResolveHostname}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSServer}" IsOn="{Binding UseCustomDNSServer}" Margin="0,0,0,10"/>
-        <TextBlock Text="{x:Static localization:Strings.DNSServer}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServer}" Style="{StaticResource DefaultTextBox}">
-            <TextBox.Text>
-                <Binding Path="CustomDNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <validators:MultipleIPAddressesValidator ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-        <TextBlock Text="{x:Static localization:Strings.Port}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" IsEnabled="{Binding UseCustomDNSServer}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort53}" Style="{StaticResource DefaultTextBox}">
-            <TextBox.Text>
-                <Binding Path="DNSPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                        <validators:PortValidator ValidatesOnTargetUpdated="True" />
-                    </Binding.ValidationRules>
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.Recursion}" IsOn="{Binding DNSRecursion}" Margin="0,0,0,10"/>
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCache}" IsOn="{Binding DNSUseCache}" Margin="0,0,0,10"/>
-        <TextBlock Text="{x:Static localization:Strings.Protocol}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.UseOnlyTCP}" IsOn="{Binding DNSUseTCPOnly}" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.Retries}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding DNSRetries}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.TimeoutS}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding DNSTimeout}" Maximum="15" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsOn="{Binding ResolveHostname}" Margin="0,0,0,10"/>        
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowErrorMessage}" IsOn="{Binding DNSShowErrorMessage}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.ARP}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveMACAddressAndVendor}" IsOn="{Binding ResolveMACAddress}" Margin="0,0,0,20" />

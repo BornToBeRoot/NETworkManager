@@ -69,7 +69,7 @@
                                             <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=ComboBoxHost}" Value="True" >
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsWorking}" Value="True" >
+                                            <DataTrigger Binding="{Binding IsRunning}" Value="True" >
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -107,7 +107,7 @@
                             <mahAppsControls:MetroProgressBar.Style>
                                 <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsWorking}" Value="False">
+                                        <DataTrigger Binding="{Binding IsRunning}" Value="False">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                         </DataTrigger>
                                     </Style.Triggers>

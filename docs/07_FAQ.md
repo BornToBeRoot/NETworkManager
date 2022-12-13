@@ -12,16 +12,44 @@ The documentation and the FAQ are not complete yet! Feel free to ask questions o
 
 ## How to contribute or report an issue?
 
-Read the [contributing guidelines](https://github.com/BornToBeRoot/NETworkManager/blob/main/CONTRIBUTING.md){:target="\_blank"} and follow the instructions there.
+Read the [README](https://github.com/BornToBeRoot/NETworkManager/blob/main/README.md#-contributing){:target="\_blank"} and follow the instructions there.
+
+## Where are files stored?
+
+The setup installs the application in the following path: `%ProgramFiles%\NETworkManager`
+You can run the archive and portable version from anywhere.
+
+Profiles, settings and themes are stored in the following folders:
+
+| File(s)  | Setup or Archiv                       | Portable                  |
+| -------- | ------------------------------------- | ------------------------- |
+| Profiles | `%AppData%\NETworkManager\Profiles\*` | `<APP_FOLDER>\Profiles\*` |
+| Settings | `%AppData%\NETworkManager\Settings\*` | `<APP_FOLDER>\Settings\*` |
+| Themes   | `<APP_FOLDER>\Themes\*`               | `<APP_FOLDER>\Themes\*`   |
+
+{: .note }
+It is recommended to backup the above files on a regular basis.
+
+In addition, files are stored at the following locations:
+
+| File(s)             | Setup, Archiv and Portable                                           |
+| ------------------- | -------------------------------------------------------------------- |
+| Local settings      | `%LocalAppData%\NETworkManager\NETworkManager_Url_<RANDOM_STRING>\*` |
+| Log                 | `%LocalAppData%\NETworkManager\NETworkManager.log`                   |
+| PowerShell profiles | `HKCU:\Console\<PATH_OF_CONSOLE>`                                    |
+| PuTTY log           | `%LocalAppData%\NETworkManager\PuTTY_Log\*`                          |
+| PuTTY profile       | `HKCU:\Software\SimonTatham\PuTTY\Sessions\NETworkManager`           |
+| WebConsole cache    | `%LocalAppData%\NETworkManager\WebConsole_Cache\*`                   |
 
 ## How to build the project?
 
-The project can be build with Visual Studio or with a PowerShell script. More details and the requirements can be found in the [README](https://github.com/BornToBeRoot/NETworkManager/blob/main/README.md#build){:target="\_blank"}.
+The project can be build with Visual Studio or with a PowerShell script. More details and the requirements can be found in the [README](https://github.com/BornToBeRoot/NETworkManager/blob/main/README.md#-build){:target="\_blank"}.
 
 ## Profile, groups and settings priority
 
 Settings in profiles overwrite group settings. Group settings overwrite global settings.
-Inheritance is: General Settings > Group settings > Profile settings
+
+Inheritance is: `General Settings > Group settings > Profile settings`
 
 ## How does the profile encryption work?
 

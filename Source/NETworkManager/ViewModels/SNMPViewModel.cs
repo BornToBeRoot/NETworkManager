@@ -20,6 +20,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using System.Security;
+using Amazon.EC2.Model;
 
 namespace NETworkManager.ViewModels
 {
@@ -201,7 +202,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-    
+
         private SecureString _auth;
         public SecureString Auth
         {
@@ -289,16 +290,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _isWorking;
-        public bool IsWorking
+        private bool _isRunning;
+        public bool IsRunning
         {
-            get => _isWorking;
+            get => _isRunning;
             set
             {
-                if (value == _isWorking)
+                if (value == _isRunning)
                     return;
 
-                _isWorking = value;
+                _isRunning = value;
                 OnPropertyChanged();
             }
         }
@@ -491,7 +492,7 @@ namespace NETworkManager.ViewModels
         private async void Work()
         {
             IsStatusMessageDisplayed = false;
-            IsWorking = true;
+            IsRunning = true;
 
             QueryResults.Clear();
 
@@ -509,17 +510,19 @@ namespace NETworkManager.ViewModels
             // Try to parse the string into an IP-Address
             if (!IPAddress.TryParse(Host, out var ipAddress))
             {
-                ipAddress = await DnsLookupHelper.ResolveIPAddress(Host, SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4);
-            }
+                var dnsResult = await DNSHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4);
 
-            if (ipAddress == null)
-            {
-                Finished();
-
-                StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host);
-                IsStatusMessageDisplayed = true;
-
-                return;
+                if (!dnsResult.HasError)
+                {
+                    ipAddress = dnsResult.Value;
+                }
+                else
+                {
+                    StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host) + Environment.NewLine + dnsResult.ErrorMessage;
+                    IsStatusMessageDisplayed = true;
+                    IsRunning = false;
+                    return;
+                }
             }
 
             // SNMP...
@@ -560,11 +563,6 @@ namespace NETworkManager.ViewModels
             // Add to history...
             AddHostToHistory(Host);
             AddOIDToHistory(OID);
-        }
-
-        private void Finished()
-        {
-            IsWorking = false;
         }
 
         public void OnClose()
@@ -615,25 +613,21 @@ namespace NETworkManager.ViewModels
         {
             StatusMessage = Localization.Resources.Strings.TimeoutOnSNMPQuery;
             IsStatusMessageDisplayed = true;
-
-            Finished();
+            IsRunning = false;
         }
 
         private void Snmp_Error(object sender, EventArgs e)
         {
             StatusMessage = Mode == SNMPMode.Set ? Localization.Resources.Strings.ErrorInResponseCheckIfYouHaveWritePermissions : Localization.Resources.Strings.ErrorInResponse;
-
             IsStatusMessageDisplayed = true;
-
-            Finished();
+            IsRunning = false;
         }
 
         private void Snmp_UserHasCanceled(object sender, EventArgs e)
         {
             StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             IsStatusMessageDisplayed = true;
-
-            Finished();
+            IsRunning = false;
         }
 
         private void Snmp_Complete(object sender, EventArgs e)
@@ -644,7 +638,7 @@ namespace NETworkManager.ViewModels
                 IsStatusMessageDisplayed = true;
             }
 
-            Finished();
+            IsRunning = false;
         }
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

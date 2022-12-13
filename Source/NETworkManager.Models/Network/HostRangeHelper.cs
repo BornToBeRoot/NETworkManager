@@ -29,107 +29,96 @@ namespace NETworkManager.Models.Network
 
             foreach (var ipOrRange in ipRanges)
             {
-                // 192.168.0.1
-                if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressRegex))
+                switch (ipOrRange)
                 {
-                    bag.Add(IPAddress.Parse(ipOrRange));
-                    continue;
-                }
+                    // 192.168.0.1 or 2001:db8:85a3::8a2e:370:7334
+                    case var _ when Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressRegex) || Regex.IsMatch(ipOrRange, RegexHelper.IPv6AddressRegex):
+                        bag.Add(IPAddress.Parse(ipOrRange));
+                        break;
 
-                // 192.168.0.0/24 or 192.168.0.0/255.255.255.0
-                if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressCidrRegex) || Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSubnetmaskRegex))
-                {
-                    var network = IPNetwork.Parse(ipOrRange);
+                    // 192.168.0.0/24 or 192.168.0.0/255.255.255.0
+                    case var _ when Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressCidrRegex) || Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSubnetmaskRegex):
+                        var network = IPNetwork.Parse(ipOrRange);
 
-                    Parallel.For(IPv4Address.ToInt32(network.Network), IPv4Address.ToInt32(network.Broadcast) + 1, parallelOptions, i =>
-                    {
-                        bag.Add(IPv4Address.FromInt32(i));
-
-                        parallelOptions.CancellationToken.ThrowIfCancellationRequested();
-                    });
-
-                    continue;
-                }
-
-                // 192.168.0.0 - 192.168.0.100
-                if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressRangeRegex))
-                {
-                    var range = ipOrRange.Split('-');
-
-                    Parallel.For(IPv4Address.ToInt32(IPAddress.Parse(range[0])), IPv4Address.ToInt32(IPAddress.Parse(range[1])) + 1, parallelOptions, i =>
-                    {
-                        bag.Add(IPv4Address.FromInt32(i));
-
-                        parallelOptions.CancellationToken.ThrowIfCancellationRequested();
-                    });
-
-                    continue;
-                }
-
-                // 192.168.[50-100,200].1 --> 192.168.50.1, 192.168.51.1, 192.168.52.1, {..}, 192.168.200.1
-                if (Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
-                {
-                    var octets = ipOrRange.Split('.');
-
-                    var list = new List<List<int>>();
-
-                    // Go through each octet...
-                    foreach (var octet in octets)
-                    {
-                        var innerList = new List<int>();
-
-                        // Create a range for each octet
-                        if (Regex.IsMatch(octet, RegexHelper.SpecialRangeRegex))
+                        Parallel.For(IPv4Address.ToInt32(network.Network), IPv4Address.ToInt32(network.Broadcast) + 1, parallelOptions, i =>
                         {
-                            foreach (var numberOrRange in octet.Substring(1, octet.Length - 2).Split(','))
-                            {
-                                // 50-100
-                                if (numberOrRange.Contains("-"))
-                                {
-                                    var rangeNumbers = numberOrRange.Split('-');
+                            bag.Add(IPv4Address.FromInt32(i));
 
-                                    for (var i = int.Parse(rangeNumbers[0]); i < (int.Parse(rangeNumbers[1]) + 1); i++)
+                            parallelOptions.CancellationToken.ThrowIfCancellationRequested();
+                        });
+
+                        break;
+
+                    // 192.168.0.0 - 192.168.0.100        
+                    case var _ when Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressRangeRegex):
+                        var range = ipOrRange.Split('-');
+
+                        Parallel.For(IPv4Address.ToInt32(IPAddress.Parse(range[0])), IPv4Address.ToInt32(IPAddress.Parse(range[1])) + 1, parallelOptions, i =>
+                        {
+                            bag.Add(IPv4Address.FromInt32(i));
+
+                            parallelOptions.CancellationToken.ThrowIfCancellationRequested();
+                        });
+
+                        break;
+
+                    // 192.168.[50-100,200].1 --> 192.168.50.1, 192.168.51.1, 192.168.52.1, {..}, 192.168.200.1
+                    case var _ when Regex.IsMatch(ipOrRange, RegexHelper.IPv4AddressSpecialRangeRegex):
+                        var octets = ipOrRange.Split('.');
+
+                        var list = new List<List<int>>();
+
+                        // Go through each octet...
+                        foreach (var octet in octets)
+                        {
+                            var innerList = new List<int>();
+
+                            // Create a range for each octet
+                            if (Regex.IsMatch(octet, RegexHelper.SpecialRangeRegex))
+                            {
+                                foreach (var numberOrRange in octet[1..^1].Split(','))
+                                {
+                                    // 50-100
+                                    if (numberOrRange.Contains('-'))
                                     {
-                                        innerList.Add(i);
+                                        var rangeNumbers = numberOrRange.Split('-');
+
+                                        for (var i = int.Parse(rangeNumbers[0]); i < (int.Parse(rangeNumbers[1]) + 1); i++)
+                                        {
+                                            innerList.Add(i);
+                                        }
+                                    } // 200
+                                    else
+                                    {
+                                        innerList.Add(int.Parse(numberOrRange));
                                     }
-                                } // 200
-                                else
-                                {
-                                    innerList.Add(int.Parse(numberOrRange));
                                 }
                             }
-                        }
-                        else
-                        {
-                            innerList.Add(int.Parse(octet));
-                        }
-
-                        list.Add(innerList);
-                    }
-
-                    // Build the new ipv4
-                    foreach (var i in list[0])
-                    {
-                        foreach (var j in list[1])
-                        {
-                            foreach (var k in list[2])
+                            else
                             {
-                                foreach (var h in list[3])
+                                innerList.Add(int.Parse(octet));
+                            }
+
+                            list.Add(innerList);
+                        }
+
+                        // Build the new ipv4
+                        foreach (var i in list[0])
+                        {
+                            foreach (var j in list[1])
+                            {
+                                foreach (var k in list[2])
                                 {
-                                    bag.Add(IPAddress.Parse($"{i}.{j}.{k}.{h}"));
+                                    foreach (var h in list[3])
+                                    {
+                                        bag.Add(IPAddress.Parse($"{i}.{j}.{k}.{h}"));
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    continue;
-                }
-
-                // 2001:db8:85a3::8a2e:370:7334
-                if (Regex.IsMatch(ipOrRange, RegexHelper.IPv6AddressRegex))
-                {
-                    bag.Add(IPAddress.Parse(ipOrRange));
-                }
+                        break;
+                }                
             }
 
             return bag.ToArray();
@@ -148,68 +137,64 @@ namespace NETworkManager.Models.Network
 
             Parallel.ForEach(ipRanges, new ParallelOptions { CancellationToken = cancellationToken }, ipHostOrRange =>
             {
-                // 192.168.0.1
-                if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRegex))
+                switch (ipHostOrRange)
                 {
-                    bag.Add(ipHostOrRange);
-                }
-                // 192.168.0.0/24
-                else if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressCidrRegex))
-                {
-                    bag.Add(ipHostOrRange);
-                }
-                // 192.168.0.0/255.255.255.0
-                else if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSubnetmaskRegex))
-                {
-                    bag.Add(ipHostOrRange);
-                }
-                // 192.168.0.0 - 192.168.0.100
-                else if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex))
-                {
-                    bag.Add(ipHostOrRange);
-                }
-                // 192.168.[50-100].1
-                else if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex))
-                {
-                    bag.Add(ipHostOrRange);
-                }
-                // 2001:db8:85a3::8a2e:370:7334
-                else if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv6AddressRegex))
-                {
-                    bag.Add(ipHostOrRange);
-                }
-                // example.com
-                else if(Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex))
-                {
-                    // Wait for task inside a Parallel.Foreach
-                    var dnsResovlerTask = DnsLookupHelper.ResolveIPAddress(ipHostOrRange);
+                    // 192.168.0.1
+                    case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRegex):
+                    // 192.168.0.0/24
+                    case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressCidrRegex):
+                    // 192.168.0.0/255.255.255.0
+                    case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSubnetmaskRegex):
+                    // 192.168.0.0 - 192.168.0.100
+                    case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressRangeRegex):
+                    // 192.168.[50-100].1
+                    case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv4AddressSpecialRangeRegex):
+                    // 2001:db8:85a3::8a2e:370:7334
+                    case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv6AddressRegex):
+                        bag.Add(ipHostOrRange);
+                        break;
+                        
+                    // example.com
+                    case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex):
+                        using (var dnsResolverTask = DNSHelper.ResolveAorAaaaAsync(ipHostOrRange))
+                        {
+                            // Wait for task inside a Parallel.Foreach
+                            dnsResolverTask.Wait();
 
-                    Task.WaitAll(dnsResovlerTask);
+                            if (!dnsResolverTask.Result.HasError)
+                                bag.Add($"{dnsResolverTask.Result.Value}");
+                            else
+                                exceptions.Enqueue(new HostNotFoundException(ipHostOrRange));
+                        }
 
-                    bag.Add($"{dnsResovlerTask.Result}");
-                }
-                // example.com/24 or example.com/255.255.255.128
-                else if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex))
-                {
-                    var hostAndSubnet = ipHostOrRange.Split('/');
+                        break;
+                        
+                    // example.com/24 or example.com/255.255.255.128
+                    case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex):
+                        var hostAndSubnet = ipHostOrRange.Split('/');
 
-                    // Wait for task inside a Parallel.Foreach
-                    var dnsResovlerTask = DnsLookupHelper.ResolveIPAddress(hostAndSubnet[0]);
+                        using (var dnsResolverTask = DNSHelper.ResolveAorAaaaAsync(hostAndSubnet[0]))
+                        {
+                            // Wait for task inside a Parallel.Foreach
+                            dnsResolverTask.Wait();
 
-                    Task.WaitAll(dnsResovlerTask);
+                            if (!dnsResolverTask.Result.HasError)
+                            {
+                                // Only support IPv4 for ranges for now
+                                if (dnsResolverTask.Result.Value.AddressFamily == AddressFamily.InterNetwork)
+                                    bag.Add($"{dnsResolverTask.Result.Value}/{hostAndSubnet[1]}");
+                                else
+                                    exceptions.Enqueue(new HostNotFoundException(hostAndSubnet[0]));
+                            }
+                            else
+                                exceptions.Enqueue(new HostNotFoundException(hostAndSubnet[0]));
+                        }
 
-                    // IPv6 is not supported for ranges
-                    if (dnsResovlerTask.Result == null || dnsResovlerTask.Result.AddressFamily != AddressFamily.InterNetwork)
-                    {
-                        exceptions.Enqueue(new HostNotFoundException(hostAndSubnet[0]));
-                        return;
-                    }
-
-                    bag.Add($"{dnsResovlerTask.Result}/{hostAndSubnet[1]}");
+                        break;
                 }
             });
 
-            if (exceptions.Count > 0)
+            if (!exceptions.IsEmpty)
                 throw new AggregateException(exceptions);
 
             return bag.ToList();

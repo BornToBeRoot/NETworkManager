@@ -1,4 +1,5 @@
 ﻿using DnsClient;
+using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,8 +13,6 @@ namespace NETworkManager.Models.Network
     public class Traceroute
     {
         #region Variables
-        private readonly LookupClient DnsLookupClient = new();
-
         public int Timeout = 4000;
         public byte[] Buffer = new byte[32];
         public int MaximumHops = 30;
@@ -101,14 +100,10 @@ namespace NETworkManager.Models.Network
 
                     if (ResolveHostname && ipAddressHop != null)
                     {
-                        try
-                        {
-                            var answer = await DnsLookupClient.GetHostNameAsync(ipAddressHop);
+                        var dnsResult = await DNS.GetInstance().ResolvePtrAsync(ipAddressHop);
 
-                            if (!string.IsNullOrEmpty(answer))
-                                hostname = answer;
-                        }
-                        catch { } // Couldn't resolve hostname
+                        if (!dnsResult.HasError)
+                            hostname = dnsResult.Value;
                     }
 
                     OnHopReceived(new TracerouteHopReceivedArgs(i, tasks[0].Result.Item2, tasks[1].Result.Item2, tasks[2].Result.Item2, ipAddressHop, hostname, tasks[0].Result.Item1.Status, tasks[1].Result.Item1.Status, tasks[2].Result.Item1.Status));

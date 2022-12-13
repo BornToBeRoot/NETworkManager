@@ -211,11 +211,21 @@ namespace NETworkManager.Settings
             */
 
             // Update to 2022.10.31.0
+            /*
             var version202210310 = new Version(2022, 10, 31, 0);
             if (fromVersion < version202210310)
             {
                 _log.Info($"Apply upgrade to {version202210310}...");
+    
+            }
+            */
+            
+            // Update to latest
+            if (fromVersion < toVersion)
+            {
+                _log.Info($"Apply upgrade to {toVersion}...");
 
+                // AWS Session Manager
                 _log.Info($"Add ApplicationName.AWSSessionManager to application list...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
 
@@ -231,13 +241,8 @@ namespace NETworkManager.Settings
 
                 _log.Info($"Set AWS Session Manager application file path to \"{powerShellPath}\"...");
                 Current.AWSSessionManager_ApplicationFilePath = powerShellPath;
-            }
-
-            // Update to latest
-            if (fromVersion < toVersion)
-            {
-                _log.Info($"Apply upgrade to {toVersion}...");
-
+                
+                // Bit Calculator
                 _log.Info($"Add ApplicationName.BitCalculator to application list...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.BitCalculator));
             }

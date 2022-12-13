@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NETworkManager.Utilities;
+using System;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -52,21 +53,17 @@ namespace NETworkManager.Models.Network
         #region Methods
         public void SendAsync(IPAddress ipAddress, CancellationToken cancellationToken)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 var hostname = Hostname;
 
                 // Try to resolve PTR
                 if (string.IsNullOrEmpty(hostname))
                 {
-                    try
-                    {
-                        Task.Run(() =>
-                        {
-                            hostname = Dns.GetHostEntryAsync(ipAddress).Result.HostName;
-                        }, cancellationToken);
-                    }
-                    catch (SocketException) { }
+                    var dnsResult = await DNS.GetInstance().ResolvePtrAsync(ipAddress);
+
+                    if (!dnsResult.HasError)
+                        hostname = dnsResult.Value;
                 }
 
                 var pingTotal = 0;
@@ -148,7 +145,7 @@ namespace NETworkManager.Models.Network
             if (status != IPStatus.Success && status != IPStatus.TtlExpired)
                 return "-/-";
 
-            long.TryParse(time.ToString(), out var t);
+            _ = long.TryParse(time.ToString(), out var t);
 
             return disableSpecialChar ? $"{t} ms" : t == 0 ? "<1 ms" : $"{t} ms";
         }

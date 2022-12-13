@@ -31,6 +31,9 @@ permalink: /Download
   </p>  
 </div>
 
+{: .note }
+If you don't see the new features like [AWS Session Manager](./Documentation/Application/AWSSessionManager) or [Bit Calculator](./Documentation/Application/BitCalculator), you need to reset the settings. You can do this under [`Settings > Settings > Reset`](Documentation/Settings/Settings#reset) or by starting the application with the following parameter [`NETworkManager.exe --reset-settings`](./Documentation/CommandLineArguments#--reset-settings). The profiles are not affected when the settings are reset.
+
 ## Filehash
 
 | File                                       | SHA256                                                             |

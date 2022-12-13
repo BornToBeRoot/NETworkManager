@@ -10,7 +10,7 @@ namespace NETworkManager.Documentation
         /// <summary>
         /// Static list with all external services that are used.
         /// </summary>
-        public static List<ExternalServicesInfo> List => new List<ExternalServicesInfo>
+        public static List<ExternalServicesInfo> List => new()
         {
             new ExternalServicesInfo("ipify", "https://www.ipify.org/", Localization.Resources.Strings.ExternalService_ipify_Description)
         };
