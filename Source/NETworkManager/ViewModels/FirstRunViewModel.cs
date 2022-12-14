@@ -7,14 +7,14 @@ namespace NETworkManager.ViewModels
     public class FirstRunViewModel : ViewModelBase
     {
         public ICommand ContinueCommand { get; }
-        
+
         private bool _checkForUpdatesAtStartup = true;
         public bool CheckForUpdatesAtStartup
         {
             get => _checkForUpdatesAtStartup;
             set
             {
-                if(value == _checkForUpdatesAtStartup)
+                if (value == _checkForUpdatesAtStartup)
                     return;
 
                 _checkForUpdatesAtStartup = value;
@@ -28,7 +28,7 @@ namespace NETworkManager.ViewModels
             get => _checkPublicIPAddress;
             set
             {
-                if(value == _checkPublicIPAddress)
+                if (value == _checkPublicIPAddress)
                     return;
 
                 _checkPublicIPAddress = value;
@@ -36,9 +36,23 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _powerShellModifyGlobalProfile;
+        public bool PowerShellModifyGlobalProfile
+        {
+            get => _powerShellModifyGlobalProfile;
+            set
+            {
+                if (value == _powerShellModifyGlobalProfile)
+                    return;
+
+                _powerShellModifyGlobalProfile = value;
+                OnPropertyChanged();
+            }
+        }
+
         public FirstRunViewModel(Action<FirstRunViewModel> continueCommand)
         {
             ContinueCommand = new RelayCommand(p => continueCommand(this));
-        }        
+        }
     }
 }
