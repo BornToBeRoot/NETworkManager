@@ -7,9 +7,12 @@
   <p>
   You can connect to and manage remote systems via Remote Desktop, PowerShell, PuTTY, TigerVNC or AWS (Systems Manager) Session Manager.
   <br />
+  <br />
   Furthermore it contains features like a WiFi analyzer, IP scanner, port scanner, ping monitor, traceroute, DNS lookup or a LLDP/CDP capture (and many <a href="https://borntoberoot.net/NETworkManager/Features">more</a>) to analyze your network and troubleshoot network problems.
   <br />
+  <br />
   You can save your hosts (or networks) in profiles which can be used in the various features. For additional security, the profile file can be encrypted.
+  <br />
   <br />
   And the best part... it's open source!
   </p>
