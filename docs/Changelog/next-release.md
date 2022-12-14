@@ -19,7 +19,7 @@ permalink: /Changelog/next-release
 New Feature
 {: .label .label-green }
 
-- Bit Calculator [#1684](https://github.com/BornToBeRoot/NETworkManager/pull/1684){:target="\_blank"} (See [documentation](https://borntoberoot.net/NETworkManager/Documentation/Application/BitCalculator) for more details)
+- Bit Calculator [#1684](https://github.com/BornToBeRoot/NETworkManager/pull/1684){:target="\_blank"} (See [documentation](https://borntoberoot.net/NETworkManager/Documentation/Application/BitCalculator){:target="\_blank"} for more details)
 - Global application DNS settings under `Settings > Network > DNS` added [#1733](https://github.com/BornToBeRoot/NETworkManager/pull/1733){:target="\_blank"} 
 
 ## Improvements
@@ -40,6 +40,9 @@ New Feature
   - Input cannot end with ";" [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
 
 ## Deprecated
+
+Deprecated
+{: .label .label-red }
 
 - IP Scanner
   - Custom DNS server settings have been replaced by the global application DNS settings under `Settings > Network > DNS`. [#1733](https://github.com/BornToBeRoot/NETworkManager/pull/1733){:target="\_blank"}

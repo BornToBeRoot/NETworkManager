@@ -5,7 +5,13 @@
     <b>A powerful tool for managing networks and troubleshoot network problems!</b>
   </p>
   <p>
-    You can connect to remote systems via Remote Desktop, PowerShell, PuTTY, TigerVNC or AWS (Systems Manager) Session Manager and it includes a variety of features such as a WiFi analyzer, IP scanner, port scanner, ping monitor, traceroute, DNS lookup, or an LLDP/CDP capture (and many <a href="https://borntoberoot.net/NETworkManager/Features">more</a>). You can use profiles to store your hosts, save them encrypted and use them in the various features. Most of the features supports tabs.<br />And the best part... it's open source!
+  You can connect to and manage remote systems via Remote Desktop, PowerShell, PuTTY, TigerVNC or AWS (Systems Manager) Session Manager.
+  <br />
+  Furthermore it contains features like a WiFi analyzer, IP scanner, port scanner, ping monitor, traceroute, DNS lookup or a LLDP/CDP capture (and many <a href="https://borntoberoot.net/NETworkManager/Features">more</a>) to analyze your network and troubleshoot network problems.
+  <br />
+  You can save your hosts (or networks) in profiles which can be used in the various features. For additional security, the profile file can be encrypted.
+  <br />
+  And the best part... it's open source!
   </p>
   <br />
   <p>   
