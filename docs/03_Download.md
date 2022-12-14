@@ -30,7 +30,6 @@ permalink: /Download
     </a> 
   </p>
   <br />
-  <br />
 </div>
 
 {: .note }
