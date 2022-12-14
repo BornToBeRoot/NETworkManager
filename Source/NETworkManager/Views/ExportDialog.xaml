@@ -61,6 +61,7 @@
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             <validators:FilePathValidator ValidatesOnTargetUpdated="True" />
+                            <validators:FolderInPathExistsValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
