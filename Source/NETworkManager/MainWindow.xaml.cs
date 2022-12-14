@@ -416,11 +416,10 @@ namespace NETworkManager
                 {
                     await this.HideMetroDialogAsync(customDialog);
 
-                    SettingsManager.Current.FirstRun = false;
-
                     // Set settings based on user choice
                     SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
                     SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
+                    SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile = instance.PowerShellModifyGlobalProfile;
 
                     // Generate lists at runtime
                     SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetList());
@@ -436,6 +435,7 @@ namespace NETworkManager
                         {
                             SettingsManager.Current.PowerShell_ApplicationFilePath = file;
                             SettingsManager.Current.AWSSessionManager_ApplicationFilePath = file;
+
                             break;
                         }
                     }
@@ -449,6 +449,8 @@ namespace NETworkManager
                             break;
                         }
                     }
+
+                    SettingsManager.Current.FirstRun = false;
 
                     // Save it to create a settings file
                     SettingsManager.Save();
@@ -1542,6 +1544,8 @@ namespace NETworkManager
             if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
                 return;
 
+            Debug.WriteLine("Test");
+
             HashSet<string> paths = new();
 
             // PowerShell
@@ -1565,7 +1569,7 @@ namespace NETworkManager
 
         private async void OnNetworkHasChanged()
         {
-            if(_isNetworkChanging)
+            if (_isNetworkChanging)
                 return;
 
             _isNetworkChanging = true;
@@ -1595,27 +1599,43 @@ namespace NETworkManager
         #region Events
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            // Show restart required note for some settings
-            if (e.PropertyName == nameof(SettingsInfo.Localization_CultureCode))
-                IsRestartRequired = true;
-
-            // Update TrayIcon if changed in the settings
-            if (e.PropertyName == nameof(SettingsInfo.TrayIcon_AlwaysShowIcon))
+            switch (e.PropertyName)
             {
-                if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && _notifyIcon == null)
-                    InitNotifyIcon();
+                // Show restart required note for some settings
+                case nameof(SettingsInfo.Localization_CultureCode):
+                    IsRestartRequired = true;
 
-                if (_notifyIcon != null)
-                    _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+                    break;
+
+                // Update TrayIcon if changed in the settings    
+                case nameof(SettingsInfo.TrayIcon_AlwaysShowIcon):
+                    if (SettingsManager.Current.TrayIcon_AlwaysShowIcon && _notifyIcon == null)
+                        InitNotifyIcon();
+
+                    if (_notifyIcon != null)
+                        _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
+
+                    break;
+
+                // Update DNS server if changed in the settings
+                case nameof(SettingsInfo.Network_UseCustomDNSServer):
+                case nameof(SettingsInfo.Network_CustomDNSServer):
+                    ConfigureDNS();
+
+                    break;
+
+                // Update PowerShell profile if changed in the settings
+                case nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile):
+                case nameof(SettingsInfo.Appearance_Theme):
+                case nameof(SettingsInfo.PowerShell_ApplicationFilePath):
+                case nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath):
+                    if (SettingsManager.Current.FirstRun)
+                        return;
+
+                    WriteDefaultPowerShellProfileToRegistry();
+
+                    break;
             }
-
-            // Update DNS server if changed in the settings
-            if (e.PropertyName == nameof(SettingsInfo.Network_UseCustomDNSServer) || e.PropertyName == nameof(SettingsInfo.Network_CustomDNSServer))
-                ConfigureDNS();
-
-            // Update PowerShell profile if changed in the settings
-            if (e.PropertyName == nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile) || e.PropertyName == nameof(SettingsInfo.Appearance_Theme) || e.PropertyName == nameof(SettingsInfo.PowerShell_ApplicationFilePath) || e.PropertyName == nameof(SettingsInfo.AWSSessionManager_ApplicationFilePath))
-                WriteDefaultPowerShellProfileToRegistry();
         }
         #endregion
 
