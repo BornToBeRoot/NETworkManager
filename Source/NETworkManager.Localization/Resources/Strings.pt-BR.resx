@@ -1988,7 +1988,7 @@ Alterar esse valor requer uma reinicialização do aplicativo para entrar em vig
   <data name="FirstRunMessage" xml:space="preserve">
     <value>Obrigado por usar o NETworkManager!
 
-Para fornecer recursos adicionais, o aplicativo usa serviços na Internet que não são operados por mim. Nenhum dado será enviado a mim a qualquer momento.</value>
+Para fornecer recursos adicionais, são usados serviços na Internet que não são operados por mim. Você pode desmarcá-los abaixo na seção de privacidade. Nenhum dado é transmitido para mim a qualquer momento.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Ao iniciar o programa, ele verifica em segundo plano se uma nova versão do programa está disponível no GitHub.
@@ -3253,5 +3253,11 @@ Se a opção for desativada novamente, os valores não serão mais modificados. 
   </data>
   <data name="SettingsViewName_Network" xml:space="preserve">
     <value>Rede</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
+  <data name="ResolveIPAddressForThisHost" xml:space="preserve">
+    <value>Resolver endereço IP para este host (IPv4 é o preferido)</value>
   </data>
 </root>
