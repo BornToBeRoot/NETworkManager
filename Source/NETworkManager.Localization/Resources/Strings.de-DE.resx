@@ -1988,7 +1988,7 @@ Wenn der Wert geändert wird, muss die Anwendung muss neu gestartet werden, dami
   <data name="FirstRunMessage" xml:space="preserve">
     <value>Vielen Dank, dass Sie NETworkManager verwenden!
 
-Um zusätzliche Funktionen bereitzustellen, verwendet die Anwendung Dienste im Internet, die nicht von mir betrieben werden. Es werden zu keinem Zeitpunkt Daten an mich gesendet.</value>
+Um zusätzliche Features anbieten zu können, werden Dienste im Internet verwendet, die nicht von mir betrieben werden. Diese können im Bereich Datenschutz abgewählt werden. Es werden zu keinem Zeitpunkt Daten an mich übermittelt.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Beim Programmstart wird im Hintergrund geprüft, ob eine neue Programmversion auf GitHub verfügbar ist.
@@ -3253,5 +3253,11 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
   </data>
   <data name="SettingsViewName_Network" xml:space="preserve">
     <value>Netzwerk</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
+  <data name="ResolveIPAddressForThisHost" xml:space="preserve">
+    <value>IP-Adresse für diesen Host auflösen (IPv4 wird bevorzugt)</value>
   </data>
 </root>
