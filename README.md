@@ -105,10 +105,12 @@ You can build the application like any other .NET Core / WPF application on Wind
    - [SDK .NET 6.x](https://dotnet.microsoft.com/download/dotnet/6.0)
    - Visual Studio 2019 or later with `.NET desktop development` and `Universal Windows Platform development`
 
-2. (optional) If you want to create a setup
-
-   - [InnoSetup](https://jrsoftware.org/isinfo.php) software must be installed
-   - Add the additional languages [`ChineseSimplified.isl`](https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/ChineseSimplified.isl) and [`ChineseTraditional.isl`](https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/ChineseTraditional.isl) to the InnoSetup installation directory.
+2. (optional) Install [InnoSetup](https://jrsoftware.org/isinfo.php) to create an installer.
+   - Download the additional languages from the [Inno Setup repository](https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/) and copy the following files to `%ProgramFiles%\Inno Setup 6\Languages`:   
+  - `ChineseSimplified.isl`
+  - `ChineseTraditional.isl`
+  - `Hungarian.isl`
+  - `Korean.isl`  
 
 3. Clone or download the repository:
 

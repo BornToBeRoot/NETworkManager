@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "NETworkManager"
-#define MyAppVersion "2022.12.14.0"
+#define MyAppVersion "2022.12.16.0"
 #define MyAppPublisher "BornToBeRoot"
 #define MyAppURL "https://github.com/BornToBeRoot/NETworkManager/"
 #define MyAppExeName "NETworkManager.exe"
@@ -39,20 +39,20 @@ WizardSmallImageFile=Images\NETworkManager_InnoSetup.bmp
 
 [Languages]
 Name: "english";            MessagesFile: "compiler:Default.isl"
-Name: "brasilian";          MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
+Name: "german";             MessagesFile: "compiler:Languages\German.isl"
 Name: "chinesesimplified";  MessagesFile: "compiler:Languages\ChineseSimplified.isl"
 Name: "chinesetraditional"; MessagesFile: "compiler:Languages\ChineseTraditional.isl"
 Name: "czech";              MessagesFile: "compiler:Languages\Czech.isl"
 Name: "dutch";              MessagesFile: "compiler:Languages\Dutch.isl"
 Name: "french";             MessagesFile: "compiler:Languages\French.isl"
-Name: "german";             MessagesFile: "compiler:Languages\German.isl"
+Name: "hungarian";          MessagesFile: "compiler:Languages\Hungarian.isl"
 Name: "italian";            MessagesFile: "compiler:Languages\Italian.isl"
-Name: "japanese";           MessagesFile: "compiler:Languages\Japanese.isl"
+Name: "korean";             MessagesFile: "compiler:Languages\Korean.isl"
 Name: "polish";             MessagesFile: "compiler:Languages\Polish.isl"
+Name: "portuguese_brazil";  MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 Name: "russian";            MessagesFile: "compiler:Languages\Russian.isl"
-Name: "spanish";            MessagesFile: "compiler:Languages\Spanish.isl"
 Name: "slovenian";          MessagesFile: "compiler:Languages\Slovenian.isl"
-Name: "turkish";            MessagesFile: "compiler:Languages\Turkish.isl"
+Name: "spanish";            MessagesFile: "compiler:Languages\Spanish.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"

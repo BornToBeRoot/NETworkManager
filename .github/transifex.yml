@@ -10,12 +10,12 @@ git:
   settings:
       # http://www.codedigest.com/CodeDigest/207-Get-All-Language-Country-Code-List-for-all-Culture-in-C---ASP-Net.aspx
       language_mapping:        
+          de_DE: de-DE
           zh_CN: zh-CN
           zh_TW: zh-TW
           cs_CZ: cs-CZ
           nl_NL: nl-NL
-          fr_FR: fr-FR
-          de_DE: de-DE
+          fr_FR: fr-FR          
           hu_HU: hu-HU
           it_IT: it-IT
           ko_KR: ko-KR
