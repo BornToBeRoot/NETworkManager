@@ -73,6 +73,7 @@ namespace NETworkManager.Localization
             new LocalizationInfo("Russian (Russia)", "Русский", GetImageUri("ru-RU"), "ru-RU"),
             new LocalizationInfo("Slovenian (Slovenia)", "slovenski jezik", GetImageUri("sl-SI"), "sl-SI"),
             new LocalizationInfo("Spanish (Spain)", "Español", GetImageUri("es-ES"), "es-ES")
+            
         };
 
         /// <summary>

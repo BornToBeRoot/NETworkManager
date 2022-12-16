@@ -88,20 +88,22 @@ Remove-Item -Path "$BuildPath\NETworkManager\IsPortable.settings"
 # Installer Build
 $InnoSetupPath = "${env:ProgramFiles(x86)}\Inno Setup 6"
 
+# Check if additional language files are available
 $InnoSetupLanguageMissing = $false
 
-if(-not(Test-Path -Path "$InnoSetupPath\Languages\ChineseSimplified.isl"))
-{
-    Write-Host "ChineseSimplified.isl not found in InnoSetup language folder.`nDownload URL: https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/ChineseSimplified.isl" -ForegroundColor Yellow
-    $InnoSetupLanguageMissing = $true
+foreach($File in @("ChineseSimplified.isl", "ChineseTraditional.isl", "Hungarian.isl", "Korean.isl")) {
+    if(-not(Test-Path -Path "$InnoSetupPath\Languages\$File" -PathType Leaf))
+    {
+        Write-Host "$File not found in InnoSetup language folder." -ForegroundColor Yellow
+        $InnoSetupLanguageMissing = $true
+    }
 }
 
-if(-not(Test-Path -Path "$InnoSetupPath\Languages\ChineseTraditional.isl"))
-{
-    Write-Host "ChineseTraditional.isl not found in InnoSetup language folder.`nDownload URL: https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/ChineseTraditional.isl" -ForegroundColor Yellow
-    $InnoSetupLanguageMissing = $true
+if($InnoSetupLanguageMissing) {
+    Write-Host "You can download the language files here: https://github.com/jrsoftware/issrc/blob/main/Files/Languages/" -ForegroundColor Yellow
 }
 
+# Check if InnoSetup is installed
 $InnoSetupCompiler = "$InnoSetupPath\ISCC.exe"
 
 if(-not(Test-Path -Path $InnoSetupCompiler -PathType Leaf) -or $InnoSetupLanguageMissing)
@@ -119,4 +121,7 @@ foreach($hash in Get-ChildItem -Path $BuildPath | Where-Object {$_.Name.EndsWith
     "$($hash.Algorithm) | $($hash.Hash) | $([System.IO.Path]::GetFileName($hash.Path))" | Out-File -FilePath "$BuildPath\NETworkManager_$($Version)_Hash.txt" -Encoding utf8 -Append
 }
 
-Write-Host "Build finished! All files are here: $BuildPath" -ForegroundColor Green
+# Build finished
+Write-Host "`n`nBuild finished! The following files have been created under ""$BuildPath""`n" -ForegroundColor Green
+
+Get-Content "$BuildPath\NETworkManager_$($Version)_Hash.txt"
