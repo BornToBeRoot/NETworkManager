@@ -38,6 +38,8 @@ New Feature
 - Fixed a bug in Dragablz that in certain circumstances locks the tab when you right-click on it and try to move it (See [#132](https://github.com/ButchersBoy/Dragablz/issues/132) & [#1702](https://github.com/BornToBeRoot/NETworkManager/issues/1702) for more details) [#1712](https://github.com/BornToBeRoot/NETworkManager/pull/1712){:target="\_blank"}
 - Lookup - OUI, Lookup
   - Input cannot end with ";" [#1515](https://github.com/BornToBeRoot/NETworkManager/pull/1515){:target="\_blank"}
+- Installer
+  - Encoding für chinese language files fixed [#1413](https://github.com/BornToBeRoot/NETworkManager/issues/1413){:target="\_blank"} [#1769](https://github.com/BornToBeRoot/NETworkManager/pull/1769){:target="\_blank"}
 
 ## Deprecated
 
