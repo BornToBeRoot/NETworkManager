@@ -28,6 +28,10 @@ New Feature
 - Detect new DNS servers if they have been changed e.g. by a new network connection (LAN, WLAN) or VPN connection [#1733](https://github.com/BornToBeRoot/NETworkManager/pull/1733){:target="\_blank"}
 - Error messages for failed DNS resolution improved [#1733](https://github.com/BornToBeRoot/NETworkManager/pull/1733){:target="\_blank"}
 - Check if folder exists in export dialog [#1760](https://github.com/BornToBeRoot/NETworkManager/pull/1760){:target="\_blank"}
+- AWS Sesdsion Manager, PowerShell, PuTTY & TigerVNC
+  - Validate path to required tool [#1771](https://github.com/BornToBeRoot/NETworkManager/pull/1771){:target="\_blank"}
+- Settings
+  - Remove second dialog (restart the app immediately) [#1770](https://github.com/BornToBeRoot/NETworkManager/pull/1770){:target="\_blank"}
 - First run dialog
   - PowerShell theme added [#1761](https://github.com/BornToBeRoot/NETworkManager/pull/1761){:target="\_blank"}
 
