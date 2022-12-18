@@ -448,6 +448,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die C:\Program Files\PowerShell\7\pwsh.exe ähnelt.
+        /// </summary>
+        public static string ExamplePowerShellPath {
+            get {
+                return ResourceManager.GetString("ExamplePowerShellPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die https://api.ipify.org ähnelt.
         /// </summary>
         public static string ExamplePublicIPv4AddressAPI {
@@ -462,6 +471,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ExamplePublicIPv6AddressAPI {
             get {
                 return ResourceManager.GetString("ExamplePublicIPv6AddressAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die C:\Program Files\PuTTY\putty.exe ähnelt.
+        /// </summary>
+        public static string ExamplePuTTYPath {
+            get {
+                return ResourceManager.GetString("ExamplePuTTYPath", resourceCulture);
             }
         }
         
@@ -525,6 +543,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ExampleTags {
             get {
                 return ResourceManager.GetString("ExampleTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die C:\Tools\TigerVNC\vncviewer64-1.12.0.exe ähnelt.
+        /// </summary>
+        public static string ExampleTigerVNCPath {
+            get {
+                return ResourceManager.GetString("ExampleTigerVNCPath", resourceCulture);
             }
         }
         

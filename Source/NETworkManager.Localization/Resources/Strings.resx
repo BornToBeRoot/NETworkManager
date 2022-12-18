@@ -1369,9 +1369,6 @@ Profile files are not affected!</value>
   <data name="Paste" xml:space="preserve">
     <value>Paste</value>
   </data>
-  <data name="PuTTYLocationDots" xml:space="preserve">
-    <value>C:\Program Files\PuTTY\putty.exe</value>
-  </data>
   <data name="Reconnect" xml:space="preserve">
     <value>Reconnect</value>
   </data>
@@ -1837,9 +1834,6 @@ Profile files are not affected!</value>
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
     <value>Configure the path to TigerVNC in the settings...</value>
   </data>
-  <data name="TigerVNCLocationDots" xml:space="preserve">
-    <value>TigerVNC location...</value>
-  </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
     <value>TigerVNC process has ended!</value>
   </data>
@@ -1923,9 +1917,6 @@ Profile files are not affected!</value>
   </data>
   <data name="RemoteConsole" xml:space="preserve">
     <value>Remote console</value>
-  </data>
-  <data name="PowerShellLocationDots" xml:space="preserve">
-    <value>PowerShell location...</value>
   </data>
   <data name="FilePath" xml:space="preserve">
     <value>File path</value>
@@ -3259,5 +3250,14 @@ If the option is disabled again, the values are no longer modified. However, the
   </data>
   <data name="ResolveIPAddressForThisHost" xml:space="preserve">
     <value>Resolve IP address for this host (IPv4 is preferred)</value>
+  </data>
+  <data name="NoValidPowerShellPath" xml:space="preserve">
+    <value>A valid path to PowerShell should end with "pwsh.exe" or "powershell.exe"!</value>
+  </data>
+  <data name="NoValidPuTTYPath" xml:space="preserve">
+    <value>A valid path to PuTTY should end with "PuTTY.exe"!</value>
+  </data>
+  <data name="NoValidTigerVNCPath" xml:space="preserve">
+    <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
   </data>
 </root>
