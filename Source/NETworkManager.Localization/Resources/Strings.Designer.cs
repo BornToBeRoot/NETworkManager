@@ -5254,6 +5254,33 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die A valid path to PowerShell should end with &quot;pwsh.exe&quot; or &quot;powershell.exe&quot;! ähnelt.
+        /// </summary>
+        public static string NoValidPowerShellPath {
+            get {
+                return ResourceManager.GetString("NoValidPowerShellPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die A valid path to PuTTY should end with &quot;PuTTY.exe&quot;! ähnelt.
+        /// </summary>
+        public static string NoValidPuTTYPath {
+            get {
+                return ResourceManager.GetString("NoValidPuTTYPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die A valid path to TigerVNC should end with &quot;vncviewer-*.exe&quot; or &quot;vncviewer64-*.exe&quot;! ähnelt.
+        /// </summary>
+        public static string NoValidTigerVNCPath {
+            get {
+                return ResourceManager.GetString("NoValidTigerVNCPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No vendor found. Check your input! ähnelt.
         /// </summary>
         public static string NoVendorFoundCheckYourInput {
@@ -5819,15 +5846,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die PowerShell location... ähnelt.
-        /// </summary>
-        public static string PowerShellLocationDots {
-            get {
-                return ResourceManager.GetString("PowerShellLocationDots", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die PowerShell process has ended! ähnelt.
         /// </summary>
         public static string PowerShellProcessHasEnded {
@@ -6072,15 +6090,6 @@ namespace NETworkManager.Localization.Resources {
         public static string PuTTY {
             get {
                 return ResourceManager.GetString("PuTTY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die C:\Program Files\PuTTY\putty.exe ähnelt.
-        /// </summary>
-        public static string PuTTYLocationDots {
-            get {
-                return ResourceManager.GetString("PuTTYLocationDots", resourceCulture);
             }
         }
         
@@ -8479,15 +8488,6 @@ namespace NETworkManager.Localization.Resources {
         public static string TigerVNC {
             get {
                 return ResourceManager.GetString("TigerVNC", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die TigerVNC location... ähnelt.
-        /// </summary>
-        public static string TigerVNCLocationDots {
-            get {
-                return ResourceManager.GetString("TigerVNCLocationDots", resourceCulture);
             }
         }
         

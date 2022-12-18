@@ -309,4 +309,13 @@
   <data name="ExampleBits" xml:space="preserve">
     <value>1024</value>
   </data>
+  <data name="ExamplePowerShellPath" xml:space="preserve">
+    <value>C:\Program Files\PowerShell\7\pwsh.exe</value>
+  </data>
+  <data name="ExamplePuTTYPath" xml:space="preserve">
+    <value>C:\Program Files\PuTTY\putty.exe</value>
+  </data>
+  <data name="ExampleTigerVNCPath" xml:space="preserve">
+    <value>C:\Tools\TigerVNC\vncviewer64-1.12.0.exe</value>
+  </data>
 </root>
