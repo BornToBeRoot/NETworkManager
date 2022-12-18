@@ -6,7 +6,7 @@ namespace NETworkManager.Views
 {
     public partial class SettingsSettingsView
     {
-        private readonly SettingsSettingsViewModel _viewModel = new SettingsSettingsViewModel(DialogCoordinator.Instance);
+        private readonly SettingsSettingsViewModel _viewModel = new(DialogCoordinator.Instance);
 
         public SettingsSettingsView()
         {

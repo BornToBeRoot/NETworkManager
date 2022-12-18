@@ -362,11 +362,6 @@ namespace NETworkManager.ViewModels
 
             SettingsManager.InitDefault();
 
-            message = Localization.Resources.Strings.SettingsSuccessfullyReset;
-            message += Environment.NewLine + Environment.NewLine + Localization.Resources.Strings.TheApplicationWillBeRestarted;
-
-            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.SettingsResetExclamationMark, message, MessageDialogStyle.Affirmative, settings);
-
             // Restart the application
             ConfigurationManager.Current.Restart = true;
             ConfigurationManager.Current.DisableSaveSettings = true;
