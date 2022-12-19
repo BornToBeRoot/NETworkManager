@@ -2914,7 +2914,7 @@ Mit "Anderen Ordner verwenden" werden die vorhandenen Profildateien im Zielordne
     <value>Liste der Top-Level-Domains von iana.org, die zur Abfrage von whois-Servern der TLD von whois.iana.org über Port 43 verwendet wird</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Bereinigte IEEE OUI-Daten von linuxnet.ca.</value>
+    <value>OUI-Daten von ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Service Name and Transport Protocol Port Number Registry von iana.org.</value>
