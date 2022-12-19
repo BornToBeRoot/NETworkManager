@@ -1362,9 +1362,6 @@ Ustvarite enega...</value>
   <data name="Paste" xml:space="preserve">
     <value>Prilepi</value>
   </data>
-  <data name="PuTTYLocationDots" xml:space="preserve">
-    <value>C:\Program Files\PuTTY\putty.exe</value>
-  </data>
   <data name="Reconnect" xml:space="preserve">
     <value>Ponovno poveži</value>
   </data>
@@ -1830,9 +1827,6 @@ Ustvarite enega...</value>
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
     <value>Pot do TigerVNC nastavite v nastavitvah...</value>
   </data>
-  <data name="TigerVNCLocationDots" xml:space="preserve">
-    <value>Lokacija TigerVNC...</value>
-  </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
     <value>Proces TigerVNC se je končal!</value>
   </data>
@@ -1917,9 +1911,6 @@ Ustvarite enega...</value>
   <data name="RemoteConsole" xml:space="preserve">
     <value>Oddaljena konzola</value>
   </data>
-  <data name="PowerShellLocationDots" xml:space="preserve">
-    <value>Lokacija PowerShella...</value>
-  </data>
   <data name="FilePath" xml:space="preserve">
     <value>Pot do datoteke</value>
   </data>
@@ -1979,9 +1970,9 @@ Uveljavitev sprememb te vrednosti zahteva ponovni zagon programa.</value>
     <value>Preveri javni naslov IP</value>
   </data>
   <data name="FirstRunMessage" xml:space="preserve">
-    <value>Hvala, ker uporabljate NETworkManager!
+    <value>Thank you for using NETworkManager!
 
-Za zagotavljanje dodatnih funkcij program uporablja internetne storitve, ki jih ne upravljam jaz. Nobeni podatki mi ne bodo nikoli poslani.</value>
+In order to provide additional features, services on the Internet are used that are not operated by me. You can deselect them below in the privacy section. No data is transmitted to me at any time.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Ob zagonu programa ta v ozadju preveri, če je na GitHubu na voljo nova različica programa.
@@ -3232,5 +3223,20 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   </data>
   <data name="SettingsViewName_Network" xml:space="preserve">
     <value>Omrežje</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
+  <data name="ResolveIPAddressForThisHost" xml:space="preserve">
+    <value>Resolve IP address for this host (IPv4 is preferred)</value>
+  </data>
+  <data name="NoValidPowerShellPath" xml:space="preserve">
+    <value>A valid path to PowerShell should end with "pwsh.exe" or "powershell.exe"!</value>
+  </data>
+  <data name="NoValidPuTTYPath" xml:space="preserve">
+    <value>A valid path to PuTTY should end with "PuTTY.exe"!</value>
+  </data>
+  <data name="NoValidTigerVNCPath" xml:space="preserve">
+    <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
   </data>
 </root>
