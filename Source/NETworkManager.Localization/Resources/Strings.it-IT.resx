@@ -1381,9 +1381,6 @@ Cerca per tag con "tag = xxx".</value>
   <data name="Paste" xml:space="preserve">
     <value>Incolla</value>
   </data>
-  <data name="PuTTYLocationDots" xml:space="preserve">
-    <value>C:\Program Files\PuTTY\putty.exe</value>
-  </data>
   <data name="Reconnect" xml:space="preserve">
     <value>Ricollega</value>
   </data>
@@ -1851,9 +1848,6 @@ Il nome di dominio della parte di autenticazione potrebbe essere errato, il domi
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
     <value>Configura nelle impostazioni il percorso di TigerVNC...</value>
   </data>
-  <data name="TigerVNCLocationDots" xml:space="preserve">
-    <value>Percorso TigerVNC...</value>
-  </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
     <value>Il processo TigerVNC è terminato!</value>
   </data>
@@ -1939,9 +1933,6 @@ Per ulteriori dettagli visualizza il messaggio di errore:</value>
   <data name="RemoteConsole" xml:space="preserve">
     <value>Console remota</value>
   </data>
-  <data name="PowerShellLocationDots" xml:space="preserve">
-    <value>Percorso PowerShell...</value>
-  </data>
   <data name="FilePath" xml:space="preserve">
     <value>Percorso file</value>
   </data>
@@ -2001,10 +1992,9 @@ Per avere effetto la modifica di questo valore richiede il riavvio dell'applicaz
     <value>Controlla l'indirizzo IP pubblico</value>
   </data>
   <data name="FirstRunMessage" xml:space="preserve">
-    <value>Grazie per l'uso di NETworkManager!
+    <value>Thank you for using NETworkManager!
 
-Per fornire funzionalità aggiuntive l'applicazione usa servizi su Internet che non sono gestiti da me. 
-In qualsiasi momento non mi verrà inviato nessun dato personale.</value>
+In order to provide additional features, services on the Internet are used that are not operated by me. You can deselect them below in the privacy section. No data is transmitted to me at any time.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Quando parte, il programma verifica in background se sono disponibili nuove versioni su GitHub.
@@ -3285,5 +3275,20 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
   </data>
   <data name="SettingsViewName_Network" xml:space="preserve">
     <value>Rete</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
+  <data name="ResolveIPAddressForThisHost" xml:space="preserve">
+    <value>Resolve IP address for this host (IPv4 is preferred)</value>
+  </data>
+  <data name="NoValidPowerShellPath" xml:space="preserve">
+    <value>A valid path to PowerShell should end with "pwsh.exe" or "powershell.exe"!</value>
+  </data>
+  <data name="NoValidPuTTYPath" xml:space="preserve">
+    <value>A valid path to PuTTY should end with "PuTTY.exe"!</value>
+  </data>
+  <data name="NoValidTigerVNCPath" xml:space="preserve">
+    <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
   </data>
 </root>
