@@ -21,10 +21,8 @@ Generated $(Get-Date)
 # Root node
 $RootNode = $Document.CreateNode("element", "OUIs", $null)
 
-foreach($Line in $LatestOUIs -split '[\r\n]')
-{
-    if($Line -match "^[A-F0-9]{6}")
-    {   
+foreach ($Line in $LatestOUIs -split '[\r\n]') {
+    if ($Line -match "^[A-F0-9]{6}") {   
         # Line looks like: 2405F5     (base 16)		Integrated Device Technology (Malaysia) Sdn. Bhd.
         $OUIData = ($Line -replace '\s+', ' ').Replace(' (base 16) ', '|').Trim().Split('|')
                         

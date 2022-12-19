@@ -22,22 +22,18 @@ Generated $(Get-Date)
 $RootNode = $Document.CreateNode("element", "Ports", $null)
 
 # Create node for each port
-foreach($Record in $ServiceNamePortNumbers.ChildNodes.record)
-{
-    if([string]::IsNullOrEmpty($Record.number) -or ([string]::IsNullOrEmpty($Record.protocol)))
-    {        
+foreach ($Record in $ServiceNamePortNumbers.ChildNodes.record) {
+    if ([string]::IsNullOrEmpty($Record.number) -or ([string]::IsNullOrEmpty($Record.protocol))) {        
         continue   
     }       
 
-    $Description = ($Record.description -replace '`n','') -replace '\s+',' '
+    $Description = ($Record.description -replace '`n', '') -replace '\s+', ' '
     $Number = $Record.number
 
-    if($Number -like "*-*")
-    {
+    if ($Number -like "*-*") {
         $NumberArr = $Number.Split('-')
 
-        foreach($Number1 in $NumberArr[0]..$NumberArr[1])
-        {      
+        foreach ($Number1 in $NumberArr[0]..$NumberArr[1]) {      
             $PortNode = $Document.CreateNode("element", "Port", $null)
             
             $NumberElement = $Document.CreateElement("Number")
@@ -59,8 +55,7 @@ foreach($Record in $ServiceNamePortNumbers.ChildNodes.record)
             [void]$RootNode.AppendChild($PortNode)
         }
     }
-    else 
-    {
+    else {
         $PortNode = $Document.CreateNode("element", "Port", $null)
         
         $NumberElement = $Document.CreateElement("Number")
