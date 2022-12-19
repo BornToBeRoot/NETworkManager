@@ -2914,7 +2914,7 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>List of Top-Level-Domains from iana.org, which is used to query whois servers of the TLD from whois.iana.org via port 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Sanitized IEEE OUI Data from linuxnet.ca.</value>
+    <value>OUI data from ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Service Name and Transport Protocol Port Number Registry from iana.org.</value>

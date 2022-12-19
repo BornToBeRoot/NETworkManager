@@ -7147,7 +7147,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sanitized IEEE OUI Data from linuxnet.ca. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die OUI data from ieee.org. ähnelt.
         /// </summary>
         public static string Resource_OUI_Description {
             get {
