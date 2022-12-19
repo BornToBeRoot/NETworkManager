@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 10/28/2022 22:35:03-->
+Generated 12/19/2022 22:38:43-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -65289,6 +65289,18 @@ Generated 10/28/2022 22:35:03-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>8433</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>8433</Number>
+    <Protocol>udp</Protocol>
+    <Name>aws-as2</Name>
+    <Description>Non Persistent Desktop and Application Streaming</Description>
+  </Port>
+  <Port>
     <Number>8442</Number>
     <Protocol>tcp</Protocol>
     <Name>cybro-a-bus</Name>
@@ -75291,6 +75303,18 @@ Generated 10/28/2022 22:35:03-->
     <Protocol>udp</Protocol>
     <Name>caerpc</Name>
     <Description>CA eTrust RPC</Description>
+  </Port>
+  <Port>
+    <Number>42999</Number>
+    <Protocol>tcp</Protocol>
+    <Name>curiosity</Name>
+    <Description>API endpoint for search application</Description>
+  </Port>
+  <Port>
+    <Number>42999</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>43000</Number>

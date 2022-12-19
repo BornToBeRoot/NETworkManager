@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Whois servers by domain from IANA
-Generated 10/28/2022 22:35:11-->
+Generated 12/19/2022 22:43:18-->
 <WhoisServers>
   <WhoisServer>
     <TLD>AAA</TLD>
@@ -78,10 +78,6 @@ Generated 10/28/2022 22:35:11-->
     <TLD>AD</TLD>
     <Server>
     </Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>ADAC</TLD>
-    <Server>whois.nic.adac</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ADS</TLD>
@@ -1057,7 +1053,7 @@ Generated 10/28/2022 22:35:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>CLICK</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.click</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>CLINIC</TLD>
@@ -1190,7 +1186,7 @@ Generated 10/28/2022 22:35:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>COUNTRY</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.country</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>COUPON</TLD>
@@ -2285,7 +2281,7 @@ Generated 10/28/2022 22:35:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>HIV</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.hiv</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>HK</TLD>
@@ -3012,11 +3008,6 @@ Generated 10/28/2022 22:35:11-->
     <Server>whois.nic.locus</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>LOFT</TLD>
-    <Server>
-    </Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>LOL</TLD>
     <Server>whois.nic.lol</Server>
   </WhoisServer>
@@ -3401,8 +3392,7 @@ Generated 10/28/2022 22:35:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>MUSIC</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.music</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>MUTUAL</TLD>
@@ -3632,7 +3622,7 @@ Generated 10/28/2022 22:35:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>NZ</TLD>
-    <Server>whois.srs.net.nz</Server>
+    <Server>whois.irs.net.nz</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>OBI</TLD>
@@ -3993,7 +3983,7 @@ Generated 10/28/2022 22:35:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>PROPERTY</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.property</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>PROTECTION</TLD>
@@ -4414,10 +4404,6 @@ Generated 10/28/2022 22:35:11-->
     <Server>whois.nic.services</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>SES</TLD>
-    <Server>whois.nic.ses</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>SEVEN</TLD>
     <Server>whois.nic.seven</Server>
   </WhoisServer>
@@ -4431,7 +4417,7 @@ Generated 10/28/2022 22:35:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SEXY</TLD>
-    <Server>whois.uniregistry.net</Server>
+    <Server>whois.nic.sexy</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SFR</TLD>
@@ -5062,7 +5048,7 @@ Generated 10/28/2022 22:35:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>TV</TLD>
-    <Server>tvwhois.verisign-grs.com</Server>
+    <Server>whois.nic.tv</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>TVS</TLD>
@@ -5763,10 +5749,6 @@ Generated 10/28/2022 22:35:11-->
   <WhoisServer>
     <TLD>XN--JLQ480N2RG</TLD>
     <Server>whois.nic.xn--jlq480n2rg</Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>XN--JLQ61U9W7B</TLD>
-    <Server>whois.nic.xn--jlq61u9w7b</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--JVR189M</TLD>

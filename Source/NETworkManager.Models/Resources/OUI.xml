@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Organizationally unique identifier
-Generated 10/28/2022 22:34:57-->
+Generated 12/19/2022 22:38:38-->
 <OUIs>
   <OUI>
     <MACAddress>002272</MACAddress>
@@ -117,10 +117,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>D82918</MACAddress>
     <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>D0D003</MACAddress>
-    <Vendor>Samsung Electronics Co.,LTD</Vendor>
   </OUI>
   <OUI>
     <MACAddress>64B21D</MACAddress>
@@ -1447,14 +1443,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Shenzhen Kunlun TongTai Technology Co.,Ltd.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>7483C2</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>E063DA</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>50579C</MACAddress>
     <Vendor>Seiko Epson Corporation</Vendor>
   </OUI>
@@ -2757,10 +2745,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>F81D0F</MACAddress>
     <Vendor>Hitron Technologies. Inc</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>58C935</MACAddress>
-    <Vendor>Chiun Mai Communication Systems, Inc</Vendor>
   </OUI>
   <OUI>
     <MACAddress>0094A1</MACAddress>
@@ -4291,20 +4275,8 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>TP-LINK TECHNOLOGIES CO.,LTD.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>802AA8</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>F09FC2</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>188B15</MACAddress>
     <Vendor>ShenZhen ZhongRuiJing Technology co.,LTD</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>788A20</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>886B0F</MACAddress>
@@ -9461,10 +9433,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>C8F386</MACAddress>
     <Vendor>Shenzhen Xiaoniao Technology Co.,Ltd</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>E0DCA0</MACAddress>
-    <Vendor>Siemens Industrial Automation Products Ltd Chengdu</Vendor>
   </OUI>
   <OUI>
     <MACAddress>842F75</MACAddress>
@@ -17895,10 +17863,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>BTICINO SPA</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>000351</MACAddress>
-    <Vendor>Diebold, Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>00034E</MACAddress>
     <Vendor>Pos Data Company, Ltd.</Vendor>
   </OUI>
@@ -18687,10 +18651,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Network Equipment Technologies, Inc.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>00302B</MACAddress>
-    <Vendor>INALP NETWORKS, INC.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>003001</MACAddress>
     <Vendor>SMP</Vendor>
   </OUI>
@@ -18809,10 +18769,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>00506D</MACAddress>
     <Vendor>VIDEOJET SYSTEMS</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>0050CA</MACAddress>
-    <Vendor>NET TO NET TECHNOLOGIES</Vendor>
   </OUI>
   <OUI>
     <MACAddress>00D0C7</MACAddress>
@@ -22423,10 +22379,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>New H3C Technologies Co., Ltd</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>245A4C</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>80F1F1</MACAddress>
     <Vendor>Tech4home, Lda</Vendor>
   </OUI>
@@ -24371,10 +24323,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Intel Corporate</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>602232</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>ACBCD9</MACAddress>
     <Vendor>Cisco Systems, Inc</Vendor>
   </OUI>
@@ -24809,10 +24757,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>FC1193</MACAddress>
     <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>E43883</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>34B883</MACAddress>
@@ -26131,10 +26075,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Intel Corporate</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>90B4DD</MACAddress>
-    <Vendor>ZPT R&amp;D</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>80F7A6</MACAddress>
     <Vendor>Shenzhen C-Data Technology Co., Ltd.</Vendor>
   </OUI>
@@ -26335,6 +26275,14 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Vutility Inc.</Vendor>
   </OUI>
   <OUI>
+    <MACAddress>940EE7</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A8B271</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
     <MACAddress>505A65</MACAddress>
     <Vendor>AzureWave Technology Inc.</Vendor>
   </OUI>
@@ -26355,14 +26303,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>PETAiO (NanJing), Inc.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>A8B271</MACAddress>
-    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>6405E4</MACAddress>
-    <Vendor>ALPSALPINE CO,.LTD</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>BC64D9</MACAddress>
     <Vendor>GUANGDONG OPPO MOBILE TELECOMMUNICATIONS CORP.,LTD</Vendor>
   </OUI>
@@ -26371,8 +26311,8 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>zte corporation</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>940EE7</MACAddress>
-    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+    <MACAddress>6405E4</MACAddress>
+    <Vendor>ALPSALPINE CO,.LTD</Vendor>
   </OUI>
   <OUI>
     <MACAddress>7CC74A</MACAddress>
@@ -26387,12 +26327,300 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Huawei Device Co., Ltd.</Vendor>
   </OUI>
   <OUI>
+    <MACAddress>48BCE1</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
     <MACAddress>28B5E8</MACAddress>
     <Vendor>Texas Instruments</Vendor>
   </OUI>
   <OUI>
     <MACAddress>4829E4</MACAddress>
     <Vendor>AO</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>F83C80</MACAddress>
+    <Vendor>MITSUMI ELECTRIC CO.,LTD.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D83ADD</MACAddress>
+    <Vendor>Raspberry Pi Trading Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>70F8AE</MACAddress>
+    <Vendor>Microsoft Corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>F42462</MACAddress>
+    <Vendor>Selcom Electronics (Shanghai) Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>64EC65</MACAddress>
+    <Vendor>vivo Mobile Communication Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B85CEE</MACAddress>
+    <Vendor>Baidu Online Network Technology (Beijing) Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>F4A17F</MACAddress>
+    <Vendor>Marquardt Electronics Technology (Shanghai) Co.Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D0D003</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5C76D5</MACAddress>
+    <Vendor>Nokia</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>8C7A00</MACAddress>
+    <Vendor>Nokia</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B4EDD5</MACAddress>
+    <Vendor>Quectel Wireless Solutions Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>2CD1C6</MACAddress>
+    <Vendor>Murata Manufacturing Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>084218</MACAddress>
+    <Vendor>Asyril SA</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>90B4DD</MACAddress>
+    <Vendor>Private</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D85B22</MACAddress>
+    <Vendor>Shenzhen Hohunet Technology Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>8C7909</MACAddress>
+    <Vendor>Aruba, a Hewlett Packard Enterprise Company</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B838EF</MACAddress>
+    <Vendor>ADVA Optical Networking Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>705846</MACAddress>
+    <Vendor>Trig Avionics Limited</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>0891A3</MACAddress>
+    <Vendor>Amazon Technologies Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>0CD923</MACAddress>
+    <Vendor>GOCLOUD Networks(GAOKE Networks)</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>F0748D</MACAddress>
+    <Vendor>Ruijie Networks Co.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>0C2E57</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E8D775</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>7473B4</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A4FC14</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A81AF1</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>CC08FA</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>909B6F</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>9CDBAF</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>980C33</MACAddress>
+    <Vendor>Silicon Laboratories</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>84398F</MACAddress>
+    <Vendor>Fortinet, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>00302B</MACAddress>
+    <Vendor>Inalp Solutions AG</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A4A528</MACAddress>
+    <Vendor>Sichuan Tianyi Comheart Telecom Co.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E878EE</MACAddress>
+    <Vendor>New H3C Technologies Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>ECA7AD</MACAddress>
+    <Vendor>Barrot Technology Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>44DBD2</MACAddress>
+    <Vendor>YEALINK(XIAMEN) NETWORK TECHNOLOGY CO.,LTD.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5C64F1</MACAddress>
+    <Vendor>Cisco Systems, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>1C3B62</MACAddress>
+    <Vendor>HMD Global Oy</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>7C4D8F</MACAddress>
+    <Vendor>HP Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>74D558</MACAddress>
+    <Vendor>GUANGDONG OPPO MOBILE TELECOMMUNICATIONS CORP.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>244845</MACAddress>
+    <Vendor>Hangzhou Hikvision Digital Technology Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>9CCBF7</MACAddress>
+    <Vendor>CLOUD STAR TECHNOLOGY CO., LTD.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E0DCA0</MACAddress>
+    <Vendor>Siemens Industrial Automation Products Ltd., Chengdu</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>8858BE</MACAddress>
+    <Vendor>kuosheng.com</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>3CF9F0</MACAddress>
+    <Vendor>zte corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>6877DA</MACAddress>
+    <Vendor>zte corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>F46412</MACAddress>
+    <Vendor>Sony Interactive Entertainment Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>48814E</MACAddress>
+    <Vendor>E&amp;M SOLUTION CO,.Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>58C935</MACAddress>
+    <Vendor>Chiun Mai Communication System, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>BC49B2</MACAddress>
+    <Vendor>SHENZHEN ALONG COMMUNICATION TECH CO., LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>9497AE</MACAddress>
+    <Vendor>GUANGDONG OPPO MOBILE TELECOMMUNICATIONS CORP.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>0CBD75</MACAddress>
+    <Vendor>GUANGDONG OPPO MOBILE TELECOMMUNICATIONS CORP.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>AC9073</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>FC1D3A</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>AC800A</MACAddress>
+    <Vendor>Sony Corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B8EA98</MACAddress>
+    <Vendor>Xiaomi Communications Co Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>788CB5</MACAddress>
+    <Vendor>TP-Link Corporation Limited</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>10C4CA</MACAddress>
+    <Vendor>HUMAX Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E4BEFB</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>58F8D7</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>000351</MACAddress>
+    <Vendor>Diebold Nixdorf</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>F09FC2</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>802AA8</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>788A20</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>7483C2</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E063DA</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>245A4C</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>602232</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E43883</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>0050CA</MACAddress>
+    <Vendor>DZS Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>74EE8D</MACAddress>
+    <Vendor>Apollo Intelligent Connectivity (Beijing) Technology Co., Ltd.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>9CFFC2</MACAddress>
@@ -29051,10 +29279,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Nokia</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>9C65EE</MACAddress>
-    <Vendor>DASAN Network Solutions</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>78CA04</MACAddress>
     <Vendor>Nokia Corporation</Vendor>
   </OUI>
@@ -29753,10 +29977,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>5CFF35</MACAddress>
     <Vendor>Wistron Corporation</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>CC9F7A</MACAddress>
-    <Vendor>Chiun Mai Communication Systems, Inc</Vendor>
   </OUI>
   <OUI>
     <MACAddress>78F29E</MACAddress>
@@ -48367,10 +48587,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Huawei Device Co., Ltd.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>784558</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>64F947</MACAddress>
     <Vendor>Senscomm Semiconductor Co., Ltd.</Vendor>
   </OUI>
@@ -50451,10 +50667,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Erbe Elektromedizin GmbH</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>AC8BA9</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>C475AB</MACAddress>
     <Vendor>Intel Corporate</Vendor>
   </OUI>
@@ -50877,10 +51089,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>F897A9</MACAddress>
     <Vendor>Ericsson AB</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>30B216</MACAddress>
-    <Vendor>Hitachi Energy</Vendor>
   </OUI>
   <OUI>
     <MACAddress>98CA20</MACAddress>
@@ -52311,10 +52519,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>New H3C Technologies Co., Ltd</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>B4CBB8</MACAddress>
-    <Vendor>UNIVERSAL ELECTRONICS</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>E4233C</MACAddress>
     <Vendor>Juniper Networks</Vendor>
   </OUI>
@@ -52329,10 +52533,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>1CC316</MACAddress>
     <Vendor>Xiamen Milesight IoT Co., Ltd.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>64C6D2</MACAddress>
-    <Vendor>Seiko Epson Corporation</Vendor>
   </OUI>
   <OUI>
     <MACAddress>782459</MACAddress>
@@ -52351,8 +52551,48 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Carrier Culoz SA</Vendor>
   </OUI>
   <OUI>
+    <MACAddress>48BDCE</MACAddress>
+    <Vendor>Technicolor CH USA Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>64C6D2</MACAddress>
+    <Vendor>Seiko Epson Corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>481F66</MACAddress>
+    <Vendor>China Mobile Group Device Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
     <MACAddress>B83C28</MACAddress>
     <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>106838</MACAddress>
+    <Vendor>AzureWave Technology Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>748669</MACAddress>
+    <Vendor>GUANGDONG OPPO MOBILE TELECOMMUNICATIONS CORP.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C80A35</MACAddress>
+    <Vendor>Qingdao Hisense Smart Life Technology Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>141AAA</MACAddress>
+    <Vendor>Metal Work SpA</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D8028A</MACAddress>
+    <Vendor>Shenzhen YOUHUA Technology Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>88CE3F</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>ECF8D0</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
   </OUI>
   <OUI>
     <MACAddress>3C6D89</MACAddress>
@@ -52375,56 +52615,16 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Apple, Inc.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>48BDCE</MACAddress>
-    <Vendor>Technicolor CH USA Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>481F66</MACAddress>
-    <Vendor>China Mobile Group Device Co.,Ltd.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>106838</MACAddress>
-    <Vendor>AzureWave Technology Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>748669</MACAddress>
-    <Vendor>GUANGDONG OPPO MOBILE TELECOMMUNICATIONS CORP.,LTD</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>C80A35</MACAddress>
-    <Vendor>Qingdao Hisense Smart Life Technology Co., Ltd</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>141AAA</MACAddress>
-    <Vendor>Metal Work SpA</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>CCDEDE</MACAddress>
-    <Vendor>Nokia</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>ECF8D0</MACAddress>
-    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>30DF17</MACAddress>
-    <Vendor>ALPSALPINE CO,.LTD</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>D8028A</MACAddress>
-    <Vendor>Shenzhen YOUHUA Technology Co., Ltd</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>88CE3F</MACAddress>
-    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+    <MACAddress>EC7379</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>60B647</MACAddress>
     <Vendor>Silicon Laboratories</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>EC7379</MACAddress>
-    <Vendor>Apple, Inc.</Vendor>
+    <MACAddress>30DF17</MACAddress>
+    <Vendor>ALPSALPINE CO,.LTD</Vendor>
   </OUI>
   <OUI>
     <MACAddress>047056</MACAddress>
@@ -52439,12 +52639,8 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>CLOUD NETWORK TECHNOLOGY SINGAPORE PTE. LTD.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>D404E6</MACAddress>
-    <Vendor>Broadcom Limited</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>DCE305</MACAddress>
-    <Vendor>AO</Vendor>
+    <MACAddress>CCDEDE</MACAddress>
+    <Vendor>Nokia</Vendor>
   </OUI>
   <OUI>
     <MACAddress>B894D9</MACAddress>
@@ -52455,16 +52651,12 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Texas Instruments</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>886D2D</MACAddress>
-    <Vendor>Huawei Device Co., Ltd.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>0804B4</MACAddress>
     <Vendor>Texas Instruments</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>30AF7E</MACAddress>
-    <Vendor>Texas Instruments</Vendor>
+    <MACAddress>886D2D</MACAddress>
+    <Vendor>Huawei Device Co., Ltd.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>242A04</MACAddress>
@@ -52475,6 +52667,10 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Google, Inc.</Vendor>
   </OUI>
   <OUI>
+    <MACAddress>DCE305</MACAddress>
+    <Vendor>AO</Vendor>
+  </OUI>
+  <OUI>
     <MACAddress>10BE99</MACAddress>
     <Vendor>Netberg</Vendor>
   </OUI>
@@ -52483,8 +52679,212 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Shenzhen iComm Semiconductor CO.,LTD</Vendor>
   </OUI>
   <OUI>
+    <MACAddress>E42150</MACAddress>
+    <Vendor>Shanghai Chint low voltage electrical technology Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
     <MACAddress>84D352</MACAddress>
     <Vendor>Tonly Technology Co. Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>BC32B2</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D404E6</MACAddress>
+    <Vendor>Broadcom Limited</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>80D266</MACAddress>
+    <Vendor>ScaleFlux</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>30AF7E</MACAddress>
+    <Vendor>Texas Instruments</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>F8D758</MACAddress>
+    <Vendor>Veratron AG</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>24FE9A</MACAddress>
+    <Vendor>CyberTAN Technology Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E81098</MACAddress>
+    <Vendor>Aruba, a Hewlett Packard Enterprise Company</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B4CBB8</MACAddress>
+    <Vendor>Universal Electronics, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>EC8A48</MACAddress>
+    <Vendor>Arista Networks</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>98868B</MACAddress>
+    <Vendor>Juniper Networks</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>8C5DB2</MACAddress>
+    <Vendor>IEEE Registration Authority</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>CC4D74</MACAddress>
+    <Vendor>Fujian Newland Payment Technology Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A031EB</MACAddress>
+    <Vendor>Semikron Elektronik GmbH &amp; Co. KG</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>28EBA6</MACAddress>
+    <Vendor>Nex-T LLC</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C0B3C8</MACAddress>
+    <Vendor>LLC NTC Rotek</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>3C1EB5</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>AC86A3</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>74872E</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>4045C4</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>141A97</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C836A3</MACAddress>
+    <Vendor>GERTEC BRASIL LTDA</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>7495A7</MACAddress>
+    <Vendor>Keyence Corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>F4EE31</MACAddress>
+    <Vendor>Cisco Systems, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>30B216</MACAddress>
+    <Vendor>Hitachi Energy Germany AG</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>88625D</MACAddress>
+    <Vendor>BITNETWORKS CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>685932</MACAddress>
+    <Vendor>Sunitec Enterprise Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A0A3B3</MACAddress>
+    <Vendor>Espressif Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>34987A</MACAddress>
+    <Vendor>Espressif Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>005828</MACAddress>
+    <Vendor>Axon Networks Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>380716</MACAddress>
+    <Vendor>FREEBOX SAS</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B4B9E6</MACAddress>
+    <Vendor>eero inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>CC9F7A</MACAddress>
+    <Vendor>Chiun Mai Communication System, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5414A7</MACAddress>
+    <Vendor>Nanjing Qinheng Microelectronics Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>0C7274</MACAddress>
+    <Vendor>AVM Audiovisuelles Marketing und Computersysteme GmbH</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>4CE705</MACAddress>
+    <Vendor>Siemens Industrial Automation Products Ltd., Chengdu</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5C6AEC</MACAddress>
+    <Vendor>IEEE Registration Authority</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>48BDA7</MACAddress>
+    <Vendor>Honor Device Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>EC2150</MACAddress>
+    <Vendor>vivo Mobile Communication Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>784558</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>AC8BA9</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>9C05D6</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>28704E</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A0AF12</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>6096A4</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>04A526</MACAddress>
+    <Vendor>Nokia</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D80AE6</MACAddress>
+    <Vendor>zte corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>489E9D</MACAddress>
+    <Vendor>Hui Zhou Gaoshengda Technology Co.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>9C5416</MACAddress>
+    <Vendor>Cisco Systems, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>9C65EE</MACAddress>
+    <Vendor>DZS Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>20BA36</MACAddress>
+    <Vendor>u-blox AG</Vendor>
   </OUI>
   <OUI>
     <MACAddress>848094</MACAddress>
@@ -53287,10 +53687,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>MitraStar Technology Corp.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>CCD81F</MACAddress>
-    <Vendor>Maipu Communication Technology Co.,Ltd.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>688B0F</MACAddress>
     <Vendor>China Mobile IOT Company Limited</Vendor>
   </OUI>
@@ -53343,10 +53739,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>BOSUNG POWERTEC CO.,LTD.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>000147</MACAddress>
-    <Vendor>Zhone Technologies</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>20B780</MACAddress>
     <Vendor>Toshiba Visual Solutions Corporation Co.,Ltd</Vendor>
   </OUI>
@@ -53357,10 +53749,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>14D4FE</MACAddress>
     <Vendor>ARRIS Group, Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>304F75</MACAddress>
-    <Vendor>DASAN Network Solutions</Vendor>
   </OUI>
   <OUI>
     <MACAddress>ECA9FA</MACAddress>
@@ -54943,10 +55331,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>GUANGDONG OPPO MOBILE TELECOMMUNICATIONS CORP.,LTD</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>D096FB</MACAddress>
-    <Vendor>DASAN Network Solutions</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>00E091</MACAddress>
     <Vendor>LG Electronics</Vendor>
   </OUI>
@@ -56499,14 +56883,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>NetChip Technology, Inc.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>44D9E7</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>24A43C</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>9C8BA0</MACAddress>
     <Vendor>Apple, Inc.</Vendor>
   </OUI>
@@ -56557,10 +56933,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>00B0EE</MACAddress>
     <Vendor>Ajile Systems, Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>0418D6</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>20DBAB</MACAddress>
@@ -59973,10 +60345,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>F0F249</MACAddress>
     <Vendor>Hitron Technologies. Inc</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>2857BE</MACAddress>
-    <Vendor>Hangzhou Hikvision Digital Technology Co.,Ltd.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>5CF5DA</MACAddress>
@@ -67007,10 +67375,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Nittan Company, Limited</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>001616</MACAddress>
-    <Vendor>BROWAN COMMUNICATION INC.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>001617</MACAddress>
     <Vendor>MSI</Vendor>
   </OUI>
@@ -67321,10 +67685,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>00148A</MACAddress>
     <Vendor>Elin Ebg Traction Gmbh</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>001491</MACAddress>
-    <Vendor>Daniels Electronics Ltd. dbo Codan Rado Communications</Vendor>
   </OUI>
   <OUI>
     <MACAddress>00146E</MACAddress>
@@ -68213,10 +68573,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>000E57</MACAddress>
     <Vendor>Iworld Networking, Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>000E51</MACAddress>
-    <Vendor>tecna elettronica srl</Vendor>
   </OUI>
   <OUI>
     <MACAddress>000E67</MACAddress>
@@ -70429,10 +70785,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>00024F</MACAddress>
     <Vendor>IPM Datacom S.R.L.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>000271</MACAddress>
-    <Vendor>Zhone Technologies</Vendor>
   </OUI>
   <OUI>
     <MACAddress>00028A</MACAddress>
@@ -74735,10 +75087,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Tymphany Acoustic Technology (Huizhou) Co., Ltd.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>D021F9</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>D03D52</MACAddress>
     <Vendor>Ava Security Limited</Vendor>
   </OUI>
@@ -76743,10 +77091,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Intel Corporate</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>70A741</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>D4D7CF</MACAddress>
     <Vendor>Realme Chongqing Mobile Telecommunications Corp.,Ltd.</Vendor>
   </OUI>
@@ -78671,8 +79015,16 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Toast, Inc.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>043201</MACAddress>
-    <Vendor>Broadcom Limited</Vendor>
+    <MACAddress>DCA313</MACAddress>
+    <Vendor>Shenzhen Changjin Communication Technology Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>70B651</MACAddress>
+    <Vendor>Eight Sleep</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>ACFC82</MACAddress>
+    <Vendor>Shenzhen Sundray Technologies Company Limited</Vendor>
   </OUI>
   <OUI>
     <MACAddress>D8AF81</MACAddress>
@@ -78681,6 +79033,10 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>0012E0</MACAddress>
     <Vendor>Codan Limited</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>7C1779</MACAddress>
+    <Vendor>EM Microelectronic</Vendor>
   </OUI>
   <OUI>
     <MACAddress>38396C</MACAddress>
@@ -78695,32 +79051,300 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Huawei Device Co., Ltd.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>70B651</MACAddress>
-    <Vendor>Eight Sleep</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>DCA313</MACAddress>
-    <Vendor>Shenzhen Changjin Communication Technology Co.,Ltd</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>689A21</MACAddress>
     <Vendor>Fiberhome Telecommunication Technologies Co.,LTD</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>7C1779</MACAddress>
-    <Vendor>EM Microelectronic</Vendor>
+    <MACAddress>043201</MACAddress>
+    <Vendor>Broadcom Limited</Vendor>
   </OUI>
   <OUI>
     <MACAddress>90CEB8</MACAddress>
     <Vendor>Texas Instruments</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>ACFC82</MACAddress>
-    <Vendor>Shenzhen Sundray Technologies Company Limited</Vendor>
+    <MACAddress>CCF826</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>182654</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>541149</MACAddress>
+    <Vendor>vivo Mobile Communication Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5C22DA</MACAddress>
+    <Vendor>Technicolor CH USA Inc.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>705A6F</MACAddress>
     <Vendor>IEEE Registration Authority</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>1C6760</MACAddress>
+    <Vendor>Phonesuite</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>386F6B</MACAddress>
+    <Vendor>GUANGDONG OPPO MOBILE TELECOMMUNICATIONS CORP.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E88843</MACAddress>
+    <Vendor>Xiaomi Communications Co Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>3C6F9B</MACAddress>
+    <Vendor>zte corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>9052BF</MACAddress>
+    <Vendor>Sichuan Tianyi Comheart Telecom Co.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>881E59</MACAddress>
+    <Vendor>Onion Corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>FC9CA7</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>48E15C</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>7415F5</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>88C6E8</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>707CE3</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>2C002A</MACAddress>
+    <Vendor>Shenzhen TINNO Mobile Technology Corp.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>60EFAB</MACAddress>
+    <Vendor>Silicon Laboratories</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>48A98A</MACAddress>
+    <Vendor>Routerboard.com</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>28022E</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>38141B</MACAddress>
+    <Vendor>Secure Letter Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B461E9</MACAddress>
+    <Vendor>Sichuan AI-Link Technology Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>64E204</MACAddress>
+    <Vendor>NTN Technical Service Corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>2C9811</MACAddress>
+    <Vendor>CLOUD NETWORK TECHNOLOGY SINGAPORE PTE. LTD.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>90D689</MACAddress>
+    <Vendor>Huahao Fangzhou Technology Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>3C792B</MACAddress>
+    <Vendor>Dongguan Auklink TechnologyCo.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C08B2A</MACAddress>
+    <Vendor>Cisco Systems, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>2CCA75</MACAddress>
+    <Vendor>Robert Bosch GmbH AnP</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>9CD1D0</MACAddress>
+    <Vendor>Guangzhou Ronsuo Electronic Technology Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5C9462</MACAddress>
+    <Vendor>Shenzhen Jiuzhou Electric Co.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E0D8C4</MACAddress>
+    <Vendor>Qingdao Intelligent&amp;Precise Electronics Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>CCD81F</MACAddress>
+    <Vendor>Maipu Communication Technology Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D4996C</MACAddress>
+    <Vendor>Juniper Networks</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C4678B</MACAddress>
+    <Vendor>Alphabet Capital Sdn Bhd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>60F04D</MACAddress>
+    <Vendor>Honor Device Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>000E51</MACAddress>
+    <Vendor>TECNA SpA</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C0C70A</MACAddress>
+    <Vendor>Ruckus Wireless</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E4BCAA</MACAddress>
+    <Vendor>Xiaomi Communications Co Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>404CCA</MACAddress>
+    <Vendor>Espressif Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>BC9E2C</MACAddress>
+    <Vendor>China Mobile Group Device Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>545DD9</MACAddress>
+    <Vendor>EDISTEC</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>001616</MACAddress>
+    <Vendor>BROWAN COMMUNICATIONS INCORPORATION</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5C628B</MACAddress>
+    <Vendor>TP-Link Corporation Limited</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D43A2F</MACAddress>
+    <Vendor>SHENZHEN MTC CO LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>14ABEC</MACAddress>
+    <Vendor>Aruba, a Hewlett Packard Enterprise Company</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>9C84B6</MACAddress>
+    <Vendor>Shenzhen iComm Semiconductor CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>34CA81</MACAddress>
+    <Vendor>New H3C Intelligence Terminal Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>4881D4</MACAddress>
+    <Vendor>Ruijie Networks Co.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>60030C</MACAddress>
+    <Vendor>Shenzhen YOUHUA Technology Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>280C2D</MACAddress>
+    <Vendor>QUALVISION TECHNOLOGY CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>8867DC</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>40410D</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5C8B6B</MACAddress>
+    <Vendor>Amazon Technologies Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C82B6B</MACAddress>
+    <Vendor>shenzhen worldelite electronics co., LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D021F9</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>70A741</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>24A43C</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>44D9E7</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C0613D</MACAddress>
+    <Vendor>BioIntelliSense, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>1814AE</MACAddress>
+    <Vendor>Nokia</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>0418D6</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>001491</MACAddress>
+    <Vendor>Daniels Electronics Ltd. dba Codan Radio Communications</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>200BC5</MACAddress>
+    <Vendor>Cisco Systems, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>90E95E</MACAddress>
+    <Vendor>Cisco Systems, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>2857BE</MACAddress>
+    <Vendor>Hangzhou Hikvision Digital Technology Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>807C62</MACAddress>
+    <Vendor>Hangzhou Hikvision Digital Technology Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>304F75</MACAddress>
+    <Vendor>DZS Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D096FB</MACAddress>
+    <Vendor>DZS Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>000147</MACAddress>
+    <Vendor>DZS Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>000271</MACAddress>
+    <Vendor>DZS Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>2029B9</MACAddress>
+    <Vendor>Ikotek technology SH Co., Ltd</Vendor>
   </OUI>
   <OUI>
     <MACAddress>F8D027</MACAddress>
@@ -78885,10 +79509,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>000163</MACAddress>
     <Vendor>Cisco Systems, Inc</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>205F3D</MACAddress>
-    <Vendor>Cambridge Communication Systems Ltd</Vendor>
   </OUI>
   <OUI>
     <MACAddress>E00084</MACAddress>
@@ -79361,10 +79981,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>543B30</MACAddress>
     <Vendor>duagon AG</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>40F21C</MACAddress>
-    <Vendor>DASAN Zhone Solutions</Vendor>
   </OUI>
   <OUI>
     <MACAddress>B0BB8B</MACAddress>
@@ -82343,10 +82959,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Merten GmbH&amp;CoKG</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>FCECDA</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>00B0E1</MACAddress>
     <Vendor>Cisco Systems, Inc</Vendor>
   </OUI>
@@ -82377,14 +82989,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>28EE52</MACAddress>
     <Vendor>TP-LINK TECHNOLOGIES CO.,LTD.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>687251</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>B4FBE4</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>707990</MACAddress>
@@ -92343,10 +92947,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Smarty (HZ) Information Electronics Co., Ltd</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>001AA6</MACAddress>
-    <Vendor>Telefunken Radio Communication Systems GmbH &amp;CO.KG</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>001A96</MACAddress>
     <Vendor>ECLER S.A.</Vendor>
   </OUI>
@@ -92809,10 +93409,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>001819</MACAddress>
     <Vendor>Cisco Systems, Inc</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>00180C</MACAddress>
-    <Vendor>Optelian Access Networks</Vendor>
   </OUI>
   <OUI>
     <MACAddress>001810</MACAddress>
@@ -97339,10 +97935,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Addonics Technologies, Inc.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>0050C4</MACAddress>
-    <Vendor>IMD</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>005089</MACAddress>
     <Vendor>SAFETY MANAGEMENT SYSTEMS</Vendor>
   </OUI>
@@ -98121,10 +98713,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>00A0A3</MACAddress>
     <Vendor>RELIABLE POWER METERS</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>00A01B</MACAddress>
-    <Vendor>PREMISYS COMMUNICATIONS, INC.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>00A055</MACAddress>
@@ -101587,10 +102175,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>ARRIS Group, Inc.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>00E0DF</MACAddress>
-    <Vendor>DZS GmbH</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>E0E8BB</MACAddress>
     <Vendor>Unicom Vsens Telecommunications Co., Ltd.</Vendor>
   </OUI>
@@ -103383,14 +103967,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Hangzhou Ezviz Software Co.,Ltd.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>942A6F</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>F4E2C6</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>A84FB1</MACAddress>
     <Vendor>Cisco Systems, Inc</Vendor>
   </OUI>
@@ -105023,10 +105599,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Wilk Elektronik S.A.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>FC315D</MACAddress>
-    <Vendor>Apple, Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>74A6CD</MACAddress>
     <Vendor>Apple, Inc.</Vendor>
   </OUI>
@@ -105036,6 +105608,14 @@ Generated 10/28/2022 22:34:57-->
   </OUI>
   <OUI>
     <MACAddress>30D7A1</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>887477</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>FC315D</MACAddress>
     <Vendor>Apple, Inc.</Vendor>
   </OUI>
   <OUI>
@@ -105071,16 +105651,32 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Ericsson AB</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>887477</MACAddress>
-    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+    <MACAddress>3C3B4D</MACAddress>
+    <Vendor>Toyo Seisakusho Kaisha, Limited</Vendor>
   </OUI>
   <OUI>
     <MACAddress>28B829</MACAddress>
     <Vendor>Juniper Networks</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>3C3B4D</MACAddress>
-    <Vendor>Toyo Seisakusho Kaisha, Limited</Vendor>
+    <MACAddress>14DD02</MACAddress>
+    <Vendor>Liangang Optoelectronic Technology CO., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>60C727</MACAddress>
+    <Vendor>Digiboard Eletronica da Amazonia Ltda</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D039FA</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B40B1D</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>AC80FB</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
   </OUI>
   <OUI>
     <MACAddress>64B2B4</MACAddress>
@@ -105091,20 +105687,232 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Huawei Device Co., Ltd.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>147F0F</MACAddress>
-    <Vendor>Texas Instruments</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>D0A9D3</MACAddress>
     <Vendor>EM Microelectronic</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>14DD02</MACAddress>
-    <Vendor>Liangang Optoelectronic Technology CO., Ltd.</Vendor>
+    <MACAddress>147F0F</MACAddress>
+    <Vendor>Texas Instruments</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>60C727</MACAddress>
-    <Vendor>Digiboard Eletronica da Amazonia Ltda</Vendor>
+    <MACAddress>205F3D</MACAddress>
+    <Vendor>Adtran Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>0092A5</MACAddress>
+    <Vendor>LG Innotek</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D8638C</MACAddress>
+    <Vendor>Shenzhen Dttek Technology Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>24D337</MACAddress>
+    <Vendor>Xiaomi Communications Co Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B4636F</MACAddress>
+    <Vendor>Nokia Solutions and Networks GmbH &amp; Co. KG</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>04F778</MACAddress>
+    <Vendor>Sony Interactive Entertainment Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>90314B</MACAddress>
+    <Vendor>AltoBeam Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>304074</MACAddress>
+    <Vendor>zte corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A01077</MACAddress>
+    <Vendor>zte corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>7C7A3C</MACAddress>
+    <Vendor>New H3C Technologies Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>347DE4</MACAddress>
+    <Vendor>SHENZHEN BILIAN ELECTRONIC CO.ï¼LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>CCCF83</MACAddress>
+    <Vendor>CIG SHANGHAI CO LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>FCA0F3</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>04A81C</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>10CF0F</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>1CCA41</MACAddress>
+    <Vendor>AO</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>140FA6</MACAddress>
+    <Vendor>Renesas Electronics (Penang) Sdn. Bhd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>0050C4</MACAddress>
+    <Vendor>IMD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>148473</MACAddress>
+    <Vendor>Cisco Systems, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C0EAC3</MACAddress>
+    <Vendor>IEEE Registration Authority</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>9CF86B</MACAddress>
+    <Vendor>AgiTech Distribution Limited</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>483177</MACAddress>
+    <Vendor>Nintendo Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>AC1754</MACAddress>
+    <Vendor>tiko Energy Solutions AG</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>ACE0D6</MACAddress>
+    <Vendor>koreabts</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>14F5F9</MACAddress>
+    <Vendor>HUNAN FN-LINK TECHNOLOGY LIMITED</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A4C23E</MACAddress>
+    <Vendor>Huizhou Speed Wireless Technology Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>BC73A4</MACAddress>
+    <Vendor>ANDA TELECOM PVT LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>54B7BD</MACAddress>
+    <Vendor>Arcadyan Corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>7C45F9</MACAddress>
+    <Vendor>IEEE Registration Authority</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E897B8</MACAddress>
+    <Vendor>Chiun Mai Communication System, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>94F524</MACAddress>
+    <Vendor>Chengdu BeiZhongWangXin Technology Co.Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>60FAB1</MACAddress>
+    <Vendor>Kempower Oyj</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>8CE042</MACAddress>
+    <Vendor>vivo Mobile Communication Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>FC5703</MACAddress>
+    <Vendor>Hisense broadband multimedia technology Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>001AA6</MACAddress>
+    <Vendor>Elbit Systems Deutschland GmbH &amp; Co. KG</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C8787D</MACAddress>
+    <Vendor>D-Link Corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B0A732</MACAddress>
+    <Vendor>Espressif Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B0B21C</MACAddress>
+    <Vendor>Espressif Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>540295</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B4FBE4</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E09B27</MACAddress>
+    <Vendor>Ciena Corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>687251</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>942A6F</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>F4E2C6</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D8B370</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>F412DA</MACAddress>
+    <Vendor>zte corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>FCECDA</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D09395</MACAddress>
+    <Vendor>IEEE Registration Authority</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C02C17</MACAddress>
+    <Vendor>Cisco Systems, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>984925</MACAddress>
+    <Vendor>Juniper Networks</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>40F21C</MACAddress>
+    <Vendor>DZS Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>00180C</MACAddress>
+    <Vendor>DZS Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>00E0DF</MACAddress>
+    <Vendor>DZS Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>00A01B</MACAddress>
+    <Vendor>DZS Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>04472A</MACAddress>
+    <Vendor>Palo Alto Networks</Vendor>
   </OUI>
   <OUI>
     <MACAddress>7C8AE1</MACAddress>
@@ -106483,10 +107291,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Apple, Inc.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>18E829</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>E0C286</MACAddress>
     <Vendor>Aisai Communication Technology Co., Ltd.</Vendor>
   </OUI>
@@ -106641,10 +107445,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>0026B7</MACAddress>
     <Vendor>Kingston Technology Company, Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>28D0CB</MACAddress>
-    <Vendor>Cambridge Communication Systems Ltd</Vendor>
   </OUI>
   <OUI>
     <MACAddress>4062EA</MACAddress>
@@ -108989,18 +109789,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>CCFD17</MACAddress>
     <Vendor>TCT mobile ltd</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>DC9FDB</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>002722</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>00156D</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>00D78F</MACAddress>
@@ -115391,10 +116179,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>BrightSign LLC</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>AC51EE</MACAddress>
-    <Vendor>Cambridge Communication Systems Ltd</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>78A183</MACAddress>
     <Vendor>Advidia</Vendor>
   </OUI>
@@ -117711,10 +118495,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Uniloc USA Inc.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>0023C7</MACAddress>
-    <Vendor>AVSystem</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>0023C3</MACAddress>
     <Vendor>LogMeIn, Inc.</Vendor>
   </OUI>
@@ -118853,10 +119633,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>001B1B</MACAddress>
     <Vendor>Siemens AG,</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>001B1F</MACAddress>
-    <Vendor>DELTA - Danish Electronics, Light &amp; Acoustics</Vendor>
   </OUI>
   <OUI>
     <MACAddress>001B57</MACAddress>
@@ -122895,10 +123671,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Mitac, Inc.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>000356</MACAddress>
-    <Vendor>Wincor Nixdorf International GmbH</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>00034F</MACAddress>
     <Vendor>Sur-Gard Security</Vendor>
   </OUI>
@@ -123457,10 +124229,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>0030F4</MACAddress>
     <Vendor>STARDOT TECHNOLOGIES</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>003052</MACAddress>
-    <Vendor>ELASTIC NETWORKS</Vendor>
   </OUI>
   <OUI>
     <MACAddress>003019</MACAddress>
@@ -126059,10 +126827,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Samsung Electronics Co.,Ltd</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>AC1E92</MACAddress>
-    <Vendor>Samsung Electronics Co.,LTD</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>0068EB</MACAddress>
     <Vendor>HP Inc.</Vendor>
   </OUI>
@@ -126141,10 +126905,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>98524A</MACAddress>
     <Vendor>Technicolor CH USA Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>3868A4</MACAddress>
-    <Vendor>Samsung Electronics Co.,LTD</Vendor>
   </OUI>
   <OUI>
     <MACAddress>B4A5AC</MACAddress>
@@ -126383,14 +127143,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Hangzhou BroadLink Technology Co.,Ltd</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>74ACB9</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>F492BF</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>D8C561</MACAddress>
     <Vendor>CommFront Communications Pte Ltd</Vendor>
   </OUI>
@@ -126413,10 +127165,6 @@ Generated 10/28/2022 22:34:57-->
   <OUI>
     <MACAddress>F0463B</MACAddress>
     <Vendor>Comcast Cable Corporation</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>68D79A</MACAddress>
-    <Vendor>Ubiquiti Networks Inc.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>1C63BF</MACAddress>
@@ -129015,10 +129763,6 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Juniper Networks</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>98C854</MACAddress>
-    <Vendor>Chiun MaiCommunication System, Inc</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>C4D7FD</MACAddress>
     <Vendor>Bouffalo Lab (Nanjing) Co., Ltd.</Vendor>
   </OUI>
@@ -131183,12 +131927,28 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Ruckus Wireless</Vendor>
   </OUI>
   <OUI>
+    <MACAddress>503CCA</MACAddress>
+    <Vendor>TECNO MOBILE LIMITED</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>9C0C35</MACAddress>
+    <Vendor>Shenzhenshi Xinzhongxin Technology Co.Ltd</Vendor>
+  </OUI>
+  <OUI>
     <MACAddress>C8EDFC</MACAddress>
     <Vendor>Shenzhen Ideaform Industrial Product Design Co., Ltd</Vendor>
   </OUI>
   <OUI>
     <MACAddress>F82229</MACAddress>
     <Vendor>Nokia Shanghai Bell Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>443D54</MACAddress>
+    <Vendor>Amazon Technologies Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5447CC</MACAddress>
+    <Vendor>Sagemcom Broadband SAS</Vendor>
   </OUI>
   <OUI>
     <MACAddress>78D6D6</MACAddress>
@@ -131199,24 +131959,28 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>TATUNG Technology Inc.,</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>9C0C35</MACAddress>
-    <Vendor>Shenzhenshi Xinzhongxin Technology Co.Ltd</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>443D54</MACAddress>
-    <Vendor>Amazon Technologies Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>503CCA</MACAddress>
-    <Vendor>TECNO MOBILE LIMITED</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>5447CC</MACAddress>
-    <Vendor>Sagemcom Broadband SAS</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>DCFBB8</MACAddress>
     <Vendor>Meizhou Guo Wei Electronics Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>ACB181</MACAddress>
+    <Vendor>Belden Mooresville</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>ACE403</MACAddress>
+    <Vendor>Shenzhen Visteng Technology CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>60D039</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C4C17D</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E0BDA0</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>C4DB04</MACAddress>
@@ -131239,48 +132003,12 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Apple, Inc.</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>60D039</MACAddress>
-    <Vendor>Apple, Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>C4C17D</MACAddress>
-    <Vendor>Apple, Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>9409C9</MACAddress>
     <Vendor>ALPSALPINE CO,.LTD</Vendor>
   </OUI>
   <OUI>
-    <MACAddress>E0BDA0</MACAddress>
-    <Vendor>Apple, Inc.</Vendor>
-  </OUI>
-  <OUI>
     <MACAddress>F83451</MACAddress>
     <Vendor>Comcast-SRL</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>20DE1E</MACAddress>
-    <Vendor>Nokia</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>ACB181</MACAddress>
-    <Vendor>Belden Mooresville</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>ACE403</MACAddress>
-    <Vendor>Shenzhen Visteng Technology CO.,LTD</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>E462C4</MACAddress>
-    <Vendor>Cisco Systems, Inc</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>3C3174</MACAddress>
-    <Vendor>Google, Inc.</Vendor>
-  </OUI>
-  <OUI>
-    <MACAddress>D43F32</MACAddress>
-    <Vendor>eero inc.</Vendor>
   </OUI>
   <OUI>
     <MACAddress>686372</MACAddress>
@@ -131295,11 +132023,363 @@ Generated 10/28/2022 22:34:57-->
     <Vendor>Huawei Device Co., Ltd.</Vendor>
   </OUI>
   <OUI>
+    <MACAddress>E462C4</MACAddress>
+    <Vendor>Cisco Systems, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>3C3174</MACAddress>
+    <Vendor>Google, Inc.</Vendor>
+  </OUI>
+  <OUI>
     <MACAddress>44EE14</MACAddress>
     <Vendor>Texas Instruments</Vendor>
   </OUI>
   <OUI>
+    <MACAddress>D43F32</MACAddress>
+    <Vendor>eero inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>20DE1E</MACAddress>
+    <Vendor>Nokia</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A88055</MACAddress>
+    <Vendor>Tuya Smart Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>508BB9</MACAddress>
+    <Vendor>Tuya Smart Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>001B1F</MACAddress>
+    <Vendor>FORCE Technology</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>FC6A1C</MACAddress>
+    <Vendor>Mellanox Technologies, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A088C2</MACAddress>
+    <Vendor>Mellanox Technologies, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>6CACC2</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>BCF730</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>4829D6</MACAddress>
+    <Vendor>GUANGDONG OPPO MOBILE TELECOMMUNICATIONS CORP.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>BC9307</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
     <MACAddress>B4AC9D</MACAddress>
     <Vendor>Texas Instruments</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>082802</MACAddress>
+    <Vendor>SHENZHEN CHUANGWEI-RGB ELECTRONICS CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>CC4210</MACAddress>
+    <Vendor>Xiaomi Communications Co Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>0023C7</MACAddress>
+    <Vendor>AVSystem sp. z o. o.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>C4FC22</MACAddress>
+    <Vendor>YEALINK(XIAMEN) NETWORK TECHNOLOGY CO.,LTD.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>3C998C</MACAddress>
+    <Vendor>Houwa System Design Corp.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>98F9CC</MACAddress>
+    <Vendor>Zhejiang Dahua Technology Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>BCAD90</MACAddress>
+    <Vendor>Kymeta Purchasing</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>AC51EE</MACAddress>
+    <Vendor>Adtran Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>28D0CB</MACAddress>
+    <Vendor>Adtran Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>3868A4</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>AC1E92</MACAddress>
+    <Vendor>Samsung Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A4D5C2</MACAddress>
+    <Vendor>Hangzhou Hikvision Digital Technology Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B837B2</MACAddress>
+    <Vendor>Aruba, a Hewlett Packard Enterprise Company</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D853BC</MACAddress>
+    <Vendor>Lenovo Information Products (Shenzhen)Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B4E54C</MACAddress>
+    <Vendor>LLC Elektra</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A416C0</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>DC45B8</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>DCC2C9</MACAddress>
+    <Vendor>CANON INC.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>F0D31F</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B4AEC1</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5432C7</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>90ECEA</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>10B588</MACAddress>
+    <Vendor>Apple, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>80ACC8</MACAddress>
+    <Vendor>Phyplus Microelectronics Limited</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A06032</MACAddress>
+    <Vendor>Amcrest Technologies</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>58E488</MACAddress>
+    <Vendor>Amazon Technologies Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>844693</MACAddress>
+    <Vendor>Beijing Xiaomi Mobile Software Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5C7545</MACAddress>
+    <Vendor>Wayties, Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>10A793</MACAddress>
+    <Vendor>Technicolor CH USA Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>247823</MACAddress>
+    <Vendor>Panasonic Entertainment &amp; Communication Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E4BC96</MACAddress>
+    <Vendor>DAP B.V.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>202141</MACAddress>
+    <Vendor>Universal Electronics BV</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>44DF65</MACAddress>
+    <Vendor>Beijing Xiaomi Mobile Software Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>380FAD</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>D8031A</MACAddress>
+    <Vendor>Laird Connectivity</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>0C9505</MACAddress>
+    <Vendor>The Chamberlain Group, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>08E6C9</MACAddress>
+    <Vendor>Business-intelligence of Oriental Nations Corporation Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>9817F1</MACAddress>
+    <Vendor>zte corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B8A535</MACAddress>
+    <Vendor>Technicolor CH USA Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5C1648</MACAddress>
+    <Vendor>GUANGDONG OPPO MOBILE TELECOMMUNICATIONS CORP.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>002BF5</MACAddress>
+    <Vendor>BUFFALO.INC</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>705464</MACAddress>
+    <Vendor>Silicon Laboratories</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>8C6FB9</MACAddress>
+    <Vendor>Silicon Laboratories</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B86AF1</MACAddress>
+    <Vendor>Sagemcom Broadband SAS</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>CC5830</MACAddress>
+    <Vendor>Sagemcom Broadband SAS</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>7C273C</MACAddress>
+    <Vendor>Shenzhen Yunlink Technology Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>1C2AB0</MACAddress>
+    <Vendor>Beijing Xiaomi Electronics Co.,Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E824A6</MACAddress>
+    <Vendor>Juniper Networks</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>98C854</MACAddress>
+    <Vendor>Chiun Mai Communication System, Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>7017D7</MACAddress>
+    <Vendor>Shanghai Enflame Technology Co., Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>4CC844</MACAddress>
+    <Vendor>Maipu Communication Technology Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>A08E24</MACAddress>
+    <Vendor>eero inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>64B708</MACAddress>
+    <Vendor>Espressif Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>E05694</MACAddress>
+    <Vendor>Yunhight Microelectronics</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>242730</MACAddress>
+    <Vendor>GD Midea Air-Conditioning Equipment Co.,Ltd.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>541159</MACAddress>
+    <Vendor>Nettrix Information Industry co.LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B49882</MACAddress>
+    <Vendor>Brusa HyPower AG</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>FC7A58</MACAddress>
+    <Vendor>Shenzhen Skyworth Digital Technology CO., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>18E829</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>74ACB9</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>F492BF</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>68D79A</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>00156D</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>002722</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>DC9FDB</MACAddress>
+    <Vendor>Ubiquiti Inc</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>BCC427</MACAddress>
+    <Vendor>HUAWEI TECHNOLOGIES CO.,LTD</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>B0CFCB</MACAddress>
+    <Vendor>Amazon Technologies Inc.</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>AC89D2</MACAddress>
+    <Vendor>Ciena Corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>000356</MACAddress>
+    <Vendor>Diebold Nixdorf</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>4838B6</MACAddress>
+    <Vendor>Auhui Taoyun Technology Co., Ltd</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>5C4DBF</MACAddress>
+    <Vendor>zte corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>984744</MACAddress>
+    <Vendor>Shenzhen Boomtech Industrial Corporation</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>504594</MACAddress>
+    <Vendor>Radisys</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>80433F</MACAddress>
+    <Vendor>Juniper Networks</Vendor>
+  </OUI>
+  <OUI>
+    <MACAddress>003052</MACAddress>
+    <Vendor>DZS Inc.</Vendor>
   </OUI>
 </OUIs>
