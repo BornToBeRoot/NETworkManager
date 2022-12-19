@@ -1366,9 +1366,6 @@
   <data name="Paste" xml:space="preserve">
     <value>붙여넣기</value>
   </data>
-  <data name="PuTTYLocationDots" xml:space="preserve">
-    <value>C:\Program Files\PuTTY\putty.exe</value>
-  </data>
   <data name="Reconnect" xml:space="preserve">
     <value>다시 연결</value>
   </data>
@@ -1834,9 +1831,6 @@
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
     <value>설정에서 TigerVNC 경로 구성...</value>
   </data>
-  <data name="TigerVNCLocationDots" xml:space="preserve">
-    <value>TigerVNC 위치...</value>
-  </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
     <value>TigerVNC 프로세스가 종료되었습니다!</value>
   </data>
@@ -1921,9 +1915,6 @@
   <data name="RemoteConsole" xml:space="preserve">
     <value>원격 콘솔</value>
   </data>
-  <data name="PowerShellLocationDots" xml:space="preserve">
-    <value>PowerShell 위치...</value>
-  </data>
   <data name="FilePath" xml:space="preserve">
     <value>파일 경로</value>
   </data>
@@ -1983,9 +1974,9 @@
     <value>공용 IP 주소 확인</value>
   </data>
   <data name="FirstRunMessage" xml:space="preserve">
-    <value>Network Manager를 사용해 주셔서 감사합니다!
+    <value>Thank you for using NETworkManager!
 
-추가 기능을 제공하기 위해 응용프로그램은 제가 운영하지 않는 인터넷 서비스를 사용합니다. 어떤 자료도 나에게 보내지지 않을 것입니다.</value>
+In order to provide additional features, services on the Internet are used that are not operated by me. You can deselect them below in the privacy section. No data is transmitted to me at any time.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>프로그램을 시작할 때 GitHub에서 새 프로그램 버전을 사용할 수 있는지 백그라운드에서 확인합니다.
@@ -2673,51 +2664,6 @@ $$hostname$$	--&gt;	호스트이름</value>
   <data name="ProfileViewName_General" xml:space="preserve">
     <value>일반</value>
   </data>
-  <data name="ProfileViewName_DNSLookup" xml:space="preserve">
-    <value>DNS 조회</value>
-  </data>
-  <data name="ProfileViewName_HTTPHeaders" xml:space="preserve">
-    <value>HTTP 헤더</value>
-  </data>
-  <data name="ProfileViewName_IP Scanner" xml:space="preserve">
-    <value>IP 스캐너</value>
-  </data>
-  <data name="ProfileViewName_NetworkInterface" xml:space="preserve">
-    <value>네트워크 인터페이스</value>
-  </data>
-  <data name="ProfileViewName_Ping" xml:space="preserve">
-    <value>핑</value>
-  </data>
-  <data name="ProfileViewName_PingMonitor" xml:space="preserve">
-    <value>핑 모니터</value>
-  </data>
-  <data name="ProfileViewName_PortScanner" xml:space="preserve">
-    <value>포트 스캐너</value>
-  </data>
-  <data name="ProfileViewName_PowerShell" xml:space="preserve">
-    <value>PowerShell</value>
-  </data>
-  <data name="ProfileViewName_PuTTY" xml:space="preserve">
-    <value>PuTTY</value>
-  </data>
-  <data name="ProfileViewName_RemoteDesktop" xml:space="preserve">
-    <value>원격 데스크탑</value>
-  </data>
-  <data name="ProfileViewName_TigerVNC" xml:space="preserve">
-    <value>TigerVNC</value>
-  </data>
-  <data name="ProfileViewName_Traceroute" xml:space="preserve">
-    <value>추적 경로</value>
-  </data>
-  <data name="ProfileViewName_WakeOnLAN" xml:space="preserve">
-    <value>Wake on LAN</value>
-  </data>
-  <data name="ProfileViewName_WebConsole" xml:space="preserve">
-    <value>웹 콘솔</value>
-  </data>
-  <data name="ProfileViewName_Whois" xml:space="preserve">
-    <value>Whois</value>
-  </data>
   <data name="SettingsViewGroup_Applications" xml:space="preserve">
     <value>응용 프로그램</value>
   </data>
@@ -3188,9 +3134,6 @@ If not set, the default AWS CLI settings are used.</value>
 
 If not set, the default AWS CLI settings are used.</value>
   </data>
-  <data name="ProfileViewName_AWSSessionManager" xml:space="preserve">
-    <value>AWS Session Manager</value>
-  </data>
   <data name="HelpMessage_AWSCLIDefaultsAreUsedIfNotSet" xml:space="preserve">
     <value>If not set, the default AWS CLI settings are used.</value>
   </data>
@@ -3238,5 +3181,80 @@ Only the PowerShell consoles configured in the PowerShell and AWS Session Manage
 Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
 
 If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
+  </data>
+  <data name="InputCannotEndWithSemicolon" xml:space="preserve">
+    <value>Input cannot end with a ";"!</value>
+  </data>
+  <data name="InputDoesNotContainAnyText" xml:space="preserve">
+    <value>Input does not contain any text!</value>
+  </data>
+  <data name="ApplicationName_BitCalculator" xml:space="preserve">
+    <value>Bit Calculator</value>
+  </data>
+  <data name="BitCalculator" xml:space="preserve">
+    <value>Bit Calculator</value>
+  </data>
+  <data name="Notation" xml:space="preserve">
+    <value>Notation</value>
+  </data>
+  <data name="Input" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="Bits" xml:space="preserve">
+    <value>Bits</value>
+  </data>
+  <data name="Gigabits" xml:space="preserve">
+    <value>Gigabits</value>
+  </data>
+  <data name="Gigabytes" xml:space="preserve">
+    <value>Gigabytes</value>
+  </data>
+  <data name="Kilobits" xml:space="preserve">
+    <value>Kilobits</value>
+  </data>
+  <data name="Kilobytes" xml:space="preserve">
+    <value>Kilobytes</value>
+  </data>
+  <data name="Megabits" xml:space="preserve">
+    <value>Megabits</value>
+  </data>
+  <data name="Megabytes" xml:space="preserve">
+    <value>Megabytes</value>
+  </data>
+  <data name="Petabits" xml:space="preserve">
+    <value>Petabits</value>
+  </data>
+  <data name="Petabytes" xml:space="preserve">
+    <value>Petabytes</value>
+  </data>
+  <data name="Terabits" xml:space="preserve">
+    <value>Terabits</value>
+  </data>
+  <data name="Terabytes" xml:space="preserve">
+    <value>Terabytes</value>
+  </data>
+  <data name="EnterANumberAndSelectAUnitToCalculateTheUnits" xml:space="preserve">
+    <value>Enter a number and select a unit to calculate the units...</value>
+  </data>
+  <data name="SettingsViewName_Network" xml:space="preserve">
+    <value>Network</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
+  <data name="ResolveIPAddressForThisHost" xml:space="preserve">
+    <value>Resolve IP address for this host (IPv4 is preferred)</value>
+  </data>
+  <data name="NoValidPowerShellPath" xml:space="preserve">
+    <value>A valid path to PowerShell should end with "pwsh.exe" or "powershell.exe"!</value>
+  </data>
+  <data name="NoValidPuTTYPath" xml:space="preserve">
+    <value>A valid path to PuTTY should end with "PuTTY.exe"!</value>
+  </data>
+  <data name="NoValidTigerVNCPath" xml:space="preserve">
+    <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
   </data>
 </root>
