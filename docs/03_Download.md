@@ -8,22 +8,22 @@ permalink: /Download
 
 # Download
 
-## 2022.10.31.0
+## 2022.12.20.0
 
 <div align="center">
   <br />
   <p>
-    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.10.31.0/NETworkManager_2022.10.31.0_Setup.exe' target="_blank">
+    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Setup.exe' target="_blank">
       <span class="fs-5">
         <button type="button" name="button" class="btn">:package: Setup</button>
       </span>
     </a>    
-    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.10.31.0/NETworkManager_2022.10.31.0_Portable.zip' target="_blank">
+    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Portable.zip' target="_blank">
       <span class="fs-5">
         <button type="button" name="button" class="btn">:package: Portable</button>
       </span>
     </a> 
-    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.10.31.0/NETworkManager_2022.10.31.0_Archive.zip' target="_blank">
+    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Archive.zip' target="_blank">
       <span class="fs-5">
         <button type="button" name="button" class="btn">:package: Archive</button>
       </span>
@@ -41,15 +41,14 @@ Pre-release versions are available [here](https://github.com/BornToBeRoot/NETwor
 
 | File                                       | SHA256                                                             |
 | ------------------------------------------ | ------------------------------------------------------------------ |
-| `NETworkManager_2022.10.31.0_Setup.exe`    | `18A9528247BFA1880AF61CEAA1401FCA7C8271BC6635B40BA72D77AB065867A0` |
-| `NETworkManager_2022.10.31.0_Portable.zip` | `7B5822191C1D8EB0DE8F223AA1AC581CFEB4ED726F652A3A8A7D0941A51BE68F` |
-| `NETworkManager_2022.10.31.0_Archive.zip`  | `4F1B60B42A1D935B56C0F044755DD5B3EB3DAE35C75961D0CD7FFFFB87596847` |
+| `NETworkManager_2022.12.20.0_Setup.exe`    | `36F915D917DF6461CB52C1524F3E7373EC0BC40D3A48E9D28E3D02BAA416E369` |
+| `NETworkManager_2022.12.20.0_Portable.zip` | `5A5553BF3609749C1214B8B724857AE954C4F8881907BD0DE5F1C44E48D2CEFA` |
+| `NETworkManager_2022.12.20.0_Archive.zip`  | `29D6EE0FD1A822E5CF45F0A175A0CECAE22C64F5551CCBB117C5EE76DC07DF61` |
 
 ## System requirements
 
 - Windows 10 / Server x64 (1809 or later)
 - [.NET Desktop Runtime 6.x (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0){:target="\_blank"}
-- (optional) [Microsoft Edge - WebView2 Runtime (Evergreen)](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="\_blank"}
 
 ## Package Manager
 

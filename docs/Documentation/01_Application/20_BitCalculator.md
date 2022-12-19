@@ -10,8 +10,11 @@ permalink: /Documentation/Application/BitCalculator
 
 # Bit Calculator
 
-Coming soon
-{: .label .label-yellow }
+New Feature
+{: .label .label-green }
+
+2022.12.20.0
+{: .label .label-purple }
 
 With the Bit Calculator different data units can be converted. Based on the input number and the selected unit the different units like bits, bytes, kilobits, kilobytes, megabits, megabytes, etc. are calculated.
 
