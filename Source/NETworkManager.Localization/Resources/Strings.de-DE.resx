@@ -1096,10 +1096,10 @@ Erstelle eins...</value>
     <value>Wählen Sie eine Bildschirmauflösung</value>
   </data>
   <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
-    <value>Settings are overwritten!</value>
+    <value>Einstellungen werden überschrieben!</value>
   </data>
   <data name="SettingsAreResetMessage" xml:space="preserve">
-    <value>Settings are reset!</value>
+    <value>Einstellungen werden zurückgesetzt!</value>
   </data>
   <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
     <value>Wählen Sie die Einstellungen aus, die Sie exportieren möchten:</value>
@@ -1120,11 +1120,11 @@ Erstelle eins...</value>
     <value>Dienst</value>
   </data>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
-    <value>The found settings file was corrupted or is not compatible with this version! You may report this issue on GitHub.
+    <value>Die gefundene Einstellungsdatei war beschädigt oder ist mit dieser Version nicht kompatibel! Sie können dieses Problem auf GitHub melden.
 
-A backup of the settings file was created in the settings folder and the settings were reset.
+Es wurde ein Backup der Einstellungsdatei im Einstellungsordner erstellt und die Einstellungen wurden zurückgesetzt.
 
-Profile files are not affected!</value>
+Profildateien sind nicht betroffen!</value>
   </data>
   <data name="SettingsSuccessfullyExported" xml:space="preserve">
     <value>Einstellungen erfolgreich exportiert!</value>
@@ -1187,7 +1187,7 @@ Profile files are not affected!</value>
     <value>Der Vorgang kann einige Zeit und Ressourcen in Anspruch nehmen (CPU / RAM).</value>
   </data>
   <data name="TheSettingsLocationIsNotAffected" xml:space="preserve">
-    <value>The settings location is not affected!</value>
+    <value>Der Speicherort der Einstellungen ist davon nicht betroffen!</value>
   </data>
   <data name="TimeoutOnSNMPQuery" xml:space="preserve">
     <value>Zeitüberschreitung bei SNMP-Abfrage.</value>
@@ -1368,9 +1368,6 @@ Profile files are not affected!</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>Einfügen</value>
-  </data>
-  <data name="PuTTYLocationDots" xml:space="preserve">
-    <value>C:\Program Files\PuTTY\putty.exe</value>
   </data>
   <data name="Reconnect" xml:space="preserve">
     <value>Wiederverbinden</value>
@@ -1837,9 +1834,6 @@ Profile files are not affected!</value>
   <data name="ConfigureThePathToTigerVNCInTheSettingsDots" xml:space="preserve">
     <value>Konfiguriere den Pfad zu TigerVNC in den Einstellungen...</value>
   </data>
-  <data name="TigerVNCLocationDots" xml:space="preserve">
-    <value>TigerVNC-Speicherort...</value>
-  </data>
   <data name="TigerVNCProcessHasEnded" xml:space="preserve">
     <value>TigerVNC-Prozess wurde beendet!</value>
   </data>
@@ -1923,9 +1917,6 @@ Profile files are not affected!</value>
   </data>
   <data name="RemoteConsole" xml:space="preserve">
     <value>Remote-Konsole</value>
-  </data>
-  <data name="PowerShellLocationDots" xml:space="preserve">
-    <value>PowerShell-Speicherort...</value>
   </data>
   <data name="FilePath" xml:space="preserve">
     <value>Dateipfad</value>
@@ -3259,5 +3250,14 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
   </data>
   <data name="ResolveIPAddressForThisHost" xml:space="preserve">
     <value>IP-Adresse für diesen Host auflösen (IPv4 wird bevorzugt)</value>
+  </data>
+  <data name="NoValidPowerShellPath" xml:space="preserve">
+    <value>Ein gültiger Pfad zu PowerShell sollte mit "pwsh.exe" oder "powershell.exe" enden!</value>
+  </data>
+  <data name="NoValidPuTTYPath" xml:space="preserve">
+    <value>Ein gültiger Pfad zu PuTTY sollte mit "PuTTY.exe" enden!</value>
+  </data>
+  <data name="NoValidTigerVNCPath" xml:space="preserve">
+    <value>Ein gültiger Pfad zu TigerVNC sollte mit "vncviewer-*.exe" oder "vncviewer64-*.exe" enden!</value>
   </data>
 </root>
