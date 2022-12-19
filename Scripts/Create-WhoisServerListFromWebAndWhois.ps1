@@ -22,10 +22,8 @@ $RootNode = $Document.CreateNode("element", "WhoisServers", $null)
 
 $ProgressCount = 0
 
-foreach($Tld in $IANA_TLDs)
-{
-    if($Tld.StartsWith("#"))
-    {
+foreach ($Tld in $IANA_TLDs) {
+    if ($Tld.StartsWith("#")) {
         continue
     }
 
@@ -33,7 +31,7 @@ foreach($Tld in $IANA_TLDs)
 
     $tcpClient = New-Object System.Net.Sockets.TcpClient("whois.iana.org", 43)
 
-    $networkStream= $tcpClient.GetStream()
+    $networkStream = $tcpClient.GetStream()
 
     $bufferedStream = New-Object System.IO.BufferedStream($networkStream)
 
@@ -46,8 +44,7 @@ foreach($Tld in $IANA_TLDs)
 
     $stringBuilder = New-Object System.Text.StringBuilder
 
-    while(!$streamReader.EndOfStream)
-    {
+    while (!$streamReader.EndOfStream) {
         $stringBuilder.Append($streamReader.ReadLine())
     }
 
@@ -66,7 +63,10 @@ foreach($Tld in $IANA_TLDs)
     [void]$RootNode.AppendChild($WhoisServerNode)
 
     Write-Host -Object "Progress: $ProgressCount from $($IANA_TLDs.Count)"
-    $ProgressCount ++
+    $ProgressCount++
+
+    # Sleep 1 because there is a rate limit
+    Start-Sleep -Seconds 1
 }           
 
 [void]$Document.AppendChild($RootNode)
