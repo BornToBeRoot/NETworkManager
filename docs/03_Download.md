@@ -41,9 +41,9 @@ Pre-release versions are available [here](https://github.com/BornToBeRoot/NETwor
 
 | File                                       | SHA256                                                             |
 | ------------------------------------------ | ------------------------------------------------------------------ |
-| `NETworkManager_2022.12.20.0_Setup.exe`    | `36F915D917DF6461CB52C1524F3E7373EC0BC40D3A48E9D28E3D02BAA416E369` |
-| `NETworkManager_2022.12.20.0_Portable.zip` | `5A5553BF3609749C1214B8B724857AE954C4F8881907BD0DE5F1C44E48D2CEFA` |
-| `NETworkManager_2022.12.20.0_Archive.zip`  | `29D6EE0FD1A822E5CF45F0A175A0CECAE22C64F5551CCBB117C5EE76DC07DF61` |
+| [`NETworkManager_2022.12.20.0_Setup.exe`](https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Setup.exe){:target="\_blank"}    | `36F915D917DF6461CB52C1524F3E7373EC0BC40D3A48E9D28E3D02BAA416E369` |
+| [`NETworkManager_2022.12.20.0_Portable.zip`](https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Portable.zip){:target="\_blank"} | `5A5553BF3609749C1214B8B724857AE954C4F8881907BD0DE5F1C44E48D2CEFA` |
+| [`NETworkManager_2022.12.20.0_Archive.zip`](https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Archive.zip){:target="\_blank"}  | `29D6EE0FD1A822E5CF45F0A175A0CECAE22C64F5551CCBB117C5EE76DC07DF61` |
 
 ## System requirements
 
