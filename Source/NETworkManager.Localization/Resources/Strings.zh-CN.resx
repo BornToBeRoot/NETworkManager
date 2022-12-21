@@ -2919,7 +2919,7 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>来自iana.org的顶级域名列表，用于从whois.iana.org通过43端口查询顶级域名的whois服务器。</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>来自linuxnet.ca的经过净化的IEEE OUI数据。</value>
+    <value>OUI data from ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>服务名称和传输协议端口号注册从iana.org。</value>
