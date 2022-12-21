@@ -2914,7 +2914,7 @@ Caso contrário, o perfil pode estar corrompido e você pode relatar o problema 
     <value>Lista de domínios de nível superior de iana.org, que é usada para consultar servidores whois do TLD de whois.iana.org por meio da porta 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Dados Sanitized IEEE OUI de linuxnet.ca.</value>
+    <value>OUI data from ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Registro de Nome de Serviço e Número de Porta de Protocolo de Transporte de iana.org.</value>
