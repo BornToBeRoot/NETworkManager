@@ -2901,7 +2901,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Seznam domen najvišje ravni iz iana.org, ki se uporablja za poizvedovanje whois strežnikov TLD s whois.iana.org prek vrat 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Razkuženi podatki IEEE OUI z linuxnet.ca.</value>
+    <value>OUI data from ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Ime storitve in register številke vrat transportnega protokola z iana.org.</value>
@@ -3225,18 +3225,18 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
     <value>Omrežje</value>
   </data>
   <data name="Proxy" xml:space="preserve">
-    <value>Proxy</value>
+    <value>Namestniški strežnik</value>
   </data>
   <data name="ResolveIPAddressForThisHost" xml:space="preserve">
-    <value>Resolve IP address for this host (IPv4 is preferred)</value>
+    <value>Razreši naslov IP za tega gostitelja (IPv4 je prednostni)</value>
   </data>
   <data name="NoValidPowerShellPath" xml:space="preserve">
-    <value>A valid path to PowerShell should end with "pwsh.exe" or "powershell.exe"!</value>
+    <value>Veljavna pot do lupine PowerShell se mora končati z "pwsh.exe" ali "powershell.exe"!</value>
   </data>
   <data name="NoValidPuTTYPath" xml:space="preserve">
-    <value>A valid path to PuTTY should end with "PuTTY.exe"!</value>
+    <value>Veljavna pot do PuTTY se mora končati z "PuTTY.exe"!</value>
   </data>
   <data name="NoValidTigerVNCPath" xml:space="preserve">
-    <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
+    <value>Veljavna pot do TigerVNC se mora končati z "vncviewer-*.exe" ali "vncviewer64-*.exe"!</value>
   </data>
 </root>
