@@ -2938,7 +2938,7 @@ Se selezioni 'Unisci', i profili attuali verranno copiati nella cartella.</value
     <value>Elenco dei domini di primo livello da iana.org, usato per interrogare i server whois del TLD da whois.iana.org tramite la porta 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Dati IEEE OUI ripuliti da linuxnet.ca.</value>
+    <value>OUI data from ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Registro del nome del servizio e del numero di porta del protocollo di trasporto da iana.org.</value>
