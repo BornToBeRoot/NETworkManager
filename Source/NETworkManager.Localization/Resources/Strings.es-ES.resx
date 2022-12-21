@@ -2911,7 +2911,7 @@ De lo contrario, es posible que el perfil esté dañado y quieras informar del p
     <value>Lista de dominios de nivel superior de iana.org, que se utiliza para consultar los servidores whois TLD de whois.iana.org a través del puerto 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Datos IEEE OUI saneados de linuxnet.ca.</value>
+    <value>OUI data from ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Registro de nombres de servicio y números de puerto de protocolo de transporte de iana.org.</value>
