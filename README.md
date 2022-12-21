@@ -107,10 +107,10 @@ You can build the application like any other .NET Core / WPF application on Wind
 
 2. (optional) Install [InnoSetup](https://jrsoftware.org/isinfo.php) to create an installer.
    - Download the additional languages from the [Inno Setup repository](https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/) and copy the following files to `%ProgramFiles%\Inno Setup 6\Languages`:   
-  - `ChineseSimplified.isl`
-  - `ChineseTraditional.isl`
-  - `Hungarian.isl`
-  - `Korean.isl`  
+      - `ChineseSimplified.isl`
+     - `ChineseTraditional.isl`
+     - `Hungarian.isl`
+      - `Korean.isl`  
 
 3. Clone or download the repository:
 
