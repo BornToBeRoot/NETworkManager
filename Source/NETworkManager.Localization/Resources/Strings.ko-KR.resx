@@ -2911,7 +2911,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>포트 43을 통해 whois.iana.org에서 TLD의 서버를 쿼리하는 데 사용되는 iana.org의 최상위 도메인 목록</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>linuxnet.ca에서 IEEE OUI 데이터를 삭제했습니다.</value>
+    <value>OUI data from ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>iana.org의 서비스 이름 및 전송 프로토콜 포트 번호 레지스트리</value>
