@@ -2913,7 +2913,7 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>Seznam domén nejvyšší úrovně z iana.org, který se používá k dotazování Whois serverů TLD z whois.iana.org přes port 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Sanitizovaná data IEEE OUI z linuxnet.ca.</value>
+    <value>OUI data from ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Název služby a číslo portu transportního protokolu z registru iana.org.</value>
