@@ -2911,7 +2911,7 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
     <value>Liste des domaines de premier niveau de iana.org, qui est utilisée pour interroger les serveurs whois du TLD à partir de whois.iana.org via le port 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>Données IEEE OUI désinfectées de linuxnet.ca.</value>
+    <value>OUI data from ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Registre des noms de service et des numéros de port du protocole de transport sur iana.org.</value>
