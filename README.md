@@ -129,3 +129,4 @@ git clone https://github.com/BornToBeRoot/NETworkManager; Set-ExecutionPolicy -S
 ## 📝 License
 
 NETworkManager is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE). The licenses of the used libraries can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/main/Source/NETworkManager.Documentation/Licenses).
+
