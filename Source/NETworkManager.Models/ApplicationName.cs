@@ -79,12 +79,17 @@
         /// WebConsole application.
         /// </summary>
         WebConsole,
-
+                      
         /// <summary>
         /// SNMP application.
         /// </summary>
         SNMP,
-
+        
+        /// <summary>
+        /// NTP lookup application.
+        /// </summary>
+        NTPLookup,
+        
         /// <summary>
         /// Discovery protocol application.
         /// </summary>

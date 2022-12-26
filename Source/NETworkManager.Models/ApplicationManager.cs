@@ -83,9 +83,12 @@ namespace NETworkManager.Models
                     break;
                 case ApplicationName.WebConsole:
                     canvas.Children.Add(new PackIconPicolIcons { Kind = PackIconPicolIconsKind.Website });
-                    break;
+                    break;                    
                 case ApplicationName.SNMP:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Switch });
+                    break;
+                case ApplicationName.NTPLookup:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.ClockCheckOutline });
                     break;
                 case ApplicationName.DiscoveryProtocol:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.SwapHorizontal });
