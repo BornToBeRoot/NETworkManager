@@ -24,7 +24,8 @@ And the best part... it's open source!
       <span class="fs-5">
         <button type="button" name="button" class="btn">:package: Download</button>
       </span>
-    </a>    
+    </a>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a href='https://github.com/BornToBeRoot/NETworkManager' target="_blank">
       <span class="fs-5">
         <button type="button" name="button" class="btn">:octocat: Github</button>
