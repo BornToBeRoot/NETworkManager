@@ -6,7 +6,7 @@ logo: "Logo.png"
 remote_theme: "pmarsceill/just-the-docs"
 color_scheme: "custom"
 search_enabled: true
-aux_links_new_tab: true
+aux_links_new_tab: false
 aux_links:
   "Download":
     - "https://borntoberoot.net/NETworkManager/Download"
