@@ -18,13 +18,13 @@ permalink: /Download
         <button type="button" name="button" class="btn">:package: Setup</button>
       </span>
     </a>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    
+    &nbsp;
     <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Portable.zip' style="text-decoration: none;" target="_blank">
       <span class="fs-5">
         <button type="button" name="button" class="btn">:package: Portable</button>
       </span>
     </a>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;  
     <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Archive.zip' style="text-decoration: none;" target="_blank">
       <span class="fs-5">
         <button type="button" name="button" class="btn">:package: Archive</button>
