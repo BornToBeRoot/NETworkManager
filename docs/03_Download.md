@@ -10,7 +10,7 @@ permalink: /Download
 
 ## 2022.12.20.0
 
-<div align="center">
+<div style="text-align: center; white-space: nowrap;">
   <br />
   <p>
     <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Setup.exe' style="text-decoration: none;" target="_blank">
