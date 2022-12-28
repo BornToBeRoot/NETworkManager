@@ -1,16 +1,36 @@
+/*
+    Code block background color.
+*/
 .highlight {
     background-color: #26292b;
 }
 
+/*
+    Code block background and foreground color.
+*/
 pre.highlight {
     background-color: #26292b;
     color: #c0bab2;
 }
 
+/*
+    Code block font size. Default is 0.75em.
+*/
 code {
     font-size: inherit;
 }
 
+/*
+    Upper right corner link font size.
+*/
 .aux-nav-list-item {
     font-size: 14px;
+}
+
+/*
+    Center the image inside a button.
+*/
+img.emoji {
+    vertical-align: middle;
+    margin-bottom: 3px;
 }
