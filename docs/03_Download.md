@@ -2,24 +2,25 @@
 layout: default
 title: Download
 nav_order: 3
-description: "Download of the latest available version"
+description: "Download the latest available version"
 permalink: /Download
 ---
 
 # Download
 
-## 2022.12.20.0
+Version: `2022.12.20.0` <br />
+Release date: `20.12.2022`
 
 <table>
   <tr>
-    <td>File</td>
-    <td>Checksum <code>SHA256</code></td>
+    <td><b>File</b></td>
+    <td><b>Checksum</b> (<code>SHA256</code>)</td>
   </tr>
   <tr>
     <td>
       <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Setup.exe' style="text-decoration: none;" target="_blank">
         <span class="fs-5">
-          <button type="button" name="button" class="btn">:package: Setup</button>
+          <button type="button" name="button" class="btn btn-primary">:package: Setup</button>
         </span>
       </a>
     </td>
@@ -31,7 +32,7 @@ permalink: /Download
     <td>
       <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Portable.zip' style="text-decoration: none;" target="_blank">
         <span class="fs-5">
-          <button type="button" name="button" class="btn">:package: Portable</button>
+          <button type="button" name="button" class="btn btn-primary">:package: Portable</button>
         </span>
       </a>
     </td>
@@ -43,7 +44,7 @@ permalink: /Download
     <td>
       <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Archive.zip' style="text-decoration: none;" target="_blank">
         <span class="fs-5">
-          <button type="button" name="button" class="btn">:package: Archive</button>
+          <button type="button" name="button" class="btn btn-primary">:package: Archive</button>
         </span>
       </a> 
     </td>

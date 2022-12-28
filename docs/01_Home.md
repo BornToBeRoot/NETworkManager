@@ -23,7 +23,7 @@ And the best part... it's open source!
     <p>
       <a href='./Download' style="text-decoration: none;">
         <span class="fs-5">
-          <button type="button" name="button" class="btn">:package: Download</button>
+          <button type="button" name="button" class="btn btn-primary">:package: Download</button>
         </span>
       </a>
       &nbsp;
