@@ -10,42 +10,53 @@ permalink: /Download
 
 ## 2022.12.20.0
 
-<div style="text-align: center; white-space: nowrap;">
-  <br />
-  <p>
-    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Setup.exe' style="text-decoration: none;" target="_blank">
-      <span class="fs-5">
-        <button type="button" name="button" class="btn">:package: Setup</button>
-      </span>
-    </a>
-    &nbsp;
-    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Portable.zip' style="text-decoration: none;" target="_blank">
-      <span class="fs-5">
-        <button type="button" name="button" class="btn">:package: Portable</button>
-      </span>
-    </a>
-    &nbsp;  
-    <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Archive.zip' style="text-decoration: none;" target="_blank">
-      <span class="fs-5">
-        <button type="button" name="button" class="btn">:package: Archive</button>
-      </span>
-    </a> 
-  </p>
-  <br />
-</div>
+<table>
+  <tr>
+    <td>File</td>
+    <td>Checksum <code>SHA256</code></td>
+  </tr>
+  <tr>
+    <td>
+      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Setup.exe' style="text-decoration: none;" target="_blank">
+        <span class="fs-5">
+          <button type="button" name="button" class="btn">:package: Setup</button>
+        </span>
+      </a>
+    </td>
+    <td>
+      <code>36F915D917DF6461CB52C1524F3E7373EC0BC40D3A48E9D28E3D02BAA416E369</code>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Portable.zip' style="text-decoration: none;" target="_blank">
+        <span class="fs-5">
+          <button type="button" name="button" class="btn">:package: Portable</button>
+        </span>
+      </a>
+    </td>
+    <td>
+      <code>5A5553BF3609749C1214B8B724857AE954C4F8881907BD0DE5F1C44E48D2CEFA</code>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Archive.zip' style="text-decoration: none;" target="_blank">
+        <span class="fs-5">
+          <button type="button" name="button" class="btn">:package: Archive</button>
+        </span>
+      </a> 
+    </td>
+    <td>
+      <code>29D6EE0FD1A822E5CF45F0A175A0CECAE22C64F5551CCBB117C5EE76DC07DF61</code>
+    </td>
+  </tr>
+</table>
 
 {: .note }
 If you don't see the new features like [AWS Session Manager](./Documentation/Application/AWSSessionManager) or [Bit Calculator](./Documentation/Application/BitCalculator), you need to reset the settings. You can do this under [`Settings > Settings > Reset`](Documentation/Settings/Settings#reset) or by starting the application with the following parameter [`NETworkManager.exe --reset-settings`](./Documentation/CommandLineArguments#--reset-settings). The profiles are not affected when the settings are reset.
 
 Pre-release versions are available [here](https://github.com/BornToBeRoot/NETworkManager/releases){:target="\_blank"}.
-
-## Checksum
-
-| File                                       | SHA256                                                             |
-| ------------------------------------------ | ------------------------------------------------------------------ |
-| [`NETworkManager_2022.12.20.0_Setup.exe`](https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Setup.exe){:target="\_blank"}    | `36F915D917DF6461CB52C1524F3E7373EC0BC40D3A48E9D28E3D02BAA416E369` |
-| [`NETworkManager_2022.12.20.0_Portable.zip`](https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Portable.zip){:target="\_blank"} | `5A5553BF3609749C1214B8B724857AE954C4F8881907BD0DE5F1C44E48D2CEFA` |
-| [`NETworkManager_2022.12.20.0_Archive.zip`](https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Archive.zip){:target="\_blank"}  | `29D6EE0FD1A822E5CF45F0A175A0CECAE22C64F5551CCBB117C5EE76DC07DF61` |
 
 ## System requirements
 
