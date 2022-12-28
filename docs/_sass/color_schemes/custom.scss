@@ -1,12 +1,12 @@
 @import "./color_schemes/dark";
 
 $body-background-color: #252525;
-$sidebar-color: #195759;
+$sidebar-color: #00686a;
 $border-color: #606060;
 
 $body-heading-color: #ffffff;
 $body-text-color: #e6e6e6;
-$nav-child-link-color: #00abbd;
+$nav-child-link-color: #e6e6e6;
 $search-result-preview-color: #222222;
 
 $link-color: #00abbd;
@@ -18,4 +18,4 @@ $search-background-color: #2d333b;
 $table-background-color: #2d333b;
 
 $feedback-color: darken($sidebar-color, 3%);
-$content-width: 1200px;
+$content-width: 950px;
