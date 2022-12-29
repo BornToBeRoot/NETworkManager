@@ -8,8 +8,8 @@ permalink: /Download
 
 # Download
 
-Version: `2022.12.20.0` <br />
-Release date: `20.12.2022`
+Version: **2022.12.20.0** <br />
+Release date: **20.12.2022**
 
 <table>
   <tr>
