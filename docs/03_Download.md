@@ -13,8 +13,12 @@ Release date: `20.12.2022`
 
 <table>
   <tr>
-    <td><b>File</b></td>
-    <td><b>Checksum</b> <code>SHA256</code></td>
+    <td style="text-align: center;">
+      <b>File</b>
+    </td>
+    <td style="text-align: center;">
+      <b>Checksum</b> <code>SHA256</code>
+    </td>
   </tr>
   <tr>
     <td>
