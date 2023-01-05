@@ -7,7 +7,8 @@ description: "Changelog for next release"
 permalink: /Changelog/next-release
 ---
 
-# Next release
+Version: **Next release** <br />
+Release date: **xx.xx.2023**
 
 **System requirements**
 

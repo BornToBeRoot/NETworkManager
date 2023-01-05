@@ -6,10 +6,12 @@ logo: "Logo.png"
 remote_theme: "pmarsceill/just-the-docs"
 color_scheme: "custom"
 search_enabled: true
+aux_links_new_tab: false
 aux_links:
+  "Download":
+    - "https://borntoberoot.net/NETworkManager/Download"
   "View on GitHub":
-    - "//github.com/BornToBeRoot/NETworkManager"
-aux_links_new_tab: true
+    - "https://github.com/BornToBeRoot/NETworkManager"
 heading_anchors: true
 back_to_top: true
 back_to_top_text: "Back to top"
@@ -23,7 +25,7 @@ plugins:
   - jemoji
 callouts:
   information:
-    title: information
+    title: Information
     color: blue
   note:
     title: Note

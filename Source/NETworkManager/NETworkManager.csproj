@@ -41,9 +41,9 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AirspaceFixer" Version="1.0.6" />
-		<PackageReference Include="AWSSDK.EC2" Version="3.7.114.3" />
+		<PackageReference Include="AWSSDK.EC2" Version="3.7.114.7" />
 		<PackageReference Include="DnsClient" Version="1.7.0" />
-		<PackageReference Include="IPNetwork2" Version="2.6.543" />
+		<PackageReference Include="IPNetwork2" Version="2.6.548" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.1" />
 		<PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
 		<PackageReference Include="LoadingIndicators.WPF" Version="0.0.1" />
@@ -54,7 +54,7 @@
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.1" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.7" />
+		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.8" />
 		<Reference Include="AxMSTSCLib">
 			<HintPath>$(TargetDir)\AxMSTSCLib.dll</HintPath>
 		</Reference>

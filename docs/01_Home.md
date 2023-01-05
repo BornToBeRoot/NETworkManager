@@ -18,19 +18,22 @@ You can save your hosts (or networks) in profiles which can be used in the vario
 
 And the best part... it's open source!
 
-<div align="center">
-  <p>
-    <a href='./Download'>
-      <span class="fs-5">
-        <button type="button" name="button" class="btn">:package: Download</button>
-      </span>
-    </a>    
-    <a href='https://github.com/BornToBeRoot/NETworkManager' target="_blank">
-      <span class="fs-5">
-        <button type="button" name="button" class="btn">:octocat: Github</button>
-      </span>
-    </a> 
-  </p>  
+<div style="text-align: center">
+  <div style="white-space: nowrap;">
+    <p>
+      <a href='./Download' style="text-decoration: none;">
+        <span class="fs-5">
+          <button type="button" name="button" class="btn btn-primary">:package: Download</button>
+        </span>
+      </a>
+      &nbsp;
+      <a href='https://github.com/BornToBeRoot/NETworkManager' style="text-decoration: none;" target="_blank">
+        <span class="fs-5">
+          <button type="button" name="button" class="btn">:octocat: Github</button>
+        </span>
+      </a> 
+    </p>
+  </div>
   <img alt="NETworkManager" src="Preview.gif" />
    <p>   
     <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
