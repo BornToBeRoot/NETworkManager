@@ -1003,7 +1003,7 @@ namespace NETworkManager
 
         #region Settings
         private void OpenSettings()
-        {
+        {   
             // Init settings view
             if (_settingsView == null)
             {
