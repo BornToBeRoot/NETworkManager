@@ -3260,4 +3260,7 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="NoValidTigerVNCPath" xml:space="preserve">
     <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
   </data>
+  <data name="ApplicationName_SNTPLookup" xml:space="preserve">
+    <value>SNTP Lookup</value>
+  </data>
 </root>

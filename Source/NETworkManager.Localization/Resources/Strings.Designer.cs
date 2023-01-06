@@ -826,6 +826,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SNTP Lookup ähnelt.
+        /// </summary>
+        public static string ApplicationName_SNTPLookup {
+            get {
+                return ResourceManager.GetString("ApplicationName_SNTPLookup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Subnet Calculator ähnelt.
         /// </summary>
         public static string ApplicationName_SubnetCalculator {

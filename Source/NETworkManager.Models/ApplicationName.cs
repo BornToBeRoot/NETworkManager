@@ -86,9 +86,9 @@
         SNMP,
         
         /// <summary>
-        /// NTP lookup application.
+        /// SNTP lookup application.
         /// </summary>
-        NTPLookup,
+        SNTPLookup,
         
         /// <summary>
         /// Discovery protocol application.

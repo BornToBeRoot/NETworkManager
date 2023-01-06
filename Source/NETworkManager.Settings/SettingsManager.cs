@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Management.Automation.Runspaces;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -235,8 +234,8 @@ namespace NETworkManager.Settings
                 _log.Info($"Apply upgrade to {toVersion}...");
 
                 // NTP Lookup
-                _log.Info($"Add ApplicationName.NTPLookup to application list...");
-                Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.NTPLookup));
+                _log.Info($"Add ApplicationName.SNTPLookup to application list...");
+                Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.SNTPLookup));
             }
 
             // Set to latest version and save
