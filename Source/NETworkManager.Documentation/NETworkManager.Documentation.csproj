@@ -56,10 +56,10 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Licenses\AWSSDK.EC2.txt">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Licenses\log4net.txt">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Licenses\MahApps.Metro.IconPack.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -91,10 +91,8 @@
 		<Content Include="Licenses\SharpSnmpLib.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-	</ItemGroup>
-	<ItemGroup>
 		<Content Include="Licenses\Microsoft.PowerShell.SDK.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-	</ItemGroup>
+	</ItemGroup>	
 </Project>
