@@ -160,7 +160,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="20" Height="20"  Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">                            
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:JamIcons Kind=BugF}" />
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Bug}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </StackPanel>
@@ -268,7 +268,7 @@
                                 </Button.Style>
                                 <Rectangle Grid.Column="0" Width="16" Height="16" Margin="0,0,-2,0">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:VaadinIcons Kind=AngleDoubleRight}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDoubleRight}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">

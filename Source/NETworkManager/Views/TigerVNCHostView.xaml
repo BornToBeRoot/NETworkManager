@@ -211,7 +211,7 @@
                                 </ToggleButton.Style>
                                 <Rectangle Width="16" Height="16">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinRight}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
