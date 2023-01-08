@@ -9,6 +9,7 @@
 		<SelfContained>false</SelfContained>
 		<UseWPF>true</UseWPF>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
 		<NoWarn>1701;1702;CA1712</NoWarn>
 	</PropertyGroup>
 	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->

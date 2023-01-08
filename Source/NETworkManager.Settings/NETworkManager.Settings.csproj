@@ -9,7 +9,7 @@
 		<SelfContained>false</SelfContained>
 		<UseWPF>true</UseWPF>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	</PropertyGroup>
+		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>	</PropertyGroup>
 	<ItemGroup>
 	  <Page Remove="Themes\Dark.Accent1.xaml" />
 	  <Page Remove="Themes\Dark.Accent2.xaml" />
@@ -26,15 +26,23 @@
 	<ItemGroup>
 	  <Content Include="Themes\Dark.Accent1.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator></Generator>
 	  </Content>
 	  <Content Include="Themes\Dark.Accent2.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator></Generator>
 	  </Content>
 	  <Content Include="Themes\Light.Accent1.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator></Generator>
 	  </Content>
 	  <Content Include="Themes\Light.Accent2.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator></Generator>
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>

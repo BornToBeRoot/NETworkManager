@@ -10,6 +10,7 @@
 		<SelfContained>false</SelfContained>
 		<UseWPF>true</UseWPF>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
 	</PropertyGroup>
 	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
 	<ItemGroup>
