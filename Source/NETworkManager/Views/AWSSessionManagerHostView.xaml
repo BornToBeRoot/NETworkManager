@@ -233,7 +233,7 @@
                                 </ToggleButton.Style>
                                 <Rectangle Width="16" Height="16">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Entypo Kind=ChevronThinRight}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -262,14 +262,14 @@
                             </TextBox>
                             <Rectangle Grid.Column="4" Grid.Row="0" Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}" Visibility="{Binding IsSyncEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ToolTip="{x:Static localization:Strings.SyncIsDisabled}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Unicons Kind=SyncSlash}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SyncOff}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <Grid Grid.Column="4" Grid.Row="0" Visibility="{Binding IsSyncEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                 <Button Grid.Column="4" Grid.Row="0" Style="{StaticResource CleanButton}" Command="{Binding SyncAllInstanceIDsFromAWSCommand}" Visibility="{Binding IsSyncing, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ToolTip="{x:Static localization:Strings.SyncAllEC2InstancesFromAWS}">
                                     <Rectangle Width="16" Height="16">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Unicons Kind=Sync}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Sync}" />
                                         </Rectangle.OpacityMask>
                                         <Rectangle.Style>
                                             <Style TargetType="{x:Type Rectangle}">
@@ -405,7 +405,7 @@
                                                                                         <DataTrigger Binding="{Binding (CollectionViewGroup.Name), Converter={StaticResource IsDynamicProfileToBooleanConverter}}" Value="True">
                                                                                             <Setter Property="OpacityMask">
                                                                                                 <Setter.Value>
-                                                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Unicons Kind=Sync}" />
+                                                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Sync}" />
                                                                                                 </Setter.Value>
                                                                                             </Setter>
                                                                                         </DataTrigger>

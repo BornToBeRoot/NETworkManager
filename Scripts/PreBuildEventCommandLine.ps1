@@ -14,10 +14,22 @@ if(-not($OutPath.StartsWith('"')))
     $OutPath = $OutPath.TrimEnd('"')
 }
 
+################################################
+### Generate MSTSCLib.dll and AxMSTSCLib.dll ###
+################################################
+
 # Test if files are already there...
 if((Test-Path -Path "$OutPath\MSTSCLib.dll") -and (Test-Path -Path "$OutPath\AxMSTSCLib.dll"))
 {
     Write-Host "MSTSCLib.dll and AxMSTSCLib.dll exist! Continue..."
+    return
+}
+
+# Test if files are in the lib folder (NetBeauty) and copy them from there because this is faster than re-creating them...
+if((Test-Path -Path "$OutPath\lib\MSTSCLib.dll") -and (Test-Path -Path "$OutPath\lib\AxMSTSCLib.dll")) {
+    Write-Host "MSTSCLib.dll and AxMSTSCLib.dll exist in lib folder! Copy them..."
+    Copy-Item -Path "$OutPath\lib\MSTSCLib.dll" -Destination "$OutPath\MSTSCLib.dll" -Force
+    Copy-Item -Path "$OutPath\lib\AxMSTSCLib.dll" -Destination "$OutPath\AxMSTSCLib.dll" -Force
     return
 }
 
@@ -37,7 +49,6 @@ $IlasmPath = ((Get-ChildItem -Path "$($Env:windir)\Microsoft.NET\Framework\" -Re
 if([String]::IsNullOrEmpty($AximpPath) -or [String]::IsNullOrEmpty($IldasmPath) -or [String]::IsNullOrEmpty($IlasmPath))
 {
     Write-Host "Could not find sdk tools:`naximp.exe`t$AximpPath`nildasm.exe`t$IldasmPath`nilasm.exe`t$IlasmPath"
-
     return
 }
 

@@ -18,6 +18,7 @@ Release date: **xx.xx.2023**
 ## What's new?
 
 ## Improvements
+- Move .NET runtime components and dependencies into a subfolder to simplify the installation/portable folder [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
 
 ## Bugfixes
 

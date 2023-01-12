@@ -7,11 +7,11 @@ namespace NETworkManager.Settings
     public static class SettingsViewManager
     {
         // List of all applications
-        public static List<SettingsViewInfo> List => new List<SettingsViewInfo>
+        public static List<SettingsViewInfo> List => new()
         {
             // General
             new SettingsViewInfo(SettingsViewName.General, new PackIconModern{ Kind = PackIconModernKind.Layer }, SettingsViewGroup.General),
-            new SettingsViewInfo(SettingsViewName.Window, new PackIconPicolIcons { Kind = PackIconPicolIconsKind.BrowserWindow }, SettingsViewGroup.General),
+            new SettingsViewInfo(SettingsViewName.Window, new PackIconOcticons { Kind = PackIconOcticonsKind.Browser }, SettingsViewGroup.General),
             new SettingsViewInfo(SettingsViewName.Appearance, new PackIconMaterial { Kind = PackIconMaterialKind.Palette }, SettingsViewGroup.General),
             new SettingsViewInfo(SettingsViewName.Language, new PackIconMaterial { Kind = PackIconMaterialKind.Translate }, SettingsViewGroup.General),
             new SettingsViewInfo(SettingsViewName.Network, new PackIconModern { Kind = PackIconModernKind.Network }, SettingsViewGroup.General),

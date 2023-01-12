@@ -10,7 +10,7 @@
 		<SelfContained>false</SelfContained>
 		<UseWPF>true</UseWPF>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<DocumentationFile>bin\Debug\NETworkManager.Converters.xml</DocumentationFile>
+		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>		
 	</PropertyGroup>
 	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
