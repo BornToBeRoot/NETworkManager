@@ -30,6 +30,7 @@
 	  <None Remove="Licenses\Microsoft.Xaml.Behaviors.Wpf.txt" />
 	  <None Remove="Licenses\NETworkManager.txt" />
 	  <None Remove="Licenses\Newtonsoft.Json.txt" />
+	  <None Remove="Licenses\nulastudio.NetBeauty.txt" />
 	  <None Remove="Licenses\Octokit.txt" />
 	  <None Remove="Licenses\PSDiscoveryProtocol.txt" />
 	  <None Remove="Licenses\SharpSnmpLib.txt" />
@@ -55,6 +56,9 @@
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
 	  <Content Include="Licenses\Dragablz.txt">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="Licenses\nulastudio.NetBeauty.txt">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
 	  <Content Include="Licenses\IPNetwork.txt">
