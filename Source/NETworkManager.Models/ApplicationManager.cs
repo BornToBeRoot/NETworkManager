@@ -82,8 +82,8 @@ namespace NETworkManager.Models
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.EyeOutline });
                     break;
                 case ApplicationName.WebConsole:
-                    canvas.Children.Add(new PackIconPicolIcons { Kind = PackIconPicolIconsKind.Website });
-                    break;                    
+                    canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Browser });
+                    break;
                 case ApplicationName.SNMP:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Switch });
                     break;

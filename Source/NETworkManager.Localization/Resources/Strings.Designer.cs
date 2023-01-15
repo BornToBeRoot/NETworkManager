@@ -4443,6 +4443,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Move a .NET Framework/.NET Core app runtime components and dependencies into a sub-directory and make it beauty. ähnelt.
+        /// </summary>
+        public static string Library_nulastudioNetBeauty_Description {
+            get {
+                return ResourceManager.GetString("Library_nulastudioNetBeauty_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die A GitHub API client library for .NET ähnelt.
         /// </summary>
         public static string Library_Octokit_Description {

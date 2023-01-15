@@ -9,6 +9,7 @@
 		<SelfContained>false</SelfContained>
 		<UseWPF>true</UseWPF>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
 	</PropertyGroup>
 	<!-- Target 6.0.0 for compatibility https://github.com/dotnet/core/issues/7176 -->
 	<ItemGroup>
@@ -27,7 +28,11 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
-		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
+		<PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
+		<PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="4.11.0" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />

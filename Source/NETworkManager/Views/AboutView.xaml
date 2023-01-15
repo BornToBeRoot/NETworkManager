@@ -79,7 +79,7 @@
                         <Button ToolTip="{x:Static localization:Strings.ToolTip_GithubNewIssueUrl}" Command="{Binding OpenWebsiteCommand}" CommandParameter="{x:Static resources:Resources.NETworkManager_NewIssueUrl}" Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24" >
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:JamIcons Kind=BugF}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Bug}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">

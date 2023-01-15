@@ -9,7 +9,7 @@
 		<SelfContained>false</SelfContained>
 		<UseWPF>true</UseWPF>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-	</PropertyGroup>
+		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>	</PropertyGroup>
 	<ItemGroup>
 	  <Page Remove="Themes\Dark.Accent1.xaml" />
 	  <Page Remove="Themes\Dark.Accent2.xaml" />
@@ -26,15 +26,23 @@
 	<ItemGroup>
 	  <Content Include="Themes\Dark.Accent1.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator></Generator>
 	  </Content>
 	  <Content Include="Themes\Dark.Accent2.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator></Generator>
 	  </Content>
 	  <Content Include="Themes\Light.Accent1.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator></Generator>
 	  </Content>
 	  <Content Include="Themes\Light.Accent2.xaml">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <SubType>Designer</SubType>
+	    <Generator></Generator>
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>
@@ -42,7 +50,11 @@
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.1" />
 		<PackageReference Include="log4net" Version="2.0.15" />
 		<PackageReference Include="MahApps.Metro" Version="2.4.9" />
-		<PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
+		<PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
+		<PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="4.11.0" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
+		<PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="Properties\Settings.settings">
