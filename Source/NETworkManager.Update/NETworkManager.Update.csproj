@@ -22,6 +22,6 @@
 		<Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Octokit" Version="4.0.3" />
+		<PackageReference Include="Octokit" Version="4.0.4" />
 	</ItemGroup>
 </Project>
