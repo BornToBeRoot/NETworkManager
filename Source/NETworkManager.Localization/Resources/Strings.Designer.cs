@@ -3646,7 +3646,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The background job will save settings, profiles and credentials every x-minutes.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The background job will save settings and profiles every x-minutes.
         ///
         ///Value 0 will disable this feature.
         ///
