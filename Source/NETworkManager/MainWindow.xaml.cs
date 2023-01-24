@@ -423,7 +423,7 @@ namespace NETworkManager
 
                     // Generate lists at runtime
                     SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetList());
-                    SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());
+                    SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());                    
                     SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.GetDefaultList());
                     SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(DNSServer.GetDefaultList());
                     SettingsManager.Current.AWSSessionManager_AWSProfiles = new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
@@ -615,6 +615,7 @@ namespace NETworkManager
         private TigerVNCHostView _tigerVNCHostView;
         private WebConsoleHostView _webConsoleHostView;
         private SNMPHostView _snmpHostView;
+        private SNTPLookupHostView _sntpLookupHostView;
         private DiscoveryProtocolView _discoveryProtocolView;
         private WakeOnLANView _wakeOnLanView;
         private SubnetCalculatorHostView _subnetCalculatorHostView;
@@ -756,6 +757,14 @@ namespace NETworkManager
 
                     ContentControlApplication.Content = _snmpHostView;
                     break;
+                case ApplicationName.SNTPLookup:
+                    if (_sntpLookupHostView == null)
+                        _sntpLookupHostView = new SNTPLookupHostView();
+                    else
+                        _sntpLookupHostView.OnViewVisible();
+
+                    ContentControlApplication.Content = _sntpLookupHostView;
+                    break;
                 case ApplicationName.DiscoveryProtocol:
                     if (_discoveryProtocolView == null)
                         _discoveryProtocolView = new DiscoveryProtocolView();
@@ -880,6 +889,9 @@ namespace NETworkManager
                 case ApplicationName.SNMP:
                     _snmpHostView?.OnViewHide();
                     break;
+                case ApplicationName.SNTPLookup:
+                    _sntpLookupHostView?.OnViewHide();
+                    break;
                 case ApplicationName.DiscoveryProtocol:
                     _discoveryProtocolView?.OnViewHide();
                     break;
@@ -975,6 +987,8 @@ namespace NETworkManager
                 case ApplicationName.SNMP:
                     _snmpHostView.AddTab(data.Args);
                     break;
+                case ApplicationName.SNTPLookup:
+                    break;
                 case ApplicationName.DiscoveryProtocol:
                     break;
                 case ApplicationName.WakeOnLAN:
@@ -994,7 +1008,7 @@ namespace NETworkManager
                 case ApplicationName.ARPTable:
                     break;
                 case ApplicationName.None:
-                    break;
+                    break;                    
                 default:
                     throw new ArgumentOutOfRangeException();
             }

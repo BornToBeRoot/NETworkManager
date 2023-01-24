@@ -104,6 +104,9 @@ namespace NETworkManager.Controls
                 case ApplicationName.SNMP:
                     ((SNMPView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;
+                case ApplicationName.SNTPLookup:
+                    ((SNTPLookupView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
+                    break;
                 case ApplicationName.Whois:
                     ((WhoisView)((DragablzTabItem)args.DragablzItem.Content).View).CloseTab();
                     break;

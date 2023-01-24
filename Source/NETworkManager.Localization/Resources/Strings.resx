@@ -3266,4 +3266,10 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
     <value>Move a .NET Framework/.NET Core app runtime components and dependencies into a sub-directory and make it beauty.</value>
   </data>
+  <data name="AddATabToPerformASNTPLookup" xml:space="preserve">
+    <value>Add a tab to perform a SNTP lookup...</value>
+  </data>
+  <data name="SNTPServers" xml:space="preserve">
+    <value>SNTP server(s)</value>
+  </data>
 </root>

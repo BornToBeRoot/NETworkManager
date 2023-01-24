@@ -349,6 +349,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add a tab to perform a SNTP lookup... ähnelt.
+        /// </summary>
+        public static string AddATabToPerformASNTPLookup {
+            get {
+                return ResourceManager.GetString("AddATabToPerformASNTPLookup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Add a tab to perform a trace... ähnelt.
         /// </summary>
         public static string AddATabToPerformATrace {
@@ -7894,6 +7903,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SNMP {
             get {
                 return ResourceManager.GetString("SNMP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SNTP server(s) ähnelt.
+        /// </summary>
+        public static string SNTPServers {
+            get {
+                return ResourceManager.GetString("SNTPServers", resourceCulture);
             }
         }
         
