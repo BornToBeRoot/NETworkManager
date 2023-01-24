@@ -3693,11 +3693,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die URL to a web service that can be reached via http or https and returns an IP address as response. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die URL to a web service that can be reached via http or https and returns an IPv4 address like &quot;xx.xx.xx.xx&quot; as response. ähnelt.
         /// </summary>
-        public static string HelpMessage_CustomPublicIPAddressAPI {
+        public static string HelpMessage_CustomPublicIPv4AddressAPI {
             get {
-                return ResourceManager.GetString("HelpMessage_CustomPublicIPAddressAPI", resourceCulture);
+                return ResourceManager.GetString("HelpMessage_CustomPublicIPv4AddressAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die URL to a web service that can be reached via http or https and returns an IPv6 address like &quot;xxxx:xx:xxx::xx&quot; as response. ähnelt.
+        /// </summary>
+        public static string HelpMessage_CustomPublicIPv6AddressAPI {
+            get {
+                return ResourceManager.GetString("HelpMessage_CustomPublicIPv6AddressAPI", resourceCulture);
             }
         }
         
@@ -3738,7 +3747,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Public accessible IPv4 address. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Public IPv4 address reachable via ICMP. ähnelt.
         /// </summary>
         public static string HelpMessage_PublicIPv4Address {
             get {
@@ -3747,7 +3756,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Public accessible IPv6 address. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Public IPv6 address reachable via ICMP. ähnelt.
         /// </summary>
         public static string HelpMessage_PublicIPv6Address {
             get {
