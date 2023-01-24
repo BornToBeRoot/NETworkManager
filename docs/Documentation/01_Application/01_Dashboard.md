@@ -4,13 +4,15 @@ title: Dashboard
 parent: Application
 grand_parent: Documentation
 nav_order: 1
-description: ""
+description: "Documentation of the Dashboard"
 permalink: /Documentation/Application/Dashboard
 ---
 
 # Dashboard
 
-The dashboard checks automatically and whenever the status of the local network adapters changes (network cable plugged in, WLAN connected, etc.) whether there is a connection to the router and the Internet.
+The dashboard automatically checks your computer's network connection and gives you a quick overview of it with the most important information.
+
+As soon as the status of the local network adapter changes (Ethernet cable is plugged in, WLAN or VPN is connected, etc.), the connection to the router and Internet is checked.
 
 ![Dashboard](01_Dashboard.png)
 
@@ -18,7 +20,7 @@ The dashboard checks automatically and whenever the status of the local network 
 
 ### Public IPv4 address
 
-A public IPv4 address that is reachable via ICMP.
+Public IPv4 address reachable via ICMP.
 
 **Type:** `String`
 
@@ -26,7 +28,7 @@ A public IPv4 address that is reachable via ICMP.
 
 ### Public IPv6 address
 
-A public IPv6 address that is reachable via ICMP.
+Public IPv6 address reachable via ICMP.
 
 **Type:** `String`
 
@@ -48,7 +50,8 @@ Override the default IPv4 address API to resolve the public IP address. The API 
 
 **Default:** `Disabled | Empty`
 
-**Example:** 
+**Example:**
+
 - [`api.ipify.org`](https://api.ipify.org/){:target="\_blank"}
 - [`ip4.seeip.org`](https://ip4.seeip.org/){:target="\_blank"}
 - [`api.my-ip.io/ip`](https://api.my-ip.io/ip){:target="\_blank"}
@@ -62,4 +65,5 @@ Override the default IPv6 address API to resolve the public IP address. The API 
 **Default:** `Disabled | Empty`
 
 **Example:**
+
 - [`api6.ipify.org`](https://api6.ipify.org/){:target="\_blank"}

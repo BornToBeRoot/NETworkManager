@@ -2088,8 +2088,8 @@ is disabled!</value>
   <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
     <value>Use custom IPv4 address API</value>
   </data>
-  <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IP address as response.</value>
+  <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
+    <value>URL to a web service that can be reached via http or https and returns an IPv4 address like "xx.xx.xx.xx" as response.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Could not parse public ip address from "{0}"! Try another service or use the default... </value>
@@ -2964,10 +2964,10 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Enter a valid IPv6 address!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Public accessible IPv4 address.</value>
+    <value>Public IPv4 address reachable via ICMP.</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Public accessible IPv6 address.</value>
+    <value>Public IPv6 address reachable via ICMP.</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Public IPv4 address</value>
@@ -3262,5 +3262,8 @@ If the option is disabled again, the values are no longer modified. However, the
   </data>
   <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
     <value>Move a .NET Framework/.NET Core app runtime components and dependencies into a sub-directory and make it beauty.</value>
+  </data>
+  <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
+    <value>URL to a web service that can be reached via http or https and returns an IPv6 address like "xxxx:xx:xxx::xx" as response.</value>
   </data>
 </root>
