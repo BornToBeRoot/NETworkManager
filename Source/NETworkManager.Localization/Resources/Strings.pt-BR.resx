@@ -2088,8 +2088,8 @@ público está desabilitada!</value>
   <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
     <value>Usar API de endereço IPv4 personalizado</value>
   </data>
-  <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
-    <value>URL para um serviço da web que pode ser acessado via http ou https e retorna um endereço IP como resposta.</value>
+  <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
+    <value>URL para um serviço da web que pode ser acessado via http ou https e retorna um endereço IP do tipo "xx.xx.xx.xx" como resposta.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Não foi possível analisar o endereço IP público de "{0}"! Tente outro serviço ou use o padrão...</value>
@@ -2914,7 +2914,7 @@ Caso contrário, o perfil pode estar corrompido e você pode relatar o problema 
     <value>Lista de domínios de nível superior de iana.org, que é usada para consultar servidores whois do TLD de whois.iana.org por meio da porta 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>OUI data from ieee.org.</value>
+    <value>Dados OUI de ieee.org</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Registro de Nome de Serviço e Número de Porta de Protocolo de Transporte de iana.org.</value>
@@ -2964,10 +2964,10 @@ Habilite a criptografia do arquivo de perfil em Configurações &gt; Perfil para
     <value>Entre um endereço IPv6 válido!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Endereço IPv4 acessível ao público.</value>
+    <value>Endereço IPv4 público acessível via ICMP.</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Endereço IPv6 acessível ao público.</value>
+    <value>Endereço IPv6 público acessível via ICMP.</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Endereço IPv4 público</value>
@@ -3252,12 +3252,18 @@ Se a opção for desativada novamente, os valores não serão mais modificados. 
     <value>Resolver endereço IP para este host (IPv4 é o preferido)</value>
   </data>
   <data name="NoValidPowerShellPath" xml:space="preserve">
-    <value>A valid path to PowerShell should end with "pwsh.exe" or "powershell.exe"!</value>
+    <value>Um caminho válido para o PowerShell deve terminar com "pwsh.exe" ou "powershell.exe"!</value>
   </data>
   <data name="NoValidPuTTYPath" xml:space="preserve">
-    <value>A valid path to PuTTY should end with "PuTTY.exe"!</value>
+    <value>Um caminho válido para o PuTTY deve terminar com "PuTTY.exe"!</value>
   </data>
   <data name="NoValidTigerVNCPath" xml:space="preserve">
-    <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
+    <value>Um caminho válido para TigerVNC deve terminar com "vncviewer-*.exe" ou "vncviewer64-*.exe"!</value>
+  </data>
+  <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
+    <value>Mova os componentes e dependências de tempo de execução de um aplicativo .NET Framework/.NET Core para uma subpasta e torne-o atraente.</value>
+  </data>
+  <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
+    <value>URL para um serviço da web que pode ser acessado via http ou https e retorna um endereço IPv6 do tipo "xxxx:xx:xxx::xx" como resposta.</value>
   </data>
 </root>
