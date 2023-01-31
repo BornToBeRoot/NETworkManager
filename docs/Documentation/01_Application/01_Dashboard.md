@@ -10,7 +10,7 @@ permalink: /Documentation/Application/Dashboard
 
 # Dashboard
 
-The dashboard automatically checks your computer's network connection and gives you a quick overview of it with the most important information.
+On the **Dashboard** the status of the current network connection of your computer is displayed to get a quick overview with the most important information.
 
 As soon as the status of the local network adapter changes (Ethernet cable is plugged in, WLAN or VPN is connected, etc.), the connection to the router and Internet is checked.
 
