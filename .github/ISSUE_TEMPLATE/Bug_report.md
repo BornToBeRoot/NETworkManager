@@ -12,11 +12,13 @@ labels: ":mag: needs triage"
 2.
 3.
 
-**NETworkManager version**: 
+**NETworkManager version**:
 
-**Windows version**:
+- [ ] Portable
 
-**.NET-Framework version**:
+**Windows version** (like 10.0.x.x):
+
+**.NET version** (like 6.0.x): 
 
 **Screenshots**
 
