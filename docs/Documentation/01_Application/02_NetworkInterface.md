@@ -62,7 +62,7 @@ In addition, further actions can be performed using the buttons at the bottom le
 
 ### Obtain an IP address automatically
 
-Obtain an IP address automatically from a DHCP server.
+Obtain an IP address automatically from a DHCP server for the selected network adapter.
 
 **Type:** `Boolean`
 
@@ -71,14 +71,20 @@ Obtain an IP address automatically from a DHCP server.
 {: .note }
 If you select this option, the [Use the following IP address](#use-the-following-ip-address) option will be disabled.
 
-
 ### Use the following IP address:
+
+Configure a static IP address for the selected network adapter. See [IPv4 address](#ipv4-address), [Subnetmask or CIDR](#subnetmask-or-cidr) and [Default-Gateway](#default-gateway) options below for more information.
 
 **Type:** `Boolean`
 
 **Default:** `Disabled`
 
+{: .note }
+If you select this option, the [Obtain an IP address automatically](#obtain-an-ip-address-automatically) option will be disabled.
+
 ### IPv4 address
+
+Static IPv4 address for the selected network adapter.
 
 **Type:** `String`
 
@@ -88,6 +94,8 @@ If you select this option, the [Use the following IP address](#use-the-following
 
 ### Subnetmask or CIDR
 
+Subnet mask or CIDR for the selected network adapter.
+
 **Type:** `String`
 
 **Default:** `Empty`
@@ -95,6 +103,8 @@ If you select this option, the [Use the following IP address](#use-the-following
 **Example:** `/24` or `255.255.255.0`
 
 ### Default-Gateway
+
+Default gateway for the selected network adapter.
 
 **Type:** `String`
 
@@ -104,9 +114,15 @@ If you select this option, the [Use the following IP address](#use-the-following
 
 ### Obtain DNS server address automatically
 
+Obtain DNS server address automatically from a DHCP server for the selected network adapter.
+
 ### Use the following DNS server addresses:
 
+Configure static DNS server addresses for the selected network adapter. See [Primary DNS server](#primary-dns-server) and [Secondary DNS server](#secondary-dns-server) options below for more information.
+
 ### Primary DNS server
+
+Primary DNS server for the selected network adapter.
 
 **Type:** `String`
 
@@ -115,6 +131,8 @@ If you select this option, the [Use the following IP address](#use-the-following
 **Example:** `1.1.1.1`
 
 ### Secondary DNS server
+
+Secondary DNS server for the selected network adapter.
 
 **Type:** `String`
 
