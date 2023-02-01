@@ -4,27 +4,30 @@ title: WiFi
 parent: Application
 grand_parent: Documentation
 nav_order: 3
-description: ""
+description: "Documentation of the WiFi"
 permalink: /Documentation/Application/WiFi
 ---
 
 # WiFi
-The WiFi shows all available wireless networks with additional details such as channel, signal strength or the type of encryption used.
 
-Hidden wireless networks are displayed as `Hidden Network`. 
+In **WiFi**, all available wireless networks are shown with additional details such as channel, signal strength or the type of encryption used.
+
+Hidden wireless networks are displayed as `Hidden Network`.
 
 ## WiFi
 
-You can select which wireless network adapter is used to scan for wireless networks. Wireless networks can be filtered by 2.4 Ghz, 5 Ghz and the SSID.
+On the **WiFi** tab, you can select which wireless network adapter is used to scan for wireless networks. Wireless networks can be filtered by 2.4 Ghz, 5 Ghz and the SSID.
 
+{: .note }
 Due to limitations of the `Windows.Devices.WiFi` API the channel bandwidth cannot be detected.
 
 ![WiFi](03_WiFi.png)
 
 ## Channels
 
-In the channels view, all wireless networks are displayed graphically, with channel and signal strength. This can be useful to identify overlapping wireless networks that are not from the same access point.
+On the **Channels** tab, all wireless networks of the selected wireless network adapter are displayed in a graphical view with the channel and signal strength. This can be useful to identify overlapping wireless networks that do not originate from the same access point.
 
-You can move the mouse over the channel to display all wireless networks that occupy this channel.
+{: .note }
+You can move the mouse over the channel to display all wireless networks in a ToolTip that occupy that channel.
 
 ![WiFi_Channel](03_WiFi_Channel.png)
