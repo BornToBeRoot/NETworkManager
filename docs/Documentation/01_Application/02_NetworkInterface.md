@@ -25,9 +25,6 @@ In addition, further actions can be performed using the buttons at the bottom le
   - **Release** - Releases the current IPv4 addresses obtained via DHCP for all network adapters that are configured to automatically obtain an IPv4 address. (`ipconfig /release`)
   - **Renew** - Renews the current IPv4 address via DHCP for all network adapters that are configured to automatically obtain an IPv4 address. (`ipconfig /renew`)
 
-{: .note }
-You may need to confirm a Windows UAC dialog to make changes to the network interface.
-
 ![NetworkInterface_Information](02_NetworkInterface_Information.png)
 
 ## Bandwidth
@@ -47,14 +44,14 @@ On the **Configure** tab, you can change the configuration of the selected netwo
 
 The options you can set correspond to the network adapter properties `Internetprotokoll, Version 4 (TCP/IPv4) Properties` in the `Control Panel > Network and Internet > Network Connections`. These are explained in the [profiles section](#profile). Clicking the **Apply** button will launch an elevated PowerShell to configure the network adapter.
 
-{: .note }
-You may need to confirm a Windows UAC dialog to make changes to the network interface.
-
 In addition, further actions can be performed using the buttons at the bottom left:
 
 - **Additional config...**
   - **Add IPv4 address...** - Opens a dialog to add an IPv4 address with a subnet mask or CIDR to the selected network adapter.
   - **Remove IPv4 addres...** - Opens a dialog where you can select an IPv4 address to remove from the selected network adapter.
+
+{: .note }
+You may need to confirm a Windows UAC dialog to make changes to the network interface.
 
 ![NetworkInterface_Configure](02_NetworkInterface_Configure.png)
 
@@ -116,9 +113,23 @@ Default gateway for the selected network adapter.
 
 Obtain DNS server address automatically from a DHCP server for the selected network adapter.
 
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+{: .note }
+If you select this option, the [Use the following DNS server addresses](#use-the-following-dns-server-addresses) option will be disabled.
+
 ### Use the following DNS server addresses:
 
 Configure static DNS server addresses for the selected network adapter. See [Primary DNS server](#primary-dns-server) and [Secondary DNS server](#secondary-dns-server) options below for more information.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+{: .note }
+If you select this option, the [Obtain DNS server address automatically](#obtain-dns-server-address-automatically) option will be disabled.
 
 ### Primary DNS server
 
