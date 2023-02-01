@@ -10,7 +10,7 @@ permalink: /Documentation/Application/Dashboard
 
 # Dashboard
 
-On the **Dashboard** the status of the current network connection of your computer is displayed to get a quick overview with the most important information.
+The **Dashboard** shows the status of your computer's current network connection to get a quick overview of the most important information.
 
 As soon as the status of the local network adapter changes (Ethernet cable is plugged in, WLAN or VPN is connected, etc.), the connection to the router and Internet is checked.
 
