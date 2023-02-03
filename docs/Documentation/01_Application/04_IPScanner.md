@@ -25,7 +25,7 @@ Possible inputs are:
 | `example.com/24`            | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)         |
 | `example.com/255.255.255.0` | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)         |
 
-{: note }#
+{: .note }
 Multiple inputs can be combined with a semicolon (`;`).<br />Example: `10.0.0.0/24; 10.0.[10-20]1`
 
 The button to the left of the `Scan` button determines the IP address and subnet mask of the network interface currently in use in order to scan the local subnet for active devices.
@@ -44,7 +44,7 @@ Inherit the host from the general settings.
 
 **Default:** `Disabled`
 
-{: note }
+{: .note }
 If you enable this option, the [IP range](#ip-range) is overwritten by the host from the general settings and the [IP range](#ip-range) is disabled.
 
 ### IP range
@@ -126,7 +126,7 @@ Resolve the MAC address and vendor for each IP address.
 
 **Default:** `Enabled`
 
-{: note }
+{: .note }
 Due to the fact that the MAC address is resolved via ARP, the device must be in the same subnet as the IP address.
 
 ### Custom commands
