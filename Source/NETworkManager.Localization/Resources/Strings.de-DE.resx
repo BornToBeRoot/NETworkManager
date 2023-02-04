@@ -1959,7 +1959,7 @@ Profildateien sind nicht betroffen!</value>
 
 Wert 0 deaktiviert dieses Feature.
 
-Wenn der Wert geändert wird, muss die Anwendung muss neu gestartet werden, damit dieser angewandt werden.</value>
+Die Änderung dieses Wertes erfordert einen Neustart der Anwendung, um wirksam zu werden.</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
     <value>Hintergrundjob alle x-Minuten ausführen</value>
@@ -2088,8 +2088,8 @@ ist deaktiviert!</value>
   <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
     <value>Benutzerdefinierte IPv4-Adressen-API verwenden</value>
   </data>
-  <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
-    <value>URL zu einem Webdienst, der über http oder https erreichbar ist und eine IP-Adresse als Antwort zurückgibt.</value>
+  <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
+    <value>URL zu einem Webdienst, der über http oder https erreicht werden kann und eine IPv4-Adresse wie "xx.xx.xx.xx" als Antwort zurückgibt.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Öffentliche IP-Adresse von "{0}" konnte nicht geparsed! Versuchen Sie es mit einem anderen Dienst oder verwenden Sie die Standardeinstellung ...</value>
@@ -2964,10 +2964,10 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
     <value>Geben Sie eine gültige IPv6-Adresse ein!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Öffentlich verfügbare IPv4-Adresse.</value>
+    <value>Öffentliche IPv4-Adresse, die über ICMP erreichbar ist.</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Öffentlich verfügbare IPv6-Adresse.</value>
+    <value>Öffentliche IPv6-Adresse, die über ICMP erreichbar ist.</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Öffentliche IPv4-Adresse</value>
@@ -3259,5 +3259,11 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
   </data>
   <data name="NoValidTigerVNCPath" xml:space="preserve">
     <value>Ein gültiger Pfad zu TigerVNC sollte mit "vncviewer-*.exe" oder "vncviewer64-*.exe" enden!</value>
+  </data>
+  <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
+    <value>Verschieben Sie die Laufzeitkomponenten und Abhängigkeiten einer .NET Framework/.NET Core-Anwendung in ein Unterverzeichnis und machen Sie es schön.</value>
+  </data>
+  <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
+    <value>URL zu einem Webdienst, der über http oder https erreicht werden kann und eine IPv6-Adresse wie "xxxx:xx:xxx::xx" als Antwort zurückgibt.</value>
   </data>
 </root>

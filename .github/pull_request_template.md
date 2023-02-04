@@ -1,10 +1,14 @@
-Fixes #{Replace this with the issue number}
-
 **Please provide some details about this pull request:**
 -
 -
 -
 
+Fixes #{issue number}
+
+**ToDo:**
+
+- [ ] Update [documentation](https://github.com/BornToBeRoot/NETworkManager/tree/main/docs/Documentation) to reflect this changes
+- [ ] Update [changelog](https://github.com/BornToBeRoot/NETworkManager/tree/main/docs/Changelog) to reflect this changes
 
 ---
 

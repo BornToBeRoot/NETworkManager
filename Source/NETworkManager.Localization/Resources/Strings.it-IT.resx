@@ -1992,9 +1992,10 @@ Per avere effetto la modifica di questo valore richiede il riavvio dell'applicaz
     <value>Controlla l'indirizzo IP pubblico</value>
   </data>
   <data name="FirstRunMessage" xml:space="preserve">
-    <value>Thank you for using NETworkManager!
-
-In order to provide additional features, services on the Internet are used that are not operated by me. You can deselect them below in the privacy section. No data is transmitted to me at any time.</value>
+    <value>Grazie per aver utilizzato NETworkManager!
+Per fornire funzionalità aggiuntive, vengono utilizzati servizi su Internet che non sono gestiti da me. 
+Puoi deselezionarli di seguito nella sezione privacy. 
+Nessun dato verrà mai trasmesso a me.</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Quando parte, il programma verifica in background se sono disponibili nuove versioni su GitHub.
@@ -2105,8 +2106,8 @@ Controlla la connessione di rete (firewall, proxy, ecc.).</value>
   <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
     <value>Usa API indirizzo IPv4 personalizzato</value>
   </data>
-  <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
-    <value>URL ad un servizio Web che può essere raggiunto tramite HTTP o HTTPS e restituisce un indirizzo IP come risposta.</value>
+  <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
+    <value>URL a un servizio Web che può essere raggiunto tramite http o https e restituisce un indirizzo IPv4 come "xx.xx.xx.xx" come risposta.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Impossibile analizzare l'indirizzo IP pubblico da "{0}"!
@@ -2938,7 +2939,7 @@ Se selezioni 'Unisci', i profili attuali verranno copiati nella cartella.</value
     <value>Elenco dei domini di primo livello da iana.org, usato per interrogare i server whois del TLD da whois.iana.org tramite la porta 43</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
-    <value>OUI data from ieee.org.</value>
+    <value>Dati OUI da ieee.org.</value>
   </data>
   <data name="Resource_ServiceNamePortNumber_Description" xml:space="preserve">
     <value>Registro del nome del servizio e del numero di porta del protocollo di trasporto da iana.org.</value>
@@ -2988,10 +2989,10 @@ Per archiviare le credenziali in modo sicuro abilita la crittografia del file de
     <value>Inserisci un indirizzo IPv6 valido!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Indirizzo IPv4 accessibile al pubblico.</value>
+    <value>Indirizzo IPv4 pubblico raggiungibile tramite ICMP.</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Indirizzo IPv6 accessibile al pubblico.</value>
+    <value>Indirizzo IPv6 pubblico raggiungibile tramite ICMP.</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Indirizzo IPv4 pubblico</value>
@@ -3280,15 +3281,21 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
     <value>Proxy</value>
   </data>
   <data name="ResolveIPAddressForThisHost" xml:space="preserve">
-    <value>Resolve IP address for this host (IPv4 is preferred)</value>
+    <value>Risolvi l'indirizzo IP per questo host (è preferibile IPv4)</value>
   </data>
   <data name="NoValidPowerShellPath" xml:space="preserve">
-    <value>A valid path to PowerShell should end with "pwsh.exe" or "powershell.exe"!</value>
+    <value>Un percorso valido per PowerShell dovrebbe terminare con "pwsh.exe" o "powershell.exe"!</value>
   </data>
   <data name="NoValidPuTTYPath" xml:space="preserve">
-    <value>A valid path to PuTTY should end with "PuTTY.exe"!</value>
+    <value>Un percorso valido per PuTTY dovrebbe terminare con "PuTTY.exe"!</value>
   </data>
   <data name="NoValidTigerVNCPath" xml:space="preserve">
-    <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
+    <value>Un percorso valido per TigerVNC dovrebbe terminare con "vncviewer-*.exe" o "vncviewer64-*.exe"!</value>
+  </data>
+  <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
+    <value>Sposta i componenti e le dipendenze di runtime di un'app .NET Framework/.NET Core in una sotto cartella.</value>
+  </data>
+  <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
+    <value>URL a un servizio Web che può essere raggiunto tramite http o https e restituisce un indirizzo IPv6 come "xxxx:xx:xxx::xx" come risposta.</value>
   </data>
 </root>
