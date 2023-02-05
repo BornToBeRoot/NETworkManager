@@ -3259,6 +3259,38 @@ namespace NETworkManager.Settings
         }
         #endregion
 
+        #region
+        private ObservableCollection<SNTPServerInfo> _sntpLookup_SNTPServers = new();
+        public ObservableCollection<SNTPServerInfo> SNTPLookup_SNTPServers
+        {
+            get => _sntpLookup_SNTPServers;
+            set
+            {
+                if (value == _sntpLookup_SNTPServers)
+                    return;
+
+                _sntpLookup_SNTPServers = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private SNTPServerInfo _sntpLookup_SelectedSNTPServer = new();
+        public SNTPServerInfo SNTPLookup_SelectedSNTPServer
+        {
+            get => _sntpLookup_SelectedSNTPServer;
+            set
+            {
+                if (value == _sntpLookup_SelectedSNTPServer)
+                    return;
+
+                _sntpLookup_SelectedSNTPServer = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
         #region Discovery Protocol
         private string _discoveryProtocol_SelectedInterfaceId;
         public string DiscoveryProtocol_InterfaceId
@@ -3927,6 +3959,9 @@ namespace NETworkManager.Settings
             // SNMP
             SNMP_HostHistory.CollectionChanged += CollectionChanged;
             SNMP_OIDHistory.CollectionChanged += CollectionChanged;
+
+            // SNTP Lookup
+            SNTPLookup_SNTPServers.CollectionChanged += CollectionChanged;
 
             // Subnet Calculator / Calculator
             SubnetCalculator_Calculator_SubnetHistory.CollectionChanged += CollectionChanged;

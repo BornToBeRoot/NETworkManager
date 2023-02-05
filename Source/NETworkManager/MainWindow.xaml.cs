@@ -427,9 +427,10 @@ namespace NETworkManager
                     SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.GetDefaultList());
                     SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(DNSServer.GetDefaultList());
                     SettingsManager.Current.AWSSessionManager_AWSProfiles = new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
+                    SettingsManager.Current.SNTPLookup_SNTPServers = new ObservableCollection<SNTPServerInfo>(SNTP.GetDefaultList());
 
                     // Check if PowerShell is installed
-                    foreach (var file in Models.PowerShell.PowerShell.GetDefaultIntallationPaths)
+                    foreach (var file in PowerShell.GetDefaultIntallationPaths)
                     {
                         if (File.Exists(file))
                         {

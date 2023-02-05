@@ -44,18 +44,12 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>                
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.SNTPServers}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox x:Name="ComboBoxDNSServers" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding DNSServers}" SelectedItem="{Binding DNSServer}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=., Converter={StaticResource DNSServerInfoToString}}" d:DataContext="{d:DesignInstance network:DNSServerInfo}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>               
+                <ComboBox x:Name="ComboBoxSNTPServers" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding SNTPServers}" SelectedItem="{Binding SNTPServer}" DisplayMemberPath="Name" />
                 <Button Grid.Column="4" Grid.Row="0" Command="{Binding LookupCommand}" IsDefault="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" HorizontalAlignment="Right">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
-                            <Style.Triggers>                                                                
+                            <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsLookupRunning}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>

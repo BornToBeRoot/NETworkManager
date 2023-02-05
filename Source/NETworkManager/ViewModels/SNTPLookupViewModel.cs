@@ -33,27 +33,25 @@ namespace NETworkManager.ViewModels
         private string _lastSortDescriptionAscending = string.Empty;
 
         private readonly bool _isLoading;
+                
+        public ICollectionView SNTPServers { get; }
 
-        /*
-        public ICollectionView DNSServers { get; }
-
-        private DNSServerInfo _dnsServer = new();
-        public DNSServerInfo DNSServer
+        private SNTPServerInfo _sntpServer = new();
+        public SNTPServerInfo SNTPServer
         {
-            get => _dnsServer;
+            get => _sntpServer;
             set
             {
-                if (value == _dnsServer)
+                if (value == _sntpServer)
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_SelectedDNSServer = value;
+                    SettingsManager.Current.SNTPLookup_SelectedSNTPServer = value;
 
-                _dnsServer = value;
+                _sntpServer = value;
                 OnPropertyChanged();
             }
         }
-        */
                 
         private bool _isLookupRunning;
         public bool IsLookupRunning
@@ -151,18 +149,17 @@ namespace NETworkManager.ViewModels
             _dialogCoordinator = instance;
 
             TabId = tabId;
-                        
-            /*
-            DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers }.View;
-            DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.UseWindowsDNSServer), ListSortDirection.Descending));
-            DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.Name), ListSortDirection.Ascending));
-            DNSServer = DNSServers.SourceCollection.Cast<DNSServerInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer.Name) ?? DNSServers.SourceCollection.Cast<DNSServerInfo>().First();
+            
+            SNTPServers = new CollectionViewSource { Source = SettingsManager.Current.SNTPLookup_SNTPServers }.View;            
+            SNTPServers.SortDescriptions.Add(new SortDescription(nameof(SNTPServerInfo.Name), ListSortDirection.Ascending));
+            SNTPServer = SNTPServers.SourceCollection.Cast<SNTPServerInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.SNTPLookup_SelectedSNTPServer.Name) ?? SNTPServers.SourceCollection.Cast<SNTPServerInfo>().First();
 
+            /*
             LookupResultsView = CollectionViewSource.GetDefaultView(LookupResults);
             LookupResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
             LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.DNSServer), ListSortDirection.Descending));
             */
-            
+
             LoadSettings();
 
             // Detect if settings have changed...

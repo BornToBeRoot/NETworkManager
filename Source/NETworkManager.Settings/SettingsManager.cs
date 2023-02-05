@@ -1,7 +1,9 @@
 ﻿using log4net;
 using NETworkManager.Models;
+using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -204,10 +206,10 @@ namespace NETworkManager.Settings
             // Update to 2022.12.22.0            
             if (fromVersion < new Version(2022, 12, 22, 0))
             {
-                _log.Info($"Apply update to 2022.12.22.0");
+                _log.Info("Apply update to 2022.12.22.0");
 
                 // AWS Session Manager
-                _log.Info($"Add ApplicationName.AWSSessionManager to application list...");
+                _log.Info("Add new App AWS Session Manager...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
 
                 var powerShellPath = "";
@@ -224,7 +226,7 @@ namespace NETworkManager.Settings
                 Current.AWSSessionManager_ApplicationFilePath = powerShellPath;
 
                 // Bit Calculator
-                _log.Info($"Add ApplicationName.BitCalculator to application list...");
+                _log.Info("Add new App Bit Calculator...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.BitCalculator));
             }
             
@@ -234,8 +236,9 @@ namespace NETworkManager.Settings
                 _log.Info($"Apply upgrade to {toVersion}...");
 
                 // NTP Lookup
-                _log.Info($"Add ApplicationName.SNTPLookup to application list...");
+                _log.Info("Add new App SNTP Lookup...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.SNTPLookup));
+                Current.SNTPLookup_SNTPServers = new ObservableCollection<SNTPServerInfo>(SNTP.GetDefaultList());                
             }
 
             // Set to latest version and save
