@@ -238,7 +238,7 @@ namespace NETworkManager.Settings
                 // NTP Lookup
                 _log.Info("Add new App SNTP Lookup...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.SNTPLookup));
-                Current.SNTPLookup_SNTPServers = new ObservableCollection<SNTPServerInfo>(SNTP.GetDefaultList());                
+                Current.SNTPLookup_SNTPServers = new ObservableCollection<SNTPServerInfo>(SNTPServer.GetDefaultList());                
             }
 
             // Set to latest version and save

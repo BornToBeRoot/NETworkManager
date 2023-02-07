@@ -174,10 +174,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                </ContextMenu>
-                <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource DefaultDataGridColumnHeader}">
-                    <EventSetter Event="Click" Handler="ColumnHeader_Click" />
-                </Style>
+                </ContextMenu>                
             </controls:MultiSelectDataGrid.Resources>
             <controls:MultiSelectDataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
@@ -188,35 +185,9 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </controls:MultiSelectDataGrid.RowStyle>
-            <controls:MultiSelectDataGrid.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.ContainerStyle>
-                        <Style TargetType="{x:Type GroupItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                                        <Expander IsExpanded="True" Style="{StaticResource DefaultExpander}" d:DataContext="{d:DesignInstance network:DNSLookupRecordInfo}">
-                                            <Expander.Header>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Name}" Margin="0" />
-                                                </StackPanel>
-                                            </Expander.Header>
-                                            <ItemsPresenter />
-                                        </Expander>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </GroupStyle.ContainerStyle>
-                </GroupStyle>
-            </controls:MultiSelectDataGrid.GroupStyle>
+            </controls:MultiSelectDataGrid.RowStyle>           
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.DomainName}" Binding="{Binding (network:DNSLookupRecordInfo.DomainName)}" SortMemberPath="DomainName" MinWidth="200" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.TTL}" Binding="{Binding (network:DNSLookupRecordInfo.TTL)}" SortMemberPath="TTL" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Class}" Binding="{Binding (network:DNSLookupRecordInfo.Class)}" SortMemberPath="Class" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Type}" Binding="{Binding (network:DNSLookupRecordInfo.Type)}" SortMemberPath="Type" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Result}" Binding="{Binding (network:DNSLookupRecordInfo.Result)}" SortMemberPath="Result" MinWidth="200" />
+                <DataGridTextColumn Header="Test" Binding="{Binding (network:SNTPLookupResultInfo.Test)}" SortMemberPath="Test" MinWidth="200" />                
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>

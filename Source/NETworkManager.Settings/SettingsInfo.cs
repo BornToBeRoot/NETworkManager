@@ -3289,6 +3289,21 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
+
+        private int _sntpLookup_Timeout = GlobalStaticConfiguration.SNTPLookup_Timeout;
+        public int SNTPLookup_Timeout
+        {
+            get => _sntpLookup_Timeout;
+            set
+            {
+                if (value == _sntpLookup_Timeout)
+                    return;
+
+                _sntpLookup_Timeout = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
         #endregion
 
         #region Discovery Protocol

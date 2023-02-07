@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
@@ -10,11 +9,11 @@ namespace NETworkManager.Views
     {
         private readonly SNTPLookupViewModel _viewModel;
 
-        public SNTPLookupView(int tabId, string host = null)
+        public SNTPLookupView(int tabId)
         {
             InitializeComponent();
 
-            _viewModel = new SNTPLookupViewModel(DialogCoordinator.Instance, tabId, host);
+            _viewModel = new SNTPLookupViewModel(DialogCoordinator.Instance, tabId);
 
             DataContext = _viewModel;
         }
@@ -28,12 +27,6 @@ namespace NETworkManager.Views
         {
             if (sender is ContextMenu menu)
                 menu.DataContext = _viewModel;
-        }
-
-        private void ColumnHeader_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is DataGridColumnHeader columnHeader)
-                _viewModel.SortResultByPropertyName(columnHeader.Column.SortMemberPath);
         }
     }
 }

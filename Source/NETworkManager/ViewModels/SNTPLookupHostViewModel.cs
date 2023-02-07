@@ -86,11 +86,11 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        public void AddTab(string host = null)
+        public void AddTab()
         {
             _tabId++;
 
-            TabItems.Add(new DragablzTabItem(host ?? Localization.Resources.Strings.NewTab, new SNTPLookupView(_tabId, host), _tabId));
+            TabItems.Add(new DragablzTabItem(Localization.Resources.Strings.NewTab, new SNTPLookupView(_tabId), _tabId));
 
             SelectedTabIndex = TabItems.Count - 1;
         }

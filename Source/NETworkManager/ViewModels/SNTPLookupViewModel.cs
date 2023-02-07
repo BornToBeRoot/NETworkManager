@@ -19,6 +19,8 @@ using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using DnsClient;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using NETworkManager.Converters;
 
 namespace NETworkManager.ViewModels
 {
@@ -33,7 +35,7 @@ namespace NETworkManager.ViewModels
         private string _lastSortDescriptionAscending = string.Empty;
 
         private readonly bool _isLoading;
-                
+
         public ICollectionView SNTPServers { get; }
 
         private SNTPServerInfo _sntpServer = new();
@@ -52,7 +54,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-                
+
         private bool _isLookupRunning;
         public bool IsLookupRunning
         {
@@ -67,9 +69,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        /*
-        private ObservableCollection<DNSLookupRecordInfo> _lookupResults = new ObservableCollection<DNSLookupRecordInfo>();
-        public ObservableCollection<DNSLookupRecordInfo> LookupResults
+        private ObservableCollection<SNTPLookupResultInfo> _lookupResults = new();
+        public ObservableCollection<SNTPLookupResultInfo> LookupResults
         {
             get => _lookupResults;
             set
@@ -83,8 +84,8 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView LookupResultsView { get; }
 
-        private DNSLookupRecordInfo _selectedLookupResult;
-        public DNSLookupRecordInfo SelectedLookupResult
+        private SNTPLookupResultInfo _selectedLookupResult;
+        public SNTPLookupResultInfo SelectedLookupResult
         {
             get => _selectedLookupResult;
             set
@@ -95,7 +96,7 @@ namespace NETworkManager.ViewModels
                 _selectedLookupResult = value;
                 OnPropertyChanged();
             }
-        }        
+        }
 
         private IList _selectedLookupResults = new ArrayList();
         public IList SelectedLookupResults
@@ -110,8 +111,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-        */
-        
+
         private bool _isStatusMessageDisplayed;
         public bool IsStatusMessageDisplayed
         {
@@ -142,37 +142,34 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings
-        public SNTPLookupViewModel(IDialogCoordinator instance, int tabId, string host)
+        public SNTPLookupViewModel(IDialogCoordinator instance, int tabId)
         {
             _isLoading = true;
 
             _dialogCoordinator = instance;
 
             TabId = tabId;
-            
-            SNTPServers = new CollectionViewSource { Source = SettingsManager.Current.SNTPLookup_SNTPServers }.View;            
+
+            SNTPServers = new CollectionViewSource { Source = SettingsManager.Current.SNTPLookup_SNTPServers }.View;
             SNTPServers.SortDescriptions.Add(new SortDescription(nameof(SNTPServerInfo.Name), ListSortDirection.Ascending));
             SNTPServer = SNTPServers.SourceCollection.Cast<SNTPServerInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.SNTPLookup_SelectedSNTPServer.Name) ?? SNTPServers.SourceCollection.Cast<SNTPServerInfo>().First();
 
-            /*
             LookupResultsView = CollectionViewSource.GetDefaultView(LookupResults);
-            LookupResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
-            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.DNSServer), ListSortDirection.Descending));
-            */
+            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(SNTPLookupResultInfo.Test), ListSortDirection.Descending));
 
             LoadSettings();
 
             // Detect if settings have changed...
-            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+            /* SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged; */
 
             _isLoading = false;
         }
-       
+
         private void LoadSettings()
         {
-        
+
         }
-        
+
         #endregion
 
         #region ICommands & Actions
@@ -185,7 +182,7 @@ namespace NETworkManager.ViewModels
             if (!IsLookupRunning)
                 StartLookup();
         }
-        
+
         /*
         public ICommand CopySelectedDomainNameCommand => new RelayCommand(p => CopySelectedDomainNameAction());
 
@@ -223,7 +220,7 @@ namespace NETworkManager.ViewModels
             ClipboardHelper.SetClipboard(SelectedLookupResult.Result);
         }
         */
-        
+
         /*
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
@@ -270,8 +267,8 @@ namespace NETworkManager.ViewModels
             IsStatusMessageDisplayed = false;
             StatusMessage = string.Empty;
 
-            IsLookupRunning = true;                       
-            /*
+            IsLookupRunning = true;
+
             // Reset the latest results
             LookupResults.Clear();
 
@@ -282,48 +279,28 @@ namespace NETworkManager.ViewModels
             {
                 foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
                 {
-                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = Host;
+                    tabablzControl.Items.OfType<DragablzTabItem>().First(x => x.Id == TabId).Header = SNTPServer.Name;
                 }
             }
 
-            AddHostToHistory(Host);
 
-            DNSLookupSettings settings = new()
+            SNTPLookupSettings settings = new()
             {
-                AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix,
-                QueryClass = SettingsManager.Current.DNSLookup_QueryClass,
-                QueryType = QueryType,
-                Recursion = SettingsManager.Current.DNSLookup_Recursion,
-                UseCache = SettingsManager.Current.DNSLookup_UseCache,
-                UseTCPOnly = SettingsManager.Current.DNSLookup_UseTCPOnly,
-                Retries = SettingsManager.Current.DNSLookup_Retries,
-                Timeout = TimeSpan.FromSeconds(SettingsManager.Current.DNSLookup_Timeout),
+                Timeout = SettingsManager.Current.SNTPLookup_Timeout
             };
 
-            if (!DNSServer.UseWindowsDNSServer)
-            {
-                settings.UseCustomDNSServer = true;
-                settings.CustomDNSServer = DNSServer;                
-            }
 
-            if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
-            {
-                settings.UseCustomDNSSuffix = true;
-                settings.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
-            }
+            SNTPLookup lookup = new(settings);
 
-            DNSLookup lookup = new(settings);
+            lookup.ResultReceived += Lookup_ResultReceived;
+            lookup.LookupError += Lookup_LookupError;
+            lookup.LookupComplete += Lookup_LookupComplete;
 
-            lookup.RecordReceived += DNSLookup_RecordReceived;
-            lookup.LookupError += DNSLookup_LookupError;
-            lookup.LookupComplete += DNSLookup_LookupComplete;
-
-            lookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList());
-            */
+            lookup.QueryAsync(SNTPServer.Servers);
         }
 
         private void LookupFinished()
-        {         
+        {
             IsLookupRunning = false;
         }
 
@@ -331,85 +308,33 @@ namespace NETworkManager.ViewModels
         {
 
         }
-
-        // Modify history list
-        /*
-        private void AddHostToHistory(string host)
-        {
-            // Create the new list
-            var list = ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory.ToList(), host, SettingsManager.Current.General_HistoryListEntries);
-
-            // Clear the old items
-            SettingsManager.Current.DNSLookup_HostHistory.Clear();
-            OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
-
-            // Fill with the new items
-            list.ForEach(x => SettingsManager.Current.DNSLookup_HostHistory.Add(x));
-        }
-        */
-        
-        public void SortResultByPropertyName(string sortDescription)
-        {
-            /*
-            LookupResultsView.SortDescriptions.Clear();
-            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.DNSServer), ListSortDirection.Descending));
-
-            if (_lastSortDescriptionAscending.Equals(sortDescription))
-            {
-                LookupResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Descending));
-                _lastSortDescriptionAscending = string.Empty;
-            }
-            else
-            {
-                LookupResultsView.SortDescriptions.Add(new SortDescription(sortDescription, ListSortDirection.Ascending));
-                _lastSortDescriptionAscending = sortDescription;
-            }
-            */
-        }
         #endregion
 
         #region Events
-        /*
-        private void DNSLookup_RecordReceived(object sender, DNSLookupRecordArgs e)
+        private void Lookup_ResultReceived(object sender, SNTPLookupResultArgs e)
         {
-            var dnsLookupRecordInfo = DNSLookupRecordInfo.Parse(e);
+            var result = SNTPLookupResultInfo.Parse(e);
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                //lock (LookupResults)
-                    LookupResults.Add(dnsLookupRecordInfo);
+                LookupResults.Add(result);
             }));
         }
-
-        private void DNSLookup_LookupError(object sender, DNSLookupErrorArgs e)
+        
+        private void Lookup_LookupError(object sender, SNTPLookupErrorArgs e)
         {
             if (!string.IsNullOrEmpty(StatusMessage))
                 StatusMessage += Environment.NewLine;
-            
-            StatusMessage += $"{e.DNSServer.Address}: {e.ErrorCode}";
+
+            StatusMessage += $"{e.SNTPServer.Server}:{e.SNTPServer.Port} => {e.ErrorCode}";
 
             IsStatusMessageDisplayed = true;
-
-            LookupFinished();
         }
 
-        private void DNSLookup_LookupComplete(object sender, EventArgs e)
+        private void Lookup_LookupComplete(object sender, EventArgs e)
         {
             LookupFinished();
-        }
-        */
-                
-        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            /*
-            switch (e.PropertyName)
-            {             
-                case nameof(SettingsInfo.DNSLookup_ShowOnlyMostCommonQueryTypes):
-                    LoadTypes();
-                    break;
-            }
-            */
-        }
+        }              
         #endregion
     }
 }
