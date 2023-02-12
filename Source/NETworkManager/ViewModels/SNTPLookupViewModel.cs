@@ -183,43 +183,55 @@ namespace NETworkManager.ViewModels
                 StartLookup();
         }
 
-        /*
-        public ICommand CopySelectedDomainNameCommand => new RelayCommand(p => CopySelectedDomainNameAction());
+        public ICommand CopySelectedServerCommand => new RelayCommand(p => CopySelectedServerAction());
 
-        
-        private void CopySelectedDomainNameAction()
+
+        private void CopySelectedServerAction()
         {
-            ClipboardHelper.SetClipboard(SelectedLookupResult.DomainName);
+            ClipboardHelper.SetClipboard(SelectedLookupResult.Server);
         }
 
-        public ICommand CopySelectedTTLCommand => new RelayCommand(p => CopySelectedTTLAction());
+        public ICommand CopySelectedIPEndPointCommand => new RelayCommand(p => CopySelectedIPEndPointAction());
 
-        private void CopySelectedTTLAction()
+        private void CopySelectedIPEndPointAction()
         {
-            ClipboardHelper.SetClipboard(SelectedLookupResult.TTL.ToString());
+            ClipboardHelper.SetClipboard(SelectedLookupResult.IPEndPoint);
         }
 
-        public ICommand CopySelectedClassCommand => new RelayCommand(p => CopySelectedClassAction());
+        public ICommand CopySelectedNetworkTimeCommand => new RelayCommand(p => CopySelectedNetworkTimeAction());
 
-        private void CopySelectedClassAction()
+        private void CopySelectedNetworkTimeAction()
         {
-            ClipboardHelper.SetClipboard(SelectedLookupResult.Class);
+            ClipboardHelper.SetClipboard(SelectedLookupResult.DateTime.NetworkTime.ToString("yyyy.MM.dd HH:mm:ss.fff"));
         }
 
-        public ICommand CopySelectedTypeCommand => new RelayCommand(p => CopySelectedTypeAction());
+        public ICommand CopySelectedLocalStartTimeCommand => new RelayCommand(p => CopySelectedLocalStartTimeAction());
 
-        private void CopySelectedTypeAction()
+        private void CopySelectedLocalStartTimeAction()
         {
-            ClipboardHelper.SetClipboard(SelectedLookupResult.Type);
+            ClipboardHelper.SetClipboard(SelectedLookupResult.DateTime.LocalStartTime.ToString("yyyy.MM.dd HH:mm:ss.fff"));
         }
 
-        public ICommand CopySelectedResultCommand => new RelayCommand(p => CopySelectedResultAction());
+        public ICommand CopySelectedLocalEndTimeCommand => new RelayCommand(p => CopySelectedLocalEndTimeAction());
 
-        private void CopySelectedResultAction()
+        private void CopySelectedLocalEndTimeAction()
         {
-            ClipboardHelper.SetClipboard(SelectedLookupResult.Result);
+            ClipboardHelper.SetClipboard(SelectedLookupResult.DateTime.LocalEndTime.ToString("yyyy.MM.dd HH:mm:ss.fff"));
         }
-        */
+
+        public ICommand CopySelectedOffsetCommand => new RelayCommand(p => CopySelectedOffsetAction());
+
+        private void CopySelectedOffsetAction()
+        {
+            ClipboardHelper.SetClipboard(SelectedLookupResult.DateTime.Offset.ToString() + " s");
+        }
+
+        public ICommand CopySelectedRoundTripDelayCommand => new RelayCommand(p => CopySelectedRoundTripDelayAction());
+
+        private void CopySelectedRoundTripDelayAction()
+        {
+            ClipboardHelper.SetClipboard(SelectedLookupResult.DateTime.RoundTripDelay.ToString() + " ms");
+        }
 
         /*
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
@@ -320,7 +332,7 @@ namespace NETworkManager.ViewModels
                 LookupResults.Add(result);
             }));
         }
-        
+
         private void Lookup_LookupError(object sender, SNTPLookupErrorArgs e)
         {
             if (!string.IsNullOrEmpty(StatusMessage))
@@ -334,7 +346,7 @@ namespace NETworkManager.ViewModels
         private void Lookup_LookupComplete(object sender, EventArgs e)
         {
             LookupFinished();
-        }              
+        }
         #endregion
     }
 }

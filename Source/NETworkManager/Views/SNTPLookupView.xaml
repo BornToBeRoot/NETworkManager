@@ -104,7 +104,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
-                        <MenuItem Header="{x:Static localization:Strings.DomainName}" Command="{Binding CopySelectedDomainNameCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.Server}" Command="{Binding CopySelectedServerCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -113,7 +113,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.TTL}" Command="{Binding CopySelectedTTLCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.IPEndPoint}" Command="{Binding CopySelectedIPEndPointCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -122,7 +122,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Class}" Command="{Binding CopySelectedClassCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.NetworkTime}" Command="{Binding CopySelectedNetworkTimeCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -131,7 +131,7 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Type}" Command="{Binding CopySelectedTypeCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.LocalStartTime}" Command="{Binding CopySelectedLocalStartTimeCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -140,7 +140,25 @@
                                 </Rectangle>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Result}" Command="{Binding CopySelectedResultCommand}">
+                        <MenuItem Header="{x:Static localization:Strings.LocalEndTime}" Command="{Binding CopySelectedLocalEndTimeCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{x:Static localization:Strings.Offset}" Command="{Binding CopySelectedOffsetCommand}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{x:Static localization:Strings.RoundTripDelay}" Command="{Binding CopySelectedRoundTripDelayCommand}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
