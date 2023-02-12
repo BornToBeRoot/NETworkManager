@@ -7979,6 +7979,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SNTP Lookup ähnelt.
+        /// </summary>
+        public static string SNTPLookup {
+            get {
+                return ResourceManager.GetString("SNTPLookup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die SNTP server(s) ähnelt.
         /// </summary>
         public static string SNTPServers {

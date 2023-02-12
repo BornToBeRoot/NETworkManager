@@ -44,7 +44,7 @@ namespace NETworkManager.Models.Network
         }
         #endregion
 
-        #region Methods
+        #region Methods        
         public static SNTPDateTime GetNetworkTimeRfc2030(IPEndPoint server, int timeout = 4000)
         {
             var ntpData = new byte[48]; // RFC 2030

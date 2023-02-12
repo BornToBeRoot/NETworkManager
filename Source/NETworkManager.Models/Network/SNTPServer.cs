@@ -2,10 +2,17 @@
 
 namespace NETworkManager.Models.Network
 {
+    /// <summary>
+    /// Class provides static informations about SNTP servers.
+    /// </summary>
     public static class SNTPServer
     {
+        /// <summary>
+        /// Method will return a default list of common SNTP servers.
+        /// </summary>
+        /// <return
         public static List<SNTPServerInfo> GetDefaultList() => new()
-        {
+        {            
             new SNTPServerInfo("Cloudflare", new()
             {
                 ("time.cloudflare.com", 123)
@@ -21,11 +28,7 @@ namespace NETworkManager.Models.Network
             new SNTPServerInfo("Microsoft", new()
             {
                 ("time.windows.com", 123)
-            }),
-            new SNTPServerInfo("NIST", new()
-            {
-                ("time.nist.gov", 123)
-            }),
+            }),            
             new SNTPServerInfo("pool.ntp.org", new()
             {
                 ("0.pool.ntp.org", 123),

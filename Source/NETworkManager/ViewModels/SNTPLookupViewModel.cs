@@ -26,9 +26,6 @@ namespace NETworkManager.ViewModels
         private readonly IDialogCoordinator _dialogCoordinator;
 
         public readonly int TabId;
-        private bool _firstLoad = true;
-
-        private string _lastSortDescriptionAscending = string.Empty;
 
         private readonly bool _isLoading;
 
@@ -289,12 +286,10 @@ namespace NETworkManager.ViewModels
                 }
             }
 
-
             SNTPLookupSettings settings = new()
             {
                 Timeout = SettingsManager.Current.SNTPLookup_Timeout
             };
-
 
             SNTPLookup lookup = new(settings);
 

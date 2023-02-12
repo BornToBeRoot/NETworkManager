@@ -122,6 +122,7 @@ namespace NETworkManager.ViewModels
         private AWSSessionManagerSettingsView _awsSessionManagerSettingsView;
         private TigerVNCSettingsView _tigerVNCSettingsView;
         private SNMPSettingsView _snmpSettingsView;
+        private SNTPLookupSettingsView _sntpLookupSettingsView;
         private WakeOnLANSettingsView _wakeOnLANSettingsView;
         //private WhoisSettingsView _whoisSettingsView;
         private BitCalculatorSettingsView _bitCalculatorSettingsView;
@@ -301,6 +302,11 @@ namespace NETworkManager.ViewModels
                     _snmpSettingsView ??= new SNMPSettingsView();
 
                     SettingsContent = _snmpSettingsView;
+                    break;
+                case SettingsViewName.SNTPLookup:
+                    _sntpLookupSettingsView ??= new SNTPLookupSettingsView();
+
+                    SettingsContent = _sntpLookupSettingsView;
                     break;
                 case SettingsViewName.WakeOnLAN:
                     _wakeOnLANSettingsView ??= new WakeOnLANSettingsView();
