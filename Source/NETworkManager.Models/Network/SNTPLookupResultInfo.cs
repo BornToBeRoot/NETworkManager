@@ -2,22 +2,25 @@
 {
     public class SNTPLookupResultInfo
     {
-
-        public string Test { get; set; }        
-
+        public string Server { get; set; }
+        public string IPEndPoint { get; set; }
+        public SNTPDateTime DateTime { get; set; }
+                
         public SNTPLookupResultInfo()
         {
 
         }
 
-        public SNTPLookupResultInfo(string test)
+        public SNTPLookupResultInfo(string server, string ipEndPoint, SNTPDateTime dateTime)
         {
-            Test = test;
+            Server = server;
+            IPEndPoint = ipEndPoint;
+            DateTime = dateTime;            
         }
 
         public static SNTPLookupResultInfo Parse(SNTPLookupResultArgs e)
         {
-            return new SNTPLookupResultInfo(e.Test);
+            return new SNTPLookupResultInfo(e.Server, e.IPEndPoint, e.DateTime);
         }
     }
 }

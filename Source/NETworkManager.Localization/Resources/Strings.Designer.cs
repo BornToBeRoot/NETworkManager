@@ -4101,6 +4101,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die IP endpoint ähnelt.
+        /// </summary>
+        public static string IPEndPoint {
+            get {
+                return ResourceManager.GetString("IPEndPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die IP range ähnelt.
         /// </summary>
         public static string IPRange {
@@ -4623,6 +4632,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Local end time ähnelt.
+        /// </summary>
+        public static string LocalEndTime {
+            get {
+                return ResourceManager.GetString("LocalEndTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Local interface ähnelt.
         /// </summary>
         public static string LocalInterface {
@@ -4646,6 +4664,15 @@ namespace NETworkManager.Localization.Resources {
         public static string LocalPort {
             get {
                 return ResourceManager.GetString("LocalPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Local start time ähnelt.
+        /// </summary>
+        public static string LocalStartTime {
+            get {
+                return ResourceManager.GetString("LocalStartTime", resourceCulture);
             }
         }
         
@@ -5100,6 +5127,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Network time ähnelt.
+        /// </summary>
+        public static string NetworkTime {
+            get {
+                return ResourceManager.GetString("NetworkTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Network unavailable! ähnelt.
         /// </summary>
         public static string NetworkUnavailable {
@@ -5394,6 +5430,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Official {
             get {
                 return ResourceManager.GetString("Official", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Offset ähnelt.
+        /// </summary>
+        public static string Offset {
+            get {
+                return ResourceManager.GetString("Offset", resourceCulture);
             }
         }
         
@@ -7318,6 +7363,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round trip delay ähnelt.
+        /// </summary>
+        public static string RoundTripDelay {
+            get {
+                return ResourceManager.GetString("RoundTripDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Route ähnelt.
         /// </summary>
         public static string Route {
@@ -7539,6 +7593,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SerialLine {
             get {
                 return ResourceManager.GetString("SerialLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Server ähnelt.
+        /// </summary>
+        public static string Server {
+            get {
+                return ResourceManager.GetString("Server", resourceCulture);
             }
         }
         

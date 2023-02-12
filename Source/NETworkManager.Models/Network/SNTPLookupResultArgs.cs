@@ -4,16 +4,20 @@ namespace NETworkManager.Models.Network
 {
     public class SNTPLookupResultArgs : System.EventArgs
     {        
-        public string Test { get; set; }        
+        public string Server { get; set; }
+        public string IPEndPoint { get; set; }
+        public SNTPDateTime DateTime { get; set; }        
 
         public SNTPLookupResultArgs()
         {
 
         }
 
-        public SNTPLookupResultArgs(string test)
+        public SNTPLookupResultArgs(string server, string ipEndPoint, SNTPDateTime dateTime)
         {
-            Test = test;
+            Server = server;
+            IPEndPoint = ipEndPoint;
+            DateTime = dateTime;
         }
     }
 }

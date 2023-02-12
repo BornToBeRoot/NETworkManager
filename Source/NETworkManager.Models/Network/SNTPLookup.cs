@@ -1,7 +1,6 @@
 ﻿using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
@@ -46,7 +45,7 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Methods
-        public static DateTime GetNetworkTimeRfc2030(IPEndPoint server, int timeout = 4000)
+        public static SNTPDateTime GetNetworkTimeRfc2030(IPEndPoint server, int timeout = 4000)
         {
             var ntpData = new byte[48]; // RFC 2030
             ntpData[0] = 0x1B; // LI = 0 (no warning), VN = 3 (IPv4 only), Mode = 3 (Client Mode)
@@ -56,18 +55,33 @@ namespace NETworkManager.Models.Network
             udpClient.Client.ReceiveTimeout = timeout;
             udpClient.Connect(server);
 
-            udpClient.Send(ntpData, ntpData.Length);
+            var localStartTime = DateTime.Now.ToUniversalTime();
 
+            udpClient.Send(ntpData, ntpData.Length);
             ntpData = udpClient.Receive(ref server);
+
+            var localEndTime = DateTime.Now.ToUniversalTime();
+            
             udpClient.Close();
 
             ulong intPart = (ulong)ntpData[40] << 24 | (ulong)ntpData[41] << 16 | (ulong)ntpData[42] << 8 | (ulong)ntpData[43];
             ulong fractPart = (ulong)ntpData[44] << 24 | (ulong)ntpData[45] << 16 | (ulong)ntpData[46] << 8 | (ulong)ntpData[47];
 
             var milliseconds = (intPart * 1000) + (fractPart * 1000 / 0x100000000L);
-            var networkDateTime = new DateTime(1900, 1, 1).AddMilliseconds((long)milliseconds);
+            var networkTime = new DateTime(1900, 1, 1).AddMilliseconds((long)milliseconds);
 
-            return networkDateTime;
+            // Calculate local offset with local start/end time and network time in seconds            
+            var roundTripDelayTicks = localEndTime.Ticks - localStartTime.Ticks;            
+            var offsetInSeconds = (localStartTime.Ticks + (roundTripDelayTicks / 2) - networkTime.Ticks) / TimeSpan.TicksPerSecond;
+
+            return new SNTPDateTime()
+            {
+                LocalStartTime = localStartTime,
+                LocalEndTime = localEndTime,
+                NetworkTime = networkTime,
+                RoundTripDelay = roundTripDelayTicks / TimeSpan.TicksPerMillisecond,
+                Offset = offsetInSeconds
+            };            
         }
 
         public void QueryAsync(IEnumerable<(string Server, int Port)> servers)
@@ -96,9 +110,9 @@ namespace NETworkManager.Models.Network
                             OnLookupError(new SNTPLookupErrorArgs(dnsResolverTask.Result.ErrorMessage, server));
                     }
 
-                    DateTime networkTime = GetNetworkTimeRfc2030(new(serverIP, server.Port), _settings.Timeout);
+                    SNTPDateTime dateTime = GetNetworkTimeRfc2030(new(serverIP, server.Port), _settings.Timeout);
 
-                    OnResultReceived(new SNTPLookupResultArgs(networkTime.ToString()));
+                    OnResultReceived(new SNTPLookupResultArgs(server.Server, $"{serverIP}:{server.Port}", dateTime));
                 });
 
                 OnLookupComplete();
