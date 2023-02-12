@@ -110,9 +110,15 @@ namespace NETworkManager.Models.Network
                             OnLookupError(new SNTPLookupErrorArgs(dnsResolverTask.Result.ErrorMessage, server));
                     }
 
-                    SNTPDateTime dateTime = GetNetworkTimeRfc2030(new(serverIP, server.Port), _settings.Timeout);
+                    try
+                    {
+                        SNTPDateTime dateTime = GetNetworkTimeRfc2030(new(serverIP, server.Port), _settings.Timeout);
 
-                    OnResultReceived(new SNTPLookupResultArgs(server.Server, $"{serverIP}:{server.Port}", dateTime));
+                        OnResultReceived(new SNTPLookupResultArgs(server.Server, $"{serverIP}:{server.Port}", dateTime));
+                    } catch (Exception ex)
+                    {
+                        OnLookupError(new SNTPLookupErrorArgs(ex.Message, server));
+                    }
                 });
 
                 OnLookupComplete();

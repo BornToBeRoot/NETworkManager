@@ -21,7 +21,11 @@ namespace NETworkManager.Models.Network
             new SNTPServerInfo("Microsoft", new()
             {
                 ("time.windows.com", 123)
-            }),            
+            }),
+            new SNTPServerInfo("NIST", new()
+            {
+                ("time.nist.gov", 123)
+            }),
             new SNTPServerInfo("pool.ntp.org", new()
             {
                 ("0.pool.ntp.org", 123),
