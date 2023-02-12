@@ -2,7 +2,6 @@
 using NETworkManager.Settings;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -15,12 +14,9 @@ using NETworkManager.Controls;
 using Dragablz;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using System.Threading.Tasks;
 using NETworkManager.Models.Export;
 using NETworkManager.Views;
-using DnsClient;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using NETworkManager.Converters;
 
 namespace NETworkManager.ViewModels
 {
@@ -232,8 +228,7 @@ namespace NETworkManager.ViewModels
         {
             ClipboardHelper.SetClipboard(SelectedLookupResult.DateTime.RoundTripDelay.ToString() + " ms");
         }
-
-        /*
+                
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
         private async Task ExportAction()
@@ -249,7 +244,7 @@ namespace NETworkManager.ViewModels
 
                 try
                 {
-                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? LookupResults : new ObservableCollection<DNSLookupRecordInfo>(SelectedLookupResults.Cast<DNSLookupRecordInfo>().ToArray()));
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? LookupResults : new ObservableCollection<SNTPLookupResultInfo>(SelectedLookupResults.Cast<SNTPLookupResultInfo>().ToArray()));
                 }
                 catch (Exception ex)
                 {
@@ -259,9 +254,9 @@ namespace NETworkManager.ViewModels
                     await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, Localization.Resources.Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine + Environment.NewLine + ex.Message, MessageDialogStyle.Affirmative, settings);
                 }
 
-                SettingsManager.Current.DNSLookup_ExportFileType = instance.FileType;
-                SettingsManager.Current.DNSLookup_ExportFilePath = instance.FilePath;
-            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.CSV, ExportManager.ExportFileType.XML, ExportManager.ExportFileType.JSON }, true, SettingsManager.Current.DNSLookup_ExportFileType, SettingsManager.Current.DNSLookup_ExportFilePath);
+                SettingsManager.Current.SNTPLookup_ExportFileType = instance.FileType;
+                SettingsManager.Current.SNTPLookup_ExportFilePath = instance.FilePath;
+            }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.CSV, ExportManager.ExportFileType.XML, ExportManager.ExportFileType.JSON }, true, SettingsManager.Current.SNTPLookup_ExportFileType, SettingsManager.Current.SNTPLookup_ExportFilePath);
 
             customDialog.Content = new ExportDialog
             {
@@ -269,8 +264,7 @@ namespace NETworkManager.ViewModels
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }
-        */
+        }        
         #endregion
 
         #region Methods      

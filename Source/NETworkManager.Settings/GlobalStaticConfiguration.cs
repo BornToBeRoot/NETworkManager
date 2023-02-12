@@ -152,6 +152,7 @@ namespace NETworkManager.Settings
 
         // Application: SNTP Lookup
         public static int SNTPLookup_Timeout => 4000;
+        public static ExportManager.ExportFileType SNTPLookup_ExportFileType => ExportManager.ExportFileType.CSV;
 
         // Application: Discovery Protocol
         public static DiscoveryProtocol.Protocol DiscoveryProtocol_Protocol => DiscoveryProtocol.Protocol.LLDP_CDP;

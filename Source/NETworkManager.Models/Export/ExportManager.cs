@@ -194,6 +194,30 @@ namespace NETworkManager.Models.Export
         }
 
         /// <summary>
+        /// Method to export objects from type <see cref="SNTPLookupResultInfo"/> to a file.
+        /// </summary>
+        /// <param name="filePath">Path to the export file.</param>
+        /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
+        /// <param name="collection">Objects as <see cref="ObservableCollection{SNTPLookupResultInfo}"/> to export.</param>
+        public static void Export(string filePath, ExportFileType fileType, ObservableCollection<SNTPLookupResultInfo> collection)
+        {
+            switch (fileType)
+            {
+                case ExportFileType.CSV:
+                    CreateCSV(collection, filePath);
+                    break;
+                case ExportFileType.XML:
+                    CreateXML(collection, filePath);
+                    break;
+                case ExportFileType.JSON:
+                    CreateJSON(collection, filePath);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
+            }
+        }
+
+        /// <summary>
         /// Method to export objects from type <see cref="IPNetworkInfo"/> to a file.
         /// </summary>
         /// <param name="filePath">Path to the export file.</param>
@@ -433,6 +457,18 @@ namespace NETworkManager.Models.Export
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
 
+        private static void CreateCSV(IEnumerable<SNTPLookupResultInfo> collection, string filePath)
+        {
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine($"{nameof(SNTPLookupResultInfo.Server)},{nameof(SNTPLookupResultInfo.IPEndPoint)},{nameof(SNTPLookupResultInfo.DateTime.NetworkTime)},{nameof(SNTPLookupResultInfo.DateTime.LocalStartTime)},{nameof(SNTPLookupResultInfo.DateTime.LocalEndTime)},{nameof(SNTPLookupResultInfo.DateTime.Offset)},{nameof(SNTPLookupResultInfo.DateTime.RoundTripDelay)}");
+
+            foreach (var info in collection)
+                stringBuilder.AppendLine($"{info.Server},{info.IPEndPoint},{info.DateTime.NetworkTime.ToString("yyyy.MM.dd HH:mm:ss.fff")},{info.DateTime.LocalStartTime.ToString("yyyy.MM.dd HH:mm:ss.fff")},{info.DateTime.LocalEndTime.ToString("yyyy.MM.dd HH:mm:ss.fff")},{info.DateTime.Offset} s,{info.DateTime.RoundTripDelay} ms");
+
+            System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
+        }
+
         private static void CreateCSV(IEnumerable<IPNetworkInfo> collection, string filePath)
         {
             var stringBuilder = new StringBuilder();
@@ -653,6 +689,27 @@ namespace NETworkManager.Models.Export
                             new XElement(nameof(SNMPReceivedInfo),
                                 new XElement(nameof(SNMPReceivedInfo.OID), info.OID),
                                 new XElement(nameof(SNMPReceivedInfo.Data), info.Data)))));
+
+            document.Save(filePath);
+        }
+
+        public static void CreateXML(IEnumerable<SNTPLookupResultInfo> collection, string filePath)
+        {
+            var document = new XDocument(DefaultXDeclaration,
+
+                new XElement(ApplicationName.SNMP.ToString(),
+                    new XElement(nameof(SNTPLookupResultInfo) + "s",
+
+                        from info in collection
+                        select
+                            new XElement(nameof(SNTPLookupResultInfo),
+                                new XElement(nameof(SNTPLookupResultInfo.Server), info.Server),
+                                new XElement(nameof(SNTPLookupResultInfo.IPEndPoint), info.IPEndPoint),
+                                new XElement(nameof(SNTPLookupResultInfo.DateTime.NetworkTime), info.DateTime.NetworkTime.ToString("yyyy.MM.dd HH:mm:ss.fff")),
+                                new XElement(nameof(SNTPLookupResultInfo.DateTime.LocalStartTime), info.DateTime.LocalStartTime.ToString("yyyy.MM.dd HH:mm:ss.fff")),
+                                new XElement(nameof(SNTPLookupResultInfo.DateTime.LocalEndTime), info.DateTime.LocalEndTime.ToString("yyyy.MM.dd HH:mm:ss.fff")),
+                                new XElement(nameof(SNTPLookupResultInfo.DateTime.Offset), $"{info.DateTime.Offset} s"),
+                                new XElement(nameof(SNTPLookupResultInfo.DateTime.RoundTripDelay), $"{info.DateTime.RoundTripDelay} ms")))));
 
             document.Save(filePath);
         }
@@ -920,6 +977,27 @@ namespace NETworkManager.Models.Export
             System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
         }
 
+        public static void CreateJSON(ObservableCollection<SNTPLookupResultInfo> collection, string filePath)
+        {
+            var jsonData = new object[collection.Count];
+
+            for (var i = 0; i < collection.Count; i++)
+            {
+                jsonData[i] = new
+                {
+                    collection[i].Server,
+                    collection[i].IPEndPoint,
+                    NetworkTime = collection[i].DateTime.NetworkTime.ToString("yyyy.MM.dd HH:mm:ss.fff"),
+                    LocalStartTime = collection[i].DateTime.LocalStartTime.ToString("yyyy.MM.dd HH:mm:ss.fff"),
+                    LocalEndTime = collection[i].DateTime.LocalEndTime.ToString("yyyy.MM.dd HH:mm:ss.fff"),
+                    Offset = $"{collection[i].DateTime.Offset} s",
+                    RoundTripDelay = $"{collection[i].DateTime.RoundTripDelay} ms",
+                };
+            }
+
+            System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+        }
+
         public static void CreateJSON(ObservableCollection<IPNetworkInfo> collection, string filePath)
         {
             var jsonData = new object[collection.Count];
@@ -1041,19 +1119,14 @@ namespace NETworkManager.Models.Export
 
         public static string GetFileExtensionAsString(ExportFileType fileExtension)
         {
-            switch (fileExtension)
+            return fileExtension switch
             {
-                case ExportFileType.CSV:
-                    return "CSV";
-                case ExportFileType.XML:
-                    return "XML";
-                case ExportFileType.JSON:
-                    return "JSON";
-                case ExportFileType.TXT:
-                    return "TXT";
-                default:
-                    return string.Empty;
-            }
+                ExportFileType.CSV => "CSV",
+                ExportFileType.XML => "XML",
+                ExportFileType.JSON => "JSON",
+                ExportFileType.TXT => "TXT",
+                _ => string.Empty,
+            };
         }
         #endregion
     }

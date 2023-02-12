@@ -2756,7 +2756,7 @@ namespace NETworkManager.Settings
         }
         #endregion
 
-        #region AWSSessionManager
+        #region AWS Session Manager
         private bool _awsSessionManager_EnableSyncInstanceIDsFromAWS = GlobalStaticConfiguration.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
         public bool AWSSessionManager_EnableSyncInstanceIDsFromAWS
         {
@@ -3259,7 +3259,7 @@ namespace NETworkManager.Settings
         }
         #endregion
 
-        #region
+        #region SNTPLookup
         private ObservableCollection<SNTPServerInfo> _sntpLookup_SNTPServers = new();
         public ObservableCollection<SNTPServerInfo> SNTPLookup_SNTPServers
         {
@@ -3300,6 +3300,36 @@ namespace NETworkManager.Settings
                     return;
 
                 _sntpLookup_Timeout = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _sntpLookup_ExportFilePath;
+        public string SNTPLookup_ExportFilePath
+        {
+            get => _sntpLookup_ExportFilePath;
+            set
+            {
+                if (value == _sntpLookup_ExportFilePath)
+                    return;
+
+                _sntpLookup_ExportFilePath = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _sntpLookup_ExportFileType = GlobalStaticConfiguration.SNTPLookup_ExportFileType;
+        public ExportManager.ExportFileType SNTPLookup_ExportFileType
+        {
+            get => _sntpLookup_ExportFileType;
+            set
+            {
+                if (value == _sntpLookup_ExportFileType)
+                    return;
+
+                _sntpLookup_ExportFileType = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
