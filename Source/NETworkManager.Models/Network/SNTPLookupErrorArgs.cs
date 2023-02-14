@@ -2,18 +2,30 @@
 {
     public class SNTPLookupErrorArgs : System.EventArgs
     {
+        public string Server { get; set; }
+
+        public bool HasIPEndPoint { get; set; }
+        public string IPEndPoint { get; set; }
+        
         public string ErrorCode { get; set; }
-        public (string Server, int Port) SNTPServer { get; set; }
 
         public SNTPLookupErrorArgs()
         {
 
         }
 
-        public SNTPLookupErrorArgs(string errorCode, (string Server, int Port) sntpServer)
+        public SNTPLookupErrorArgs(string server, string errorCode)
         {
+            Server = server;            
             ErrorCode = errorCode;
-            SNTPServer = sntpServer;
+        }
+
+        public SNTPLookupErrorArgs(string server, string ipEndPoint, string errorCode)
+        {
+            Server = server;
+            HasIPEndPoint = true;
+            IPEndPoint = ipEndPoint;
+            ErrorCode = errorCode;
         }
     }
 }

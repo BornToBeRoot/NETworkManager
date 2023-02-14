@@ -61,7 +61,7 @@ namespace NETworkManager.Models.Network
             ntpData = udpClient.Receive(ref server);
 
             var localEndTime = DateTime.Now.ToUniversalTime();
-            
+
             udpClient.Close();
 
             ulong intPart = (ulong)ntpData[40] << 24 | (ulong)ntpData[41] << 16 | (ulong)ntpData[42] << 8 | (ulong)ntpData[43];
@@ -71,7 +71,7 @@ namespace NETworkManager.Models.Network
             var networkTime = new DateTime(1900, 1, 1).AddMilliseconds((long)milliseconds);
 
             // Calculate local offset with local start/end time and network time in seconds            
-            var roundTripDelayTicks = localEndTime.Ticks - localStartTime.Ticks;            
+            var roundTripDelayTicks = localEndTime.Ticks - localStartTime.Ticks;
             var offsetInSeconds = (localStartTime.Ticks + (roundTripDelayTicks / 2) - networkTime.Ticks) / TimeSpan.TicksPerSecond;
 
             return new SNTPDateTime()
@@ -81,10 +81,10 @@ namespace NETworkManager.Models.Network
                 NetworkTime = networkTime,
                 RoundTripDelay = roundTripDelayTicks / TimeSpan.TicksPerMillisecond,
                 Offset = offsetInSeconds
-            };            
+            };
         }
 
-        public void QueryAsync(IEnumerable<(string Server, int Port)> servers)
+        public void QueryAsync(IEnumerable<ServerInfo> servers)
         {
             Task.Run(() =>
             {
@@ -96,7 +96,7 @@ namespace NETworkManager.Models.Network
                     if (Regex.IsMatch(server.Server, RegexHelper.IPv4AddressRegex) || Regex.IsMatch(server.Server, RegexHelper.IPv6AddressRegex))
                     {
                         IPAddress.Parse(server.Server);
-                    }                        
+                    }
                     else
                     {
                         using var dnsResolverTask = DNSHelper.ResolveAorAaaaAsync(server.Server, true);
@@ -107,7 +107,7 @@ namespace NETworkManager.Models.Network
                         if (!dnsResolverTask.Result.HasError)
                             serverIP = dnsResolverTask.Result.Value;
                         else
-                            OnLookupError(new SNTPLookupErrorArgs(dnsResolverTask.Result.ErrorMessage, server));
+                            OnLookupError(new SNTPLookupErrorArgs(server.Server, dnsResolverTask.Result.ErrorMessage));
                     }
 
                     try
@@ -115,9 +115,10 @@ namespace NETworkManager.Models.Network
                         SNTPDateTime dateTime = GetNetworkTimeRfc2030(new(serverIP, server.Port), _settings.Timeout);
 
                         OnResultReceived(new SNTPLookupResultArgs(server.Server, $"{serverIP}:{server.Port}", dateTime));
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
-                        OnLookupError(new SNTPLookupErrorArgs(ex.Message, server));
+                        OnLookupError(new SNTPLookupErrorArgs(server.Server, $"{serverIP}:{server.Port}", ex.Message));
                     }
                 });
 

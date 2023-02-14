@@ -225,7 +225,7 @@ namespace NETworkManager.ViewModels
         {
             ClipboardHelper.SetClipboard(SelectedLookupResult.DateTime.RoundTripDelay.ToString() + " ms");
         }
-                
+
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
         private async Task ExportAction()
@@ -261,7 +261,7 @@ namespace NETworkManager.ViewModels
             };
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
-        }        
+        }
         #endregion
 
         #region Methods      
@@ -327,8 +327,7 @@ namespace NETworkManager.ViewModels
             if (!string.IsNullOrEmpty(StatusMessage))
                 StatusMessage += Environment.NewLine;
 
-            StatusMessage += $"{e.SNTPServer.Server}:{e.SNTPServer.Port} => {e.ErrorCode}";
-
+            StatusMessage += e.HasIPEndPoint ? $"{e.Server} ({e.IPEndPoint}) => {e.ErrorCode}" : $"{e.Server} => {e.ErrorCode}";
             IsStatusMessageDisplayed = true;
         }
 

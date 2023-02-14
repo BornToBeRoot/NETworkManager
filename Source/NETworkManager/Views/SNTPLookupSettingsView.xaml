@@ -14,16 +14,16 @@
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNTPLookupSettingsViewModel}">
     <UserControl.Resources>
-        <converters:ListToStringConverter x:Key="ListToStringConverter" />
+        <converters:ListServerInfoToStringConverter x:Key="ListServerInfoToStringConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.SNTPLookup}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.SNTPServers}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <DataGrid x:Name="DataGridDNSServers" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding DNSServers}" SelectionMode="Single" SelectedItem="{Binding SelectedDNSServer}" Height="200" Margin="0,0,0,10">
+        <DataGrid x:Name="DataGridSNTPServers" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding SNTPServers}" SelectionMode="Single" SelectedItem="{Binding SelectedSNTPServer}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                    <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditDNSServerCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.EditDots}" Command="{Binding EditSNTPServerCommand}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -32,7 +32,7 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteDNSServerCommand}">
+                    <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteSNTPServerCommand}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -44,13 +44,12 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:DNSServerInfo.Name)}" MinWidth="200" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.DNSServers}" Binding="{Binding (network:DNSServerInfo.Servers), Converter={StaticResource ListToStringConverter}}" MinWidth="200" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:DNSServerInfo.Port)}" MinWidth="80" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:SNTPServerInfo.Name)}" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.SNTPServers}" Binding="{Binding (network:SNTPServerInfo.Servers), Converter={StaticResource ListServerInfoToStringConverter}}" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
-                <KeyBinding Command="{Binding EditDNSServerCommand}" Key="F2" />
-                <KeyBinding Command="{Binding DeleteDNSServerCommand}" Key="Delete" />
+                <KeyBinding Command="{Binding EditSNTPServerCommand}" Key="F2" />
+                <KeyBinding Command="{Binding DeleteSNTPServerCommand}" Key="Delete" />
             </DataGrid.InputBindings>
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
@@ -64,14 +63,14 @@
             </DataGrid.RowStyle>
         </DataGrid>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,10">
-            <Button Command="{Binding DeleteDNSServerCommand}">
+            <Button Command="{Binding DeleteSNTPServerCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                         <Setter Property="IsEnabled" Value="False"/>
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridDNSServers, Path=SelectedItems.Count}" Value="1" />
+                                    <Condition Binding="{Binding ElementName=DataGridSNTPServers, Path=SelectedItems.Count}" Value="1" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True"/>
@@ -95,14 +94,14 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Command="{Binding EditDNSServerCommand}" Margin="10,0,0,0">
+            <Button Command="{Binding EditSNTPServerCommand}" Margin="10,0,0,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                         <Setter Property="IsEnabled" Value="False"/>
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=DataGridDNSServers, Path=SelectedItems.Count}" Value="1" />
+                                    <Condition Binding="{Binding ElementName=DataGridSNTPServers, Path=SelectedItems.Count}" Value="1" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True"/>
@@ -126,7 +125,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Button Command="{Binding AddDNSServerCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
+            <Button Command="{Binding AddSNTPServerCommand}" Style="{StaticResource ImageWithTextButton}" Margin="10,0,0,0">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>

@@ -12,30 +12,30 @@ namespace NETworkManager.Models.Network
         /// </summary>
         /// <return
         public static List<SNTPServerInfo> GetDefaultList() => new()
-        {            
+        {
             new SNTPServerInfo("Cloudflare", new()
             {
-                ("time.cloudflare.com", 123)
+                new ServerInfo("time.cloudflare.com", 123)
             }),
             new SNTPServerInfo("Google Public NTP", new()
             {
-                ("time.google.com", 123),
-                ("time1.google.com", 123),
-                ("time2.google.com", 123),
-                ("time3.google.com", 123),
-                ("time4.google.com", 123)
-            }),            
+                new ServerInfo("time.google.com", 123),
+                new ServerInfo("time1.google.com", 123),
+                new ServerInfo("time2.google.com", 123),
+                new ServerInfo ("time3.google.com", 123),
+                new ServerInfo("time4.google.com", 123)
+            }),
             new SNTPServerInfo("Microsoft", new()
             {
-                ("time.windows.com", 123)
-            }),            
+                new ServerInfo("time.windows.com", 123)
+            }),
             new SNTPServerInfo("pool.ntp.org", new()
             {
-                ("0.pool.ntp.org", 123),
-                ("1.pool.ntp.org", 123),
-                ("2.pool.ntp.org", 123),
-                ("3.pool.ntp.org", 123)
-            })            
+                new ServerInfo("0.pool.ntp.org", 123),
+                new ServerInfo("1.pool.ntp.org", 123),
+                new ServerInfo("2.pool.ntp.org", 123),
+                new ServerInfo("3.pool.ntp.org", 123)
+            })
         };
     }
 }

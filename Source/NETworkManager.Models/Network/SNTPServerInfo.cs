@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NETworkManager.Models.Network
 {
@@ -14,9 +13,9 @@ namespace NETworkManager.Models.Network
         public string Name { get; set; }
 
         /// <summary>
-        /// List of SNTP servers as <see cref="Tuple{string, int}"/>.
+        /// List of SNTP servers as <see cref="ServerInfo"/>.
         /// </summary>
-        public List<(string Server, int Port)> Servers { get; set; }
+        public List<ServerInfo> Servers { get; set; }
 
         /// <summary>
         /// Create an instance of <see cref="SNTPServerInfo"/>.
@@ -30,8 +29,8 @@ namespace NETworkManager.Models.Network
         /// Create an instance of <see cref="SNTPServerInfo"/> with parameters.
         /// </summary>
         /// <param name="name">Name of the profile.</param>
-        /// <param name="servers">List of SNMP servers as <see cref="Tuple{string, int}"/>.</param>        
-        public SNTPServerInfo(string name, List<(string Server, int Port)> servers)
+        /// <param name="servers">List of SNMP servers as <see cref="ServerInfo"/>.</param>        
+        public SNTPServerInfo(string name, List<ServerInfo> servers)
         {
             Name = name;
             Servers = servers;
