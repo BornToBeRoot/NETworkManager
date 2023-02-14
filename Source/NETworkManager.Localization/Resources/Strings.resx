@@ -3299,4 +3299,16 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="SNTPLookup" xml:space="preserve">
     <value>SNTP Lookup</value>
   </data>
+  <data name="AddSNTPServer" xml:space="preserve">
+    <value>Add SNTP server</value>
+  </data>
+  <data name="DeleteSNTPServer" xml:space="preserve">
+    <value>Delete SNTP server</value>
+  </data>
+  <data name="DeleteSNTPServerMessage" xml:space="preserve">
+    <value>The selected SNTP server will be deleted permanently.</value>
+  </data>
+  <data name="EditSNTPServer" xml:space="preserve">
+    <value>Edit SNTP server</value>
+  </data>
 </root>

@@ -74,8 +74,6 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        /*
-
         #region ICommand & Actions
         public ICommand AddSNTPServerCommand => new RelayCommand(p => AddSNTPServerAction());
 
@@ -104,10 +102,10 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.AddDNSServer
+                Title = Localization.Resources.Strings.AddSNTPServer
             };
 
-            var viewModel = new DNSServerViewModel(instance =>
+            var viewModel = new SNTPServerViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -117,7 +115,7 @@ namespace NETworkManager.ViewModels
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             });
 
-            customDialog.Content = new DNSServerDialog
+            customDialog.Content = new SNTPServerDialog
             {
                 DataContext = viewModel
             };
@@ -129,10 +127,10 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {
-                Title = Localization.Resources.Strings.EditDNSServer
+                Title = Localization.Resources.Strings.EditSNTPServer
             };
 
-            var viewModel = new DNSServerViewModel(instance =>
+            var viewModel = new SNTPServerViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -143,7 +141,7 @@ namespace NETworkManager.ViewModels
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, true, SelectedSNTPServer);
 
-            customDialog.Content = new DNSServerDialog
+            customDialog.Content = new SNTPServerDialog
             {
                 DataContext = viewModel
             };
@@ -155,18 +153,18 @@ namespace NETworkManager.ViewModels
         {
             var customDialog = new CustomDialog
             {                
-                Title = Localization.Resources.Strings.DeleteDNSServer
+                Title = Localization.Resources.Strings.DeleteSNTPServer
             };
 
             var viewModel = new ConfirmDeleteViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedSNTPServer);
+                SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, Localization.Resources.Strings.DeleteDNSServerMessage);
+            }, Localization.Resources.Strings.DeleteSNTPServerMessage);
 
             customDialog.Content = new ConfirmDeleteDialog
             {
@@ -175,7 +173,6 @@ namespace NETworkManager.ViewModels
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-        #endregion
-        */
+        #endregion        
     }
 }

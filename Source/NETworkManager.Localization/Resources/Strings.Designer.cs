@@ -556,6 +556,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add SNTP server ähnelt.
+        /// </summary>
+        public static string AddSNTPServer {
+            get {
+                return ResourceManager.GetString("AddSNTPServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Add tab... ähnelt.
         /// </summary>
         public static string AddTabDots {
@@ -2358,6 +2367,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete SNTP server ähnelt.
+        /// </summary>
+        public static string DeleteSNTPServer {
+            get {
+                return ResourceManager.GetString("DeleteSNTPServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The selected SNTP server will be deleted permanently. ähnelt.
+        /// </summary>
+        public static string DeleteSNTPServerMessage {
+            get {
+                return ResourceManager.GetString("DeleteSNTPServerMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Delete table ähnelt.
         /// </summary>
         public static string DeleteTable {
@@ -2822,6 +2849,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EditProfileFile {
             get {
                 return ResourceManager.GetString("EditProfileFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Edit SNTP server ähnelt.
+        /// </summary>
+        public static string EditSNTPServer {
+            get {
+                return ResourceManager.GetString("EditSNTPServer", resourceCulture);
             }
         }
         
