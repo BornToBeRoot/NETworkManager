@@ -7,7 +7,7 @@
 
         public ServerInfo()
         {
-
+            
         }
 
         public ServerInfo(string server, int port)

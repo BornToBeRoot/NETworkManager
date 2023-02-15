@@ -3,8 +3,10 @@ using System;
 using System.Windows.Input;
 using NETworkManager.Models.Network;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Windows.Controls;
+using System.Windows;
 using System.Linq;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
@@ -75,9 +77,6 @@ namespace NETworkManager.ViewModels
 
                 _name = value;
 
-                if (!_isLoading)
-                    Validate();
-
                 OnPropertyChanged();
             }
         }
@@ -96,22 +95,6 @@ namespace NETworkManager.ViewModels
             }
         }
         #endregion
-
-        /*
-        private bool _infoChanged;
-        public bool InfoChanged
-        {
-            get => _infoChanged;
-            set
-            {
-                if (value == _infoChanged)
-                    return;
-
-                _infoChanged = value;
-                OnPropertyChanged();
-            }
-        }
-        */
 
         public ServerInfoProfileViewModel(Action<ServerInfoProfileViewModel> saveCommand, Action<ServerInfoProfileViewModel> cancelHandler, (List<string> UsedNames, bool IsEdited) options, ServerInfoProfile info = null)
         {
@@ -132,12 +115,6 @@ namespace NETworkManager.ViewModels
             Servers = _currentProfile.Servers;
 
             _isLoading = false;
-        }
-
-
-        public void Validate()
-        {
-            //InfoChanged = _info.Name != Name || _previousDNSServerAsString != DNSServers || _info.Port != Port;
         }
     }
 }

@@ -49,18 +49,19 @@
                 </TextBox.Text>
             </TextBox>
         </Grid>
-        <DataGrid Grid.Row="2" Style="{StaticResource DefaultDataGrid}" IsReadOnly="False" ItemsSource="{Binding Servers}">
+        <DataGrid x:Name="DataGridServers" AddingNewItem="DataGridServers_AddingNewItem" Grid.Column="0" Grid.Row="2" Style="{StaticResource DefaultDataGrid}" IsReadOnly="False" ItemsSource="{Binding Servers}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Server}" MinWidth="200">
                     <DataGridTextColumn.Binding>
                         <Binding Path="Server" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
+                                <validators:EmptyValidator />
                                 <validators:DomainOrIPAddressValidator />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}">
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}">                    
                     <DataGridTextColumn.Binding>
                         <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -79,8 +80,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxName}" Value="False" />
-                                    <Condition Binding="{Binding InfoChanged}" Value="True" />
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxName}" Value="False" />                                   
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True" />

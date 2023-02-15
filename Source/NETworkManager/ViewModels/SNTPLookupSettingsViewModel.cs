@@ -19,6 +19,8 @@ namespace NETworkManager.ViewModels
 
         private readonly IDialogCoordinator _dialogCoordinator;
 
+        private (string Server, int Port) _serverInfoDialogNewItemOptions = ("time.example.com", 123);
+
         public ICollectionView Servers { get; }
 
         private ServerInfoProfile _selectedServer = new();
@@ -117,7 +119,7 @@ namespace NETworkManager.ViewModels
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, (ServerInfoProfileNames, false));
 
-            customDialog.Content = new ServerInfoProfileDialog
+            customDialog.Content = new ServerInfoProfileDialog(_serverInfoDialogNewItemOptions)
             {
                 DataContext = viewModel
             };
@@ -136,14 +138,14 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                //SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
-                //SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerInfo(instance.Name, instance.DNSServers.Replace(" ", "").Split(';').ToList(), instance.Port));
+                SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedServer);
+                SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerInfoProfile(instance.Name, instance.Servers));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
             }, (ServerInfoProfileNames, true), SelectedServer);
 
-            customDialog.Content = new ServerInfoProfileDialog
+            customDialog.Content = new ServerInfoProfileDialog(_serverInfoDialogNewItemOptions)
             {
                 DataContext = viewModel
             };
