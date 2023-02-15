@@ -38,6 +38,9 @@ List of SNTP server profiles. A profile can contain one or more SNTP servers wit
 | Microsoft         | `time.windows.com:123`                                                                                        |
 | pool.ntp.org      | `0.pool.ntp.org:123; 1.pool.ntp.org:123; 2.pool.ntp.org:123; 3.pool.ntp.org:123`                              |
 
+{: .note }
+At least one SNTP server profile must exist.
+
 ### Timeout (ms)
 
 Timeout in milliseconds after the SNTP request is canceled.

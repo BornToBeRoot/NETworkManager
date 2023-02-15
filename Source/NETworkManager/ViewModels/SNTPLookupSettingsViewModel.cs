@@ -21,7 +21,19 @@ namespace NETworkManager.ViewModels
 
         private (string Server, int Port) _serverInfoDialogNewItemOptions = ("time.example.com", 123);
 
-        public ICollectionView Servers { get; }
+        private ICollectionView _servers;
+        public ICollectionView Servers
+        {
+            get => _servers;
+            set
+            {
+                if(value == _servers) 
+                    return;
+
+                _servers = value;
+                OnPropertyChanged();
+            }
+        }
 
         private ServerInfoProfile _selectedServer = new();
         public ServerInfoProfile SelectedServer
@@ -93,7 +105,12 @@ namespace NETworkManager.ViewModels
             EditServer();
         }
 
-        public ICommand DeleteServerCommand => new RelayCommand(p => DeleteServerAction());
+        public ICommand DeleteServerCommand => new RelayCommand(p => DeleteServerAction(), DeleteServer_CanExecute);
+
+        private bool DeleteServer_CanExecute(object obj)
+        {
+            return Servers.Cast<ServerInfoProfile>().Count() > 1;
+        }
 
         private void DeleteServerAction()
         {
