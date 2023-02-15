@@ -1,8 +1,8 @@
 ﻿namespace NETworkManager.Views
 {
-    public partial class SNTPServerDialog
+    public partial class ServerInfoProfileDialog
     {
-        public SNTPServerDialog()
+        public ServerInfoProfileDialog()
         {
             InitializeComponent();
         }

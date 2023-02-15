@@ -24,7 +24,7 @@ namespace NETworkManager.Views
 
         private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            _viewModel.EditSNTPServer();
+            _viewModel.EditServer();
         }
     }
 }

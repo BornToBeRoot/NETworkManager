@@ -19,22 +19,24 @@ namespace NETworkManager.ViewModels
 
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        public ICollectionView SNTPServers { get; }
+        public ICollectionView Servers { get; }
 
-        private SNTPServerInfo _selectedSNTPServer = new();
-        public SNTPServerInfo SelectedSNTPServer
+        private ServerInfoProfile _selectedServer = new();
+        public ServerInfoProfile SelectedServer
         {
-            get => _selectedSNTPServer;
+            get => _selectedServer;
             set
             {
-                if (value == _selectedSNTPServer)
+                if (value == _selectedServer)
                     return;
 
-                _selectedSNTPServer = value;
+                _selectedServer = value;
                 OnPropertyChanged();
             }
         }
-        
+
+        private List<string> ServerInfoProfileNames => SettingsManager.Current.SNTPLookup_SNTPServers.Select(x => x.Name).ToList();
+
         private int _timeout;
         public int Timeout
         {
@@ -60,8 +62,8 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            SNTPServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNTPLookup_SNTPServers);
-            SNTPServers.SortDescriptions.Add(new SortDescription(nameof(SNTPServerInfo.Name), ListSortDirection.Ascending));
+            Servers = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNTPLookup_SNTPServers);
+            Servers.SortDescriptions.Add(new SortDescription(nameof(ServerInfoProfile.Name), ListSortDirection.Ascending));
 
             LoadSettings();
 
@@ -69,53 +71,53 @@ namespace NETworkManager.ViewModels
         }
 
         private void LoadSettings()
-        {            
+        {
             Timeout = SettingsManager.Current.SNTPLookup_Timeout;
         }
         #endregion
 
         #region ICommand & Actions
-        public ICommand AddSNTPServerCommand => new RelayCommand(p => AddSNTPServerAction());
+        public ICommand AddServerCommand => new RelayCommand(p => AddServerAction());
 
-        private void AddSNTPServerAction()
+        private void AddServerAction()
         {
-            AddSNTPServer();
+            AddServer();
         }
 
-        public ICommand EditSNTPServerCommand => new RelayCommand(p => EditSNTPServerAction());
+        public ICommand EditServerCommand => new RelayCommand(p => EditServerAction());
 
-        private void EditSNTPServerAction()
+        private void EditServerAction()
         {
-            EditSNTPServer();
+            EditServer();
         }
 
-        public ICommand DeleteSNTPServerCommand => new RelayCommand(p => DeleteSNTPServerAction());
+        public ICommand DeleteServerCommand => new RelayCommand(p => DeleteServerAction());
 
-        private void DeleteSNTPServerAction()
+        private void DeleteServerAction()
         {
-            DeleteSNTPServer();
+            DeleteServer();
         }
         #endregion
-                
+
         #region Methods
-        public async Task AddSNTPServer()
+        public async Task AddServer()
         {
             var customDialog = new CustomDialog
             {
                 Title = Localization.Resources.Strings.AddSNTPServer
             };
 
-            var viewModel = new SNTPServerViewModel(instance =>
+            var viewModel = new ServerInfoProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                //SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerInfo(instance.Name, instance.DNSServers.Replace(" ", "").Split(';').ToList(), instance.Port));
+                SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerInfoProfile(instance.Name, instance.Servers));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            });
+            }, (ServerInfoProfileNames, false));
 
-            customDialog.Content = new SNTPServerDialog
+            customDialog.Content = new ServerInfoProfileDialog
             {
                 DataContext = viewModel
             };
@@ -123,14 +125,14 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public async Task EditSNTPServer()
+        public async Task EditServer()
         {
             var customDialog = new CustomDialog
             {
                 Title = Localization.Resources.Strings.EditSNTPServer
             };
 
-            var viewModel = new SNTPServerViewModel(instance =>
+            var viewModel = new ServerInfoProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
@@ -139,9 +141,9 @@ namespace NETworkManager.ViewModels
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, true, SelectedSNTPServer);
+            }, (ServerInfoProfileNames, true), SelectedServer);
 
-            customDialog.Content = new SNTPServerDialog
+            customDialog.Content = new ServerInfoProfileDialog
             {
                 DataContext = viewModel
             };
@@ -149,10 +151,10 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
-        public async Task DeleteSNTPServer()
+        public async Task DeleteServer()
         {
             var customDialog = new CustomDialog
-            {                
+            {
                 Title = Localization.Resources.Strings.DeleteSNTPServer
             };
 
@@ -160,7 +162,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
+                SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedServer);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

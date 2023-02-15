@@ -11,13 +11,13 @@ namespace NETworkManager.Models.Network
         /// Method will return a default list of common SNTP servers.
         /// </summary>
         /// <return
-        public static List<SNTPServerInfo> GetDefaultList() => new()
+        public static List<ServerInfoProfile> GetDefaultList() => new()
         {
-            new SNTPServerInfo("Cloudflare", new()
+            new ServerInfoProfile("Cloudflare", new()
             {
                 new ServerInfo("time.cloudflare.com", 123)
             }),
-            new SNTPServerInfo("Google Public NTP", new()
+            new ServerInfoProfile("Google Public NTP", new()
             {
                 new ServerInfo("time.google.com", 123),
                 new ServerInfo("time1.google.com", 123),
@@ -25,11 +25,11 @@ namespace NETworkManager.Models.Network
                 new ServerInfo ("time3.google.com", 123),
                 new ServerInfo("time4.google.com", 123)
             }),
-            new SNTPServerInfo("Microsoft", new()
+            new ServerInfoProfile("Microsoft", new()
             {
                 new ServerInfo("time.windows.com", 123)
             }),
-            new SNTPServerInfo("pool.ntp.org", new()
+            new ServerInfoProfile("pool.ntp.org", new()
             {
                 new ServerInfo("0.pool.ntp.org", 123),
                 new ServerInfo("1.pool.ntp.org", 123),
