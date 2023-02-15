@@ -27,48 +27,34 @@
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />                
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
-            <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}">
-                <TextBox.Style>
-                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsEdited}" Value="True">
-                                <Setter Property="TextBox.Text">
-                                    <Setter.Value>
-                                        <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />                                                
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </Setter.Value>
-                                </Setter>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding IsEdited}" Value="False">
-                                <Setter Property="TextBox.Text">
-                                    <Setter.Value>
-                                        <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:IsDNSLookupDNSServersNameUnique ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </Setter.Value>
-                                </Setter>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>            
+            <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}" />
         </Grid>
         <DataGrid Grid.Row="2" Style="{StaticResource DefaultDataGrid}" IsReadOnly="False" ItemsSource="{Binding Servers}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Server" Binding="{Binding Server}"/>
-                <DataGridTextColumn Header="Port" Binding="{Binding Port}"/>
+                <DataGridTextColumn Header="{x:Static localization:Strings.Server}">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="Server" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validators:DomainOrIPAddressValidator />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <validators:PortValidator />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
             </DataGrid.Columns>
-        </DataGrid>        
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">            
+        </DataGrid>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Save}" Command="{Binding SaveCommand}" IsDefault="True" Margin="0,0,10,0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">
@@ -77,8 +63,6 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxName}" Value="False" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxDNSServers}" Value="False" />
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxPort}" Value="False" />
                                     <Condition Binding="{Binding InfoChanged}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>

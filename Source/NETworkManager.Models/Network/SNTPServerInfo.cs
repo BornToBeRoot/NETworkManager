@@ -15,7 +15,7 @@ namespace NETworkManager.Models.Network
         /// <summary>
         /// List of SNTP servers as <see cref="ServerInfo"/>.
         /// </summary>
-        public List<ServerInfo> Servers { get; set; }
+        public List<ServerInfo> Servers { get; set; } = new();
 
         /// <summary>
         /// Create an instance of <see cref="SNTPServerInfo"/>.

@@ -1406,7 +1406,7 @@ Profile files are not affected!</value>
     <value>Connections</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>Enter a valid ip range!</value>
+    <value>Enter a valid IP range!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
     <value>Enter a valid IPv4 address!</value>
@@ -3310,5 +3310,11 @@ If the option is disabled again, the values are no longer modified. However, the
   </data>
   <data name="EditSNTPServer" xml:space="preserve">
     <value>Edit SNTP server</value>
+  </data>
+  <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
+    <value>An SNTP server with this name already exists!</value>
+  </data>
+  <data name="EnterValidDomainOrIPAddress" xml:space="preserve">
+    <value>Enter a valid domain (like "example.com") or a valid IP address (like 192.168.178.1)!</value>
   </data>
 </root>

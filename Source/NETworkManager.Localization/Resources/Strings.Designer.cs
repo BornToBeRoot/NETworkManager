@@ -3033,6 +3033,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid domain (like &quot;example.com&quot;) or a valid IP address (like 192.168.178.1)! ähnelt.
+        /// </summary>
+        public static string EnterValidDomainOrIPAddress {
+            get {
+                return ResourceManager.GetString("EnterValidDomainOrIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid file name! ähnelt.
         /// </summary>
         public static string EnterValidFileName {
@@ -3087,7 +3096,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid ip range! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid IP range! ähnelt.
         /// </summary>
         public static string EnterValidIPScanRange {
             get {
@@ -8029,6 +8038,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SNTPServers {
             get {
                 return ResourceManager.GetString("SNTPServers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die An SNTP server with this name already exists! ähnelt.
+        /// </summary>
+        public static string SNTPServerWithThisNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("SNTPServerWithThisNameAlreadyExists", resourceCulture);
             }
         }
         
