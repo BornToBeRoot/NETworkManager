@@ -3317,4 +3317,7 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="EnterValidDomainOrIPAddress" xml:space="preserve">
     <value>Enter a valid domain (like "example.com") or a valid IP address (like 192.168.178.1)!</value>
   </data>
+  <data name="Servers" xml:space="preserve">
+    <value>Server(s)</value>
+  </data>
 </root>

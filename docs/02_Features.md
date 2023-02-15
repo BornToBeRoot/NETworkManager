@@ -23,6 +23,7 @@ permalink: /Features
 - [TigerVNC](Documentation/Application/TigerVNC) (requires [TigerVNC](https://tigervnc.org/){:target="\_blank"})
 - [Web Console](Documentation/Application/WebConsole) (requires [Microsoft Edge - WebView2 Runtime](https://developer.microsoft.com/en-us/microsoft-edge/webview2/){:target="\_blank"})
 - [SNMP](Documentation/Application/SNMP) - Get, Walk, Set
+- [SNTP Lookup](Documentation/Application/SNTPLookup)
 - [Discovery Protocol](Documentation/Application/DiscoveryProtocol) - LLDP, CDP
 - [Wake on LAN](Documentation/Application/WakeOnLAN)
 - [Whois](Documentation/Application/Whois)
