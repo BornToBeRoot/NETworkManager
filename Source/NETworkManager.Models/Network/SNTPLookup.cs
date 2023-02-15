@@ -95,7 +95,7 @@ namespace NETworkManager.Models.Network
 
                     if (Regex.IsMatch(server.Server, RegexHelper.IPv4AddressRegex) || Regex.IsMatch(server.Server, RegexHelper.IPv6AddressRegex))
                     {
-                        IPAddress.Parse(server.Server);
+                        serverIP = IPAddress.Parse(server.Server);
                     }
                     else
                     {

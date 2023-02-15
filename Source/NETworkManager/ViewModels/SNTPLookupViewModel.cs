@@ -152,9 +152,6 @@ namespace NETworkManager.ViewModels
 
             LoadSettings();
 
-            // Detect if settings have changed...
-            /* SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged; */
-
             _isLoading = false;
         }
 
