@@ -260,6 +260,19 @@ namespace NETworkManager.Settings
                 }
             }
 
+            // Update Port scanner port profiles
+            foreach (var portProfile in PortProfile.GetDefaultList())
+            {
+                var portProfileToReplace = Current.PortScanner_PortProfiles.FirstOrDefault(x => x.Name == portProfile.Name && !x.Ports.Equals(portProfile.Ports));
+
+                if (portProfileToReplace != null)
+                {
+                    _log.Info($"Update Port scanner port profile \"{portProfile.Name}\"...");
+                    Current.PortScanner_PortProfiles.Remove(portProfileToReplace);
+                    Current.PortScanner_PortProfiles.Add(portProfile);
+                }
+            }
+
             // Set to latest version and save
             Current.Version = toVersion.ToString();
             Save();
