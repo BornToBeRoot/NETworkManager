@@ -688,7 +688,7 @@
     <value>Anwenden</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Windows Tastenkombinationen anwenden (z.B. ALT+TAB):</value>
+    <value>Windows Tastenkombinationen anwenden (z. B. ALT+TAB):</value>
   </data>
   <data name="Auth" xml:space="preserve">
     <value>Auth</value>
@@ -1412,16 +1412,16 @@ Profildateien sind nicht betroffen!</value>
     <value>Geben Sie eine gültige IPv4-Adresse ein!</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Geben Sie eine gültige MAC-Addresse (z.B. 00:F1:23:AB:F2:35) ein!</value>
+    <value>Geben Sie eine gültige MAC-Addresse (z. B. 00:F1:23:AB:F2:35) ein!</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
     <value>Geben Sie einen gültigen Port ein (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Geben Sie eine gültige Subnetzmaske ein (z.B. 255.255.255.0)!</value>
+    <value>Geben Sie eine gültige Subnetzmaske ein (z. B. 255.255.255.0)!</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Geben Sie eine gültige Subnetzmaske oder CIDR ein (z.B. 255.255.255.0 oder /24)!</value>
+    <value>Geben Sie eine gültige Subnetzmaske oder CIDR ein (z. B. 255.255.255.0 oder /24)!</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>Feld darf nicht leer sein!</value>
@@ -1493,10 +1493,10 @@ Profildateien sind nicht betroffen!</value>
     <value>Geben Sie einen gültigen Port und/oder Port-Bereich ein (1 - 65535)!</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Geben Sie ein gültiges Subnetz ein (z.B. 192.168.178.133/26)!</value>
+    <value>Geben Sie ein gültiges Subnetz ein (z. B. 192.168.178.133/26)!</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Geben Sie eine gültige Webseite ein (z.B. https://example.com/index.html)</value>
+    <value>Geben Sie eine gültige Webseite ein (z. B. https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>Grün</value>
@@ -1790,7 +1790,7 @@ Profildateien sind nicht betroffen!</value>
     <value>Füge eine Registerkarte hinzu, um eine Whois abfrage durchzuführen...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>Geben Sie eine gültige Domain ein (z.B. "example.com")!</value>
+    <value>Geben Sie eine gültige Domain ein (z. B. "example.com")!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>Whois-Server nicht gefunden für die Domain: "{0}"</value>
@@ -1955,11 +1955,11 @@ Profildateien sind nicht betroffen!</value>
     <value>Hintergrundjob</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>Der Hintergrundjob speichert alle x-Minuten die Einstellungen, Profile und Anmeldeinformationen.
+    <value>Der Hintergrundjob speichert Einstellungen und Profile alle x Minuten.
 
-Wert 0 deaktiviert dieses Feature.
+Der Wert 0 deaktiviert dieses Feature.
 
-Die Änderung dieses Wertes erfordert einen Neustart der Anwendung, um wirksam zu werden.</value>
+Änderungen an diesem Wert erfordern einen Neustart der Anwendung, um wirksam zu werden.</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
     <value>Hintergrundjob alle x-Minuten ausführen</value>
@@ -1989,7 +1989,7 @@ URL: https://api.github.com/</value>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
     <value>Die öffentliche IP-Adresse wird über ipify.org ermittelt.
 
-URL: https://api.ipify.org/</value>
+URL: https://api.ipify.org und https://api6.ipify.org</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privatsphäre</value>
@@ -3260,10 +3260,64 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
   <data name="NoValidTigerVNCPath" xml:space="preserve">
     <value>Ein gültiger Pfad zu TigerVNC sollte mit "vncviewer-*.exe" oder "vncviewer64-*.exe" enden!</value>
   </data>
+  <data name="ApplicationName_SNTPLookup" xml:space="preserve">
+    <value>SNTP-Lookup</value>
+  </data>
   <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
     <value>Verschieben Sie die Laufzeitkomponenten und Abhängigkeiten einer .NET Framework/.NET Core-Anwendung in ein Unterverzeichnis und machen Sie es schön.</value>
   </data>
+  <data name="AddATabToPerformASNTPLookup" xml:space="preserve">
+    <value>Füge eine Registerkarte hinzu, um eine SNTP-Suche durchzuführen...</value>
+  </data>
+  <data name="SNTPServers" xml:space="preserve">
+    <value>SNTP-Server(s)</value>
+  </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
     <value>URL zu einem Webdienst, der über http oder https erreicht werden kann und eine IPv6-Adresse wie "xxxx:xx:xxx::xx" als Antwort zurückgibt.</value>
+  </data>
+  <data name="IPEndPoint" xml:space="preserve">
+    <value>IP-Endpunkt</value>
+  </data>
+  <data name="LocalEndTime" xml:space="preserve">
+    <value>Lokale Endzeit</value>
+  </data>
+  <data name="LocalStartTime" xml:space="preserve">
+    <value>Lokale Startzeit</value>
+  </data>
+  <data name="NetworkTime" xml:space="preserve">
+    <value>Netzwerkzeit</value>
+  </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="RoundTripDelay" xml:space="preserve">
+    <value>Round trip delay</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="SNTPLookup" xml:space="preserve">
+    <value>SNTP-Lookup</value>
+  </data>
+  <data name="AddSNTPServer" xml:space="preserve">
+    <value>SNTP-Server hinzufügen</value>
+  </data>
+  <data name="DeleteSNTPServer" xml:space="preserve">
+    <value>SNTP-Server löschen</value>
+  </data>
+  <data name="DeleteSNTPServerMessage" xml:space="preserve">
+    <value>Der ausgewählte SNTP-Server wird unwiederbringlich gelöscht.</value>
+  </data>
+  <data name="EditSNTPServer" xml:space="preserve">
+    <value>SNTP-Server bearbeiten</value>
+  </data>
+  <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
+    <value>Ein SNTP-Server mit diesem Namen existiert bereits!</value>
+  </data>
+  <data name="EnterValidDomainOrIPAddress" xml:space="preserve">
+    <value>Geben Sie eine gültige Domäne (z. B. "example.com") oder eine gültige IP-Adresse (z. B. 192.168.178.1) ein!</value>
+  </data>
+  <data name="Servers" xml:space="preserve">
+    <value>Server(s)</value>
   </data>
 </root>
