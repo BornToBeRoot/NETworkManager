@@ -74,7 +74,7 @@ namespace NETworkManager.Settings
 
         // Application: Port Scanner 
         public static int PortScanner_HostThreads => 5;
-        public static int PortScanner_PortThreds => 100;
+        public static int PortScanner_PortThreads => 100;
         public static int PortScanner_Timeout => 4000;
         public static ExportManager.ExportFileType PortScanner_ExportFileType => ExportManager.ExportFileType.CSV;
 

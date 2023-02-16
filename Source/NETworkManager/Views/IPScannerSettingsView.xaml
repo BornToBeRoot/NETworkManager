@@ -16,7 +16,7 @@
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowScanResultForAllIPAddresses}" IsOn="{Binding ShowScanResultForAllIPAddresses}" Margin="0,0,0,20"/>
         <TextBlock Text="{x:Static localization:Strings.Multithreading}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock  Text="{x:Static localization:Strings.Threads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding Threads}" Maximum="15000" Minimum="1" Interval="1" Margin="0,0,0,20" />
+        <mah:NumericUpDown Value="{Binding Threads}" Maximum="1024" Minimum="1" Interval="1" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Ping}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock  Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown  Value="{Binding ICMPTimeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,10" />
