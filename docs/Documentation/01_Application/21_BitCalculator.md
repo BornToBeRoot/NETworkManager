@@ -3,7 +3,7 @@ layout: default
 title: Bit Calculator
 parent: Application
 grand_parent: Documentation
-nav_order: 20
+nav_order: 21
 description: "Documentation of the Bit Calculator"
 permalink: /Documentation/Application/BitCalculator
 ---
@@ -18,7 +18,7 @@ New Feature
 
 With the Bit Calculator different data units can be converted. Based on the input number and the selected unit the different units like bits, bytes, kilobits, kilobytes, megabits, megabytes, etc. are calculated.
 
-![BitCalculator](20_BitCalculator.png)
+![BitCalculator](21_BitCalculator.png)
 
 ## Settings
 

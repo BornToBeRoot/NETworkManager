@@ -41,11 +41,11 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="DataGridScrollBar" TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MahApps.Styles.ScrollBar}">
+    <Style x:Key="DataGridScrollBar" TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MahApps.Styles.ScrollBar}">        
            <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="Width" Value="Auto"/>
-                <Setter Property="Height" Value="8" />
+                <Setter Property="Height" Value="8" />                
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Width" Value="8"/>

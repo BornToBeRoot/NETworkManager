@@ -1,11 +1,12 @@
 ﻿using log4net;
 using NETworkManager.Models;
+using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Management.Automation.Runspaces;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -202,31 +203,13 @@ namespace NETworkManager.Settings
         {
             _log.Info($"Start settings upgrade from {fromVersion} to {toVersion}...");
 
-            // Update to 2022.8.18.0
-            /*
-            if (fromVersion < new Version(2022, 8, 18, 0))
+            // Update to 2022.12.22.0            
+            if (fromVersion < new Version(2022, 12, 22, 0))
             {
-                _log.Info($"Apply update to 2022.8.18.0");
-            }
-            */
-
-            // Update to 2022.10.31.0
-            /*
-            var version202210310 = new Version(2022, 10, 31, 0);
-            if (fromVersion < version202210310)
-            {
-                _log.Info($"Apply upgrade to {version202210310}...");
-    
-            }
-            */
-            
-            // Update to latest
-            if (fromVersion < toVersion)
-            {
-                _log.Info($"Apply upgrade to {toVersion}...");
+                _log.Info("Apply update to 2022.12.22.0");
 
                 // AWS Session Manager
-                _log.Info($"Add ApplicationName.AWSSessionManager to application list...");
+                _log.Info("Add new App AWS Session Manager...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
 
                 var powerShellPath = "";
@@ -241,10 +224,21 @@ namespace NETworkManager.Settings
 
                 _log.Info($"Set AWS Session Manager application file path to \"{powerShellPath}\"...");
                 Current.AWSSessionManager_ApplicationFilePath = powerShellPath;
-                
+
                 // Bit Calculator
-                _log.Info($"Add ApplicationName.BitCalculator to application list...");
+                _log.Info("Add new App Bit Calculator...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.BitCalculator));
+            }
+            
+            // Update to latest
+            if (fromVersion < toVersion)
+            {
+                _log.Info($"Apply upgrade to {toVersion}...");
+
+                // NTP Lookup
+                _log.Info("Add new App SNTP Lookup...");
+                Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.SNTPLookup));
+                Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerInfoProfile>(SNTPServer.GetDefaultList());                
             }
 
             // Set to latest version and save

@@ -118,7 +118,7 @@ namespace NETworkManager.Models.Network
                             if (dnsResponse.HasError)
                             {
                                 OnLookupError(new DNSLookupErrorArgs(dnsResponse.ErrorMessage, new IPEndPoint(IPAddress.Parse(dnsResponse.NameServer.Address), dnsResponse.NameServer.Port)));
-                                return;
+                                return; // continue
                             }
 
                             // Process the results...

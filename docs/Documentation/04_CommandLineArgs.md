@@ -47,6 +47,7 @@ Start a specific application on startup.
   - `TigerVNC`
   - `WebConsole`
   - `SNMP`
+  - `SNTPLookup`
   - `DiscoveryProtocol`
   - `WakeOnLAN`
   - `Whois`

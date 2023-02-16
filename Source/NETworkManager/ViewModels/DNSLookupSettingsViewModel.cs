@@ -22,7 +22,7 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView DNSServers { get; }
 
-        private DNSServerInfo _selectedDNSServer = new DNSServerInfo();
+        private DNSServerInfo _selectedDNSServer = new();
         public DNSServerInfo SelectedDNSServer
         {
             get => _selectedDNSServer;
@@ -220,7 +220,7 @@ namespace NETworkManager.ViewModels
             DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.Name), ListSortDirection.Ascending));
             DNSServers.Filter = o =>
             {
-                if (!(o is DNSServerInfo info))
+                if (o is not DNSServerInfo info)
                     return false;
 
                 return !info.UseWindowsDNSServer;

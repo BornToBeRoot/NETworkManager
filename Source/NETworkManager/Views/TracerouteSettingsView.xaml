@@ -12,7 +12,7 @@
         <TextBlock Text="{x:Static localization:Strings.MaximumHopsRouter}" Style="{StaticResource CenterTextBlock}"  Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding MaximumHops}" Maximum="100" Minimum="1" Interval="1" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Ping}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{x:Static localization:Strings.Timeout}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Buffer}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Buffer}" Minimum="1" Maximum="65535" Margin="0,0,0,20" />

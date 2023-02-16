@@ -5,14 +5,14 @@ namespace NETworkManager.Views
 {
     public partial class SNMPHostView
     {
-        private readonly SNMPHostViewModel _viewModel = new SNMPHostViewModel();
+        private readonly SNMPHostViewModel _viewModel = new();
 
         public SNMPHostView()
         {
             InitializeComponent();
             DataContext = _viewModel;
 
-            InterTabController.Partition = ApplicationName.PuTTY.ToString();
+            InterTabController.Partition = ApplicationName.SNMP.ToString();
         }
 
         public void AddTab(string host)

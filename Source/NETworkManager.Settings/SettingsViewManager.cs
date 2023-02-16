@@ -35,6 +35,7 @@ namespace NETworkManager.Settings
             new SettingsViewInfo(SettingsViewName.AWSSessionManager, ApplicationManager.GetIcon(ApplicationName.AWSSessionManager), SettingsViewGroup.Applications),
             new SettingsViewInfo(SettingsViewName.TigerVNC, ApplicationManager.GetIcon(ApplicationName.TigerVNC), SettingsViewGroup.Applications),
             new SettingsViewInfo(SettingsViewName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP), SettingsViewGroup.Applications),
+            new SettingsViewInfo(SettingsViewName.SNTPLookup, ApplicationManager.GetIcon(ApplicationName.SNTPLookup), SettingsViewGroup.Applications),
             new SettingsViewInfo(SettingsViewName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN), SettingsViewGroup.Applications),
             // new SettingsViewInfo(SettingsViewName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois), SettingsViewGroup.Applications)
             new SettingsViewInfo(SettingsViewName.BitCalculator, ApplicationManager.GetIcon(ApplicationName.BitCalculator), SettingsViewGroup.Applications),           

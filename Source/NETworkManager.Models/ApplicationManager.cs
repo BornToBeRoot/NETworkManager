@@ -87,6 +87,9 @@ namespace NETworkManager.Models
                 case ApplicationName.SNMP:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Switch });
                     break;
+                case ApplicationName.SNTPLookup:
+                    canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.ClockCheckOutline });
+                    break;
                 case ApplicationName.DiscoveryProtocol:
                     canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.SwapHorizontal });
                     break;

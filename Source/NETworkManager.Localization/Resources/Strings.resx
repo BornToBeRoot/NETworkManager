@@ -1406,7 +1406,7 @@ Profile files are not affected!</value>
     <value>Connections</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>Enter a valid ip range!</value>
+    <value>Enter a valid IP range!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
     <value>Enter a valid IPv4 address!</value>
@@ -1955,7 +1955,7 @@ Profile files are not affected!</value>
     <value>Background job</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>The background job will save settings, profiles and credentials every x-minutes.
+    <value>The background job will save settings and profiles every x-minutes.
 
 Value 0 will disable this feature.
 
@@ -3260,10 +3260,64 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="NoValidTigerVNCPath" xml:space="preserve">
     <value>A valid path to TigerVNC should end with "vncviewer-*.exe" or "vncviewer64-*.exe"!</value>
   </data>
+  <data name="ApplicationName_SNTPLookup" xml:space="preserve">
+    <value>SNTP Lookup</value>
+  </data>
   <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
     <value>Move a .NET Framework/.NET Core app runtime components and dependencies into a sub-directory and make it beauty.</value>
   </data>
+  <data name="AddATabToPerformASNTPLookup" xml:space="preserve">
+    <value>Add a tab to perform a SNTP lookup...</value>
+  </data>
+  <data name="SNTPServers" xml:space="preserve">
+    <value>SNTP server(s)</value>
+  </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
     <value>URL to a web service that can be reached via http or https and returns an IPv6 address like "xxxx:xx:xxx::xx" as response.</value>
+  </data>
+  <data name="IPEndPoint" xml:space="preserve">
+    <value>IP endpoint</value>
+  </data>
+  <data name="LocalEndTime" xml:space="preserve">
+    <value>Local end time</value>
+  </data>
+  <data name="LocalStartTime" xml:space="preserve">
+    <value>Local start time</value>
+  </data>
+  <data name="NetworkTime" xml:space="preserve">
+    <value>Network time</value>
+  </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="RoundTripDelay" xml:space="preserve">
+    <value>Round trip delay</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="SNTPLookup" xml:space="preserve">
+    <value>SNTP Lookup</value>
+  </data>
+  <data name="AddSNTPServer" xml:space="preserve">
+    <value>Add SNTP server</value>
+  </data>
+  <data name="DeleteSNTPServer" xml:space="preserve">
+    <value>Delete SNTP server</value>
+  </data>
+  <data name="DeleteSNTPServerMessage" xml:space="preserve">
+    <value>The selected SNTP server will be deleted permanently.</value>
+  </data>
+  <data name="EditSNTPServer" xml:space="preserve">
+    <value>Edit SNTP server</value>
+  </data>
+  <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
+    <value>An SNTP server with this name already exists!</value>
+  </data>
+  <data name="EnterValidDomainOrIPAddress" xml:space="preserve">
+    <value>Enter a valid domain (like "example.com") or a valid IP address (like 192.168.178.1)!</value>
+  </data>
+  <data name="Servers" xml:space="preserve">
+    <value>Server(s)</value>
   </data>
 </root>

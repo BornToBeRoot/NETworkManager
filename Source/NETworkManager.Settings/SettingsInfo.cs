@@ -2756,7 +2756,7 @@ namespace NETworkManager.Settings
         }
         #endregion
 
-        #region AWSSessionManager
+        #region AWS Session Manager
         private bool _awsSessionManager_EnableSyncInstanceIDsFromAWS = GlobalStaticConfiguration.AWSSessionManager_EnableSyncInstanceIDsFromAWS;
         public bool AWSSessionManager_EnableSyncInstanceIDsFromAWS
         {
@@ -3253,6 +3253,83 @@ namespace NETworkManager.Settings
                     return;
 
                 _snmp_ExportFileType = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+        #endregion
+
+        #region SNTPLookup
+        private ObservableCollection<ServerInfoProfile> _sntpLookup_SNTPServers = new();
+        public ObservableCollection<ServerInfoProfile> SNTPLookup_SNTPServers
+        {
+            get => _sntpLookup_SNTPServers;
+            set
+            {
+                if (value == _sntpLookup_SNTPServers)
+                    return;
+
+                _sntpLookup_SNTPServers = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ServerInfoProfile _sntpLookup_SelectedSNTPServer = new();
+        public ServerInfoProfile SNTPLookup_SelectedSNTPServer
+        {
+            get => _sntpLookup_SelectedSNTPServer;
+            set
+            {
+                if (value == _sntpLookup_SelectedSNTPServer)
+                    return;
+
+                _sntpLookup_SelectedSNTPServer = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private int _sntpLookup_Timeout = GlobalStaticConfiguration.SNTPLookup_Timeout;
+        public int SNTPLookup_Timeout
+        {
+            get => _sntpLookup_Timeout;
+            set
+            {
+                if (value == _sntpLookup_Timeout)
+                    return;
+
+                _sntpLookup_Timeout = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private string _sntpLookup_ExportFilePath;
+        public string SNTPLookup_ExportFilePath
+        {
+            get => _sntpLookup_ExportFilePath;
+            set
+            {
+                if (value == _sntpLookup_ExportFilePath)
+                    return;
+
+                _sntpLookup_ExportFilePath = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private ExportManager.ExportFileType _sntpLookup_ExportFileType = GlobalStaticConfiguration.SNTPLookup_ExportFileType;
+        public ExportManager.ExportFileType SNTPLookup_ExportFileType
+        {
+            get => _sntpLookup_ExportFileType;
+            set
+            {
+                if (value == _sntpLookup_ExportFileType)
+                    return;
+
+                _sntpLookup_ExportFileType = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -3927,6 +4004,9 @@ namespace NETworkManager.Settings
             // SNMP
             SNMP_HostHistory.CollectionChanged += CollectionChanged;
             SNMP_OIDHistory.CollectionChanged += CollectionChanged;
+
+            // SNTP Lookup
+            SNTPLookup_SNTPServers.CollectionChanged += CollectionChanged;
 
             // Subnet Calculator / Calculator
             SubnetCalculator_Calculator_SubnetHistory.CollectionChanged += CollectionChanged;
