@@ -1,6 +1,6 @@
 ---
 layout: default
-title: SNTPLookup
+title: SNTP Lookup
 parent: Application
 grand_parent: Documentation
 nav_order: 16
