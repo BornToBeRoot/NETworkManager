@@ -148,7 +148,7 @@ namespace NETworkManager.ViewModels
             SNTPServer = SNTPServers.SourceCollection.Cast<ServerInfoProfile>().FirstOrDefault(x => x.Name == SettingsManager.Current.SNTPLookup_SelectedSNTPServer.Name) ?? SNTPServers.SourceCollection.Cast<ServerInfoProfile>().First();
 
             LookupResultsView = CollectionViewSource.GetDefaultView(LookupResults);
-            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(SNTPLookupResultInfo.Server), ListSortDirection.Descending));
+            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(SNTPLookupResultInfo.Server), ListSortDirection.Ascending));
 
             LoadSettings();
 
