@@ -1079,7 +1079,7 @@ namespace NETworkManager.Settings
             }
         }
 
-        private int _portScanner_PortThreads = GlobalStaticConfiguration.PortScanner_PortThreds;
+        private int _portScanner_PortThreads = GlobalStaticConfiguration.PortScanner_PortThreads;
         public int PortScanner_PortThreads
         {
             get => _portScanner_PortThreads;

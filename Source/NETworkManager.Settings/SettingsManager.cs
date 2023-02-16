@@ -208,7 +208,7 @@ namespace NETworkManager.Settings
             {
                 _log.Info("Apply update to 2022.12.22.0");
 
-                // AWS Session Manager
+                // Add AWS Session Manager application
                 _log.Info("Add new App AWS Session Manager...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
 
@@ -225,7 +225,7 @@ namespace NETworkManager.Settings
                 _log.Info($"Set AWS Session Manager application file path to \"{powerShellPath}\"...");
                 Current.AWSSessionManager_ApplicationFilePath = powerShellPath;
 
-                // Bit Calculator
+                // Add Bit Calculator application
                 _log.Info("Add new App Bit Calculator...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.BitCalculator));
             }
@@ -235,10 +235,29 @@ namespace NETworkManager.Settings
             {
                 _log.Info($"Apply upgrade to {toVersion}...");
 
-                // NTP Lookup
+                // Add NTP Lookup application
                 _log.Info("Add new App SNTP Lookup...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.SNTPLookup));
-                Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerInfoProfile>(SNTPServer.GetDefaultList());                
+                Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerInfoProfile>(SNTPServer.GetDefaultList());
+
+                // Update default settings values
+                if(Current.IPScanner_Threads > 1024)
+                {
+                    _log.Info("Change IP scanner threads to 1024");
+                    Current.IPScanner_Threads = 1024;
+                }
+
+                if(Current.PortScanner_HostThreads > 256)
+                {
+                    _log.Info("Change Port scanner host threads to 256");
+                    Current.PortScanner_HostThreads = 256;
+                }
+
+                if (Current.PortScanner_PortThreads > 1024)
+                {
+                    _log.Info("Change Port scanner port threads to 1024");
+                    Current.PortScanner_PortThreads = 1024;
+                }
             }
 
             // Set to latest version and save
