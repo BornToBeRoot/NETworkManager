@@ -229,7 +229,7 @@ namespace NETworkManager.Settings
                 _log.Info("Add new App Bit Calculator...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.BitCalculator));
             }
-            
+
             // Update to latest
             if (fromVersion < toVersion)
             {
@@ -241,22 +241,40 @@ namespace NETworkManager.Settings
                 Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerInfoProfile>(SNTPServer.GetDefaultList());
 
                 // Update default settings values
-                if(Current.IPScanner_Threads > 1024)
+                if (Current.IPScanner_Threads > 1024)
                 {
-                    _log.Info("Change IP scanner threads to 1024");
+                    _log.Info("Change IP Scanner threads to 1024");
                     Current.IPScanner_Threads = 1024;
                 }
 
-                if(Current.PortScanner_HostThreads > 256)
+                if (Current.PortScanner_HostThreads > 256)
                 {
-                    _log.Info("Change Port scanner host threads to 256");
+                    _log.Info("Change Port Scanner host threads to 256");
                     Current.PortScanner_HostThreads = 256;
                 }
 
                 if (Current.PortScanner_PortThreads > 1024)
                 {
-                    _log.Info("Change Port scanner port threads to 1024");
+                    _log.Info("Change Port Scanner port threads to 1024");
                     Current.PortScanner_PortThreads = 1024;
+                }
+            }
+
+            // Add or update Port Scanner port profiles
+            foreach (var portProfile in PortProfile.GetDefaultList())
+            {
+                var portProfileFound = Current.PortScanner_PortProfiles.FirstOrDefault(x => x.Name == portProfile.Name);
+
+                if (portProfileFound == null)
+                {
+                    _log.Info($"Add Port Scanner port profile \"{portProfile.Name}\"...");
+                    Current.PortScanner_PortProfiles.Add(portProfile);
+                }
+                else if (!portProfile.Ports.Equals(portProfileFound.Ports))
+                {
+                    _log.Info($"Update Port Scanner port profile \"{portProfile.Name}\"...");
+                    Current.PortScanner_PortProfiles.Remove(portProfileFound);
+                    Current.PortScanner_PortProfiles.Add(portProfile);
                 }
             }
 
