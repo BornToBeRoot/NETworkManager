@@ -86,6 +86,11 @@
         ApplicationSnmp,
 
         /// <summary>
+        /// SNTP lookup documentation page.
+        /// </summary>
+        ApplicationSntpLookup,
+
+        /// <summary>
         /// Discovery Protocol documentation page.
         /// </summary>
         ApplicationDiscoveryProtocol,

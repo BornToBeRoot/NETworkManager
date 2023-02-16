@@ -17,8 +17,16 @@ Release date: **xx.xx.2023**
 
 ## What's new?
 
+New Feature
+{: .label .label-green }
+
+- SNTP Lookup [#1821](https://github.com/BornToBeRoot/NETworkManager/pull/1821){:target="\_blank"} (See [documentation](https://borntoberoot.net/NETworkManager/Documentation/Application/SNTPLookup){:target="\_blank"} for more details)
+
 ## Improvements
 - Move .NET runtime components and dependencies into a subfolder to simplify the installation/portable folder [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
+- Reduce the size of the installer, portable and archive build [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
+- DataGrid Column header design improved [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
+- DataGrid Columns can now be resized [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - Add documentation for: [#265](https://github.com/BornToBeRoot/NETworkManager/pull/265){:target="\_blank"}
   - [Dashboard](https://borntoberoot.net/NETworkManager/Documentation/Application/Dashboard){:target="\_blank"}
   - [Network Interface](https://borntoberoot.net/NETworkManager/Documentation/Application/NetworkInterface){:target="\_blank"
@@ -26,8 +34,9 @@ Release date: **xx.xx.2023**
   - [IP Scanner](https://borntoberoot.net/NETworkManager/Documentation/Application/IPScanner){:target="\_blank"}
 
 ## Bugfixes
+AWS Session Manager
+  - Use UTF-8 encoding for embedded PowerShell console window [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
 
 ## Other
-
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}

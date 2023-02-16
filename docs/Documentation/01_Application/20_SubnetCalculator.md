@@ -3,7 +3,7 @@ layout: default
 title: Subnet Calculator
 parent: Application
 grand_parent: Documentation
-nav_order: 19
+nav_order: 20
 description: ""
 permalink: /Documentation/Application/SubnetCalculator
 ---
@@ -12,12 +12,12 @@ permalink: /Documentation/Application/SubnetCalculator
 
 ## Calculator
 
-![SubnetCalculator_Calculator](19_SubnetCalculator_Calculator.png)
+![SubnetCalculator_Calculator](20_SubnetCalculator_Calculator.png)
 
 ## Subnetting
 
-![SubnetCalculator_Subnetting](19_SubnetCalculator_Subnetting.png)
+![SubnetCalculator_Subnetting](20_SubnetCalculator_Subnetting.png)
 
 ## Wide Subnet
 
-![SubnetCalculator_WideSubnet](19_SubnetCalculator_WideSubnet.png)
+![SubnetCalculator_WideSubnet](20_SubnetCalculator_WideSubnet.png)

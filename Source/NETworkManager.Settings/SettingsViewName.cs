@@ -25,6 +25,7 @@
         AWSSessionManager,
         TigerVNC,
         SNMP,
+        SNTPLookup,
         WakeOnLAN,
         //Whois,
         BitCalculator

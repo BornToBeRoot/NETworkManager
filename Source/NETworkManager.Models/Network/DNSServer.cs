@@ -19,6 +19,6 @@ namespace NETworkManager.Models.Network
                 new DNSServerInfo("Google Public DNS", new List<string>{"8.8.8.8", "8.8.4.4"}),
                 new DNSServerInfo("Level3", new List<string> {"209.244.0.3", "209.244.0.4"}),
                 new DNSServerInfo("Verisign", new List<string> {"64.6.64.6", "64.6.65.6"})
-            };
+        };
     }
 }

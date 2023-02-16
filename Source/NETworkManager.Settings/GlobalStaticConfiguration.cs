@@ -150,6 +150,10 @@ namespace NETworkManager.Settings
         public static SNMP.SNMPV3PrivacyProvider SNMP_PrivacyProvider => SNMP.SNMPV3PrivacyProvider.AES;
         public static ExportManager.ExportFileType SNMP_ExportFileType => ExportManager.ExportFileType.CSV;
 
+        // Application: SNTP Lookup
+        public static int SNTPLookup_Timeout => 4000;
+        public static ExportManager.ExportFileType SNTPLookup_ExportFileType => ExportManager.ExportFileType.CSV;
+
         // Application: Discovery Protocol
         public static DiscoveryProtocol.Protocol DiscoveryProtocol_Protocol => DiscoveryProtocol.Protocol.LLDP_CDP;
         public static int DiscoveryProtocol_Duration => 60;

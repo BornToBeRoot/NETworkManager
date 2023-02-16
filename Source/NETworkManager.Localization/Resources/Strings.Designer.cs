@@ -349,6 +349,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add a tab to perform a SNTP lookup... ähnelt.
+        /// </summary>
+        public static string AddATabToPerformASNTPLookup {
+            get {
+                return ResourceManager.GetString("AddATabToPerformASNTPLookup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Add a tab to perform a trace... ähnelt.
         /// </summary>
         public static string AddATabToPerformATrace {
@@ -543,6 +552,15 @@ namespace NETworkManager.Localization.Resources {
         public static string AddProfileFile {
             get {
                 return ResourceManager.GetString("AddProfileFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add SNTP server ähnelt.
+        /// </summary>
+        public static string AddSNTPServer {
+            get {
+                return ResourceManager.GetString("AddSNTPServer", resourceCulture);
             }
         }
         
@@ -822,6 +840,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ApplicationName_SNMP {
             get {
                 return ResourceManager.GetString("ApplicationName_SNMP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SNTP Lookup ähnelt.
+        /// </summary>
+        public static string ApplicationName_SNTPLookup {
+            get {
+                return ResourceManager.GetString("ApplicationName_SNTPLookup", resourceCulture);
             }
         }
         
@@ -2340,6 +2367,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete SNTP server ähnelt.
+        /// </summary>
+        public static string DeleteSNTPServer {
+            get {
+                return ResourceManager.GetString("DeleteSNTPServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The selected SNTP server will be deleted permanently. ähnelt.
+        /// </summary>
+        public static string DeleteSNTPServerMessage {
+            get {
+                return ResourceManager.GetString("DeleteSNTPServerMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Delete table ähnelt.
         /// </summary>
         public static string DeleteTable {
@@ -2808,6 +2853,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Edit SNTP server ähnelt.
+        /// </summary>
+        public static string EditSNTPServer {
+            get {
+                return ResourceManager.GetString("EditSNTPServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Emerald ähnelt.
         /// </summary>
         public static string Emerald {
@@ -2979,6 +3033,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid domain (like &quot;example.com&quot;) or a valid IP address (like 192.168.178.1)! ähnelt.
+        /// </summary>
+        public static string EnterValidDomainOrIPAddress {
+            get {
+                return ResourceManager.GetString("EnterValidDomainOrIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid file name! ähnelt.
         /// </summary>
         public static string EnterValidFileName {
@@ -3033,7 +3096,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid ip range! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid IP range! ähnelt.
         /// </summary>
         public static string EnterValidIPScanRange {
             get {
@@ -3637,7 +3700,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The background job will save settings, profiles and credentials every x-minutes.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The background job will save settings and profiles every x-minutes.
         ///
         ///Value 0 will disable this feature.
         ///
@@ -4079,6 +4142,15 @@ namespace NETworkManager.Localization.Resources {
         public static string IPAddressToDetectLocalIPAddressBasedOnRouting {
             get {
                 return ResourceManager.GetString("IPAddressToDetectLocalIPAddressBasedOnRouting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die IP endpoint ähnelt.
+        /// </summary>
+        public static string IPEndPoint {
+            get {
+                return ResourceManager.GetString("IPEndPoint", resourceCulture);
             }
         }
         
@@ -4605,6 +4677,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Local end time ähnelt.
+        /// </summary>
+        public static string LocalEndTime {
+            get {
+                return ResourceManager.GetString("LocalEndTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Local interface ähnelt.
         /// </summary>
         public static string LocalInterface {
@@ -4628,6 +4709,15 @@ namespace NETworkManager.Localization.Resources {
         public static string LocalPort {
             get {
                 return ResourceManager.GetString("LocalPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Local start time ähnelt.
+        /// </summary>
+        public static string LocalStartTime {
+            get {
+                return ResourceManager.GetString("LocalStartTime", resourceCulture);
             }
         }
         
@@ -5082,6 +5172,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Network time ähnelt.
+        /// </summary>
+        public static string NetworkTime {
+            get {
+                return ResourceManager.GetString("NetworkTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Network unavailable! ähnelt.
         /// </summary>
         public static string NetworkUnavailable {
@@ -5376,6 +5475,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Official {
             get {
                 return ResourceManager.GetString("Official", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Offset ähnelt.
+        /// </summary>
+        public static string Offset {
+            get {
+                return ResourceManager.GetString("Offset", resourceCulture);
             }
         }
         
@@ -7300,6 +7408,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round trip delay ähnelt.
+        /// </summary>
+        public static string RoundTripDelay {
+            get {
+                return ResourceManager.GetString("RoundTripDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Route ähnelt.
         /// </summary>
         public static string Route {
@@ -7521,6 +7638,24 @@ namespace NETworkManager.Localization.Resources {
         public static string SerialLine {
             get {
                 return ResourceManager.GetString("SerialLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Server ähnelt.
+        /// </summary>
+        public static string Server {
+            get {
+                return ResourceManager.GetString("Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Server(s) ähnelt.
+        /// </summary>
+        public static string Servers {
+            get {
+                return ResourceManager.GetString("Servers", resourceCulture);
             }
         }
         
@@ -7894,6 +8029,33 @@ namespace NETworkManager.Localization.Resources {
         public static string SNMP {
             get {
                 return ResourceManager.GetString("SNMP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SNTP Lookup ähnelt.
+        /// </summary>
+        public static string SNTPLookup {
+            get {
+                return ResourceManager.GetString("SNTPLookup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SNTP server(s) ähnelt.
+        /// </summary>
+        public static string SNTPServers {
+            get {
+                return ResourceManager.GetString("SNTPServers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die An SNTP server with this name already exists! ähnelt.
+        /// </summary>
+        public static string SNTPServerWithThisNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("SNTPServerWithThisNameAlreadyExists", resourceCulture);
             }
         }
         

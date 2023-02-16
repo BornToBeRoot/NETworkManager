@@ -3,8 +3,9 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
 		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+		<PlatformTarget>x64</PlatformTarget>
 		<SelfContained>false</SelfContained>
-		<!--
+		<!-- Publish a single file can't be used when accessing assembly file path
 		<PublishSingleFile>true</PublishSingleFile>
 		<PublishReadyToRun>true</PublishReadyToRun>
 		-->
@@ -23,15 +24,16 @@
 		<PackageLicenseFile>NETworkManager.txt</PackageLicenseFile>
 		<PackageIcon>NETworkManager.ico</PackageIcon>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-		<Description>A powerful tool for managing networks and troubleshoot network problems!</Description>
-		<PlatformTarget>x64</PlatformTarget>
+		<Description>A powerful tool for managing networks and troubleshoot network problems!</Description>		
 	</PropertyGroup>
 	<PropertyGroup>
 		<BeautySharedRuntimeMode>False</BeautySharedRuntimeMode>
 		<BeautyLibsDir Condition="$(BeautySharedRuntimeMode) == 'True'">../lib</BeautyLibsDir>
 		<BeautyLibsDir Condition="$(BeautySharedRuntimeMode) != 'True'">./lib</BeautyLibsDir>
 		<BeautyExcludes>NETworkManager.Models.dll</BeautyExcludes>
+		<!-- Hidden files are not supported by Compress-Archive (Portable, Archive) and InnoSetup (Installer)
 		<BeautyHiddens>*.deps.json;*.runtimeconfig.json;*.dll.config</BeautyHiddens>
+		-->
 		<DisableBeauty>False</DisableBeauty>
 		<BeautyOnPublishOnly>False</BeautyOnPublishOnly>
 		<BeautyEnableDebugging>False</BeautyEnableDebugging>
@@ -54,7 +56,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AirspaceFixer" Version="1.0.6" />
-		<PackageReference Include="AWSSDK.EC2" Version="3.7.122.1" />
+		<PackageReference Include="AWSSDK.EC2" Version="3.7.123.1" />
 		<PackageReference Include="DnsClient" Version="1.7.0" />
 		<PackageReference Include="IPNetwork2" Version="2.6.548" />
 		<PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.1" />
@@ -67,7 +69,7 @@
 		<PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="4.11.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
 		<PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0" />
-		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1518.46" />
+		<PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1587.40" />
 		<PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.1" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
@@ -116,49 +118,7 @@
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\AWSSessionManagerControl.xaml">
-		  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-		</Page>
-		<Page Update="Resources\Styles\WindowStyles.xaml">
-			<CopyToOutputDirectory></CopyToOutputDirectory>
-		</Page>
-		<Page Update="Views\CredentialsChangePasswordDialog.xaml">
-			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-		</Page>
-		<Page Update="Views\AWSProfileDialog.xaml">
-		  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-		</Page>
-		<Page Update="Views\DropdownDialog.xaml">
-			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Views\NetworkConnectionView.xaml">
-			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-		</Page>
-		<Page Update="Views\IPAddressDialog.xaml">
-			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-		</Page>
-		<Page Update="Views\PortProfilesDialog.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Views\AWSSessionManagerConnectDialog.xaml">
-		  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-		</Page>
-		<Page Update="Views\AWSSessionManagerHostView.xaml">
-		  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-		</Page>
-		<Page Update="Views\AWSSessionManagerSettingsView.xaml">
-		  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-		</Page>
-		<Page Update="Views\BitCalculatorSettingsView.xaml">
-		  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-		</Page>
-		<Page Update="Views\BitCalculatorView.xaml">
-		  <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-		</Page>
-	</ItemGroup>
+	</ItemGroup>	
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
 		<Exec Command="PowerShell.exe -ExecutionPolicy Bypass -NoProfile -File &quot;$(ProjectDir)..\..\Scripts\PreBuildEventCommandLine.ps1&quot; &quot;$(TargetDir)&quot;" />
 	</Target>
