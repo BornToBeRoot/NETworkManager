@@ -27,6 +27,11 @@ New Feature
 - Reduce the size of the installer, portable and archive build [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
 - DataGrid Column header design improved [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - DataGrid Columns can now be resized [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
+- IP Scanner
+  - Max threads changed to to 1024 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
+- Port Scanner
+  - Max host threads changed to to 256 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
+  - Max port threads changed to to 1024 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
 - Add documentation for: [#265](https://github.com/BornToBeRoot/NETworkManager/pull/265){:target="\_blank"}
   - [Dashboard](https://borntoberoot.net/NETworkManager/Documentation/Application/Dashboard){:target="\_blank"}
   - [Network Interface](https://borntoberoot.net/NETworkManager/Documentation/Application/NetworkInterface){:target="\_blank"

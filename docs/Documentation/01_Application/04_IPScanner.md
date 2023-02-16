@@ -71,7 +71,7 @@ Show the scan result for all IP addresses including the ones that are not active
 
 Number of threads to use for scanning.
 
-**Type:** `Integer` [Min `1`, Max `15000`]
+**Type:** `Integer` [Min `1`, Max `1024`]
 
 **Default:** `256`
 
