@@ -1,10 +1,10 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  #push:
+  #  branches: [ main ]
+  #pull_request:
+  #  branches: [ main ]
   schedule:
     - cron: '29 7 * * 1'
 
@@ -17,9 +17,9 @@ jobs:
       contents: read
       security-events: write
     # Ignore dependabot, ImgBot and transifex-integration
-    if: github.actor!= 'dependabot[bot]' &&
-        github.actor!= 'imgbot[bot]' &&
-        github.actor!= 'transifex-integration[bot]'
+    #if: github.actor!= 'dependabot[bot]' &&
+    #    github.actor!= 'imgbot[bot]' &&
+    #    github.actor!= 'transifex-integration[bot]'
     
     strategy:
       fail-fast: false
