@@ -5,13 +5,14 @@ using System;
 using System.Xml;
 using System.IO;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace NETworkManager.Models.Lookup
 {
     public static partial class PortLookup
     {
         #region Variables
-        private static readonly string PortsFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "Ports.xml");
+        private static readonly string PortsFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Resources", "Ports.xml");
 
         private static readonly List<PortLookupInfo> PortList;
         private static readonly Lookup<int, PortLookupInfo> Ports;

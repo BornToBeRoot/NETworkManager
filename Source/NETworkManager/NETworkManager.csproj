@@ -30,7 +30,9 @@
 		<BeautySharedRuntimeMode>False</BeautySharedRuntimeMode>
 		<BeautyLibsDir Condition="$(BeautySharedRuntimeMode) == 'True'">../lib</BeautyLibsDir>
 		<BeautyLibsDir Condition="$(BeautySharedRuntimeMode) != 'True'">./lib</BeautyLibsDir>
+		<!-- Exclude files if necessary
 		<BeautyExcludes>NETworkManager.Models.dll</BeautyExcludes>
+		-->
 		<!-- Hidden files are not supported by Compress-Archive (Portable, Archive) and InnoSetup (Installer)
 		<BeautyHiddens>*.deps.json;*.runtimeconfig.json;*.dll.config</BeautyHiddens>
 		-->

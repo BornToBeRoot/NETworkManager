@@ -12,7 +12,7 @@ namespace NETworkManager.Models.Network
     public static class Whois
     {
         #region Variables
-        private static readonly string WhoisServerFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "WhoisServers.xml");
+        private static readonly string WhoisServerFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Resources", "WhoisServers.xml");
 
         private static readonly List<WhoisServerInfo> WhoisServerList;
         private static readonly Lookup<string, WhoisServerInfo> WhoisServers;

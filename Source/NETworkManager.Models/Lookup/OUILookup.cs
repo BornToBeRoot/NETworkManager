@@ -12,7 +12,7 @@ namespace NETworkManager.Models.Lookup
     public static class OUILookup
     {
         #region Variables
-        private static readonly string OuiFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "OUI.xml");
+        private static readonly string OuiFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Resources", "OUI.xml");
 
         private static readonly List<OUIInfo> OUIInfoList;
         private static readonly Lookup<string, OUIInfo> OUIInfoLookup;

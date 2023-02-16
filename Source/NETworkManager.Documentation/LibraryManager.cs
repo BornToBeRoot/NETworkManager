@@ -19,8 +19,8 @@ namespace NETworkManager.Documentation
         /// </summary>
         /// <returns>Location of the license folder.</returns>
         public static string GetLicenseLocation()
-        {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new DirectoryNotFoundException("Program execution directory not found, while trying to build path to license directory!"), LicenseFolderName);
+        {            
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) ?? throw new DirectoryNotFoundException("Program execution directory not found, while trying to build path to license directory!"), LicenseFolderName);
         }
 
         /// <summary>
