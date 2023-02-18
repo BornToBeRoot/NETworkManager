@@ -9,19 +9,20 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            var subnetmaskOrCidr = value as string;
+            var subnetmaskOrCidr = (value as string)?.Trim();
 
-            if (subnetmaskOrCidr != null && Regex.IsMatch(subnetmaskOrCidr, RegexHelper.SubnetmaskRegex))
-                return ValidationResult.ValidResult;
-
-            if (subnetmaskOrCidr == null || !subnetmaskOrCidr.StartsWith("/"))
+            if(string.IsNullOrEmpty(subnetmaskOrCidr))
                 return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmaskOrCIDR);
 
-            if (!int.TryParse(subnetmaskOrCidr.TrimStart('/'), out var cidr))
-                return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmaskOrCIDR);
 
-            if (cidr >= 0 && cidr < 33)
+            if (Regex.IsMatch(subnetmaskOrCidr, RegexHelper.SubnetmaskRegex))
                 return ValidationResult.ValidResult;
+
+            if (int.TryParse(subnetmaskOrCidr.TrimStart('/'), out var cidr))
+            {
+                if (cidr >= 0 && cidr < 33)
+                    return ValidationResult.ValidResult;
+            }
 
             return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmaskOrCIDR);
         }

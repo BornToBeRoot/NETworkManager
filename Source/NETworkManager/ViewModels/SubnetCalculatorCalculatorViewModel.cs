@@ -97,11 +97,13 @@ namespace NETworkManager.ViewModels
         {
             IsCalculationRunning = true;
 
-            Result = new IPNetworkInfo(IPNetwork.Parse(Subnet));
+            var subnet = Subnet.Trim();
+
+            Result = new IPNetworkInfo(IPNetwork.Parse(subnet));
 
             IsResultVisible = true;
 
-            AddSubnetToHistory(Subnet);
+            AddSubnetToHistory(subnet);
 
             IsCalculationRunning = false;
         }

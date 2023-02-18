@@ -12,7 +12,7 @@
     <StackPanel>
         <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.ShowStatusWindowOnNetworkChange}" IsOn="{Binding ShowWindowOnNetworkChange}" Margin="0,0,0,10"/>
         <TextBlock Text="{x:Static localization:Strings.IPAddressToDetectLocalIPAddressBasedOnRouting}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" mahAppsControls:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort53}" Style="{StaticResource DefaultTextBox}">
+        <TextBox Width="250" HorizontalAlignment="Left"  Margin="0,0,0,10" mahAppsControls:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4DNSServer}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="IPAddressToDetectLocalIPAddressBasedOnRouting" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

@@ -5,14 +5,14 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Validators
 {
-    public class IPAddressValidator : ValidationRule
+    public class EmptyOrIPv4AddressValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (value != null && (Regex.IsMatch((string)value, RegexHelper.IPv4AddressRegex) || Regex.IsMatch((string)value, RegexHelper.IPv6AddressRegex)))
+            if (string.IsNullOrEmpty(value as string))
                 return ValidationResult.ValidResult;
 
-            return new ValidationResult(false, Localization.Resources.Strings.EnterValidIPAddress);
+            return Regex.IsMatch((string)value, RegexHelper.IPv4AddressRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPv4Address);
         }
     }
 }

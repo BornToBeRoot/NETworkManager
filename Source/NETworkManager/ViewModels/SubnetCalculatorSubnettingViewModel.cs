@@ -257,20 +257,23 @@ namespace NETworkManager.ViewModels
 
             SubnetsResult.Clear();
 
-            var subnet = IPNetwork.Parse(Subnet);
+            var subnet = Subnet.Trim();
+            var newSubnetmaskOrCidr = NewSubnetmaskOrCIDR.Trim();                
+
+            var ipNetwork = IPNetwork.Parse(Subnet.Trim());
 
             byte newCidr = 0;
 
             // Support subnetmask like 255.255.255.0
-            if (Regex.IsMatch(NewSubnetmaskOrCIDR, RegexHelper.SubnetmaskRegex))
-                newCidr = Convert.ToByte(Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(NewSubnetmaskOrCIDR)));
+            if (Regex.IsMatch(newSubnetmaskOrCidr, RegexHelper.SubnetmaskRegex))
+                newCidr = Convert.ToByte(Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCidr)));
             else
-                newCidr = Convert.ToByte(NewSubnetmaskOrCIDR.TrimStart('/'));
+                newCidr = Convert.ToByte(newSubnetmaskOrCidr.TrimStart('/'));
 
             // Ask the user if there is a large calculation...
-            var baseCidr = subnet.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? 32 : 128;
+            var baseCidr = ipNetwork.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? 32 : 128;
 
-            if (65535 < Math.Pow(2, baseCidr - subnet.Cidr) / Math.Pow(2, (baseCidr - newCidr)))
+            if (65535 < Math.Pow(2, baseCidr - ipNetwork.Cidr) / Math.Pow(2, (baseCidr - newCidr)))
             {
                 var settings = AppearanceManager.MetroDialog;
 
@@ -290,7 +293,7 @@ namespace NETworkManager.ViewModels
             // This still slows the application / freezes the ui... there are to many updates to the ui thread...
             await Task.Run(() =>
             {
-                foreach (var network in subnet.Subnet(newCidr))
+                foreach (var network in ipNetwork.Subnet(newCidr))
                 {
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
                     {                        
@@ -301,8 +304,8 @@ namespace NETworkManager.ViewModels
 
             IsResultVisible = true;
 
-            AddSubnetToHistory(Subnet);
-            AddNewSubnetmaskOrCIDRToHistory(NewSubnetmaskOrCIDR);
+            AddSubnetToHistory(subnet);
+            AddNewSubnetmaskOrCIDRToHistory(newSubnetmaskOrCidr);
 
             IsCalculationRunning = false;
         }

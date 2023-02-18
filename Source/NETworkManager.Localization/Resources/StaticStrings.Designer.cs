@@ -169,7 +169,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 192.168.178.1; example.com ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die SERVER-01; 172.16.0.100 ähnelt.
         /// </summary>
         public static string ExampleHostnameAndOrIPAddress {
             get {
@@ -214,7 +214,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 8.8.8.8 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1.1.1.1 ähnelt.
         /// </summary>
         public static string ExampleIPv4DNSServer {
             get {
@@ -223,7 +223,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 192.168.178.1; 8.8.8.8; 8.8.4.4 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 192.168.178.1; 1.1.1.1; 1.0.0.1 ähnelt.
         /// </summary>
         public static string ExampleIPv4DNSServers {
             get {

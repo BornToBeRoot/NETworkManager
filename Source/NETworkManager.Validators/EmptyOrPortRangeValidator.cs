@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Validators
 {
-    public class IsEmptyOrPortRangeValidator : ValidationRule
+    public class EmptyOrPortRangeValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -17,7 +17,7 @@ namespace NETworkManager.Validators
 
             foreach (var portOrRange in ((string)value).Replace(" ", "").Split(';'))
             {
-                if (portOrRange.Contains("-"))
+                if (portOrRange.Contains('-'))
                 {
                     var portRange = portOrRange.Split('-');
 

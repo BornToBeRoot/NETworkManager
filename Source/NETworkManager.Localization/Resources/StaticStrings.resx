@@ -139,7 +139,7 @@
     <value>SERVER-01</value>
   </data>
   <data name="ExampleHostnameAndOrIPAddress" xml:space="preserve">
-    <value>192.168.178.1; example.com</value>
+    <value>SERVER-01; 172.16.0.100</value>
   </data>
   <data name="ExampleHostnameOrIPAddress" xml:space="preserve">
     <value>SERVER-01 or 172.16.0.100</value>
@@ -154,10 +154,10 @@
     <value>192.168.178.255</value>
   </data>
   <data name="ExampleIPv4DNSServer" xml:space="preserve">
-    <value>8.8.8.8</value>
+    <value>1.1.1.1</value>
   </data>
   <data name="ExampleIPv4DNSServers" xml:space="preserve">
-    <value>192.168.178.1; 8.8.8.8; 8.8.4.4</value>
+    <value>192.168.178.1; 1.1.1.1; 1.0.0.1</value>
   </data>
   <data name="ExampleIPv4Gateway" xml:space="preserve">
     <value>192.168.178.1</value>
