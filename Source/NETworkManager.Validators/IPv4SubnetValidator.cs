@@ -11,10 +11,13 @@ namespace NETworkManager.Validators
         {
             var subnet = (value as string)?.Trim();
 
-            if (subnet != null && Regex.IsMatch(subnet, RegexHelper.IPv4AddressCidrRegex))
+            if(string.IsNullOrEmpty(subnet))
+                return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnet);
+
+            if (Regex.IsMatch(subnet, RegexHelper.IPv4AddressCidrRegex))
                 return ValidationResult.ValidResult;
 
-            if (subnet != null && Regex.IsMatch(subnet, RegexHelper.IPv4AddressSubnetmaskRegex))
+            if (Regex.IsMatch(subnet, RegexHelper.IPv4AddressSubnetmaskRegex))
                 return ValidationResult.ValidResult;
 
             return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnet);

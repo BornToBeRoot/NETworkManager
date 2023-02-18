@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace NETworkManager.Validators
 {
-    public class IsEmptyOrAWSRegionExistsValidator : ValidationRule
+    public class EmptyOrAWSRegionExistsValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

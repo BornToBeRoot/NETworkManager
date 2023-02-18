@@ -9,7 +9,12 @@ namespace NETworkManager.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            return value != null && Regex.IsMatch((string) value, RegexHelper.IPv6AddressRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPv6Address);
+            var ipAddress = (value as string)?.Trim();
+
+            if (string.IsNullOrEmpty(ipAddress))
+                return new ValidationResult(false, Localization.Resources.Strings.EnterValidIPv6Address);
+
+            return Regex.IsMatch(ipAddress, RegexHelper.IPv6AddressRegex) ? ValidationResult.ValidResult : new ValidationResult(false, Localization.Resources.Strings.EnterValidIPv6Address);
         }
     }
 }

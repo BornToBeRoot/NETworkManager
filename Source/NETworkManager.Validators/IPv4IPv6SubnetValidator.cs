@@ -10,13 +10,19 @@ namespace NETworkManager.Validators
         {
             var subnet = (value as string)?.Trim();
 
-            if (subnet != null && Regex.IsMatch(subnet, RegexHelper.SubnetCalculatorIPv4AddressCidrRegex))
+            if (string.IsNullOrEmpty(subnet))
+                return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnet);
+
+            // Check if it is a IPv4 address with a cidr like 192.168.0.0/24            
+            if (Regex.IsMatch(subnet, RegexHelper.IPv4AddressCidrRegex))
                 return ValidationResult.ValidResult;
 
-            if (subnet != null && Regex.IsMatch(subnet, RegexHelper.SubnetCalculatorIPv4AddressSubnetmaskRegex))
+            // Check if it is a IPv4 address with a subnetmask like 255.255.255.0
+            if (Regex.IsMatch(subnet, RegexHelper.IPv4AddressSubnetmaskRegex))
                 return ValidationResult.ValidResult;
 
-            if (subnet != null && Regex.IsMatch(subnet, RegexHelper.IPv6AddressCidrRegex))
+            // check if it is a IPv6 address with a cidr like ::1/64
+            if (Regex.IsMatch(subnet, RegexHelper.IPv6AddressCidrRegex))
                 return ValidationResult.ValidResult;
 
             return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnet);

@@ -16,8 +16,8 @@ namespace NETworkManager.Converters
             if ((bool)values[0] || (bool)values[1])
                 return false;
 
-            var subnet = values[2] as string;
-            var newSubnetmaskOrCidr = values[3] as string;
+            var subnet = (values[2] as string)?.Trim();
+            var newSubnetmaskOrCidr = (values[3] as string)?.Trim();
 
             // Catch null exceptions...
             if (string.IsNullOrEmpty(subnet) || string.IsNullOrEmpty(newSubnetmaskOrCidr))
@@ -28,21 +28,13 @@ namespace NETworkManager.Converters
 
             var ipAddress = IPAddress.Parse(subnetData[0]);
             var subnetmaskOrCidr = subnetData[1];
-            int cidr;
 
-            switch (ipAddress.AddressFamily)
+            var cidr = ipAddress.AddressFamily switch
             {
-                case System.Net.Sockets.AddressFamily.InterNetwork when subnetmaskOrCidr.Length < 3:
-                    cidr = int.Parse(subnetmaskOrCidr);
-                    break;
-                case System.Net.Sockets.AddressFamily.InterNetwork:
-                    cidr = Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(subnetmaskOrCidr));
-                    break;
-                default:
-                    cidr = int.Parse(subnetmaskOrCidr);
-                    break;
-            }
-
+                System.Net.Sockets.AddressFamily.InterNetwork when subnetmaskOrCidr.Length < 3 => int.Parse(subnetmaskOrCidr),
+                System.Net.Sockets.AddressFamily.InterNetwork => Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(subnetmaskOrCidr)),
+                _ => int.Parse(subnetmaskOrCidr),
+            };
             int newCidr;
 
             // Support subnetmask like 255.255.255.0

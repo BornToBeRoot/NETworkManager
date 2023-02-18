@@ -64,7 +64,7 @@
                 <ComboBox.Text>
                     <Binding Path="Region" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validators:IsEmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
+                            <validators:EmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>

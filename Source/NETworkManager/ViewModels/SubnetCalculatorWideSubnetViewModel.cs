@@ -5,7 +5,6 @@ using System.Windows.Data;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using System.Numerics;
 using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -121,15 +120,18 @@ namespace NETworkManager.ViewModels
         {
             IsCalculationRunning = true;
 
-            var subnet1 = IPNetwork.Parse(Subnet1);
-            var subnet2 = IPNetwork.Parse(Subnet2);
+            var subnet1 = Subnet1.Trim();
+            var subnet2 = Subnet2.Trim();
 
-            Result = new IPNetworkInfo(IPNetwork.WideSubnet(new[] { subnet1, subnet2 }));
+            var ipNetwork1 = IPNetwork.Parse(subnet1);
+            var ipNetwork2 = IPNetwork.Parse(subnet2);
+
+            Result = new IPNetworkInfo(IPNetwork.WideSubnet(new[] { ipNetwork1, ipNetwork2 }));
 
             IsResultVisible = true;
 
-            AddSubnet1ToHistory(Subnet1);
-            AddSubnet2ToHistory(Subnet2);
+            AddSubnet1ToHistory(subnet1);
+            AddSubnet2ToHistory(subnet2);
 
             IsCalculationRunning = false;
         }

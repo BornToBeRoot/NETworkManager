@@ -615,7 +615,7 @@
                                     <TextBox.Text>
                                         <Binding Path="AWSSessionManager_Region" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validators:IsEmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
