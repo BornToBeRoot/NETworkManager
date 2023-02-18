@@ -3033,15 +3033,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid domain (like &quot;example.com&quot;) or a valid IP address (like 192.168.178.1)! ähnelt.
-        /// </summary>
-        public static string EnterValidDomainOrIPAddress {
-            get {
-                return ResourceManager.GetString("EnterValidDomainOrIPAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid file name! ähnelt.
         /// </summary>
         public static string EnterValidFileName {
@@ -3074,6 +3065,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnterValidHostnameAndPort {
             get {
                 return ResourceManager.GetString("EnterValidHostnameAndPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid hostname (like &quot;server-01&quot; or &quot;example.com&quot;) or a valid IP address (like 192.168.178.1)! ähnelt.
+        /// </summary>
+        public static string EnterValidHostnameOrIPAddress {
+            get {
+                return ResourceManager.GetString("EnterValidHostnameOrIPAddress", resourceCulture);
             }
         }
         
@@ -3191,15 +3191,6 @@ namespace NETworkManager.Localization.Resources {
         public static string EnterValidSubnetmaskOrCIDR {
             get {
                 return ResourceManager.GetString("EnterValidSubnetmaskOrCIDR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid value between 25 and 100! ähnelt.
-        /// </summary>
-        public static string EnterValidValueBetween25and100 {
-            get {
-                return ResourceManager.GetString("EnterValidValueBetween25and100", resourceCulture);
             }
         }
         
