@@ -54,7 +54,7 @@ namespace NETworkManager.Utilities
         // Private hostname values
         private const string HostnameValues = @"(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])";
 
-        // Hostname regex
+        // Hostname regex like server-01 or server-01.example.com
         public const string HostnameRegex = @"^" + HostnameValues + @"$";
 
         // Match a hostname with cidr like server-01.example.com/24

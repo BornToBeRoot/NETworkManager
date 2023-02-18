@@ -6,7 +6,7 @@ using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators
 {
-    public class IPAddressOrDomainValidator : ValidationRule
+    public class IPAddressOrHostnameValidator : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -23,8 +23,8 @@ namespace NETworkManager.Validators
             if (Regex.IsMatch(input, RegexHelper.IPv6AddressRegex))
                 return ValidationResult.ValidResult;
 
-            // Check if it is a valid domain name like google.com
-            if (Regex.IsMatch(input, RegexHelper.DomainRegex))
+            // Check if it is a valid domain name like server-01 or server-01.example.com
+            if (Regex.IsMatch(input, RegexHelper.HostnameRegex))
                 return ValidationResult.ValidResult;
 
             return new ValidationResult(false, Strings.EnterValidDomainOrIPAddress);
