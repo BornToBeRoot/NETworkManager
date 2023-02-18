@@ -882,7 +882,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>Hostname or IP address</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Hosts</value>
+    <value>Host(s)</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>

@@ -3939,7 +3939,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hosts ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Host(s) ähnelt.
         /// </summary>
         public static string Hosts {
             get {

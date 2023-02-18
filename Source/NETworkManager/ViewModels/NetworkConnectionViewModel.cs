@@ -773,7 +773,7 @@ namespace NETworkManager.ViewModels
 
                         var result = await httpResponse.Content.ReadAsStringAsync();
 
-                        var match = Regex.Match(result, RegexHelper.IPv6AddressExctractRegex);
+                        var match = Regex.Match(result, RegexHelper.IPv6AddressRegex);
 
                         if (match.Success)
                         {
