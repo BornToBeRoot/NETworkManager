@@ -4,7 +4,7 @@
     /// 
     /// </summary>
     public class DNSResultString : DNSResult
-    {
+    {        
         public string Value { get; set; }
 
         public DNSResultString(bool hasError, string errorMessage) : base(hasError, errorMessage)

@@ -54,7 +54,7 @@
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <validators:DomainOrIPAddressValidator ValidatesOnTargetUpdated="True" />
+                                <validators:IPAddressOrHostnameValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>

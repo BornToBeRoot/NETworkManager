@@ -517,7 +517,7 @@
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
                                 <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent="" IsOn="{Binding PingMonitor_InheritHost}" />
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Host}" />
-                                <TextBox x:Name="TextBoxPingMonitorHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding PingMonitor_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
+                                <TextBox x:Name="TextBoxPingMonitorHost" Grid.Column="2" Grid.Row="2" IsEnabled="{Binding PingMonitor_InheritHost, Converter={StaticResource BooleanReverseConverter}}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameAndOrIPAddress}">
                                     <TextBox.Style>
                                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                                             <Style.Triggers>
@@ -534,7 +534,7 @@
                                                             <Binding Path="PingMonitor_Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                                                 <Binding.ValidationRules>
                                                                     <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                                    <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                                                                    <validators:IPAddressOrHostnameAsRangeValidator ValidatesOnTargetUpdated="True" />
                                                                 </Binding.ValidationRules>
                                                             </Binding>
                                                         </Setter.Value>

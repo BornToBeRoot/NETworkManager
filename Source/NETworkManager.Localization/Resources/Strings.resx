@@ -882,7 +882,7 @@ First make a backup copy of your profile files before enabling encryption!</valu
     <value>Hostname or IP address</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Hosts</value>
+    <value>Host(s)</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
@@ -1758,9 +1758,6 @@ Profile files are not affected!</value>
   </data>
   <data name="Yellow" xml:space="preserve">
     <value>Yellow</value>
-  </data>
-  <data name="EnterValidValueBetween25and100" xml:space="preserve">
-    <value>Enter a valid value between 25 and 100!</value>
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>A profile with this name already exists!</value>
@@ -3314,8 +3311,8 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
     <value>An SNTP server with this name already exists!</value>
   </data>
-  <data name="EnterValidDomainOrIPAddress" xml:space="preserve">
-    <value>Enter a valid domain (like "example.com") or a valid IP address (like 192.168.178.1)!</value>
+  <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
+    <value>Enter a valid hostname (like "server-01" or "example.com") or a valid IP address (like 192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>Server(s)</value>

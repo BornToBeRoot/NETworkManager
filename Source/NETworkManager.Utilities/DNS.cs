@@ -75,7 +75,7 @@ namespace NETworkManager.Utilities
                 if (result.HasError)
                     return new DNSResultIPAddress(result.HasError, $"{result.NameServer}: {result.ErrorMessage}");
 
-                return new DNSResultIPAddress(result.Answers.ARecords().FirstOrDefault().Address);
+                return new DNSResultIPAddress(result.Answers.ARecords().FirstOrDefault()?.Address);
             }
             catch (DnsResponseException ex)
             {
@@ -98,7 +98,7 @@ namespace NETworkManager.Utilities
                 if (result.HasError)
                     return new DNSResultIPAddress(result.HasError, $"{result.NameServer}: {result.ErrorMessage}");
 
-                return new DNSResultIPAddress(result.Answers.AaaaRecords().FirstOrDefault().Address);
+                return new DNSResultIPAddress(result.Answers.AaaaRecords().FirstOrDefault()?.Address);
             }
             catch (DnsResponseException ex)
             {
@@ -120,7 +120,7 @@ namespace NETworkManager.Utilities
                 if (result.HasError)
                     return new DNSResultString(result.HasError, $"{result.NameServer}: {result.ErrorMessage}");
 
-                return new DNSResultString(result.Answers.CnameRecords().FirstOrDefault().CanonicalName);
+                return new DNSResultString(result.Answers.CnameRecords().FirstOrDefault()?.CanonicalName);
             }
             catch (DnsResponseException ex)
             {
@@ -142,7 +142,7 @@ namespace NETworkManager.Utilities
                 if (result.HasError)
                     return new DNSResultString(result.HasError, $"{result.NameServer}: {result.ErrorMessage}");
 
-                return new DNSResultString(result.Answers.PtrRecords().FirstOrDefault().PtrDomainName);
+                return new DNSResultString(result.Answers.PtrRecords().FirstOrDefault()?.PtrDomainName);
             }
             catch (DnsResponseException ex)
             {

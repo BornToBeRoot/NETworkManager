@@ -7,7 +7,7 @@ namespace NETworkManager.Views
 {
     public partial class PingMonitorHostView
     {
-        private readonly PingMonitorHostViewModel _viewModel = new PingMonitorHostViewModel(DialogCoordinator.Instance);
+        private readonly PingMonitorHostViewModel _viewModel = new(DialogCoordinator.Instance);
 
         public PingMonitorHostView()
         {

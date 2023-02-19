@@ -56,7 +56,7 @@
                         <Binding Path="Server" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator />
-                                <validators:DomainOrIPAddressValidator />
+                                <validators:IPAddressOrHostnameValidator />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
