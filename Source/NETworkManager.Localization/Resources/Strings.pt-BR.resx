@@ -882,7 +882,7 @@ Primeiro faça uma cópia de backup dos seus arquivos de perfil antes de habilit
     <value>Nome do host ou endereço IP</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Hosts</value>
+    <value>Host(s)</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
@@ -1758,9 +1758,6 @@ Os arquivos do perfil não foram afetados!</value>
   </data>
   <data name="Yellow" xml:space="preserve">
     <value>Amarelo</value>
-  </data>
-  <data name="EnterValidValueBetween25and100" xml:space="preserve">
-    <value>Entre um valor válido entre 25 e 100!</value>
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>Um perfil com este nome já existe!</value>
@@ -3314,8 +3311,8 @@ Se a opção for desativada novamente, os valores não serão mais modificados. 
   <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
     <value>Um servidor SNTP com este nome já existe!</value>
   </data>
-  <data name="EnterValidDomainOrIPAddress" xml:space="preserve">
-    <value>Digite um domínio válido (como "exemplo.com) ou um endereço de IP válido (como 192.168.178.1)!</value>
+  <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
+    <value>Digite um nome de host válido (como "servidor-01.com" ou "exemplo.com") ou um endereço de IP válido (como 192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>Servidor(es)</value>
