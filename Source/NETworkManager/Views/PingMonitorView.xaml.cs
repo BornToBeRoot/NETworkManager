@@ -9,9 +9,9 @@ namespace NETworkManager.Views
     {
         private readonly PingMonitorViewModel _viewModel;
 
-        public int HostId => _viewModel.HostId;
+        public Guid HostId => _viewModel.HostId;
 
-        public PingMonitorView(int hostId, Action<int> closeCallback, PingMonitorOptions options)
+        public PingMonitorView(Guid hostId, Action<Guid> closeCallback, PingMonitorOptions options)
         {
             InitializeComponent();
 

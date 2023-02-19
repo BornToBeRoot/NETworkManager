@@ -18,6 +18,9 @@ using System.Collections.Generic;
 using NETworkManager.Models;
 using System.Collections;
 using ControlzEx.Standard;
+using Windows.Networking;
+using System.ServiceModel;
+using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
@@ -29,8 +32,6 @@ namespace NETworkManager.ViewModels
 
         private readonly bool _isLoading = true;
         private bool _isViewActive = true;
-
-        private int _hostId;
 
         private string _host;
         public string Host
@@ -90,7 +91,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<PingMonitorView> _hosts = new ObservableCollection<PingMonitorView>();
+        private ObservableCollection<PingMonitorView> _hosts = new();
         public ObservableCollection<PingMonitorView> Hosts
         {
             get => _hosts;
@@ -352,55 +353,73 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
-        public async Task AddHost(string host)
+        public void AddHost(string hosts)
         {
-            IsRunning = true;
             IsStatusMessageDisplayed = false;
+            StatusMessage = string.Empty;
 
-            _hostId++;
+            IsRunning = true;
 
-            string hostname = string.Empty;
-
-            // Resolve ip address from hostname
-            if (!IPAddress.TryParse(host, out var ipAddress))
+            Task.Run(() =>
             {
-                hostname = host;
-                var dnsResult = await DNSHelper.ResolveAorAaaaAsync(host, SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4);
-
-                if (!dnsResult.HasError)
+                Parallel.ForEach(hosts.Split(';'), currentHost =>
                 {
-                    ipAddress = dnsResult.Value;
-                }
-                else
-                {
-                    StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, host) + Environment.NewLine + dnsResult.ErrorMessage;
-                    IsStatusMessageDisplayed = true;
-                    IsRunning = false;
-                    return;
-                }
-            }
-            // Resolve hostname from ip address
-            else
-            {
-                var dnsResult = await DNS.GetInstance().ResolvePtrAsync(ipAddress);
+                    var host = currentHost.Trim();
+                    string hostname = string.Empty;
 
-                // Hostname is not necessary for ping. Don't show an error message in the UI.
-                if (!dnsResult.HasError)
-                    hostname = dnsResult.Value;
-            }
+                    // Resolve ip address from hostname
+                    if (!IPAddress.TryParse(host, out var ipAddress))
+                    {
+                        hostname = host;
 
-            Hosts.Add(new PingMonitorView(_hostId, RemoveHost, new PingMonitorOptions(hostname, ipAddress)));
+                        using var dnsResolverTask = DNSHelper.ResolveAorAaaaAsync(host, SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4);
 
-            IsRunning = false;
+                        // Wait for task inside a Parallel.Foreach
+                        dnsResolverTask.Wait();
+
+                        if (!dnsResolverTask.Result.HasError && dnsResolverTask.Result.Value != null)
+                        {
+                            ipAddress = dnsResolverTask.Result.Value;
+                        }
+                        else
+                        {
+                            var errorMessage = dnsResolverTask.Result.HasError ? dnsResolverTask.Result.ErrorMessage : string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, host);
+                            StatusMessageShowOrAdd(host, errorMessage);
+
+                            return;
+                        }
+                    }
+
+                    // Resolve hostname from ip address
+                    else
+                    {
+                        using var dnsResolverTask = DNS.GetInstance().ResolvePtrAsync(ipAddress);
+
+                        // Wait for task inside a Parallel.Foreach
+                        dnsResolverTask.Wait();
+
+                        // Hostname is not necessary for ping. Don't show an error message in the UI.
+                        if (!dnsResolverTask.Result.HasError && dnsResolverTask.Result.Value != null)
+                            hostname = dnsResolverTask.Result.Value;
+                    }
+
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                        Hosts.Add(new PingMonitorView(Guid.NewGuid(), RemoveHost, new PingMonitorOptions(hostname, ipAddress)));
+                    }));
+                });
+
+                IsRunning = false;
+            });                        
         }
 
-        private void RemoveHost(int hostId)
+        private void RemoveHost(Guid hostId)
         {
             var index = -1;
 
             foreach (var host in Hosts)
             {
-                if (host.HostId == hostId)
+                if (host.HostId.Equals(hostId))
                     index = Hosts.IndexOf(host);
             }
 
@@ -503,6 +522,30 @@ namespace NETworkManager.ViewModels
         public void OnProfileDialogClose()
         {
 
+        }
+
+        /// <summary>
+        /// Show status message or add message if it's already displayed.
+        /// </summary>
+        /// <param name="message">Message to show or add.</param>
+        private void StatusMessageShowOrAdd(string host, string message)
+        {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                var statusMessage = $"{host} ==> {message}";
+
+                // Show message
+                if (!IsStatusMessageDisplayed)
+                {
+                    StatusMessage = statusMessage;
+                    IsStatusMessageDisplayed = true;
+
+                    return;
+                }
+
+                // Append message
+                StatusMessage = Environment.NewLine + statusMessage;
+            }));
         }
         #endregion
 

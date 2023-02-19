@@ -25,8 +25,8 @@ namespace NETworkManager.ViewModels
         private readonly IDialogCoordinator _dialogCoordinator;
         private CancellationTokenSource _cancellationTokenSource;
 
-        public readonly int HostId;
-        private readonly Action<int> _closeCallback;
+        public readonly Guid HostId;
+        private readonly Action<Guid> _closeCallback;
         private readonly PingMonitorOptions _pingMonitorOptions;
         private bool _firstLoad = true;
 
@@ -170,7 +170,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Contructor, load settings    
-        public PingMonitorViewModel(IDialogCoordinator instance, int hostId, Action<int> closeCallback, PingMonitorOptions options)
+        public PingMonitorViewModel(IDialogCoordinator instance, Guid hostId, Action<Guid> closeCallback, PingMonitorOptions options)
         {
             _dialogCoordinator = instance;
 
