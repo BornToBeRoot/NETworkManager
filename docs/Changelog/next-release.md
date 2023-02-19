@@ -32,7 +32,12 @@ New Feature
 - Port Scanner
   - Add new port profiles / improve existing ones [#1909](https://github.com/BornToBeRoot/NETworkManager/pull/1909){:target="\_blank"}
   - Max host threads changed to to 256 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
-  - Max port threads changed to to 1024 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}  
+  - Max port threads changed to to 1024 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
+- Ping
+  - Allow multiple hosts like `server-01; 1.1.1.1; example.com` as input [#1933](https://github.com/BornToBeRoot/NETworkManager/pull/1933){:target="\_blank"}
+  - Use a fixed size for the view [#1933](https://github.com/BornToBeRoot/NETworkManager/pull/1933){:target="\_blank"}
+- Traceroute
+  - Add more validation (host, ip address) to input [#1932](https://github.com/BornToBeRoot/NETworkManager/pull/1932){:target="\_blank"}  
 - Add documentation for: [#265](https://github.com/BornToBeRoot/NETworkManager/pull/265){:target="\_blank"}
   - [Dashboard](https://borntoberoot.net/NETworkManager/Documentation/Application/Dashboard){:target="\_blank"}
   - [Network Interface](https://borntoberoot.net/NETworkManager/Documentation/Application/NetworkInterface){:target="\_blank"
