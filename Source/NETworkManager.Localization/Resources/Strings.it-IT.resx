@@ -1773,9 +1773,6 @@ Il nome di dominio della parte di autenticazione potrebbe essere errato, il domi
   <data name="Yellow" xml:space="preserve">
     <value>Giallo</value>
   </data>
-  <data name="EnterValidValueBetween25and100" xml:space="preserve">
-    <value>Inserisci un valore valido tra 25 e 100!</value>
-  </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>Esiste già un profilo con questo nome!</value>
   </data>
@@ -3346,8 +3343,8 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
   <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
     <value>Esiste già un server SNTP con questo nome!</value>
   </data>
-  <data name="EnterValidDomainOrIPAddress" xml:space="preserve">
-    <value>Inserisci un dominio valido (esempio "example.com") o un indirizzo IP valido (esempio 192.168.178.1)!</value>
+  <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
+    <value>Inserisci un nome host valido (esempio "server-01" o "esempio.com") o un indirizzo IP valido (esempio 192.168.178.1)!</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>Server</value>
