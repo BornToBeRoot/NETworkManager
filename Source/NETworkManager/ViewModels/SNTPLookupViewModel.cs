@@ -296,12 +296,7 @@ namespace NETworkManager.ViewModels
 
             lookup.QueryAsync(SNTPServer.Servers);
         }
-
-        private void LookupFinished()
-        {
-            IsLookupRunning = false;
-        }
-
+        
         public void OnClose()
         {
 
@@ -324,13 +319,13 @@ namespace NETworkManager.ViewModels
             if (!string.IsNullOrEmpty(StatusMessage))
                 StatusMessage += Environment.NewLine;
 
-            StatusMessage += e.HasIPEndPoint ? $"{e.Server} ({e.IPEndPoint}) => {e.ErrorCode}" : $"{e.Server} => {e.ErrorCode}";
+            StatusMessage += e.HasIPEndPoint ? $"{e.Server} ({e.IPEndPoint}) => {e.ErrorMessage}" : $"{e.Server} => {e.ErrorMessage}";
             IsStatusMessageDisplayed = true;
         }
 
         private void Lookup_LookupComplete(object sender, EventArgs e)
         {
-            LookupFinished();
+            IsLookupRunning = false;
         }
         #endregion
     }

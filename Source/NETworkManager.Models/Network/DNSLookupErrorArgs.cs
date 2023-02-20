@@ -1,21 +1,32 @@
-﻿using System.Net;
-
-namespace NETworkManager.Models.Network
+﻿namespace NETworkManager.Models.Network
 {
     public class DNSLookupErrorArgs : System.EventArgs
     {
-        public string ErrorCode { get; set; }
-        public IPEndPoint DNSServer { get; set; }
+        public string Server { get; set; }
 
+        public bool HasIPEndPoint { get; set; }
+
+        public string IPEndPoint { get; set; }
+
+        public string ErrorMessage { get; set; }
+        
         public DNSLookupErrorArgs()
         {
 
         }
 
-        public DNSLookupErrorArgs(string errorCode, IPEndPoint dnsServer)
+        public DNSLookupErrorArgs(string server, string errorMessage)
         {
-            ErrorCode = errorCode;
-            DNSServer = dnsServer;
+            Server = server;
+            ErrorMessage = errorMessage;
+        }
+        
+        public DNSLookupErrorArgs(string server, string ipEndPoint, string errorMessage)
+        {
+            Server = server;
+            HasIPEndPoint = true;
+            IPEndPoint = ipEndPoint;
+            ErrorMessage = errorMessage;
         }
     }
 }

@@ -197,15 +197,15 @@ namespace NETworkManager.ViewModels
             Host = host;
 
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
-                        
+
             DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers }.View;
             DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.UseWindowsDNSServer), ListSortDirection.Descending));
             DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.Name), ListSortDirection.Ascending));
             DNSServer = DNSServers.SourceCollection.Cast<DNSServerInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer.Name) ?? DNSServers.SourceCollection.Cast<DNSServerInfo>().First();
 
             LookupResultsView = CollectionViewSource.GetDefaultView(LookupResults);
-            LookupResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.DNSServer)));
-            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.DNSServer), ListSortDirection.Descending));
+            LookupResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.Server)));
+            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.Server), ListSortDirection.Descending));
 
             LoadSettings();
 
@@ -333,7 +333,7 @@ namespace NETworkManager.ViewModels
             IsStatusMessageDisplayed = false;
             StatusMessage = string.Empty;
 
-            IsLookupRunning = true;                       
+            IsLookupRunning = true;
 
             // Reset the latest results
             LookupResults.Clear();
@@ -366,7 +366,7 @@ namespace NETworkManager.ViewModels
             if (!DNSServer.UseWindowsDNSServer)
             {
                 settings.UseCustomDNSServer = true;
-                settings.CustomDNSServer = DNSServer;                
+                settings.CustomDNSServer = DNSServer;
             }
 
             if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
@@ -385,7 +385,7 @@ namespace NETworkManager.ViewModels
         }
 
         private void LookupFinished()
-        {         
+        {
             IsLookupRunning = false;
         }
 
@@ -411,7 +411,7 @@ namespace NETworkManager.ViewModels
         public void SortResultByPropertyName(string sortDescription)
         {
             LookupResultsView.SortDescriptions.Clear();
-            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.DNSServer), ListSortDirection.Descending));
+            LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(DNSLookupRecordInfo.Server), ListSortDirection.Descending));
 
             if (_lastSortDescriptionAscending.Equals(sortDescription))
             {
@@ -433,8 +433,7 @@ namespace NETworkManager.ViewModels
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                //lock (LookupResults)
-                    LookupResults.Add(dnsLookupRecordInfo);
+                LookupResults.Add(dnsLookupRecordInfo);
             }));
         }
 
@@ -442,8 +441,8 @@ namespace NETworkManager.ViewModels
         {
             if (!string.IsNullOrEmpty(StatusMessage))
                 StatusMessage += Environment.NewLine;
-            
-            StatusMessage += $"{e.DNSServer.Address}: {e.ErrorCode}";
+
+            StatusMessage += $"{e.Server} ({e.IPEndPoint}) ==> {e.ErrorMessage}";
 
             IsStatusMessageDisplayed = true;
 
@@ -454,11 +453,11 @@ namespace NETworkManager.ViewModels
         {
             LookupFinished();
         }
-                
+
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
-            {             
+            {
                 case nameof(SettingsInfo.DNSLookup_ShowOnlyMostCommonQueryTypes):
                     LoadTypes();
                     break;
