@@ -296,12 +296,7 @@ namespace NETworkManager.ViewModels
 
             lookup.QueryAsync(SNTPServer.Servers);
         }
-
-        private void LookupFinished()
-        {
-            IsLookupRunning = false;
-        }
-
+        
         public void OnClose()
         {
 
@@ -330,7 +325,7 @@ namespace NETworkManager.ViewModels
 
         private void Lookup_LookupComplete(object sender, EventArgs e)
         {
-            LookupFinished();
+            IsLookupRunning = false;
         }
         #endregion
     }
