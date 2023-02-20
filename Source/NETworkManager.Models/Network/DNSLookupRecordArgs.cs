@@ -1,6 +1,5 @@
 ﻿using DnsClient;
 using DnsClient.Protocol;
-using System.Net;
 
 namespace NETworkManager.Models.Network
 {
@@ -11,21 +10,23 @@ namespace NETworkManager.Models.Network
         public QueryClass Class { get; set; }
         public ResourceRecordType Type { get; set; }        
         public string Result { get; set; }
-        public IPEndPoint DNSServer { get; set; }
+        public string Server { get; set; }
+        public string IPEndPoint { get; set; }
 
         public DNSLookupRecordArgs()
         {
 
         }
 
-        public DNSLookupRecordArgs(string domainName, int ttl, QueryClass queryClass, ResourceRecordType queryType, string result, IPEndPoint dnsServer)
+        public DNSLookupRecordArgs(string domainName, int ttl, QueryClass queryClass, ResourceRecordType queryType, string result, string server, string ipEndPoint)
         {
             DomainName = domainName;
             TTL = ttl;
             Class = queryClass;
             Type = queryType;
             Result = result;
-            DNSServer = dnsServer;
+            Server = server;
+            IPEndPoint = ipEndPoint;
         }
     }
 }

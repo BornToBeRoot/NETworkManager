@@ -5,27 +5,28 @@
         public string Server { get; set; }
 
         public bool HasIPEndPoint { get; set; }
+        
         public string IPEndPoint { get; set; }
         
-        public string ErrorCode { get; set; }
+        public string ErrorMessage { get; set; }
 
         public SNTPLookupErrorArgs()
         {
 
         }
 
-        public SNTPLookupErrorArgs(string server, string errorCode)
+        public SNTPLookupErrorArgs(string server, string errorMessage)
         {
             Server = server;            
-            ErrorCode = errorCode;
+            ErrorMessage = errorMessage;
         }
 
-        public SNTPLookupErrorArgs(string server, string ipEndPoint, string errorCode)
+        public SNTPLookupErrorArgs(string server, string ipEndPoint, string errorMessage)
         {
             Server = server;
             HasIPEndPoint = true;
             IPEndPoint = ipEndPoint;
-            ErrorCode = errorCode;
+            ErrorMessage = errorMessage;
         }
     }
 }

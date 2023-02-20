@@ -437,10 +437,10 @@ namespace NETworkManager.Models.Export
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine($"{nameof(DNSLookupRecordInfo.DomainName)},{nameof(DNSLookupRecordInfo.TTL)},{nameof(DNSLookupRecordInfo.Class)},{nameof(DNSLookupRecordInfo.Type)},{nameof(DNSLookupRecordInfo.Result)},{nameof(DNSLookupRecordInfo.DNSServer)},{nameof(DNSLookupRecordInfo.Port)}");
+            stringBuilder.AppendLine($"{nameof(DNSLookupRecordInfo.DomainName)},{nameof(DNSLookupRecordInfo.TTL)},{nameof(DNSLookupRecordInfo.Class)},{nameof(DNSLookupRecordInfo.Type)},{nameof(DNSLookupRecordInfo.Result)},{nameof(DNSLookupRecordInfo.Server)},{nameof(DNSLookupRecordInfo.IPEndPoint)}");
 
             foreach (var info in collection)
-                stringBuilder.AppendLine($"{info.DomainName},{info.TTL},{info.Class},{info.Type},{info.Result},{info.DNSServer},{info.Port}");
+                stringBuilder.AppendLine($"{info.DomainName},{info.TTL},{info.Class},{info.Type},{info.Result},{info.Server},{info.IPEndPoint}");
 
             System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
         }
@@ -671,8 +671,8 @@ namespace NETworkManager.Models.Export
                                 new XElement(nameof(DNSLookupRecordInfo.Class), info.Class),
                                 new XElement(nameof(DNSLookupRecordInfo.Type), info.Type),
                                 new XElement(nameof(DNSLookupRecordInfo.Result), info.Result),
-                                new XElement(nameof(DNSLookupRecordInfo.DNSServer), info.DNSServer),
-                                new XElement(nameof(DNSLookupRecordInfo.Port), info.Port)))));
+                                new XElement(nameof(DNSLookupRecordInfo.Server), info.Server),
+                                new XElement(nameof(DNSLookupRecordInfo.IPEndPoint), info.IPEndPoint)))));
 
             document.Save(filePath);
         }
@@ -953,8 +953,8 @@ namespace NETworkManager.Models.Export
                     collection[i].Class,
                     collection[i].Type,
                     collection[i].Result,
-                    collection[i].DNSServer,
-                    collection[i].Port
+                    collection[i].Server,
+                    collection[i].IPEndPoint
                 };
             }
 
