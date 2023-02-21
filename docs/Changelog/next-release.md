@@ -24,6 +24,8 @@ New Feature
 
 ## Improvements
 - Move .NET runtime components and dependencies into a subfolder to simplify the installation/portable folder [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
+- Installer (Inno Setup)
+  - Uninstall previous versions of NETworkManager when installing a new version [2382f1f](https://github.com/BornToBeRoot/NETworkManager/commit/2382f1fc5e95d7165f56cb7f42c27e1e281abbf2){:target="\_blank"}
 - Reduce the size of the installer, portable and archive build [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
 - DataGrid Column header design improved [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - DataGrid Columns can now be resized [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
