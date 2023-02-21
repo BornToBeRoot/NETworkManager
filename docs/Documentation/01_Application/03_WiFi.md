@@ -18,6 +18,8 @@ Hidden wireless networks are displayed as `Hidden Network`.
 
 On the **WiFi** tab, you can select which wireless network adapter is used to scan for wireless networks. Wireless networks can be filtered by 2.4 Ghz, 5 Ghz and the SSID.
 
+In the search field, you can filter the wireless networks by `SSID`, `Security`, `Channel`, `MAC Address (BSSID)`, `Vendor` and `Phy kind`. The search is case insensitive.
+
 {: .note }
 Due to limitations of the `Windows.Devices.WiFi` API the channel bandwidth cannot be detected.
 

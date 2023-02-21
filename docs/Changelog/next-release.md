@@ -30,6 +30,8 @@ New Feature
 - Reduce the size of the installer, portable and archive build [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
 - DataGrid Column header design improved [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - DataGrid Columns can now be resized [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
+- WiFi
+  - Improve search - you can now search for SSID, Security, Channel, BSSID (MAC address), Vendor and Phy kind [#1941](https://github.com/BornToBeRoot/NETworkManager/pull/1941){:target="\_blank"}
 - IP Scanner
   - Max threads changed to to 1024 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
 - Port Scanner

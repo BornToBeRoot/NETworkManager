@@ -11,7 +11,7 @@ namespace NETworkManager.Converters
         /* Translate the name of the accent */
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is NetworkAuthenticationType type))
+            if (value is not NetworkAuthenticationType type)
                 return "-/-";
             
             return $"{WiFi.GetHumanReadableNetworkAuthenticationType(type)}";

@@ -64,89 +64,50 @@ namespace NETworkManager.Models.Network
 
         public static int GetChannelFromChannelFrequency(int kilohertz)
         {
-            switch (ConvertChannelFrequencyToGigahertz(kilohertz))
+            return (double)ConvertChannelFrequencyToGigahertz(kilohertz) switch
             {
                 // 2.4 GHz
-                case 2.412:
-                    return 1;
-                case 2.417:
-                    return 2;
-                case 2.422:
-                    return 3;
-                case 2.427:
-                    return 4;
-                case 2.432:
-                    return 5;
-                case 2.437:
-                    return 6;
-                case 2.442:
-                    return 7;
-                case 2.447:
-                    return 8;
-                case 2.452:
-                    return 9;
-                case 2.457:
-                    return 10;
-                case 2.462:
-                    return 11;
-                case 2.467:
-                    return 12;
-                case 2.472:
-                    return 13;
+                2.412 => 1,
+                2.417 => 2,
+                2.422 => 3,
+                2.427 => 4,
+                2.432 => 5,
+                2.437 => 6,
+                2.442 => 7,
+                2.447 => 8,
+                2.452 => 9,
+                2.457 => 10,
+                2.462 => 11,
+                2.467 => 12,
+                2.472 => 13,
                 // 5 GHz
-                case 5.180:
-                    return 36;
-                case 5.200:
-                    return 40;
-                case 5.220:
-                    return 44;
-                case 5.240:
-                    return 48;
-                case 5.260:
-                    return 52;
-                case 5.280:
-                    return 56;
-                case 5.300:
-                    return 60;
-                case 5.320:
-                    return 64;
-                case 5.500:
-                    return 100;
-                case 5.520:
-                    return 104;
-                case 5.540:
-                    return 108;
-                case 5.560:
-                    return 112;
-                case 5.580:
-                    return 116;
-                case 5.600:
-                    return 120;
-                case 5.620:
-                    return 124;
-                case 5.640:
-                    return 128;
-                case 5.660:
-                    return 132;
-                case 5.680:
-                    return 136;
-                case 5.700:
-                    return 140;
-                case 5.720:
-                    return 144;
-                case 5.745:
-                    return 149;
-                case 5.765:
-                    return 153;
-                case 5.785:
-                    return 157;
-                case 5.805:
-                    return 161;
-                case 5.825:
-                    return 165;
-            }
-
-            return -1;
+                5.180 => 36,
+                5.200 => 40,
+                5.220 => 44,
+                5.240 => 48,
+                5.260 => 52,
+                5.280 => 56,
+                5.300 => 60,
+                5.320 => 64,
+                5.500 => 100,
+                5.520 => 104,
+                5.540 => 108,
+                5.560 => 112,
+                5.580 => 116,
+                5.600 => 120,
+                5.620 => 124,
+                5.640 => 128,
+                5.660 => 132,
+                5.680 => 136,
+                5.700 => 140,
+                5.720 => 144,
+                5.745 => 149,
+                5.765 => 153,
+                5.785 => 157,
+                5.805 => 161,
+                5.825 => 165,
+                _ => -1,
+            };
         }
 
         public static double ConvertChannelFrequencyToGigahertz(int kilohertz)
@@ -170,57 +131,36 @@ namespace NETworkManager.Models.Network
 
         public static string GetHumanReadableNetworkAuthenticationType(NetworkAuthenticationType networkAuthenticationType)
         {
-            switch (networkAuthenticationType)
+            return networkAuthenticationType switch
             {
-                case NetworkAuthenticationType.Open80211:
-                    return "Open";
-                case NetworkAuthenticationType.Rsna:
-                    return "WPA2 Enterprise";
-                case NetworkAuthenticationType.RsnaPsk:
-                    return "WPA2 PSK";
-                case NetworkAuthenticationType.Wpa:
-                    return "WPA Enterprise";
-                case NetworkAuthenticationType.WpaNone:
-                    return "WPA None";
-                case NetworkAuthenticationType.WpaPsk:
-                    return "WPA PSK";
-                case NetworkAuthenticationType.SharedKey80211:
-                    return "WEP";
-                case NetworkAuthenticationType.Ihv:
-                    return "IHV";
-                case NetworkAuthenticationType.Unknown:
-                    return "Unkown";
-                case NetworkAuthenticationType.None:
-                    return "-/-";
-            }
-
-            return "-/-";
+                NetworkAuthenticationType.Open80211 => "Open",
+                NetworkAuthenticationType.Rsna => "WPA2 Enterprise",
+                NetworkAuthenticationType.RsnaPsk => "WPA2 PSK",
+                NetworkAuthenticationType.Wpa => "WPA Enterprise",
+                NetworkAuthenticationType.WpaNone => "WPA None",
+                NetworkAuthenticationType.WpaPsk => "WPA PSK",
+                NetworkAuthenticationType.SharedKey80211 => "WEP",
+                NetworkAuthenticationType.Ihv => "IHV",
+                NetworkAuthenticationType.Unknown => "Unkown",
+                NetworkAuthenticationType.None => "-/-",
+                _ => "-/-",
+            };
         }
 
         public static string GetHumandReadablePhyKind(WiFiPhyKind phyKind)
         {
-            switch (phyKind)
+            return phyKind switch
             {
-                case WiFiPhyKind.Dsss:
-                case WiFiPhyKind.Fhss:
-                    return "802.11";
-                case WiFiPhyKind.Ofdm:
-                    return "802.11a";
-                case WiFiPhyKind.Hrdsss:
-                    return "802.11b";
-                case WiFiPhyKind.Erp:
-                    return "802.11g";                    
-                case WiFiPhyKind.HT:
-                    return "802.11n";
-                case WiFiPhyKind.Dmg:
-                    return "802.11ad";
-                case WiFiPhyKind.Vht:
-                    return "802.11ac";
-                case WiFiPhyKind.HE:
-                    return "802.11ax";
-            }
-
-            return "-/-";
+                WiFiPhyKind.Dsss or WiFiPhyKind.Fhss => "802.11",
+                WiFiPhyKind.Ofdm => "802.11a",
+                WiFiPhyKind.Hrdsss => "802.11b",
+                WiFiPhyKind.Erp => "802.11g",
+                WiFiPhyKind.HT => "802.11n",
+                WiFiPhyKind.Dmg => "802.11ad",
+                WiFiPhyKind.Vht => "802.11ac",
+                WiFiPhyKind.HE => "802.11ax",
+                _ => "-/-",
+            };
         }
 
         public enum Radio

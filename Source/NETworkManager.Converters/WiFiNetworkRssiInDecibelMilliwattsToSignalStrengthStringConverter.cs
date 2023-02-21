@@ -8,7 +8,7 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is double networkRssiInDecibelMilliwatts))
+            if (value is not double networkRssiInDecibelMilliwatts)
                 return "-/-";
 
             return $"{networkRssiInDecibelMilliwatts} dBm";

@@ -10,7 +10,7 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is string macAddress))
+            if (value is not string macAddress)
                 return "-/-";
 
             return OUILookup.Lookup(macAddress).FirstOrDefault()?.Vendor;

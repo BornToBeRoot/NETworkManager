@@ -9,7 +9,7 @@ namespace NETworkManager.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is int channelCenterFrequencyInKilohertz))
+            if (value is not int channelCenterFrequencyInKilohertz)
                 return "-/-";
 
             return $"{WiFi.ConvertChannelFrequencyToGigahertz(channelCenterFrequencyInKilohertz)} GHz";
