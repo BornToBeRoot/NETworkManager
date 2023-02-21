@@ -23,6 +23,7 @@ New Feature
 - SNTP Lookup [#1821](https://github.com/BornToBeRoot/NETworkManager/pull/1821){:target="\_blank"} (See [documentation](https://borntoberoot.net/NETworkManager/Documentation/Application/SNTPLookup){:target="\_blank"} for more details)
 
 ## Improvements
+
 - Move .NET runtime components and dependencies into a subfolder to simplify the installation/portable folder [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
 - Installer (Inno Setup)
   - Uninstall previous versions of NETworkManager when installing a new version [2382f1f](https://github.com/BornToBeRoot/NETworkManager/commit/2382f1fc5e95d7165f56cb7f42c27e1e281abbf2){:target="\_blank"}
@@ -39,7 +40,7 @@ New Feature
   - Allow multiple hosts like `server-01; 1.1.1.1; example.com` as input [#1933](https://github.com/BornToBeRoot/NETworkManager/pull/1933){:target="\_blank"}
   - Use a fixed size for the view [#1933](https://github.com/BornToBeRoot/NETworkManager/pull/1933){:target="\_blank"}
 - Traceroute
-  - Add more validation (host, ip address) to input [#1932](https://github.com/BornToBeRoot/NETworkManager/pull/1932){:target="\_blank"}  
+  - Add more validation (host, ip address) to input [#1932](https://github.com/BornToBeRoot/NETworkManager/pull/1932){:target="\_blank"}
 - DNS Lookup
   - Improve overall DNS lookup performance with multiple DNS servers and hosts [#1940](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
 - Add documentation for: [#265](https://github.com/BornToBeRoot/NETworkManager/pull/265){:target="\_blank"}
@@ -49,12 +50,15 @@ New Feature
   - [IP Scanner](https://borntoberoot.net/NETworkManager/Documentation/Application/IPScanner){:target="\_blank"}
 
 ## Bugfixes
+
 DNS Lookup
-  - Fix a bug where the DNS lookup is not completed, but the user interface indicates that it is completed [#1940](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
-AWS Session Manager
-  - Use UTF-8 encoding for embedded PowerShell console window [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
+
+- Fix a bug where the DNS lookup is not completed, but the user interface indicates that it is completed [#1940](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
+  AWS Session Manager
+- Use UTF-8 encoding for embedded PowerShell console window [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
 
 ## Other
+
 - Code cleanup [#1932](https://github.com/BornToBeRoot/NETworkManager/pull/1932){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
