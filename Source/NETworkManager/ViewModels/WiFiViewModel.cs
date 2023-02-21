@@ -2,6 +2,7 @@
 using LiveCharts.Wpf;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Models.Export;
+using NETworkManager.Models.Lookup;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -331,7 +332,14 @@ namespace NETworkManager.ViewModels
                     if (string.IsNullOrEmpty(Search))
                         return true;
 
-                    return info.SSID.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 || info.BSSID.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+
+                    // Search by: SSID, Security, Channel, BSSID (MAC address), Vendor, Phy kind
+                    return info.SSID.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                    WiFi.GetHumanReadableNetworkAuthenticationType(info.AuthenticationType).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                    $"{WiFi.GetChannelFromChannelFrequency(info.ChannelCenterFrequencyInKilohertz)}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                    info.BSSID.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                    OUILookup.Lookup(info.BSSID).FirstOrDefault()?.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                    WiFi.GetHumandReadablePhyKind(info.PhyKind).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
                 }
                 else
                 {
