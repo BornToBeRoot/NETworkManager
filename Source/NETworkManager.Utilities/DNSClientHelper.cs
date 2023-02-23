@@ -2,7 +2,7 @@
 
 namespace NETworkManager.Utilities;
 
-public static class DNSHelper
+public static class DNSClientHelper
 {
     public static async Task<DNSClientResultIPAddress> ResolveAorAaaaAsync(string query, bool preferIPv4 = true)
     {
@@ -33,5 +33,17 @@ public static class DNSHelper
         }
 
         return firstResult;
+    }
+
+    public static string FormatDNSClientResultError(string query, DNSClientResult result)
+    {
+        var statusMessage = $"{query}";
+
+        if (string.IsNullOrEmpty(result.DNSServer))
+            statusMessage += $" ==> {result.ErrorMessage}";
+        else
+            statusMessage += $" @ {result.DNSServer} ==> {result.ErrorMessage}";
+
+        return statusMessage;
     }
 }

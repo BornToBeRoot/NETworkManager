@@ -99,7 +99,7 @@ namespace NETworkManager.Models.Network
                     }
                     else
                     {
-                        using var dnsResolverTask = DNSHelper.ResolveAorAaaaAsync(server.Server, true);
+                        using var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(server.Server, true);
 
                         // Wait for task inside a Parallel.Foreach
                         dnsResolverTask.Wait();

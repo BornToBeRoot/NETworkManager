@@ -156,7 +156,7 @@ namespace NETworkManager.Models.Network
                         
                     // example.com
                     case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex):
-                        using (var dnsResolverTask = DNSHelper.ResolveAorAaaaAsync(ipHostOrRange))
+                        using (var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(ipHostOrRange))
                         {
                             // Wait for task inside a Parallel.Foreach
                             dnsResolverTask.Wait();
@@ -173,7 +173,7 @@ namespace NETworkManager.Models.Network
                     case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex):
                         var hostAndSubnet = ipHostOrRange.Split('/');
 
-                        using (var dnsResolverTask = DNSHelper.ResolveAorAaaaAsync(hostAndSubnet[0]))
+                        using (var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(hostAndSubnet[0]))
                         {
                             // Wait for task inside a Parallel.Foreach
                             dnsResolverTask.Wait();

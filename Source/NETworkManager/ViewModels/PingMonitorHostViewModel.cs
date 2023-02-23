@@ -367,7 +367,7 @@ namespace NETworkManager.ViewModels
                     {
                         hostname = host;
 
-                        using var dnsResolverTask = DNSHelper.ResolveAorAaaaAsync(host, SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4);
+                        using var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(host, SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4);
 
                         // Wait for task inside a Parallel.Foreach
                         dnsResolverTask.Wait();
@@ -525,25 +525,17 @@ namespace NETworkManager.ViewModels
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                // Build the message based on the information in the DNSClientResult
-                var statusMessage = $"{host} ==> ";
-
-                if (string.IsNullOrEmpty(result.DNSServer))
-                    statusMessage += $"{result.ErrorMessage}";
-                else
-                    statusMessage += $"(DNS server: {result.DNSServer}) {result.ErrorMessage}";
-
                 // Show the message
                 if (!IsStatusMessageDisplayed)
                 {
-                    StatusMessage = statusMessage;
+                    StatusMessage = DNSClientHelper.FormatDNSClientResultError(host, result);
                     IsStatusMessageDisplayed = true;
 
                     return;
                 }
 
                 // Append the message
-                StatusMessage += Environment.NewLine + statusMessage;
+                StatusMessage += Environment.NewLine + DNSClientHelper.FormatDNSClientResultError(host, result);
             }));
         }
         #endregion

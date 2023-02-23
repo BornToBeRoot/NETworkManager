@@ -19,6 +19,8 @@ using NETworkManager.Models.Export;
 using NETworkManager.Views;
 using DnsClient;
 using System.Threading.Tasks;
+using Amazon.EC2.Model;
+using ControlzEx.Standard;
 
 namespace NETworkManager.ViewModels
 {
@@ -383,12 +385,7 @@ namespace NETworkManager.ViewModels
 
             lookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList());
         }
-
-        private void LookupFinished()
-        {
-            IsLookupRunning = false;
-        }
-
+        
         public void OnClose()
         {
 
@@ -439,19 +436,28 @@ namespace NETworkManager.ViewModels
 
         private void DNSLookup_LookupError(object sender, DNSLookupErrorArgs e)
         {
-            if (!string.IsNullOrEmpty(StatusMessage))
-                StatusMessage += Environment.NewLine;
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                // Build the message based on the information in the DNSLookupErrorArgs
+                var statusMessage = $"{e.Query} @ {e.IPEndPoint} ==> {e.ErrorMessage}";
 
-            StatusMessage += $"{e.Server} ({e.IPEndPoint}) ==> {e.ErrorMessage}";
+                // Show the message
+                if (!IsStatusMessageDisplayed)
+                {
+                    StatusMessage = statusMessage;
+                    IsStatusMessageDisplayed = true;
 
-            IsStatusMessageDisplayed = true;
+                    return;
+                }
 
-            LookupFinished();
+                // Append the message
+                StatusMessage += Environment.NewLine + statusMessage;
+            }));
         }
 
         private void DNSLookup_LookupComplete(object sender, EventArgs e)
         {
-            LookupFinished();
+            IsLookupRunning = false;
         }
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
