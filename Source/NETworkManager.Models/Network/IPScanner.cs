@@ -119,7 +119,7 @@ namespace NETworkManager.Models.Network
 
                              if (ResolveHostname)
                              {
-                                 var dnsResponse = await DNS.GetInstance().ResolvePtrAsync(ipAddress);
+                                 var dnsResponse = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
 
                                  if (!dnsResponse.HasError)
                                      hostname = dnsResponse.Value;

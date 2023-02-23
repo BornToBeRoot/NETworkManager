@@ -16,11 +16,6 @@ using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using NETworkManager.Models;
-using System.Collections;
-using ControlzEx.Standard;
-using Windows.Networking;
-using System.ServiceModel;
-using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
@@ -377,29 +372,25 @@ namespace NETworkManager.ViewModels
                         // Wait for task inside a Parallel.Foreach
                         dnsResolverTask.Wait();
 
-                        if (!dnsResolverTask.Result.HasError && dnsResolverTask.Result.Value != null)
+                        if (dnsResolverTask.Result.HasError)
                         {
-                            ipAddress = dnsResolverTask.Result.Value;
-                        }
-                        else
-                        {
-                            var errorMessage = dnsResolverTask.Result.HasError ? dnsResolverTask.Result.ErrorMessage : string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, host);
-                            StatusMessageShowOrAdd(host, errorMessage);
-
+                            StatusMessageShowOrAdd(host, dnsResolverTask.Result);
                             return;
                         }
+
+                        ipAddress = dnsResolverTask.Result.Value;
                     }
 
                     // Resolve hostname from ip address
                     else
                     {
-                        using var dnsResolverTask = DNS.GetInstance().ResolvePtrAsync(ipAddress);
+                        using var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
 
                         // Wait for task inside a Parallel.Foreach
                         dnsResolverTask.Wait();
 
                         // Hostname is not necessary for ping. Don't show an error message in the UI.
-                        if (!dnsResolverTask.Result.HasError && dnsResolverTask.Result.Value != null)
+                        if (!dnsResolverTask.Result.HasError)
                             hostname = dnsResolverTask.Result.Value;
                     }
 
@@ -410,7 +401,7 @@ namespace NETworkManager.ViewModels
                 });
 
                 IsRunning = false;
-            });                        
+            });
         }
 
         private void RemoveHost(Guid hostId)
@@ -524,17 +515,25 @@ namespace NETworkManager.ViewModels
 
         }
 
+
         /// <summary>
-        /// Show status message or add message if it's already displayed.
+        /// Method to display the status message and append messages related to <see cref="DNSClientResult"/>.
         /// </summary>
-        /// <param name="message">Message to show or add.</param>
-        private void StatusMessageShowOrAdd(string host, string message)
+        /// <param name="host">Host which should be resolved.</param>
+        /// <param name="result">Information about the error that occurred in the <see cref="DNSClientResult"/> query.</param>
+        private void StatusMessageShowOrAdd(string host, DNSClientResult result)
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                var statusMessage = $"{host} ==> {message}";
+                // Build the message based on the information in the DNSClientResult
+                var statusMessage = $"{host} ==> ";
 
-                // Show message
+                if (string.IsNullOrEmpty(result.DNSServer))
+                    statusMessage += $"{result.ErrorMessage}";
+                else
+                    statusMessage += $"(DNS server: {result.DNSServer}) {result.ErrorMessage}";
+
+                // Show the message
                 if (!IsStatusMessageDisplayed)
                 {
                     StatusMessage = statusMessage;
@@ -543,8 +542,8 @@ namespace NETworkManager.ViewModels
                     return;
                 }
 
-                // Append message
-                StatusMessage = Environment.NewLine + statusMessage;
+                // Append the message
+                StatusMessage += Environment.NewLine + statusMessage;
             }));
         }
         #endregion

@@ -423,7 +423,7 @@ namespace NETworkManager
 
                     // Generate lists at runtime
                     SettingsManager.Current.General_ApplicationList = new ObservableSetCollection<ApplicationInfo>(ApplicationManager.GetList());
-                    SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());                    
+                    SettingsManager.Current.IPScanner_CustomCommands = new ObservableCollection<CustomCommandInfo>(IPScannerCustomCommand.GetDefaultList());
                     SettingsManager.Current.PortScanner_PortProfiles = new ObservableCollection<PortProfileInfo>(PortProfile.GetDefaultList());
                     SettingsManager.Current.DNSLookup_DNSServers = new ObservableCollection<DNSServerInfo>(DNSServer.GetDefaultList());
                     SettingsManager.Current.AWSSessionManager_AWSProfiles = new ObservableCollection<AWSProfileInfo>(AWSProfile.GetDefaultList());
@@ -1009,7 +1009,7 @@ namespace NETworkManager
                 case ApplicationName.ARPTable:
                     break;
                 case ApplicationName.None:
-                    break;                    
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -1018,7 +1018,7 @@ namespace NETworkManager
 
         #region Settings
         private void OpenSettings()
-        {   
+        {
             // Init settings view
             if (_settingsView == null)
             {
@@ -1521,22 +1521,27 @@ namespace NETworkManager
         {
             _log.Info("Configure application DNS...");
 
-            DNSSettings dnsSettings = null;
+            DNSClientSettings dnsSettings = new();
 
             if (SettingsManager.Current.Network_UseCustomDNSServer)
             {
-                _log.Info($"Use custom DNS servers ({SettingsManager.Current.Network_CustomDNSServer})...");
-
                 if (!string.IsNullOrEmpty(SettingsManager.Current.Network_CustomDNSServer))
                 {
-                    dnsSettings = new()
+                    _log.Info($"Use custom DNS servers ({SettingsManager.Current.Network_CustomDNSServer})...");
+
+                    List<(string Server, int Port)> dnsServers = new();
+
+                    foreach (var dnsServer in SettingsManager.Current.Network_CustomDNSServer.Split(";"))
                     {
-                        DNSServers = SettingsManager.Current.Network_CustomDNSServer.Split(";")
-                    };
+                        dnsServers.Add((dnsServer, 53));    
+                    }                   
+
+                    dnsSettings.UseCustomDNSServers = true;
+                    dnsSettings.DNSServers = dnsServers;
                 }
                 else
                 {
-                    _log.Info("Custom DNS servers could not be set! Fallback to Windows DNS servers.");
+                    _log.Info($"Custom DNS servers could not be set (Setting \"{nameof(SettingsManager.Current.Network_CustomDNSServer)}\" has value \"{SettingsManager.Current.Network_CustomDNSServer}\")! Fallback to Windows DNS servers...");
                 }
             }
             else
@@ -1544,14 +1549,14 @@ namespace NETworkManager
                 _log.Info("Use Windows DNS servers...");
             }
 
-            DNS.GetInstance().Configure(dnsSettings);
+            DNSClient.GetInstance().Configure(dnsSettings);
         }
 
         private void UpdateDNS()
         {
             _log.Info("Update Windows DNS servers...");
 
-            DNS.GetInstance().UpdateFromWindows();
+            DNSClient.GetInstance().UpdateFromWindows();
         }
 
         private void WriteDefaultPowerShellProfileToRegistry()
