@@ -558,7 +558,7 @@ namespace NETworkManager.ViewModels
                 // Try to resolve local DNS based on IPv4
                 if (ComputerIPv4State == ConnectionState.OK)
                 {
-                    var dnsResult = await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse(ComputerIPv4));
+                    var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(ComputerIPv4));
 
                     if(!dnsResult.HasError)
                     {
@@ -570,7 +570,7 @@ namespace NETworkManager.ViewModels
                 // Try to resolve local DNS based on IPv6 if IPv4 failed
                 if(string.IsNullOrEmpty(ComputerDNS) && ComputerIPv6State == ConnectionState.OK)
                 {
-                    var dnsResult = await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse(ComputerIPv6));
+                    var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(ComputerIPv6));
 
                     if (!dnsResult.HasError)
                     {
@@ -665,7 +665,7 @@ namespace NETworkManager.ViewModels
                 // Try to resolve router DNS based on IPv4
                 if (RouterIPv4State == ConnectionState.OK)
                 {
-                    var dnsResult = await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse(RouterIPv4));
+                    var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(RouterIPv4));
 
                     if (!dnsResult.HasError)
                     {
@@ -677,7 +677,7 @@ namespace NETworkManager.ViewModels
                 // Try to resolve router DNS based on IPv6 if IPv4 failed
                 if (string.IsNullOrEmpty(RouterDNS) && RouterIPv6State == ConnectionState.OK)
                 {
-                    var dnsResult = await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse(RouterIPv6));
+                    var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(RouterIPv6));
 
                     if (!dnsResult.HasError)
                     {
@@ -800,7 +800,7 @@ namespace NETworkManager.ViewModels
                     // Try to resolve public DNS based on IPv4
                     if (InternetIPv4State == ConnectionState.OK)
                     {
-                        var dnsResult = await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv4));
+                        var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv4));
 
                         if (!dnsResult.HasError)
                         {
@@ -812,7 +812,7 @@ namespace NETworkManager.ViewModels
                     // Try to resolve router DNS based on IPv6 if IPv4 failed
                     if (string.IsNullOrEmpty(InternetDNS) && InternetIPv6State == ConnectionState.OK)
                     {
-                        var dnsResult = await DNS.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv6));
+                        var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(InternetIPv6));
 
                         if (!dnsResult.HasError)
                         {

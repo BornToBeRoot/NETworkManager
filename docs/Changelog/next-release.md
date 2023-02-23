@@ -30,6 +30,7 @@ New Feature
 - Reduce the size of the installer, portable and archive build [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
 - DataGrid Column header design improved [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - DataGrid Columns can now be resized [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
+- Add text wrapping for status textboxes [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
 - WiFi
   - Improve search - you can now search for SSID, Security, Channel, BSSID (MAC address), Vendor and Phy kind [#1941](https://github.com/BornToBeRoot/NETworkManager/pull/1941){:target="\_blank"}
 - IP Scanner
@@ -53,14 +54,16 @@ New Feature
 
 ## Bugfixes
 
-DNS Lookup
-
-- Fix a bug where the DNS lookup is not completed, but the user interface indicates that it is completed [#1940](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
-  AWS Session Manager
-- Use UTF-8 encoding for embedded PowerShell console window [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
+- Detect if the DNS result for a query is null even when the DNS server doesn't send an error code (because some providers do not implement their DNS server correctly...) [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
+- Improve the error message for DNS lookup to get more details (translation is not supported) [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
+- DNS Lookup
+  - Detect if the DNS result for a query is null even when the DNS server doesn't send an error code and improve the processing of the resource records answers [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
+  - Fix a bug where the DNS lookup is not completed, but the user interface indicates that it is completed [#1940](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"} [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
+- AWS Session Manager
+  - Use UTF-8 encoding for embedded PowerShell console window [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
 
 ## Other
 
-- Code cleanup [#1932](https://github.com/BornToBeRoot/NETworkManager/pull/1932){:target="\_blank"}
+- Code cleanup [#1932](https://github.com/BornToBeRoot/NETworkManager/pull/1932){:target="\_blank"} [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}

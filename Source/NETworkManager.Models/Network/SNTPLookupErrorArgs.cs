@@ -4,27 +4,26 @@
     {
         public string Server { get; set; }
 
-        public bool HasIPEndPoint { get; set; }
-        
         public string IPEndPoint { get; set; }
         
         public string ErrorMessage { get; set; }
+
+        public bool IsDNSError { get; set; }
 
         public SNTPLookupErrorArgs()
         {
 
         }
 
-        public SNTPLookupErrorArgs(string server, string errorMessage)
-        {
-            Server = server;            
+        public SNTPLookupErrorArgs(string errorMessage, bool isDNSError)
+        {            
             ErrorMessage = errorMessage;
+            IsDNSError = isDNSError;
         }
 
         public SNTPLookupErrorArgs(string server, string ipEndPoint, string errorMessage)
         {
-            Server = server;
-            HasIPEndPoint = true;
+            Server = server;     
             IPEndPoint = ipEndPoint;
             ErrorMessage = errorMessage;
         }

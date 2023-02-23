@@ -100,7 +100,7 @@ namespace NETworkManager.Models.Network
 
                     if (ResolveHostname && ipAddressHop != null)
                     {
-                        var dnsResult = await DNS.GetInstance().ResolvePtrAsync(ipAddressHop);
+                        var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddressHop);
 
                         if (!dnsResult.HasError)
                             hostname = dnsResult.Value;

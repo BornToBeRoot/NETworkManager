@@ -319,7 +319,7 @@ namespace NETworkManager.ViewModels
             if (!string.IsNullOrEmpty(StatusMessage))
                 StatusMessage += Environment.NewLine;
 
-            StatusMessage += e.HasIPEndPoint ? $"{e.Server} ({e.IPEndPoint}) => {e.ErrorMessage}" : $"{e.Server} => {e.ErrorMessage}";
+            StatusMessage += e.IsDNSError ? e.ErrorMessage : $"{e.Server} ({e.IPEndPoint}) ==> {e.ErrorMessage}";
             IsStatusMessageDisplayed = true;
         }
 

@@ -510,19 +510,17 @@ namespace NETworkManager.ViewModels
             // Try to parse the string into an IP-Address
             if (!IPAddress.TryParse(Host, out var ipAddress))
             {
-                var dnsResult = await DNSHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4);
+                var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4);
 
-                if (!dnsResult.HasError)
+                if (dnsResult.HasError)
                 {
-                    ipAddress = dnsResult.Value;
-                }
-                else
-                {
-                    StatusMessage = string.Format(Localization.Resources.Strings.CouldNotResolveIPAddressFor, Host) + Environment.NewLine + dnsResult.ErrorMessage;
+                    StatusMessage = DNSClientHelper.FormatDNSClientResultError(Host, dnsResult);
                     IsStatusMessageDisplayed = true;
                     IsRunning = false;
                     return;
                 }
+
+                ipAddress = dnsResult.Value;
             }
 
             // SNMP...

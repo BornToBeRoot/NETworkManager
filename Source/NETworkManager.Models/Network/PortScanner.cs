@@ -83,7 +83,7 @@ namespace NETworkManager.Models.Network
 
                         if (ResolveHostname)
                         {
-                            var dnsResult = await DNS.GetInstance().ResolvePtrAsync(ipAddress);
+                            var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
 
                             if (!dnsResult.HasError)
                                 hostname = dnsResult.Value;

@@ -99,15 +99,18 @@ namespace NETworkManager.Models.Network
                     }
                     else
                     {
-                        using var dnsResolverTask = DNSHelper.ResolveAorAaaaAsync(server.Server, true);
+                        using var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(server.Server, true);
 
                         // Wait for task inside a Parallel.Foreach
                         dnsResolverTask.Wait();
 
-                        if (!dnsResolverTask.Result.HasError)
-                            serverIP = dnsResolverTask.Result.Value;
-                        else
-                            OnLookupError(new SNTPLookupErrorArgs(server.Server, dnsResolverTask.Result.ErrorMessage));
+                        if (dnsResolverTask.Result.HasError)
+                        {
+                            OnLookupError(new SNTPLookupErrorArgs(DNSClientHelper.FormatDNSClientResultError(server.Server, dnsResolverTask.Result), true));
+                            return;
+                        }
+
+                        serverIP = dnsResolverTask.Result.Value;
                     }
 
                     try

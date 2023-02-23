@@ -2418,7 +2418,7 @@ namespace NETworkManager.ViewModels
         {
             IsResolveHostnameRunning = true;
 
-            var dnsResult = await DNSHelper.ResolveAorAaaaAsync(Host);
+            var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(Host);
 
             if (!dnsResult.HasError)
                 Host = dnsResult.Value.ToString();
