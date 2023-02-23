@@ -60,7 +60,7 @@ namespace NETworkManager.Models.Network
                 // Try to resolve PTR
                 if (string.IsNullOrEmpty(hostname))
                 {
-                    var dnsResult = await DNS.GetInstance().ResolvePtrAsync(ipAddress);
+                    var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
 
                     if (!dnsResult.HasError)
                         hostname = dnsResult.Value;

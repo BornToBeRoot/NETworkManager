@@ -736,7 +736,7 @@
                                 </Style>
                             </mahAppsControls:MetroProgressBar.Style>
                         </mahAppsControls:MetroProgressBar>
-                        <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+                        <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}" Text="{Binding StatusMessage}" Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Style="{DynamicResource StatusMessageTextBlock}" Margin="0,0,0,10" />
                         <Grid Grid.Row="4">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
