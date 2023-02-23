@@ -6,9 +6,10 @@ Set-Location -Path $PSScriptRoot
 # Output path where the build and all generated files is stored
 $BuildPath = "$PSScriptRoot\Build"
 
-# Build configuration
+# Target framework and runtime identifier
+# win10-x64 is required - don't use win-x64 because of: https://github.com/PowerShell/PowerShell/issues/7909 & https://github.com/BornToBeRoot/NETworkManager/issues/1942
 $TargetFramework = "net6.0-windows10.0.17763.0"
-$RuntimeIdentifier = "win-x64"
+$RuntimeIdentifier = "win10-x64"
 
 # Remove old build and generated files
 if (Test-Path -Path $BuildPath) {
