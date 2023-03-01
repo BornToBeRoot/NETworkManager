@@ -1,4 +1,6 @@
-﻿namespace NETworkManager.Models.Network
+﻿using System.Net;
+
+namespace NETworkManager.Models.Network
 {
     /// <summary>
     /// Class contains information about a server.
@@ -37,7 +39,7 @@
         {
             Server = server;
             Port = port;
-            TransportProtocol = TransportProtocol.TCP;
+            TransportProtocol = TransportProtocol.Tcp;
         }
 
         /// <summary>

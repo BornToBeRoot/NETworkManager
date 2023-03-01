@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NETworkManager.Views.ServerInfoProfileDialog"
+﻿<UserControl x:Class="NETworkManager.Views.ServerConnectionInfoProfileDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:ServerInfoProfileViewModel}">
+             mc:Ignorable="d" Loaded="UserControl_Loaded" d:DataContext="{d:DesignInstance viewModels:ServerConnectionInfoProfileViewModel}">    
     <Grid Margin="0,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -35,7 +35,7 @@
                 <TextBox.Resources>
                     <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 </TextBox.Resources>
-                <TextBox.Text>
+                <TextBox.Text>                    
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
@@ -50,22 +50,29 @@
             </TextBox>
         </Grid>
         <DataGrid x:Name="DataGridServers" AddingNewItem="DataGridServers_AddingNewItem" Grid.Column="0" Grid.Row="2" Style="{StaticResource DefaultDataGrid}" IsReadOnly="False" ItemsSource="{Binding Servers}">
+            <DataGrid.Resources>
+                <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Server}" MinWidth="200">
                     <DataGridTextColumn.Binding>
                         <Binding Path="Server" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <validators:EmptyValidator />
-                                <validators:IPAddressOrHostnameValidator />
+                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:ServerValidator ValidatesOnTargetUpdated="True">
+                                    <validators:ServerValidator.Wrapper>
+                                        <validators:ServerDependencyObjectWrapper AllowOnlyIPAddress="{Binding Data.AllowOnlyIPAddress, Source={StaticResource BindingProxy}}" />
+                                    </validators:ServerValidator.Wrapper>
+                                </validators:ServerValidator>
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}">                    
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}">
                     <DataGridTextColumn.Binding>
                         <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <validators:PortValidator />
+                                <validators:PortValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
@@ -80,7 +87,7 @@
                         <Style.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxName}" Value="False" />                                   
+                                    <Condition Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxName}" Value="False" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="True" />

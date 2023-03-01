@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
-    public class ServerInfoProfileViewModel : ViewModelBase
+    public class ServerConnectionInfoProfileViewModel : ViewModelBase
     {
         private readonly bool _isLoading;
 
@@ -33,6 +33,20 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _usedNames = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _allowOnlyIPAddress;
+        public bool AllowOnlyIPAddress
+        {
+            get => _allowOnlyIPAddress;
+            set
+            {
+                if (value == _allowOnlyIPAddress)
+                    return;
+
+                _allowOnlyIPAddress = value;
                 OnPropertyChanged();
             }
         }
@@ -96,7 +110,7 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        public ServerInfoProfileViewModel(Action<ServerInfoProfileViewModel> saveCommand, Action<ServerInfoProfileViewModel> cancelHandler, (List<string> UsedNames, bool IsEdited) options, ServerConnectionInfoProfile info = null)
+        public ServerConnectionInfoProfileViewModel(Action<ServerConnectionInfoProfileViewModel> saveCommand, Action<ServerConnectionInfoProfileViewModel> cancelHandler, (List<string> UsedNames, bool IsEdited, bool allowOnlyIPAddress) options, ServerConnectionInfoProfile info = null)
         {
             _isLoading = true;
 
@@ -104,6 +118,7 @@ namespace NETworkManager.ViewModels
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
             UsedNames = options.UsedNames;
+            AllowOnlyIPAddress = options.allowOnlyIPAddress;
             IsEdited = options.IsEdited;
             CurrentProfile = info ?? new ServerConnectionInfoProfile();
 

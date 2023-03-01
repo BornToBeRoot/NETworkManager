@@ -54,8 +54,8 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView DNSServers { get; }
 
-        private DNSServerInfo _dnsServer = new();
-        public DNSServerInfo DNSServer
+        private DNSServerConnectionInfoProfile _dnsServer = new();
+        public DNSServerConnectionInfoProfile DNSServer
         {
             get => _dnsServer;
             set
@@ -64,7 +64,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.DNSLookup_SelectedDNSServer = value;
+                    SettingsManager.Current.DNSLookup_SelectedDNSServer_v2 = value;
 
                 _dnsServer = value;
                 OnPropertyChanged();
@@ -200,10 +200,10 @@ namespace NETworkManager.ViewModels
 
             HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
 
-            DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers }.View;
-            DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.UseWindowsDNSServer), ListSortDirection.Descending));
-            DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.Name), ListSortDirection.Ascending));
-            DNSServer = DNSServers.SourceCollection.Cast<DNSServerInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer.Name) ?? DNSServers.SourceCollection.Cast<DNSServerInfo>().First();
+            DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers_v2 }.View;
+            DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.UseWindowsDNSServer), ListSortDirection.Descending));
+            DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name), ListSortDirection.Ascending));
+            DNSServer = DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>().FirstOrDefault(x => x.Name == SettingsManager.Current.DNSLookup_SelectedDNSServer_v2.Name) ?? DNSServers.SourceCollection.Cast<DNSServerConnectionInfoProfile>().First();
 
             LookupResultsView = CollectionViewSource.GetDefaultView(LookupResults);
             LookupResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(DNSLookupRecordInfo.Server)));
@@ -353,7 +353,7 @@ namespace NETworkManager.ViewModels
 
             AddHostToHistory(Host);
 
-            DNSLookupSettings settings = new()
+            DNSLookupSettings dnsSettings = new()
             {
                 AddDNSSuffix = SettingsManager.Current.DNSLookup_AddDNSSuffix,
                 QueryClass = SettingsManager.Current.DNSLookup_QueryClass,
@@ -365,27 +365,26 @@ namespace NETworkManager.ViewModels
                 Timeout = TimeSpan.FromSeconds(SettingsManager.Current.DNSLookup_Timeout),
             };
 
-            if (!DNSServer.UseWindowsDNSServer)
-            {
-                settings.UseCustomDNSServer = true;
-                settings.CustomDNSServer = DNSServer;
-            }
-
             if (SettingsManager.Current.DNSLookup_UseCustomDNSSuffix)
             {
-                settings.UseCustomDNSSuffix = true;
-                settings.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
+                dnsSettings.UseCustomDNSSuffix = true;
+                dnsSettings.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
             }
 
-            DNSLookup lookup = new(settings);
+            DNSLookup dnsLookup;
 
-            lookup.RecordReceived += DNSLookup_RecordReceived;
-            lookup.LookupError += DNSLookup_LookupError;
-            lookup.LookupComplete += DNSLookup_LookupComplete;
+            if (DNSServer.UseWindowsDNSServer)
+                dnsLookup = new(dnsSettings);
+            else
+                dnsLookup = new(dnsSettings, DNSServer.Servers);
 
-            lookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList());
+            dnsLookup.RecordReceived += DNSLookup_RecordReceived;
+            dnsLookup.LookupError += DNSLookup_LookupError;
+            dnsLookup.LookupComplete += DNSLookup_LookupComplete;
+
+            dnsLookup.ResolveAsync(Host.Split(';').Select(x => x.Trim()).ToList());
         }
-        
+
         public void OnClose()
         {
 

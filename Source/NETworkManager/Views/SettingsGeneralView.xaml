@@ -20,7 +20,7 @@
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}"
-                               d:DataContext="{d:DesignInstance models:ApplicationInfo}" />
+                               d:DataContext="{d:DesignInstance models:ApplicationInfo}" TextSearch.TextPath="{Binding Name}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>

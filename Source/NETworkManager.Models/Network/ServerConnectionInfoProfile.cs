@@ -34,6 +34,6 @@ namespace NETworkManager.Models.Network
         {
             Name = name;
             Servers = servers;
-        }
+        }        
     }
 }

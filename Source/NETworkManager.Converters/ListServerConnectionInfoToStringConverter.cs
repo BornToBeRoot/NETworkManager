@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NETworkManager.Converters
 {
-    public sealed class ListServerInfoToStringConverter : IValueConverter
+    public sealed class ListServerConnectionInfoToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

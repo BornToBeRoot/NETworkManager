@@ -2,10 +2,10 @@
 
 namespace NETworkManager.Views
 {
-    public partial class ServerInfoProfileDialog
+    public partial class ServerConnectionInfoProfileDialog
     {
         private (string Server, int Port) _newItemOptions;
-        public ServerInfoProfileDialog((string Server, int Port)NewItemOptions)
+        public ServerConnectionInfoProfileDialog((string Server, int Port)NewItemOptions)
         {            
             InitializeComponent();
 
@@ -23,7 +23,7 @@ namespace NETworkManager.Views
             e.NewItem = new ServerConnectionInfo
             {
                 Server = _newItemOptions.Server,
-                Port = _newItemOptions.Port
+                Port = _newItemOptions.Port                
             };
         }
     }
