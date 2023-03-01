@@ -5,6 +5,6 @@
 /// </summary>
 public enum TransportProtocol
 {
-    Udp,
-    Tcp
+    UDP,
+    TCP
 }

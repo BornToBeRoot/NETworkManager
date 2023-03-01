@@ -20,7 +20,7 @@ namespace NETworkManager.ViewModels
 
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private (string Server, int Port) _profileDialog_NewItemsOptions = ("1.1.1.1", 53);
+        private (string Server, int Port, TransportProtocol TransportProtocol) _profileDialog_NewItemsOptions = ("1.1.1.1", 53, TransportProtocol.UDP);
 
         public ICollectionView DNSServers { get; }
 

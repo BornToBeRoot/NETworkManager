@@ -39,7 +39,7 @@ namespace NETworkManager.Models.Network
         {
             Server = server;
             Port = port;
-            TransportProtocol = TransportProtocol.Tcp;
+            TransportProtocol = TransportProtocol.TCP;
         }
 
         /// <summary>

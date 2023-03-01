@@ -19,7 +19,7 @@ namespace NETworkManager.ViewModels
 
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private (string Server, int Port) _profileDialog_NewItemsOptions = ("time.example.com", 123);
+        private (string Server, int Port, TransportProtocol TransportProtocol) _profileDialog_NewItemsOptions = ("time.example.com", 123, TransportProtocol.TCP);
 
         private ICollectionView _sntpServers;
         public ICollectionView SNTPServers
