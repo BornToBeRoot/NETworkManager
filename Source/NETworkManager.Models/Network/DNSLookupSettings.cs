@@ -4,9 +4,7 @@ using System;
 namespace NETworkManager.Models.Network
 {
     public class DNSLookupSettings
-    {
-        public bool UseCustomDNSServer { get; set; } = false;
-        public DNSServerInfo CustomDNSServer { get; set; }
+    {        
         public bool AddDNSSuffix { get; set; } = true;
         public bool UseCustomDNSSuffix { get; set; } = false;
         public string CustomDNSSuffix { get; set; }

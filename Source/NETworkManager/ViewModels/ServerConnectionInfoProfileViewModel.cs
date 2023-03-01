@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace NETworkManager.ViewModels
 {
-    public class ServerInfoProfileViewModel : ViewModelBase
+    public class ServerConnectionInfoProfileViewModel : ViewModelBase
     {
         private readonly bool _isLoading;
 
@@ -37,6 +37,20 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _allowOnlyIPAddress;
+        public bool AllowOnlyIPAddress
+        {
+            get => _allowOnlyIPAddress;
+            set
+            {
+                if (value == _allowOnlyIPAddress)
+                    return;
+
+                _allowOnlyIPAddress = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _isEdited;
         public bool IsEdited
         {
@@ -51,8 +65,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ServerInfoProfile _currentProfile;
-        public ServerInfoProfile CurrentProfile
+        private ServerConnectionInfoProfile _currentProfile;
+        public ServerConnectionInfoProfile CurrentProfile
         {
             get => _currentProfile;
             set
@@ -81,8 +95,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private List<ServerInfo> _servers;
-        public List<ServerInfo> Servers
+        private List<ServerConnectionInfo> _servers;
+        public List<ServerConnectionInfo> Servers
         {
             get => _servers;
             set
@@ -96,7 +110,7 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        public ServerInfoProfileViewModel(Action<ServerInfoProfileViewModel> saveCommand, Action<ServerInfoProfileViewModel> cancelHandler, (List<string> UsedNames, bool IsEdited) options, ServerInfoProfile info = null)
+        public ServerConnectionInfoProfileViewModel(Action<ServerConnectionInfoProfileViewModel> saveCommand, Action<ServerConnectionInfoProfileViewModel> cancelHandler, (List<string> UsedNames, bool IsEdited, bool allowOnlyIPAddress) options, ServerConnectionInfoProfile info = null)
         {
             _isLoading = true;
 
@@ -104,8 +118,9 @@ namespace NETworkManager.ViewModels
             CancelCommand = new RelayCommand(p => cancelHandler(this));
 
             UsedNames = options.UsedNames;
+            AllowOnlyIPAddress = options.allowOnlyIPAddress;
             IsEdited = options.IsEdited;
-            CurrentProfile = info ?? new ServerInfoProfile();
+            CurrentProfile = info ?? new ServerConnectionInfoProfile();
 
             // Remove the current profile name from the list
             if (IsEdited)

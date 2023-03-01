@@ -14,12 +14,12 @@
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNTPLookupSettingsViewModel}">
     <UserControl.Resources>
-        <converters:ListServerInfoToStringConverter x:Key="ListServerInfoToStringConverter" />
+        <converters:ListServerConnectionInfoToStringConverter x:Key="ListServerConnectionInfoToStringConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.SNTPLookup}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.SNTPServers}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <DataGrid x:Name="DataGridSNTPServers" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding Servers}" SelectionMode="Single" SelectedItem="{Binding SelectedServer}" Height="200" Margin="0,0,0,10">
+        <DataGrid x:Name="DataGridSNTPServers" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding SNTPServers}" SelectionMode="Single" SelectedItem="{Binding SelectedSNTPServer}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -44,8 +44,8 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:ServerInfoProfile.Name)}" MinWidth="200" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.SNTPServers}" Binding="{Binding (network:ServerInfoProfile.Servers), Converter={StaticResource ListServerInfoToStringConverter}}" MinWidth="250" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:ServerConnectionInfoProfile.Name)}" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.SNTPServers}" Binding="{Binding (network:ServerConnectionInfoProfile.Servers), Converter={StaticResource ListServerConnectionInfoToStringConverter}}" MinWidth="250" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditServerCommand}" Key="F2" />

@@ -13,8 +13,8 @@
         xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
         dialogs:DialogParticipation.Register="{Binding}"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DNSLookupSettingsViewModel}">
-    <UserControl.Resources>
-        <converters:ListToStringConverter x:Key="ListToStringConverter" />
+    <UserControl.Resources>        
+        <converters:ListServerConnectionInfoToStringConverter x:Key="ListServerConnectionInfoToStringConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.DNSLookup}" Style="{StaticResource HeaderTextBlock}" />
@@ -44,9 +44,8 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:DNSServerInfo.Name)}" MinWidth="200" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.DNSServers}" Binding="{Binding (network:DNSServerInfo.Servers), Converter={StaticResource ListToStringConverter}}" MinWidth="200" Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding (network:DNSServerInfo.Port)}" MinWidth="80" Width="*" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:DNSServerConnectionInfoProfile.Name)}" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.DNSServers}" Binding="{Binding (network:DNSServerConnectionInfoProfile.Servers), Converter={StaticResource ListServerConnectionInfoToStringConverter}}" MinWidth="250" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditDNSServerCommand}" Key="F2" />

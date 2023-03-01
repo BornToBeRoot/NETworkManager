@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NETworkManager.Converters
 {
-    public sealed class ListServerInfoToStringConverter : IValueConverter
+    public sealed class ListServerConnectionInfoToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -16,7 +16,7 @@ namespace NETworkManager.Converters
 
             StringBuilder stringBuilder = new();
             
-            foreach (var server in (List<ServerInfo>)value)
+            foreach (var server in (List<ServerConnectionInfo>)value)
             {
                 if (stringBuilder.Length > 0)
                     stringBuilder.Append("; ");

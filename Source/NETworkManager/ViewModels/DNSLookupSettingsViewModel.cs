@@ -20,10 +20,12 @@ namespace NETworkManager.ViewModels
 
         private readonly IDialogCoordinator _dialogCoordinator;
 
+        private (string Server, int Port, TransportProtocol TransportProtocol) _profileDialog_NewItemsOptions = ("1.1.1.1", 53, TransportProtocol.UDP);
+
         public ICollectionView DNSServers { get; }
 
-        private DNSServerInfo _selectedDNSServer = new();
-        public DNSServerInfo SelectedDNSServer
+        private DNSServerConnectionInfoProfile _selectedDNSServer = new();
+        public DNSServerConnectionInfoProfile SelectedDNSServer
         {
             get => _selectedDNSServer;
             set
@@ -35,6 +37,8 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        private List<string> ServerInfoProfileNames => SettingsManager.Current.DNSLookup_DNSServers_v2.Where(x => !x.UseWindowsDNSServer).Select(x => x.Name).ToList();
 
         private bool _addDNSSuffix;
         public bool AddDNSSuffix
@@ -173,7 +177,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-               
+
         private int _retries;
         public int Retries
         {
@@ -216,11 +220,11 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            DNSServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_DNSServers);
-            DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerInfo.Name), ListSortDirection.Ascending));
+            DNSServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_DNSServers_v2);
+            DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name), ListSortDirection.Ascending));
             DNSServers.Filter = o =>
             {
-                if (o is not DNSServerInfo info)
+                if (o is not DNSServerConnectionInfoProfile info)
                     return false;
 
                 return !info.UseWindowsDNSServer;
@@ -271,6 +275,7 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region Methods
+
         public async Task AddDNSServer()
         {
             var customDialog = new CustomDialog
@@ -278,17 +283,17 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.AddDNSServer
             };
 
-            var viewModel = new DNSServerViewModel(instance =>
+            var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerInfo(instance.Name, instance.DNSServers.Replace(" ", "").Split(';').ToList(), instance.Port));
+                SettingsManager.Current.DNSLookup_DNSServers_v2.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            });
+            }, (ServerInfoProfileNames, false, true));
 
-            customDialog.Content = new DNSServerDialog
+            customDialog.Content = new ServerConnectionInfoProfileDialog(_profileDialog_NewItemsOptions)
             {
                 DataContext = viewModel
             };
@@ -303,18 +308,18 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.EditDNSServer
             };
 
-            var viewModel = new DNSServerViewModel(instance =>
+            var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
-                SettingsManager.Current.DNSLookup_DNSServers.Add(new DNSServerInfo(instance.Name, instance.DNSServers.Replace(" ", "").Split(';').ToList(), instance.Port));
+                SettingsManager.Current.DNSLookup_DNSServers_v2.Remove(SelectedDNSServer);
+                SettingsManager.Current.DNSLookup_DNSServers_v2.Add(new DNSServerConnectionInfoProfile(instance.Name, instance.Servers));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, true, SelectedDNSServer);
+            }, (ServerInfoProfileNames, true, true), SelectedDNSServer);
 
-            customDialog.Content = new DNSServerDialog
+            customDialog.Content = new ServerConnectionInfoProfileDialog(_profileDialog_NewItemsOptions)
             {
                 DataContext = viewModel
             };
@@ -325,7 +330,7 @@ namespace NETworkManager.ViewModels
         public async Task DeleteDNSServer()
         {
             var customDialog = new CustomDialog
-            {                
+            {
                 Title = Localization.Resources.Strings.DeleteDNSServer
             };
 
@@ -333,7 +338,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
+                SettingsManager.Current.DNSLookup_DNSServers_v2.Remove(SelectedDNSServer);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

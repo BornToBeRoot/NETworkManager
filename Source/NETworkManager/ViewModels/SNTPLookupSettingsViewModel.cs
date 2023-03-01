@@ -19,32 +19,32 @@ namespace NETworkManager.ViewModels
 
         private readonly IDialogCoordinator _dialogCoordinator;
 
-        private (string Server, int Port) _serverInfoDialogNewItemOptions = ("time.example.com", 123);
+        private (string Server, int Port, TransportProtocol TransportProtocol) _profileDialog_NewItemsOptions = ("time.example.com", 123, TransportProtocol.TCP);
 
-        private ICollectionView _servers;
-        public ICollectionView Servers
+        private ICollectionView _sntpServers;
+        public ICollectionView SNTPServers
         {
-            get => _servers;
+            get => _sntpServers;
             set
             {
-                if(value == _servers) 
+                if(value == _sntpServers) 
                     return;
 
-                _servers = value;
+                _sntpServers = value;
                 OnPropertyChanged();
             }
         }
 
-        private ServerInfoProfile _selectedServer = new();
-        public ServerInfoProfile SelectedServer
+        private ServerConnectionInfoProfile _selectedSNTPServer = new();
+        public ServerConnectionInfoProfile SelectedSNTPServer
         {
-            get => _selectedServer;
+            get => _selectedSNTPServer;
             set
             {
-                if (value == _selectedServer)
+                if (value == _selectedSNTPServer)
                     return;
 
-                _selectedServer = value;
+                _selectedSNTPServer = value;
                 OnPropertyChanged();
             }
         }
@@ -76,8 +76,8 @@ namespace NETworkManager.ViewModels
 
             _dialogCoordinator = instance;
 
-            Servers = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNTPLookup_SNTPServers);
-            Servers.SortDescriptions.Add(new SortDescription(nameof(ServerInfoProfile.Name), ListSortDirection.Ascending));
+            SNTPServers = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNTPLookup_SNTPServers);
+            SNTPServers.SortDescriptions.Add(new SortDescription(nameof(ServerConnectionInfoProfile.Name), ListSortDirection.Ascending));
 
             LoadSettings();
 
@@ -109,7 +109,7 @@ namespace NETworkManager.ViewModels
 
         private bool DeleteServer_CanExecute(object obj)
         {
-            return Servers.Cast<ServerInfoProfile>().Count() > 1;
+            return SNTPServers.Cast<ServerConnectionInfoProfile>().Count() > 1;
         }
 
         private void DeleteServerAction()
@@ -126,17 +126,17 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.AddSNTPServer
             };
 
-            var viewModel = new ServerInfoProfileViewModel(instance =>
+            var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerInfoProfile(instance.Name, instance.Servers));
+                SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerConnectionInfoProfile(instance.Name, instance.Servers));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, (ServerInfoProfileNames, false));
+            }, (ServerInfoProfileNames, false, false));
 
-            customDialog.Content = new ServerInfoProfileDialog(_serverInfoDialogNewItemOptions)
+            customDialog.Content = new ServerConnectionInfoProfileDialog(_profileDialog_NewItemsOptions)
             {
                 DataContext = viewModel
             };
@@ -151,18 +151,18 @@ namespace NETworkManager.ViewModels
                 Title = Localization.Resources.Strings.EditSNTPServer
             };
 
-            var viewModel = new ServerInfoProfileViewModel(instance =>
+            var viewModel = new ServerConnectionInfoProfileViewModel(instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedServer);
-                SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerInfoProfile(instance.Name, instance.Servers));
+                SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
+                SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerConnectionInfoProfile(instance.Name, instance.Servers));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, (ServerInfoProfileNames, true), SelectedServer);
+            }, (ServerInfoProfileNames, true, false), SelectedSNTPServer);
 
-            customDialog.Content = new ServerInfoProfileDialog(_serverInfoDialogNewItemOptions)
+            customDialog.Content = new ServerConnectionInfoProfileDialog(_profileDialog_NewItemsOptions)
             {
                 DataContext = viewModel
             };
@@ -181,7 +181,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedServer);
+                SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedSNTPServer);
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

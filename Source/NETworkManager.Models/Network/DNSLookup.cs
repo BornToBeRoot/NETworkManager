@@ -22,11 +22,11 @@ namespace NETworkManager.Models.Network
         #endregion
 
         #region Constructor
-        public DNSLookup(DNSLookupSettings settings)
+        public DNSLookup(DNSLookupSettings settings, IEnumerable<ServerConnectionInfo> dnsServers = null)
         {
             _settings = settings;
 
-            _dnsServers = GetDnsServer();
+            _dnsServers = GetDnsServer(dnsServers);
 
             _dnsSuffix = _settings.UseCustomDNSSuffix ? _settings.CustomDNSSuffix : IPGlobalProperties.GetIPGlobalProperties().DomainName;
             _addSuffix = _settings.AddDNSSuffix && !string.IsNullOrEmpty(_dnsSuffix);
@@ -61,22 +61,23 @@ namespace NETworkManager.Models.Network
         /// Get the DNS servers from Windows or get custom DNS servers from <see cref="DNSLookupSettings"/>.
         /// </summary>
         /// <returns>List of DNS servers as <see cref="IPEndPoint"/>.</returns>
-        private IEnumerable<IPEndPoint> GetDnsServer()
+        private IEnumerable<IPEndPoint> GetDnsServer(IEnumerable<ServerConnectionInfo> dnsServers = null)
         {
-            List<IPEndPoint> dnsServers = new();
+            List<IPEndPoint> servers = new();
 
-            if (_settings.UseCustomDNSServer)
+            // Use windows dns servers
+            if(dnsServers == null)
             {
-                foreach (var dnsServer in _settings.CustomDNSServer.Servers)
-                    dnsServers.Add(new IPEndPoint(IPAddress.Parse(dnsServer), _settings.CustomDNSServer.Port));
+                foreach (var dnsServer in NameServer.ResolveNameServers(true, false))
+                    servers.Add(new IPEndPoint(IPAddress.Parse(dnsServer.Address), dnsServer.Port));
             }
             else
             {
-                foreach (var dnsServer in NameServer.ResolveNameServers(true, false))
-                    dnsServers.Add(new IPEndPoint(IPAddress.Parse(dnsServer.Address), dnsServer.Port));
-            }
+                foreach (var dnsServer in dnsServers)
+                    servers.Add(new IPEndPoint(IPAddress.Parse(dnsServer.Server), dnsServer.Port));
+            }           
 
-            return dnsServers;
+            return servers;
         }
 
         /// <summary>

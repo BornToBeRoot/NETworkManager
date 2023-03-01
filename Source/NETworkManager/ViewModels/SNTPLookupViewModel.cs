@@ -31,8 +31,8 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView SNTPServers { get; }
 
-        private ServerInfoProfile _sntpServer = new();
-        public ServerInfoProfile SNTPServer
+        private ServerConnectionInfoProfile _sntpServer = new();
+        public ServerConnectionInfoProfile SNTPServer
         {
             get => _sntpServer;
             set
@@ -144,8 +144,8 @@ namespace NETworkManager.ViewModels
             TabId = tabId;
 
             SNTPServers = new CollectionViewSource { Source = SettingsManager.Current.SNTPLookup_SNTPServers }.View;
-            SNTPServers.SortDescriptions.Add(new SortDescription(nameof(ServerInfoProfile.Name), ListSortDirection.Ascending));
-            SNTPServer = SNTPServers.SourceCollection.Cast<ServerInfoProfile>().FirstOrDefault(x => x.Name == SettingsManager.Current.SNTPLookup_SelectedSNTPServer.Name) ?? SNTPServers.SourceCollection.Cast<ServerInfoProfile>().First();
+            SNTPServers.SortDescriptions.Add(new SortDescription(nameof(ServerConnectionInfoProfile.Name), ListSortDirection.Ascending));
+            SNTPServer = SNTPServers.SourceCollection.Cast<ServerConnectionInfoProfile>().FirstOrDefault(x => x.Name == SettingsManager.Current.SNTPLookup_SelectedSNTPServer.Name) ?? SNTPServers.SourceCollection.Cast<ServerConnectionInfoProfile>().First();
 
             LookupResultsView = CollectionViewSource.GetDefaultView(LookupResults);
             LookupResultsView.SortDescriptions.Add(new SortDescription(nameof(SNTPLookupResultInfo.Server), ListSortDirection.Ascending));

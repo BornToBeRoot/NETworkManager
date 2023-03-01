@@ -14,7 +14,6 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
-using static NETworkManager.Models.Network.SNMP;
 
 namespace NETworkManager.Settings
 {
@@ -1519,31 +1518,31 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ObservableCollection<DNSServerInfo> _dnsLookup_DNSServers = new();
-        public ObservableCollection<DNSServerInfo> DNSLookup_DNSServers
+        private ObservableCollection<DNSServerConnectionInfoProfile> _dnsLookup_DNSServers_v2 = new();
+        public ObservableCollection<DNSServerConnectionInfoProfile> DNSLookup_DNSServers_v2
         {
-            get => _dnsLookup_DNSServers;
+            get => _dnsLookup_DNSServers_v2;
             set
             {
-                if (value == _dnsLookup_DNSServers)
+                if (value == _dnsLookup_DNSServers_v2)
                     return;
 
-                _dnsLookup_DNSServers = value;
+                _dnsLookup_DNSServers_v2 = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private DNSServerInfo _dnsLookup_SelectedDNSServer = new();
-        public DNSServerInfo DNSLookup_SelectedDNSServer
+        private DNSServerConnectionInfoProfile _dnsLookup_SelectedDNSServer_v2 = new();
+        public DNSServerConnectionInfoProfile DNSLookup_SelectedDNSServer_v2
         {
-            get => _dnsLookup_SelectedDNSServer;
+            get => _dnsLookup_SelectedDNSServer_v2;
             set
             {
-                if (value == _dnsLookup_SelectedDNSServer)
+                if (value == _dnsLookup_SelectedDNSServer_v2)
                     return;
 
-                _dnsLookup_SelectedDNSServer = value;
+                _dnsLookup_SelectedDNSServer_v2 = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -3259,9 +3258,9 @@ namespace NETworkManager.Settings
         }
         #endregion
 
-        #region SNTPLookup
-        private ObservableCollection<ServerInfoProfile> _sntpLookup_SNTPServers = new();
-        public ObservableCollection<ServerInfoProfile> SNTPLookup_SNTPServers
+        #region SNTP Lookup
+        private ObservableCollection<ServerConnectionInfoProfile> _sntpLookup_SNTPServers = new();
+        public ObservableCollection<ServerConnectionInfoProfile> SNTPLookup_SNTPServers
         {
             get => _sntpLookup_SNTPServers;
             set
@@ -3275,8 +3274,8 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ServerInfoProfile _sntpLookup_SelectedSNTPServer = new();
-        public ServerInfoProfile SNTPLookup_SelectedSNTPServer
+        private ServerConnectionInfoProfile _sntpLookup_SelectedSNTPServer = new();
+        public ServerConnectionInfoProfile SNTPLookup_SelectedSNTPServer
         {
             get => _sntpLookup_SelectedSNTPServer;
             set
@@ -3972,8 +3971,8 @@ namespace NETworkManager.Settings
             Traceroute_HostHistory.CollectionChanged += CollectionChanged;
 
             // DNS Lookup
-            DNSLookup_HostHistory.CollectionChanged += CollectionChanged;
-            DNSLookup_DNSServers.CollectionChanged += CollectionChanged;
+            DNSLookup_HostHistory.CollectionChanged += CollectionChanged;            
+            DNSLookup_DNSServers_v2.CollectionChanged += CollectionChanged;
 
             // Remote Desktop
             RemoteDesktop_HostHistory.CollectionChanged += CollectionChanged;
