@@ -238,7 +238,7 @@ namespace NETworkManager.Settings
                 // Add NTP Lookup application
                 _log.Info("Add new App SNTP Lookup...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.SNTPLookup));
-                Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerInfoProfile>(SNTPServer.GetDefaultList());
+                Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
 
                 // Update default settings values
                 if (Current.IPScanner_Threads > 1024)

@@ -3259,9 +3259,9 @@ namespace NETworkManager.Settings
         }
         #endregion
 
-        #region SNTPLookup
-        private ObservableCollection<ServerInfoProfile> _sntpLookup_SNTPServers = new();
-        public ObservableCollection<ServerInfoProfile> SNTPLookup_SNTPServers
+        #region SNTP Lookup
+        private ObservableCollection<ServerConnectionInfoProfile> _sntpLookup_SNTPServers = new();
+        public ObservableCollection<ServerConnectionInfoProfile> SNTPLookup_SNTPServers
         {
             get => _sntpLookup_SNTPServers;
             set
@@ -3275,8 +3275,8 @@ namespace NETworkManager.Settings
             }
         }
 
-        private ServerInfoProfile _sntpLookup_SelectedSNTPServer = new();
-        public ServerInfoProfile SNTPLookup_SelectedSNTPServer
+        private ServerConnectionInfoProfile _sntpLookup_SelectedSNTPServer = new();
+        public ServerConnectionInfoProfile SNTPLookup_SelectedSNTPServer
         {
             get => _sntpLookup_SelectedSNTPServer;
             set

@@ -51,8 +51,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ServerInfoProfile _currentProfile;
-        public ServerInfoProfile CurrentProfile
+        private ServerConnectionInfoProfile _currentProfile;
+        public ServerConnectionInfoProfile CurrentProfile
         {
             get => _currentProfile;
             set
@@ -81,8 +81,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private List<ServerInfo> _servers;
-        public List<ServerInfo> Servers
+        private List<ServerConnectionInfo> _servers;
+        public List<ServerConnectionInfo> Servers
         {
             get => _servers;
             set
@@ -96,7 +96,7 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        public ServerInfoProfileViewModel(Action<ServerInfoProfileViewModel> saveCommand, Action<ServerInfoProfileViewModel> cancelHandler, (List<string> UsedNames, bool IsEdited) options, ServerInfoProfile info = null)
+        public ServerInfoProfileViewModel(Action<ServerInfoProfileViewModel> saveCommand, Action<ServerInfoProfileViewModel> cancelHandler, (List<string> UsedNames, bool IsEdited) options, ServerConnectionInfoProfile info = null)
         {
             _isLoading = true;
 
@@ -105,7 +105,7 @@ namespace NETworkManager.ViewModels
 
             UsedNames = options.UsedNames;
             IsEdited = options.IsEdited;
-            CurrentProfile = info ?? new ServerInfoProfile();
+            CurrentProfile = info ?? new ServerConnectionInfoProfile();
 
             // Remove the current profile name from the list
             if (IsEdited)

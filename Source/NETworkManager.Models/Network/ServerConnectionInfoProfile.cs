@@ -5,7 +5,7 @@ namespace NETworkManager.Models.Network
     /// <summary>
     /// Class is used to store informations about a server profile.    
     /// </summary>
-    public class ServerInfoProfile
+    public class ServerConnectionInfoProfile
     {
         /// <summary>
         /// Name of the server profile.
@@ -13,24 +13,24 @@ namespace NETworkManager.Models.Network
         public string Name { get; set; }
 
         /// <summary>
-        /// List of servers as <see cref="ServerInfo"/>.
+        /// List of servers as <see cref="ServerConnectionInfo"/>.
         /// </summary>
-        public List<ServerInfo> Servers { get; set; } = new();
+        public List<ServerConnectionInfo> Servers { get; set; } = new();
 
         /// <summary>
-        /// Create an instance of <see cref="ServerInfoProfile"/>.
+        /// Create an instance of <see cref="ServerConnectionInfoProfile"/>.
         /// </summary>
-        public ServerInfoProfile()
+        public ServerConnectionInfoProfile()
         {
 
         }
 
         /// <summary>
-        /// Create an instance of <see cref="ServerInfoProfile"/> with parameters.
+        /// Create an instance of <see cref="ServerConnectionInfoProfile"/> with parameters.
         /// </summary>
         /// <param name="name">Name of the profile.</param>
-        /// <param name="servers">List of servers as <see cref="ServerInfo"/>.</param>        
-        public ServerInfoProfile(string name, List<ServerInfo> servers)
+        /// <param name="servers">List of servers as <see cref="ServerConnectionInfo"/>.</param>        
+        public ServerConnectionInfoProfile(string name, List<ServerConnectionInfo> servers)
         {
             Name = name;
             Servers = servers;

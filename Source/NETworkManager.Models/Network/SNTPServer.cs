@@ -11,30 +11,30 @@ namespace NETworkManager.Models.Network
         /// Method will return a default list of common SNTP servers.
         /// </summary>
         /// <return
-        public static List<ServerInfoProfile> GetDefaultList() => new()
+        public static List<ServerConnectionInfoProfile> GetDefaultList() => new()
         {
-            new ServerInfoProfile("Cloudflare", new()
+            new ServerConnectionInfoProfile("Cloudflare", new()
             {
-                new ServerInfo("time.cloudflare.com", 123)
+                new ServerConnectionInfo("time.cloudflare.com", 123)
             }),
-            new ServerInfoProfile("Google Public NTP", new()
+            new ServerConnectionInfoProfile("Google Public NTP", new()
             {
-                new ServerInfo("time.google.com", 123),
-                new ServerInfo("time1.google.com", 123),
-                new ServerInfo("time2.google.com", 123),
-                new ServerInfo ("time3.google.com", 123),
-                new ServerInfo("time4.google.com", 123)
+                new ServerConnectionInfo("time.google.com", 123),
+                new ServerConnectionInfo("time1.google.com", 123),
+                new ServerConnectionInfo("time2.google.com", 123),
+                new ServerConnectionInfo ("time3.google.com", 123),
+                new ServerConnectionInfo("time4.google.com", 123)
             }),
-            new ServerInfoProfile("Microsoft", new()
+            new ServerConnectionInfoProfile("Microsoft", new()
             {
-                new ServerInfo("time.windows.com", 123)
+                new ServerConnectionInfo("time.windows.com", 123)
             }),
-            new ServerInfoProfile("pool.ntp.org", new()
+            new ServerConnectionInfoProfile("pool.ntp.org", new()
             {
-                new ServerInfo("0.pool.ntp.org", 123),
-                new ServerInfo("1.pool.ntp.org", 123),
-                new ServerInfo("2.pool.ntp.org", 123),
-                new ServerInfo("3.pool.ntp.org", 123)
+                new ServerConnectionInfo("0.pool.ntp.org", 123),
+                new ServerConnectionInfo("1.pool.ntp.org", 123),
+                new ServerConnectionInfo("2.pool.ntp.org", 123),
+                new ServerConnectionInfo("3.pool.ntp.org", 123)
             })
         };
     }

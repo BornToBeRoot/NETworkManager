@@ -1,17 +1,15 @@
-﻿namespace NETworkManager.Models.Network
-{
-    public partial class SNMP
-    {
-        #endregion
+﻿namespace NETworkManager.Models.Network;
 
-        // Trap and Inform not implemented
-        public enum SNMPMode
-        {
-            Get,
-            Walk,
-            Set,
-            Trap,
-            Inform
-        }
-    }
+/// <summary>
+/// Enum SNMP Mode.
+/// 
+/// Trap and Inform are not implemented yet.
+/// </summary>
+public enum SNMPMode
+{
+    Get,
+    Walk,
+    Set,
+    Trap,
+    Inform
 }

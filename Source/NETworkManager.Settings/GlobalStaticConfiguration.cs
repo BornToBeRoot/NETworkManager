@@ -143,11 +143,11 @@ namespace NETworkManager.Settings
         // Application: SNMP
         public static WalkMode SNMP_WalkMode => WalkMode.WithinSubtree;
         public static int SNMP_Timeout => 60000;
-        public static SNMP.SNMPMode SNMP_Mode => SNMP.SNMPMode.Walk;
-        public static SNMP.SNMPVersion SNMP_Version => SNMP.SNMPVersion.V2C;
-        public static SNMP.SNMPV3Security SNMP_Security => SNMP.SNMPV3Security.AuthPriv;
-        public static SNMP.SNMPV3AuthenticationProvider SNMP_AuthenticationProvider => SNMP.SNMPV3AuthenticationProvider.SHA1;
-        public static SNMP.SNMPV3PrivacyProvider SNMP_PrivacyProvider => SNMP.SNMPV3PrivacyProvider.AES;
+        public static SNMPMode SNMP_Mode => SNMPMode.Walk;
+        public static SNMPVersion SNMP_Version => SNMPVersion.V2C;
+        public static SNMPV3Security SNMP_Security => SNMPV3Security.AuthPriv;
+        public static SNMPV3AuthenticationProvider SNMP_AuthenticationProvider => SNMPV3AuthenticationProvider.SHA1;
+        public static SNMPV3PrivacyProvider SNMP_PrivacyProvider => SNMPV3PrivacyProvider.AES;
         public static ExportManager.ExportFileType SNMP_ExportFileType => ExportManager.ExportFileType.CSV;
 
         // Application: SNTP Lookup

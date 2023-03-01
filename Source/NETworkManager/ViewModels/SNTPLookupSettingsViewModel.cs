@@ -35,8 +35,8 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ServerInfoProfile _selectedServer = new();
-        public ServerInfoProfile SelectedServer
+        private ServerConnectionInfoProfile _selectedServer = new();
+        public ServerConnectionInfoProfile SelectedServer
         {
             get => _selectedServer;
             set
@@ -77,7 +77,7 @@ namespace NETworkManager.ViewModels
             _dialogCoordinator = instance;
 
             Servers = CollectionViewSource.GetDefaultView(SettingsManager.Current.SNTPLookup_SNTPServers);
-            Servers.SortDescriptions.Add(new SortDescription(nameof(ServerInfoProfile.Name), ListSortDirection.Ascending));
+            Servers.SortDescriptions.Add(new SortDescription(nameof(ServerConnectionInfoProfile.Name), ListSortDirection.Ascending));
 
             LoadSettings();
 
@@ -109,7 +109,7 @@ namespace NETworkManager.ViewModels
 
         private bool DeleteServer_CanExecute(object obj)
         {
-            return Servers.Cast<ServerInfoProfile>().Count() > 1;
+            return Servers.Cast<ServerConnectionInfoProfile>().Count() > 1;
         }
 
         private void DeleteServerAction()
@@ -130,7 +130,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerInfoProfile(instance.Name, instance.Servers));
+                SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerConnectionInfoProfile(instance.Name, instance.Servers));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -156,7 +156,7 @@ namespace NETworkManager.ViewModels
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
                 SettingsManager.Current.SNTPLookup_SNTPServers.Remove(SelectedServer);
-                SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerInfoProfile(instance.Name, instance.Servers));
+                SettingsManager.Current.SNTPLookup_SNTPServers.Add(new ServerConnectionInfoProfile(instance.Name, instance.Servers));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

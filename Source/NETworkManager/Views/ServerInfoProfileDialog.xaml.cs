@@ -20,7 +20,7 @@ namespace NETworkManager.Views
 
         private void DataGridServers_AddingNewItem(object sender, System.Windows.Controls.AddingNewItemEventArgs e)
         {
-            e.NewItem = new ServerInfo
+            e.NewItem = new ServerConnectionInfo
             {
                 Server = _newItemOptions.Server,
                 Port = _newItemOptions.Port

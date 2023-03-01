@@ -44,8 +44,8 @@
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:ServerInfoProfile.Name)}" MinWidth="200" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.SNTPServers}" Binding="{Binding (network:ServerInfoProfile.Servers), Converter={StaticResource ListServerInfoToStringConverter}}" MinWidth="250" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:ServerConnectionInfoProfile.Name)}" MinWidth="200" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.SNTPServers}" Binding="{Binding (network:ServerConnectionInfoProfile.Servers), Converter={StaticResource ListServerInfoToStringConverter}}" MinWidth="250" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditServerCommand}" Key="F2" />

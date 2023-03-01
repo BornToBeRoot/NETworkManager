@@ -16,7 +16,7 @@ namespace NETworkManager.Converters
 
             StringBuilder stringBuilder = new();
             
-            foreach (var server in (List<ServerInfo>)value)
+            foreach (var server in (List<ServerConnectionInfo>)value)
             {
                 if (stringBuilder.Length > 0)
                     stringBuilder.Append("; ");

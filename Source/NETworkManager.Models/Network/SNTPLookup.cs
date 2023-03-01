@@ -84,7 +84,7 @@ namespace NETworkManager.Models.Network
             };
         }
 
-        public void QueryAsync(IEnumerable<ServerInfo> servers)
+        public void QueryAsync(IEnumerable<ServerConnectionInfo> servers)
         {
             Task.Run(() =>
             {
