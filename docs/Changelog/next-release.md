@@ -46,6 +46,7 @@ New Feature
   - Add more validation (host, ip address) to input [#1932](https://github.com/BornToBeRoot/NETworkManager/pull/1932){:target="\_blank"}
 - DNS Lookup
   - Improve overall DNS lookup performance with multiple DNS servers and hosts [#1940](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
+  - New dialog to add/edit DNS servers [#1960](https://github.com/BornToBeRoot/NETworkManager/pull/1960){:target="\_blank"}
 - Add documentation for: [#265](https://github.com/BornToBeRoot/NETworkManager/pull/265){:target="\_blank"}
   - [Dashboard](https://borntoberoot.net/NETworkManager/Documentation/Application/Dashboard){:target="\_blank"}
   - [Network Interface](https://borntoberoot.net/NETworkManager/Documentation/Application/NetworkInterface){:target="\_blank"
@@ -59,6 +60,7 @@ New Feature
 - DNS Lookup
   - Detect if the DNS result for a query is null even when the DNS server doesn't send an error code and improve the processing of the resource records answers [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
   - Fix a bug where the DNS lookup is not completed, but the user interface indicates that it is completed [#1940](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"} [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
+  - Detect if a dns server profile with this name already exists [#1960](https://github.com/BornToBeRoot/NETworkManager/pull/1960){:target="\_blank"}
 - AWS Session Manager
   - Use UTF-8 encoding for embedded PowerShell console window [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
 - Discovery Protocol
