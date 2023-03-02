@@ -57,7 +57,7 @@ namespace NETworkManager.Profiles
         /// <returns>Returns true if the <see cref="ProfileFileInfo"/> is equal to another <see cref="ProfileFileInfo"/>.</returns>
         public override bool Equals(object obj)
         {
-            if (!(obj is ProfileFileInfo info))
+            if (obj is not ProfileFileInfo info)
                 return false;
 
             return info.ID == ID;

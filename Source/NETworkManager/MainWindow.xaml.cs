@@ -1072,19 +1072,19 @@ namespace NETworkManager
             SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
             SelectedProfileFile ??= ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
         }
-
-        private async Task LoadProfile(ProfileFileInfo info)
-        {
+        
+        private async Task LoadProfile(ProfileFileInfo info, bool showWrongPassword = false)
+        {            
             if (info.IsEncrypted && !info.IsPasswordValid)
             {
                 IsProfileFileLocked = true;
 
                 var customDialog = new CustomDialog
                 {
-                    Title = Localization.Resources.Strings.MasterPassword
+                    Title = Localization.Resources.Strings.UnlockProfileFile
                 };
 
-                var credentialsPasswordViewModel = new CredentialsPasswordViewModel(async instance =>
+                var viewModel = new CredentialsPasswordProfileFileViewModel(async instance =>
                 {
                     await this.HideMetroDialogAsync(customDialog);
                     ConfigurationManager.Current.FixAirspace = false;
@@ -1098,11 +1098,11 @@ namespace NETworkManager
                     ConfigurationManager.Current.FixAirspace = false;
 
                     ProfileManager.Unload();
-                });
+                }, info.Name, showWrongPassword);
 
-                customDialog.Content = new CredentialsPasswordDialog
+                customDialog.Content = new CredentialsPasswordProfileFileDialog
                 {
-                    DataContext = credentialsPasswordViewModel
+                    DataContext = viewModel
                 };
 
                 ConfigurationManager.Current.FixAirspace = true;
@@ -1128,14 +1128,8 @@ namespace NETworkManager
             }
             catch (System.Security.Cryptography.CryptographicException)
             {
-                var settings = AppearanceManager.MetroDialog;
-                settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
-
-                ConfigurationManager.Current.FixAirspace = true;
-
-                await this.ShowMessageAsync(Localization.Resources.Strings.WrongPassword, Localization.Resources.Strings.WrongPasswordDecryptionFailedMessage, MessageDialogStyle.Affirmative, settings);
-
-                ConfigurationManager.Current.FixAirspace = false;
+                // Wrong password, try again...
+                LoadProfile(info, true);                
             }
             catch
             {

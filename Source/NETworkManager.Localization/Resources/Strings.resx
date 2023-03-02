@@ -3317,4 +3317,10 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="Servers" xml:space="preserve">
     <value>Server(s)</value>
   </data>
+  <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
+    <value>Enter master password to unlock the profile file:</value>
+  </data>
+  <data name="UnlockProfileFile" xml:space="preserve">
+    <value>Unlock profile file</value>
+  </data>
 </root>
