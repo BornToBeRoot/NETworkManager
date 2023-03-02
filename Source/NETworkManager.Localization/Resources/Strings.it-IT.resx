@@ -3349,4 +3349,10 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
   <data name="Servers" xml:space="preserve">
     <value>Server</value>
   </data>
+  <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
+    <value>Per sbloccare il file del profilo inserisci la password principale:</value>
+  </data>
+  <data name="UnlockProfileFile" xml:space="preserve">
+    <value>Sblocca file profilo</value>
+  </data>
 </root>
