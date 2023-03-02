@@ -460,7 +460,6 @@ namespace NETworkManager.ViewModels
 
                     await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.DecryptionError, $"{Localization.Resources.Strings.DecryptionErrorMessage}\n\n{ex.Message}", MessageDialogStyle.Affirmative, settings);
                 }
-
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);

@@ -2988,6 +2988,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter master password to unlock the profile file: ähnelt.
+        /// </summary>
+        public static string EnterMasterPasswordToUnlockProfile {
+            get {
+                return ResourceManager.GetString("EnterMasterPasswordToUnlockProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Enter one or more valid IP addresses! ähnelt.
         /// </summary>
         public static string EnterOneOrMoreValidIPAddresses {
@@ -8965,6 +8974,15 @@ namespace NETworkManager.Localization.Resources {
         public static string UnlockProfile {
             get {
                 return ResourceManager.GetString("UnlockProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Unlock profile file ähnelt.
+        /// </summary>
+        public static string UnlockProfileFile {
+            get {
+                return ResourceManager.GetString("UnlockProfileFile", resourceCulture);
             }
         }
         
