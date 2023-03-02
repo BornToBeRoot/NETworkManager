@@ -882,7 +882,7 @@ Erstelle zuerst ein Backup der Profildatei bevor du die Verschlüsselung aktivie
     <value>Hostname oder IP-Adresse</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Hosts</value>
+    <value>Host(s)</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
@@ -1758,9 +1758,6 @@ Profildateien sind nicht betroffen!</value>
   </data>
   <data name="Yellow" xml:space="preserve">
     <value>Gelb</value>
-  </data>
-  <data name="EnterValidValueBetween25and100" xml:space="preserve">
-    <value>Geben Sie einen gültigen Wert ein zwischen 25 und 100!</value>
   </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>Ein Profil mit diesem Namen existiert bereits!</value>
@@ -2823,7 +2820,7 @@ Ansonsten kann das Profil beschädigt sein und Sie können das Problem auf GitHu
     <value>Neues Passwort</value>
   </data>
   <data name="ChangeMasterPassword" xml:space="preserve">
-    <value>Master-Kennwort ändern</value>
+    <value>Masterpasswort ändern</value>
   </data>
   <data name="UnlockProfile" xml:space="preserve">
     <value>Profil entsperren</value>
@@ -3314,8 +3311,8 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
   <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
     <value>Ein SNTP-Server mit diesem Namen existiert bereits!</value>
   </data>
-  <data name="EnterValidDomainOrIPAddress" xml:space="preserve">
-    <value>Geben Sie eine gültige Domäne (z. B. "example.com") oder eine gültige IP-Adresse (z. B. 192.168.178.1) ein!</value>
+  <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
+    <value>Geben Sie einen gültigen Hostnamen (wie "server-01" oder "example.com") oder eine gültige IP-Adresse (wie 192.168.178.1) ein!</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>Server(s)</value>
