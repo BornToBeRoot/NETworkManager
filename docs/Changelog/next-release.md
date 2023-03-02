@@ -28,6 +28,8 @@ New Feature
 - Installer (Inno Setup)
   - Uninstall previous versions of NETworkManager when installing a new version [2382f1f](https://github.com/BornToBeRoot/NETworkManager/commit/2382f1fc5e95d7165f56cb7f42c27e1e281abbf2){:target="\_blank"}
 - Reduce the size of the installer, portable and archive build [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
+- Profiles
+  - Show password dialog again if the password is not correct [#1962](https://github.com/BornToBeRoot/NETworkManager/pull/1962){:target="\_blank"}
 - DataGrid Column header design improved [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - DataGrid Columns can now be resized [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - Add text wrapping for status textboxes [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
