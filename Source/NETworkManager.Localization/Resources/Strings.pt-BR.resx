@@ -3317,4 +3317,10 @@ Se a opção for desativada novamente, os valores não serão mais modificados. 
   <data name="Servers" xml:space="preserve">
     <value>Servidor(es)</value>
   </data>
+  <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
+    <value>Digite a senha mestre para desbloquear o arquivo de perfil:</value>
+  </data>
+  <data name="UnlockProfileFile" xml:space="preserve">
+    <value>Desbloquear arquivo de perfil</value>
+  </data>
 </root>
