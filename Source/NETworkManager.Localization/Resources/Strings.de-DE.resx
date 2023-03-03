@@ -3323,4 +3323,7 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
   <data name="UnlockProfileFile" xml:space="preserve">
     <value>Profildatei entsperren</value>
   </data>
+  <data name="PortState_TimedOut" xml:space="preserve">
+    <value>Zeitüberschreitung</value>
+  </data>
 </root>
