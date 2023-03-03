@@ -205,11 +205,11 @@ namespace NETworkManager.Settings
 
             // Update to 2022.12.22.0            
             if (fromVersion < new Version(2022, 12, 22, 0))
-            {
+            {                
                 _log.Info("Apply update to 2022.12.22.0");
 
                 // Add AWS Session Manager application
-                _log.Info("Add new App AWS Session Manager...");
+                _log.Info("Add new app \"AWSSessionManager\"...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.AWSSessionManager));
 
                 var powerShellPath = "";
@@ -222,11 +222,11 @@ namespace NETworkManager.Settings
                     }
                 }
 
-                _log.Info($"Set AWS Session Manager application file path to \"{powerShellPath}\"...");
+                _log.Info($"Set \"AWSSessionManager_ApplicationFilePath\" to \"{powerShellPath}\"...");
                 Current.AWSSessionManager_ApplicationFilePath = powerShellPath;
 
                 // Add Bit Calculator application
-                _log.Info("Add new App Bit Calculator...");
+                _log.Info("Add new app \"BitCalculator\"...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.BitCalculator));
             }
 
@@ -236,46 +236,50 @@ namespace NETworkManager.Settings
                 _log.Info($"Apply upgrade to {toVersion}...");
 
                 // Add NTP Lookup application
-                _log.Info("Add new App SNTP Lookup...");
+                _log.Info($"Add new app \"SNTP Lookup\"...");
                 Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.SNTPLookup));
                 Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
 
-                // Update default settings values
+                // Update some default settings values, if necessary
                 if (Current.IPScanner_Threads > 1024)
                 {
-                    _log.Info("Change IP Scanner threads to 1024");
+                    _log.Info("Change \"IPScanner_Threads\" to \"1024\"...");
                     Current.IPScanner_Threads = 1024;
                 }
 
                 if (Current.PortScanner_HostThreads > 256)
                 {
-                    _log.Info("Change Port Scanner host threads to 256");
+                    _log.Info("Change \"PortScanner_HostThreads\" to \"256\"...");
                     Current.PortScanner_HostThreads = 256;
                 }
 
                 if (Current.PortScanner_PortThreads > 1024)
                 {
-                    _log.Info("Change Port Scanner port threads to 1024");
+                    _log.Info("Change \"PortScanner_PortThreads\" to \"1024\"...");
                     Current.PortScanner_PortThreads = 1024;
                 }
-            }
 
-            // Add or update Port Scanner port profiles
-            foreach (var portProfile in PortProfile.GetDefaultList())
-            {
-                var portProfileFound = Current.PortScanner_PortProfiles.FirstOrDefault(x => x.Name == portProfile.Name);
+                // Add or update Port Scanner port profiles
+                foreach (var portProfile in PortProfile.GetDefaultList())
+                {
+                    var portProfileFound = Current.PortScanner_PortProfiles.FirstOrDefault(x => x.Name == portProfile.Name);
 
-                if (portProfileFound == null)
-                {
-                    _log.Info($"Add Port Scanner port profile \"{portProfile.Name}\"...");
-                    Current.PortScanner_PortProfiles.Add(portProfile);
+                    if (portProfileFound == null)
+                    {
+                        _log.Info($"Add PortScanner_PortProfiles \"{portProfile.Name}\"...");
+                        Current.PortScanner_PortProfiles.Add(portProfile);
+                    }
+                    else if (!portProfile.Ports.Equals(portProfileFound.Ports))
+                    {
+                        _log.Info($"Update PortScanner_PortProfiles \"{portProfile.Name}\"...");
+                        Current.PortScanner_PortProfiles.Remove(portProfileFound);
+                        Current.PortScanner_PortProfiles.Add(portProfile);
+                    }
                 }
-                else if (!portProfile.Ports.Equals(portProfileFound.Ports))
-                {
-                    _log.Info($"Update Port Scanner port profile \"{portProfile.Name}\"...");
-                    Current.PortScanner_PortProfiles.Remove(portProfileFound);
-                    Current.PortScanner_PortProfiles.Add(portProfile);
-                }
+
+                // Add new DNS lookup profiles
+                _log.Info("Set \"DNSLookup_DNSServers_v2\" to default...");
+                Current.DNSLookup_DNSServers_v2 = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
             }
 
             // Set to latest version and save
