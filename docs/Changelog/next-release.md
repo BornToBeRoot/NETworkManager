@@ -15,14 +15,6 @@ Release date: **xx.xx.2023**
 - Windows 10 / Server x64 (1809 or later)
 - [.NET Desktop Runtime 6.x (LTS)](https://dotnet.microsoft.com/download/dotnet/6.0){:target="\_blank"}
 
-To be sort:
-- IP Scanner
-  - Imp: Event handling when a host is found, user has canceled, etc.
-  - Fix: In some cases the IP scan is not completed, but the user interface indicates that it is completed
-- Port Scanner
-  - Imp: New Port state "Timed out" if the timelimit is reached.
-  - Fix: In some cases the IP scan is not completed, but the user interface indicates that it is completed
-
 ## What's new?
 
 New Feature
@@ -45,6 +37,9 @@ New Feature
   - Improve search - you can now search for SSID, Security, Channel, BSSID (MAC address), Vendor and Phy kind [#1941](https://github.com/BornToBeRoot/NETworkManager/pull/1941){:target="\_blank"}
 - **IP Scanner**
   - Max threads changed to to 1024 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
+  - Event handling when a host is found, user has canceled, etc. [#1969](https://github.com/BornToBeRoot/NETworkManager/pull/1969){:target="\_blank"}
+- **Port Scanner**
+  - New Port state "Timed out" if the timelimit is reached. [#1969](https://github.com/BornToBeRoot/NETworkManager/pull/1969){:target="\_blank"}
 - **Port Scanner**
   - Add new port profiles / improve existing ones [#1909](https://github.com/BornToBeRoot/NETworkManager/pull/1909){:target="\_blank"}
   - Max host threads changed to to 256 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
@@ -62,6 +57,12 @@ New Feature
 
 - Detect if the DNS result for a query is null even when the DNS server doesn't send an error code (because some providers do not implement their DNS server correctly...) [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
 - Improve the error message for DNS lookup to get more details (translation is not supported) [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
+- **Dashboard**
+  - `F5` key is now working to refresh the dashboard (again) [#1969](https://github.com/BornToBeRoot/NETworkManager/pull/1969){:target="\_blank"}
+- **IP Scanner**
+  - In some cases the IP scan is not completed, but the user interface indicates that it is completed [#1969](https://github.com/BornToBeRoot/NETworkManager/pull/1969){:target="\_blank"}
+- **Port Scanner**
+  - In some cases the IP scan is not completed, but the user interface indicates that it is completed [#1969](https://github.com/BornToBeRoot/NETworkManager/pull/1969){:target="\_blank"}
 - **DNS Lookup**
   - Detect if the DNS result for a query is null even when the DNS server doesn't send an error code and improve the processing of the resource records answers [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
   - In some cases the DNS lookup is not completed, but the user interface indicates that it is completed [#1940](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"} [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
