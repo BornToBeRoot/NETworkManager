@@ -119,12 +119,16 @@ namespace NETworkManager.Models.Network
 
                              if (ResolveHostname)
                              {
-                                 var dnsResponse = DNSClient.GetInstance().ResolvePtrAsync(ipAddress).Result;
+                                 // Don't use await in Paralle.ForEach, this will break
+                                 var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
 
-                                 if (!dnsResponse.HasError)
-                                     hostname = dnsResponse.Value;
+                                 // Wait for task inside a Parallel.Foreach
+                                 dnsResolverTask.Wait();
+
+                                 if (!dnsResolverTask.Result.HasError)
+                                     hostname = dnsResolverTask.Result.Value;
                                  else
-                                     hostname = DNSShowErrorMessage ? dnsResponse.ErrorMessage : string.Empty;
+                                     hostname = DNSShowErrorMessage ? dnsResolverTask.Result.ErrorMessage : string.Empty;
                              }
 
                              // ARP

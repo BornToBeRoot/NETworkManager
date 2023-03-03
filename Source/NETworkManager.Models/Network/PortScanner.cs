@@ -84,10 +84,13 @@ namespace NETworkManager.Models.Network
                         if (ResolveHostname)
                         {
                             // Don't use await in Paralle.ForEach, this will break
-                            var dnsResult = DNSClient.GetInstance().ResolvePtrAsync(ipAddress).Result;
+                            var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
 
-                            if (!dnsResult.HasError)
-                                hostname = dnsResult.Value;
+                            // Wait for task inside a Parallel.Foreach
+                            dnsResolverTask.Wait();
+
+                            if (!dnsResolverTask.Result.HasError)
+                                hostname = dnsResolverTask.Result.Value;
                         }
 
                         // Check each port
