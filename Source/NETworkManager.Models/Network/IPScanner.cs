@@ -161,30 +161,25 @@ namespace NETworkManager.Models.Network
                              OnHostFound(new HostFoundArgs(pingInfo, hostname, macAddress, vendor));
                          }
 
-                         IncreaseProcess();
+                         IncreaseProgess();
                      });
-
-
-                    OnScanComplete();
                 }
                 catch (OperationCanceledException)  // If user has canceled
                 {
-                    // Check if the scan is already complete...
-                    if (ipAddresses.Length == _progressValue)
-                        OnScanComplete();
-                    else
-                        OnUserHasCanceled();
+                    OnUserHasCanceled();
                 }
                 finally
                 {
                     // Reset the ThreadPool to default
                     ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
                     ThreadPool.SetMinThreads(workerThreads - Threads, completionPortThreads - Threads);
+
+                    OnScanComplete();
                 }
             }, cancellationToken);
         }
 
-        private void IncreaseProcess()
+        private void IncreaseProgess()
         {
             // Increase the progress                        
             Interlocked.Increment(ref _progressValue);
