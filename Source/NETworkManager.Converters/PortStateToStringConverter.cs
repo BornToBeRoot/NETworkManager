@@ -21,7 +21,7 @@ namespace NETworkManager.Converters
         /// <returns>Translated <see cref="PortState"/>.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is PortState portState))
+            if (value is not PortState portState)
                 return "-/-";
 
             return PortStateTranslator.GetInstance().Translate(portState);

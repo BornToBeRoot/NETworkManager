@@ -5945,6 +5945,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Timed out ähnelt.
+        /// </summary>
+        public static string PortState_TimedOut {
+            get {
+                return ResourceManager.GetString("PortState_TimedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Port threads ähnelt.
         /// </summary>
         public static string PortThreads {
