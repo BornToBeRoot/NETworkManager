@@ -317,47 +317,6 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
-        /*
-        public ICommand ReloadNetworkInterfacesCommand => new RelayCommand(p => ReloadNetworkInterfacesAction(), ReloadNetworkInterfaces_CanExecute);
-
-        private bool ReloadNetworkInterfaces_CanExecute(object obj) => !IsNetworkInterfaceLoading && Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-
-        private async Task ReloadNetworkInterfacesAction()
-        {
-            IsNetworkInterfaceLoading = true;
-
-            await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-
-            var id = string.Empty;
-
-            if (SelectedNetworkInterface != null)
-                id = SelectedNetworkInterface.Id;
-
-            NetworkInterfaces = await Models.Network.NetworkInterface.GetNetworkInterfacesAsync();
-
-            // Change interface...
-            SelectedNetworkInterface = string.IsNullOrEmpty(id) ? NetworkInterfaces.FirstOrDefault() : NetworkInterfaces.FirstOrDefault(x => x.Id == id);
-
-            IsNetworkInterfaceLoading = false;
-        }
-        */
-
-        /*
-        public ICommand OpenNetworkConnectionsCommand => new RelayCommand(p => OpenNetworkConnectionsAction());
-
-        public async Task OpenNetworkConnectionsAction()
-        {
-            try
-            {
-                Process.Start("NCPA.cpl");
-            }
-            catch (Exception ex)
-            {
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-            }
-        }
-        */
-
         public ICommand RestartAsAdminCommand => new RelayCommand(p => RestartAsAdminAction());
 
         public async Task RestartAsAdminAction()
