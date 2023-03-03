@@ -75,7 +75,7 @@ namespace NETworkManager.Models.Network
                         MaxDegreeOfParallelism = Threads
                     };
 
-                    Parallel.ForEach(ipAddresses, parallelOptions, async ipAddress =>
+                    Parallel.ForEach(ipAddresses, parallelOptions, ipAddress =>
                      {
                          var pingInfo = new PingInfo();
                          var pingable = false;
@@ -119,7 +119,7 @@ namespace NETworkManager.Models.Network
 
                              if (ResolveHostname)
                              {
-                                 var dnsResponse = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
+                                 var dnsResponse = DNSClient.GetInstance().ResolvePtrAsync(ipAddress).Result;
 
                                  if (!dnsResponse.HasError)
                                      hostname = dnsResponse.Value;
