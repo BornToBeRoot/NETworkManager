@@ -511,13 +511,7 @@ namespace NETworkManager.ViewModels
             CancelScan = true;
             _cancellationTokenSource.Cancel();
         }
-
-        private void ScanFinished()
-        {
-            CancelScan = false;
-            IsScanRunning = false;
-        }
-
+        
         private async Task DetectIPRange()
         {
             IsSubnetDetectionRunning = true;
@@ -660,7 +654,8 @@ namespace NETworkManager.ViewModels
 
         private void ScanComplete(object sender, EventArgs e)
         {
-            ScanFinished();
+            CancelScan = false;
+            IsScanRunning = false;
         }
 
         private void ProgressChanged(object sender, ProgressChangedArgs e)
@@ -672,16 +667,15 @@ namespace NETworkManager.ViewModels
         {
             StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
             IsStatusMessageDisplayed = true;
-
-            ScanFinished();
+            
+            CancelScan = false;
+            IsScanRunning = false;
         }
 
         private void UserHasCanceled(object sender, EventArgs e)
         {
             StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
-            IsStatusMessageDisplayed = true;
-
-            ScanFinished();
+            IsStatusMessageDisplayed = true;                        
         }
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

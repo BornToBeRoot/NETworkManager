@@ -75,7 +75,7 @@ namespace NETworkManager.Models.Network
                         MaxDegreeOfParallelism = Threads
                     };
 
-                    Parallel.ForEach(ipAddresses, parallelOptions, async ipAddress =>
+                    Parallel.ForEach(ipAddresses, parallelOptions, ipAddress =>
                      {
                          var pingInfo = new PingInfo();
                          var pingable = false;
@@ -119,12 +119,16 @@ namespace NETworkManager.Models.Network
 
                              if (ResolveHostname)
                              {
-                                 var dnsResponse = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
+                                 // Don't use await in Paralle.ForEach, this will break
+                                 var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
 
-                                 if (!dnsResponse.HasError)
-                                     hostname = dnsResponse.Value;
+                                 // Wait for task inside a Parallel.Foreach
+                                 dnsResolverTask.Wait();
+
+                                 if (!dnsResolverTask.Result.HasError)
+                                     hostname = dnsResolverTask.Result.Value;
                                  else
-                                     hostname = DNSShowErrorMessage ? dnsResponse.ErrorMessage : string.Empty;
+                                     hostname = DNSShowErrorMessage ? dnsResolverTask.Result.ErrorMessage : string.Empty;
                              }
 
                              // ARP
@@ -161,30 +165,25 @@ namespace NETworkManager.Models.Network
                              OnHostFound(new HostFoundArgs(pingInfo, hostname, macAddress, vendor));
                          }
 
-                         IncreaseProcess();
+                         IncreaseProgess();
                      });
-
-
-                    OnScanComplete();
                 }
                 catch (OperationCanceledException)  // If user has canceled
                 {
-                    // Check if the scan is already complete...
-                    if (ipAddresses.Length == _progressValue)
-                        OnScanComplete();
-                    else
-                        OnUserHasCanceled();
+                    OnUserHasCanceled();
                 }
                 finally
                 {
                     // Reset the ThreadPool to default
                     ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
                     ThreadPool.SetMinThreads(workerThreads - Threads, completionPortThreads - Threads);
+
+                    OnScanComplete();
                 }
             }, cancellationToken);
         }
 
-        private void IncreaseProcess()
+        private void IncreaseProgess()
         {
             // Increase the progress                        
             Interlocked.Increment(ref _progressValue);

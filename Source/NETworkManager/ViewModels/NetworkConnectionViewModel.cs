@@ -11,6 +11,7 @@ using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NETworkManager.ViewModels
 {
@@ -440,7 +441,12 @@ namespace NETworkManager.ViewModels
         #endregion
 
         #region ICommands & Actions
+        public ICommand CheckConnectionViaHotkeyCommand => new RelayCommand(p => CheckConnectionViaHotkeyAction());
 
+        private void CheckConnectionViaHotkeyAction()
+        {
+            CheckConnection();    
+        }
         #endregion
 
         #region Methods

@@ -21,6 +21,10 @@ namespace NETworkManager.ViewModels
         /// Private variable for <see cref="ProfileName"/>.
         /// </summary>
         private string _profileName;
+
+        /// <summary>
+        /// Name of the profile file.
+        /// </summary>
         public string ProfileName
         {
             get => _profileName;
@@ -39,6 +43,9 @@ namespace NETworkManager.ViewModels
         /// </summary>
         private bool _showWrongPassword;
 
+        /// <summary>
+        /// Show note that the password is wrong.
+        /// </summary>
         public bool ShowWrongPassword
         {
             get => _showWrongPassword;

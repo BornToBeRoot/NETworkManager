@@ -76,82 +76,77 @@ namespace NETworkManager.Models.Network
                         MaxDegreeOfParallelism = PortThreads / HostThreads
                     };
 
-                    Parallel.ForEach(ipAddresses, hostParallelOptions, async ipAddress =>
+                    Parallel.ForEach(ipAddresses, hostParallelOptions, ipAddress =>
                     {
                         // Resolve Hostname (PTR)
                         var hostname = string.Empty;
 
                         if (ResolveHostname)
                         {
-                            var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
+                            // Don't use await in Paralle.ForEach, this will break
+                            var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
 
-                            if (!dnsResult.HasError)
-                                hostname = dnsResult.Value;
+                            // Wait for task inside a Parallel.Foreach
+                            dnsResolverTask.Wait();
+
+                            if (!dnsResolverTask.Result.HasError)
+                                hostname = dnsResolverTask.Result.Value;
                         }
 
                         // Check each port
                         Parallel.ForEach(ports, portParallelOptions, port =>
                         {
                             // Test if port is open
-                            using (var tcpClient = ipAddress.AddressFamily == AddressFamily.InterNetworkV6
-                                ? new TcpClient(AddressFamily.InterNetworkV6)
-                                : new TcpClient(AddressFamily.InterNetwork))
+                            using (var tcpClient = new TcpClient(ipAddress.AddressFamily))
                             {
-                                var tcpClientConnection = tcpClient.BeginConnect(ipAddress, port, null, null);
-
-                                if (tcpClientConnection.AsyncWaitHandle.WaitOne(Timeout, false))
+                                PortState portState = PortState.None;
+                                
+                                try
                                 {
-                                    try
-                                    {
-                                        tcpClient.EndConnect(tcpClientConnection);
+                                    var task = tcpClient.ConnectAsync(ipAddress, port);
 
-                                        OnPortScanned(new PortScannedArgs(ipAddress, hostname, port,
-                                            PortLookup.Lookup(port)
-                                                .FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp),
-                                            PortState.Open));
-                                    }
-                                    catch
-                                    {
-                                        if (ShowClosed)
-                                            OnPortScanned(new PortScannedArgs(ipAddress, hostname, port,
-                                                PortLookup.Lookup(port).FirstOrDefault(x =>
-                                                    x.Protocol == PortLookup.Protocol.Tcp),
-                                                PortState.Closed));
-                                    }
+                                    if (task.Wait(Timeout))
+                                        portState = tcpClient.Connected ? PortState.Open : PortState.Closed;
+                                    else
+                                        portState = PortState.TimedOut;                                    
                                 }
-                                else
+                                catch
                                 {
-                                    if (ShowClosed)
-                                        OnPortScanned(new PortScannedArgs(ipAddress, hostname, port,
-                                            PortLookup.Lookup(port)
-                                                .FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp),
-                                            PortState.Closed));
+                                    portState = PortState.Closed;
+                                }
+                                finally
+                                {
+                                    tcpClient?.Close();
+
+                                    if (ShowClosed || portState == PortState.Open)
+                                        OnPortScanned(new PortScannedArgs(ipAddress, hostname, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp), portState));
                                 }
                             }
 
-                            // Increase the progress                        
-                            Interlocked.Increment(ref _progressValue);
-                            OnProgressChanged();
+                            IncreaseProgess();
                         });
                     });
-
-                    OnScanComplete();
                 }
                 catch (OperationCanceledException) // If user has canceled
                 {
-                    // Check if the scan is already complete...
-                    if (ports.Length * ipAddresses.Length == _progressValue)
-                        OnScanComplete();
-                    else
-                        OnUserHasCanceled();
+                    OnUserHasCanceled();
                 }
                 finally
                 {
                     // Reset the ThreadPool to defaul
                     ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
                     ThreadPool.SetMinThreads(workerThreads - HostThreads + PortThreads, completionPortThreads - HostThreads + PortThreads);
+
+                    OnScanComplete();
                 }
             }, cancellationToken);
+        }
+
+        private void IncreaseProgess()
+        {
+            // Increase the progress                        
+            Interlocked.Increment(ref _progressValue);
+            OnProgressChanged();
         }
         #endregion
     }
