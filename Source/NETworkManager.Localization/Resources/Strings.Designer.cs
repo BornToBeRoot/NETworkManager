@@ -3921,6 +3921,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hostkey ähnelt.
+        /// </summary>
+        public static string Hostkey {
+            get {
+                return ResourceManager.GetString("Hostkey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Hostname ähnelt.
         /// </summary>
         public static string Hostname {

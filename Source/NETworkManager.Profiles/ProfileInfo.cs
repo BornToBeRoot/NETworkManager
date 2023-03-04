@@ -154,6 +154,8 @@ namespace NETworkManager.Profiles
         public string PuTTY_PrivateKeyFile { get; set; }
         public bool PuTTY_OverrideProfile { get; set; }
         public string PuTTY_Profile { get; set; }
+        public bool PuTTY_OverrideHostkey { get; set; }
+        public string PuTTY_Hostkey { get; set; }
         public bool PuTTY_OverrideEnableLog { get; set; }
         public bool PuTTY_EnableLog { get; set; }
         public bool PuTTY_OverrideLogMode { get; set; }
@@ -307,7 +309,7 @@ namespace NETworkManager.Profiles
             RemoteDesktop_MenuAndWindowAnimation = profile.RemoteDesktop_MenuAndWindowAnimation;
             RemoteDesktop_OverrideVisualStyles = profile.RemoteDesktop_OverrideVisualStyles;
             RemoteDesktop_VisualStyles = profile.RemoteDesktop_VisualStyles;
-            
+
             // PowerShell
             PowerShell_Enabled = profile.PowerShell_Enabled;
             PowerShell_EnableRemoteConsole = profile.PowerShell_EnableRemoteConsole;
@@ -333,6 +335,8 @@ namespace NETworkManager.Profiles
             PuTTY_PrivateKeyFile = profile.PuTTY_PrivateKeyFile;
             PuTTY_OverrideProfile = profile.PuTTY_OverrideProfile;
             PuTTY_Profile = profile.PuTTY_Profile;
+            PuTTY_OverrideHostkey = profile.PuTTY_OverrideHostkey;
+            PuTTY_Hostkey = profile.PuTTY_Hostkey;
             PuTTY_OverrideEnableLog = profile.PuTTY_OverrideEnableLog;
             PuTTY_EnableLog = profile.PuTTY_EnableLog;
             PuTTY_OverrideLogMode = profile.PuTTY_OverrideLogMode;
@@ -374,6 +378,6 @@ namespace NETworkManager.Profiles
             Whois_Enabled = profile.Whois_Enabled;
             Whois_InheritHost = profile.Whois_InheritHost;
             Whois_Domain = profile.Whois_Domain;
-        }        
+        }
     }
 }

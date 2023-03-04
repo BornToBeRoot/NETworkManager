@@ -160,6 +160,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 71:b8:f2:6e..., 13:59:a7... ähnelt.
+        /// </summary>
+        public static string ExampleHostkey {
+            get {
+                return ResourceManager.GetString("ExampleHostkey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die SERVER-01 ähnelt.
         /// </summary>
         public static string ExampleHostname {
@@ -480,6 +489,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ExamplePuTTYPath {
             get {
                 return ResourceManager.GetString("ExamplePuTTYPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die NETworkManager ähnelt.
+        /// </summary>
+        public static string ExamplePuTTYProfile {
+            get {
+                return ResourceManager.GetString("ExamplePuTTYProfile", resourceCulture);
             }
         }
         

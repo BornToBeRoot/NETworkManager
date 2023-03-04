@@ -41,6 +41,11 @@
         public string Profile { get; set; }
 
         /// <summary>
+        /// PuTTY host key. Multiple keys are separated by a comma.
+        /// </summary>
+        public string Hostkey { get; set; }
+
+        /// <summary>
         /// Enables session log.
         /// </summary>
         public bool EnableLog { get; set; }
