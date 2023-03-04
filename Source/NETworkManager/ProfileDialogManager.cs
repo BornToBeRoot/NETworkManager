@@ -350,6 +350,8 @@ namespace NETworkManager
                 PuTTY_PrivateKeyFile = instance.PuTTY_PrivateKeyFile,
                 PuTTY_OverrideProfile = instance.PuTTY_OverrideProfile,
                 PuTTY_Profile = instance.PuTTY_Profile?.Trim(),
+                PuTTY_OverrideHostkey = instance.PuTTY_OverrideHostkey,
+                PuTTY_Hostkey = instance.PuTTY_Hostkey?.Trim(),
                 PuTTY_OverrideEnableLog = instance.PuTTY_OverrideEnableLog,
                 PuTTY_EnableLog = instance.PuTTY_EnableLog,
                 PuTTY_OverrideLogMode = instance.PuTTY_OverrideLogMode,

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -158,11 +159,20 @@ namespace NETworkManager.Models.PuTTY
 
             // Private key
             if (!string.IsNullOrEmpty(sessionInfo.PrivateKey))
-                command += $" -i {'"'}{sessionInfo.PrivateKey}{'"'}";
+                command += $" -i \"{sessionInfo.PrivateKey}\"";
 
             // Profile
             if (!string.IsNullOrEmpty(sessionInfo.Profile))
-                command += $" -load {'"'}{sessionInfo.Profile}{'"'}";
+                command += $" -load \"{sessionInfo.Profile}\"";
+
+            // Hostkey(s)
+            if (!string.IsNullOrEmpty(sessionInfo.Hostkey))
+            {
+                var hostkeys = StringHelper.RemoveWhitespace(sessionInfo.Hostkey).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var hostkey in hostkeys)
+                    command += $" -hostkey \"{hostkey}\"";
+            }
 
             // Log
             if (sessionInfo.EnableLog)

@@ -318,4 +318,10 @@
   <data name="ExampleTigerVNCPath" xml:space="preserve">
     <value>C:\Tools\TigerVNC\vncviewer64-1.12.0.exe</value>
   </data>
+  <data name="ExampleHostkey" xml:space="preserve">
+    <value>71:b8:f2:6e..., 13:59:a7...</value>
+  </data>
+  <data name="ExamplePuTTYProfile" xml:space="preserve">
+    <value>NETworkManager</value>
+  </data>
 </root>

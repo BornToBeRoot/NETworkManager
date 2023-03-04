@@ -1725,6 +1725,34 @@ namespace NETworkManager.ViewModels
             }
         }
 
+        private bool _puTTY_OverrideHostkey;
+        public bool PuTTY_OverrideHostkey
+        {
+            get => _puTTY_OverrideHostkey;
+            set
+            {
+                if (value == _puTTY_OverrideHostkey)
+                    return;
+
+                _puTTY_OverrideHostkey = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _puTTY_Hostkey;
+        public string PuTTY_Hostkey
+        {
+            get => _puTTY_Hostkey;
+            set
+            {
+                if (value == _puTTY_Hostkey)
+                    return;
+
+                _puTTY_Hostkey = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _puTTY_OverrideEnableLog;
         public bool PuTTY_OverrideEnableLog
         {
@@ -2188,17 +2216,6 @@ namespace NETworkManager.ViewModels
         }
         #endregion
         #endregion
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="saveCommand"></param>
-        /// <param name="cancelHandler"></param>
-        /// <param name="groups"></param>
-        /// <param name="group"></param>
-        /// <param name="editMode"></param>
-        /// <param name="profile"></param>
-        /// <param name="applicationName"></param>
         public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler, IReadOnlyCollection<string> groups, string group = null, ProfileEditMode editMode = ProfileEditMode.Add, ProfileInfo profile = null, ApplicationName applicationName = ApplicationName.None)
         {
             // Load the view
@@ -2362,6 +2379,8 @@ namespace NETworkManager.ViewModels
             PuTTY_PrivateKeyFile = profileInfo.PuTTY_PrivateKeyFile;
             PuTTY_OverrideProfile = profileInfo.PuTTY_OverrideProfile;
             PuTTY_Profile = profileInfo.PuTTY_Profile;
+            PuTTY_OverrideHostkey = profileInfo.PuTTY_OverrideHostkey;
+            PuTTY_Hostkey = profileInfo.PuTTY_Hostkey;
             PuTTY_OverrideEnableLog = profileInfo.PuTTY_OverrideEnableLog;
             PuTTY_EnableLog = profileInfo.PuTTY_EnableLog;
             PuTTY_OverrideLogMode = profileInfo.PuTTY_OverrideLogMode;

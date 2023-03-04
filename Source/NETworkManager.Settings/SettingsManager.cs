@@ -266,19 +266,19 @@ namespace NETworkManager.Settings
 
                     if (portProfileFound == null)
                     {
-                        _log.Info($"Add PortScanner_PortProfiles \"{portProfile.Name}\"...");
+                        _log.Info($"Add \"{portProfile.Name}\" to \"PortScanner_PortProfiles\"...");
                         Current.PortScanner_PortProfiles.Add(portProfile);
                     }
                     else if (!portProfile.Ports.Equals(portProfileFound.Ports))
                     {
-                        _log.Info($"Update PortScanner_PortProfiles \"{portProfile.Name}\"...");
+                        _log.Info($"Update \"{portProfile.Name}\" in \"PortScanner_PortProfiles\"...");
                         Current.PortScanner_PortProfiles.Remove(portProfileFound);
                         Current.PortScanner_PortProfiles.Add(portProfile);
                     }
                 }
 
                 // Add new DNS lookup profiles
-                _log.Info("Set \"DNSLookup_DNSServers_v2\" to default...");
+                _log.Info("Init \"DNSLookup_DNSServers_v2\" with default DNS servers...");
                 Current.DNSLookup_DNSServers_v2 = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
             }
 
