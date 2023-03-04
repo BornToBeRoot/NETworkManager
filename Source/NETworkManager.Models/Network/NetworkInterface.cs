@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network
 {
-    public class NetworkInterface
+    public partial class NetworkInterface
     {
         #region Events
         public event EventHandler UserHasCanceled;
@@ -167,19 +167,18 @@ namespace NETworkManager.Models.Network
         {
             bool isIPv4 = remoteIPAddress.AddressFamily == AddressFamily.InterNetwork;
 
-            using (var socket = new Socket(isIPv4 ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp))
-            {
-                // return null on error...
-                try
-                {
-                    socket.Bind(new IPEndPoint( isIPv4 ? IPAddress.Any : IPAddress.IPv6Any, 0));
-                    socket.Connect(new IPEndPoint(remoteIPAddress, 0));
+            using var socket = new Socket(isIPv4 ? AddressFamily.InterNetwork : AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
 
-                    if (socket.LocalEndPoint is IPEndPoint ipAddress)
-                        return ipAddress.Address;
-                }
-                catch (SocketException) { }
+            // return null on error...
+            try
+            {
+                socket.Bind(new IPEndPoint(isIPv4 ? IPAddress.Any : IPAddress.IPv6Any, 0));
+                socket.Connect(new IPEndPoint(remoteIPAddress, 0));
+
+                if (socket.LocalEndPoint is IPEndPoint ipAddress)
+                    return ipAddress.Address;
             }
+            catch (SocketException) { }
 
             return null;
         }
@@ -249,11 +248,18 @@ namespace NETworkManager.Models.Network
             }
         }
 
+        /// <summary>
+        /// Flush the DNS cache asynchronously.
+        /// </summary>
+        /// <returns>Running task.</returns>
         public static Task FlushDnsAsync()
         {
             return Task.Run(() => FlushDns());
         }
 
+        /// <summary>
+        /// Flush the DNS cache.
+        /// </summary>
         public static void FlushDns()
         {
             const string command = @"ipconfig /flushdns";
@@ -261,33 +267,55 @@ namespace NETworkManager.Models.Network
             PowerShellHelper.ExecuteCommand(command);
         }
 
-        public static Task ReleaseRenewAsync(IPConfigReleaseRenewMode mode)
+        /// <summary>
+        /// Release or renew the IP address of the specified network adapter asynchronously.
+        /// </summary>
+        /// <param name="mode">ipconfig.exe modes which are used like /release(6) or /renew(6)</param>
+        /// <param name="adapterName">Name of the ethernet adapter.</param>
+        /// <returns>Running task.</returns>
+        public static Task ReleaseRenewAsync(IPConfigReleaseRenewMode mode, string adapterName)
         {
-            return Task.Run(() => ReleaseRenew(mode));
+            return Task.Run(() => ReleaseRenew(mode, adapterName));
         }
 
-        public static void ReleaseRenew(IPConfigReleaseRenewMode mode)
+        /// <summary>
+        /// Release or renew the IP address of the specified network adapter.
+        /// </summary>
+        /// <param name="mode">ipconfig.exe modes which are used like /release(6) or /renew(6)</param>
+        /// <param name="adapterName">Name of the ethernet adapter.</param>
+        public static void ReleaseRenew(IPConfigReleaseRenewMode mode, string adapterName)
         {
-            if (mode == IPConfigReleaseRenewMode.ReleaseRenew || mode == IPConfigReleaseRenewMode.Release)
-            {
-                const string command = @"ipconfig /release";
+            string command = string.Empty;
 
-                PowerShellHelper.ExecuteCommand(command);
-            }
+            if (mode == IPConfigReleaseRenewMode.ReleaseRenew || mode == IPConfigReleaseRenewMode.Release)
+                command += @"ipconfig /release '" + adapterName + "';";
 
             if (mode == IPConfigReleaseRenewMode.ReleaseRenew || mode == IPConfigReleaseRenewMode.Renew)
-            {
-                const string command = @"ipconfig /renew";
+                command += @"ipconfig /renew '" + adapterName + "';";
 
-                PowerShellHelper.ExecuteCommand(command);
-            }
+            if (mode == IPConfigReleaseRenewMode.ReleaseRenew6 || mode == IPConfigReleaseRenewMode.Release6)
+                command += @"ipconfig /release6 '" + adapterName + "';";
+
+            if (mode == IPConfigReleaseRenewMode.ReleaseRenew6 || mode == IPConfigReleaseRenewMode.Renew6)
+                command += @"ipconfig /renew6 '" + adapterName + "';";
+
+            PowerShellHelper.ExecuteCommand(command);
         }
 
+        /// <summary>
+        /// Add an IP address to a network interface asynchronously.
+        /// </summary>
+        /// <param name="config">Ethernet adapter name, IP address and subnetmask.</param>
+        /// <returns>Running task.</returns>
         public static Task AddIPAddressToNetworkInterfaceAsync(NetworkInterfaceConfig config)
         {
             return Task.Run(() => AddIPAddressToNetworkInterface(config));
         }
 
+        /// <summary>
+        /// Add an IP address to a network interface.
+        /// </summary>
+        /// <param name="config">Ethernet adapter name, IP address and subnetmask.</param>
         public static void AddIPAddressToNetworkInterface(NetworkInterfaceConfig config)
         {
             var command = @"netsh interface ipv4 add address '" + config.Name + @"' " + config.IPAddress + @" " + config.Subnetmask;
@@ -295,25 +323,25 @@ namespace NETworkManager.Models.Network
             PowerShellHelper.ExecuteCommand(command, true);
         }
 
+        /// <summary>
+        /// Remove an IP address from a network interface asynchronously.
+        /// </summary>
+        /// <param name="config">Ethernet adapter name, IP address</param>
+        /// <returns>Running task.</returns>
         public static Task RemoveIPAddressFromNetworkInterfaceAsync(NetworkInterfaceConfig config)
         {
             return Task.Run(() => RemoveIPAddressFromNetworkInterface(config));
         }
 
+        /// <summary>
+        /// Remove an IP address from a network interface.
+        /// </summary>
+        /// <param name="config">Ethernet adapter name, IP address</param>
         public static void RemoveIPAddressFromNetworkInterface(NetworkInterfaceConfig config)
         {
             var command = @"netsh interface ipv4 delete address '" + config.Name + @"' " + config.IPAddress;
 
             PowerShellHelper.ExecuteCommand(command, true);
-        }
-        #endregion
-
-        #region Enum
-        public enum IPConfigReleaseRenewMode
-        {
-            ReleaseRenew,
-            Release,
-            Renew
         }
         #endregion
     }

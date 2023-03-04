@@ -33,6 +33,9 @@ New Feature
 - DataGrid Column header design improved [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - DataGrid Columns can now be resized [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - Add text wrapping for status textboxes [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
+- **Network Interface**
+  - Release & Renew button now targets the selected interface instead of all interfaces [#1982](https://github.com/BornToBeRoot/NETworkManager/pull/1982){:target="\_blank"}
+  - Release & Renew button now supports IPv6 [#1982](https://github.com/BornToBeRoot/NETworkManager/pull/1982){:target="\_blank"}  
 - **WiFi**
   - Improve search - you can now search for SSID, Security, Channel, BSSID (MAC address), Vendor and Phy kind [#1941](https://github.com/BornToBeRoot/NETworkManager/pull/1941){:target="\_blank"}
 - **IP Scanner**
