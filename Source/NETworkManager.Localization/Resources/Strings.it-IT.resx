@@ -3358,4 +3358,7 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
   <data name="PortState_TimedOut" xml:space="preserve">
     <value>Timeout</value>
   </data>
+  <data name="Hostkey" xml:space="preserve">
+    <value>Tasto rapido</value>
+  </data>
 </root>
