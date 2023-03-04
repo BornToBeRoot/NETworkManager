@@ -52,6 +52,8 @@ New Feature
 - **DNS Lookup**
   - Improve overall DNS lookup performance with multiple DNS servers and hosts [#1940](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
   - New dialog to add/edit DNS servers [#1960](https://github.com/BornToBeRoot/NETworkManager/pull/1960){:target="\_blank"}
+- **PuTTY**
+  - Parameter `-hostkey` is now supported and can be configured in the profile. Multiple hostkeys can be separated by a comma. [#1977](https://github.com/BornToBeRoot/NETworkManager/pull/1977){:target="\_blank"}
 
 ## Bugfixes
 
