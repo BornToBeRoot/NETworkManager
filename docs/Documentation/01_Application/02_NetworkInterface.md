@@ -21,9 +21,14 @@ In addition, further actions can be performed using the buttons at the bottom le
 - **Network connections...** - Opens the `Control Panel > Network and Internet > Network Connections` window
 - **Flush DNS cache** - Flush the DNS cache (`ipconfig /flushdns`)
 - **Release & Renew**
-  - **Release & Renew** - Releases the current IPv4 addresses obtained via DHCP and renews them via DHCP for all network adapters that are configured to automatically obtain an IPv4 address (`ipconfig /release && ipconfig /renew`)
-  - **Release** - Releases the current IPv4 addresses obtained via DHCP for all network adapters that are configured to automatically obtain an IPv4 address. (`ipconfig /release`)
-  - **Renew** - Renews the current IPv4 address via DHCP for all network adapters that are configured to automatically obtain an IPv4 address. (`ipconfig /renew`)
+  - **IPv4**
+    - **Release & Renew** - Releases the current IPv4 addresses obtained via DHCP and renews them via DHCP for the _selected_ network adapter that is configured to automatically obtain an IPv4 address (`ipconfig /release && ipconfig /renew`)
+    - **Release** - Releases the current IPv4 addresses obtained via DHCP for the _selected_ network adapter that is configured to automatically obtain an IPv4 address. (`ipconfig /release`)
+    - **Renew** - Renews the current IPv4 address via DHCP for the _selected_ network adapter that is configured to automatically obtain an IPv4 address. (`ipconfig /renew`)
+  - **IPv6**
+    - **Release & Renew** - Releases the current IPv6 addresses obtained via DHCPv6 and renews them via DHCPv6 for the _selected_ adapter that ist configured to automatically obtain an IPv6 address (`ipconfig /release6 && ipconfig /renew6`)
+    - **Release** - Releases the current IPv6 addresses obtained via DHCPv6 for the _selected_ network adapter that is configured to automatically obtain an IPv6 address. (`ipconfig /release6`)
+    - **Renew** - Renews the current IPv6 address via DHCPv6 for the _selected_ network adapter that is configured to automatically obtain an IPv6 address. (`ipconfig /renew6`)
 
 ![NetworkInterface_Information](02_NetworkInterface_Information.png)
 
