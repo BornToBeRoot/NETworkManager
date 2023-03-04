@@ -4956,15 +4956,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The destination folder already contains files. If you click Merge, the current profiles are copied to the folder. ähnelt.
-        /// </summary>
-        public static string MergeProfileFilesInDestinationFolderMessage {
-            get {
-                return ResourceManager.GetString("MergeProfileFilesInDestinationFolderMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Message size ähnelt.
         /// </summary>
         public static string MessageSize {
@@ -5677,19 +5668,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Overwrite profiles in destination folder?
-        ///
-        ///&quot;Overwrite&quot; will copy the profile files to the destination folder and overwrite existing profile files.
-        ///&quot;Merge&quot; will copy the profile files to the destination folder, but won&apos;t overwrite exitsting profile files.
-        ///&quot;Use other folder&quot; will use the existing profile files in the destination folder. ähnelt.
-        /// </summary>
-        public static string OverwriteProfilesInDestinationFolderMessage {
-            get {
-                return ResourceManager.GetString("OverwriteProfilesInDestinationFolderMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Overwrite? ähnelt.
         /// </summary>
         public static string OverwriteQuestion {
@@ -6089,15 +6067,6 @@ namespace NETworkManager.Localization.Resources {
         public static string ProfileEncryptionDisclaimer {
             get {
                 return ResourceManager.GetString("ProfileEncryptionDisclaimer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Profile files will be moved to the selected destination folder. ähnelt.
-        /// </summary>
-        public static string ProfileFilesWillBeMovedMessage {
-            get {
-                return ResourceManager.GetString("ProfileFilesWillBeMovedMessage", resourceCulture);
             }
         }
         
@@ -9163,15 +9132,6 @@ namespace NETworkManager.Localization.Resources {
         public static string UseOther {
             get {
                 return ResourceManager.GetString("UseOther", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Use other folder ähnelt.
-        /// </summary>
-        public static string UseOtherFolder {
-            get {
-                return ResourceManager.GetString("UseOtherFolder", resourceCulture);
             }
         }
         

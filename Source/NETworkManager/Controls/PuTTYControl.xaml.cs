@@ -119,7 +119,7 @@ namespace NETworkManager.Controls
             IsConnecting = true;
 
             // Create log path
-            DirectoryCreator.CreateWithEnvironmentVariables(_sessionInfo.LogPath);
+            DirectoryHelper.CreateWithEnvironmentVariables(_sessionInfo.LogPath);
 
             var info = new ProcessStartInfo
             {

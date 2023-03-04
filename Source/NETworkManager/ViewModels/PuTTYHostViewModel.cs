@@ -493,7 +493,7 @@ namespace NETworkManager.ViewModels
         private void ConnectProfileExternal()
         {
             // Create log path
-            DirectoryCreator.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
+            DirectoryHelper.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
 
             ProcessStartInfo info = new()
             {

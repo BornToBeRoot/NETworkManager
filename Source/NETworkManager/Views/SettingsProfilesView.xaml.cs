@@ -26,23 +26,6 @@ namespace NETworkManager.Views
                 _viewModel.CloseAction = window.Close;
         }
 
-        private void TextBoxLocation_Drop(object sender, DragEventArgs e)
-        {
-            if (!e.Data.GetDataPresent(DataFormats.FileDrop))
-                return;
-
-            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-            if (files != null)
-                _viewModel.SetLocationPathFromDragDrop(files[0]);
-        }
-
-        private void TextBoxLocation_PreviewDragOver(object sender, DragEventArgs e)
-        {
-            e.Effects = DragDropEffects.Copy;
-            e.Handled = true;
-        }
-
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
             if (sender is ContextMenu menu)

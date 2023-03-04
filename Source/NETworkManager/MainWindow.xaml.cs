@@ -1147,7 +1147,7 @@ namespace NETworkManager
 
                 if (result == MessageDialogResult.Affirmative)
                 {
-                    ExternalProcessStarter.RunProcess("powershell.exe", $"-NoLogo -NoProfile -ExecutionPolicy ByPass -File \"{Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Migrate-Profiles.ps1")}\" -Path \"{ProfileManager.GetProfilesLocation()}\" -NETworkManagerPath \"{ConfigurationManager.Current.ApplicationFullName}\" -NETworkManagerVersion \"{AssemblyManager.Current.Version}\"");
+                    ExternalProcessStarter.RunProcess("powershell.exe", $"-NoLogo -NoProfile -ExecutionPolicy ByPass -File \"{Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Migrate-Profiles.ps1")}\" -Path \"{ProfileManager.GetProfilesFolderLocation()}\" -NETworkManagerPath \"{ConfigurationManager.Current.ApplicationFullName}\" -NETworkManagerVersion \"{AssemblyManager.Current.Version}\"");
                     CloseApplication();
                 }
             }

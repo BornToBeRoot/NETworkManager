@@ -2379,9 +2379,6 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>The application will be restarted...</value>
   </data>
-  <data name="UseOtherFolder" xml:space="preserve">
-    <value>Use other folder</value>
-  </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Could not export file! See error message: "{0}"</value>
   </data>
@@ -2834,24 +2831,11 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
   <data name="Merge" xml:space="preserve">
     <value>Merge</value>
   </data>
-  <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
-    <value>The destination folder already contains files. If you click Merge, the current profiles are copied to the folder.</value>
-  </data>
-  <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite profiles in destination folder?
-
-"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
-"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
-"Use other folder" will use the existing profile files in the destination folder.</value>
-  </data>
   <data name="UseOther" xml:space="preserve">
     <value>Use other</value>
   </data>
   <data name="Move" xml:space="preserve">
     <value>Move</value>
-  </data>
-  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
-    <value>Profile files will be moved to the selected destination folder.</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
     <value>Last scan at {0}</value>
