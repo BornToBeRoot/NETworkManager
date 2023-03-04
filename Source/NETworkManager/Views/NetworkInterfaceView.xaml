@@ -285,33 +285,17 @@
                                     </Grid>
                                 </mah:DropDownButton.Content>
                                 <mah:DropDownButton.Items>
-                                    <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}" Command="{Binding ReleaseRenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
-                                        <MenuItem.Icon>
-                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                                <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
-                                                </Rectangle.OpacityMask>
-                                            </Rectangle>
-                                        </MenuItem.Icon>
+                                    <MenuItem Header="{x:Static localization:Strings.IPv4}">
+                                        <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}" Command="{Binding ReleaseRenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" />
+                                        <Separator />
+                                        <MenuItem Header="{x:Static localization:Strings.Release}" Command="{Binding ReleaseCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" />
+                                        <MenuItem Header="{x:Static localization:Strings.Renew}" Command="{Binding RenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" />
                                     </MenuItem>
-                                    <Separator />
-                                    <MenuItem Header="{x:Static localization:Strings.Release}" Command="{Binding ReleaseCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
-                                        <MenuItem.Icon>
-                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                                <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
-                                                </Rectangle.OpacityMask>
-                                            </Rectangle>
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                    <MenuItem Header="{x:Static localization:Strings.Renew}" Command="{Binding RenewCommand}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
-                                        <MenuItem.Icon>
-                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                                <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
-                                                </Rectangle.OpacityMask>
-                                            </Rectangle>
-                                        </MenuItem.Icon>
+                                    <MenuItem Header="{x:Static localization:Strings.IPv6}">
+                                        <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}" Command="{Binding ReleaseRenew6Command}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" />
+                                        <Separator />
+                                        <MenuItem Header="{x:Static localization:Strings.Release}" Command="{Binding Release6Command}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" />
+                                        <MenuItem Header="{x:Static localization:Strings.Renew}" Command="{Binding Renew6Command}" IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" />
                                     </MenuItem>
                                 </mah:DropDownButton.Items>
                             </mah:DropDownButton>

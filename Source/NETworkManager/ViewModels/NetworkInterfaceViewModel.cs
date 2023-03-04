@@ -545,8 +545,8 @@ namespace NETworkManager.ViewModels
             _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
             // Detect if network address or status changed...
-            NetworkChange.NetworkAvailabilityChanged += (sender, args) => ReloadNetworkInterfacesAction();
-            NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfacesAction();
+            NetworkChange.NetworkAvailabilityChanged += (sender, args) => ReloadNetworkInterfaces();
+            NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfaces();
 
             LoadSettings();
 
@@ -617,47 +617,11 @@ namespace NETworkManager.ViewModels
 
         private bool ReloadNetworkInterfaces_CanExecute(object obj) => !IsNetworkInterfaceLoading && Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
-        private async Task ReloadNetworkInterfacesAction()
+        private void ReloadNetworkInterfacesAction()
         {
-            IsNetworkInterfaceLoading = true;
-
-            await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-
-            var id = string.Empty;
-
-            if (SelectedNetworkInterface != null)
-                id = SelectedNetworkInterface.Id;
-
-            NetworkInterfaces = await Models.Network.NetworkInterface.GetNetworkInterfacesAsync();
-
-            // Change interface...
-            SelectedNetworkInterface = string.IsNullOrEmpty(id) ? NetworkInterfaces.FirstOrDefault() : NetworkInterfaces.FirstOrDefault(x => x.Id == id);
-
-            IsNetworkInterfaceLoading = false;
+            ReloadNetworkInterfaces();
         }
-
-        public ICommand OpenNetworkConnectionsCommand => new RelayCommand(p => OpenNetworkConnectionsAction(), OpenNetworkConnections_CanExecute);
-
-        private bool OpenNetworkConnections_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-
-        public async Task OpenNetworkConnectionsAction()
-        {
-            try
-            {
-                ProcessStartInfo info = new ProcessStartInfo
-                {
-                    FileName = "NCPA.cpl",
-                    UseShellExecute = true
-                };
-
-                Process.Start(info);
-            }
-            catch (Exception ex)
-            {
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-            }
-        }
-
+        
         public ICommand ApplyConfigurationCommand => new RelayCommand(p => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
 
         private bool ApplyConfiguration_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
@@ -671,7 +635,7 @@ namespace NETworkManager.ViewModels
 
         private void ApplyProfileProfileAction()
         {
-            ApplyProfileConfig();
+            ApplyConfigurationFromProfile();
         }
 
         public ICommand AddProfileCommand => new RelayCommand(p => AddProfileAction());
@@ -710,21 +674,7 @@ namespace NETworkManager.ViewModels
         {
             ProfileDialogManager.ShowEditGroupDialog(this, _dialogCoordinator, ProfileManager.GetGroup(group.ToString()));
         }
-
-        public ICommand FlushDNSCommand => new RelayCommand(p => FlushDNSAction(), FlushDNS_CanExecute);
-
-        private bool FlushDNS_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-
-        private async Task FlushDNSAction()
-        {
-            IsConfigurationRunning = true;
-            IsStatusMessageDisplayed = false;
-
-            await Models.Network.NetworkInterface.FlushDnsAsync();
-
-            IsConfigurationRunning = false;
-        }
-
+        
         public ICommand ClearSearchCommand => new RelayCommand(p => ClearSearchAction());
 
         private void ClearSearchAction()
@@ -732,48 +682,66 @@ namespace NETworkManager.ViewModels
             Search = string.Empty;
         }
 
-        public ICommand ReleaseRenewCommand => new RelayCommand(p => ReleaseRenewAction(), ReleaseRenew_CanExecute);
+        #region Additional commands
+        private bool AdditionalCommands_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+        
+        public ICommand OpenNetworkConnectionsCommand => new RelayCommand(p => OpenNetworkConnectionsAction(), AdditionalCommands_CanExecute);
 
-        private bool ReleaseRenew_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-
-        private async Task ReleaseRenewAction()
+        public void OpenNetworkConnectionsAction()
         {
-            IsConfigurationRunning = true;
+            OpenNetworkConnectionsAsync();
+        }
+        
+        public ICommand FlushDNSCommand => new RelayCommand(p => FlushDNSAction(), AdditionalCommands_CanExecute);
 
-            await Models.Network.NetworkInterface.ReleaseRenewAsync(Models.Network.NetworkInterface.IPConfigReleaseRenewMode.ReleaseRenew);
+        private void FlushDNSAction()
+        {
+            FlushDNSAsync();
+        }
+        
+        public ICommand ReleaseRenewCommand => new RelayCommand(p => ReleaseRenewAction(), AdditionalCommands_CanExecute);
 
-            IsConfigurationRunning = false;
+        private void ReleaseRenewAction()
+        {
+            ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew);
+        }
+        
+        public ICommand ReleaseCommand => new RelayCommand(p => ReleaseAction(), AdditionalCommands_CanExecute);
+
+        private void ReleaseAction()
+        {
+            ReleaseRenewAsync(IPConfigReleaseRenewMode.Release);
+        }       
+
+        public ICommand RenewCommand => new RelayCommand(p => RenewAction(), AdditionalCommands_CanExecute);
+
+        private void RenewAction()
+        {
+            ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew);
         }
 
-        public ICommand ReleaseCommand => new RelayCommand(p => ReleaseAction(), Release_CanExecute);
+        public ICommand ReleaseRenew6Command => new RelayCommand(p => ReleaseRenew6Action(), AdditionalCommands_CanExecute);
 
-        private bool Release_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-
-        private async Task ReleaseAction()
+        private void ReleaseRenew6Action()
         {
-            IsConfigurationRunning = true;
-
-            await Models.Network.NetworkInterface.ReleaseRenewAsync(Models.Network.NetworkInterface.IPConfigReleaseRenewMode.Release);
-
-            IsConfigurationRunning = false;
+            ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew6);
         }
 
-        public ICommand RenewCommand => new RelayCommand(p => RenewAction(), Renew_CanExecute);
+        public ICommand Release6Command => new RelayCommand(p => Release6Action(), AdditionalCommands_CanExecute);
 
-        private bool Renew_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
-
-        private async Task RenewAction()
+        private void Release6Action()
         {
-            IsConfigurationRunning = true;
-
-            await Models.Network.NetworkInterface.ReleaseRenewAsync(Models.Network.NetworkInterface.IPConfigReleaseRenewMode.Renew);
-
-            IsConfigurationRunning = false;
+            ReleaseRenewAsync(IPConfigReleaseRenewMode.Release6);
         }
 
-        public ICommand AddIPv4AddressCommand => new RelayCommand(p => AddIPv4AddressAction(), AddIPv4Address_CanExecute);
+        public ICommand Renew6Command => new RelayCommand(p => Renew6Action(), AdditionalCommands_CanExecute);
 
-        private bool AddIPv4Address_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+        private void Renew6Action()
+        {
+            ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew);
+        }
+
+        public ICommand AddIPv4AddressCommand => new RelayCommand(p => AddIPv4AddressAction(), AdditionalCommands_CanExecute);
 
         private async Task AddIPv4AddressAction()
         {
@@ -801,9 +769,7 @@ namespace NETworkManager.ViewModels
         }
 
 
-        public ICommand RemoveIPv4AddressCommand => new RelayCommand(p => RemoveIPv4AddressAction(), RemoveIPv4Address_CanExecute);
-
-        private bool RemoveIPv4Address_CanExecute(object paramter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
+        public ICommand RemoveIPv4AddressCommand => new RelayCommand(p => RemoveIPv4AddressAction(), AdditionalCommands_CanExecute);
 
         private async Task RemoveIPv4AddressAction()
         {
@@ -830,8 +796,29 @@ namespace NETworkManager.ViewModels
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
         #endregion
+        #endregion
 
         #region Methods
+
+        private async void ReloadNetworkInterfaces()
+        {
+            IsNetworkInterfaceLoading = true;
+
+            await Task.Delay(2000); // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
+
+            var id = string.Empty;
+
+            if (SelectedNetworkInterface != null)
+                id = SelectedNetworkInterface.Id;
+
+            NetworkInterfaces = await Models.Network.NetworkInterface.GetNetworkInterfacesAsync();
+
+            // Change interface...
+            SelectedNetworkInterface = string.IsNullOrEmpty(id) ? NetworkInterfaces.FirstOrDefault() : NetworkInterfaces.FirstOrDefault(x => x.Id == id);
+
+            IsNetworkInterfaceLoading = false;
+        }
+        
         private void SetConfigurationDefaults(NetworkInterfaceInfo info)
         {
             if (info.DhcpEnabled)
@@ -859,6 +846,7 @@ namespace NETworkManager.ViewModels
                 ConfigSecondaryDNSServer = dnsServers.Count > 1 ? dnsServers[1].ToString() : string.Empty;
             }
         }
+        
         public async Task ApplyConfiguration()
         {
             IsConfigurationRunning = true;
@@ -901,7 +889,7 @@ namespace NETworkManager.ViewModels
 
                 await networkInterface.ConfigureNetworkInterfaceAsync(config);
 
-                ReloadNetworkInterfacesAction();
+                ReloadNetworkInterfaces();
             }
             catch (Exception ex)
             {
@@ -914,70 +902,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        public async Task AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
-        {
-            IsConfigurationRunning = true;
-            IsStatusMessageDisplayed = false;
-
-            var subnetmask = subnetmaskOrCidr;
-
-            // CIDR to subnetmask
-            if (subnetmask.StartsWith("/"))
-                subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
-
-            var config = new NetworkInterfaceConfig
-            {
-                Name = SelectedNetworkInterface.Name,
-                IPAddress = ipAddress,
-                Subnetmask = subnetmask
-            };
-
-            try
-            {
-                await Models.Network.NetworkInterface.AddIPAddressToNetworkInterfaceAsync(config);
-
-                ReloadNetworkInterfacesAction();
-            }
-            catch (Exception ex)
-            {
-                StatusMessage = ex.Message;
-                IsStatusMessageDisplayed = true;
-            }
-            finally
-            {
-                IsConfigurationRunning = false;
-            }
-        }
-
-        public async Task RemoveIPv4Address(string ipAddress)
-        {
-            IsConfigurationRunning = true;
-            IsStatusMessageDisplayed = false;
-
-            var config = new NetworkInterfaceConfig
-            {
-                Name = SelectedNetworkInterface.Name,
-                IPAddress = ipAddress
-            };
-
-            try
-            {
-                await Models.Network.NetworkInterface.RemoveIPAddressFromNetworkInterfaceAsync(config);
-
-                ReloadNetworkInterfacesAction();
-            }
-            catch (Exception ex)
-            {
-                StatusMessage = ex.Message;
-                IsStatusMessageDisplayed = true;
-            }
-            finally
-            {
-                IsConfigurationRunning = false;
-            }
-        }
-
-        public async Task ApplyProfileConfig()
+        public async Task ApplyConfigurationFromProfile()
         {
             IsConfigurationRunning = true;
             IsStatusMessageDisplayed = false;
@@ -1024,7 +949,109 @@ namespace NETworkManager.ViewModels
 
                 await networkInterface.ConfigureNetworkInterfaceAsync(config);
 
-                ReloadNetworkInterfacesAction();
+                ReloadNetworkInterfaces();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = ex.Message;
+                IsStatusMessageDisplayed = true;
+            }
+            finally
+            {
+                IsConfigurationRunning = false;
+            }
+        }
+
+        private async Task OpenNetworkConnectionsAsync()
+        {
+            try
+            {
+                ProcessStartInfo info = new()
+                {
+                    FileName = "NCPA.cpl",
+                    UseShellExecute = true
+                };
+
+                Process.Start(info);
+            }
+            catch (Exception ex)
+            {
+                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+            }
+        }
+        
+        private async Task FlushDNSAsync()
+        {
+            IsConfigurationRunning = true;
+            IsStatusMessageDisplayed = false;
+
+            await Models.Network.NetworkInterface.FlushDnsAsync();
+
+            IsConfigurationRunning = false;
+        }
+
+        private async Task ReleaseRenewAsync(IPConfigReleaseRenewMode releaseRenewMode)
+        {
+            IsConfigurationRunning = true;
+
+            await Models.Network.NetworkInterface.ReleaseRenewAsync(releaseRenewMode, SelectedNetworkInterface.Name);
+
+            ReloadNetworkInterfaces();
+
+            IsConfigurationRunning = false;
+        }
+        
+        public async Task AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
+        {
+            IsConfigurationRunning = true;
+            IsStatusMessageDisplayed = false;
+
+            var subnetmask = subnetmaskOrCidr;
+
+            // CIDR to subnetmask
+            if (subnetmask.StartsWith("/"))
+                subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
+
+            var config = new NetworkInterfaceConfig
+            {
+                Name = SelectedNetworkInterface.Name,
+                IPAddress = ipAddress,
+                Subnetmask = subnetmask
+            };
+
+            try
+            {
+                await Models.Network.NetworkInterface.AddIPAddressToNetworkInterfaceAsync(config);
+
+                ReloadNetworkInterfaces();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = ex.Message;
+                IsStatusMessageDisplayed = true;
+            }
+            finally
+            {
+                IsConfigurationRunning = false;
+            }
+        }
+
+        public async Task RemoveIPv4Address(string ipAddress)
+        {
+            IsConfigurationRunning = true;
+            IsStatusMessageDisplayed = false;
+
+            var config = new NetworkInterfaceConfig
+            {
+                Name = SelectedNetworkInterface.Name,
+                IPAddress = ipAddress
+            };
+
+            try
+            {
+                await Models.Network.NetworkInterface.RemoveIPAddressFromNetworkInterfaceAsync(config);
+
+                ReloadNetworkInterfaces();
             }
             catch (Exception ex)
             {
