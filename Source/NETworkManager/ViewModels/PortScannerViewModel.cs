@@ -99,16 +99,16 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<PortInfo> _portScanResults = new ObservableCollection<PortInfo>();
-        public ObservableCollection<PortInfo> PortScanResult
+        private ObservableCollection<PortInfo> _results = new();
+        public ObservableCollection<PortInfo> Results
         {
-            get => _portScanResults;
+            get => _results;
             set
             {
-                if (_portScanResults != null && value == _portScanResults)
+                if (_results != null && value == _results)
                     return;
 
-                _portScanResults = value;
+                _results = value;
             }
         }
 
@@ -231,7 +231,7 @@ namespace NETworkManager.ViewModels
             PortsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortsHistory);
 
             // Result view
-            ResultsView = CollectionViewSource.GetDefaultView(PortScanResult);
+            ResultsView = CollectionViewSource.GetDefaultView(Results);
             ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.IPAddress)));
             ResultsView.SortDescriptions.Add(new SortDescription(nameof(PortInfo.IPAddressInt32), ListSortDirection.Descending));
 
@@ -358,7 +358,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                Ports = instance.SelectedPortProfile.Ports;
+                Ports = string.Join("; " , instance.GetSelectedPortProfiles().Select(x => x.Ports));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -382,7 +382,7 @@ namespace NETworkManager.ViewModels
             IsScanRunning = true;
             PreparingScan = true;
 
-            PortScanResult.Clear();
+            Results.Clear();
 
             // Change the tab title (not nice, but it works)
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -482,7 +482,7 @@ namespace NETworkManager.ViewModels
 
                 try
                 {
-                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? PortScanResult : new ObservableCollection<PortInfo>(SelectedResults.Cast<PortInfo>().ToArray()));
+                    ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<PortInfo>(SelectedResults.Cast<PortInfo>().ToArray()));
                 }
                 catch (Exception ex)
                 {
@@ -582,7 +582,7 @@ namespace NETworkManager.ViewModels
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
             {
                 //lock (PortScanResult)
-                    PortScanResult.Add(portInfo);
+                Results.Add(portInfo);
             }));
         }
 

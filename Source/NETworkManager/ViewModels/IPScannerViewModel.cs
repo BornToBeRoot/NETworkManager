@@ -100,7 +100,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private ObservableCollection<HostInfo> _results = new ObservableCollection<HostInfo>();
+        private ObservableCollection<HostInfo> _results = new();
         public ObservableCollection<HostInfo> Results
         {
             get => _results;
