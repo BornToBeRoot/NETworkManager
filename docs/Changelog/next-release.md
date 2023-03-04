@@ -42,6 +42,7 @@ New Feature
   - New Port state "Timed out" if the timelimit is reached. [#1969](https://github.com/BornToBeRoot/NETworkManager/pull/1969){:target="\_blank"}
 - **Port Scanner**
   - Add new port profiles / improve existing ones [#1909](https://github.com/BornToBeRoot/NETworkManager/pull/1909){:target="\_blank"}
+  - Select multiple port profiles with `Ctrl` or holding left mouse button [#1979](https://github.com/BornToBeRoot/NETworkManager/pull/1979){:target="\_blank"}
   - Max host threads changed to to 256 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
   - Max port threads changed to to 1024 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
 - **Ping**

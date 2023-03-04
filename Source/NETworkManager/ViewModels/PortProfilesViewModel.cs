@@ -5,6 +5,9 @@ using NETworkManager.Models.Network;
 using System.ComponentModel;
 using System.Windows.Data;
 using NETworkManager.Settings;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NETworkManager.ViewModels
 {
@@ -36,16 +39,16 @@ namespace NETworkManager.ViewModels
 
         public ICollectionView PortProfiles { get; }
 
-        private PortProfileInfo _selectedPortProfile = new PortProfileInfo();
-        public PortProfileInfo SelectedPortProfile
+        private IList _selectedPortProfiles = new ArrayList();
+        public IList SelectedPortProfiles
         {
-            get => _selectedPortProfile;
+            get => _selectedPortProfiles;
             set
             {
-                if (value == _selectedPortProfile)
+                if (Equals(value, _selectedPortProfiles))
                     return;
 
-                _selectedPortProfile = value;
+                _selectedPortProfiles = value;
                 OnPropertyChanged();
             }
         }
@@ -64,7 +67,7 @@ namespace NETworkManager.ViewModels
                 if (string.IsNullOrEmpty(Search))
                     return true;
 
-                if (!(o is PortProfileInfo info))
+                if (o is not PortProfileInfo info)
                     return false;
 
                 var search = Search.Trim();
@@ -74,6 +77,11 @@ namespace NETworkManager.ViewModels
             };
 
             _isLoading = false;
+        }
+
+        public List<PortProfileInfo> GetSelectedPortProfiles()
+        {
+            return new List<PortProfileInfo>(SelectedPortProfiles.Cast<PortProfileInfo>());
         }
     }
 }
