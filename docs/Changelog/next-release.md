@@ -85,6 +85,18 @@ The profiles and settings are automatically migrated to the new location when th
 - **Discovery Protocol**
   - Discovery Protocol was not working in release because a .dll was missing... Fixed by setting the dotnet RuntimeIdentfier from `win-x64` to `win10-x64` (See [PowerShell/PowerShell#7909](https://github.com/PowerShell/PowerShell/issues/7909){:target="\_blank"} for more details) [#1951](https://github.com/BornToBeRoot/NETworkManager/pull/1951){:target="\_blank"}
 
+
+## Deprecated
+
+- Profiles
+  - The settings folder path can no longer be set to a custom path [#1984](https://github.com/BornToBeRoot/NETworkManager/pull/1984){:target="\_blank"}
+- Settings
+  - The profiles folder path can no longer be set to a custom path [#1984](https://github.com/BornToBeRoot/NETworkManager/pull/1984){:target="\_blank"}
+  - Import and export of profiles is no longer supported [#1984](https://github.com/BornToBeRoot/NETworkManager/pull/1984){:target="\_blank"}
+
+{: note }
+The outdated functions were buggy, incomplete and difficult to maintain. I decided to remove them and adjust the path to the profiles and settings (See [What's new](#whats-new)). You may also perform a backup/import/export/migration by manually copying the profile or settings files (See [FAQ > Where are files stored?](https://borntoberoot.net/NETworkManager/FAQ#where-are-files-stored)).
+
 ## Other
 
 - Code cleanup [#1932](https://github.com/BornToBeRoot/NETworkManager/pull/1932){:target="\_blank"} [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
