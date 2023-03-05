@@ -1,4 +1,5 @@
-﻿using NETworkManager.Utilities;
+﻿using Amazon.Util.Internal;
+using NETworkManager.Utilities;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -124,12 +125,12 @@ namespace NETworkManager.Models.Network
             return bag.ToArray();
         }
 
-        public static Task<List<string>> ResolveHostnamesInIPRangesAsync(string[] ipRanges, CancellationToken cancellationToken)
+        public static Task<List<string>> ResolveHostnamesInIPRangesAsync(string[] ipRanges, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
         {
-            return Task.Run(() => ResolveHostnamesInIPRanges(ipRanges, cancellationToken), cancellationToken);
+            return Task.Run(() => ResolveHostnamesInIPRanges(ipRanges, dnsResolveHostnamePreferIPv4, cancellationToken), cancellationToken);
         }
 
-        public static List<string> ResolveHostnamesInIPRanges(string[] ipRanges, CancellationToken cancellationToken)
+        public static List<string> ResolveHostnamesInIPRanges(string[] ipRanges, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
         {
             var bag = new ConcurrentBag<string>();
 
@@ -153,10 +154,10 @@ namespace NETworkManager.Models.Network
                     case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.IPv6AddressRegex):
                         bag.Add(ipHostOrRange);
                         break;
-                        
+                    
                     // example.com
                     case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameRegex):
-                        using (var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(ipHostOrRange))
+                        using (var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(ipHostOrRange, dnsResolveHostnamePreferIPv4))
                         {
                             // Wait for task inside a Parallel.Foreach
                             dnsResolverTask.Wait();
@@ -173,7 +174,8 @@ namespace NETworkManager.Models.Network
                     case var _ when Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameCidrRegex) || Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameSubnetmaskRegex):
                         var hostAndSubnet = ipHostOrRange.Split('/');
 
-                        using (var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(hostAndSubnet[0]))
+                        // Only support IPv4
+                        using (var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(hostAndSubnet[0], true))
                         {
                             // Wait for task inside a Parallel.Foreach
                             dnsResolverTask.Wait();

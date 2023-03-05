@@ -339,7 +339,22 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-        
+
+        private bool _network_ResolveHostnamePreferIPv4 = GlobalStaticConfiguration.Network_ResolveHostnamePreferIPv4;
+        public bool Network_ResolveHostnamePreferIPv4
+        {
+            get => _network_ResolveHostnamePreferIPv4;
+            set
+            {
+                if (value == _network_ResolveHostnamePreferIPv4)
+                    return;
+
+                _network_ResolveHostnamePreferIPv4 = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
         // Status
         private bool _status_ShowWindowOnNetworkChange = GlobalStaticConfiguration.Status_ShowWindowOnNetworkChange;
         public bool Status_ShowWindowOnNetworkChange
@@ -1273,22 +1288,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _pingMonitor_ResolveHostnamePreferIPv4 = true;
-        public bool PingMonitor_ResolveHostnamePreferIPv4
-        {
-            get => _pingMonitor_ResolveHostnamePreferIPv4;
-            set
-            {
-                if (value == _pingMonitor_ResolveHostnamePreferIPv4)
-                    return;
-
-                _pingMonitor_ResolveHostnamePreferIPv4 = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+                
         private string _pingMonitor_ExportFilePath;
         public string PingMonitor_ExportFilePath
         {
@@ -1424,22 +1424,7 @@ namespace NETworkManager.Settings
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
-        }
-
-        private bool _traceroute_ResolveHostnamePreferIPv4 = true;
-        public bool Traceroute_ResolveHostnamePreferIPv4
-        {
-            get => _traceroute_ResolveHostnamePreferIPv4;
-            set
-            {
-                if (value == _traceroute_ResolveHostnamePreferIPv4)
-                    return;
-
-                _traceroute_ResolveHostnamePreferIPv4 = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
+        }                
 
         private bool _traceroute_ExpandProfileView = true;
         public bool Traceroute_ExpandProfileView
@@ -3106,22 +3091,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-
-        private bool _snmp_ResolveHostnamePreferIPv4 = true;
-        public bool SNMP_ResolveHostnamePreferIPv4
-        {
-            get => _snmp_ResolveHostnamePreferIPv4;
-            set
-            {
-                if (value == _snmp_ResolveHostnamePreferIPv4)
-                    return;
-
-                _snmp_ResolveHostnamePreferIPv4 = value;
-                OnPropertyChanged();
-                SettingsChanged = true;
-            }
-        }
-
+        
         private ObservableCollection<string> _snmp_HostHistory = new();
         public ObservableCollection<string> SNMP_HostHistory
         {

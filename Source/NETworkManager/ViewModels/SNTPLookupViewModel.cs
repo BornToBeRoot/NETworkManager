@@ -294,7 +294,7 @@ namespace NETworkManager.ViewModels
             lookup.LookupError += Lookup_LookupError;
             lookup.LookupComplete += Lookup_LookupComplete;
 
-            lookup.QueryAsync(SNTPServer.Servers);
+            lookup.QueryAsync(SNTPServer.Servers, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
         }
         
         public void OnClose()

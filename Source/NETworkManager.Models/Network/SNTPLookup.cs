@@ -1,4 +1,5 @@
-﻿using NETworkManager.Utilities;
+﻿using Amazon.Util.Internal;
+using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -84,7 +85,7 @@ namespace NETworkManager.Models.Network
             };
         }
 
-        public void QueryAsync(IEnumerable<ServerConnectionInfo> servers)
+        public void QueryAsync(IEnumerable<ServerConnectionInfo> servers, bool dnsResolveHostnamePreferIPv4)
         {
             Task.Run(() =>
             {
@@ -99,7 +100,7 @@ namespace NETworkManager.Models.Network
                     }
                     else
                     {
-                        using var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(server.Server, true);
+                        using var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(server.Server, dnsResolveHostnamePreferIPv4);
 
                         // Wait for task inside a Parallel.Foreach
                         dnsResolverTask.Wait();

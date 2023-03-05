@@ -510,7 +510,7 @@ namespace NETworkManager.ViewModels
             // Try to parse the string into an IP-Address
             if (!IPAddress.TryParse(Host, out var ipAddress))
             {
-                var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4);
+                var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
 
                 if (dnsResult.HasError)
                 {

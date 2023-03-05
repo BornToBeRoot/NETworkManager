@@ -358,7 +358,7 @@ namespace NETworkManager.ViewModels
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
 
-                Ports = string.Join("; " , instance.GetSelectedPortProfiles().Select(x => x.Ports));
+                Ports = string.Join("; ", instance.GetSelectedPortProfiles().Select(x => x.Ports));
             }, instance =>
             {
                 _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
@@ -402,7 +402,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Hosts.Replace(" ", "").Split(';'), _cancellationTokenSource.Token);
+                ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Hosts.Replace(" ", "").Split(';'), SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {

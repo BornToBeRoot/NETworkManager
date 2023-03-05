@@ -66,7 +66,7 @@ namespace NETworkManager.ViewModels
                 _timeout = value;
                 OnPropertyChanged();
             }
-        }
+        }                
         #endregion
 
         #region Constructor, load settings
