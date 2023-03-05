@@ -26,7 +26,7 @@ namespace NETworkManager.Settings
         public bool Restart { get; set; }
 
         private bool _isDialogOpen;
-        public bool FixAirspace
+        public bool IsDialogOpen
         {
             get => _isDialogOpen;
             set

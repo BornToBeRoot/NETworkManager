@@ -749,7 +749,7 @@ namespace NETworkManager.ViewModels
             var connectViewModel = new AWSSessionManagerConnectViewModel(async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
 
                 // Create profile info
                 var info = new AWSSessionManagerSessionInfo
@@ -771,7 +771,7 @@ namespace NETworkManager.ViewModels
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
             });
 
             customDialog.Content = new AWSSessionManagerConnectDialog
@@ -779,7 +779,7 @@ namespace NETworkManager.ViewModels
                 DataContext = connectViewModel
             };
 
-            ConfigurationManager.Current.FixAirspace = true;
+            ConfigurationManager.Current.IsDialogOpen = true;
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
@@ -930,12 +930,12 @@ namespace NETworkManager.ViewModels
 
         public void OnProfileDialogOpen()
         {
-            ConfigurationManager.Current.FixAirspace = true;
+            ConfigurationManager.Current.IsDialogOpen = true;
         }
 
         public void OnProfileDialogClose()
         {
-            ConfigurationManager.Current.FixAirspace = false;
+            ConfigurationManager.Current.IsDialogOpen = false;
         }
         #endregion
 

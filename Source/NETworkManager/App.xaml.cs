@@ -110,7 +110,7 @@ namespace NETworkManager
 
                 // Create backup of corrupted file
                 var destinationFile = $"{TimestampHelper.GetTimestamp()}_corrupted_" + SettingsManager.GetSettingsFileName();
-                File.Copy(SettingsManager.GetSettingsFilePath(), Path.Combine(SettingsManager.GetSettingsLocation(), destinationFile));
+                File.Copy(SettingsManager.GetSettingsFilePath(), Path.Combine(SettingsManager.GetSettingsFolderLocation(), destinationFile));
                 _log.Info($"A backup of the corrupted settings file has been saved under {destinationFile}");
 
                 // Initialize default application settings

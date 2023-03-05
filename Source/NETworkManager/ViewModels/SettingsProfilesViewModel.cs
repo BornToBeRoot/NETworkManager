@@ -308,7 +308,6 @@ namespace NETworkManager.ViewModels
 
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
-
         #endregion
     }
 }

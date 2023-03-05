@@ -133,7 +133,7 @@ public static class ProfileManager
     /// <summary>
     /// Method to get the path of the profiles folder.
     /// </summary>
-    /// <returns>Location of the profiles.</returns>
+    /// <returns>Path to the profiles folder.</returns>
     public static string GetProfilesFolderLocation()
     {
         return ConfigurationManager.Current.IsPortable ?
