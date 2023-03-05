@@ -16,7 +16,7 @@
     <UserControl.Resources>
         <converters:PercentConverter x:Key="PercentConverter" />
     </UserControl.Resources>
-    <Grid Margin="10">
+    <Grid Margin="10" MinWidth="800">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="48" />
             <ColumnDefinition Width="10" />

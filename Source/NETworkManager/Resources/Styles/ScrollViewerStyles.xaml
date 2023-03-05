@@ -17,7 +17,26 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <ScrollContentPresenter Grid.ColumnSpan="1" Grid.RowSpan="1" />
-                        <ScrollBar Name="PART_VerticalScrollBar" Width="8" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Style="{StaticResource ScrollViewerScrollBar}" Margin="10,0,0,0"/>
+                        <ScrollBar Name="PART_VerticalScrollBar"                                    
+                                   HorizontalAlignment="Right" 
+                                   Grid.Row="0" 
+                                   Grid.Column="1" 
+                                   Value="{TemplateBinding VerticalOffset}" 
+                                   Maximum="{TemplateBinding ScrollableHeight}" 
+                                   ViewportSize="{TemplateBinding ViewportHeight}" 
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
+                                   Style="{StaticResource ScrollViewerScrollBar}" 
+                                   Margin="10,0,0,0" />
+                        <ScrollBar x:Name="PART_HorizontalScrollBar"
+                                   Grid.Row="1"
+                                   Grid.Column="0"
+                                   Value="{TemplateBinding HorizontalOffset}"
+                                   Maximum="{TemplateBinding ScrollableWidth}"
+                                   ViewportSize="{TemplateBinding ViewportWidth}"
+                                   Orientation="Horizontal"                                   
+                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                   Style="{StaticResource ScrollViewerScrollBar}" 
+                                   Margin="0,10,0,0" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -40,7 +59,23 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <ScrollContentPresenter Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                        <ScrollBar Name="PART_VerticalScrollBar" Width="8" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="1" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                        <ScrollBar Name="PART_VerticalScrollBar" 
+                                   HorizontalAlignment="Right" 
+                                   Grid.Row="0" 
+                                   Grid.Column="1" 
+                                   Value="{TemplateBinding VerticalOffset}" 
+                                   Maximum="{TemplateBinding ScrollableHeight}" 
+                                   ViewportSize="{TemplateBinding ViewportHeight}" 
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                        <ScrollBar x:Name="PART_HorizontalScrollBar"
+                                   Grid.Row="1"
+                                   Grid.Column="0"
+                                   Value="{TemplateBinding HorizontalOffset}"
+                                   Maximum="{TemplateBinding ScrollableWidth}"
+                                   ViewportSize="{TemplateBinding ViewportWidth}"
+                                   Orientation="Horizontal"                                   
+                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                   Style="{StaticResource ScrollViewerScrollBar}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -48,6 +83,7 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
             </Trigger>
         </Style.Triggers>
     </Style>

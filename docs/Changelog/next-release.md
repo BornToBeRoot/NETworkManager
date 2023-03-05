@@ -60,7 +60,7 @@ The profiles and settings are automatically migrated to the new location when th
   - Max port threads changed to to 1024 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
 - **Ping Monitor**
   - Allow multiple hosts like `server-01; 1.1.1.1; example.com` as input [#1933](https://github.com/BornToBeRoot/NETworkManager/pull/1933){:target="\_blank"}
-  - Use a fixed size for the view [#1933](https://github.com/BornToBeRoot/NETworkManager/pull/1933){:target="\_blank"}
+  - Use a fixed size for the view and enable horizonal scrollbar [#1933](https://github.com/BornToBeRoot/NETworkManager/pull/1933){:target="\_blank"} [#1990](https://github.com/BornToBeRoot/NETworkManager/pull/1990){:target="\_blank"}
   - Remove option to set the preferred IP protocol for DNS resolution (can now be set globally) [#1950](https://github.com/BornToBeRoot/NETworkManager/pull/1950){:target="\_blank"}
 - **Traceroute**
   - Add more validation (host, ip address) to input [#1932](https://github.com/BornToBeRoot/NETworkManager/pull/1932){:target="\_blank"}
