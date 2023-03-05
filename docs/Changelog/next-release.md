@@ -81,7 +81,7 @@ The profiles and settings are automatically migrated to the new location when th
   - In some cases the DNS lookup is not completed, but the user interface indicates that it is completed [#1940](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"} [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
   - Detect if a dns server profile with this name already exists [#1960](https://github.com/BornToBeRoot/NETworkManager/pull/1960){:target="\_blank"}
 - **AWS Session Manager**
-  - Use UTF-8 encoding for embedded PowerShell console window [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
+  - Use UTF-8 encoding for embedded PowerShell console window [#1925](https://github.com/BornToBeRoot/NETworkManager/pull/1925){:target="\_blank"}
 - **Discovery Protocol**
   - Discovery Protocol was not working in release because a .dll was missing... Fixed by setting the dotnet RuntimeIdentfier from `win-x64` to `win10-x64` (See [PowerShell/PowerShell#7909](https://github.com/PowerShell/PowerShell/issues/7909){:target="\_blank"} for more details) [#1951](https://github.com/BornToBeRoot/NETworkManager/pull/1951){:target="\_blank"}
 
