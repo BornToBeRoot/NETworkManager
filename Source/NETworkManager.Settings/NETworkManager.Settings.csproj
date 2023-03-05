@@ -57,12 +57,6 @@
 		<PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="4.11.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Include="Properties\Settings.settings">
-			<Generator>SettingsSingleFileGenerator</Generator>
-			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
-		</None>
-	</ItemGroup>
-	<ItemGroup>
 		<ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />
 		<ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
 		<ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />

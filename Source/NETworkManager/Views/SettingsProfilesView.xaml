@@ -22,7 +22,7 @@
     </UserControl.Resources>
     <StackPanel >
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Location}" />
-        <TextBox x:Name="TextBoxLocation" Text="{Binding Location}" Style="{StaticResource ReadOnlyTextBox}" Margin="0,0,0,10" />
+        <TextBox x:Name="TextBoxLocation" Text="{Binding Location}" Style="{StaticResource ReadOnlyTextBox}" IsEnabled="False" Margin="0,0,0,10" />
         <Button Command="{Binding OpenLocationCommand}" Style="{StaticResource ImageWithTextButton}" HorizontalAlignment="Right" Margin="0,0,0,20">
             <Button.Content>
                 <Grid>
