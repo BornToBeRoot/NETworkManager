@@ -348,9 +348,6 @@
   <data name="Settings" xml:space="preserve">
     <value>Impostazioni</value>
   </data>
-  <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>Le impostazioni sono state ripristinate!</value>
-  </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
@@ -1000,12 +997,6 @@ Controlla i parametri!</value>
   <data name="Override" xml:space="preserve">
     <value>sostituisci</value>
   </data>
-  <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Vuoi sovrascrivere le impostazioni nella cartella destinazione?
-
-"Sovrascrivi" sovrascriverà il file delle impostazioni nella cartella  destinazione.
-"Usa altro" userà il file di impostazione esistente nella cartella destinazione e riavvierà in seguito l'applicazione.</value>
-  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -1105,18 +1096,6 @@ Controlla i parametri!</value>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Seleziona una risoluzione dello schermo</value>
   </data>
-  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
-    <value>Le impostazioni verranno sovrascritte!</value>
-  </data>
-  <data name="SettingsAreResetMessage" xml:space="preserve">
-    <value>Le impostazioni sono state ripristinate!</value>
-  </data>
-  <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
-    <value>Seleziona le impostazioni da esportare:</value>
-  </data>
-  <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
-    <value>Seleziona le impostazioni da importare:</value>
-  </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
     <value>Selezionando questo verranno ripristinate tutte le impostazioni!</value>
   </data>
@@ -1135,15 +1114,6 @@ Puoi segnalare questo problema su GitHub.
 È stato creato un backup del file delle impostazioni nella cartella delle impostazioni e le impostazioni sono state ripristinate.
 
 I file del profilo non sono interessati dal problema!</value>
-  </data>
-  <data name="SettingsSuccessfullyExported" xml:space="preserve">
-    <value>Esportazione impostazioni completata!</value>
-  </data>
-  <data name="SettingsSuccessfullyImported" xml:space="preserve">
-    <value>Importazioni impostazioni completata!</value>
-  </data>
-  <data name="SettingsSuccessfullyReset" xml:space="preserve">
-    <value>Ripristino impostazioni completato!</value>
   </data>
   <data name="ShowClosedPorts" xml:space="preserve">
     <value>Visualizza porte chiuse</value>
@@ -2236,8 +2206,8 @@ $$hostname$$	--&gt;	Nome host</value>
   <data name="Restart" xml:space="preserve">
     <value>Riavvia</value>
   </data>
-  <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
-    <value>Impossibile risolvere l'indirizzo IP nome host!</value>
+  <data name="WarningMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
+    <value>Impossibile risolvere l'indirizzo IP per il nome host!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Canc</value>
@@ -2397,9 +2367,6 @@ $$hostname$$	--&gt;	Nome host</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>L'applicazione verrà riavviata...</value>
-  </data>
-  <data name="UseOtherFolder" xml:space="preserve">
-    <value>Usa altra cartella</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Impossibile esportare il file!
@@ -2858,25 +2825,11 @@ Segnala questo problema su Github.</value>
   <data name="Merge" xml:space="preserve">
     <value>Unisci</value>
   </data>
-  <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
-    <value>La cartella destinazione contiene già dei file. 
-Se selezioni 'Unisci', i profili attuali verranno copiati nella cartella.</value>
-  </data>
-  <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Vuoi sovrascrivre i profili nella cartella destinazione?
-
-"Sovrascrivi" copierà i file dei profili nella cartella destinazione e sovrascriverà i file profilo esistenti.
-"Unisci" copierà i file profilo nella cartella di destinazione, ma non sovrascriverà i file profilo esistenti.
-"Usa altra cartella" userà i file profilo esistenti nella cartella destinazione.</value>
-  </data>
   <data name="UseOther" xml:space="preserve">
     <value>Usa altri</value>
   </data>
   <data name="Move" xml:space="preserve">
     <value>Sposta</value>
-  </data>
-  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
-    <value>I file del profilo verranno spostati nella cartella destinazione selezionata.</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
     <value>Ultima scansione il {0}</value>
@@ -3076,17 +3029,11 @@ Questo limite è impostato dall'amministratore del server o dai criteri di rete.
   <data name="CustomThemes" xml:space="preserve">
     <value>Temi personalizzati</value>
   </data>
-  <data name="ImportSettingsQuestion" xml:space="preserve">
-    <value>Vuoi importare le impostazioni?</value>
-  </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
     <value>Vuoi ripristinare le impostazioni?</value>
   </data>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>Impostazioni ripristinate!</value>
-  </data>
-  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
-    <value>Vuoi sovrascrivere il file delle impostazioni esistente?</value>
   </data>
   <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
     <value>Gestione sessioni AWS</value>
@@ -3360,5 +3307,11 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
   </data>
   <data name="Hostkey" xml:space="preserve">
     <value>Tasto rapido</value>
+  </data>
+  <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
+    <value>Le impostazioni verranno ripristinate e l'applicazione successivamente verrà riavviata!</value>
+  </data>
+  <data name="SettingsHaveBeenReset" xml:space="preserve">
+    <value>Le impostazioni sono state ripristinate!</value>
   </data>
 </root>
