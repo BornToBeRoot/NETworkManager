@@ -348,9 +348,6 @@
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>Settings have been reset!</value>
-  </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
@@ -990,12 +987,6 @@ Create one...</value>
   <data name="Override" xml:space="preserve">
     <value>override</value>
   </data>
-  <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite settings in the destination folder?
-
-"Overwrite" will overwrite the settings file in the destination folder.
-"Use other" will use the existing setting file in the destination folder and restart the application afterwards.</value>
-  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -1095,18 +1086,6 @@ Create one...</value>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Select a screen resolution</value>
   </data>
-  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
-    <value>Settings are overwritten!</value>
-  </data>
-  <data name="SettingsAreResetMessage" xml:space="preserve">
-    <value>Settings are reset!</value>
-  </data>
-  <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
-    <value>Select the settings you want to export:</value>
-  </data>
-  <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
-    <value>Select the settings you want to import:</value>
-  </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
     <value>This will reset all settings!</value>
   </data>
@@ -1125,15 +1104,6 @@ Create one...</value>
 A backup of the settings file was created in the settings folder and the settings were reset.
 
 Profile files are not affected!</value>
-  </data>
-  <data name="SettingsSuccessfullyExported" xml:space="preserve">
-    <value>Settings successfully exported!</value>
-  </data>
-  <data name="SettingsSuccessfullyImported" xml:space="preserve">
-    <value>Settings successfully imported!</value>
-  </data>
-  <data name="SettingsSuccessfullyReset" xml:space="preserve">
-    <value>Settings successfully reset!</value>
   </data>
   <data name="ShowClosedPorts" xml:space="preserve">
     <value>Show closed ports</value>
@@ -2217,7 +2187,7 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="Restart" xml:space="preserve">
     <value>Restart</value>
   </data>
-  <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
+  <data name="WarningMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
     <value>Could not resolve ip address for hostname!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
@@ -2378,9 +2348,6 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>The application will be restarted...</value>
-  </data>
-  <data name="UseOtherFolder" xml:space="preserve">
-    <value>Use other folder</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Could not export file! See error message: "{0}"</value>
@@ -2834,24 +2801,11 @@ Otherwise, the profile may be corrupted and you want to report the issue on GitH
   <data name="Merge" xml:space="preserve">
     <value>Merge</value>
   </data>
-  <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
-    <value>The destination folder already contains files. If you click Merge, the current profiles are copied to the folder.</value>
-  </data>
-  <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Overwrite profiles in destination folder?
-
-"Overwrite" will copy the profile files to the destination folder and overwrite existing profile files.
-"Merge" will copy the profile files to the destination folder, but won't overwrite exitsting profile files.
-"Use other folder" will use the existing profile files in the destination folder.</value>
-  </data>
   <data name="UseOther" xml:space="preserve">
     <value>Use other</value>
   </data>
   <data name="Move" xml:space="preserve">
     <value>Move</value>
-  </data>
-  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
-    <value>Profile files will be moved to the selected destination folder.</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
     <value>Last scan at {0}</value>
@@ -3050,17 +3004,11 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="CustomThemes" xml:space="preserve">
     <value>Custom themes</value>
   </data>
-  <data name="ImportSettingsQuestion" xml:space="preserve">
-    <value>Import settings?</value>
-  </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
     <value>Reset settings?</value>
   </data>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>Settings reset!</value>
-  </data>
-  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
-    <value>Overwrite existing settings file?</value>
   </data>
   <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
     <value>AWS Session Manager</value>
@@ -3328,5 +3276,11 @@ If the option is disabled again, the values are no longer modified. However, the
   </data>
   <data name="Hostkey" xml:space="preserve">
     <value>Hostkey</value>
+  </data>
+  <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
+    <value>The settings will be reset and the application will be restarted afterwards!</value>
+  </data>
+  <data name="SettingsHaveBeenReset" xml:space="preserve">
+    <value>Settings have been reset!</value>
   </data>
 </root>

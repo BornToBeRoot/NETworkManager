@@ -23,7 +23,7 @@ namespace NETworkManager.ViewModels
         public ICollectionView GroupViews { get; }
         public GroupInfo Group { get; }
 
-        private List<string> _groups { get; }
+        private IReadOnlyCollection<string> _groups { get; }
 
         #region General
         private bool _nameIsValid = true;
@@ -1238,7 +1238,7 @@ namespace NETworkManager.ViewModels
         }
         #endregion
 
-        public GroupViewModel(Action<GroupViewModel> saveCommand, Action<GroupViewModel> cancelHandler, List<string> groups, GroupEditMode editMode = GroupEditMode.Add, GroupInfo group = null)
+        public GroupViewModel(Action<GroupViewModel> saveCommand, Action<GroupViewModel> cancelHandler, IReadOnlyCollection<string> groups, GroupEditMode editMode = GroupEditMode.Add, GroupInfo group = null)
         {
             // Load the view
             GroupViews = new CollectionViewSource { Source = GroupViewManager.List }.View;

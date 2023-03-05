@@ -440,7 +440,7 @@ namespace NETworkManager.ViewModels
             var connectViewModel = new PuTTYConnectViewModel(async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
 
                 // Create profile info
                 var info = new PuTTYSessionInfo
@@ -473,7 +473,7 @@ namespace NETworkManager.ViewModels
             }, async instance =>
                 {
                     await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                    ConfigurationManager.Current.FixAirspace = false;
+                    ConfigurationManager.Current.IsDialogOpen = false;
                 }, host);
 
             customDialog.Content = new PuTTYConnectDialog
@@ -481,7 +481,7 @@ namespace NETworkManager.ViewModels
                 DataContext = connectViewModel
             };
 
-            ConfigurationManager.Current.FixAirspace = true;
+            ConfigurationManager.Current.IsDialogOpen = true;
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
@@ -493,7 +493,7 @@ namespace NETworkManager.ViewModels
         private void ConnectProfileExternal()
         {
             // Create log path
-            DirectoryCreator.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
+            DirectoryHelper.CreateWithEnvironmentVariables(Settings.Application.PuTTY.LogPath);
 
             ProcessStartInfo info = new()
             {
@@ -667,12 +667,12 @@ namespace NETworkManager.ViewModels
 
         public void OnProfileDialogOpen()
         {
-            ConfigurationManager.Current.FixAirspace = true;
+            ConfigurationManager.Current.IsDialogOpen = true;
         }
 
         public void OnProfileDialogClose()
         {
-            ConfigurationManager.Current.FixAirspace = false;
+            ConfigurationManager.Current.IsDialogOpen = false;
         }
         #endregion
 

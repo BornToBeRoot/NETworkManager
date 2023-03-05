@@ -20,7 +20,14 @@ Release date: **xx.xx.2023**
 New Feature
 {: .label .label-green }
 
+Breaking Change
+{: .label .label-red }
+
 - **SNTP Lookup** [#1821](https://github.com/BornToBeRoot/NETworkManager/pull/1821){:target="\_blank"} (See [documentation](https://borntoberoot.net/NETworkManager/Documentation/Application/SNTPLookup){:target="\_blank"} for more details)
+- Profiles and settings are now saved in the `%UserProfile%\Documents\NETworkManager` folder instead of the `%AppData%\NETworkManager` folder. If folder redirection is set up (e.g. OneDrive, Group Policy, etc.). The profiles and settings (files) are automatically transferred to other devices and may be automatically backed up depending on your configuration. I hope this will provide better support for virtual environments / terminal servers. [#1984](https://github.com/BornToBeRoot/NETworkManager/pull/1984){:target="\_blank"}
+
+{: note }
+The profiles and settings are automatically migrated to the new location when the application is started. You can check the log under `%LocalAppData%\NETworkManager\NETworkManager.log` for more details and possible errors. This does not apply to portable version.
 
 ## Improvements
 
@@ -77,6 +84,18 @@ New Feature
   - Use UTF-8 encoding for embedded PowerShell console window [#1832](https://github.com/BornToBeRoot/NETworkManager/pull/1832){:target="\_blank"}
 - **Discovery Protocol**
   - Discovery Protocol was not working in release because a .dll was missing... Fixed by setting the dotnet RuntimeIdentfier from `win-x64` to `win10-x64` (See [PowerShell/PowerShell#7909](https://github.com/PowerShell/PowerShell/issues/7909){:target="\_blank"} for more details) [#1951](https://github.com/BornToBeRoot/NETworkManager/pull/1951){:target="\_blank"}
+
+
+## Deprecated
+
+- Profiles
+  - The settings folder path can no longer be set to a custom path [#1984](https://github.com/BornToBeRoot/NETworkManager/pull/1984){:target="\_blank"}
+- Settings
+  - The profiles folder path can no longer be set to a custom path [#1984](https://github.com/BornToBeRoot/NETworkManager/pull/1984){:target="\_blank"}
+  - Import and export of profiles is no longer supported [#1984](https://github.com/BornToBeRoot/NETworkManager/pull/1984){:target="\_blank"}
+
+{: note }
+The outdated functions were buggy, incomplete and difficult to maintain. I decided to remove them and adjust the path to the profiles and settings (See [What's new](#whats-new)). You may also perform a backup/import/export/migration by manually copying the profile or settings files (See [FAQ > Where are files stored?](https://borntoberoot.net/NETworkManager/FAQ#where-are-files-stored)).
 
 ## Other
 

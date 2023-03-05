@@ -396,11 +396,11 @@ namespace NETworkManager
                 var settings = AppearanceManager.MetroDialog;
                 settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
 
-                ConfigurationManager.Current.FixAirspace = true;
+                ConfigurationManager.Current.IsDialogOpen = true;
 
                 await this.ShowMessageAsync(Localization.Resources.Strings.SettingsHaveBeenReset, Localization.Resources.Strings.SettingsFileFoundWasCorruptOrNotCompatibleMessage, MessageDialogStyle.Affirmative, settings);
 
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
             }
 
             // Show a note on the first run
@@ -541,11 +541,11 @@ namespace NETworkManager
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
                 // Fix airspace issues
-                ConfigurationManager.Current.FixAirspace = true;
+                ConfigurationManager.Current.IsDialogOpen = true;
 
                 var result = await this.ShowMessageAsync(Localization.Resources.Strings.Confirm, Localization.Resources.Strings.ConfirmCloseMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
 
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
 
                 if (result != MessageDialogResult.Affirmative)
                     return;
@@ -1087,7 +1087,7 @@ namespace NETworkManager
                 var viewModel = new CredentialsPasswordProfileFileViewModel(async instance =>
                 {
                     await this.HideMetroDialogAsync(customDialog);
-                    ConfigurationManager.Current.FixAirspace = false;
+                    ConfigurationManager.Current.IsDialogOpen = false;
 
                     info.Password = instance.Password;
 
@@ -1095,7 +1095,7 @@ namespace NETworkManager
                 }, async instance =>
                 {
                     await this.HideMetroDialogAsync(customDialog);
-                    ConfigurationManager.Current.FixAirspace = false;
+                    ConfigurationManager.Current.IsDialogOpen = false;
 
                     ProfileManager.Unload();
                 }, info.Name, showWrongPassword);
@@ -1105,7 +1105,7 @@ namespace NETworkManager
                     DataContext = viewModel
                 };
 
-                ConfigurationManager.Current.FixAirspace = true;
+                ConfigurationManager.Current.IsDialogOpen = true;
                 await this.ShowMetroDialogAsync(customDialog);
             }
             else
@@ -1138,16 +1138,16 @@ namespace NETworkManager
                 settings.NegativeButtonText = Localization.Resources.Strings.Cancel;
                 settings.DefaultButtonFocus = MessageDialogResult.Affirmative;
 
-                ConfigurationManager.Current.FixAirspace = true;
+                ConfigurationManager.Current.IsDialogOpen = true;
 
                 // ToDo: Improve Message
                 var result = await this.ShowMessageAsync(Localization.Resources.Strings.ProfileCouldNotBeLoaded, Localization.Resources.Strings.ProfileCouldNotBeLoadedMessage, MessageDialogStyle.AffirmativeAndNegative, settings);
 
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
 
                 if (result == MessageDialogResult.Affirmative)
                 {
-                    ExternalProcessStarter.RunProcess("powershell.exe", $"-NoLogo -NoProfile -ExecutionPolicy ByPass -File \"{Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Migrate-Profiles.ps1")}\" -Path \"{ProfileManager.GetProfilesLocation()}\" -NETworkManagerPath \"{ConfigurationManager.Current.ApplicationFullName}\" -NETworkManagerVersion \"{AssemblyManager.Current.Version}\"");
+                    ExternalProcessStarter.RunProcess("powershell.exe", $"-NoLogo -NoProfile -ExecutionPolicy ByPass -File \"{Path.Combine(ConfigurationManager.Current.ExecutionPath, "Resources", "Migrate-Profiles.ps1")}\" -Path \"{ProfileManager.GetProfilesFolderLocation()}\" -NETworkManagerPath \"{ConfigurationManager.Current.ApplicationFullName}\" -NETworkManagerVersion \"{AssemblyManager.Current.Version}\"");
                     CloseApplication();
                 }
             }
@@ -1682,7 +1682,7 @@ namespace NETworkManager
                - Dialog over an embedded window is opened
                - Window is resizing
             */
-            if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.FixAirspace)
+            if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.IsDialogOpen)
                 return;
 
             // Switch by name

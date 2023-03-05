@@ -4029,15 +4029,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Import settings? ähnelt.
-        /// </summary>
-        public static string ImportSettingsQuestion {
-            get {
-                return ResourceManager.GetString("ImportSettingsQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Indigo ähnelt.
         /// </summary>
         public static string Indigo {
@@ -4956,15 +4947,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The destination folder already contains files. If you click Merge, the current profiles are copied to the folder. ähnelt.
-        /// </summary>
-        public static string MergeProfileFilesInDestinationFolderMessage {
-            get {
-                return ResourceManager.GetString("MergeProfileFilesInDestinationFolderMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Message size ähnelt.
         /// </summary>
         public static string MessageSize {
@@ -5668,45 +5650,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Overwrite existing settings file? ähnelt.
-        /// </summary>
-        public static string OverwriteExistingSettingsFileQuestion {
-            get {
-                return ResourceManager.GetString("OverwriteExistingSettingsFileQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Overwrite profiles in destination folder?
-        ///
-        ///&quot;Overwrite&quot; will copy the profile files to the destination folder and overwrite existing profile files.
-        ///&quot;Merge&quot; will copy the profile files to the destination folder, but won&apos;t overwrite exitsting profile files.
-        ///&quot;Use other folder&quot; will use the existing profile files in the destination folder. ähnelt.
-        /// </summary>
-        public static string OverwriteProfilesInDestinationFolderMessage {
-            get {
-                return ResourceManager.GetString("OverwriteProfilesInDestinationFolderMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Overwrite? ähnelt.
         /// </summary>
         public static string OverwriteQuestion {
             get {
                 return ResourceManager.GetString("OverwriteQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Overwrite settings in the destination folder?
-        ///
-        ///&quot;Overwrite&quot; will overwrite the settings file in the destination folder.
-        ///&quot;Use other&quot; will use the existing setting file in the destination folder and restart the application afterwards. ähnelt.
-        /// </summary>
-        public static string OverwriteSettingsInDestinationFolderMessage {
-            get {
-                return ResourceManager.GetString("OverwriteSettingsInDestinationFolderMessage", resourceCulture);
             }
         }
         
@@ -6089,15 +6037,6 @@ namespace NETworkManager.Localization.Resources {
         public static string ProfileEncryptionDisclaimer {
             get {
                 return ResourceManager.GetString("ProfileEncryptionDisclaimer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Profile files will be moved to the selected destination folder. ähnelt.
-        /// </summary>
-        public static string ProfileFilesWillBeMovedMessage {
-            get {
-                return ResourceManager.GetString("ProfileFilesWillBeMovedMessage", resourceCulture);
             }
         }
         
@@ -7615,24 +7554,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select the settings you want to export: ähnelt.
-        /// </summary>
-        public static string SelectTheSettingsYouWantToExport {
-            get {
-                return ResourceManager.GetString("SelectTheSettingsYouWantToExport", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select the settings you want to import: ähnelt.
-        /// </summary>
-        public static string SelectTheSettingsYouWantToImport {
-            get {
-                return ResourceManager.GetString("SelectTheSettingsYouWantToImport", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Send ähnelt.
         /// </summary>
         public static string Send {
@@ -7714,20 +7635,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Settings are overwritten! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The settings will be reset and the application will be restarted afterwards! ähnelt.
         /// </summary>
-        public static string SettingsAreOverwrittenMessage {
+        public static string SettingsAreResetAndApplicationWillBeRestartedMessage {
             get {
-                return ResourceManager.GetString("SettingsAreOverwrittenMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Settings are reset! ähnelt.
-        /// </summary>
-        public static string SettingsAreResetMessage {
-            get {
-                return ResourceManager.GetString("SettingsAreResetMessage", resourceCulture);
+                return ResourceManager.GetString("SettingsAreResetAndApplicationWillBeRestartedMessage", resourceCulture);
             }
         }
         
@@ -7759,33 +7671,6 @@ namespace NETworkManager.Localization.Resources {
         public static string SettingsResetExclamationMark {
             get {
                 return ResourceManager.GetString("SettingsResetExclamationMark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Settings successfully exported! ähnelt.
-        /// </summary>
-        public static string SettingsSuccessfullyExported {
-            get {
-                return ResourceManager.GetString("SettingsSuccessfullyExported", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Settings successfully imported! ähnelt.
-        /// </summary>
-        public static string SettingsSuccessfullyImported {
-            get {
-                return ResourceManager.GetString("SettingsSuccessfullyImported", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Settings successfully reset! ähnelt.
-        /// </summary>
-        public static string SettingsSuccessfullyReset {
-            get {
-                return ResourceManager.GetString("SettingsSuccessfullyReset", resourceCulture);
             }
         }
         
@@ -9167,15 +9052,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Use other folder ähnelt.
-        /// </summary>
-        public static string UseOtherFolder {
-            get {
-                return ResourceManager.GetString("UseOtherFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Use resolver cache ähnelt.
         /// </summary>
         public static string UseResolverCache {
@@ -9367,9 +9243,9 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Could not resolve ip address for hostname! ähnelt.
         /// </summary>
-        public static string WarningMessage_CouldNotResolvIPAddressForHostname {
+        public static string WarningMessage_CouldNotResolveIPAddressForHostname {
             get {
-                return ResourceManager.GetString("WarningMessage_CouldNotResolvIPAddressForHostname", resourceCulture);
+                return ResourceManager.GetString("WarningMessage_CouldNotResolveIPAddressForHostname", resourceCulture);
             }
         }
         

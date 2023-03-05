@@ -34,8 +34,7 @@ namespace NETworkManager.Localization
         /// <returns>Instance of the class.</returns>
         public static LocalizationManager GetInstance(string cultureCode = _defaultCultureCode)
         {
-            if (_instance == null)
-                _instance = new LocalizationManager(cultureCode);
+            _instance ??= new LocalizationManager(cultureCode);
 
             return _instance;
         }

@@ -272,11 +272,11 @@ namespace NETworkManager.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    ConfigurationManager.Current.FixAirspace = true;
+                    ConfigurationManager.Current.IsDialogOpen = true;
 
                     await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", Localization.Resources.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
 
-                    ConfigurationManager.Current.FixAirspace = false;
+                    ConfigurationManager.Current.IsDialogOpen = false;
                 }
             }
         }
@@ -371,7 +371,7 @@ namespace NETworkManager.ViewModels
             var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
 
                 // Create new session info with default settings
                 var sessionInfo = NETworkManager.Profiles.Application.RemoteDesktop.CreateSessionInfo();
@@ -404,7 +404,7 @@ namespace NETworkManager.ViewModels
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
             })
             {
                 Host = host
@@ -415,7 +415,7 @@ namespace NETworkManager.ViewModels
                 DataContext = remoteDesktopConnectViewModel
             };
 
-            ConfigurationManager.Current.FixAirspace = true;
+            ConfigurationManager.Current.IsDialogOpen = true;
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
@@ -444,7 +444,7 @@ namespace NETworkManager.ViewModels
             var remoteDesktopConnectViewModel = new RemoteDesktopConnectViewModel(async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
 
                 if (instance.UseCredentials)
                 {
@@ -457,7 +457,7 @@ namespace NETworkManager.ViewModels
             }, async instance =>
             {
                 await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-                ConfigurationManager.Current.FixAirspace = false;
+                ConfigurationManager.Current.IsDialogOpen = false;
             }, true)
             {
                 // Set name, hostname
@@ -473,7 +473,7 @@ namespace NETworkManager.ViewModels
                 DataContext = remoteDesktopConnectViewModel
             };
 
-            ConfigurationManager.Current.FixAirspace = true;
+            ConfigurationManager.Current.IsDialogOpen = true;
             await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
@@ -570,12 +570,12 @@ namespace NETworkManager.ViewModels
 
         public void OnProfileDialogOpen()
         {
-            ConfigurationManager.Current.FixAirspace = true;
+            ConfigurationManager.Current.IsDialogOpen = true;
         }
 
         public void OnProfileDialogClose()
         {
-            ConfigurationManager.Current.FixAirspace = false;
+            ConfigurationManager.Current.IsDialogOpen = false;
         }
         #endregion
 

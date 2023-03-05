@@ -10,8 +10,6 @@ using NETworkManager.Profiles;
 using NETworkManager.Localization;
 using System.IO;
 using log4net;
-using NETworkManager.Models.Network;
-using System.Collections.ObjectModel;
 
 namespace NETworkManager
 {
@@ -82,16 +80,7 @@ namespace NETworkManager
                 _log.Info($"NETworkManager process with Pid {CommandLineManager.Current.RestartPid} has been exited.");
             }
 
-            // Update integrated settings %LocalAppData%\NETworkManager\NETworkManager_GUID (custom settings path)
-            if (LocalSettingsManager.UpgradeRequired)
-            {
-                _log.Info("Local application settings are being updated...");
-
-                LocalSettingsManager.Upgrade();
-                LocalSettingsManager.UpgradeRequired = false;
-
-                _log.Info("Local application settings have been updated.");
-            }
+            MigrateAppDataToDocuments();
 
             // Load settings
             try
@@ -101,7 +90,7 @@ namespace NETworkManager
                 if (CommandLineManager.Current.ResetSettings)
                     SettingsManager.InitDefault();
                 else
-                    SettingsManager.Load();                
+                    SettingsManager.Load();
             }
             catch (InvalidOperationException ex)
             {
@@ -110,7 +99,7 @@ namespace NETworkManager
 
                 // Create backup of corrupted file
                 var destinationFile = $"{TimestampHelper.GetTimestamp()}_corrupted_" + SettingsManager.GetSettingsFileName();
-                File.Copy(SettingsManager.GetSettingsFilePath(), Path.Combine(SettingsManager.GetSettingsLocation(), destinationFile));
+                File.Copy(SettingsManager.GetSettingsFilePath(), Path.Combine(SettingsManager.GetSettingsFolderLocation(), destinationFile));
                 _log.Info($"A backup of the corrupted settings file has been saved under {destinationFile}");
 
                 // Initialize default application settings
@@ -213,6 +202,101 @@ namespace NETworkManager
             }
         }
 
+        [Obsolete("Temp method to migrate settings and profiles... should be removed after in 2-3 updates.")]
+        private void MigrateAppDataToDocuments()
+        {
+            // Migrate settings and profiles from old paths to new paths
+            if (!ConfigurationManager.Current.IsPortable)
+            {
+                string oldSettingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "NETworkManager", "Settings");
+
+                if (Directory.Exists(oldSettingsPath))
+                {
+                    string oldSettingsFile = Path.Combine(oldSettingsPath, "Settings.xml");
+
+                    var oldSettingsError = false;
+
+                    if (File.Exists(oldSettingsFile))
+                    {
+                        _log.Info($"Migrate settings file from \"{oldSettingsFile}\" to \"{SettingsManager.GetSettingsFilePath()}\"...");                        
+                        Directory.CreateDirectory(SettingsManager.GetSettingsFolderLocation());
+
+                        try
+                        {
+                            File.Move(oldSettingsFile, SettingsManager.GetSettingsFilePath());
+                        }
+                        catch (Exception ex)
+                        {
+                            oldSettingsError = true;
+                            _log.Error("Could not migrate settings file!", ex);
+                        }
+                    }
+
+                    try
+                    {
+                        if (!oldSettingsError)
+                        {
+                            _log.Info($"Delete folder \"{oldSettingsPath}\"...");
+                            Directory.Delete(oldSettingsPath, true);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _log.Error($"Could not delete folder!", ex);
+                    }
+                }
+
+                string oldProfilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "NETworkManager", "Profiles");
+
+                if (Directory.Exists(oldProfilesPath))
+                {
+                    var profileExtensions = new[] { ".xml", ".encrypted" };
+
+                    var oldProfileFilePaths = Directory.EnumerateFiles(oldProfilesPath, "*.*", SearchOption.TopDirectoryOnly)
+                        .Where(f => profileExtensions.Contains(Path.GetExtension(f).ToLowerInvariant()));
+
+                    var oldProfilesError = false;
+
+                    if (oldProfileFilePaths != null && oldProfileFilePaths.Count() > 0)
+                    {
+                        _log.Info($"Migrate \"{oldProfileFilePaths.Count()}\" profile(s)...");
+                        var newProfilesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "NETworkManager", "Profiles");
+                        Directory.CreateDirectory(newProfilesPath);
+
+                        foreach (var oldProfileFilePath in oldProfileFilePaths)
+                        {
+                            var newProfileFilePath = Path.Combine(newProfilesPath, Path.GetFileName(oldProfileFilePath));
+
+                            _log.Info($"Migrate profile file from \"{oldProfileFilePath}\" to \"{newProfileFilePath}\"");
+
+                            try
+                            {
+                                File.Move(oldProfileFilePath, newProfileFilePath);
+                            }
+                            catch (Exception ex)
+                            {
+                                oldProfilesError = true;
+                                _log.Error("Could not migrate profile file!", ex);
+                            }
+                        }
+                    }
+
+                    try
+                    {
+                        if (!oldProfilesError)
+                        {
+                            _log.Info($"Delete folder \"{oldProfilesPath}\"...");
+                            Directory.Delete(oldProfilesPath, true);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _log.Error($"Could not delete folder!", ex);
+                    }
+                }
+            }
+        }
+
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             _log.Info("Run background job...");
@@ -238,7 +322,7 @@ namespace NETworkManager
                 return;
 
             _log.Info("Stop background job (if it exists)...");
-            _dispatcherTimer?.Stop();            
+            _dispatcherTimer?.Stop();
 
             Save();
             _log.Info("Bye!");
@@ -249,13 +333,13 @@ namespace NETworkManager
             if (SettingsManager.Current.SettingsChanged && !ConfigurationManager.Current.DisableSaveSettings)
             {
                 _log.Info("Save application settings...");
-                SettingsManager.Save();                
+                SettingsManager.Save();
             }
 
             if (ProfileManager.ProfilesChanged)
             {
                 _log.Info("Save current profiles...");
-                ProfileManager.Save();                
+                ProfileManager.Save();
             }
         }
     }

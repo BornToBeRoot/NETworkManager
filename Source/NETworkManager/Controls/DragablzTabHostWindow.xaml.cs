@@ -182,11 +182,11 @@ namespace NETworkManager.Controls
                 }
                 catch (Exception ex)
                 {
-                    ConfigurationManager.Current.FixAirspace = true;
+                    ConfigurationManager.Current.IsDialogOpen = true;
 
                     await this.ShowMessageAsync(Localization.Resources.Strings.Error, string.Format("{0}\n\nMessage:\n{1}", NETworkManager.Localization.Resources.Strings.CouldNotSendKeystroke, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog));
 
-                    ConfigurationManager.Current.FixAirspace = false;
+                    ConfigurationManager.Current.IsDialogOpen = false;
                 }
             }
         }
