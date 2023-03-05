@@ -62,37 +62,6 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        private bool _resolveHostnamePreferIPv4;
-        public bool ResolveHostnamePreferIPv4
-        {
-            get => _resolveHostnamePreferIPv4;
-            set
-            {
-                if (value == _resolveHostnamePreferIPv4)
-                    return;
-
-                if (!_isLoading)
-                    SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4 = value;
-
-                _resolveHostnamePreferIPv4 = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _resolveHostnamePreferIPv6;
-        public bool ResolveHostnamePreferIPv6
-        {
-            get => _resolveHostnamePreferIPv6;
-            set
-            {
-                if (value == _resolveHostnamePreferIPv6)
-                    return;
-
-                _resolveHostnamePreferIPv6 = value;
-                OnPropertyChanged();
-            }
-        }
         #endregion
 
         #region Contructor, load settings
@@ -111,11 +80,6 @@ namespace NETworkManager.ViewModels
             WalkMode = WalkModes.First(x => x == SettingsManager.Current.SNMP_WalkMode);
             Timeout = SettingsManager.Current.SNMP_Timeout;
             Port = SettingsManager.Current.SNMP_Port;
-
-            if (SettingsManager.Current.SNMP_ResolveHostnamePreferIPv4)
-                ResolveHostnamePreferIPv4 = true;
-            else
-                ResolveHostnamePreferIPv6 = true;
         }
         #endregion
     }

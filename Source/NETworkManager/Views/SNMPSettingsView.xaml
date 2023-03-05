@@ -15,7 +15,7 @@
         <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="900000" Minimum="100" Interval="100" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Port}" Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="150" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort161}" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
+        <TextBox Width="150" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort161}" Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -24,10 +24,6 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
-        </TextBox>
-        <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
-        <RadioButton Content="{x:Static localization:Strings.IPv4}" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
-        <RadioButton Content="{x:Static localization:Strings.IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" />
+        </TextBox>        
     </StackPanel>
 </UserControl>

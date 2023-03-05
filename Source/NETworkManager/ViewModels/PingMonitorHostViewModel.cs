@@ -367,7 +367,7 @@ namespace NETworkManager.ViewModels
                     {
                         hostname = host;
 
-                        using var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(host, SettingsManager.Current.PingMonitor_ResolveHostnamePreferIPv4);
+                        using var dnsResolverTask = DNSClientHelper.ResolveAorAaaaAsync(host, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
 
                         // Wait for task inside a Parallel.Foreach
                         dnsResolverTask.Wait();

@@ -22,7 +22,6 @@ using NETworkManager.Views;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
-using Amazon.EC2.Model;
 
 namespace NETworkManager.ViewModels
 {
@@ -319,7 +318,7 @@ namespace NETworkManager.ViewModels
             // Try to parse the string into an IP-Address
             if (!IPAddress.TryParse(Host, out var ipAddress))
             {
-                var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.Traceroute_ResolveHostnamePreferIPv4);
+                var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(Host, SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
 
                 if (dnsResult.HasError)
                 {

@@ -20,7 +20,10 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
-        </TextBox>        
+        </TextBox>
+        <TextBlock Style="{StaticResource CenterTextBlock}" Text="{x:Static localization:Strings.PreferredProtocolWhenResolvingHostname}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,0,0,10" />
+        <RadioButton Content="{x:Static localization:Strings.IPv4}" IsChecked="{Binding ResolveHostnamePreferIPv4}" Margin="0,0,0,10" />
+        <RadioButton Content="{x:Static localization:Strings.IPv6}" IsChecked="{Binding ResolveHostnamePreferIPv6}" />
         <!--
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Proxy}" />
         -->

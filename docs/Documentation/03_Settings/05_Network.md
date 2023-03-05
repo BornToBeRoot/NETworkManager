@@ -29,3 +29,16 @@ A semicolon-separated list of IP addresses of DNS servers to be used for DNS que
 **Default:** `Empty`
 
 **Example:** `1.1.1.1; 1.0.0.1`
+
+### Preffered protocol when resolving hostnames:
+
+Set the preferred protocol when resolving hostnames.
+
+**Type:** `Boolean`
+
+**Default:** `IPv4`
+
+**Possible values:**
+
+- `IPv4`
+- `IPv6`

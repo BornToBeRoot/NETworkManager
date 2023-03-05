@@ -4,7 +4,7 @@ namespace NETworkManager.Utilities;
 
 public static class DNSClientHelper
 {
-    public static async Task<DNSClientResultIPAddress> ResolveAorAaaaAsync(string query, bool preferIPv4 = true)
+    public static async Task<DNSClientResultIPAddress> ResolveAorAaaaAsync(string query, bool preferIPv4)
     {
         DNSClientResultIPAddress firstResult = null;
 

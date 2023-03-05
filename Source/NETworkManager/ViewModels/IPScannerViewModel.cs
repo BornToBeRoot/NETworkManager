@@ -451,7 +451,7 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Hosts.Replace(" ", "").Split(';'), _cancellationTokenSource.Token);
+                ipRanges = await HostRangeHelper.ResolveHostnamesInIPRangesAsync(Hosts.Replace(" ", "").Split(';'), SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
