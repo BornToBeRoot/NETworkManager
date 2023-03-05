@@ -348,9 +348,6 @@
   <data name="Settings" xml:space="preserve">
     <value>Configurações</value>
   </data>
-  <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>As configurações foram redefinidas!</value>
-  </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
@@ -990,12 +987,6 @@ Crie um...</value>
   <data name="Override" xml:space="preserve">
     <value>sobrepor</value>
   </data>
-  <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Substituir as configurações na pasta de destino?
-
-"Substituir" substituirá o arquivo de configurações na pasta de destino.
-"Usar outro" usará o arquivo de configurações existente na pasta de destino e reiniciará o aplicativo.</value>
-  </data>
   <data name="Password" xml:space="preserve">
     <value>Senha</value>
   </data>
@@ -1095,18 +1086,6 @@ Crie um...</value>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Selecione uma resolução de tela</value>
   </data>
-  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
-    <value>As configurações foram substituídas!</value>
-  </data>
-  <data name="SettingsAreResetMessage" xml:space="preserve">
-    <value>Configurações redefinidas!</value>
-  </data>
-  <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
-    <value>Selecione as configurações que deseja exportar:</value>
-  </data>
-  <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
-    <value>Selecione as configurações que deseja importar:</value>
-  </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
     <value>Isto irá redefinir todas as configurações!</value>
   </data>
@@ -1125,15 +1104,6 @@ Crie um...</value>
 Um backup do arquivo de configurações foi criado na pasta de configurações e as configurações foram redefinidas.
 
 Os arquivos do perfil não foram afetados!</value>
-  </data>
-  <data name="SettingsSuccessfullyExported" xml:space="preserve">
-    <value>Configurações exportadas com sucesso!</value>
-  </data>
-  <data name="SettingsSuccessfullyImported" xml:space="preserve">
-    <value>Configurações importadas com sucesso!</value>
-  </data>
-  <data name="SettingsSuccessfullyReset" xml:space="preserve">
-    <value>Configurações redefinidas com sucesso!</value>
   </data>
   <data name="ShowClosedPorts" xml:space="preserve">
     <value>Mostrar portas fechadas</value>
@@ -2217,7 +2187,7 @@ $$hostname$$--&gt;Nome do host</value>
   <data name="Restart" xml:space="preserve">
     <value>Reiniciar</value>
   </data>
-  <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
+  <data name="WarningMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
     <value>Não foi possível resolver o endereço IP do nome do host!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
@@ -2378,9 +2348,6 @@ $$hostname$$--&gt;Nome do host</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>O aplicativo será reiniciado...</value>
-  </data>
-  <data name="UseOtherFolder" xml:space="preserve">
-    <value>Usar outra pasta</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Não foi possível exportar o arquivo! Veja a mensagem de erro: "{0}"</value>
@@ -2834,24 +2801,11 @@ Caso contrário, o perfil pode estar corrompido e você pode relatar o problema 
   <data name="Merge" xml:space="preserve">
     <value>Unir</value>
   </data>
-  <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
-    <value>O arquivo de destino ainda contém arquivos. Se você clicar em Unir, os perfis atuais serão copiados para a pasta.</value>
-  </data>
-  <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Substituir perfis na pasta de destino?
-
-"Substituir" copiará os arquivos de perfil para a pasta de destino e substituirá os arquivos de perfil existentes.
-"Unir" copiará os arquivos de perfil para a pasta de destino, mas não substituirá os arquivos de perfil de saída.
-"Usar outra pasta" usará os arquivos de perfil existentes na pasta de destino.</value>
-  </data>
   <data name="UseOther" xml:space="preserve">
     <value>Usar outro</value>
   </data>
   <data name="Move" xml:space="preserve">
     <value>Mover</value>
-  </data>
-  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
-    <value>Os arquivos do perfil serão movidos para a pasta de destino selecionada.</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
     <value>Última verificação às {0}</value>
@@ -3050,17 +3004,11 @@ Habilite a criptografia do arquivo de perfil em Configurações &gt; Perfil para
   <data name="CustomThemes" xml:space="preserve">
     <value>Temas personalizados</value>
   </data>
-  <data name="ImportSettingsQuestion" xml:space="preserve">
-    <value>Importar configurações?</value>
-  </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
     <value>Redefinir configurações?</value>
   </data>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>Configurações redefinidas!</value>
-  </data>
-  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
-    <value>Substituir arquivo de configurações existente?</value>
   </data>
   <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
     <value>Gerenciador de sessão AWS</value>
@@ -3328,5 +3276,11 @@ Se a opção for desativada novamente, os valores não serão mais modificados. 
   </data>
   <data name="Hostkey" xml:space="preserve">
     <value>Hostkey</value>
+  </data>
+  <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
+    <value>As configurações serão redefinidas e o aplicativo será reiniciado em seguida!</value>
+  </data>
+  <data name="SettingsHaveBeenReset" xml:space="preserve">
+    <value>As configurações foram redefinidas!</value>
   </data>
 </root>
