@@ -40,6 +40,7 @@ The profiles and settings are automatically migrated to the new location when th
 - DataGrid Column header design improved [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - DataGrid Columns can now be resized [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - Add text wrapping for status textboxes [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
+- Toggle button added to hide profile list if the profiles are locked [#1991](https://github.com/BornToBeRoot/NETworkManager/pull/1991){:target="\_blank"}
 - Settings > Network
   - Global option added to set the prefered IP protocol (IPv4/IPv6) for DNS resolution. [#1950](https://github.com/BornToBeRoot/NETworkManager/pull/1950){:target="\_blank"}
 - **Network Interface**
