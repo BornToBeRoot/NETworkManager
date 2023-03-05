@@ -35,20 +35,25 @@ And the best part... it's open source!
     </p>
   </div>
   <img alt="NETworkManager" src="Preview.gif" />
-   <p>   
+   <p>
     <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
       <img alt="All releases" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=for-the-badge&logo=github" />
     </a>    
     <a href="https://github.com/BornToBeroot/NETworkManager/releases/latest" target="_blank">
       <img alt="Latest release" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/latest/total.svg?style=for-the-badge&logo=github" />
-    </a>    
+    </a>
+    <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
+      <img alt="Latest pre-release" src="https://img.shields.io/github/downloads-pre/BornToBeroot/NETworkManager/latest/total.svg?label=downloads%40pre-release&style=for-the-badge&logo=github" />
+    </a>
+  </p>
+  <p>
     <a href="https://github.com/BornToBeroot/NETworkManager/stargazers" target="_blank">
       <img alt="GitHub stars" src="https://img.shields.io/github/stars/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
     </a>    
     <a href="https://github.com/BornToBeroot/NETworkManager/network" target="_blank">       
       <img alt="GitHub forks" src="https://img.shields.io/github/forks/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
-    </a>     
-  </p> 
+    </a>
+  </p>
   <p> 
     <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/main">
       <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/main.svg?style=for-the-badge&logo=appveyor&&label=main" />

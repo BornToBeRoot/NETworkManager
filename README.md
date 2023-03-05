@@ -17,7 +17,7 @@
   And the best part... it's open source!
   </p>
   <br />
-  <p>   
+  <p>
     <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
       <img alt="All releases" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=for-the-badge&logo=github" />
     </a>    
@@ -34,8 +34,8 @@
     </a>    
     <a href="https://github.com/BornToBeroot/NETworkManager/network" target="_blank">       
       <img alt="GitHub forks" src="https://img.shields.io/github/forks/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
-    </a>     
-  </p> 
+    </a>
+  </p>
   <p> 
     <a href="https://ci.appveyor.com/project/BornToBeRoot/NETworkManager/branch/main">
       <img alt="AppVeyor" src="https://img.shields.io/appveyor/ci/BornToBeRoot/NETworkManager/main.svg?style=for-the-badge&logo=appveyor&&label=main" />
@@ -111,11 +111,12 @@ You can build the application like any other .NET Core / WPF application on Wind
    - Visual Studio 2019 or later with `.NET desktop development` and `Universal Windows Platform development`
 
 2. (optional) Install [InnoSetup](https://jrsoftware.org/isinfo.php) to create an installer.
-   - Download the additional languages from the [Inno Setup repository](https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/) and copy the following files to `%ProgramFiles%\Inno Setup 6\Languages`:   
-      - `ChineseSimplified.isl`
+
+   - Download the additional languages from the [Inno Setup repository](https://github.com/jrsoftware/issrc/blob/main/Files/Languages/Unofficial/) and copy the following files to `%ProgramFiles%\Inno Setup 6\Languages`:
+     - `ChineseSimplified.isl`
      - `ChineseTraditional.isl`
      - `Hungarian.isl`
-      - `Korean.isl`  
+     - `Korean.isl`
 
 3. Clone or download the repository:
 
@@ -134,4 +135,3 @@ git clone https://github.com/BornToBeRoot/NETworkManager; Set-ExecutionPolicy -S
 ## 📝 License
 
 NETworkManager is published under the [GNU General Public License v3](https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE). The licenses of the used libraries can be found [here](https://github.com/BornToBeRoot/NETworkManager/tree/main/Source/NETworkManager.Documentation/Licenses).
-
