@@ -1087,7 +1087,7 @@ Erstelle eins...</value>
     <value>Wählen Sie eine Bildschirmauflösung</value>
   </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
-    <value>Dadurch werden alle Einstellungen zurückgesetzt!</value>
+    <value>Hierdurch werden alle Einstellungen zurückgesetzt!</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>Seriell</value>
