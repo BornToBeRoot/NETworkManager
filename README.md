@@ -25,8 +25,10 @@
       <img alt="Latest release" src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/latest/total.svg?style=for-the-badge&logo=github" />
     </a>
     <a href="https://github.com/BornToBeroot/NETworkManager/releases" target="_blank">
-      <img alt="Latest pre-release" src="https://img.shields.io/github/downloads-pre/BornToBeroot/NETworkManager/latest/total.svg?style=for-the-badge&logo=github" />
+      <img alt="Latest pre-release" src="https://img.shields.io/github/downloads-pre/BornToBeroot/NETworkManager/latest/total.svg?label=downloads%40pre-release&style=for-the-badge&logo=github" />
     </a>
+  </p>
+  <p>
     <a href="https://github.com/BornToBeroot/NETworkManager/stargazers" target="_blank">
       <img alt="GitHub stars" src="https://img.shields.io/github/stars/BornToBeroot/NETworkManager.svg?style=for-the-badge&logo=github" />
     </a>    
