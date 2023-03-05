@@ -348,9 +348,6 @@
   <data name="Settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
-  <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>Einstellungen wurden zurückgesetzt!</value>
-  </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
@@ -990,12 +987,6 @@ Erstelle eins...</value>
   <data name="Override" xml:space="preserve">
     <value>überschreiben</value>
   </data>
-  <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>Einstellungen im Zielordner überschrieben?
-
-"Überschreiben" überschreibt die Einstellungsdatei im Zielordner.
-"Anderen Ordner verwenden" verwendet die vorhande Einstellungsdatei im Zielordner und startet die Anwendung neu.</value>
-  </data>
   <data name="Password" xml:space="preserve">
     <value>Passwort</value>
   </data>
@@ -1095,18 +1086,6 @@ Erstelle eins...</value>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Wählen Sie eine Bildschirmauflösung</value>
   </data>
-  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
-    <value>Einstellungen werden überschrieben!</value>
-  </data>
-  <data name="SettingsAreResetMessage" xml:space="preserve">
-    <value>Einstellungen werden zurückgesetzt!</value>
-  </data>
-  <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
-    <value>Wählen Sie die Einstellungen aus, die Sie exportieren möchten:</value>
-  </data>
-  <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
-    <value>Wählen Sie die Einstellungen aus, die Sie importieren möchten:</value>
-  </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
     <value>Dadurch werden alle Einstellungen zurückgesetzt!</value>
   </data>
@@ -1125,15 +1104,6 @@ Erstelle eins...</value>
 Es wurde ein Backup der Einstellungsdatei im Einstellungsordner erstellt und die Einstellungen wurden zurückgesetzt.
 
 Profildateien sind nicht betroffen!</value>
-  </data>
-  <data name="SettingsSuccessfullyExported" xml:space="preserve">
-    <value>Einstellungen erfolgreich exportiert!</value>
-  </data>
-  <data name="SettingsSuccessfullyImported" xml:space="preserve">
-    <value>Einstellungen erfolgreich importiert!</value>
-  </data>
-  <data name="SettingsSuccessfullyReset" xml:space="preserve">
-    <value>Einstellungen erfolgreich zurückgesetzt!</value>
   </data>
   <data name="ShowClosedPorts" xml:space="preserve">
     <value>Geschlossene Ports anzeigen</value>
@@ -2217,7 +2187,7 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="Restart" xml:space="preserve">
     <value>Neustart</value>
   </data>
-  <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
+  <data name="WarningMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
     <value>IP-Adresse für Hostname konnte nicht aufgelöst werden!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
@@ -2378,9 +2348,6 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>Die Anwendung wird neu gestartet...</value>
-  </data>
-  <data name="UseOtherFolder" xml:space="preserve">
-    <value>Anderen Ordner verwenden</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Datei konnte nicht exportiert werden! Siehe Fehlermeldung: "{0}"</value>
@@ -2834,24 +2801,11 @@ Ansonsten kann das Profil beschädigt sein und Sie können das Problem auf GitHu
   <data name="Merge" xml:space="preserve">
     <value>Zusammenführen</value>
   </data>
-  <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Der Zielordner enthält bereits Dateien. Wenn Sie auf Zusammenführen klicken, werden die aktuellen Profile in den Ordner kopiert.</value>
-  </data>
-  <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Profile im Zielordner überschreiben?
-
-Mit "Überschreiben" werden die Profildateien in den Zielordner kopiert und die vorhandenen Profildateien überschrieben.
-"Zusammenführen" kopiert die Profildateien in den Zielordner, überschreibt aber nicht die vorhandenen Profildateien.
-Mit "Anderen Ordner verwenden" werden die vorhandenen Profildateien im Zielordner verwendet.</value>
-  </data>
   <data name="UseOther" xml:space="preserve">
     <value>Anderen Verwenden</value>
   </data>
   <data name="Move" xml:space="preserve">
     <value>Verschieben</value>
-  </data>
-  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
-    <value>Die Profildateien werden in den ausgewählten Zielordner verschoben.</value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
     <value>Letzter Scan um {0}</value>
@@ -3050,17 +3004,11 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
   <data name="CustomThemes" xml:space="preserve">
     <value>Benutzerdefinierte Themes</value>
   </data>
-  <data name="ImportSettingsQuestion" xml:space="preserve">
-    <value>Einstellungen importieren?</value>
-  </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
     <value>Einstellungen zurücksetzen?</value>
   </data>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>Einstellungen zurückgesetzt!</value>
-  </data>
-  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
-    <value>Existierende Einstellungsdatei überschreiben?</value>
   </data>
   <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
     <value>AWS Session Manager</value>
@@ -3328,5 +3276,11 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
   </data>
   <data name="Hostkey" xml:space="preserve">
     <value>Hostkey</value>
+  </data>
+  <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
+    <value>Die Einstellungen werden zurückgesetzt und die Anwendung wird anschließend neu gestartet!</value>
+  </data>
+  <data name="SettingsHaveBeenReset" xml:space="preserve">
+    <value>Einstellungen wurden zurückgesetzt!</value>
   </data>
 </root>
