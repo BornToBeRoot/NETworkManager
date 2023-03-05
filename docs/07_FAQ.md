@@ -53,9 +53,6 @@ In addition, some files and settings, as well as the cache, are stored in the fo
 | PuTTY profile       | `HKCU:\Software\SimonTatham\PuTTY\Sessions\NETworkManager`           |
 | WebConsole cache    | `%LocalAppData%\NETworkManager\WebConsole_Cache\*`                   |
 
-{: .note }
-Since version `2022.12.22.0` the local settings are no longer used.
-
 ## How to build the project?
 
 The project can be build with Visual Studio or with a PowerShell script. More details and the requirements can be found in the [README](https://github.com/BornToBeRoot/NETworkManager/blob/main/README.md#-build){:target="\_blank"}.
