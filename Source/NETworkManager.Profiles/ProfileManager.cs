@@ -15,7 +15,7 @@ public static class ProfileManager
 {
     #region Variables
     /// <summary>
-    /// Name of the profiles directory in the %appdata%\NETworkManager or in the portable location.
+    /// Profiles directory name.
     /// </summary>
     private static string ProfilesFolderName => "Profiles";
 
@@ -503,10 +503,10 @@ public static class ProfileManager
 
     #region Serialize and deserialize
     /// <summary>
-    /// 
+    /// Method to serialize a list of groups as <see cref="GroupInfo"/> to an xml file.
     /// </summary>
-    /// <param name="filePath"></param>
-    /// <param name="groups"></param>
+    /// <param name="filePath">Path to an xml file.</param>
+    /// <param name="groups">List of the groups as <see cref="GroupInfo"/> to serialize.</param>
     private static void SerializeToFile(string filePath, List<GroupInfo> groups)
     {
         var xmlSerializer = new XmlSerializer(typeof(List<GroupInfoSerializable>));
@@ -517,10 +517,10 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// 
+    /// Method to serialize a list of groups as <see cref="GroupInfo"/> to a byte array.
     /// </summary>
-    /// <param name="groups"></param>
-    /// <returns></returns>
+    /// <param name="groups">List of the groups as <see cref="GroupInfo"/> to serialize.</param>
+    /// <returns>Serialized list of groups as <see cref="GroupInfo"/> as byte array.</returns>
     private static byte[] SerializeToByteArray(List<GroupInfo> groups)
     {
         var xmlSerializer = new XmlSerializer(typeof(List<GroupInfoSerializable>));
@@ -535,10 +535,10 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// 
+    /// Method to serialize a list of groups as <see cref="GroupInfo"/>.
     /// </summary>
-    /// <param name="groups"></param>
-    /// <returns></returns>
+    /// <param name="groups">List of the groups as <see cref="GroupInfo"/> to serialize.</param>
+    /// <returns>Serialized list of groups as <see cref="GroupInfoSerializable"/>.</returns>
     private static List<GroupInfoSerializable> SerializeGroup(List<GroupInfo> groups)
     {
         List<GroupInfoSerializable> groupsSerializable = new();
@@ -583,10 +583,10 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// 
+    /// Method to deserialize a list of groups as <see cref="GroupInfo"/> from an xml file.
     /// </summary>
-    /// <param name="filePath">Path of an XML file.</param>
-    /// <returns>List of <see cref="GroupInfo"/>.</returns>
+    /// <param name="filePath">Path to an xml file.</param>
+    /// <returns>List of groups as <see cref="GroupInfo"/>.</returns>
     private static List<GroupInfo> DeserializeFromFile(string filePath)
     {
         using FileStream fileStream = new(filePath, FileMode.Open);
@@ -595,10 +595,10 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// 
+    /// Method to deserialize a list of groups as <see cref="GroupInfo"/> from a byte array.
     /// </summary>
-    /// <param name="xml">XML as <see cref="Byte"/> Array.</param>
-    /// <returns>List of <see cref="GroupInfo"/>.</returns>
+    /// <param name="xml">Serialized list of groups as <see cref="GroupInfo"/> as byte array.</param>
+    /// <returns>List of groups as <see cref="GroupInfo"/>.</returns>
     private static List<GroupInfo> DeserializeFromByteArray(byte[] xml)
     {
         using MemoryStream memoryStream = new(xml);
@@ -607,10 +607,10 @@ public static class ProfileManager
     }
 
     /// <summary>
-    /// 
+    /// Method to deserialize a list of groups as <see cref="GroupInfo"/>.
     /// </summary>
-    /// <param name="stream"></param>
-    /// <returns></returns>
+    /// <param name="stream">Stream to deserialize.</param>
+    /// <returns>List of groups as <see cref="GroupInfo"/>.</returns>
     private static List<GroupInfo> DeserializeGroup(Stream stream)
     {
         List<GroupInfo> groups = new();
