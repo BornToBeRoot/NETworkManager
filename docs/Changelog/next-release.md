@@ -20,7 +20,11 @@ Release date: **xx.xx.2023**
 New Feature
 {: .label .label-green }
 
+Breaking Change
+{: .label .label-red }
+
 - **SNTP Lookup** [#1821](https://github.com/BornToBeRoot/NETworkManager/pull/1821){:target="\_blank"} (See [documentation](https://borntoberoot.net/NETworkManager/Documentation/Application/SNTPLookup){:target="\_blank"} for more details)
+- Profiles and settings are now saved in the `%UserProfile%\Documents\NETworkManager` folder instead of the `%AppData%\NETworkManager` folder. If folder redirection is set up (e.g. OneDrive, Group Policy, etc.). The profiles and settings (files) are automatically transferred to other devices and may be automatically backed up depending on your configuration. I hope this will provide better support for virtual environments / terminal servers. [#1984](https://github.com/BornToBeRoot/NETworkManager/pull/1984){:target="\_blank"}
 
 ## Improvements
 

@@ -21,6 +21,18 @@ You can run the archive and portable version from anywhere.
 
 Profiles, settings and themes are stored in the following folders:
 
+\> 2022.12.22.0
+{: .label .label-purple }
+
+| File(s)  | Setup or Archiv                                     | Portable                  |
+| -------- | --------------------------------------------------- | ------------------------- |
+| Profiles | `%UserProfile%\Documents\NETworkManager\Profiles\*` | `<APP_FOLDER>\Profiles\*` |
+| Settings | `%UserProfile%\Documents\NETworkManager\Settings\*` | `<APP_FOLDER>\Settings\*` |
+| Themes   | `<APP_FOLDER>\Themes\*`                             | `<APP_FOLDER>\Themes\*`   |
+
+<= 2022.12.22.0
+{: .label .label-purple }
+
 | File(s)  | Setup or Archiv                       | Portable                  |
 | -------- | ------------------------------------- | ------------------------- |
 | Profiles | `%AppData%\NETworkManager\Profiles\*` | `<APP_FOLDER>\Profiles\*` |
@@ -30,7 +42,7 @@ Profiles, settings and themes are stored in the following folders:
 {: .note }
 It is recommended to backup the above files on a regular basis.
 
-In addition, files are stored at the following locations:
+In addition, some files and settings, as well as the cache, are stored in the following locations:
 
 | File(s)             | Setup, Archiv and Portable                                           |
 | ------------------- | -------------------------------------------------------------------- |
