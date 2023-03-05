@@ -39,7 +39,9 @@ The profiles and settings are automatically migrated to the new location when th
   - Show password dialog again if the password is not correct [#1962](https://github.com/BornToBeRoot/NETworkManager/pull/1962){:target="\_blank"}
 - DataGrid Column header design improved [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - DataGrid Columns can now be resized [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
-- Add text wrapping for status textboxes [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
+- Add text wrapping for status textboxes [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
+- Settings > Network
+  - Global option added to set the prefered IP protocol (IPv4/IPv6) for DNS resolution. [#1950](https://github.com/BornToBeRoot/NETworkManager/pull/1950){:target="\_blank"}
 - **Network Interface**
   - Release & Renew button now targets the selected interface instead of all interfaces [#1982](https://github.com/BornToBeRoot/NETworkManager/pull/1982){:target="\_blank"}
   - Release & Renew button now supports IPv6 [#1982](https://github.com/BornToBeRoot/NETworkManager/pull/1982){:target="\_blank"}  
@@ -48,23 +50,28 @@ The profiles and settings are automatically migrated to the new location when th
 - **IP Scanner**
   - Max threads changed to to 1024 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
   - Event handling when a host is found, user has canceled, etc. [#1969](https://github.com/BornToBeRoot/NETworkManager/pull/1969){:target="\_blank"}
-- **Port Scanner**
-  - New Port state "Timed out" if the timelimit is reached. [#1969](https://github.com/BornToBeRoot/NETworkManager/pull/1969){:target="\_blank"}
+  - Remove option to set the preferred IP protocol for DNS resolution (can now be set globally) [#1950](https://github.com/BornToBeRoot/NETworkManager/pull/1950){:target="\_blank"}
 - **Port Scanner**
   - Add new port profiles / improve existing ones [#1909](https://github.com/BornToBeRoot/NETworkManager/pull/1909){:target="\_blank"}
+  - New Port state "Timed out" if the timelimit is reached. [#1969](https://github.com/BornToBeRoot/NETworkManager/pull/1969){:target="\_blank"}
   - Select multiple port profiles with `Ctrl` or holding left mouse button [#1979](https://github.com/BornToBeRoot/NETworkManager/pull/1979){:target="\_blank"}
+  - Remove option to set the preferred IP protocol for DNS resolution (can now be set globally) [#1950](https://github.com/BornToBeRoot/NETworkManager/pull/1950){:target="\_blank"}
   - Max host threads changed to to 256 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
   - Max port threads changed to to 1024 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
-- **Ping**
+- **Ping Monitor**
   - Allow multiple hosts like `server-01; 1.1.1.1; example.com` as input [#1933](https://github.com/BornToBeRoot/NETworkManager/pull/1933){:target="\_blank"}
   - Use a fixed size for the view [#1933](https://github.com/BornToBeRoot/NETworkManager/pull/1933){:target="\_blank"}
+  - Remove option to set the preferred IP protocol for DNS resolution (can now be set globally) [#1950](https://github.com/BornToBeRoot/NETworkManager/pull/1950){:target="\_blank"}
 - **Traceroute**
   - Add more validation (host, ip address) to input [#1932](https://github.com/BornToBeRoot/NETworkManager/pull/1932){:target="\_blank"}
+  - Remove option to set the preferred IP protocol for DNS resolution (can now be set globally) [#1950](https://github.com/BornToBeRoot/NETworkManager/pull/1950){:target="\_blank"}
 - **DNS Lookup**
   - Improve overall DNS lookup performance with multiple DNS servers and hosts [#1940](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"}
   - New dialog to add/edit DNS servers [#1960](https://github.com/BornToBeRoot/NETworkManager/pull/1960){:target="\_blank"}
 - **PuTTY**
   - Parameter `-hostkey` is now supported and can be configured in the profile. Multiple hostkeys can be separated by a comma. [#1977](https://github.com/BornToBeRoot/NETworkManager/pull/1977){:target="\_blank"}
+- **SNMP**
+  - Remove option to set the preferred IP protocol for DNS resolution (can now be set globally) [#1950](https://github.com/BornToBeRoot/NETworkManager/pull/1950){:target="\_blank"}
 
 ## Bugfixes
 
