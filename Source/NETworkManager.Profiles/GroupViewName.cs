@@ -1,12 +1,11 @@
-﻿namespace NETworkManager.Profiles
+﻿namespace NETworkManager.Profiles;
+
+public enum GroupViewName
 {
-    public enum GroupViewName
-    {
-        General,
-        RemoteDesktop,
-        PowerShell,
-        PuTTY,
-        AWSSessionManager,
-        TigerVNC
-    }
+    General,
+    RemoteDesktop,
+    PowerShell,
+    PuTTY,
+    AWSSessionManager,
+    TigerVNC
 }

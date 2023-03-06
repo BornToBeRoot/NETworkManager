@@ -1,8 +1,7 @@
-﻿namespace NETworkManager.Profiles
+﻿namespace NETworkManager.Profiles;
+
+public enum GroupEditMode
 {
-    public enum GroupEditMode
-    {
-        Add,
-        Edit
-    }
+    Add,
+    Edit
 }

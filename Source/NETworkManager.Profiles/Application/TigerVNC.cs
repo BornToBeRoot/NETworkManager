@@ -2,21 +2,20 @@
 using NETworkManager.Models.TigerVNC;
 using NETworkManager.Settings;
 
-namespace NETworkManager.Profiles.Application
+namespace NETworkManager.Profiles.Application;
+
+public static class TigerVNC
 {
-    public static class TigerVNC
+    public static TigerVNCSessionInfo CreateSessionInfo(ProfileInfo profile)
     {
-        public static TigerVNCSessionInfo CreateSessionInfo(ProfileInfo profile)
+        // Get group info
+        GroupInfo group = ProfileManager.GetGroup(profile.Group);
+
+        return new TigerVNCSessionInfo
         {
-            // Get group info
-            GroupInfo group = ProfileManager.GetGroup(profile.Group);
+            Host = profile.TigerVNC_Host,
 
-            return new TigerVNCSessionInfo
-            {
-                Host = profile.TigerVNC_Host,
-
-                Port = profile.TigerVNC_OverridePort ? profile.TigerVNC_Port : (group.TigerVNC_OverridePort ? group.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port)
-            };
-        }
+            Port = profile.TigerVNC_OverridePort ? profile.TigerVNC_Port : (group.TigerVNC_OverridePort ? group.TigerVNC_Port : SettingsManager.Current.TigerVNC_Port)
+        };
     }
 }

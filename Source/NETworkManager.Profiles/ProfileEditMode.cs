@@ -1,9 +1,8 @@
-﻿namespace NETworkManager.Profiles
+﻿namespace NETworkManager.Profiles;
+
+public enum ProfileEditMode
 {
-    public enum ProfileEditMode
-    {
-        Add,
-        Edit,
-        Copy
-    }
+    Add,
+    Edit,
+    Copy
 }

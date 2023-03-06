@@ -1,30 +1,29 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace NETworkManager.Profiles
+namespace NETworkManager.Profiles;
+
+public class ProfileViewInfo
 {
-    public class ProfileViewInfo
+    public ProfileViewName Name { get; set; }
+
+    public Canvas Icon { get; set; }
+
+    public ProfileViewInfo()
     {
-        public ProfileViewName Name { get; set; }
+    }
 
-        public Canvas Icon { get; set; }
+    public ProfileViewInfo(ProfileViewName name, Canvas icon)
+    {
+        Name = name;
+        Icon = icon;
+    }
 
-        public ProfileViewInfo()
-        {
-        }
-
-        public ProfileViewInfo(ProfileViewName name, Canvas icon)
-        {
-            Name = name;
-            Icon = icon;
-        }
-
-        public ProfileViewInfo(ProfileViewName name, UIElement uiElement)
-        {
-            Name = name;
-            var canvas = new Canvas();
-            canvas.Children.Add(uiElement);
-            Icon = canvas;
-        }
+    public ProfileViewInfo(ProfileViewName name, UIElement uiElement)
+    {
+        Name = name;
+        var canvas = new Canvas();
+        canvas.Children.Add(uiElement);
+        Icon = canvas;
     }
 }
