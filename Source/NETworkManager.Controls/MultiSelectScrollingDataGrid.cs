@@ -3,39 +3,38 @@ using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace NETworkManager.Controls
+namespace NETworkManager.Controls;
+
+public class MultiSelectScrollingDataGrid : DataGrid
 {
-    public class MultiSelectScrollingDataGrid : DataGrid
+    public MultiSelectScrollingDataGrid()
     {
-        public MultiSelectScrollingDataGrid()
-        {
-            SelectionChanged += DataGridMultiItemSelect_SelectionChanged;
-        }
+        SelectionChanged += DataGridMultiItemSelect_SelectionChanged;
+    }
 
-        private void DataGridMultiItemSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SelectedItemsList = SelectedItems;
-        }
+    private void DataGridMultiItemSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        SelectedItemsList = SelectedItems;
+    }
 
-        public IList SelectedItemsList
-        {
-            get => (IList)GetValue(SelectedItemsListProperty);
-            set => SetValue(SelectedItemsListProperty, value);
-        }
+    public IList SelectedItemsList
+    {
+        get => (IList)GetValue(SelectedItemsListProperty);
+        set => SetValue(SelectedItemsListProperty, value);
+    }
 
-        public static readonly DependencyProperty SelectedItemsListProperty = DependencyProperty.Register("SelectedItemsList", typeof(IList), typeof(MultiSelectScrollingDataGrid), new PropertyMetadata(null));
+    public static readonly DependencyProperty SelectedItemsListProperty = DependencyProperty.Register("SelectedItemsList", typeof(IList), typeof(MultiSelectScrollingDataGrid), new PropertyMetadata(null));
 
-        protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems == null)
-                return;
+    protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
+    {
+        if (e.NewItems == null)
+            return;
 
-            var newItemCount = e.NewItems.Count;
+        var newItemCount = e.NewItems.Count;
 
-            if (newItemCount > 0)
-                ScrollIntoView(e.NewItems[newItemCount - 1]);
+        if (newItemCount > 0)
+            ScrollIntoView(e.NewItems[newItemCount - 1]);
 
-            base.OnItemsChanged(e);
-        }
+        base.OnItemsChanged(e);
     }
 }
