@@ -1,25 +1,24 @@
 ﻿using NETworkManager.ViewModels;
 
-namespace NETworkManager.Views
+namespace NETworkManager.Views;
+
+public partial class LookupHostView
 {
-    public partial class LookupHostView
+    private readonly LookupHostViewModel _viewModel = new();
+
+    public LookupHostView()
     {
-        private readonly LookupHostViewModel _viewModel = new();
+        InitializeComponent();
+        DataContext = _viewModel;
+    }
 
-        public LookupHostView()
-        {
-            InitializeComponent();
-            DataContext = _viewModel;
-        }
+    public void OnViewHide()
+    {
+        _viewModel.OnViewHide();
+    }
 
-        public void OnViewHide()
-        {
-            _viewModel.OnViewHide();
-        }
-
-        public void OnViewVisible()
-        {
-            _viewModel.OnViewVisible();
-        }
+    public void OnViewVisible()
+    {
+        _viewModel.OnViewVisible();
     }
 }

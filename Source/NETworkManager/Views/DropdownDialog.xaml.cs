@@ -1,15 +1,14 @@
-﻿namespace NETworkManager.Views
+﻿namespace NETworkManager.Views;
+
+public partial class DropdownDialog
 {
-    public partial class DropdownDialog
+    public DropdownDialog()
     {
-        public DropdownDialog()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
+    private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    {
 
-        }
     }
 }

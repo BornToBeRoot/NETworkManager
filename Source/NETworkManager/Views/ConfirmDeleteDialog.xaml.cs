@@ -1,10 +1,9 @@
-﻿namespace NETworkManager.Views
+﻿namespace NETworkManager.Views;
+
+public partial class ConfirmDeleteDialog
 {
-    public partial class ConfirmDeleteDialog
+    public ConfirmDeleteDialog()
     {
-        public ConfirmDeleteDialog()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

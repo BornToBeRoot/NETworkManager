@@ -1,15 +1,14 @@
 ﻿using NETworkManager.ViewModels;
 
-namespace NETworkManager.Views
-{
-    public partial class SettingsHotKeysView
-    {
-        private readonly SettingsHotKeysViewModel _viewModel = new SettingsHotKeysViewModel();
+namespace NETworkManager.Views;
 
-        public SettingsHotKeysView()
-        {
-            InitializeComponent();
-            DataContext = _viewModel;
-        }
+public partial class SettingsHotKeysView
+{
+    private readonly SettingsHotKeysViewModel _viewModel = new SettingsHotKeysViewModel();
+
+    public SettingsHotKeysView()
+    {
+        InitializeComponent();
+        DataContext = _viewModel;
     }
 }

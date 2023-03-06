@@ -1,16 +1,15 @@
-﻿namespace NETworkManager.Views
-{
-    public partial class IPAddressDialog
-    {
-        public IPAddressDialog()
-        {
-            InitializeComponent();
-        }
+﻿namespace NETworkManager.Views;
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            // Need to be in loaded event, focusmanger won't work...
-            TextBoxIPAddress.Focus();
-        }
+public partial class IPAddressDialog
+{
+    public IPAddressDialog()
+    {
+        InitializeComponent();
+    }
+
+    private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    {
+        // Need to be in loaded event, focusmanger won't work...
+        TextBoxIPAddress.Focus();
     }
 }

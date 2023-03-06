@@ -2,22 +2,21 @@
 using System.Windows.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
-namespace NETworkManager.Views
+namespace NETworkManager.Views;
+
+public partial class LookupPortLookupView
 {
-    public partial class LookupPortLookupView
+    private readonly LookupPortLookupViewModel _viewModel = new LookupPortLookupViewModel(DialogCoordinator.Instance);
+
+    public LookupPortLookupView()
     {
-        private readonly LookupPortLookupViewModel _viewModel = new LookupPortLookupViewModel(DialogCoordinator.Instance);
+        InitializeComponent();
+        DataContext = _viewModel;
+    }
 
-        public LookupPortLookupView()
-        {
-            InitializeComponent();
-            DataContext = _viewModel;
-        }
-
-        private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (sender is ContextMenu menu)
-                menu.DataContext = _viewModel;
-        }
+    private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+    {
+        if (sender is ContextMenu menu)
+            menu.DataContext = _viewModel;
     }
 }

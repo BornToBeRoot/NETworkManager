@@ -1,10 +1,9 @@
-﻿namespace NETworkManager.Views
+﻿namespace NETworkManager.Views;
+
+public partial class FirstRunDialog
 {
-    public partial class FirstRunDialog
+    public FirstRunDialog()
     {
-        public FirstRunDialog()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

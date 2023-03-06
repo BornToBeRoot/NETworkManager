@@ -2,33 +2,32 @@
 using NETworkManager.ViewModels;
 using System.Windows;
 
-namespace NETworkManager.Views
+namespace NETworkManager.Views;
+
+public partial class PowerShellSettingsView
 {
-    public partial class PowerShellSettingsView
+    private readonly PowerShellSettingsViewModel _viewModel = new PowerShellSettingsViewModel(DialogCoordinator.Instance);
+
+    public PowerShellSettingsView()
     {
-        private readonly PowerShellSettingsViewModel _viewModel = new PowerShellSettingsViewModel(DialogCoordinator.Instance);
+        InitializeComponent();
+        DataContext = _viewModel;
+    }
 
-        public PowerShellSettingsView()
-        {
-            InitializeComponent();
-            DataContext = _viewModel;
-        }
+    private void TextBoxApplicationFilePath_Drop(object sender, DragEventArgs e)
+    {
+        if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+            return;
 
-        private void TextBoxApplicationFilePath_Drop(object sender, DragEventArgs e)
-        {
-            if (!e.Data.GetDataPresent(DataFormats.FileDrop))
-                return;
+        var files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+        if (files != null)
+            _viewModel.SetFilePathFromDragDrop(files[0]);
+    }
 
-            if (files != null)
-                _viewModel.SetFilePathFromDragDrop(files[0]);
-        }
-
-        private void TextBoxApplicationFilePath_PreviewDragOver(object sender, DragEventArgs e)
-        {
-            e.Effects = DragDropEffects.Copy;
-            e.Handled = true;
-        }
+    private void TextBoxApplicationFilePath_PreviewDragOver(object sender, DragEventArgs e)
+    {
+        e.Effects = DragDropEffects.Copy;
+        e.Handled = true;
     }
 }

@@ -2,32 +2,31 @@
 using NETworkManager.ViewModels;
 using MahApps.Metro.Controls.Dialogs;
 
-namespace NETworkManager.Views
+namespace NETworkManager.Views;
+
+public partial class ARPTableView
 {
-    public partial class ARPTableView
+    private readonly ARPTableViewModel _viewModel = new ARPTableViewModel(DialogCoordinator.Instance);
+
+    public ARPTableView()
     {
-        private readonly ARPTableViewModel _viewModel = new ARPTableViewModel(DialogCoordinator.Instance);
+        InitializeComponent();
+        DataContext = _viewModel;
+    }
 
-        public ARPTableView()
-        {
-            InitializeComponent();
-            DataContext = _viewModel;
-        }
+    private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+    {
+        if (sender is ContextMenu menu)
+            menu.DataContext = _viewModel;
+    }
 
-        private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (sender is ContextMenu menu)
-                menu.DataContext = _viewModel;
-        }
+    public void OnViewHide()
+    {
+        _viewModel.OnViewHide();
+    }
 
-        public void OnViewHide()
-        {
-            _viewModel.OnViewHide();
-        }
-
-        public void OnViewVisible()
-        {
-            _viewModel.OnViewVisible();
-        }
+    public void OnViewVisible()
+    {
+        _viewModel.OnViewVisible();
     }
 }

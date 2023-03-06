@@ -1,34 +1,33 @@
 ﻿using System.Windows.Input;
 using NETworkManager.ViewModels;
 
-namespace NETworkManager.Views
+namespace NETworkManager.Views;
+
+public partial class SettingsGeneralView
 {
-    public partial class SettingsGeneralView
+    private readonly SettingsGeneralViewModel _viewModel = new SettingsGeneralViewModel();
+
+    public SettingsGeneralView()
     {
-        private readonly SettingsGeneralViewModel _viewModel = new SettingsGeneralViewModel();
+        InitializeComponent();
+        DataContext = _viewModel;
+    }
 
-        public SettingsGeneralView()
-        {
-            InitializeComponent();
-            DataContext = _viewModel;
-        }
+    private void ListBoxVisibleToHide_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if(!_viewModel.IsVisibleToHideApplicationEnabled)
+            return;
 
-        private void ListBoxVisibleToHide_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if(!_viewModel.IsVisibleToHideApplicationEnabled)
-                return;
+        if (e.ChangedButton == MouseButton.Left)
+            _viewModel.VisibleToHideApplicationCommand.Execute(null);
+    }
 
-            if (e.ChangedButton == MouseButton.Left)
-                _viewModel.VisibleToHideApplicationCommand.Execute(null);
-        }
+    private void ListBoxHideToVisible_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (!_viewModel.IsHideToVisibleApplicationEnabled)
+            return;
 
-        private void ListBoxHideToVisible_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (!_viewModel.IsHideToVisibleApplicationEnabled)
-                return;
-
-            if (e.ChangedButton == MouseButton.Left)
-                _viewModel.HideToVisibleApplicationCommand.Execute(null);
-        }
+        if (e.ChangedButton == MouseButton.Left)
+            _viewModel.HideToVisibleApplicationCommand.Execute(null);
     }
 }

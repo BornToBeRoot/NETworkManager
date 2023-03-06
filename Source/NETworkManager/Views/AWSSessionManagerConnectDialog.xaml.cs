@@ -1,16 +1,15 @@
-﻿namespace NETworkManager.Views
-{
-    public partial class AWSSessionManagerConnectDialog
-    {
-        public AWSSessionManagerConnectDialog()
-        {
-            InitializeComponent();
-        }
+﻿namespace NETworkManager.Views;
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            // Need to be in loaded event, focusmanger won't work...
-            ComboBoxInstanceID.Focus();
-        }
+public partial class AWSSessionManagerConnectDialog
+{
+    public AWSSessionManagerConnectDialog()
+    {
+        InitializeComponent();
+    }
+
+    private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    {
+        // Need to be in loaded event, focusmanger won't work...
+        ComboBoxInstanceID.Focus();
     }
 }
