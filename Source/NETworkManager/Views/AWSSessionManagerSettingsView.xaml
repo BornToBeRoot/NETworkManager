@@ -176,7 +176,7 @@
             <TextBox Width="250" HorizontalAlignment="Left" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleAWSRegion}" Style="{StaticResource DefaultTextBox}">
                 <TextBox.Text>
                     <Binding Path="DefaultRegion" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
+                        <Binding.ValidationRules>                            
                             <validators:EmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>

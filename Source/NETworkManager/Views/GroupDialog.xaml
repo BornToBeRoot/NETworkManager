@@ -520,6 +520,7 @@
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                                 <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
@@ -530,6 +531,7 @@
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_PrivateKeyFile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                                 <validators:FileExistsValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
@@ -615,7 +617,8 @@
                                     <TextBox.Text>
                                         <Binding Path="AWSSessionManager_Region" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validators:EmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:AWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>

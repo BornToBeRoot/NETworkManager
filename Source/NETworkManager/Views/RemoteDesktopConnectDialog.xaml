@@ -85,6 +85,7 @@
                     <Binding Path="Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

@@ -33,12 +33,12 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Host}" />
-            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}" Style="{StaticResource EditableComboBox}">
+            <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="0" ItemsSource="{Binding HostHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}" Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
                     <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                            <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
+                            <validators:IPAddressOrHostnameValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </ComboBox.Text>

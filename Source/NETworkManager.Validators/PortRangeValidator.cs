@@ -14,7 +14,7 @@ public class PortRangeValidator : ValidationRule
 
         foreach (var portOrRange in ((string)value).Replace(" ", "").Split(';'))
         {
-            if (portOrRange.Contains("-"))
+            if (portOrRange.Contains('-'))
             {
                 var portRange = portOrRange.Split('-');
 
