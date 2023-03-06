@@ -3,11 +3,9 @@ using System.Windows.Input;
 
 namespace NETworkManager.Profiles
 {
-    public interface IProfileManager
+    public interface IProfileManager : IProfileManagerMinimal
     {
-        ICollectionView Profiles { get; }
-        void OnProfileDialogOpen();
-        void OnProfileDialogClose();
+        ICollectionView Profiles { get; }       
         ICommand AddProfileCommand { get; }
         ICommand EditProfileCommand { get; }
         ICommand CopyAsProfileCommand { get; }

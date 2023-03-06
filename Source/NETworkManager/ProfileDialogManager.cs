@@ -14,11 +14,11 @@ namespace NETworkManager;
 public static class ProfileDialogManager
 {
     #region Variables
-    private static string DialogResourceKey = "LargeMetroDialog";
+    private static string DialogResourceKey => "LargeMetroDialog";
     #endregion
 
     #region Dialog to add, edit, copy as and delete profile
-    public static async Task ShowAddProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, string group = null, ApplicationName applicationName = ApplicationName.None)
+    public static async Task ShowAddProfileDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile = null, string group = null, ApplicationName applicationName = ApplicationName.None)
     {
         CustomDialog customDialog = new()
         {
@@ -36,7 +36,7 @@ public static class ProfileDialogManager
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
             viewModel.OnProfileDialogClose();
-        }, ProfileManager.GetGroupNames(), group, ProfileEditMode.Add, null, applicationName);
+        }, ProfileManager.GetGroupNames(), group, ProfileEditMode.Add, profile, applicationName);
 
         customDialog.Content = new ProfileDialog
         {
@@ -48,7 +48,7 @@ public static class ProfileDialogManager
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowEditProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile)
+    public static async Task ShowEditProfileDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile)
     {
         CustomDialog customDialog = new()
         {
@@ -77,7 +77,7 @@ public static class ProfileDialogManager
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowCopyAsProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile)
+    public static async Task ShowCopyAsProfileDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator, ProfileInfo profile)
     {
         CustomDialog customDialog = new()
         {
@@ -106,7 +106,7 @@ public static class ProfileDialogManager
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowDeleteProfileDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, IList<ProfileInfo> profiles)
+    public static async Task ShowDeleteProfileDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator, IList<ProfileInfo> profiles)
     {
         CustomDialog customDialog = new()
         {
@@ -137,7 +137,7 @@ public static class ProfileDialogManager
     #endregion
 
     #region Dialog to add, edit and delete group        
-    public static async Task ShowAddGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator)
+    public static async Task ShowAddGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator)
     {
         CustomDialog customDialog = new()
         {
@@ -166,7 +166,7 @@ public static class ProfileDialogManager
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowEditGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, GroupInfo group)
+    public static async Task ShowEditGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator, GroupInfo group)
     {
         CustomDialog customDialog = new()
         {
@@ -195,7 +195,7 @@ public static class ProfileDialogManager
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
-    public static async Task ShowDeleteGroupDialog(IProfileManager viewModel, IDialogCoordinator dialogCoordinator, GroupInfo group)
+    public static async Task ShowDeleteGroupDialog(IProfileManagerMinimal viewModel, IDialogCoordinator dialogCoordinator, GroupInfo group)
     {
         CustomDialog customDialog = new()
         {
