@@ -2,21 +2,20 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace NETworkManager.Converters
+namespace NETworkManager.Converters;
+
+public sealed class WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter : IValueConverter
 {
-    public sealed class WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is not double networkRssiInDecibelMilliwatts)
-                return "-/-";
+        if (value is not double networkRssiInDecibelMilliwatts)
+            return "-/-";
 
-            return $"{networkRssiInDecibelMilliwatts} dBm";
-        }
+        return $"{networkRssiInDecibelMilliwatts} dBm";
+    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

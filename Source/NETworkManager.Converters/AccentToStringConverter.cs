@@ -4,41 +4,40 @@ using System.Windows.Data;
 using NETworkManager.Localization.Translators;
 using NETworkManager.Models.Appearance;
 
-namespace NETworkManager.Converters
+namespace NETworkManager.Converters;
+
+/// <summary>
+/// Convert <see cref="AccentColorInfo"/> to translated <see cref="string"/> or wise versa.
+/// </summary>
+public sealed class AccentToStringConverter : IValueConverter
 {
+
     /// <summary>
-    /// Convert <see cref="AccentColorInfo"/> to translated <see cref="string"/> or wise versa.
+    /// Convert <see cref="AccentColorInfo"/> to translated <see cref="string"/>. 
     /// </summary>
-    public sealed class AccentToStringConverter : IValueConverter
+    /// <param name="value">Object from type <see cref="AccentColorInfo"/>.</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns>Translated <see cref="AccentColorInfo"/>.</returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
+        if (!(value is string accent))
+            return "-/-";
 
-        /// <summary>
-        /// Convert <see cref="AccentColorInfo"/> to translated <see cref="string"/>. 
-        /// </summary>
-        /// <param name="value">Object from type <see cref="AccentColorInfo"/>.</param>
-        /// <param name="targetType"></param>
-        /// <param name="parameter"></param>
-        /// <param name="culture"></param>
-        /// <returns>Translated <see cref="AccentColorInfo"/>.</returns>
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (!(value is string accent))
-                return "-/-";
+        return AccentTranslator.GetInstance().Translate(accent);
+    }
 
-            return AccentTranslator.GetInstance().Translate(accent);
-        }
-
-        /// <summary>
-        /// !!! Method not implemented !!!
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="targetType"></param>
-        /// <param name="parameter"></param>
-        /// <param name="culture"></param>
-        /// <returns></returns>
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+    /// <summary>
+    /// !!! Method not implemented !!!
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

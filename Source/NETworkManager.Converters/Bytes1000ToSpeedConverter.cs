@@ -2,30 +2,29 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace NETworkManager.Converters
+namespace NETworkManager.Converters;
+
+public sealed class Bytes1000ToSpeedConverter : IValueConverter
 {
-    public sealed class Bytes1000ToSpeedConverter : IValueConverter
+    private readonly string[] _sizes = { "Bit/s", "KBit/s", "MBit/s", "GBit/s", "Tbit/s" };
+
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        private readonly string[] _sizes = { "Bit/s", "KBit/s", "MBit/s", "GBit/s", "Tbit/s" };
+        if (value == null)
+            return "-/-";
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value == null)
-                return "-/-";
+        double.TryParse(value.ToString(), out var bits);
 
-            double.TryParse(value.ToString(), out var bits);
+        var sizeCount = 0;
 
-            var sizeCount = 0;
+        while (bits >= 1000 && ++sizeCount < _sizes.Length)
+            bits /= 1000;
 
-            while (bits >= 1000 && ++sizeCount < _sizes.Length)
-                bits /= 1000;
+        return $"{bits} {_sizes[sizeCount]}";
+    }
 
-            return $"{bits} {_sizes[sizeCount]}";
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }
