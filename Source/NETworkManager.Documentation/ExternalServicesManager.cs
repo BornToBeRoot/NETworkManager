@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 
-namespace NETworkManager.Documentation
+namespace NETworkManager.Documentation;
+
+/// <summary>
+/// This class provides information about external services used within the program.
+/// </summary>
+public static class ExternalServicesManager
 {
     /// <summary>
-    /// This class provides information about external services used within the program.
+    /// Static list with all external services that are used.
     /// </summary>
-    public static class ExternalServicesManager
+    public static List<ExternalServicesInfo> List => new()
     {
-        /// <summary>
-        /// Static list with all external services that are used.
-        /// </summary>
-        public static List<ExternalServicesInfo> List => new()
-        {
-            new ExternalServicesInfo("ipify", "https://www.ipify.org/", Localization.Resources.Strings.ExternalService_ipify_Description)
-        };
-    }
+        new ExternalServicesInfo("ipify", "https://www.ipify.org/", Localization.Resources.Strings.ExternalService_ipify_Description)
+    };
 }

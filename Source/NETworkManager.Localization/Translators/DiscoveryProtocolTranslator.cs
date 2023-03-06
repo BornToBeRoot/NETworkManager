@@ -1,38 +1,37 @@
 ﻿using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
 
-namespace NETworkManager.Localization.Translators
+namespace NETworkManager.Localization.Translators;
+
+/// <summary>
+/// Class to translate <see cref="Protocol"/>.
+/// </summary>
+public class DiscoveryProtocolTranslator : SingletonBase<DiscoveryProtocolTranslator>, ILocalizationStringTranslator
 {
     /// <summary>
-    /// Class to translate <see cref="Protocol"/>.
+    /// Constant to identify the strings in the language files.
     /// </summary>
-    public class DiscoveryProtocolTranslator : SingletonBase<DiscoveryProtocolTranslator>, ILocalizationStringTranslator
+    private const string _identifier = "DiscoveryProtocolIdentifier_";
+
+    /// <summary>
+    /// Method to translate <see cref="Protocol"/>.
+    /// </summary>
+    /// <param name="value"><see cref="Protocol"/>.</param>
+    /// <returns>Translated <see cref="Protocol"/>.</returns>
+    public string Translate(string value)
     {
-        /// <summary>
-        /// Constant to identify the strings in the language files.
-        /// </summary>
-        private const string _identifier = "DiscoveryProtocolIdentifier_";
+        var translation = Resources.Strings.ResourceManager.GetString(_identifier + value, LocalizationManager.GetInstance().Culture);
 
-        /// <summary>
-        /// Method to translate <see cref="Protocol"/>.
-        /// </summary>
-        /// <param name="value"><see cref="Protocol"/>.</param>
-        /// <returns>Translated <see cref="Protocol"/>.</returns>
-        public string Translate(string value)
-        {
-            var translation = Resources.Strings.ResourceManager.GetString(_identifier + value, LocalizationManager.GetInstance().Culture);
+        return string.IsNullOrEmpty(translation) ? value : translation;
+    }
 
-            return string.IsNullOrEmpty(translation) ? value : translation;
-        }
-
-        /// <summary>
-        /// Method to translate <see cref="Protocol"/>.
-        /// </summary>
-        /// <param name="discoveryProtocol"><see cref="Protocol"/>.</param>
-        /// <returns>Translated <see cref="Protocol"/>.</returns>
-        public string Translate(DiscoveryProtocol.Protocol discoveryProtocol)
-        {
-            return Translate(discoveryProtocol.ToString());
-        }
+    /// <summary>
+    /// Method to translate <see cref="Protocol"/>.
+    /// </summary>
+    /// <param name="discoveryProtocol"><see cref="Protocol"/>.</param>
+    /// <returns>Translated <see cref="Protocol"/>.</returns>
+    public string Translate(DiscoveryProtocol.Protocol discoveryProtocol)
+    {
+        return Translate(discoveryProtocol.ToString());
     }
 }
