@@ -74,6 +74,9 @@ The profiles and settings are automatically migrated to the new location when th
   - Parameter `-hostkey` is now supported and can be configured in the profile. Multiple hostkeys can be separated by a comma. [#1977](https://github.com/BornToBeRoot/NETworkManager/pull/1977){:target="\_blank"}
 - **SNMP**
   - Remove option to set the preferred IP protocol for DNS resolution (can now be set globally) [#1950](https://github.com/BornToBeRoot/NETworkManager/pull/1950){:target="\_blank"}
+- **Wake on LAN**
+  - Update view & code cleanup [#1995](https://github.com/BornToBeRoot/NETworkManager/pull/1995){:target="\_blank"}
+  - Add history for MAC address & broadcast [#1995](https://github.com/BornToBeRoot/NETworkManager/pull/1995){:target="\_blank"}
 
 ## Bugfixes
 
