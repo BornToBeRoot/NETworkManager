@@ -49,7 +49,8 @@
                 <TextBox.Text>
                     <Binding Path="Region" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validators:EmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
+                            <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <validators:AWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

@@ -12,7 +12,7 @@ public class RemoteDesktopHostnameAndPortValidator : ValidationRule
     {
         string hostnameAndPort = (string)value;
 
-        if(hostnameAndPort.Contains(":"))
+        if(hostnameAndPort.Contains(':'))
         {
             string[] hostnameAndPortValues = hostnameAndPort.Split(':');
 

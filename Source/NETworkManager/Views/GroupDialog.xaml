@@ -192,7 +192,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.RemoteDesktop}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel>
                             <Grid>
                                 <Grid.Resources>
@@ -442,7 +442,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.PowerShell}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="0,0,0,20">
                             <Grid>
                                 <Grid.Resources>
@@ -520,6 +520,7 @@
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_Username" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                                 <validators:NoSpacesValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
@@ -530,6 +531,7 @@
                                     <TextBox.Text>
                                         <Binding Path="PuTTY_PrivateKeyFile" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                                 <validators:FileExistsValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
@@ -576,7 +578,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.AWSSessionManager}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="0,0,0,20">
                             <Grid>
                                 <Grid.Resources>
@@ -615,7 +617,8 @@
                                     <TextBox.Text>
                                         <Binding Path="AWSSessionManager_Region" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validators:EmptyOrAWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:AWSRegionExistsValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -625,7 +628,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.TigerVNC}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="0,0,0,20">
                             <Grid>
                                 <Grid.Resources>
