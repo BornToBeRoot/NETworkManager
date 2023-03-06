@@ -41,6 +41,7 @@ The profiles and settings are automatically migrated to the new location when th
 - DataGrid Columns can now be resized [#1910](https://github.com/BornToBeRoot/NETworkManager/pull/1910){:target="\_blank"}
 - Add text wrapping for status textboxes [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
 - Toggle button added to hide profile list if the profiles are locked [#1991](https://github.com/BornToBeRoot/NETworkManager/pull/1991){:target="\_blank"}
+- Improve input validation in groups, profiles and some tools [#2004](https://github.com/BornToBeRoot/NETworkManager/pull/2004){:target="\_blank"}
 - Settings > Network
   - Global option added to set the prefered IP protocol (IPv4/IPv6) for DNS resolution. [#1950](https://github.com/BornToBeRoot/NETworkManager/pull/1950){:target="\_blank"}
 - **Network Interface**
@@ -83,6 +84,7 @@ The profiles and settings are automatically migrated to the new location when th
 
 - Detect if the DNS result for a query is null even when the DNS server doesn't send an error code (because some providers do not implement their DNS server correctly...) [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
 - Improve the error message for DNS lookup to get more details (translation is not supported) [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
+- Fix a UI bug in group & profile dialog if input text is to large [#2004](https://github.com/BornToBeRoot/NETworkManager/pull/2004){:target="\_blank"}
 - **Dashboard**
   - `F5` key is now working to refresh the dashboard (again) [#1969](https://github.com/BornToBeRoot/NETworkManager/pull/1969){:target="\_blank"}
 - **IP Scanner**
