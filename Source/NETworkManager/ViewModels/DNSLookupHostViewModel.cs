@@ -224,7 +224,7 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.DNSLookup);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.DNSLookup);
         }
 
         private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;

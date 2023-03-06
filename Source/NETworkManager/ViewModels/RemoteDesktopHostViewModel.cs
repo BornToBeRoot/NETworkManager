@@ -311,7 +311,7 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator,null, ApplicationName.RemoteDesktop);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.RemoteDesktop);
         }
 
         private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;

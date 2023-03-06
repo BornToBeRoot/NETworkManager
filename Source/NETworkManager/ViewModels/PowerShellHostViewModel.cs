@@ -341,7 +341,7 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.PowerShell);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.PowerShell);
         }
 
         private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;

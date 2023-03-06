@@ -224,7 +224,7 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.Traceroute);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.Traceroute);
         }
 
         private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;

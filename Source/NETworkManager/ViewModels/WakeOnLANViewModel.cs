@@ -288,7 +288,7 @@ namespace NETworkManager.ViewModels
 
         private void AddProfileAction()
         {
-            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, ApplicationName.WakeOnLAN);
+            ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, null, null, ApplicationName.WakeOnLAN);
         }
 
         private bool ModifyProfile_CanExecute(object obj) => SelectedProfile != null && !SelectedProfile.IsDynamic;

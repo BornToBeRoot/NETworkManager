@@ -29,7 +29,7 @@ using System.Threading.Tasks;
 
 namespace NETworkManager.ViewModels
 {
-    public class IPScannerViewModel : ViewModelBase
+    public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         #region Variables
         private readonly IDialogCoordinator _dialogCoordinator;
@@ -287,7 +287,7 @@ namespace NETworkManager.ViewModels
 
         private void RedirectDataToApplicationAction(object name)
         {
-            if (!(name is string appName))
+            if (name is not string appName)
                 return;
 
             if (!Enum.TryParse(appName, out ApplicationName applicationName))
@@ -321,7 +321,7 @@ namespace NETworkManager.ViewModels
 
         public ICommand AddProfileSelectedHostCommand => new RelayCommand(p => AddProfileSelectedHostAction());
 
-        private async Task AddProfileSelectedHostAction()
+        private async void AddProfileSelectedHostAction()
         {
             ProfileInfo profileInfo = new()
             {
@@ -332,27 +332,7 @@ namespace NETworkManager.ViewModels
                 WakeOnLAN_MACAddress = SelectedResult.MACAddressString
             };
 
-            var customDialog = new CustomDialog
-            {
-                Title = Localization.Resources.Strings.AddProfile
-            };
-
-            var profileViewModel = new ProfileViewModel(instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-
-                ProfileManager.AddProfile(ProfileDialogManager.ParseProfileInfo(instance));
-            }, instance =>
-            {
-                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
-            }, ProfileManager.GetGroupNames(), null, ProfileEditMode.Add, profileInfo);
-
-            customDialog.Content = new ProfileDialog
-            {
-                DataContext = profileViewModel
-            };
-
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            await ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, profileInfo);
         }
 
         public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
@@ -412,7 +392,7 @@ namespace NETworkManager.ViewModels
         }
 
         public ICommand ExportCommand => new RelayCommand(p => ExportAction());
-
+        
         private void ExportAction()
         {
             Export();
@@ -692,6 +672,16 @@ namespace NETworkManager.ViewModels
                     OnPropertyChanged(nameof(ResolveHostname));
                     break;
             }
+        }
+
+        public void OnProfileDialogOpen()
+        {
+            
+        }
+
+        public void OnProfileDialogClose()
+        {
+            
         }
         #endregion
     }
