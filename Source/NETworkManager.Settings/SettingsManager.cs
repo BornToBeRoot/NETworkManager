@@ -246,6 +246,18 @@ public static class SettingsManager
             Current.PortScanner_PortThreads = 1024;
         }
 
+        // Add IP Scanner custom commands
+        foreach(var customCommand in IPScannerCustomCommand.GetDefaultList())
+        {
+            var customCommandFound = Current.IPScanner_CustomCommands.FirstOrDefault(x => x.Name == customCommand.Name);
+
+            if(customCommandFound == null)
+            {
+                _log.Info($"Add \"{customCommand.Name}\" to \"IPScanner_CustomCommands\"...");
+                Current.IPScanner_CustomCommands.Add(customCommand);
+            }
+        }
+
         // Add or update Port Scanner port profiles
         foreach (var portProfile in PortProfile.GetDefaultList())
         {

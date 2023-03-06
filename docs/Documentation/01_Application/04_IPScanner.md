@@ -137,11 +137,11 @@ Custom commands that can be executed with a right click on the selected result.
 
 **Default:**
 
-| Name                      | File path      | Arguments                |
-| ------------------------- | -------------- | ------------------------ |
-| Internet Explorer         | `iexplore.exe` | `http://$$ipaddress$$/`  |
-| Internet Explorer (https) | `iexplore.exe` | `https://$$ipaddress$$/` |
-| Windows Explorer (c$)     | `explorer.exe` | `\\$$ipaddress$$\c$`     |
+| Name                  | File path      | Arguments                                        |
+| --------------------- | -------------- | ------------------------------------------------ |
+| Edge                  | `cmd.exe`      | `/c start microsoft-edge:http://$$ipaddress$$/`  |
+| Edge (https)          | `cmd.exe`      | `/c start microsoft-edge:https://$$ipaddress$$/` |
+| Windows Explorer (c$) | `explorer.exe` | `\\$$ipaddress$$\c$`                             |
 
 In the arguments you can use the following placeholders:
 
