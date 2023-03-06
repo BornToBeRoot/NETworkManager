@@ -1,17 +1,16 @@
 ﻿using System;
 
-namespace NETworkManager.Settings
+namespace NETworkManager.Settings;
+
+public class AssemblyInfo
 {
-    public class AssemblyInfo
+    public string Title { get; set; }
+    public Version Version { get; set; }
+    public string Location { get; set; }
+    public string Name { get; set; }
+
+    public AssemblyInfo()
     {
-        public string Title { get; set; }
-        public Version Version { get; set; }
-        public string Location { get; set; }
-        public string Name { get; set; }
 
-        public AssemblyInfo()
-        {
-
-        }
     }
 }
