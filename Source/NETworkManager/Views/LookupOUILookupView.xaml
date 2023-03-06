@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
-        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-        xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"        
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
         xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -44,10 +43,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.MACAddressOrVendor}" Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox Grid.Column="2" x:Name="TextBoxMACAddressOrVendor" ItemsSource="{Binding MACAddressOrVendorHistoryView}" wpfHelpers:ProtocolSettingsLayout.MVVMHasError="{Binding MACAddressOrVendorHasError}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddressesOrVendor}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
-                    <ComboBox.InputBindings>
-                        <KeyBinding Command="{Binding OUILookupCommand}" Key="Return" />
-                    </ComboBox.InputBindings>
+                <ComboBox Grid.Column="2" x:Name="TextBoxMACAddressOrVendor" ItemsSource="{Binding MACAddressOrVendorHistoryView}" mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddressesOrVendor}" IsEnabled="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}" Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="MACAddressOrVendor" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -58,7 +54,7 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4" Command="{Binding OUILookupCommand}" HorizontalAlignment="Right">
+                <Button Grid.Column="4" Command="{Binding OUILookupCommand}" HorizontalAlignment="Right" IsDefault="{Binding IsLookupRunning, Converter={StaticResource BooleanReverseConverter}}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Setter Property="IsEnabled" Value="True" />
