@@ -326,7 +326,10 @@ namespace NETworkManager.ViewModels
             ProfileInfo profileInfo = new()
             {
                 Name = string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.PingInfo.IPAddress.ToString() : SelectedResult.Hostname.TrimEnd('.'),
-                Host = SelectedResult.PingInfo.IPAddress.ToString()
+                Host = SelectedResult.PingInfo.IPAddress.ToString(),
+
+                // Additional data
+                WakeOnLAN_MACAddress = SelectedResult.MACAddressString
             };
 
             var customDialog = new CustomDialog
@@ -511,7 +514,7 @@ namespace NETworkManager.ViewModels
             CancelScan = true;
             _cancellationTokenSource.Cancel();
         }
-        
+
         private async Task DetectIPRange()
         {
             IsSubnetDetectionRunning = true;
@@ -667,7 +670,7 @@ namespace NETworkManager.ViewModels
         {
             StatusMessage = $"{Localization.Resources.Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", e.Flatten().InnerExceptions.Select(x => x.Message))}";
             IsStatusMessageDisplayed = true;
-            
+
             CancelScan = false;
             IsScanRunning = false;
         }
@@ -675,7 +678,7 @@ namespace NETworkManager.ViewModels
         private void UserHasCanceled(object sender, EventArgs e)
         {
             StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
-            IsStatusMessageDisplayed = true;                        
+            IsStatusMessageDisplayed = true;
         }
 
         private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
