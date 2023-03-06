@@ -2,57 +2,56 @@
 using System;
 using System.Windows.Input;
 
-namespace NETworkManager.ViewModels
+namespace NETworkManager.ViewModels;
+
+public class FirstRunViewModel : ViewModelBase
 {
-    public class FirstRunViewModel : ViewModelBase
+    public ICommand ContinueCommand { get; }
+
+    private bool _checkForUpdatesAtStartup = true;
+    public bool CheckForUpdatesAtStartup
     {
-        public ICommand ContinueCommand { get; }
-
-        private bool _checkForUpdatesAtStartup = true;
-        public bool CheckForUpdatesAtStartup
+        get => _checkForUpdatesAtStartup;
+        set
         {
-            get => _checkForUpdatesAtStartup;
-            set
-            {
-                if (value == _checkForUpdatesAtStartup)
-                    return;
+            if (value == _checkForUpdatesAtStartup)
+                return;
 
-                _checkForUpdatesAtStartup = value;
-                OnPropertyChanged();
-            }
+            _checkForUpdatesAtStartup = value;
+            OnPropertyChanged();
         }
+    }
 
-        private bool _checkPublicIPAddress = true;
-        public bool CheckPublicIPAddress
+    private bool _checkPublicIPAddress = true;
+    public bool CheckPublicIPAddress
+    {
+        get => _checkPublicIPAddress;
+        set
         {
-            get => _checkPublicIPAddress;
-            set
-            {
-                if (value == _checkPublicIPAddress)
-                    return;
+            if (value == _checkPublicIPAddress)
+                return;
 
-                _checkPublicIPAddress = value;
-                OnPropertyChanged();
-            }
+            _checkPublicIPAddress = value;
+            OnPropertyChanged();
         }
+    }
 
-        private bool _powerShellModifyGlobalProfile;
-        public bool PowerShellModifyGlobalProfile
+    private bool _powerShellModifyGlobalProfile;
+    public bool PowerShellModifyGlobalProfile
+    {
+        get => _powerShellModifyGlobalProfile;
+        set
         {
-            get => _powerShellModifyGlobalProfile;
-            set
-            {
-                if (value == _powerShellModifyGlobalProfile)
-                    return;
+            if (value == _powerShellModifyGlobalProfile)
+                return;
 
-                _powerShellModifyGlobalProfile = value;
-                OnPropertyChanged();
-            }
+            _powerShellModifyGlobalProfile = value;
+            OnPropertyChanged();
         }
+    }
 
-        public FirstRunViewModel(Action<FirstRunViewModel> continueCommand)
-        {
-            ContinueCommand = new RelayCommand(p => continueCommand(this));
-        }
+    public FirstRunViewModel(Action<FirstRunViewModel> continueCommand)
+    {
+        ContinueCommand = new RelayCommand(p => continueCommand(this));
     }
 }

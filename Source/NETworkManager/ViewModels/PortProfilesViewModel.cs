@@ -9,79 +9,78 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NETworkManager.ViewModels
+namespace NETworkManager.ViewModels;
+
+public class PortProfilesViewModel : ViewModelBase
 {
-    public class PortProfilesViewModel : ViewModelBase
+    private readonly bool _isLoading;
+
+    public ICommand OKCommand { get; }
+
+    public ICommand CancelCommand { get; }
+
+
+    private string _search;
+    public string Search
     {
-        private readonly bool _isLoading;
-
-        public ICommand OKCommand { get; }
-
-        public ICommand CancelCommand { get; }
-
-
-        private string _search;
-        public string Search
+        get => _search;
+        set
         {
-            get => _search;
-            set
-            {
-                if (value == _search)
-                    return;
+            if (value == _search)
+                return;
 
-                _search = value;
+            _search = value;
 
-                PortProfiles.Refresh();
+            PortProfiles.Refresh();
 
-                OnPropertyChanged();
-            }
+            OnPropertyChanged();
         }
+    }
 
-        public ICollectionView PortProfiles { get; }
+    public ICollectionView PortProfiles { get; }
 
-        private IList _selectedPortProfiles = new ArrayList();
-        public IList SelectedPortProfiles
+    private IList _selectedPortProfiles = new ArrayList();
+    public IList SelectedPortProfiles
+    {
+        get => _selectedPortProfiles;
+        set
         {
-            get => _selectedPortProfiles;
-            set
-            {
-                if (Equals(value, _selectedPortProfiles))
-                    return;
+            if (Equals(value, _selectedPortProfiles))
+                return;
 
-                _selectedPortProfiles = value;
-                OnPropertyChanged();
-            }
+            _selectedPortProfiles = value;
+            OnPropertyChanged();
         }
+    }
 
-        public PortProfilesViewModel(Action<PortProfilesViewModel> okCommand, Action<PortProfilesViewModel> cancelHandler)
+    public PortProfilesViewModel(Action<PortProfilesViewModel> okCommand, Action<PortProfilesViewModel> cancelHandler)
+    {
+        _isLoading = true;
+
+        OKCommand = new RelayCommand(p => okCommand(this));
+        CancelCommand = new RelayCommand(p => cancelHandler(this));
+
+        PortProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortProfiles);
+        PortProfiles.SortDescriptions.Add(new SortDescription(nameof(PortProfileInfo.Name), ListSortDirection.Ascending));
+        PortProfiles.Filter = o =>
         {
-            _isLoading = true;
+            if (string.IsNullOrEmpty(Search))
+                return true;
 
-            OKCommand = new RelayCommand(p => okCommand(this));
-            CancelCommand = new RelayCommand(p => cancelHandler(this));
+            if (o is not PortProfileInfo info)
+                return false;
 
-            PortProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortProfiles);
-            PortProfiles.SortDescriptions.Add(new SortDescription(nameof(PortProfileInfo.Name), ListSortDirection.Ascending));
-            PortProfiles.Filter = o =>
-            {
-                if (string.IsNullOrEmpty(Search))
-                    return true;
+            var search = Search.Trim();
 
-                if (o is not PortProfileInfo info)
-                    return false;
+            // Search: Name, Ports
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Ports.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+        };
 
-                var search = Search.Trim();
+        _isLoading = false;
+    }
 
-                // Search: Name, Ports
-                return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Ports.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-            };
-
-            _isLoading = false;
-        }
-
-        public List<PortProfileInfo> GetSelectedPortProfiles()
-        {
-            return new List<PortProfileInfo>(SelectedPortProfiles.Cast<PortProfileInfo>());
-        }
+    public List<PortProfileInfo> GetSelectedPortProfiles()
+    {
+        return new List<PortProfileInfo>(SelectedPortProfiles.Cast<PortProfileInfo>());
     }
 }

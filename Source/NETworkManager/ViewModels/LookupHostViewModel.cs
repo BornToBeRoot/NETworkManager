@@ -1,22 +1,21 @@
-﻿namespace NETworkManager.ViewModels
+﻿namespace NETworkManager.ViewModels;
+
+public class LookupHostViewModel : ViewModelBase
 {
-    public class LookupHostViewModel : ViewModelBase
+    private bool _isViewActive = true;
+
+    public LookupHostViewModel()
     {
-        private bool _isViewActive = true;
 
-        public LookupHostViewModel()
-        {
+    }
 
-        }
+    public void OnViewVisible()
+    {
+        _isViewActive = true;
+    }
 
-        public void OnViewVisible()
-        {
-            _isViewActive = true;
-        }
-
-        public void OnViewHide()
-        {
-            _isViewActive = false;
-        }
+    public void OnViewHide()
+    {
+        _isViewActive = false;
     }
 }

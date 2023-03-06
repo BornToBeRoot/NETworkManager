@@ -5,77 +5,76 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace NETworkManager.ViewModels
+namespace NETworkManager.ViewModels;
+
+public class AWSSessionManagerConnectViewModel : ViewModelBase
 {
-    public class AWSSessionManagerConnectViewModel : ViewModelBase
+    public ICommand ConnectCommand { get; }
+    public ICommand CancelCommand { get; }
+
+    private string _instanceID;
+    public string InstanceID
     {
-        public ICommand ConnectCommand { get; }
-        public ICommand CancelCommand { get; }
-
-        private string _instanceID;
-        public string InstanceID
+        get => _instanceID;
+        set
         {
-            get => _instanceID;
-            set
-            {
-                if (value == _instanceID)
-                    return;
+            if (value == _instanceID)
+                return;
 
-                _instanceID = value;
-                OnPropertyChanged();
-            }
+            _instanceID = value;
+            OnPropertyChanged();
         }
+    }
 
-        public ICollectionView InstanceIDHistoryView { get; }
+    public ICollectionView InstanceIDHistoryView { get; }
 
-        private string _profile;
-        public string Profile
+    private string _profile;
+    public string Profile
+    {
+        get => _profile;
+        set
         {
-            get => _profile;
-            set
-            {
-                if (value == _profile)
-                    return;
+            if (value == _profile)
+                return;
 
-                _profile = value;
-                OnPropertyChanged();
-            }
+            _profile = value;
+            OnPropertyChanged();
         }
+    }
 
-        public ICollectionView ProfileHistoryView { get; }
+    public ICollectionView ProfileHistoryView { get; }
 
-        private string _region;
-        public string Region
+    private string _region;
+    public string Region
+    {
+        get => _region;
+        set
         {
-            get => _region;
-            set
-            {
-                if (value == _region)
-                    return;
+            if (value == _region)
+                return;
 
-                _region = value;
-                OnPropertyChanged();
-            }
+            _region = value;
+            OnPropertyChanged();
         }
+    }
 
-        public ICollectionView RegionHistoryView { get; }
+    public ICollectionView RegionHistoryView { get; }
 
-        public AWSSessionManagerConnectViewModel(Action<AWSSessionManagerConnectViewModel> connectCommand, Action<AWSSessionManagerConnectViewModel> cancelHandler)
-        {
-            ConnectCommand = new RelayCommand(p => connectCommand(this));
-            CancelCommand = new RelayCommand(p => cancelHandler(this));
+    public AWSSessionManagerConnectViewModel(Action<AWSSessionManagerConnectViewModel> connectCommand, Action<AWSSessionManagerConnectViewModel> cancelHandler)
+    {
+        ConnectCommand = new RelayCommand(p => connectCommand(this));
+        CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            InstanceIDHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_InstanceIDHistory);
-            ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_ProfileHistory);
-            RegionHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_RegionHistory);
+        InstanceIDHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_InstanceIDHistory);
+        ProfileHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_ProfileHistory);
+        RegionHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.AWSSessionManager_RegionHistory);
 
-            LoadSettings();
-        }
+        LoadSettings();
+    }
 
-        private void LoadSettings()
-        {
-            Profile = SettingsManager.Current.AWSSessionManager_DefaultProfile;
-            Region = SettingsManager.Current.AWSSessionManager_DefaultRegion;                
-        }
+    private void LoadSettings()
+    {
+        Profile = SettingsManager.Current.AWSSessionManager_DefaultProfile;
+        Region = SettingsManager.Current.AWSSessionManager_DefaultRegion;                
     }
 }
