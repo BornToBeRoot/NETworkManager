@@ -167,6 +167,34 @@ namespace NETworkManager.ViewModels
         public Func<double, string> FormatterDate { get; set; }
         public Func<double, string> FormatterPingTime { get; set; }
         public SeriesCollection Series { get; set; }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                if (value == _errorMessage)
+                    return;
+
+                _errorMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isErrorMessageDisplayed;
+        public bool IsErrorMessageDisplayed
+        {
+            get => _isErrorMessageDisplayed;
+            set
+            {
+                if (value == _isErrorMessageDisplayed)
+                    return;
+
+                _isErrorMessageDisplayed = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Contructor, load settings    
@@ -222,6 +250,7 @@ namespace NETworkManager.ViewModels
 
         private void StartPing()
         {
+            IsErrorMessageDisplayed = false;
             IsRunning = true;
 
             // Reset history
@@ -260,11 +289,6 @@ namespace NETworkManager.ViewModels
             _cancellationTokenSource?.Cancel();
         }
 
-        private void PingFinished()
-        {
-            IsRunning = false;
-        }
-
         public void ResetTimeChart()
         {
             if (Series == null)
@@ -283,7 +307,7 @@ namespace NETworkManager.ViewModels
         }
 
         public async Task Export()
-        {    
+        {
             var customDialog = new CustomDialog
             {
                 Title = Localization.Resources.Strings.Export
@@ -295,7 +319,7 @@ namespace NETworkManager.ViewModels
 
                 try
                 {
-                    ExportManager.Export(instance.FilePath, instance.FileType, new ObservableCollection<PingInfo> (_pingInfoList));
+                    ExportManager.Export(instance.FilePath, instance.FileType, new ObservableCollection<PingInfo>(_pingInfoList));
                 }
                 catch (Exception ex)
                 {
@@ -314,7 +338,7 @@ namespace NETworkManager.ViewModels
                 DataContext = exportViewModel
             };
 
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public void OnClose()
@@ -374,12 +398,15 @@ namespace NETworkManager.ViewModels
 
         private void Ping_UserHasCanceled(object sender, EventArgs e)
         {
-            PingFinished();
+            IsRunning = false;
         }
 
         private void Ping_PingException(object sender, PingExceptionArgs e)
-        {
-            PingFinished();
+        {   
+            IsRunning = false;
+
+            ErrorMessage = e.Message;
+            IsErrorMessageDisplayed = true;
         }
         #endregion
     }

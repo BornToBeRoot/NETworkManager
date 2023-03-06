@@ -359,13 +359,7 @@ namespace NETworkManager.ViewModels
                 IsRunning = false;
             }
         }
-
-        private void UserHasCanceled()
-        {
-            CancelTrace = false;
-            IsRunning = false;
-        }
-
+               
         private async Task Export()
         {
             var customDialog = new CustomDialog
@@ -442,7 +436,8 @@ namespace NETworkManager.ViewModels
 
         private void Traceroute_UserHasCanceled(object sender, EventArgs e)
         {
-            UserHasCanceled();
+            CancelTrace = false;
+            IsRunning = false;
 
             StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
             IsStatusMessageDisplayed = true;
