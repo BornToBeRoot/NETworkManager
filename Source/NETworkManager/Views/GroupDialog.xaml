@@ -192,7 +192,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.RemoteDesktop}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel>
                             <Grid>
                                 <Grid.Resources>
@@ -442,7 +442,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.PowerShell}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="0,0,0,20">
                             <Grid>
                                 <Grid.Resources>
@@ -578,7 +578,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.AWSSessionManager}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="0,0,0,20">
                             <Grid>
                                 <Grid.Resources>
@@ -628,7 +628,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.TigerVNC}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="0,0,0,20">
                             <Grid>
                                 <Grid.Resources>

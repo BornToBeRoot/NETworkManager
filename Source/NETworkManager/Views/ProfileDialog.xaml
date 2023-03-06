@@ -280,7 +280,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.NetworkInterface}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding NetworkInterface_Enabled}">
                             <RadioButton x:Name="RadioButtonEnableDynamicIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableDynamicIPAddress}" Content="{x:Static localization:Strings.ObtainAnIPAddressAutomatically}" Margin="0,0,0,10"/>
                             <RadioButton x:Name="RadioButtonEnableStaticIPAddress" GroupName="NetworkInterface_IPAddressConfig" IsChecked="{Binding NetworkInterface_EnableStaticIPAddress}" Content="{x:Static localization:Strings.UseTheFollowingIPAddress}" Margin="0,0,0,10"/>
@@ -378,7 +378,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.IPScanner}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding IPScanner_Enabled}">
                             <Grid>
                                 <Grid.Resources>
@@ -431,7 +431,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.PortScanner}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding PortScanner_Enabled}">
                             <Grid>
                                 <Grid.Resources>
@@ -496,7 +496,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.PingMonitor}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding PingMonitor_Enabled}">
                             <Grid>
                                 <Grid.Resources>
@@ -549,7 +549,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.Traceroute}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding Traceroute_Enabled}">
                             <Grid>
                                 <Grid.Resources>
@@ -602,7 +602,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.DNSLookup}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding DNSLookup_Enabled}">
                             <Grid>
                                 <Grid.Resources>
@@ -654,7 +654,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.RemoteDesktop}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding RemoteDesktop_Enabled}">
                             <Grid>
                                 <Grid.Resources>
@@ -940,7 +940,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.PowerShell}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding PowerShell_Enabled}" Margin="0,0,0,20">
                             <Grid>
                                 <Grid.Resources>
@@ -1238,7 +1238,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.AWSSessionManager}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding AWSSessionManager_Enabled}" Margin="0,0,0,20">
                             <Grid>
                                 <Grid.Resources>
@@ -1302,7 +1302,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.TigerVNC}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding TigerVNC_Enabled}" Margin="0,0,0,20">
                             <Grid>
                                 <Grid.Resources>
@@ -1373,7 +1373,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.WebConsole}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding WebConsole_Enabled}" Margin="0,0,0,20">
                             <Grid>
                                 <Grid.Resources>
@@ -1406,7 +1406,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.WakeOnLAN}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding WakeOnLAN_Enabled}" Margin="0,0,0,20">
                             <Grid>
                                 <Grid.Resources>
@@ -1470,7 +1470,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="{x:Static localization:Strings.Whois}">
-                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}">
+                    <ScrollViewer Style="{StaticResource DefaultScrollViewer}" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding Whois_Enabled}">
                             <Grid>
                                 <Grid.Resources>
