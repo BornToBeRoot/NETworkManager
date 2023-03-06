@@ -8,128 +8,127 @@ using System.Windows;
 using System.Linq;
 using System.Diagnostics;
 
-namespace NETworkManager.ViewModels
+namespace NETworkManager.ViewModels;
+
+public class ServerConnectionInfoProfileViewModel : ViewModelBase
 {
-    public class ServerConnectionInfoProfileViewModel : ViewModelBase
+    private readonly bool _isLoading;
+
+    #region Commands
+    public ICommand SaveCommand { get; }
+
+    public ICommand CancelCommand { get; }
+    #endregion
+
+    #region Variables
+
+    #region Helper
+    private List<string> _usedNames;
+    public List<string> UsedNames
     {
-        private readonly bool _isLoading;
-
-        #region Commands
-        public ICommand SaveCommand { get; }
-
-        public ICommand CancelCommand { get; }
-        #endregion
-
-        #region Variables
-
-        #region Helper
-        private List<string> _usedNames;
-        public List<string> UsedNames
+        get => _usedNames;
+        set
         {
-            get => _usedNames;
-            set
-            {
-                if (value == _usedNames)
-                    return;
+            if (value == _usedNames)
+                return;
 
-                _usedNames = value;
-                OnPropertyChanged();
-            }
+            _usedNames = value;
+            OnPropertyChanged();
         }
+    }
 
-        private bool _allowOnlyIPAddress;
-        public bool AllowOnlyIPAddress
+    private bool _allowOnlyIPAddress;
+    public bool AllowOnlyIPAddress
+    {
+        get => _allowOnlyIPAddress;
+        set
         {
-            get => _allowOnlyIPAddress;
-            set
-            {
-                if (value == _allowOnlyIPAddress)
-                    return;
+            if (value == _allowOnlyIPAddress)
+                return;
 
-                _allowOnlyIPAddress = value;
-                OnPropertyChanged();
-            }
+            _allowOnlyIPAddress = value;
+            OnPropertyChanged();
         }
+    }
 
-        private bool _isEdited;
-        public bool IsEdited
+    private bool _isEdited;
+    public bool IsEdited
+    {
+        get => _isEdited;
+        set
         {
-            get => _isEdited;
-            set
-            {
-                if (value == _isEdited)
-                    return;
+            if (value == _isEdited)
+                return;
 
-                _isEdited = value;
-                OnPropertyChanged();
-            }
+            _isEdited = value;
+            OnPropertyChanged();
         }
+    }
 
-        private ServerConnectionInfoProfile _currentProfile;
-        public ServerConnectionInfoProfile CurrentProfile
+    private ServerConnectionInfoProfile _currentProfile;
+    public ServerConnectionInfoProfile CurrentProfile
+    {
+        get => _currentProfile;
+        set
         {
-            get => _currentProfile;
-            set
-            {
-                if (value == _currentProfile)
-                    return;
+            if (value == _currentProfile)
+                return;
 
-                _currentProfile = value;
-                OnPropertyChanged();
-            }
+            _currentProfile = value;
+            OnPropertyChanged();
         }
-        #endregion
+    }
+    #endregion
 
-        private string _name;
-        public string Name
+    private string _name;
+    public string Name
+    {
+        get => _name;
+        set
         {
-            get => _name;
-            set
-            {
-                if (_name == value)
-                    return;
+            if (_name == value)
+                return;
 
-                _name = value;
+            _name = value;
 
-                OnPropertyChanged();
-            }
+            OnPropertyChanged();
         }
+    }
 
-        private List<ServerConnectionInfo> _servers;
-        public List<ServerConnectionInfo> Servers
+    private List<ServerConnectionInfo> _servers;
+    public List<ServerConnectionInfo> Servers
+    {
+        get => _servers;
+        set
         {
-            get => _servers;
-            set
-            {
-                if (value == _servers)
-                    return;
+            if (value == _servers)
+                return;
 
-                _servers = value;
-                OnPropertyChanged();
-            }
+            _servers = value;
+            OnPropertyChanged();
         }
-        #endregion
+    }
+    #endregion
 
-        public ServerConnectionInfoProfileViewModel(Action<ServerConnectionInfoProfileViewModel> saveCommand, Action<ServerConnectionInfoProfileViewModel> cancelHandler, (List<string> UsedNames, bool IsEdited, bool allowOnlyIPAddress) options, ServerConnectionInfoProfile info = null)
-        {
-            _isLoading = true;
+    public ServerConnectionInfoProfileViewModel(Action<ServerConnectionInfoProfileViewModel> saveCommand, Action<ServerConnectionInfoProfileViewModel> cancelHandler, (List<string> UsedNames, bool IsEdited, bool allowOnlyIPAddress) options, ServerConnectionInfoProfile info = null)
+    {
+        _isLoading = true;
 
-            SaveCommand = new RelayCommand(p => saveCommand(this));
-            CancelCommand = new RelayCommand(p => cancelHandler(this));
+        SaveCommand = new RelayCommand(p => saveCommand(this));
+        CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            UsedNames = options.UsedNames;
-            AllowOnlyIPAddress = options.allowOnlyIPAddress;
-            IsEdited = options.IsEdited;
-            CurrentProfile = info ?? new ServerConnectionInfoProfile();
+        UsedNames = options.UsedNames;
+        AllowOnlyIPAddress = options.allowOnlyIPAddress;
+        IsEdited = options.IsEdited;
+        CurrentProfile = info ?? new ServerConnectionInfoProfile();
 
-            // Remove the current profile name from the list
-            if (IsEdited)
-                UsedNames.Remove(CurrentProfile.Name);
+        // Remove the current profile name from the list
+        if (IsEdited)
+            UsedNames.Remove(CurrentProfile.Name);
 
-            Name = _currentProfile.Name;
-            Servers = _currentProfile.Servers;
+        Name = _currentProfile.Name;
+        Servers = _currentProfile.Servers;
 
-            _isLoading = false;
-        }
+        _isLoading = false;
     }
 }

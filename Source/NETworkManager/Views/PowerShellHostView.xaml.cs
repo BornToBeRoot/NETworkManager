@@ -5,63 +5,62 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace NETworkManager.Views
+namespace NETworkManager.Views;
+
+public partial class PowerShellHostView
 {
-    public partial class PowerShellHostView
+    private readonly PowerShellHostViewModel _viewModel = new(DialogCoordinator.Instance);
+
+    private bool _loaded;
+
+    public PowerShellHostView()
     {
-        private readonly PowerShellHostViewModel _viewModel = new(DialogCoordinator.Instance);
+        InitializeComponent();
+        DataContext = _viewModel;
 
-        private bool _loaded;
+        InterTabController.Partition = ApplicationName.PowerShell.ToString();
+    }
 
-        public PowerShellHostView()
-        {
-            InitializeComponent();
-            DataContext = _viewModel;
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        _loaded = true;
+    }
 
-            InterTabController.Partition = ApplicationName.PowerShell.ToString();
-        }
+    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
+    {
+        if (sender is ContextMenu menu)
+            menu.DataContext = _viewModel;
+    }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            _loaded = true;
-        }
+    private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+            _viewModel.ConnectProfileCommand.Execute(null);
+    }
 
-        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-        {
-            if (sender is ContextMenu menu)
-                menu.DataContext = _viewModel;
-        }
+    public async Task AddTab(string host)
+    {
+        // Wait for the interface to load, before displaying the dialog to connect a new profile... 
+        // MahApps will throw an exception... 
+        while (!_loaded)
+            await Task.Delay(250);
 
-        private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
-                _viewModel.ConnectProfileCommand.Execute(null);
-        }
+        if (_viewModel.IsConfigured)
+            _viewModel.AddTab(host);
+    }
 
-        public async Task AddTab(string host)
-        {
-            // Wait for the interface to load, before displaying the dialog to connect a new profile... 
-            // MahApps will throw an exception... 
-            while (!_loaded)
-                await Task.Delay(250);
+    public void OnViewHide()
+    {
+        _viewModel.OnViewHide();
+    }
 
-            if (_viewModel.IsConfigured)
-                _viewModel.AddTab(host);
-        }
+    public void OnViewVisible()
+    {
+        _viewModel.OnViewVisible();
+    }
 
-        public void OnViewHide()
-        {
-            _viewModel.OnViewHide();
-        }
-
-        public void OnViewVisible()
-        {
-            _viewModel.OnViewVisible();
-        }
-
-        public void FocusEmbeddedWindow()
-        {
-            _viewModel.FocusEmbeddedWindow();
-        }
+    public void FocusEmbeddedWindow()
+    {
+        _viewModel.FocusEmbeddedWindow();
     }
 }

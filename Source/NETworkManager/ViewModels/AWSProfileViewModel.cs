@@ -3,121 +3,120 @@ using System;
 using System.Windows.Input;
 using NETworkManager.Models.AWS;
 
-namespace NETworkManager.ViewModels
+namespace NETworkManager.ViewModels;
+
+public class AWSProfileViewModel : ViewModelBase
 {
-    public class AWSProfileViewModel : ViewModelBase
+    private readonly bool _isLoading;
+
+    public ICommand SaveCommand { get; }
+
+    public ICommand CancelCommand { get; }
+
+    private bool _isEnabled;
+    public bool IsEnabled
     {
-        private readonly bool _isLoading;
-
-        public ICommand SaveCommand { get; }
-
-        public ICommand CancelCommand { get; }
-
-        private bool _isEnabled;
-        public bool IsEnabled
+        get => _isEnabled;
+        set
         {
-            get => _isEnabled;
-            set
-            {
-                if (_isEnabled == value)
-                    return;
+            if (_isEnabled == value)
+                return;
 
-                _isEnabled = value;
+            _isEnabled = value;
 
-                if (!_isLoading)
-                    Validate();
+            if (!_isLoading)
+                Validate();
 
-                OnPropertyChanged();
-            }
+            OnPropertyChanged();
         }
+    }
 
-        private string _profile;
-        public string Profile
+    private string _profile;
+    public string Profile
+    {
+        get => _profile;
+        set
         {
-            get => _profile;
-            set
-            {
-                if (_profile == value)
-                    return;
+            if (_profile == value)
+                return;
 
-                _profile = value;
+            _profile = value;
 
-                if (!_isLoading)
-                    Validate();
+            if (!_isLoading)
+                Validate();
 
-                OnPropertyChanged();
-            }
+            OnPropertyChanged();
         }
+    }
 
-        private string _region;
-        public string Region
+    private string _region;
+    public string Region
+    {
+        get => _region;
+        set
         {
-            get => _region;
-            set
-            {
-                if (_region == value)
-                    return;
+            if (_region == value)
+                return;
 
-                _region = value;
+            _region = value;
 
-                if (!_isLoading)
-                    Validate();
+            if (!_isLoading)
+                Validate();
 
-                OnPropertyChanged();
-            }
+            OnPropertyChanged();
         }
+    }
 
-        private readonly AWSProfileInfo _info;
+    private readonly AWSProfileInfo _info;
 
-        private bool _infoChanged;
-        public bool InfoChanged
+    private bool _infoChanged;
+    public bool InfoChanged
+    {
+        get => _infoChanged;
+        set
         {
-            get => _infoChanged;
-            set
-            {
-                if (value == _infoChanged)
-                    return;
+            if (value == _infoChanged)
+                return;
 
-                _infoChanged = value;
-                OnPropertyChanged();
-            }
+            _infoChanged = value;
+            OnPropertyChanged();
         }
+    }
 
-        private bool _isEdited;
-        public bool IsEdited
+    private bool _isEdited;
+    public bool IsEdited
+    {
+        get => _isEdited;
+        set
         {
-            get => _isEdited;
-            set
-            {
-                if (value == _isEdited)
-                    return;
+            if (value == _isEdited)
+                return;
 
-                _isEdited = value;
-                OnPropertyChanged();
-            }
+            _isEdited = value;
+            OnPropertyChanged();
         }
+    }
 
-        public AWSProfileViewModel(Action<AWSProfileViewModel> saveCommand, Action<AWSProfileViewModel> cancelHandler, bool isEdited = false, AWSProfileInfo info = null)
-        {
-            _isLoading = true;
+    public AWSProfileViewModel(Action<AWSProfileViewModel> saveCommand, Action<AWSProfileViewModel> cancelHandler, bool isEdited = false, AWSProfileInfo info = null)
+    {
+        _isLoading = true;
 
-            SaveCommand = new RelayCommand(p => saveCommand(this));
-            CancelCommand = new RelayCommand(p => cancelHandler(this));
+        SaveCommand = new RelayCommand(p => saveCommand(this));
+        CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            IsEdited = isEdited;
+        IsEdited = isEdited;
 
-            _info = info ?? new AWSProfileInfo();
-            
-            IsEnabled = _info.IsEnabled;
-            Profile = _info.Profile;
-            Region = _info.Region;
+        _info = info ?? new AWSProfileInfo();
+        
+        IsEnabled = _info.IsEnabled;
+        Profile = _info.Profile;
+        Region = _info.Region;
 
-            _isLoading = false;
-        }
+        _isLoading = false;
+    }
 
-        public void Validate()
-        {
-            InfoChanged = _info.IsEnabled != IsEnabled || _info.Profile != Profile || _info.Region != Region;
-        }
+    public void Validate()
+    {
+        InfoChanged = _info.IsEnabled != IsEnabled || _info.Profile != Profile || _info.Region != Region;
     }
 }

@@ -1,25 +1,24 @@
-﻿namespace NETworkManager.Utilities
+﻿namespace NETworkManager.Utilities;
+
+/// <summary>
+/// Abstract class to implement a generic singleton.
+/// </summary>
+/// <typeparam name="T">Class</typeparam>
+public abstract class SingletonBase<T> where T : class, new()
 {
     /// <summary>
-    /// Abstract class to implement a generic singleton.
+    /// Holds the instance of the class. 
     /// </summary>
-    /// <typeparam name="T">Class</typeparam>
-    public abstract class SingletonBase<T> where T : class, new()
+    private static T _instance;
+
+    /// <summary>
+    /// Returns the current instance of the class.
+    /// </summary>
+    /// <returns>Instance of the class.</returns>
+    public static T GetInstance()
     {
-        /// <summary>
-        /// Holds the instance of the class. 
-        /// </summary>
-        private static T _instance;
+        _instance ??= new T();
 
-        /// <summary>
-        /// Returns the current instance of the class.
-        /// </summary>
-        /// <returns>Instance of the class.</returns>
-        public static T GetInstance()
-        {
-            _instance ??= new T();
-
-            return _instance;
-        }
+        return _instance;
     }
 }

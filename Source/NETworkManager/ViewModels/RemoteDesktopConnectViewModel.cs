@@ -6,110 +6,109 @@ using System.Security;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace NETworkManager.ViewModels
+namespace NETworkManager.ViewModels;
+
+public class RemoteDesktopConnectViewModel : ViewModelBase
 {
-    public class RemoteDesktopConnectViewModel : ViewModelBase
+    public ICommand ConnectCommand { get; }
+
+    public ICommand CancelCommand { get; }
+
+    private bool _connectAs;
+    public bool ConnectAs
     {
-        public ICommand ConnectCommand { get; }
-
-        public ICommand CancelCommand { get; }
-
-        private bool _connectAs;
-        public bool ConnectAs
+        get => _connectAs;
+        set
         {
-            get => _connectAs;
-            set
-            {
-                if (value == _connectAs)
-                    return;
+            if (value == _connectAs)
+                return;
 
-                _connectAs = value;
-                OnPropertyChanged();
-            }
+            _connectAs = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string _name;
-        public string Name
+    private string _name;
+    public string Name
+    {
+        get => _name;
+        set
         {
-            get => _name;
-            set
-            {
-                if (value == _name)
-                    return;
+            if (value == _name)
+                return;
 
-                _name = value;
-                OnPropertyChanged();
-            }
+            _name = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string _host;
-        public string Host
+    private string _host;
+    public string Host
+    {
+        get => _host;
+        set
         {
-            get => _host;
-            set
-            {
-                if (value == _host)
-                    return;
+            if (value == _host)
+                return;
 
-                _host = value;
-                OnPropertyChanged();
-            }
+            _host = value;
+            OnPropertyChanged();
         }
+    }
 
-        public ICollectionView HostHistoryView { get; }
+    public ICollectionView HostHistoryView { get; }
 
-        private bool _useCredentials;
-        public bool UseCredentials
+    private bool _useCredentials;
+    public bool UseCredentials
+    {
+        get => _useCredentials;
+        set
         {
-            get => _useCredentials;
-            set
-            {
-                if (value == _useCredentials)
-                    return;
+            if (value == _useCredentials)
+                return;
 
-                _useCredentials = value;
-                OnPropertyChanged();
-            }
+            _useCredentials = value;
+            OnPropertyChanged();
         }
-              
-        private string _username;
-        public string Username
+    }
+          
+    private string _username;
+    public string Username
+    {
+        get => _username;
+        set
         {
-            get => _username;
-            set
-            {
-                if (value == _username)
-                    return;
+            if (value == _username)
+                return;
 
-                _username = value;
-                OnPropertyChanged();
-            }
+            _username = value;
+            OnPropertyChanged();
         }
+    }
 
-        private SecureString _password = new SecureString();
-        public SecureString Password
+    private SecureString _password = new SecureString();
+    public SecureString Password
+    {
+        get => _password;
+        set
         {
-            get => _password;
-            set
-            {
-                if (value == _password)
-                    return;
+            if (value == _password)
+                return;
 
-                _password = value;
-                OnPropertyChanged();
-            }
+            _password = value;
+            OnPropertyChanged();
         }
+    }
 
-      
-        public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand, Action<RemoteDesktopConnectViewModel> cancelHandler, bool connectAs = false)
-        {
-            ConnectCommand = new RelayCommand(p => connectCommand(this));
-            CancelCommand = new RelayCommand(p => cancelHandler(this));
+  
+    public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand, Action<RemoteDesktopConnectViewModel> cancelHandler, bool connectAs = false)
+    {
+        ConnectCommand = new RelayCommand(p => connectCommand(this));
+        CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            ConnectAs = connectAs;
+        ConnectAs = connectAs;
 
-            if (!ConnectAs)
-                HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
-        }
+        if (!ConnectAs)
+            HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.RemoteDesktop_HostHistory);
     }
 }

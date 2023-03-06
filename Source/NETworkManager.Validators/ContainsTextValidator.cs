@@ -3,13 +3,12 @@ using System.Linq;
 using System.Windows.Controls;
 using NETworkManager.Localization.Resources;
 
-namespace NETworkManager.Validators
+namespace NETworkManager.Validators;
+
+public class ContainsTextValidator : ValidationRule
 {
-    public class ContainsTextValidator : ValidationRule
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            return ((string)value).All(char.IsWhiteSpace) ? new ValidationResult(false, Strings.InputDoesNotContainAnyText) : ValidationResult.ValidResult;
-        }
+        return ((string)value).All(char.IsWhiteSpace) ? new ValidationResult(false, Strings.InputDoesNotContainAnyText) : ValidationResult.ValidResult;
     }
 }

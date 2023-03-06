@@ -1,17 +1,16 @@
-﻿namespace NETworkManager.Models.Network
+﻿namespace NETworkManager.Models.Network;
+
+public class MaximumHopsReachedArgs : System.EventArgs
 {
-    public class MaximumHopsReachedArgs : System.EventArgs
+    public int Hops { get; set; }
+    
+    public MaximumHopsReachedArgs()
     {
-        public int Hops { get; set; }
-        
-        public MaximumHopsReachedArgs()
-        {
 
-        }
+    }
 
-        public MaximumHopsReachedArgs(int hops)
-        {
-            Hops = hops;
-        }
+    public MaximumHopsReachedArgs(int hops)
+    {
+        Hops = hops;
     }
 }

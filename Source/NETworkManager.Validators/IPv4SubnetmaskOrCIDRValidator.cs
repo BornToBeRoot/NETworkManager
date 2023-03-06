@@ -3,28 +3,27 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using NETworkManager.Utilities;
 
-namespace NETworkManager.Validators
+namespace NETworkManager.Validators;
+
+public class IPv4SubnetmaskOrCIDRValidator : ValidationRule
 {
-    public class IPv4SubnetmaskOrCIDRValidator : ValidationRule
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            var subnetmaskOrCidr = (value as string)?.Trim();
+        var subnetmaskOrCidr = (value as string)?.Trim();
 
-            if(string.IsNullOrEmpty(subnetmaskOrCidr))
-                return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmaskOrCIDR);
-
-
-            if (Regex.IsMatch(subnetmaskOrCidr, RegexHelper.SubnetmaskRegex))
-                return ValidationResult.ValidResult;
-
-            if (int.TryParse(subnetmaskOrCidr.TrimStart('/'), out var cidr))
-            {
-                if (cidr >= 0 && cidr < 33)
-                    return ValidationResult.ValidResult;
-            }
-
+        if(string.IsNullOrEmpty(subnetmaskOrCidr))
             return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmaskOrCIDR);
+
+
+        if (Regex.IsMatch(subnetmaskOrCidr, RegexHelper.SubnetmaskRegex))
+            return ValidationResult.ValidResult;
+
+        if (int.TryParse(subnetmaskOrCidr.TrimStart('/'), out var cidr))
+        {
+            if (cidr >= 0 && cidr < 33)
+                return ValidationResult.ValidResult;
         }
+
+        return new ValidationResult(false, Localization.Resources.Strings.EnterValidSubnetmaskOrCIDR);
     }
 }

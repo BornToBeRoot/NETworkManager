@@ -2,23 +2,22 @@
 using System.Globalization;
 using System.Windows.Controls;
 
-namespace NETworkManager.Validators
-{
-    public class OIDValidator : ValidationRule
-    {
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            // Use SharpSNMP new ObjectIdentifiert to validate oid
-            try
-            {
-                var oid = new ObjectIdentifier(value as string);
-            }
-            catch (System.ArgumentException)
-            {
-                return new ValidationResult(false, Localization.Resources.Strings.EnterValidOID);
-            }
+namespace NETworkManager.Validators;
 
-            return ValidationResult.ValidResult;
+public class OIDValidator : ValidationRule
+{
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+    {
+        // Use SharpSNMP new ObjectIdentifiert to validate oid
+        try
+        {
+            var oid = new ObjectIdentifier(value as string);
         }
+        catch (System.ArgumentException)
+        {
+            return new ValidationResult(false, Localization.Resources.Strings.EnterValidOID);
+        }
+
+        return ValidationResult.ValidResult;
     }
 }

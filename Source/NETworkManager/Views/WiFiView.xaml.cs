@@ -2,33 +2,32 @@
 using NETworkManager.ViewModels;
 using System.Windows.Controls;
 
-namespace NETworkManager.Views
+namespace NETworkManager.Views;
+
+public partial class WiFiView
 {
-    public partial class WiFiView
+    private readonly WiFiViewModel _viewModel; 
+
+    public WiFiView()
     {
-        private readonly WiFiViewModel _viewModel; 
+        _viewModel= new WiFiViewModel(DialogCoordinator.Instance);
+        InitializeComponent();
+        DataContext = _viewModel;
+    }
 
-        public WiFiView()
-        {
-            _viewModel= new WiFiViewModel(DialogCoordinator.Instance);
-            InitializeComponent();
-            DataContext = _viewModel;
-        }
+    public void OnViewHide()
+    {
+        _viewModel.OnViewHide();
+    }
 
-        public void OnViewHide()
-        {
-            _viewModel.OnViewHide();
-        }
+    public void OnViewVisible()
+    {
+        _viewModel.OnViewVisible();
+    }
 
-        public void OnViewVisible()
-        {
-            _viewModel.OnViewVisible();
-        }
-
-        private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (sender is ContextMenu menu)
-                menu.DataContext = _viewModel;
-        }
+    private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+    {
+        if (sender is ContextMenu menu)
+            menu.DataContext = _viewModel;
     }
 }

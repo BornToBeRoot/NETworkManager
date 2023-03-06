@@ -15,415 +15,414 @@ using MahApps.Metro.Controls;
 using static NETworkManager.Models.Network.DiscoveryProtocol;
 using System.Windows.Threading;
 
-namespace NETworkManager.ViewModels
+namespace NETworkManager.ViewModels;
+
+public class DiscoveryProtocolViewModel : ViewModelBase
 {
-    public class DiscoveryProtocolViewModel : ViewModelBase
+    #region Variables
+    private readonly IDialogCoordinator _dialogCoordinator;
+
+    private DiscoveryProtocol _discoveryProtocol = new DiscoveryProtocol();
+    private readonly bool _isLoading;
+    System.Timers.Timer _remainingTimer;
+    private int _secondsRemaining;
+
+    private bool _firstRun = true;
+    public bool FirstRun
     {
-        #region Variables
-        private readonly IDialogCoordinator _dialogCoordinator;
-
-        private DiscoveryProtocol _discoveryProtocol = new DiscoveryProtocol();
-        private readonly bool _isLoading;
-        System.Timers.Timer _remainingTimer;
-        private int _secondsRemaining;
-
-        private bool _firstRun = true;
-        public bool FirstRun
+        get => _firstRun;
+        set
         {
-            get => _firstRun;
-            set
-            {
-                if (value == _firstRun)
-                    return;
+            if (value == _firstRun)
+                return;
 
-                _firstRun = value;
-                OnPropertyChanged();
-            }
+            _firstRun = value;
+            OnPropertyChanged();
         }
+    }
 
-        /*
-        private bool _isNetworkInteraceLoading;
-        public bool IsNetworkInterfaceLoading
+    /*
+    private bool _isNetworkInteraceLoading;
+    public bool IsNetworkInterfaceLoading
+    {
+        get => _isNetworkInteraceLoading;
+        set
         {
-            get => _isNetworkInteraceLoading;
-            set
-            {
-                if (value == _isNetworkInteraceLoading)
-                    return;
+            if (value == _isNetworkInteraceLoading)
+                return;
 
-                _isNetworkInteraceLoading = value;
-                OnPropertyChanged();
-            }
+            _isNetworkInteraceLoading = value;
+            OnPropertyChanged();
         }
+    }
 
-        private List<NetworkInterfaceInfo> _networkInterfaces;
-        public List<NetworkInterfaceInfo> NetworkInterfaces
+    private List<NetworkInterfaceInfo> _networkInterfaces;
+    public List<NetworkInterfaceInfo> NetworkInterfaces
+    {
+        get => _networkInterfaces;
+        set
         {
-            get => _networkInterfaces;
-            set
-            {
-                if (value == _networkInterfaces)
-                    return;
+            if (value == _networkInterfaces)
+                return;
 
-                _networkInterfaces = value;
-                OnPropertyChanged();
-            }
+            _networkInterfaces = value;
+            OnPropertyChanged();
         }
+    }
 
-        private NetworkInterfaceInfo _selectedNetworkInterface;
-        public NetworkInterfaceInfo SelectedNetworkInterface
+    private NetworkInterfaceInfo _selectedNetworkInterface;
+    public NetworkInterfaceInfo SelectedNetworkInterface
+    {
+        get => _selectedNetworkInterface;
+        set
         {
-            get => _selectedNetworkInterface;
-            set
+            if (value == _selectedNetworkInterface)
+                return;
+
+            if (value != null)
             {
-                if (value == _selectedNetworkInterface)
-                    return;
-
-                if (value != null)
-                {
-                    if (!_isLoading)
-                        SettingsManager.Current.DiscoveryProtocol_InterfaceId = value.Id;
-
-                    CanCapture = value.IsOperational;
-                }
-
-                _selectedNetworkInterface = value;
-                OnPropertyChanged();
-            }
-        }
-        */
-
-        private List<Protocol> _protocols = new List<Protocol>();
-        public List<Protocol> Protocols
-        {
-            get => _protocols;
-            set
-            {
-                if (value == _protocols)
-                    return;
-
-                _protocols = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private Protocol _selectedProtocol;
-        public Protocol SelectedProtocol
-        {
-            get => _selectedProtocol;
-            set
-            {
-                if (value == _selectedProtocol)
-                    return;
-
                 if (!_isLoading)
-                    SettingsManager.Current.DiscoveryProtocol_Protocol = value;
+                    SettingsManager.Current.DiscoveryProtocol_InterfaceId = value.Id;
 
-                _selectedProtocol = value;
-                OnPropertyChanged();
+                CanCapture = value.IsOperational;
             }
+
+            _selectedNetworkInterface = value;
+            OnPropertyChanged();
         }
+    }
+    */
 
-        private List<int> _durations;
-        public List<int> Durations
+    private List<Protocol> _protocols = new List<Protocol>();
+    public List<Protocol> Protocols
+    {
+        get => _protocols;
+        set
         {
-            get => _durations;
-            set
-            {
-                if (value == _durations)
-                    return;
+            if (value == _protocols)
+                return;
 
-                _durations = value;
-                OnPropertyChanged();
-            }
+            _protocols = value;
+            OnPropertyChanged();
         }
+    }
 
-        private int _selectedDuration;
-        public int SelectedDuration
+    private Protocol _selectedProtocol;
+    public Protocol SelectedProtocol
+    {
+        get => _selectedProtocol;
+        set
         {
-            get => _selectedDuration;
-            set
-            {
-                if (value == _selectedDuration)
-                    return;
+            if (value == _selectedProtocol)
+                return;
 
-                if (!_isLoading)
-                    SettingsManager.Current.DiscoveryProtocol_Duration = value;
+            if (!_isLoading)
+                SettingsManager.Current.DiscoveryProtocol_Protocol = value;
 
-                _selectedDuration = value;
-                OnPropertyChanged();
-            }
+            _selectedProtocol = value;
+            OnPropertyChanged();
         }
+    }
 
-        /*
-        private bool _canCapture;
-        public bool CanCapture
+    private List<int> _durations;
+    public List<int> Durations
+    {
+        get => _durations;
+        set
         {
-            get => _canCapture;
-            set
-            {
-                if (value == _canCapture)
-                    return;
+            if (value == _durations)
+                return;
 
-                _canCapture = value;
-                OnPropertyChanged();
-            }
+            _durations = value;
+            OnPropertyChanged();
         }
-        */
+    }
 
-        private bool _isCapturing;
-        public bool IsCapturing
+    private int _selectedDuration;
+    public int SelectedDuration
+    {
+        get => _selectedDuration;
+        set
         {
-            get => _isCapturing;
-            set
-            {
-                if (value == _isCapturing)
-                    return;
+            if (value == _selectedDuration)
+                return;
 
-                _isCapturing = value;
-                OnPropertyChanged();
-            }
+            if (!_isLoading)
+                SettingsManager.Current.DiscoveryProtocol_Duration = value;
+
+            _selectedDuration = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string _timeRemainingMessage;
-        public string TimeRemainingMessage
+    /*
+    private bool _canCapture;
+    public bool CanCapture
+    {
+        get => _canCapture;
+        set
         {
-            get => _timeRemainingMessage;
-            set
-            {
-                if (value == _timeRemainingMessage)
-                    return;
+            if (value == _canCapture)
+                return;
 
-                _timeRemainingMessage = value;
-                OnPropertyChanged();
-            }
+            _canCapture = value;
+            OnPropertyChanged();
         }
-                
-        private bool _isStatusMessageDisplayed;
-        public bool IsStatusMessageDisplayed
-        {
-            get => _isStatusMessageDisplayed;
-            set
-            {
-                if (value == _isStatusMessageDisplayed)
-                    return;
+    }
+    */
 
-                _isStatusMessageDisplayed = value;
-                OnPropertyChanged();
-            }
+    private bool _isCapturing;
+    public bool IsCapturing
+    {
+        get => _isCapturing;
+        set
+        {
+            if (value == _isCapturing)
+                return;
+
+            _isCapturing = value;
+            OnPropertyChanged();
         }
+    }
 
-        private string _statusMessage;
-        public string StatusMessage
+    private string _timeRemainingMessage;
+    public string TimeRemainingMessage
+    {
+        get => _timeRemainingMessage;
+        set
         {
-            get => _statusMessage;
-            set
-            {
-                if (value == _statusMessage)
-                    return;
+            if (value == _timeRemainingMessage)
+                return;
 
-                _statusMessage = value;
-                OnPropertyChanged();
-            }
+            _timeRemainingMessage = value;
+            OnPropertyChanged();
         }
-
-        private bool _discoveryPackageReceived;
-        public bool DiscoveryPackageReceived
-        {
-            get => _discoveryPackageReceived;
-            set
-            {
-                if (value == _discoveryPackageReceived)
-                    return;
-
-                _discoveryPackageReceived = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private DiscoveryProtocolPackageInfo _discoveryPackage;
-        public DiscoveryProtocolPackageInfo DiscoveryPackage
-        {
-            get => _discoveryPackage;
-            set
-            {
-                if (value == _discoveryPackage)
-                    return;
-
-                _discoveryPackage = value;
-                OnPropertyChanged();
-            }
-        }
-        #endregion
-
-        #region Constructor, LoadSettings
-        public DiscoveryProtocolViewModel(IDialogCoordinator instance)
-        {
-            _isLoading = true;
-
-            _dialogCoordinator = instance;
-
-            //LoadNetworkInterfaces();
-
-            // Detect if network address or status changed...
-            //NetworkChange.NetworkAvailabilityChanged += (sender, args) => ReloadNetworkInterfacesAction();
-            //NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfacesAction();
+    }
             
-            _discoveryProtocol.PackageReceived += DiscoveryProtocol_PackageReceived;
-            _discoveryProtocol.ErrorReceived += DiscoveryProtocol_ErrorReceived;
-            _discoveryProtocol.WarningReceived += DiscoveryProtocol_WarningReceived;
-            _discoveryProtocol.Complete += DiscoveryProtocol_Complete;
+    private bool _isStatusMessageDisplayed;
+    public bool IsStatusMessageDisplayed
+    {
+        get => _isStatusMessageDisplayed;
+        set
+        {
+            if (value == _isStatusMessageDisplayed)
+                return;
 
-            _remainingTimer = new System.Timers.Timer
-            {
-                Interval = 1000
-            };
+            _isStatusMessageDisplayed = value;
+            OnPropertyChanged();
+        }
+    }
 
-            _remainingTimer.Elapsed += Timer_Elapsed;
+    private string _statusMessage;
+    public string StatusMessage
+    {
+        get => _statusMessage;
+        set
+        {
+            if (value == _statusMessage)
+                return;
 
-            LoadSettings();
+            _statusMessage = value;
+            OnPropertyChanged();
+        }
+    }
 
-            SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+    private bool _discoveryPackageReceived;
+    public bool DiscoveryPackageReceived
+    {
+        get => _discoveryPackageReceived;
+        set
+        {
+            if (value == _discoveryPackageReceived)
+                return;
 
-            _isLoading = false;
+            _discoveryPackageReceived = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private DiscoveryProtocolPackageInfo _discoveryPackage;
+    public DiscoveryProtocolPackageInfo DiscoveryPackage
+    {
+        get => _discoveryPackage;
+        set
+        {
+            if (value == _discoveryPackage)
+                return;
+
+            _discoveryPackage = value;
+            OnPropertyChanged();
+        }
+    }
+    #endregion
+
+    #region Constructor, LoadSettings
+    public DiscoveryProtocolViewModel(IDialogCoordinator instance)
+    {
+        _isLoading = true;
+
+        _dialogCoordinator = instance;
+
+        //LoadNetworkInterfaces();
+
+        // Detect if network address or status changed...
+        //NetworkChange.NetworkAvailabilityChanged += (sender, args) => ReloadNetworkInterfacesAction();
+        //NetworkChange.NetworkAddressChanged += (sender, args) => ReloadNetworkInterfacesAction();
+        
+        _discoveryProtocol.PackageReceived += DiscoveryProtocol_PackageReceived;
+        _discoveryProtocol.ErrorReceived += DiscoveryProtocol_ErrorReceived;
+        _discoveryProtocol.WarningReceived += DiscoveryProtocol_WarningReceived;
+        _discoveryProtocol.Complete += DiscoveryProtocol_Complete;
+
+        _remainingTimer = new System.Timers.Timer
+        {
+            Interval = 1000
+        };
+
+        _remainingTimer.Elapsed += Timer_Elapsed;
+
+        LoadSettings();
+
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+
+        _isLoading = false;
+    }
+
+    /*
+    private async Task LoadNetworkInterfaces()
+    {
+        IsNetworkInterfaceLoading = true;
+
+        NetworkInterfaces = await Models.Network.NetworkInterface.GetNetworkInterfacesAsync();
+
+        // Get the last selected interface, if it is still available on this machine...
+        if (NetworkInterfaces.Count > 0)
+        {
+            var info = NetworkInterfaces.FirstOrDefault(s => s.Id == SettingsManager.Current.DiscoveryProtocol_InterfaceId);
+
+            SelectedNetworkInterface = info ?? NetworkInterfaces[0];
         }
 
-        /*
-        private async Task LoadNetworkInterfaces()
+        IsNetworkInterfaceLoading = false;
+    }
+    */
+
+    private void LoadSettings()
+    {
+        Protocols = Enum.GetValues(typeof(Protocol)).Cast<Protocol>().OrderBy(x => x.ToString()).ToList();
+        SelectedProtocol = Protocols.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Protocol);
+        Durations = new List<int>() { 15, 30, 60, 90, 120 };
+        SelectedDuration = Durations.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Duration);
+    }
+    #endregion
+
+    #region ICommands & Actions
+    public ICommand RestartAsAdminCommand => new RelayCommand(p => RestartAsAdminAction());
+
+    public async Task RestartAsAdminAction()
+    {
+        try
         {
-            IsNetworkInterfaceLoading = true;
-
-            NetworkInterfaces = await Models.Network.NetworkInterface.GetNetworkInterfacesAsync();
-
-            // Get the last selected interface, if it is still available on this machine...
-            if (NetworkInterfaces.Count > 0)
-            {
-                var info = NetworkInterfaces.FirstOrDefault(s => s.Id == SettingsManager.Current.DiscoveryProtocol_InterfaceId);
-
-                SelectedNetworkInterface = info ?? NetworkInterfaces[0];
-            }
-
-            IsNetworkInterfaceLoading = false;
+            (Application.Current.MainWindow as MainWindow).RestartApplication(true);
         }
-        */
-
-        private void LoadSettings()
+        catch (Exception ex)
         {
-            Protocols = Enum.GetValues(typeof(Protocol)).Cast<Protocol>().OrderBy(x => x.ToString()).ToList();
-            SelectedProtocol = Protocols.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Protocol);
-            Durations = new List<int>() { 15, 30, 60, 90, 120 };
-            SelectedDuration = Durations.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Duration);
+            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
         }
-        #endregion
+    }
 
-        #region ICommands & Actions
-        public ICommand RestartAsAdminCommand => new RelayCommand(p => RestartAsAdminAction());
+    public ICommand CaptureCommand => new RelayCommand(p => CaptureAction());
 
-        public async Task RestartAsAdminAction()
+    public async Task CaptureAction()
+    {
+        if (FirstRun)
+            FirstRun = false;
+
+        IsStatusMessageDisplayed = false;
+        StatusMessage = string.Empty;
+
+        DiscoveryPackageReceived = false;
+
+        IsCapturing = true;
+
+        int duration = SelectedDuration + 2; // Capture 2 seconds more than the user chose
+
+        _secondsRemaining = duration + 1; // Init powershell etc. takes some time... 
+
+        TimeRemainingMessage = string.Format(Localization.Resources.Strings.XXSecondsRemainingDots, _secondsRemaining);
+
+        _remainingTimer.Start();
+
+        try
         {
-            try
-            {
-                (Application.Current.MainWindow as MainWindow).RestartApplication(true);
-            }
-            catch (Exception ex)
-            {
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-            }
+            _discoveryProtocol.CaptureAsync(duration, SelectedProtocol);
         }
-
-        public ICommand CaptureCommand => new RelayCommand(p => CaptureAction());
-
-        public async Task CaptureAction()
+        catch (Exception ex)
         {
-            if (FirstRun)
-                FirstRun = false;
+            await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
+        }            
+    }
 
-            IsStatusMessageDisplayed = false;
-            StatusMessage = string.Empty;
-
-            DiscoveryPackageReceived = false;
-
-            IsCapturing = true;
-
-            int duration = SelectedDuration + 2; // Capture 2 seconds more than the user chose
-
-            _secondsRemaining = duration + 1; // Init powershell etc. takes some time... 
-
+    private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+    {
+        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+        {
             TimeRemainingMessage = string.Format(Localization.Resources.Strings.XXSecondsRemainingDots, _secondsRemaining);
 
-            _remainingTimer.Start();
-
-            try
-            {
-                _discoveryProtocol.CaptureAsync(duration, SelectedProtocol);
-            }
-            catch (Exception ex)
-            {
-                await _dialogCoordinator.ShowMessageAsync(this, Localization.Resources.Strings.Error, ex.Message, MessageDialogStyle.Affirmative, AppearanceManager.MetroDialog);
-            }            
-        }
-
-        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                TimeRemainingMessage = string.Format(Localization.Resources.Strings.XXSecondsRemainingDots, _secondsRemaining);
-
-                if (_secondsRemaining > 0)
-                    _secondsRemaining--;
-            }));
-        }
-        #endregion
-
-        #region Methods   
-        public void OnViewVisible()
-        {
-
-        }
-
-        public void OnViewHide()
-        {
-
-        }
-        #endregion
-
-        #region Events
-        private void DiscoveryProtocol_PackageReceived(object sender, DiscoveryProtocolPackageArgs e)
-        {
-            DiscoveryPackage = e.PackageInfo;
-
-            DiscoveryPackageReceived = true;
-        }
-
-        private void DiscoveryProtocol_WarningReceived(object sender, DiscoveryProtocolWarningArgs e)
-        {
-            if (!string.IsNullOrEmpty(StatusMessage))
-                StatusMessage += Environment.NewLine;
-
-            StatusMessage += e.Message;
-
-            IsStatusMessageDisplayed = true;
-        }
-
-        private void DiscoveryProtocol_ErrorReceived(object sender, DiscoveryProtocolErrorArgs e)
-        {            
-            if (!string.IsNullOrEmpty(StatusMessage))
-                StatusMessage += Environment.NewLine;
-
-            StatusMessage += e.Message;
-
-            IsStatusMessageDisplayed = true;
-        }
-
-        private void DiscoveryProtocol_Complete(object sender, EventArgs e)
-        {
-            _remainingTimer.Stop();
-            IsCapturing = false;
-        }
-
-        private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-        }
-        #endregion
+            if (_secondsRemaining > 0)
+                _secondsRemaining--;
+        }));
     }
+    #endregion
+
+    #region Methods   
+    public void OnViewVisible()
+    {
+
+    }
+
+    public void OnViewHide()
+    {
+
+    }
+    #endregion
+
+    #region Events
+    private void DiscoveryProtocol_PackageReceived(object sender, DiscoveryProtocolPackageArgs e)
+    {
+        DiscoveryPackage = e.PackageInfo;
+
+        DiscoveryPackageReceived = true;
+    }
+
+    private void DiscoveryProtocol_WarningReceived(object sender, DiscoveryProtocolWarningArgs e)
+    {
+        if (!string.IsNullOrEmpty(StatusMessage))
+            StatusMessage += Environment.NewLine;
+
+        StatusMessage += e.Message;
+
+        IsStatusMessageDisplayed = true;
+    }
+
+    private void DiscoveryProtocol_ErrorReceived(object sender, DiscoveryProtocolErrorArgs e)
+    {            
+        if (!string.IsNullOrEmpty(StatusMessage))
+            StatusMessage += Environment.NewLine;
+
+        StatusMessage += e.Message;
+
+        IsStatusMessageDisplayed = true;
+    }
+
+    private void DiscoveryProtocol_Complete(object sender, EventArgs e)
+    {
+        _remainingTimer.Stop();
+        IsCapturing = false;
+    }
+
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+    }
+    #endregion
 }

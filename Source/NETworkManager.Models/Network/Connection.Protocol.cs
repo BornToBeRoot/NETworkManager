@@ -1,10 +1,9 @@
-﻿namespace NETworkManager.Models.Network
+﻿namespace NETworkManager.Models.Network;
+
+public partial class Connection
 {
-    public partial class Connection
+    public enum Protocol
     {
-        public enum Protocol
-        {
-            TCP
-        }
+        TCP
     }
 }

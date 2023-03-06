@@ -1,9 +1,9 @@
-﻿namespace NETworkManager.Models.Appearance
+﻿namespace NETworkManager.Models.Appearance;
+
+/// <summary>
+/// Class contains informations about MahApps.Metro themes.
+/// </summary>
+public class ThemeColorInfo : BaseColorInfo
 {
-    /// <summary>
-    /// Class contains informations about MahApps.Metro themes.
-    /// </summary>
-    public class ThemeColorInfo : BaseColorInfo
-    {
-    }
+    
 }

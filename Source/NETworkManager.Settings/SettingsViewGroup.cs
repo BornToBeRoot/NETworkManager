@@ -1,8 +1,7 @@
-﻿namespace NETworkManager.Settings
+﻿namespace NETworkManager.Settings;
+
+public enum SettingsViewGroup
 {
-    public enum SettingsViewGroup
-    {
-        General,
-        Applications
-    }
+    General,
+    Applications
 }

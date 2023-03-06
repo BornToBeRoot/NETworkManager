@@ -1,18 +1,17 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 
-namespace NETworkManager.Validators
+namespace NETworkManager.Validators;
+
+public class GroupNameValidator : ValidationRule
 {
-    public class GroupNameValidator : ValidationRule
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            var groupName = value as string;
+        var groupName = value as string;
 
-            if (groupName.StartsWith("~"))
-                return new ValidationResult(false, string.Format(Localization.Resources.Strings.GroupNameCannotStartWithX, "~"));
+        if (groupName.StartsWith("~"))
+            return new ValidationResult(false, string.Format(Localization.Resources.Strings.GroupNameCannotStartWithX, "~"));
 
-            return ValidationResult.ValidResult;
-        }
+        return ValidationResult.ValidResult;
     }
 }

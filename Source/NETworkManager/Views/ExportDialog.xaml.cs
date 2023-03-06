@@ -1,10 +1,9 @@
-﻿namespace NETworkManager.Views
+﻿namespace NETworkManager.Views;
+
+public partial class ExportDialog
 {
-    public partial class ExportDialog
+    public ExportDialog()
     {
-        public ExportDialog()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -3,109 +3,108 @@ using System;
 using System.Windows.Input;
 using NETworkManager.Models.Network;
 
-namespace NETworkManager.ViewModels
+namespace NETworkManager.ViewModels;
+
+public class PortProfileViewModel : ViewModelBase
 {
-    public class PortProfileViewModel : ViewModelBase
+    private readonly bool _isLoading;
+
+    public ICommand SaveCommand { get; }
+
+    public ICommand CancelCommand { get; }
+
+    private string _name;
+    public string Name
     {
-        private readonly bool _isLoading;
-
-        public ICommand SaveCommand { get; }
-
-        public ICommand CancelCommand { get; }
-
-        private string _name;
-        public string Name
+        get => _name;
+        set
         {
-            get => _name;
-            set
-            {
-                if (_name == value)
-                    return;
+            if (_name == value)
+                return;
 
-                _name = value;
+            _name = value;
 
-                if (!_isLoading)
-                    Validate();
+            if (!_isLoading)
+                Validate();
 
-                OnPropertyChanged();
-            }
+            OnPropertyChanged();
         }
+    }
 
-        private string _ports;
-        public string Ports
+    private string _ports;
+    public string Ports
+    {
+        get => _ports;
+        set
         {
-            get => _ports;
-            set
-            {
-                if (_ports == value)
-                    return;
+            if (_ports == value)
+                return;
 
-                _ports = value;
+            _ports = value;
 
-                if (!_isLoading)
-                    Validate();
+            if (!_isLoading)
+                Validate();
 
-                OnPropertyChanged();
-            }
+            OnPropertyChanged();
         }
+    }
 
-        private readonly PortProfileInfo _info;
+    private readonly PortProfileInfo _info;
 
-        private string _previousPortAsString;
+    private string _previousPortAsString;
 
-        private bool _infoChanged;
-        public bool InfoChanged
+    private bool _infoChanged;
+    public bool InfoChanged
+    {
+        get => _infoChanged;
+        set
         {
-            get => _infoChanged;
-            set
-            {
-                if (value == _infoChanged)
-                    return;
+            if (value == _infoChanged)
+                return;
 
-                _infoChanged = value;
-                OnPropertyChanged();
-            }
+            _infoChanged = value;
+            OnPropertyChanged();
         }
+    }
 
-        private bool _isEdited;
-        public bool IsEdited
+    private bool _isEdited;
+    public bool IsEdited
+    {
+        get => _isEdited;
+        set
         {
-            get => _isEdited;
-            set
-            {
-                if (value == _isEdited)
-                    return;
+            if (value == _isEdited)
+                return;
 
-                _isEdited = value;
-                OnPropertyChanged();
-            }
+            _isEdited = value;
+            OnPropertyChanged();
         }
+    }
 
-        public PortProfileViewModel(Action<PortProfileViewModel> saveCommand, Action<PortProfileViewModel> cancelHandler, bool isEdited = false, PortProfileInfo info = null)
-        {
-            _isLoading = true;
+    public PortProfileViewModel(Action<PortProfileViewModel> saveCommand, Action<PortProfileViewModel> cancelHandler, bool isEdited = false, PortProfileInfo info = null)
+    {
+        _isLoading = true;
 
-            SaveCommand = new RelayCommand(p => saveCommand(this));
-            CancelCommand = new RelayCommand(p => cancelHandler(this));
+        SaveCommand = new RelayCommand(p => saveCommand(this));
+        CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-            IsEdited = isEdited;
+        IsEdited = isEdited;
 
-            _info = info ?? new PortProfileInfo();
+        _info = info ?? new PortProfileInfo();
 
-            Name = _info.Name;
+        Name = _info.Name;
 
-            // List to string
-            if (_info.Ports != null)
-                Ports = _info.Ports;
+        // List to string
+        if (_info.Ports != null)
+            Ports = _info.Ports;
 
-            _previousPortAsString = Ports;
+        _previousPortAsString = Ports;
 
-            _isLoading = false;
-        }
+        _isLoading = false;
+    }
 
-        public void Validate()
-        {
-            InfoChanged = _info.Name != Name || _previousPortAsString != Ports;
-        }
+    public void Validate()
+    {
+        InfoChanged = _info.Name != Name || _previousPortAsString != Ports;
     }
 }

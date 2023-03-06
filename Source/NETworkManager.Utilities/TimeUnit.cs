@@ -1,28 +1,27 @@
-﻿namespace NETworkManager.Utilities
+﻿namespace NETworkManager.Utilities;
+
+/// <summary>
+/// Enum for time units.
+/// </summary>
+public enum TimeUnit
 {
     /// <summary>
-    /// Enum for time units.
+    /// No time unit.
     /// </summary>
-    public enum TimeUnit
-    {
-        /// <summary>
-        /// No time unit.
-        /// </summary>
-        None,
+    None,
 
-        /// <summary>
-        /// Second(s) time unit. 
-        /// </summary>
-        Second,
+    /// <summary>
+    /// Second(s) time unit. 
+    /// </summary>
+    Second,
 
-        /// <summary>
-        /// Minute(s) time unit.
-        /// </summary>
-        Minute,
+    /// <summary>
+    /// Minute(s) time unit.
+    /// </summary>
+    Minute,
 
-        /// <summary>
-        /// Hour(s) time unit.
-        /// </summary>
-        Hour
-    }
+    /// <summary>
+    /// Hour(s) time unit.
+    /// </summary>
+    Hour
 }

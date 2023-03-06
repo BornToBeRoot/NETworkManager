@@ -3,43 +3,42 @@ using System;
 using NETworkManager.Models.Network;
 using MahApps.Metro.Controls.Dialogs;
 
-namespace NETworkManager.Views
+namespace NETworkManager.Views;
+
+public partial class PingMonitorView
 {
-    public partial class PingMonitorView
+    private readonly PingMonitorViewModel _viewModel;
+
+    public Guid HostId => _viewModel.HostId;
+
+    public PingMonitorView(Guid hostId, Action<Guid> closeCallback, PingMonitorOptions options)
     {
-        private readonly PingMonitorViewModel _viewModel;
+        InitializeComponent();
 
-        public Guid HostId => _viewModel.HostId;
+        _viewModel = new PingMonitorViewModel(DialogCoordinator.Instance, hostId, closeCallback, options);
 
-        public PingMonitorView(Guid hostId, Action<Guid> closeCallback, PingMonitorOptions options)
-        {
-            InitializeComponent();
+        DataContext = _viewModel;
 
-            _viewModel = new PingMonitorViewModel(DialogCoordinator.Instance, hostId, closeCallback, options);
+        Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+    }
 
-            DataContext = _viewModel;
+    private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    {
+        _viewModel.OnLoaded();
+    }
 
-            Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
-        }
+    public void Export()
+    {
+        _viewModel.Export();
+    }
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _viewModel.OnLoaded();
-        }
+    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+    {
+        _viewModel.OnClose();
+    }
 
-        public void Export()
-        {
-            _viewModel.Export();
-        }
-
-        private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
-        {
-            _viewModel.OnClose();
-        }
-
-        public void CloseView()
-        {
-            _viewModel.OnClose();
-        }
+    public void CloseView()
+    {
+        _viewModel.OnClose();
     }
 }

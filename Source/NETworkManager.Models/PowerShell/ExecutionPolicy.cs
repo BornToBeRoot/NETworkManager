@@ -1,14 +1,13 @@
-﻿namespace NETworkManager.Models.PowerShell
+﻿namespace NETworkManager.Models.PowerShell;
+
+public partial class PowerShell
 {
-    public partial class PowerShell
+    public enum ExecutionPolicy
     {
-        public enum ExecutionPolicy
-        {
-            Restricted,
-            AllSigned,
-            RemoteSigned,
-            Unrestricted,
-            Bypass
-        }
+        Restricted,
+        AllSigned,
+        RemoteSigned,
+        Unrestricted,
+        Bypass
     }
 }

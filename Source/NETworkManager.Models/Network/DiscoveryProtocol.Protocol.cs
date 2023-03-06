@@ -1,30 +1,28 @@
-﻿namespace NETworkManager.Models.Network
+﻿namespace NETworkManager.Models.Network;
+
+/// <summary>
+/// Class to capture network discovery protocol packages.
+/// </summary>
+public partial class DiscoveryProtocol
 {
     /// <summary>
-    /// Class to capture network discovery protocol packages.
+    /// Represents all discovery protocols.
     /// </summary>
-    public partial class DiscoveryProtocol
+    public enum Protocol
     {
         /// <summary>
-        /// Represents all discovery protocols.
+        /// Link layer and Cisco discovery protocol.
         /// </summary>
-        public enum Protocol
-        {
-            /// <summary>
-            /// Link layer and Cisco discovery protocol.
-            /// </summary>
-            LLDP_CDP,
+        LLDP_CDP,
 
-            /// <summary>
-            /// Link layer discovery protocol.
-            /// </summary>
-            LLDP,
+        /// <summary>
+        /// Link layer discovery protocol.
+        /// </summary>
+        LLDP,
 
-            /// <summary>
-            /// Cisco discovery protocol.
-            /// </summary>
-            CDP
-        }
+        /// <summary>
+        /// Cisco discovery protocol.
+        /// </summary>
+        CDP
     }
-
 }

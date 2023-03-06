@@ -1,15 +1,14 @@
 ﻿using System;
 
-namespace NETworkManager.Profiles
+namespace NETworkManager.Profiles;
+
+public class ProfileFileInfoArgs : EventArgs
 {
-    public class ProfileFileInfoArgs : EventArgs
+    public ProfileFileInfo ProfileFileInfo { get; set; }
+
+
+    public ProfileFileInfoArgs(ProfileFileInfo profileFileInfo)
     {
-        public ProfileFileInfo ProfileFileInfo { get; set; }
-
-
-        public ProfileFileInfoArgs(ProfileFileInfo profileFileInfo)
-        {
-            ProfileFileInfo = profileFileInfo;
-        }
+        ProfileFileInfo = profileFileInfo;
     }
 }

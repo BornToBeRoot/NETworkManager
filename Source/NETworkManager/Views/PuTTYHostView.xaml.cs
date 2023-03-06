@@ -5,63 +5,62 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace NETworkManager.Views
+namespace NETworkManager.Views;
+
+public partial class PuTTYHostView
 {
-    public partial class PuTTYHostView
+    private readonly PuTTYHostViewModel _viewModel = new PuTTYHostViewModel(DialogCoordinator.Instance);
+
+    private bool _loaded;
+    
+    public PuTTYHostView()
     {
-        private readonly PuTTYHostViewModel _viewModel = new PuTTYHostViewModel(DialogCoordinator.Instance);
+        InitializeComponent();
+        DataContext = _viewModel;
 
-        private bool _loaded;
-        
-        public PuTTYHostView()
-        {
-            InitializeComponent();
-            DataContext = _viewModel;
+        InterTabController.Partition = ApplicationName.PuTTY.ToString();
+    }
 
-            InterTabController.Partition = ApplicationName.PuTTY.ToString();
-        }
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        _loaded = true;
+    }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            _loaded = true;
-        }
+    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
+    {
+        if (sender is ContextMenu menu)
+            menu.DataContext = _viewModel;
+    }
 
-        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-        {
-            if (sender is ContextMenu menu)
-                menu.DataContext = _viewModel;
-        }
+    private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+            _viewModel.ConnectProfileCommand.Execute(null);
+    }
 
-        private void ListBoxItem_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
-                _viewModel.ConnectProfileCommand.Execute(null);
-        }
+    public async Task AddTab(string host)
+    {
+        // Wait for the interface to load, before displaying the dialog to connect a new profile... 
+        // MahApps will throw an exception... 
+        while (!_loaded)
+            await Task.Delay(250);
 
-        public async Task AddTab(string host)
-        {
-            // Wait for the interface to load, before displaying the dialog to connect a new profile... 
-            // MahApps will throw an exception... 
-            while (!_loaded)
-                await Task.Delay(250);
+        if (_viewModel.IsConfigured)
+            _viewModel.AddTab(host);
+    }
 
-            if (_viewModel.IsConfigured)
-                _viewModel.AddTab(host);
-        }
+    public void OnViewHide()
+    {
+        _viewModel.OnViewHide();
+    }
 
-        public void OnViewHide()
-        {
-            _viewModel.OnViewHide();
-        }
+    public void OnViewVisible()
+    {
+        _viewModel.OnViewVisible();
+    }
 
-        public void OnViewVisible()
-        {
-            _viewModel.OnViewVisible();
-        }
-
-        public void FocusEmbeddedWindow()
-        {
-            _viewModel.FocusEmbeddedWindow();
-        }
+    public void FocusEmbeddedWindow()
+    {
+        _viewModel.FocusEmbeddedWindow();
     }
 }

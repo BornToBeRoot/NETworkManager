@@ -4,26 +4,25 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace NETworkManager.Views
+namespace NETworkManager.Views;
+
+public partial class PortScannerSettingsView
 {
-    public partial class PortScannerSettingsView
+    private readonly PortScannerSettingsViewModel _viewModel = new PortScannerSettingsViewModel(DialogCoordinator.Instance);
+
+    public PortScannerSettingsView()
     {
-        private readonly PortScannerSettingsViewModel _viewModel = new PortScannerSettingsViewModel(DialogCoordinator.Instance);
+        InitializeComponent();
+        DataContext = _viewModel;
+    }
+    private void RowContextMenu_OnOpened(object sender, RoutedEventArgs e)
+    {
+        if (sender is ContextMenu menu)
+            menu.DataContext = _viewModel;
+    }
 
-        public PortScannerSettingsView()
-        {
-            InitializeComponent();
-            DataContext = _viewModel;
-        }
-        private void RowContextMenu_OnOpened(object sender, RoutedEventArgs e)
-        {
-            if (sender is ContextMenu menu)
-                menu.DataContext = _viewModel;
-        }
-
-        private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            _viewModel.EditPortProfile();
-        }
+    private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        _viewModel.EditPortProfile();
     }
 }

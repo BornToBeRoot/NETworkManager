@@ -2,46 +2,45 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace NETworkManager.Settings
+namespace NETworkManager.Settings;
+
+public class ConfigurationInfo : INotifyPropertyChanged
 {
-    public class ConfigurationInfo : INotifyPropertyChanged
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    public bool IsAdmin { get; set; }
+    public string ExecutionPath { get; set; }
+    public string ApplicationFullName { get; set; }
+    public string ApplicationName { get; set; }
+    public bool IsPortable { get; set; }
+    public Version OSVersion { get; set; }
+
+    // Everything below will be set dynamically in the application
+    public bool ShowSettingsResetNoteOnStartup { get; set; }        
+    public bool DisableSaveSettings { get; set; }
+    public bool Restart { get; set; }
+
+    private bool _isDialogOpen;
+    public bool IsDialogOpen
+    {
+        get => _isDialogOpen;
+        set
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (value == _isDialogOpen)
+                return;
+
+            _isDialogOpen = value;
+            OnPropertyChanged();
         }
+    }
 
-        public bool IsAdmin { get; set; }
-        public string ExecutionPath { get; set; }
-        public string ApplicationFullName { get; set; }
-        public string ApplicationName { get; set; }
-        public bool IsPortable { get; set; }
-        public Version OSVersion { get; set; }
+    public ConfigurationInfo()
+    {
 
-        // Everything below will be set dynamically in the application
-        public bool ShowSettingsResetNoteOnStartup { get; set; }        
-        public bool DisableSaveSettings { get; set; }
-        public bool Restart { get; set; }
-
-        private bool _isDialogOpen;
-        public bool IsDialogOpen
-        {
-            get => _isDialogOpen;
-            set
-            {
-                if (value == _isDialogOpen)
-                    return;
-
-                _isDialogOpen = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ConfigurationInfo()
-        {
-
-        }
     }
 }

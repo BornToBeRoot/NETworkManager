@@ -7,73 +7,72 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 
-namespace NETworkManager.Models.Lookup
+namespace NETworkManager.Models.Lookup;
+
+public static partial class PortLookup
 {
-    public static partial class PortLookup
+    #region Variables
+    private static readonly string PortsFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Resources", "Ports.xml");
+
+    private static readonly List<PortLookupInfo> PortList;
+    private static readonly Lookup<int, PortLookupInfo> Ports;
+    #endregion
+
+    #region Constructor
+    static PortLookup()
     {
-        #region Variables
-        private static readonly string PortsFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Resources", "Ports.xml");
+        PortList = new List<PortLookupInfo>();
 
-        private static readonly List<PortLookupInfo> PortList;
-        private static readonly Lookup<int, PortLookupInfo> Ports;
-        #endregion
+        var document = new XmlDocument();
+        document.Load(PortsFilePath);
 
-        #region Constructor
-        static PortLookup()
+        foreach (XmlNode node in document.SelectNodes("/Ports/Port"))
         {
-            PortList = new List<PortLookupInfo>();
+            if (node == null)
+                continue;
 
-            var document = new XmlDocument();
-            document.Load(PortsFilePath);
+            int.TryParse(node.SelectSingleNode("Number")?.InnerText, out var port);
+            Enum.TryParse<Protocol>(node.SelectSingleNode("Protocol")?.InnerText, true, out var protocol);
 
-            foreach (XmlNode node in document.SelectNodes("/Ports/Port"))
+            PortList.Add(new PortLookupInfo(port, protocol, node.SelectSingleNode("Name")?.InnerText, node.SelectSingleNode("Description")?.InnerText));
+        }
+
+        Ports = (Lookup<int, PortLookupInfo>)PortList.ToLookup(x => x.Number);
+    }
+    #endregion
+
+    #region Methods
+    public static Task<List<PortLookupInfo>> LookupAsync(int port)
+    {
+        return Task.Run(() => Lookup(port));
+    }
+
+    public static List<PortLookupInfo> Lookup(int port)
+    {
+        return Ports[port].ToList();
+    }
+
+    public static Task<List<PortLookupInfo>> LookupByServiceAsync(List<string> portsByService)
+    {
+        return Task.Run(() => LookupByService(portsByService));
+    }
+
+    public static List<PortLookupInfo> LookupByService(List<string> portsByService)
+    {
+        var list = new List<PortLookupInfo>();
+
+        foreach (var info in PortList)
+        {
+            foreach (var portByService in portsByService)
             {
-                if (node == null)
-                    continue;
-
-                int.TryParse(node.SelectSingleNode("Number")?.InnerText, out var port);
-                Enum.TryParse<Protocol>(node.SelectSingleNode("Protocol")?.InnerText, true, out var protocol);
-
-                PortList.Add(new PortLookupInfo(port, protocol, node.SelectSingleNode("Name")?.InnerText, node.SelectSingleNode("Description")?.InnerText));
+                if (info.Service.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) > -1 || info.Description.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) > -1)
+                    list.Add(info);
             }
-
-            Ports = (Lookup<int, PortLookupInfo>)PortList.ToLookup(x => x.Number);
-        }
-        #endregion
-
-        #region Methods
-        public static Task<List<PortLookupInfo>> LookupAsync(int port)
-        {
-            return Task.Run(() => Lookup(port));
         }
 
-        public static List<PortLookupInfo> Lookup(int port)
-        {
-            return Ports[port].ToList();
-        }
+        return list;
 
-        public static Task<List<PortLookupInfo>> LookupByServiceAsync(List<string> portsByService)
-        {
-            return Task.Run(() => LookupByService(portsByService));
-        }
-
-        public static List<PortLookupInfo> LookupByService(List<string> portsByService)
-        {
-            var list = new List<PortLookupInfo>();
-
-            foreach (var info in PortList)
-            {
-                foreach (var portByService in portsByService)
-                {
-                    if (info.Service.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) > -1 || info.Description.IndexOf(portByService, StringComparison.OrdinalIgnoreCase) > -1)
-                        list.Add(info);
-                }
-            }
-
-            return list;
-
-        }
+    }
 
 #endregion
-    }
 }

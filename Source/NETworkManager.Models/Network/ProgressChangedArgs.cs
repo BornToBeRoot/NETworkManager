@@ -1,17 +1,16 @@
-﻿namespace NETworkManager.Models.Network
+﻿namespace NETworkManager.Models.Network;
+
+public class ProgressChangedArgs : System.EventArgs
 {
-    public class ProgressChangedArgs : System.EventArgs
+    public int Value { get; set; }
+
+    public ProgressChangedArgs()
     {
-        public int Value { get; set; }
 
-        public ProgressChangedArgs()
-        {
-
-        }
-
-        public ProgressChangedArgs(int value)
-        {            
-            Value = value;
-        }       
     }
+
+    public ProgressChangedArgs(int value)
+    {            
+        Value = value;
+    }       
 }

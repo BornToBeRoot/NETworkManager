@@ -4,13 +4,12 @@ using System.Windows.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Utilities;
 
-namespace NETworkManager.Validators
+namespace NETworkManager.Validators;
+
+public class DomainValidator : ValidationRule
 {
-    public class DomainValidator : ValidationRule
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-        {
-            return Regex.IsMatch((string) value, RegexHelper.DomainRegex) ? ValidationResult.ValidResult : new ValidationResult(false,Strings.EnterValidDomain);
-        }
+        return Regex.IsMatch((string) value, RegexHelper.DomainRegex) ? ValidationResult.ValidResult : new ValidationResult(false,Strings.EnterValidDomain);
     }
 }

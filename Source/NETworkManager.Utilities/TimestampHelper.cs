@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace NETworkManager.Utilities
+namespace NETworkManager.Utilities;
+
+public static class TimestampHelper
 {
-    public static class TimestampHelper
+    public static string GetTimestamp()
     {
-        public static string GetTimestamp()
-        {
-            return DateTime.Now.ToString("yyyyMMddHHmmss");
-        }
+        return DateTime.Now.ToString("yyyyMMddHHmmss");
     }
 }

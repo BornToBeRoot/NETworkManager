@@ -1,38 +1,37 @@
 ﻿using NETworkManager.ViewModels;
 using System.Windows.Controls;
 
-namespace NETworkManager.Controls
+namespace NETworkManager.Controls;
+
+public class DragablzTabItem : ViewModelBase
 {
-    public class DragablzTabItem : ViewModelBase
+    private string _header;
+    public string Header
     {
-        private string _header;
-        public string Header
+        get => _header;
+        set
         {
-            get => _header;
-            set
-            {
-                if (value == _header)
-                    return;
+            if (value == _header)
+                return;
 
-                _header = value;
-                OnPropertyChanged();
-            }
+            _header = value;
+            OnPropertyChanged();
         }
+    }
 
-        public UserControl View { get; set; }
-        public int Id { get; set; }
+    public UserControl View { get; set; }
+    public int Id { get; set; }
 
-        public DragablzTabItem(string header, UserControl view)
-        {
-            Header = header;
-            View = view;         
-        }
+    public DragablzTabItem(string header, UserControl view)
+    {
+        Header = header;
+        View = view;         
+    }
 
-        public DragablzTabItem(string header, UserControl view, int id)
-        {
-            Header = header;
-            View = view;
-            Id = id;
-        }
+    public DragablzTabItem(string header, UserControl view, int id)
+    {
+        Header = header;
+        View = view;
+        Id = id;
     }
 }

@@ -1,13 +1,12 @@
-﻿namespace NETworkManager.Models.Lookup
+﻿namespace NETworkManager.Models.Lookup;
+
+public static partial class PortLookup
 {
-    public static partial class PortLookup
+    public enum Protocol
     {
-        public enum Protocol
-        {
-            Tcp,
-            Udp,
-            Sctp,
-            Dccp
-        }
+        Tcp,
+        Udp,
+        Sctp,
+        Dccp
     }
 }

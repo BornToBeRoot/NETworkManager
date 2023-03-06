@@ -3,42 +3,41 @@ using System.Windows.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.ViewModels;
 
-namespace NETworkManager.Views
+namespace NETworkManager.Views;
+
+public partial class TracerouteView
 {
-    public partial class TracerouteView
+    private readonly TracerouteViewModel _viewModel;
+
+    public TracerouteView(int tabId, string host = null)
     {
-        private readonly TracerouteViewModel _viewModel;
+        InitializeComponent();
 
-        public TracerouteView(int tabId, string host = null)
-        {
-            InitializeComponent();
+        _viewModel = new TracerouteViewModel(DialogCoordinator.Instance, tabId, host);
 
-            _viewModel = new TracerouteViewModel(DialogCoordinator.Instance, tabId, host);
+        DataContext = _viewModel;
 
-            DataContext = _viewModel;
+        Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+    }
 
-            Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
-        }
+    private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    {
+        _viewModel.OnLoaded();
+    }
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _viewModel.OnLoaded();
-        }
+    private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
+    {
+        _viewModel.OnClose();
+    }
 
-        private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
-        {
-            _viewModel.OnClose();
-        }
+    public void CloseTab()
+    {
+        _viewModel.OnClose();
+    }
 
-        public void CloseTab()
-        {
-            _viewModel.OnClose();
-        }
-
-        private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (sender is ContextMenu menu)
-                menu.DataContext = _viewModel;
-        }
+    private void ContextMenu_Opened(object sender, System.Windows.RoutedEventArgs e)
+    {
+        if (sender is ContextMenu menu)
+            menu.DataContext = _viewModel;
     }
 }

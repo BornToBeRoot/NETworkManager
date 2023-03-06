@@ -1,16 +1,15 @@
-﻿namespace NETworkManager.Views
-{
-    public partial class PortProfileDialog
-    {
-        public PortProfileDialog()
-        {
-            InitializeComponent();
-        }
+﻿namespace NETworkManager.Views;
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            // Need to be in loaded event, focusmanger won't work...
-            TextBoxName.Focus();
-        }
+public partial class PortProfileDialog
+{
+    public PortProfileDialog()
+    {
+        InitializeComponent();
+    }
+
+    private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    {
+        // Need to be in loaded event, focusmanger won't work...
+        TextBoxName.Focus();
     }
 }

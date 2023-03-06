@@ -1,15 +1,14 @@
 ﻿using NETworkManager.ViewModels;
 
-namespace NETworkManager.Views
-{
-    public partial class SettingsNetworkView
-    {
-        private readonly SettingsNetworkViewModel _viewModel = new();
+namespace NETworkManager.Views;
 
-        public SettingsNetworkView()
-        {
-            InitializeComponent();
-            DataContext = _viewModel;
-        }
+public partial class SettingsNetworkView
+{
+    private readonly SettingsNetworkViewModel _viewModel = new();
+
+    public SettingsNetworkView()
+    {
+        InitializeComponent();
+        DataContext = _viewModel;
     }
 }

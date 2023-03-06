@@ -1,203 +1,202 @@
-﻿namespace NETworkManager.Documentation
-{ 
+﻿namespace NETworkManager.Documentation;
+
+/// <summary>
+/// Enum to identify documentation page entries.
+/// </summary>
+public enum DocumentationIdentifier
+{
     /// <summary>
-    /// Enum to identify documentation page entries.
+    /// Default documentation page.
     /// </summary>
-    public enum DocumentationIdentifier
-    {
-        /// <summary>
-        /// Default documentation page.
-        /// </summary>
-        Default,
+    Default,
 
-        /// <summary>
-        /// Dashboard documentation page.
-        /// </summary>
-        ApplicationDashboard,
+    /// <summary>
+    /// Dashboard documentation page.
+    /// </summary>
+    ApplicationDashboard,
 
-        /// <summary>
-        /// Network interface documentation page.
-        /// </summary>
-        ApplicationNetworkInterface,
+    /// <summary>
+    /// Network interface documentation page.
+    /// </summary>
+    ApplicationNetworkInterface,
 
-        /// <summary>
-        /// WiFi documentation page.
-        /// </summary>
-        ApplicationWiFi,
+    /// <summary>
+    /// WiFi documentation page.
+    /// </summary>
+    ApplicationWiFi,
 
-        /// <summary>
-        /// IP scanner documentation page.
-        /// </summary>
-        ApplicationIPScanner,
+    /// <summary>
+    /// IP scanner documentation page.
+    /// </summary>
+    ApplicationIPScanner,
 
-        /// <summary>
-        /// Port scanner documentation page.
-        /// </summary>
-        ApplicationPortScanner,
+    /// <summary>
+    /// Port scanner documentation page.
+    /// </summary>
+    ApplicationPortScanner,
 
-        /// <summary>
-        /// Ping monitor documentation page.
-        /// </summary>
-        ApplicationPingMonitor,
+    /// <summary>
+    /// Ping monitor documentation page.
+    /// </summary>
+    ApplicationPingMonitor,
 
-        /// <summary>
-        /// Traceroute documentation page.
-        /// </summary>
-        ApplicationTraceroute,
+    /// <summary>
+    /// Traceroute documentation page.
+    /// </summary>
+    ApplicationTraceroute,
 
-        /// <summary>
-        /// DNS lookup documentation page.
-        /// </summary>
-        ApplicationDnsLookup,
+    /// <summary>
+    /// DNS lookup documentation page.
+    /// </summary>
+    ApplicationDnsLookup,
 
-        /// <summary>
-        /// Remote desktop documentation page.
-        /// </summary>
-        ApplicationRemoteDesktop,
+    /// <summary>
+    /// Remote desktop documentation page.
+    /// </summary>
+    ApplicationRemoteDesktop,
 
-        /// <summary>
-        /// PowerShell documentation page.
-        /// </summary>
-        ApplicationPowerShell,
+    /// <summary>
+    /// PowerShell documentation page.
+    /// </summary>
+    ApplicationPowerShell,
 
-        /// <summary>
-        /// PuTTY documentation page.
-        /// </summary>
-        ApplicationPutty,
+    /// <summary>
+    /// PuTTY documentation page.
+    /// </summary>
+    ApplicationPutty,
 
-        /// <summary>
-        /// AWS Session Manager documentation page.
-        /// </summary>
-        ApplicationAWSSessionManager,
+    /// <summary>
+    /// AWS Session Manager documentation page.
+    /// </summary>
+    ApplicationAWSSessionManager,
 
-        /// <summary>
-        /// TigerVNC documentation page.
-        /// </summary>
-        ApplicationTigerVNC,
+    /// <summary>
+    /// TigerVNC documentation page.
+    /// </summary>
+    ApplicationTigerVNC,
 
-        /// <summary>
-        /// Web Console documentation page.
-        /// </summary>
-        ApplicationWebConsole,
+    /// <summary>
+    /// Web Console documentation page.
+    /// </summary>
+    ApplicationWebConsole,
 
-        /// <summary>
-        /// SNMP documentation page.
-        /// </summary>
-        ApplicationSnmp,
+    /// <summary>
+    /// SNMP documentation page.
+    /// </summary>
+    ApplicationSnmp,
 
-        /// <summary>
-        /// SNTP lookup documentation page.
-        /// </summary>
-        ApplicationSntpLookup,
+    /// <summary>
+    /// SNTP lookup documentation page.
+    /// </summary>
+    ApplicationSntpLookup,
 
-        /// <summary>
-        /// Discovery Protocol documentation page.
-        /// </summary>
-        ApplicationDiscoveryProtocol,
+    /// <summary>
+    /// Discovery Protocol documentation page.
+    /// </summary>
+    ApplicationDiscoveryProtocol,
 
-        /// <summary>
-        /// Wake on LAN documentation page.
-        /// </summary>
-        ApplicationWakeOnLan,
+    /// <summary>
+    /// Wake on LAN documentation page.
+    /// </summary>
+    ApplicationWakeOnLan,
 
-        /// <summary>
-        /// Whois documentation page.
-        /// </summary>
-        ApplicationWhois,
+    /// <summary>
+    /// Whois documentation page.
+    /// </summary>
+    ApplicationWhois,
 
-        /// <summary>
-        /// Subnet Calculator documentation page.
-        /// </summary>
-        ApplicationSubnetCalculator,
+    /// <summary>
+    /// Subnet Calculator documentation page.
+    /// </summary>
+    ApplicationSubnetCalculator,
 
-        /// <summary>
-        /// Bit Calculator documentation page.
-        /// </summary>
-        ApplicationBitCalculator,
+    /// <summary>
+    /// Bit Calculator documentation page.
+    /// </summary>
+    ApplicationBitCalculator,
 
-        /// <summary>
-        /// Lookup documentation page.
-        /// </summary>
-        ApplicationLookup,
+    /// <summary>
+    /// Lookup documentation page.
+    /// </summary>
+    ApplicationLookup,
 
-        /// <summary>
-        /// Connections documentation page.
-        /// </summary>
-        ApplicationConnections,
+    /// <summary>
+    /// Connections documentation page.
+    /// </summary>
+    ApplicationConnections,
 
-        /// <summary>
-        /// Listeners documentation page.
-        /// </summary>
-        ApplicationListeners,
+    /// <summary>
+    /// Listeners documentation page.
+    /// </summary>
+    ApplicationListeners,
 
-        /// <summary>
-        /// ARP Table documentation page.
-        /// </summary>
-        ApplicationArpTable,
+    /// <summary>
+    /// ARP Table documentation page.
+    /// </summary>
+    ApplicationArpTable,
 
-        /// <summary>
-        /// Settings\General documentation page.
-        /// </summary>
-        SettingsGeneral,
+    /// <summary>
+    /// Settings\General documentation page.
+    /// </summary>
+    SettingsGeneral,
 
-        /// <summary>
-        /// Settings\Window documentation page.
-        /// </summary>
-        SettingsWindow,
+    /// <summary>
+    /// Settings\Window documentation page.
+    /// </summary>
+    SettingsWindow,
 
-        /// <summary>
-        /// Settings\Appearance documentation page.
-        /// </summary>
-        SettingsAppearance,
+    /// <summary>
+    /// Settings\Appearance documentation page.
+    /// </summary>
+    SettingsAppearance,
 
-        /// <summary>
-        /// Settings\Language documentation page.
-        /// </summary>
-        SettingsLanguage,
+    /// <summary>
+    /// Settings\Language documentation page.
+    /// </summary>
+    SettingsLanguage,
 
-        /// <summary>
-        /// Settings\Network documentation page.
-        /// </summary>
-        SettingsNetwork,
+    /// <summary>
+    /// Settings\Network documentation page.
+    /// </summary>
+    SettingsNetwork,
 
-        /// <summary>
-        /// Settings\Status documentation page.
-        /// </summary>
-        SettingsStatus,
+    /// <summary>
+    /// Settings\Status documentation page.
+    /// </summary>
+    SettingsStatus,
 
-        /// <summary>
-        /// Settings\HotKeys documentation page.
-        /// </summary>
-        SettingsHotKeys,
+    /// <summary>
+    /// Settings\HotKeys documentation page.
+    /// </summary>
+    SettingsHotKeys,
 
-        /// <summary>
-        /// Settings\Autostart documentation page.
-        /// </summary>
-        SettingsAutostart,
+    /// <summary>
+    /// Settings\Autostart documentation page.
+    /// </summary>
+    SettingsAutostart,
 
-        /// <summary>
-        /// Settings\Update documentation page.
-        /// </summary>
-        SettingsUpdate,
+    /// <summary>
+    /// Settings\Update documentation page.
+    /// </summary>
+    SettingsUpdate,
 
-        /// <summary>
-        /// Settings\Profiles documentation page.
-        /// </summary>
-        SettingsProfiles,
+    /// <summary>
+    /// Settings\Profiles documentation page.
+    /// </summary>
+    SettingsProfiles,
 
-        /// <summary>
-        /// Settings\Settings documentation page.
-        /// </summary>
-        SettingsSettings,
+    /// <summary>
+    /// Settings\Settings documentation page.
+    /// </summary>
+    SettingsSettings,
 
-        /// <summary>
-        /// Profiles documentation page.
-        /// </summary>
-        Profiles,
+    /// <summary>
+    /// Profiles documentation page.
+    /// </summary>
+    Profiles,
 
-        /// <summary>
-        /// Command line arguments.
-        /// </summary>
-        CommandLineArguments            
-    }
+    /// <summary>
+    /// Command line arguments.
+    /// </summary>
+    CommandLineArguments            
 }

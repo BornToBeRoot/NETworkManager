@@ -1,30 +1,29 @@
 ﻿using NETworkManager.Settings;
 using NETworkManager.Utilities;
 
-namespace NETworkManager.ViewModels
+namespace NETworkManager.ViewModels;
+
+public class WhoisSettingsViewModel : ViewModelBase
 {
-    public class WhoisSettingsViewModel : ViewModelBase
+    #region Variables
+    private readonly bool _isLoading;
+    
+   
+    #endregion
+
+    #region Contructor, load settings
+    public WhoisSettingsViewModel()
     {
-        #region Variables
-        private readonly bool _isLoading;
-        
-       
-        #endregion
+        _isLoading = true;
 
-        #region Contructor, load settings
-        public WhoisSettingsViewModel()
-        {
-            _isLoading = true;
+        LoadSettings();
 
-            LoadSettings();
-
-            _isLoading = false;
-        }
-
-        private void LoadSettings()
-        {
-
-        }
-        #endregion
+        _isLoading = false;
     }
+
+    private void LoadSettings()
+    {
+
+    }
+    #endregion
 }
