@@ -1,8 +1,7 @@
-﻿using AWS;
+﻿using NETworkManager.Models.AWS;
 using System.Globalization;
 using System.Windows.Controls;
 
-namespace NETworkManager.Validators;
 namespace NETworkManager.Validators;
 
 public class EmptyOrAWSRegionExistsValidator : ValidationRule

@@ -1,44 +1,43 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 
-namespace NETworkManager.Models.Network
+namespace NETworkManager.Models.Network;
+
+public static class Subnetmask
 {
-    public static class Subnetmask
+    public static List<SubnetmaskInfo> List => GenerateList();
+
+    private static List<SubnetmaskInfo> GenerateList()
     {
-        public static List<SubnetmaskInfo> List => GenerateList();
+        var list = new List<SubnetmaskInfo>();
 
-        private static List<SubnetmaskInfo> GenerateList()
+        for (var i = 2; i < 31; i++)
+            list.Add(GetFromCidr(i));
+
+        return list;
+    }
+
+    public static SubnetmaskInfo GetFromCidr(int cidr)
+    {
+        return new SubnetmaskInfo
         {
-            var list = new List<SubnetmaskInfo>();
+            CIDR = cidr,
+            Subnetmask = ConvertCidrToSubnetmask(cidr)
+        };
+    }
 
-            for (var i = 2; i < 31; i++)
-                list.Add(GetFromCidr(i));
+    public static string ConvertCidrToSubnetmask(int cidr)
+    {
+        var bits = string.Empty;
 
-            return list;
-        }
+        for (var i = 0; i < cidr; i++)
+            bits += "1";
 
-        public static SubnetmaskInfo GetFromCidr(int cidr)
-        {
-            return new SubnetmaskInfo
-            {
-                CIDR = cidr,
-                Subnetmask = ConvertCidrToSubnetmask(cidr)
-            };
-        }
+        return IPv4Address.ToHumanString(bits.PadRight(32, '0'));
+    }
 
-        public static string ConvertCidrToSubnetmask(int cidr)
-        {
-            var bits = string.Empty;
-
-            for (var i = 0; i < cidr; i++)
-                bits += "1";
-
-            return IPv4Address.ToHumanString(bits.PadRight(32, '0'));
-        }
-
-        public static int ConvertSubnetmaskToCidr(IPAddress subnetmask)
-        {
-            return string.Join("", IPv4Address.ToBinaryString(subnetmask.ToString()).Replace(".", "").TrimEnd('0')).Length;
-        }
+    public static int ConvertSubnetmaskToCidr(IPAddress subnetmask)
+    {
+        return string.Join("", IPv4Address.ToBinaryString(subnetmask.ToString()).Replace(".", "").TrimEnd('0')).Length;
     }
 }

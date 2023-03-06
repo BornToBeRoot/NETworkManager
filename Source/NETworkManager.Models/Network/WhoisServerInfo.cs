@@ -1,14 +1,13 @@
-﻿namespace NETworkManager.Models.Network
-{
-    public class WhoisServerInfo
-    {
-        public string Server { get; set; }
-        public string Tld { get; set; }
+﻿namespace NETworkManager.Models.Network;
 
-        public WhoisServerInfo(string server, string tld)
-        {
-            Server = server;
-            Tld = tld;
-        }
+public class WhoisServerInfo
+{
+    public string Server { get; set; }
+    public string Tld { get; set; }
+
+    public WhoisServerInfo(string server, string tld)
+    {
+        Server = server;
+        Tld = tld;
     }
 }

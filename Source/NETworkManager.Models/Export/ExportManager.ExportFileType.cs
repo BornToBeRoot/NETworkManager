@@ -1,13 +1,12 @@
-﻿namespace NETworkManager.Models.Export
+﻿namespace NETworkManager.Models.Export;
+
+public static partial class ExportManager
 {
-    public static partial class ExportManager
+    public enum ExportFileType
     {
-        public enum ExportFileType
-        {
-            CSV,
-            XML,
-            JSON,
-            TXT
-        }
+        CSV,
+        XML,
+        JSON,
+        TXT
     }
 }

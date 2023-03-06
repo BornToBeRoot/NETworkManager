@@ -1,138 +1,137 @@
-﻿namespace NETworkManager.Models
+﻿namespace NETworkManager.Models;
+
+/// <summary>
+/// Represents all available applications.
+/// </summary>
+public enum ApplicationName
 {
     /// <summary>
-    /// Represents all available applications.
+    /// No application.
     /// </summary>
-    public enum ApplicationName
-    {
-        /// <summary>
-        /// No application.
-        /// </summary>
-        None,
+    None,
 
-        /// <summary>
-        /// Dashboard application.
-        /// </summary>            
-        Dashboard,
+    /// <summary>
+    /// Dashboard application.
+    /// </summary>            
+    Dashboard,
 
-        /// <summary>
-        ///  Network interface application.
-        /// </summary>
-        NetworkInterface,
+    /// <summary>
+    ///  Network interface application.
+    /// </summary>
+    NetworkInterface,
 
-        /// <summary>
-        ///  WiFi application.
-        /// </summary>
-        WiFi,
+    /// <summary>
+    ///  WiFi application.
+    /// </summary>
+    WiFi,
 
-        /// <summary>
-        /// IP scanner application.
-        /// </summary>
-        IPScanner,
+    /// <summary>
+    /// IP scanner application.
+    /// </summary>
+    IPScanner,
 
-        /// <summary>
-        /// Port scanner application.
-        /// </summary>
-        PortScanner,
+    /// <summary>
+    /// Port scanner application.
+    /// </summary>
+    PortScanner,
 
-        /// <summary>
-        /// Ping monitor application.
-        /// </summary>
-        PingMonitor,
+    /// <summary>
+    /// Ping monitor application.
+    /// </summary>
+    PingMonitor,
 
-        /// <summary>
-        /// Traceroute application.
-        /// </summary>
-        Traceroute,
+    /// <summary>
+    /// Traceroute application.
+    /// </summary>
+    Traceroute,
 
-        /// <summary>
-        /// DNS lookup application.
-        /// </summary>
-        DNSLookup,
+    /// <summary>
+    /// DNS lookup application.
+    /// </summary>
+    DNSLookup,
 
-        /// <summary>
-        /// Remote Desktop application.
-        /// </summary>
-        RemoteDesktop,
+    /// <summary>
+    /// Remote Desktop application.
+    /// </summary>
+    RemoteDesktop,
 
-        /// <summary>
-        /// PowerShell application.
-        /// </summary>
-        PowerShell,
+    /// <summary>
+    /// PowerShell application.
+    /// </summary>
+    PowerShell,
 
-        /// <summary>
-        /// PuTTY application.
-        /// </summary>
-        PuTTY,
+    /// <summary>
+    /// PuTTY application.
+    /// </summary>
+    PuTTY,
 
-        /// <summary>
-        /// AWS Systems Manager Session Manager.
-        /// </summary>
-        AWSSessionManager,
+    /// <summary>
+    /// AWS Systems Manager Session Manager.
+    /// </summary>
+    AWSSessionManager,
 
-        /// <summary>
-        /// TigerVNC application.
-        /// </summary>
-        TigerVNC,
+    /// <summary>
+    /// TigerVNC application.
+    /// </summary>
+    TigerVNC,
 
-        /// <summary>
-        /// WebConsole application.
-        /// </summary>
-        WebConsole,
-                      
-        /// <summary>
-        /// SNMP application.
-        /// </summary>
-        SNMP,
-        
-        /// <summary>
-        /// SNTP lookup application.
-        /// </summary>
-        SNTPLookup,
-        
-        /// <summary>
-        /// Discovery protocol application.
-        /// </summary>
-        DiscoveryProtocol,
+    /// <summary>
+    /// WebConsole application.
+    /// </summary>
+    WebConsole,
+                  
+    /// <summary>
+    /// SNMP application.
+    /// </summary>
+    SNMP,
+    
+    /// <summary>
+    /// SNTP lookup application.
+    /// </summary>
+    SNTPLookup,
+    
+    /// <summary>
+    /// Discovery protocol application.
+    /// </summary>
+    DiscoveryProtocol,
 
-        /// <summary>
-        /// Wake on LAN application.
-        /// </summary>
-        WakeOnLAN,
+    /// <summary>
+    /// Wake on LAN application.
+    /// </summary>
+    WakeOnLAN,
 
-        /// <summary>
-        /// Whois application.
-        /// </summary>
-        Whois,
+    /// <summary>
+    /// Whois application.
+    /// </summary>
+    Whois,
 
-        /// <summary>
-        /// Subnet calculator application.
-        /// </summary>
-        SubnetCalculator,
+    /// <summary>
+    /// Subnet calculator application.
+    /// </summary>
+    SubnetCalculator,
 
-        /// <summary>
-        /// Bit calculator application.
-        /// </summary>
-        BitCalculator,
+    /// <summary>
+    /// Bit calculator application.
+    /// </summary>
+    BitCalculator,
 
-        /// <summary>
-        /// Lookup application.
-        /// </summary>
-        Lookup,
+    /// <summary>
+    /// Lookup application.
+    /// </summary>
+    Lookup,
 
-        /// <summary>
-        /// Connections application.
-        /// </summary>
-        Connections,
+    /// <summary>
+    /// Connections application.
+    /// </summary>
+    Connections,
 
-        /// <summary>
-        /// Listeners application.
-        /// </summary>
-        Listeners,
+    /// <summary>
+    /// Listeners application.
+    /// </summary>
+    Listeners,
 
-        /// <summary>
-        /// ARP table application.
-        /// </summary>
-        ARPTable
-    }
+    /// <summary>
+    /// ARP table application.
+    /// </summary>
+    ARPTable
 }

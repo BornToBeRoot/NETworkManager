@@ -1,12 +1,11 @@
-﻿namespace NETworkManager.Models.WebConsole
-{
-    public class WebConsoleSessionInfo
-    {
-        public string Url { get; set; }
-        
-        public WebConsoleSessionInfo()
-        {
+﻿namespace NETworkManager.Models.WebConsole;
 
-        }
+public class WebConsoleSessionInfo
+{
+    public string Url { get; set; }
+    
+    public WebConsoleSessionInfo()
+    {
+
     }
 }

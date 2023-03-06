@@ -1,17 +1,16 @@
-﻿namespace NETworkManager.Models.Network
+﻿namespace NETworkManager.Models.Network;
+
+public class TracerouteErrorArgs : System.EventArgs
 {
-    public class TracerouteErrorArgs : System.EventArgs
+    public string ErrorMessage { get; set; }
+
+    public TracerouteErrorArgs()
     {
-        public string ErrorMessage { get; set; }
 
-        public TracerouteErrorArgs()
-        {
+    }
 
-        }
-
-        public TracerouteErrorArgs(string errorMessage)
-        {
-            ErrorMessage = errorMessage;
-        }
+    public TracerouteErrorArgs(string errorMessage)
+    {
+        ErrorMessage = errorMessage;
     }
 }

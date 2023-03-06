@@ -1,13 +1,12 @@
-﻿namespace NETworkManager.Models.Network
+﻿namespace NETworkManager.Models.Network;
+
+/// <summary>
+/// Class contains the settings for the SNTP lookup.
+/// </summary>
+public class SNTPLookupSettings
 {
     /// <summary>
-    /// Class contains the settings for the SNTP lookup.
+    /// Timeout in milliseconds after which the request is aborted.
     /// </summary>
-    public class SNTPLookupSettings
-    {
-        /// <summary>
-        /// Timeout in milliseconds after which the request is aborted.
-        /// </summary>
-        public int Timeout { get; set; }
-    }
+    public int Timeout { get; set; }
 }

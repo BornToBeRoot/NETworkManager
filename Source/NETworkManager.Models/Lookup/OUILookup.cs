@@ -7,68 +7,67 @@ using System;
 using System.Xml;
 using System.Reflection;
 
-namespace NETworkManager.Models.Lookup
+namespace NETworkManager.Models.Lookup;
+
+public static class OUILookup
 {
-    public static class OUILookup
+    #region Variables
+    private static readonly string OuiFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Resources", "OUI.xml");
+
+    private static readonly List<OUIInfo> OUIInfoList;
+    private static readonly Lookup<string, OUIInfo> OUIInfoLookup;
+    #endregion
+
+    #region Constructor
+    static OUILookup()
     {
-        #region Variables
-        private static readonly string OuiFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Resources", "OUI.xml");
+        OUIInfoList = new List<OUIInfo>();
 
-        private static readonly List<OUIInfo> OUIInfoList;
-        private static readonly Lookup<string, OUIInfo> OUIInfoLookup;
-        #endregion
+        var document = new XmlDocument();
+        document.Load(OuiFilePath);
 
-        #region Constructor
-        static OUILookup()
+        foreach (XmlNode node in document.SelectNodes("/OUIs/OUI"))
         {
-            OUIInfoList = new List<OUIInfo>();
-
-            var document = new XmlDocument();
-            document.Load(OuiFilePath);
-
-            foreach (XmlNode node in document.SelectNodes("/OUIs/OUI"))
-            {
-                if (node != null)
-                    OUIInfoList.Add(new OUIInfo(node.SelectSingleNode("MACAddress")?.InnerText, node.SelectSingleNode("Vendor")?.InnerText));
-            }
-
-            OUIInfoLookup = (Lookup<string, OUIInfo>)OUIInfoList.ToLookup(x => x.MACAddress);
-        }
-        #endregion
-
-        #region Methods
-        public static Task<List<OUIInfo>> LookupAsync(string macAddress)
-        {
-            return Task.Run(() => Lookup(macAddress));
+            if (node != null)
+                OUIInfoList.Add(new OUIInfo(node.SelectSingleNode("MACAddress")?.InnerText, node.SelectSingleNode("Vendor")?.InnerText));
         }
 
-        public static List<OUIInfo> Lookup(string macAddress)
-        {
-            var ouiKey = Regex.Replace(macAddress, "[-|:|.]", "").Substring(0, 6).ToUpper();
-
-            return OUIInfoLookup[ouiKey].ToList();
-        }
-
-        public static Task<List<OUIInfo>> LookupByVendorAsync(List<string> vendors)
-        {
-            return Task.Run(() => LookupByVendor(vendors));
-        }
-
-        public static List<OUIInfo> LookupByVendor(List<string> vendors)
-        {
-            var list = new List<OUIInfo>();
-
-            foreach (var info in OUIInfoList)
-            {
-                foreach (var vendor in vendors)
-                {
-                    if (info.Vendor.IndexOf(vendor, StringComparison.OrdinalIgnoreCase) > -1)
-                        list.Add(info);
-                }
-            }
-
-            return list;
-        }
-        #endregion
+        OUIInfoLookup = (Lookup<string, OUIInfo>)OUIInfoList.ToLookup(x => x.MACAddress);
     }
+    #endregion
+
+    #region Methods
+    public static Task<List<OUIInfo>> LookupAsync(string macAddress)
+    {
+        return Task.Run(() => Lookup(macAddress));
+    }
+
+    public static List<OUIInfo> Lookup(string macAddress)
+    {
+        var ouiKey = Regex.Replace(macAddress, "[-|:|.]", "").Substring(0, 6).ToUpper();
+
+        return OUIInfoLookup[ouiKey].ToList();
+    }
+
+    public static Task<List<OUIInfo>> LookupByVendorAsync(List<string> vendors)
+    {
+        return Task.Run(() => LookupByVendor(vendors));
+    }
+
+    public static List<OUIInfo> LookupByVendor(List<string> vendors)
+    {
+        var list = new List<OUIInfo>();
+
+        foreach (var info in OUIInfoList)
+        {
+            foreach (var vendor in vendors)
+            {
+                if (info.Vendor.IndexOf(vendor, StringComparison.OrdinalIgnoreCase) > -1)
+                    list.Add(info);
+            }
+        }
+
+        return list;
+    }
+    #endregion
 }

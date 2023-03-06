@@ -1,33 +1,32 @@
-﻿namespace NETworkManager.Models.Network
+﻿namespace NETworkManager.Models.Network;
+
+/// <summary>
+/// Represents the state of a connection.
+/// </summary>
+public enum ConnectionState
 {
     /// <summary>
-    /// Represents the state of a connection.
+    /// Connection has no state.
     /// </summary>
-    public enum ConnectionState
-    {
-        /// <summary>
-        /// Connection has no state.
-        /// </summary>
-        None,
+    None,
 
-        /// <summary>
-        /// Connection is OK.
-        /// </summary>
-        OK,
+    /// <summary>
+    /// Connection is OK.
+    /// </summary>
+    OK,
 
-        /// <summary>
-        /// Connection is warning.
-        /// </summary>
-        Warning,
+    /// <summary>
+    /// Connection is warning.
+    /// </summary>
+    Warning,
 
-        /// <summary>
-        /// Connection is critical.
-        /// </summary>
-        Critical,
+    /// <summary>
+    /// Connection is critical.
+    /// </summary>
+    Critical,
 
-        /// <summary>
-        /// Informations.
-        /// </summary>
-        Info
-    }
+    /// <summary>
+    /// Informations.
+    /// </summary>
+    Info
 }

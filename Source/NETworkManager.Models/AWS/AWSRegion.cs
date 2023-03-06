@@ -2,21 +2,20 @@
 using NETworkManager.Utilities;
 using System.Collections.Generic;
 
-namespace AWS
+namespace NETworkManager.Models.AWS;
+
+public class AWSRegion : SingletonBase<AWSRegion>
 {
-    public class AWSRegion : SingletonBase<AWSRegion>
+    private readonly HashSet<string> _regions = new();
+
+    public AWSRegion()
     {
-        private readonly HashSet<string> _regions = new();
+        foreach(var region in RegionEndpoint.EnumerableAllRegions)
+           _regions.Add(region.SystemName);
+    }
 
-        public AWSRegion()
-        {
-            foreach(var region in RegionEndpoint.EnumerableAllRegions)
-               _regions.Add(region.SystemName);
-        }
-
-        public bool RegionExists(string region)
-        {
-            return _regions.Contains(region);
-        }
+    public bool RegionExists(string region)
+    {
+        return _regions.Contains(region);
     }
 }

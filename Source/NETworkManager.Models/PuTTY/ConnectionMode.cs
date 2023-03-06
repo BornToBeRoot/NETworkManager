@@ -1,33 +1,32 @@
-﻿namespace NETworkManager.Models.PuTTY
+﻿namespace NETworkManager.Models.PuTTY;
+
+/// <summary>
+/// Connection modes for PuTTY.
+/// </summary>
+public enum ConnectionMode
 {
     /// <summary>
-    /// Connection modes for PuTTY.
+    /// SSH connection.
     /// </summary>
-    public enum ConnectionMode
-    {
-        /// <summary>
-        /// SSH connection.
-        /// </summary>
-        SSH,
+    SSH,
 
-        /// <summary>
-        /// Telnet connection.
-        /// </summary>
-        Telnet,
+    /// <summary>
+    /// Telnet connection.
+    /// </summary>
+    Telnet,
 
-        /// <summary>
-        /// Serial connection.
-        /// </summary>
-        Serial,
+    /// <summary>
+    /// Serial connection.
+    /// </summary>
+    Serial,
 
-        /// <summary>
-        /// Rlogin connection.
-        /// </summary>
-        Rlogin,
+    /// <summary>
+    /// Rlogin connection.
+    /// </summary>
+    Rlogin,
 
-        /// <summary>
-        /// RAW connection.
-        /// </summary>
-        RAW
-    }
+    /// <summary>
+    /// RAW connection.
+    /// </summary>
+    RAW
 }
