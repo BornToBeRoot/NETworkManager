@@ -1,20 +1,19 @@
 ﻿using System.Windows;
 
-namespace NETworkManager.Utilities.WPF
+namespace NETworkManager.Utilities.WPF;
+
+public class BindingProxy : Freezable
 {
-    public class BindingProxy : Freezable
+    protected override Freezable CreateInstanceCore()
     {
-        protected override Freezable CreateInstanceCore()
-        {
-            return new BindingProxy();
-        }
-
-        public object Data
-        {
-            get => GetValue(DataProperty);
-            set => SetValue(DataProperty, value);
-        }
-
-        public static readonly DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy));
+        return new BindingProxy();
     }
+
+    public object Data
+    {
+        get => GetValue(DataProperty);
+        set => SetValue(DataProperty, value);
+    }
+
+    public static readonly DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy));
 }

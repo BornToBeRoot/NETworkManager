@@ -1288,7 +1288,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-                
+
         private string _pingMonitor_ExportFilePath;
         public string PingMonitor_ExportFilePath
         {
@@ -1424,7 +1424,7 @@ namespace NETworkManager.Settings
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
-        }                
+        }
 
         private bool _traceroute_ExpandProfileView = true;
         public bool Traceroute_ExpandProfileView
@@ -3091,7 +3091,7 @@ namespace NETworkManager.Settings
                 SettingsChanged = true;
             }
         }
-        
+
         private ObservableCollection<string> _snmp_HostHistory = new();
         public ObservableCollection<string> SNMP_HostHistory
         {
@@ -3368,31 +3368,61 @@ namespace NETworkManager.Settings
             }
         }
 
-        private bool _wakeOnLAN_ExpandClientView = true;
-        public bool WakeOnLAN_ExpandClientView
+        private ObservableCollection<string> _wakeOnLan_MACAddressHistory = new();
+        public ObservableCollection<string> WakeOnLan_MACAddressHistory
         {
-            get => _wakeOnLAN_ExpandClientView;
+            get => _wakeOnLan_MACAddressHistory;
             set
             {
-                if (value == _wakeOnLAN_ExpandClientView)
+                if (value == _wakeOnLan_MACAddressHistory)
                     return;
 
-                _wakeOnLAN_ExpandClientView = value;
+                _wakeOnLan_MACAddressHistory = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
         }
 
-        private double _wakeOnLAN_ClientWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-        public double WakeOnLAN_ClientWidth
+        private ObservableCollection<string> _wakeOnLan_BroadcastHistory = new();
+        public ObservableCollection<string> WakeOnLan_BroadcastHistory
         {
-            get => _wakeOnLAN_ClientWidth;
+            get => _wakeOnLan_BroadcastHistory;
             set
             {
-                if (Math.Abs(value - _wakeOnLAN_ClientWidth) < GlobalStaticConfiguration.FloatPointFix)
+                if (value == _wakeOnLan_BroadcastHistory)
                     return;
 
-                _wakeOnLAN_ClientWidth = value;
+                _wakeOnLan_BroadcastHistory = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private bool _wakeOnLAN_ExpandProfileView = true;
+        public bool WakeOnLAN_ExpandProfileView
+        {
+            get => _wakeOnLAN_ExpandProfileView;
+            set
+            {
+                if (value == _wakeOnLAN_ExpandProfileView)
+                    return;
+
+                _wakeOnLAN_ExpandProfileView = value;
+                OnPropertyChanged();
+                SettingsChanged = true;
+            }
+        }
+
+        private double _wakeOnLAN_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+        public double WakeOnLAN_ProfileWidth
+        {
+            get => _wakeOnLAN_ProfileWidth;
+            set
+            {
+                if (Math.Abs(value - _wakeOnLAN_ProfileWidth) < GlobalStaticConfiguration.FloatPointFix)
+                    return;
+
+                _wakeOnLAN_ProfileWidth = value;
                 OnPropertyChanged();
                 SettingsChanged = true;
             }
@@ -3531,7 +3561,7 @@ namespace NETworkManager.Settings
         }
 
         private BitCaluclatorUnit _bitCalculator_Unit = GlobalStaticConfiguration.BitCalculator_Unit;
-            public BitCaluclatorUnit BitCalculator_Unit
+        public BitCaluclatorUnit BitCalculator_Unit
         {
             get => _bitCalculator_Unit;
             set
@@ -3941,7 +3971,7 @@ namespace NETworkManager.Settings
             Traceroute_HostHistory.CollectionChanged += CollectionChanged;
 
             // DNS Lookup
-            DNSLookup_HostHistory.CollectionChanged += CollectionChanged;            
+            DNSLookup_HostHistory.CollectionChanged += CollectionChanged;
             DNSLookup_DNSServers_v2.CollectionChanged += CollectionChanged;
 
             // Remote Desktop
@@ -3976,6 +4006,10 @@ namespace NETworkManager.Settings
 
             // SNTP Lookup
             SNTPLookup_SNTPServers.CollectionChanged += CollectionChanged;
+
+            // Wake on LAN
+            WakeOnLan_MACAddressHistory.CollectionChanged += CollectionChanged;
+            WakeOnLan_BroadcastHistory.CollectionChanged += CollectionChanged;
 
             // Subnet Calculator / Calculator
             SubnetCalculator_Calculator_SubnetHistory.CollectionChanged += CollectionChanged;

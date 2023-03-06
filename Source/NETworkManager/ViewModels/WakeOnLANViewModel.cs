@@ -15,6 +15,7 @@ using NETworkManager.Profiles;
 using System.Windows.Threading;
 using System.Collections.Generic;
 using NETworkManager.Models;
+using Amazon.EC2.Model;
 
 namespace NETworkManager.ViewModels
 {
@@ -40,6 +41,7 @@ namespace NETworkManager.ViewModels
                 OnPropertyChanged();
             }
         }
+        public ICollectionView MACAddressHistoryView { get; }
 
         private string _macAddress;
         public string MACAddress
@@ -55,19 +57,7 @@ namespace NETworkManager.ViewModels
             }
         }
 
-        private bool _macAddressHasError;
-        public bool MACAddressHasError
-        {
-            get => _macAddressHasError;
-            set
-            {
-                if (value == _macAddressHasError)
-                    return;
-
-                _macAddressHasError = value;
-                OnPropertyChanged();
-            }
-        }
+        public ICollectionView BroadcastHistoryView { get; }
 
         private string _broadcast;
         public string Broadcast
@@ -79,48 +69,6 @@ namespace NETworkManager.ViewModels
                     return;
 
                 _broadcast = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _broadcastHasError;
-        public bool BroadcastHasError
-        {
-            get => _broadcastHasError;
-            set
-            {
-                if (value == _broadcastHasError)
-                    return;
-
-                _broadcastHasError = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private int _port;
-        public int Port
-        {
-            get => _port;
-            set
-            {
-                if (value == _port)
-                    return;
-
-                _port = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _portHasError;
-        public bool PortHasError
-        {
-            get => _portHasError;
-            set
-            {
-                if (value == _portHasError)
-                    return;
-
-                _portHasError = value;
                 OnPropertyChanged();
             }
         }
@@ -169,7 +117,6 @@ namespace NETworkManager.ViewModels
                 {
                     MACAddress = value.WakeOnLAN_MACAddress;
                     Broadcast = value.WakeOnLAN_Broadcast;
-                    Port = value.WakeOnLAN_OverridePort ? value.WakeOnLAN_Port : SettingsManager.Current.WakeOnLAN_Port;
                 }
 
                 _selectedProfile = value;
@@ -188,7 +135,7 @@ namespace NETworkManager.ViewModels
 
                 _search = value;
 
-                StartDelayedSearch();                
+                StartDelayedSearch();
 
                 OnPropertyChanged();
             }
@@ -221,7 +168,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading)
-                    SettingsManager.Current.WakeOnLAN_ExpandClientView = value;
+                    SettingsManager.Current.WakeOnLAN_ExpandProfileView = value;
 
                 _expandProfileView = value;
 
@@ -242,7 +189,7 @@ namespace NETworkManager.ViewModels
                     return;
 
                 if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) > GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
-                    SettingsManager.Current.WakeOnLAN_ClientWidth = value.Value;
+                    SettingsManager.Current.WakeOnLAN_ProfileWidth = value.Value;
 
                 _profileWidth = value;
 
@@ -260,13 +207,16 @@ namespace NETworkManager.ViewModels
         {
             _dialogCoordinator = instance;
 
+            MACAddressHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.WakeOnLan_MACAddressHistory);
+            BroadcastHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.WakeOnLan_BroadcastHistory);
+
             Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
             Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
             Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
             Profiles.Filter = o =>
             {
-                if (!(o is ProfileInfo info))
+                if (o is not ProfileInfo info)
                     return false;
 
                 if (string.IsNullOrEmpty(Search))
@@ -299,19 +249,18 @@ namespace NETworkManager.ViewModels
 
         private void LoadSettings()
         {
-            Port = SettingsManager.Current.WakeOnLAN_Port;
-            ExpandProfileView = SettingsManager.Current.WakeOnLAN_ExpandClientView;
+            ExpandProfileView = SettingsManager.Current.WakeOnLAN_ExpandProfileView;
 
-            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WakeOnLAN_ClientWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+            ProfileWidth = ExpandProfileView ? new GridLength(SettingsManager.Current.WakeOnLAN_ProfileWidth) : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
-            _tempProfileWidth = SettingsManager.Current.WakeOnLAN_ClientWidth;
+            _tempProfileWidth = SettingsManager.Current.WakeOnLAN_ProfileWidth;
         }
         #endregion
 
         #region ICommands & Actions
         public ICommand WakeUpCommand => new RelayCommand(p => WakeUpAction(), WakeUpAction_CanExecute);
 
-        private bool WakeUpAction_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen && !MACAddressHasError && !BroadcastHasError && !PortHasError;
+        private bool WakeUpAction_CanExecute(object parameter) => Application.Current.MainWindow != null && !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen;
 
         private void WakeUpAction()
         {
@@ -319,8 +268,11 @@ namespace NETworkManager.ViewModels
             {
                 MagicPacket = WakeOnLAN.CreateMagicPacket(MACAddress),
                 Broadcast = IPAddress.Parse(Broadcast),
-                Port = Port
+                Port = SettingsManager.Current.WakeOnLAN_Port
             };
+
+            AddMACAddressToHistory(MACAddress);
+            AddBroadcastToHistory(Broadcast);
 
             WakeUp(info);
         }
@@ -382,7 +334,7 @@ namespace NETworkManager.ViewModels
         {
             IsStatusMessageDisplayed = false;
             IsSending = true;
-
+            
             try
             {
                 WakeOnLAN.Send(info);
@@ -397,10 +349,36 @@ namespace NETworkManager.ViewModels
                 StatusMessage = ex.Message;
                 IsStatusMessageDisplayed = true;
             }
-            finally
-            {
-                IsSending = false;
-            }
+
+
+
+            IsSending = false;
+        }
+
+        private void AddMACAddressToHistory(string macAddress)
+        {
+            // Create the new list
+            var list = ListHelper.Modify(SettingsManager.Current.WakeOnLan_MACAddressHistory.ToList(), macAddress, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.WakeOnLan_MACAddressHistory.Clear();
+            OnPropertyChanged(nameof(MACAddress)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.WakeOnLan_MACAddressHistory.Add(x));
+        }
+
+        private void AddBroadcastToHistory(string broadcast)
+        {
+            // Create the new list
+            var list = ListHelper.Modify(SettingsManager.Current.WakeOnLan_BroadcastHistory.ToList(), broadcast, SettingsManager.Current.General_HistoryListEntries);
+
+            // Clear the old items
+            SettingsManager.Current.WakeOnLan_BroadcastHistory.Clear();
+            OnPropertyChanged(nameof(Broadcast)); // Raise property changed again, after the collection has been cleared
+
+            // Fill with the new items
+            list.ForEach(x => SettingsManager.Current.WakeOnLan_BroadcastHistory.Add(x));
         }
 
         private void StartDelayedSearch()
