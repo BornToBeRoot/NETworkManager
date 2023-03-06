@@ -1,8 +1,8 @@
-﻿using DnsClient;
-using NETworkManager.Utilities;
+﻿using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
@@ -13,11 +13,7 @@ namespace NETworkManager.Models.Network
     public class Traceroute
     {
         #region Variables
-        public int Timeout = 4000;
-        public byte[] Buffer = new byte[32];
-        public int MaximumHops = 30;
-        public bool DontFragement = true;
-        public bool ResolveHostname = true;
+        private readonly TracerouteOptions _options;
         #endregion
 
         #region Events
@@ -39,10 +35,23 @@ namespace NETworkManager.Models.Network
             MaximumHopsReached?.Invoke(this, e);
         }
 
+        public event EventHandler<TracerouteErrorArgs> TraceError;
+        protected virtual void OnTraceError(TracerouteErrorArgs e)
+        {
+            TraceError?.Invoke(this, e);
+        }
+
         public event EventHandler UserHasCanceled;
         protected virtual void OnUserHasCanceled()
         {
             UserHasCanceled?.Invoke(this, EventArgs.Empty);
+        }
+        #endregion
+
+        #region Constructor
+        public Traceroute(TracerouteOptions options)
+        {
+            _options = options;
         }
         #endregion
 
@@ -51,82 +60,97 @@ namespace NETworkManager.Models.Network
         {
             Task.Run(async () =>
             {
-                for (var i = 1; i < MaximumHops + 1; i++)
+                try
                 {
-                    var tasks = new List<Task<Tuple<PingReply, long>>>();
-
-                    for (var y = 0; y < 3; y++)
+                    for (var i = 1; i < _options.MaximumHops + 1; i++)
                     {
-                        var i1 = i;
+                        var tasks = new List<Task<Tuple<PingReply, long>>>();
 
-                        tasks.Add(Task.Run(() =>
+                        // Send 3 pings
+                        for (var y = 0; y < 3; y++)
                         {
-                            var stopwatch = new Stopwatch();
+                            var i1 = i;
 
-                            PingReply pingReply;
-
-                            using (var ping = new System.Net.NetworkInformation.Ping())
+                            tasks.Add(Task.Run(() =>
                             {
-                                stopwatch.Start();
+                                var stopwatch = new Stopwatch();
 
-                                pingReply = ping.Send(ipAddress, Timeout, Buffer, new PingOptions { Ttl = i1, DontFragment = DontFragement });
+                                PingReply pingReply;
 
-                                stopwatch.Stop();
-                            }
+                                using (var ping = new System.Net.NetworkInformation.Ping())
+                                {
+                                    stopwatch.Start();
 
-                            return Tuple.Create(pingReply, stopwatch.ElapsedMilliseconds);
-                        }, cancellationToken));
-                    }
+                                    pingReply = ping.Send(ipAddress, _options.Timeout, _options.Buffer, new PingOptions { Ttl = i1, DontFragment = _options.DontFragment });
 
-                    Task.WaitAll(tasks.ToArray());
+                                    stopwatch.Stop();
+                                }
 
-                    // Check results -> Get IP on success or TTL expired
-                    IPAddress ipAddressHop = null;
+                                return Tuple.Create(pingReply, stopwatch.ElapsedMilliseconds);
+                            }, cancellationToken));
+                        }
 
-                    foreach (var task in tasks)
-                    {
-                        if (task.Result.Item1.Status == IPStatus.TimedOut)
-                            continue;
-                                                
-                        if (task.Result.Item1.Status == IPStatus.TtlExpired || task.Result.Item1.Status == IPStatus.Success)
+                        try
                         {
-                            ipAddressHop = task.Result.Item1.Address;
-                            break;
-                        }                          
-                    }
-                    
-                    // Resolve Hostname
-                    var hostname = string.Empty;
+                            Task.WaitAll(tasks.ToArray());
+                        }
+                        catch (AggregateException ex)
+                        {
+                            // Remove duplicate messages
+                            OnTraceError(new TracerouteErrorArgs(string.Join(", ", ex.Flatten().InnerExceptions.Select(s => s.Message).Distinct())));
+                            return;
+                        }
 
-                    if (ResolveHostname && ipAddressHop != null)
-                    {
-                        var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddressHop);
+                        // Check results -> Get IP on success or TTL expired
+                        IPAddress ipAddressHop = null;
 
-                        if (!dnsResult.HasError)
-                            hostname = dnsResult.Value;
-                    }
+                        foreach (var task in tasks)
+                        {
+                            if (task.Result.Item1.Status == IPStatus.TimedOut)
+                                continue;
 
-                    OnHopReceived(new TracerouteHopReceivedArgs(i, tasks[0].Result.Item2, tasks[1].Result.Item2, tasks[2].Result.Item2, ipAddressHop, hostname, tasks[0].Result.Item1.Status, tasks[1].Result.Item1.Status, tasks[2].Result.Item1.Status));
+                            if (task.Result.Item1.Status == IPStatus.TtlExpired || task.Result.Item1.Status == IPStatus.Success)
+                            {
+                                ipAddressHop = task.Result.Item1.Address;
+                                break;
+                            }
+                        }
 
-                    // Check if finished
-                    if (ipAddressHop != null && ipAddress.ToString() == ipAddressHop.ToString())
-                    {
-                        OnTraceComplete();
+                        // Resolve Hostname
+                        var hostname = string.Empty;
+
+                        if (ipAddressHop != null && _options.ResolveHostname)
+                        {
+                            var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddressHop);
+
+                            if (!dnsResult.HasError)
+                                hostname = dnsResult.Value;
+                        }
+
+                        OnHopReceived(new TracerouteHopReceivedArgs(i, tasks[0].Result.Item2, tasks[1].Result.Item2, tasks[2].Result.Item2, ipAddressHop, hostname, tasks[0].Result.Item1.Status, tasks[1].Result.Item1.Status, tasks[2].Result.Item1.Status));
+
+                        // Check if finished
+                        if (ipAddressHop != null && ipAddress.ToString() == ipAddressHop.ToString())
+                        {
+                            OnTraceComplete();
+                            return;
+                        }
+
+                        // Check for cancel
+                        if (!cancellationToken.IsCancellationRequested)
+                            continue;
+
+                        OnUserHasCanceled();
                         return;
                     }
 
-                    // Check for cancel
-                    if (!cancellationToken.IsCancellationRequested)
-                        continue;
-
-                    OnUserHasCanceled();
-
-                    return;
+                    // Max hops reached...
+                    OnMaximumHopsReached(new MaximumHopsReachedArgs(_options.MaximumHops));
                 }
-
-                // Max hops reached...
-                OnMaximumHopsReached(new MaximumHopsReachedArgs(MaximumHops));
-
+                catch (Exception ex)
+                {
+                    OnTraceError(new TracerouteErrorArgs(ex.Message));
+                }
             }, cancellationToken);
         }
         #endregion

@@ -89,6 +89,8 @@ The profiles and settings are automatically migrated to the new location when th
   - Detect if the DNS result for a query is null even when the DNS server doesn't send an error code and improve the processing of the resource records answers [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
   - In some cases the DNS lookup is not completed, but the user interface indicates that it is completed [#1940](https://github.com/BornToBeRoot/NETworkManager/pull/1940){:target="\_blank"} [#1949](https://github.com/BornToBeRoot/NETworkManager/pull/1949){:target="\_blank"}
   - Detect if a dns server profile with this name already exists [#1960](https://github.com/BornToBeRoot/NETworkManager/pull/1960){:target="\_blank"}
+- **Traceroute**
+  - Don't block the UI if an Exception occurs and show an error message [#1994](https://github.com/BornToBeRoot/NETworkManager/pull/1994){:target="\_blank"}
 - **AWS Session Manager**
   - Use UTF-8 encoding for embedded PowerShell console window [#1925](https://github.com/BornToBeRoot/NETworkManager/pull/1925){:target="\_blank"}
 - **Discovery Protocol**

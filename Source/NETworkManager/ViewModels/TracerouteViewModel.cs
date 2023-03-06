@@ -333,20 +333,21 @@ namespace NETworkManager.ViewModels
 
             try
             {
-                var traceroute = new Traceroute
+                var traceroute = new Traceroute(new TracerouteOptions
                 {
                     Timeout = SettingsManager.Current.Traceroute_Timeout,
                     Buffer = new byte[SettingsManager.Current.Traceroute_Buffer],
                     MaximumHops = SettingsManager.Current.Traceroute_MaximumHops,
-                    DontFragement = true,
-                    ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname
-                };
+                    DontFragment = true,
+                    ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname                    
+                });
 
                 traceroute.HopReceived += Traceroute_HopReceived;
                 traceroute.TraceComplete += Traceroute_TraceComplete;
                 traceroute.MaximumHopsReached += Traceroute_MaximumHopsReached;
+                traceroute.TraceError += Traceroute_TraceError;
                 traceroute.UserHasCanceled += Traceroute_UserHasCanceled;
-
+                
                 traceroute.TraceAsync(ipAddress, _cancellationTokenSource.Token);
 
                 // Add the host to history
@@ -359,7 +360,13 @@ namespace NETworkManager.ViewModels
                 IsRunning = false;
             }
         }
-               
+        
+        private void UserHasCanceled()
+        {
+            CancelTrace = false;
+            IsRunning = false;
+        }
+
         private async Task Export()
         {
             var customDialog = new CustomDialog
@@ -433,13 +440,21 @@ namespace NETworkManager.ViewModels
             IsStatusMessageDisplayed = true;
             IsRunning = false;
         }
-
+        
         private void Traceroute_UserHasCanceled(object sender, EventArgs e)
         {
             CancelTrace = false;
             IsRunning = false;
 
             StatusMessage = Localization.Resources.Strings.CanceledByUserMessage;
+            IsStatusMessageDisplayed = true;
+        }
+
+        private void Traceroute_TraceError(object sender, TracerouteErrorArgs e)
+        {
+            IsRunning = false;
+
+            StatusMessage = e.ErrorMessage;
             IsStatusMessageDisplayed = true;
         }
 
