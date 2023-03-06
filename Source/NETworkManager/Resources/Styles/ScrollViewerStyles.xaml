@@ -66,7 +66,8 @@
                                    Value="{TemplateBinding VerticalOffset}" 
                                    Maximum="{TemplateBinding ScrollableHeight}" 
                                    ViewportSize="{TemplateBinding ViewportHeight}" 
-                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
+                                   Style="{StaticResource ScrollViewerScrollBar}" />
                         <ScrollBar x:Name="PART_HorizontalScrollBar"
                                    Grid.Row="1"
                                    Grid.Column="0"
