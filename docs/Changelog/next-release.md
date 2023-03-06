@@ -52,6 +52,7 @@ The profiles and settings are automatically migrated to the new location when th
   - Max threads changed to to 1024 [#1927](https://github.com/BornToBeRoot/NETworkManager/pull/1927){:target="\_blank"}
   - Event handling when a host is found, user has canceled, etc. [#1969](https://github.com/BornToBeRoot/NETworkManager/pull/1969){:target="\_blank"}
   - Remove option to set the preferred IP protocol for DNS resolution (can now be set globally) [#1950](https://github.com/BornToBeRoot/NETworkManager/pull/1950){:target="\_blank"}
+  - Create profile from IP scanner now passes the MAC address, if available [#1998](https://github.com/BornToBeRoot/NETworkManager/pull/1998){:target="\_blank"}
 - **Port Scanner**
   - Add new port profiles / improve existing ones [#1909](https://github.com/BornToBeRoot/NETworkManager/pull/1909){:target="\_blank"}
   - New Port state "Timed out" if the timelimit is reached. [#1969](https://github.com/BornToBeRoot/NETworkManager/pull/1969){:target="\_blank"}
