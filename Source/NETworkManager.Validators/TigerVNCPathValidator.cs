@@ -7,7 +7,7 @@ namespace NETworkManager.Validators;
 
 public class TigerVNCPathValidator : ValidationRule
 {
-    private static string[] fileNames = new[] { "vncviewer-", "vncviewer64-" };
+    private static readonly string[] fileNames = new[] { "vncviewer-", "vncviewer64-" };
 
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {

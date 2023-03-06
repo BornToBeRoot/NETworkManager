@@ -7,7 +7,7 @@ namespace NETworkManager.Validators;
 
 public class PuTTYPathValidator : ValidationRule
 {
-    private static string[] fileNames = new[] { "putty.exe" };
+    private static readonly string[] fileNames = new[] { "putty.exe" };
 
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {

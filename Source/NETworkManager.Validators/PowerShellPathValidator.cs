@@ -7,7 +7,7 @@ namespace NETworkManager.Validators;
 
 public class PowerShellPathValidator : ValidationRule
 {
-    private static string[] fileNames = new[] { "powershell.exe", "pwsh.exe" };
+    private static readonly string[] fileNames = new[] { "powershell.exe", "pwsh.exe" };
 
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
