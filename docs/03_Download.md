@@ -8,8 +8,8 @@ permalink: /Download
 
 # Download
 
-Version: **2022.12.20.0** <br />
-Release date: **20.12.2022**
+Version: **2023.3.7.0** <br />
+Release date: **07.03.2023**
 
 <table>
   <tr>
@@ -22,38 +22,38 @@ Release date: **20.12.2022**
   </tr>
   <tr>
     <td>
-      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Setup.exe' style="text-decoration: none;" target="_blank">
+      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.3.7.0/NETworkManager_2023.3.7.0_Setup.exe' style="text-decoration: none;" target="_blank">
         <span class="fs-5">
           <button type="button" name="button" class="btn btn-primary">:package: Setup</button>
         </span>
       </a>
     </td>
     <td>
-      <code>36F915D917DF6461CB52C1524F3E7373EC0BC40D3A48E9D28E3D02BAA416E369</code>
+      <code>26CCD741CB9F2B52056C91C94DF281C563886AC0E4799A3D167A0566448574F6</code>
     </td>
   </tr>
   <tr>
     <td>
-      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Portable.zip' style="text-decoration: none;" target="_blank">
+      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.3.7.0/NETworkManager_2023.3.7.0_Portable.zip' style="text-decoration: none;" target="_blank">
         <span class="fs-5">
           <button type="button" name="button" class="btn btn-primary">:package: Portable</button>
         </span>
       </a>
     </td>
     <td>
-      <code>5A5553BF3609749C1214B8B724857AE954C4F8881907BD0DE5F1C44E48D2CEFA</code>
+      <code>B19782CAD036F1F1A64A204EAEBC762B4B519BB4C1836DCD5405C83F8488EB29</code>
     </td>
   </tr>
   <tr>
     <td>
-      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2022.12.20.0/NETworkManager_2022.12.20.0_Archive.zip' style="text-decoration: none;" target="_blank">
+      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.3.7.0/NETworkManager_2023.3.7.0_Archive.zip' style="text-decoration: none;" target="_blank">
         <span class="fs-5">
           <button type="button" name="button" class="btn btn-primary">:package: Archive</button>
         </span>
       </a> 
     </td>
     <td>
-      <code>29D6EE0FD1A822E5CF45F0A175A0CECAE22C64F5551CCBB117C5EE76DC07DF61</code>
+      <code>7787FE873DD2704487A5A065EA473127C888256CCE3ADA928EEE7CB4B2BF9B6F</code>
     </td>
   </tr>
 </table>

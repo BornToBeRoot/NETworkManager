@@ -13,7 +13,7 @@ permalink: /Documentation/Application/SNTPLookup
 New Feature
 {: .label .label-green }
 
-next-release
+2023.3.7.0
 {: .label .label-purple }
 
 With SNTP Lookup you can query one or more SNTP servers to get the current network time.
