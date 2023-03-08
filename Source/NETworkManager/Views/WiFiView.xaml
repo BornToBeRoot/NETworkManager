@@ -159,7 +159,7 @@
                                 <CheckBox Grid.Column="6" Grid.Row="0" Content="{x:Static localization:Strings.GHz5}" IsChecked="{Binding Show5GHzNetworks}" />
                                 <TextBox x:Name="TextBoxSearch" Grid.Column="8" Grid.Row="0" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
                             </Grid>
-                            <controls2:MultiSelectDataGrid Grid.Row="2" Visibility="{Binding IsNetworksLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding NetworksView}" SelectedItem="{Binding SelectedNetwork}" SelectedItemsList="{Binding SelectedNetworks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <controls2:MultiSelectDataGrid Grid.Row="2" Visibility="{Binding IsNetworksLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ItemsSource="{Binding NetworksView}" SelectedItem="{Binding SelectedNetwork}" SelectedItemsList="{Binding SelectedNetworks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <controls2:MultiSelectDataGrid.Resources>
                                     <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">

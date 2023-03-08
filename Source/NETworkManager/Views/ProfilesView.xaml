@@ -32,7 +32,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Groups}" />
-                    <DataGrid x:Name="DataGridGroups" Grid.Column="0" Grid.Row="1" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding Groups}" SelectionMode="Single" SelectedItem="{Binding SelectedGroup}">
+                    <DataGrid x:Name="DataGridGroups" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Groups}" SelectionMode="Single" SelectedItem="{Binding SelectedGroup}">
                         <DataGrid.Resources>
                             <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                             <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">
@@ -102,7 +102,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Profiles}" />
                 <TextBox x:Name="TextBoxSearch" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
-                <controls:MultiSelectDataGrid x:Name="DataGridProfiles" Grid.Column="4" Grid.Row="1" Style="{StaticResource MahApps.Styles.DataGrid}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" FontSize="14" mah:ControlsHelper.ContentCharacterCasing="Normal" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserResizeColumns="False" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="false" IsReadOnly="True"
+                <controls:MultiSelectDataGrid x:Name="DataGridProfiles" Grid.Column="4" Grid.Row="1" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" SelectedItemsList="{Binding SelectedProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="false"
                                       ScrollViewer.CanContentScroll="True"
                                       EnableColumnVirtualization="True"
                                       EnableRowVirtualization="True"
@@ -168,10 +168,10 @@
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </DataGrid.RowStyle>                 
+                    </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profiles:ProfileInfo.Name)}" SortMemberPath="Name" MinWidth="250" Width="Auto" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.Host}" Binding="{Binding (profiles:ProfileInfo.Host)}" SortMemberPath="Host" MinWidth="250" Width="Auto" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (profiles:ProfileInfo.Name)}" SortMemberPath="Name" MinWidth="150" Width="Auto" />
+                        <DataGridTextColumn Header="{x:Static localization:Strings.Host}" Binding="{Binding (profiles:ProfileInfo.Host)}" SortMemberPath="Host" MinWidth="150" Width="Auto" />
                         <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.NetworkInterface}" Binding="{Binding (profiles:ProfileInfo.NetworkInterface_Enabled)}" SortMemberPath="NetworkInterface_Enabled" Width="Auto" />
                         <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.IPScanner}" Binding="{Binding (profiles:ProfileInfo.IPScanner_Enabled)}" SortMemberPath="IPScanner_Enabled" MinWidth="80" Width="Auto" />
                         <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}" Header="{x:Static localization:Strings.PortScanner}" Binding="{Binding (profiles:ProfileInfo.PortScanner_Enabled)}" SortMemberPath="PortScanner_Enabled" MinWidth="80" Width="Auto" />

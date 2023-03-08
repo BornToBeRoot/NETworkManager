@@ -49,7 +49,7 @@
                 </TextBox.Text>
             </TextBox>
         </Grid>
-        <DataGrid x:Name="DataGridServers" AddingNewItem="DataGridServers_AddingNewItem" Grid.Column="0" Grid.Row="2" Style="{StaticResource DefaultDataGrid}" IsReadOnly="False" ItemsSource="{Binding Servers}">
+        <DataGrid x:Name="DataGridServers" AddingNewItem="DataGridServers_AddingNewItem" Grid.Column="0" Grid.Row="2" IsReadOnly="False" ItemsSource="{Binding Servers}">
             <DataGrid.Resources>
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
             </DataGrid.Resources>

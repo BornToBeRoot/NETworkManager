@@ -10,9 +10,7 @@ using System.Collections;
 using System.Windows.Threading;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
-using System.Diagnostics;
 using System.Windows;
-using System.ComponentModel.DataAnnotations;
 
 namespace NETworkManager.ViewModels;
 
@@ -20,7 +18,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
-    private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
+    private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public ICollectionView _groups;
     public ICollectionView Groups
@@ -181,7 +179,6 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
         // Set specific profile or first if null     
         SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(selectedProfileInfo)) ?? Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Name).FirstOrDefault();
-
         SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
     }
     #endregion

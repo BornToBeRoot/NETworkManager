@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <TextBox x:Name="TextBoxSearch" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
         <Grid Grid.Row="2">
-            <controls:MultiSelectDataGrid x:Name="DataGridPortProfiles" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding PortProfiles}" SelectedItemsList="{Binding SelectedPortProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <controls:MultiSelectDataGrid x:Name="DataGridPortProfiles" ItemsSource="{Binding PortProfiles}" SelectedItemsList="{Binding SelectedPortProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <controls:MultiSelectDataGrid.Columns>
                     <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding (network:PortProfileInfo.Name)}" Width="1*" />
                     <DataGridTextColumn Header="{x:Static localization:Strings.Ports}" Binding="{Binding (network:PortProfileInfo.Ports)}" Width="2*" />

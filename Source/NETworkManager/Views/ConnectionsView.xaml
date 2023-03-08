@@ -59,7 +59,7 @@
                     </WrapPanel>
                     <TextBox x:Name="TextBoxSearch" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="250" Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchTextBox}" />
                 </Grid>                
-                <controls:MultiSelectDataGrid x:Name="DataGridConnection" Grid.Row="2" ItemsSource="{Binding ConnectionResultsView}" SelectedItem="{Binding SelectedConnectionInfo}" SelectedItemsList="{Binding SelectedConnectionInfos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultDataGrid}">
+                <controls:MultiSelectDataGrid x:Name="DataGridConnection" Grid.Row="2" ItemsSource="{Binding ConnectionResultsView}" SelectedItem="{Binding SelectedConnectionInfo}" SelectedItemsList="{Binding SelectedConnectionInfos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"  MinWidth="150">

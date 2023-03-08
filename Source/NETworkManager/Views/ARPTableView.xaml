@@ -131,10 +131,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
-                    </controls:MultiSelectDataGrid.Resources>
-                    <controls:MultiSelectDataGrid.Style>
-                        <StaticResource ResourceKey="DefaultDataGrid"/>
-                    </controls:MultiSelectDataGrid.Style>
+                    </controls:MultiSelectDataGrid.Resources>                 
                     <controls:MultiSelectDataGrid.RowStyle>
                         <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
                             <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}"/>

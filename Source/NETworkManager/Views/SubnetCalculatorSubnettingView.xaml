@@ -132,7 +132,7 @@
             </mah:MetroProgressBar>
         </Grid>
         <TextBlock Grid.Row="2" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}" />
-        <controls:MultiSelectDataGrid Grid.Row="3" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding SubnetsResultsView}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" SelectedItem="{Binding SelectedSubnetResult}" SelectedItemsList="{Binding SelectedSubnetResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <controls:MultiSelectDataGrid Grid.Row="3" ItemsSource="{Binding SubnetsResultsView}" Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" SelectedItem="{Binding SelectedSubnetResult}" SelectedItemsList="{Binding SelectedSubnetResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
