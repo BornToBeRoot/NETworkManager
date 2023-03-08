@@ -200,7 +200,7 @@
         The sort function is in the code behind -> when you click on the header of the column, the SortMemberPath is passed to the viewmodel
         CanUserSortColumns="False" -> Default sort won't work with grouped
         -->
-        <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedResult}" SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" ItemsSource="{Binding ResultsView}" SelectedItem="{Binding SelectedResult}" SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <controls:MultiSelectDataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />

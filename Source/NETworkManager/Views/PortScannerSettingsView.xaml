@@ -14,7 +14,7 @@
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.PortScanner}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.PortProfiles}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <DataGrid x:Name="DataGridPortProfiles" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding PortProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedPortProfile}" Height="200" Margin="0,0,0,10">
+        <DataGrid x:Name="DataGridPortProfiles" ItemsSource="{Binding PortProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedPortProfile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="RowContextMenu_OnOpened"  MinWidth="150">

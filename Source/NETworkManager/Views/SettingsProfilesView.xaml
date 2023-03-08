@@ -39,7 +39,7 @@
                 </Grid>
             </Button.Content>
         </Button>
-        <DataGrid x:Name="DataGridProfileLocations" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding ProfileFiles}" SelectionMode="Single" SelectedItem="{Binding SelectedProfileFile}" Height="200" Margin="0,0,0,10">
+        <DataGrid x:Name="DataGridProfileLocations" ItemsSource="{Binding ProfileFiles}" SelectionMode="Single" SelectedItem="{Binding SelectedProfileFile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />

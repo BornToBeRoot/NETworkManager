@@ -30,7 +30,7 @@
         <TextBlock Text="{x:Static localization:Strings.ARP}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveMACAddressAndVendor}" IsOn="{Binding ResolveMACAddress}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.CustomCommands}" Style="{StaticResource HeaderTextBlock}" />
-        <DataGrid x:Name="DataGridCustomCommands" Style="{StaticResource DefaultDataGrid}" ItemsSource="{Binding CustomCommands}" SelectedItem="{Binding SelectedCustomCommand}" Height="200" Margin="0,0,0,10">
+        <DataGrid x:Name="DataGridCustomCommands" ItemsSource="{Binding CustomCommands}" SelectedItem="{Binding SelectedCustomCommand}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="RowContextMenu_OnOpened" MinWidth="150">
