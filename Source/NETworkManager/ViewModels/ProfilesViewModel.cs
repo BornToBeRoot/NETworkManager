@@ -18,7 +18,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
-    private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
+    private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public ICollectionView _groups;
     public ICollectionView Groups
