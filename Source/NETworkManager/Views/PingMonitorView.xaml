@@ -28,7 +28,7 @@
             <ColumnDefinition Width="10" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Rectangle Grid.Column="0" Width="32" Height="32" ToolTip="{Binding ErrorMessage}" Style="{StaticResource WarnImageRectangle}" Fill="Orange" Visibility="{Binding IsErrorMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+        <Rectangle Grid.Column="0" Width="32" Height="32" ToolTip="{Binding ErrorMessage}" Style="{StaticResource ErrorImageRectangle}" Visibility="{Binding IsErrorMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
         <Rectangle Grid.Column="0" Width="32" Height="32" Visibility="{Binding IsErrorMessageDisplayed, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" >
             <Rectangle.Resources>
                 <VisualBrush x:Key="VisualConnected" Stretch="Uniform" Visual="{iconPacks:Material Kind=LanConnect}"/>
