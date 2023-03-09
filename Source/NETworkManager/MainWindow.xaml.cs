@@ -198,8 +198,7 @@ public partial class MainWindow : INotifyPropertyChanged
             var sourceInfos = sourceCollection as ApplicationInfo[] ?? sourceCollection.ToArray();
             var filteredInfos = filteredCollection as ApplicationInfo[] ?? filteredCollection.ToArray();
 
-            if (_filterLastCount == null)
-                _filterLastCount = sourceInfos.Length;
+            _filterLastCount ??= sourceInfos.Length;
 
             SelectedApplication = _filterLastCount > filteredInfos.Length ? filteredInfos.FirstOrDefault() : sourceInfos.FirstOrDefault(x => x.Name == _filterLastViewName);
 
@@ -1018,7 +1017,9 @@ public partial class MainWindow : INotifyPropertyChanged
 
     #region Settings    
     private void OpenSettings()
-    {
+    {        
+        OnApplicationViewHide(SelectedApplication.Name);
+
         if (_settingsView == null)
         {
             _settingsView = new SettingsView();
