@@ -33,7 +33,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-            
+
     private ProfileInfo _profileInfoOnRefresh = null;
 
     private GroupInfo _selectedGroup = new();
@@ -145,25 +145,25 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     public void SetGroupView()
     {
-        Groups = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => !x.IsDynamic) }.View;
+        Groups = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
 
-        Groups.SortDescriptions.Add(new SortDescription(nameof(GroupInfo.Name), ListSortDirection.Ascending));
+        //Groups.SortDescriptions.Add(new SortDescription(nameof(GroupInfo.Name), ListSortDirection.Ascending));
 
         SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
     }
 
     public void SetProfilesView(string groupName, ProfileInfo selectedProfileInfo = null)
     {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Name.Equals(groupName)).Profiles.Where(x => !x.IsDynamic) }.View;
+        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Name.Equals(groupName)).Profiles.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
 
-        Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+        //Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
         Profiles.Filter = o =>
         {
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
             if (o is not ProfileInfo info)
                 return false;
+
+            if (string.IsNullOrEmpty(Search))
+                return true;
 
             var search = Search.Trim();
 
@@ -266,7 +266,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     public async void RefreshProfiles()
     {
         var _selectedGroup = SelectedGroup;
-        _profileInfoOnRefresh = SelectedProfile;            
+        _profileInfoOnRefresh = SelectedProfile;
 
         if (SelectedGroup == null)
             SetGroupView();

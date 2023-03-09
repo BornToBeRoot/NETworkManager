@@ -222,17 +222,19 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         HostsView = CollectionViewSource.GetDefaultView(Hosts);
 
         // Profiles
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
+        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.PingMonitor_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+        
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-        Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
-        Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+        //Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
+        //Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
+        
         Profiles.Filter = o =>
         {
-            if (!(o is ProfileInfo info))
+            if (o is not ProfileInfo info)
                 return false;
 
             if (string.IsNullOrEmpty(Search))
-                return info.PingMonitor_Enabled;
+                return true;
 
             var search = Search.Trim();
 
@@ -243,7 +245,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             */
 
             // Search by: Name, Ping_Host
-            return info.PingMonitor_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PingMonitor_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PingMonitor_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // This will select the first entry as selected item...
