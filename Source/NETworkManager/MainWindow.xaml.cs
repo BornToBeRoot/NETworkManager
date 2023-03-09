@@ -1016,20 +1016,20 @@ public partial class MainWindow : INotifyPropertyChanged
     }
     #endregion
 
-    #region Settings
+    #region Settings    
     private void OpenSettings()
     {
-        // Init settings view
         if (_settingsView == null)
         {
-            _settingsView = new SettingsView(SelectedApplication.Name);
+            _settingsView = new SettingsView();
             ContentControlSettings.Content = _settingsView;
         }
-        else // Change view
+        else
         {
-            _settingsView.ChangeSettingsView(SelectedApplication.Name);
-            _settingsView.Refresh();
+            _settingsView.OnViewVisible();
         }
+
+        _settingsView.ChangeSettingsView(SelectedApplication.Name);
 
         // Show the view (this will hide other content)
         ShowSettingsView = true;
@@ -1043,6 +1043,8 @@ public partial class MainWindow : INotifyPropertyChanged
     private void CloseSettings()
     {
         ShowSettingsView = false;
+
+        _settingsView.OnViewHide();
 
         // Change HotKeys
         if (SettingsManager.HotKeysChanged)
@@ -1072,9 +1074,9 @@ public partial class MainWindow : INotifyPropertyChanged
         SelectedProfileFile = ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.Profiles_LastSelected);
         SelectedProfileFile ??= ProfileFiles.SourceCollection.Cast<ProfileFileInfo>().FirstOrDefault();
     }
-    
+
     private async Task LoadProfile(ProfileFileInfo info, bool showWrongPassword = false)
-    {            
+    {
         if (info.IsEncrypted && !info.IsPasswordValid)
         {
             IsProfileFileLocked = true;
@@ -1129,7 +1131,7 @@ public partial class MainWindow : INotifyPropertyChanged
         catch (System.Security.Cryptography.CryptographicException)
         {
             // Wrong password, try again...
-            LoadProfile(info, true);                
+            LoadProfile(info, true);
         }
         catch
         {
@@ -1527,8 +1529,8 @@ public partial class MainWindow : INotifyPropertyChanged
 
                 foreach (var dnsServer in SettingsManager.Current.Network_CustomDNSServer.Split(";"))
                 {
-                    dnsServers.Add((dnsServer, 53));    
-                }                   
+                    dnsServers.Add((dnsServer, 53));
+                }
 
                 dnsSettings.UseCustomDNSServers = true;
                 dnsSettings.DNSServers = dnsServers;

@@ -9,10 +9,10 @@ public partial class SettingsView
 {
     private readonly SettingsViewModel _viewModel;
 
-    public SettingsView(ApplicationName applicationName)
+    public SettingsView()
     {
         InitializeComponent();
-        _viewModel = new SettingsViewModel(applicationName);
+        _viewModel = new SettingsViewModel();
 
         DataContext = _viewModel;
     }
@@ -30,9 +30,14 @@ public partial class SettingsView
         ListBoxSettings.ScrollIntoView(_viewModel.SelectedSettingsView);
     }
 
-    public void Refresh()
+    public void OnViewVisible()
     {
-        ProfilesView.Refresh();
+        ProfilesView.OnViewVisible();
+    }
+
+    public void OnViewHide()
+    {
+        ProfilesView.OnViewHide();
     }
 
     public DocumentationIdentifier GetDocumentationIdentifier()

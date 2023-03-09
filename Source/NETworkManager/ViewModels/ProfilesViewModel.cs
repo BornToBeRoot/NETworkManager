@@ -10,7 +10,6 @@ using System.Collections;
 using System.Windows.Threading;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
-using System.Windows;
 
 namespace NETworkManager.ViewModels;
 
@@ -20,6 +19,8 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     private readonly IDialogCoordinator _dialogCoordinator;
     private readonly DispatcherTimer _searchDispatcherTimer = new();
 
+    private bool _isViewActive = true;
+    
     public ICollectionView _groups;
     public ICollectionView Groups
     {
@@ -34,7 +35,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private ProfileInfo _profileInfoOnRefresh = null;
+    private ProfileInfo _lastSelectedProfileOnRefresh = null;
 
     private GroupInfo _selectedGroup = new();
     public GroupInfo SelectedGroup
@@ -45,14 +46,14 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             if (value == _selectedGroup)
                 return;
 
+            _selectedGroup = value;
+
             // NullReferenceException occurs if profile file is changed            
             if (value != null)
-                SetProfilesView(value.Name, _profileInfoOnRefresh);
+                SetProfilesView(value.Name, _lastSelectedProfileOnRefresh?.Name);
             else
                 Profiles = null;
 
-
-            _selectedGroup = value;
             OnPropertyChanged();
         }
     }
@@ -138,7 +139,9 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     {
         _dialogCoordinator = instance;
 
-        SetGroupView();
+        SetGroupsView();
+
+        SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
 
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
@@ -146,14 +149,21 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
         _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
     }
 
-    public void SetGroupView()
+    private void SetGroupsView(string groupName = null)
     {
         Groups = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
 
-        SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
+        // Set specific group or first if null
+        SelectedGroup = null;
+
+        if (groupName != null)
+            SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Name.Equals(groupName)) ??
+                Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
+        else
+            SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
     }
 
-    public void SetProfilesView(string groupName, ProfileInfo selectedProfileInfo = null)
+    public void SetProfilesView(string groupName, string profileName = null)
     {
         Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Name.Equals(groupName)).Profiles.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
 
@@ -177,8 +187,15 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
-        // Set specific profile or first if null     
-        SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(selectedProfileInfo)) ?? Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Name).FirstOrDefault();
+        // Set specific profile or first if null
+        SelectedProfile = null;
+
+        if (profileName != null)
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().FirstOrDefault(x => x.Name.Equals(profileName)) ??
+                Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Name).FirstOrDefault();
+        else
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Name).FirstOrDefault();
+
         SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
     }
     #endregion
@@ -239,25 +256,30 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Methods
-    public async void RefreshProfiles()
+    public void OnViewVisible()
     {
-        var _selectedGroup = SelectedGroup;
-        _profileInfoOnRefresh = SelectedProfile;
+        _isViewActive = true;
 
-        if (SelectedGroup == null)
-            SetGroupView();
-
-        await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-        {
-            Groups?.Refresh();
-
-            // Set group again after refresh or first if null (_selectedGroup can be null in some cases)
-            SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Name == _selectedGroup?.Name) ?? Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
-        }));
-
-        _profileInfoOnRefresh = null;
+        RefreshProfiles();
     }
 
+    public void OnViewHide()
+    {
+        _isViewActive = false;
+    }
+    
+    private void RefreshProfiles()
+    {
+        if (!_isViewActive)
+            return;
+        
+        _lastSelectedProfileOnRefresh = SelectedProfile;
+
+        SetGroupsView(SelectedGroup?.Name);
+
+        _lastSelectedProfileOnRefresh = null;
+    }
+    
     public void OnProfileDialogOpen()
     {
 
