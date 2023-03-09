@@ -140,63 +140,11 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
         _dialogCoordinator = instance;
 
         SetGroupsView();
-
-        SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
-
+        
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
         _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
         _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
-    }
-
-    private void SetGroupsView(string groupName = null)
-    {
-        Groups = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
-
-        // Set specific group or first if null
-        SelectedGroup = null;
-
-        if (groupName != null)
-            SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Name.Equals(groupName)) ??
-                Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
-        else
-            SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
-    }
-
-    public void SetProfilesView(string groupName, string profileName = null)
-    {
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Name.Equals(groupName)).Profiles.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
-
-        Profiles.Filter = o =>
-        {
-            if (o is not ProfileInfo info)
-                return false;
-
-            if (string.IsNullOrEmpty(Search))
-                return true;
-
-            var search = Search.Trim();
-
-            // Search by: Tag=xxx (exact match, ignore case)
-            /*
-            if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                return !string.IsNullOrEmpty(info.Tags) && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
-            */
-
-            // Search by: Name, Host
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
-        };
-
-        // Set specific profile or first if null
-        SelectedProfile = null;
-
-        if (profileName != null)
-            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().FirstOrDefault(x => x.Name.Equals(profileName)) ??
-                Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Name).FirstOrDefault();
-        else
-            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Name).FirstOrDefault();
-
-        SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
     }
     #endregion
 
@@ -266,6 +214,56 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     public void OnViewHide()
     {
         _isViewActive = false;
+    }
+
+    private void SetGroupsView(string groupName = null)
+    {
+        Groups = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
+
+        // Set specific group or first if null
+        SelectedGroup = null;
+
+        if (groupName != null)
+            SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().FirstOrDefault(x => x.Name.Equals(groupName)) ??
+                Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
+        else
+            SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
+    }
+
+    private void SetProfilesView(string groupName, string profileName = null)
+    {
+        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Name.Equals(groupName)).Profiles.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
+
+        Profiles.Filter = o =>
+        {
+            if (o is not ProfileInfo info)
+                return false;
+
+            if (string.IsNullOrEmpty(Search))
+                return true;
+
+            var search = Search.Trim();
+
+            // Search by: Tag=xxx (exact match, ignore case)
+            /*
+            if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
+                return !string.IsNullOrEmpty(info.Tags) && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+            */
+
+            // Search by: Name, Host
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+        };
+
+        // Set specific profile or first if null
+        SelectedProfile = null;
+
+        if (profileName != null)
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().FirstOrDefault(x => x.Name.Equals(profileName)) ??
+                Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Name).FirstOrDefault();
+        else
+            SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().OrderBy(x => x.Name).FirstOrDefault();
+
+        SelectedProfiles = new List<ProfileInfo> { SelectedProfile }; // Fix --> Count need to be 1 for EditProfile_CanExecute
     }
     
     private void RefreshProfiles()
