@@ -45,11 +45,12 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             if (value == _selectedGroup)
                 return;
 
-            // NullReferenceException occurs if profile file is changed
-            if (value == null)
-                Profiles = null;
-            else
+            // NullReferenceException occurs if profile file is changed            
+            if (value != null)
                 SetProfilesView(value.Name, _profileInfoOnRefresh);
+            else
+                Profiles = null;
+
 
             _selectedGroup = value;
             OnPropertyChanged();
@@ -109,7 +110,9 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
             _search = value;
 
-            StartDelayedSearch();
+            // Start searching...
+            IsSearching = true;
+            _searchDispatcherTimer.Start();
 
             OnPropertyChanged();
         }
@@ -147,8 +150,6 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     {
         Groups = new CollectionViewSource { Source = ProfileManager.Groups.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
 
-        //Groups.SortDescriptions.Add(new SortDescription(nameof(GroupInfo.Name), ListSortDirection.Ascending));
-
         SelectedGroup = Groups.SourceCollection.Cast<GroupInfo>().OrderBy(x => x.Name).FirstOrDefault();
     }
 
@@ -156,7 +157,6 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     {
         Profiles = new CollectionViewSource { Source = ProfileManager.Groups.FirstOrDefault(x => x.Name.Equals(groupName)).Profiles.Where(x => !x.IsDynamic).OrderBy(x => x.Name) }.View;
 
-        //Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
         Profiles.Filter = o =>
         {
             if (o is not ProfileInfo info)
@@ -173,8 +173,8 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
                 return !string.IsNullOrEmpty(info.Tags) && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
             */
 
-            // Search by: Name
-            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+            // Search by: Name, Host
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
         // Set specific profile or first if null     
@@ -239,30 +239,6 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Methods
-    private void StartDelayedSearch()
-    {
-        if (!IsSearching)
-        {
-            IsSearching = true;
-
-            _searchDispatcherTimer.Start();
-        }
-        else
-        {
-            _searchDispatcherTimer.Stop();
-            _searchDispatcherTimer.Start();
-        }
-    }
-
-    private void StopDelayedSearch()
-    {
-        _searchDispatcherTimer.Stop();
-
-        RefreshProfiles();
-
-        IsSearching = false;
-    }
-
     public async void RefreshProfiles()
     {
         var _selectedGroup = SelectedGroup;
@@ -296,13 +272,16 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
     #region Event
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
-        // Update group view (and profile view) when the profile file has changed            
         RefreshProfiles();
     }
 
     private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
     {
-        StopDelayedSearch();
+        _searchDispatcherTimer.Stop();
+
+        RefreshProfiles();
+
+        IsSearching = false;
     }
     #endregion
 }
