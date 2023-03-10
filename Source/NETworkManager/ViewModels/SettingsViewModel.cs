@@ -129,11 +129,9 @@ public class SettingsViewModel : ViewModelBase
     #endregion
 
     #region Contructor, load settings
-    public SettingsViewModel(ApplicationName applicationName)
+    public SettingsViewModel()
     {
         LoadSettings();
-
-        ChangeSettingsView(applicationName);
     }
 
     private void LoadSettings()
@@ -232,9 +230,6 @@ public class SettingsViewModel : ViewModelBase
                 break;
             case SettingsViewName.Settings:
                 _settingsSettingsView ??= new SettingsSettingsView();
-
-                // Save settings
-                _settingsSettingsView.OnVisible();
 
                 SettingsContent = _settingsSettingsView;
                 break;

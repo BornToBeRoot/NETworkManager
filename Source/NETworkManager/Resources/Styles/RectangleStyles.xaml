@@ -22,7 +22,7 @@
         <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationVariant}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=InformationOutline}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
@@ -33,10 +33,10 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="Fill" Value="Orange" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Alert}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOutline}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
@@ -47,10 +47,10 @@
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
         </Style.Resources>
-        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Setter Property="Fill" Value="Red" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertCircle}"/>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOctagonOutline}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="ToolTipService.InitialShowDelay" Value="0" />

@@ -27,7 +27,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
-    private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
+    private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
@@ -64,10 +64,21 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
+    public ICollectionView _profiles;
+    public ICollectionView Profiles
+    {
+        get => _profiles;
+        set
+        {
+            if (value == _profiles)
+                return;
 
-    public ICollectionView Profiles { get; }
+            _profiles = value;
+            OnPropertyChanged();
+        }
+    }
 
-    private ProfileInfo _selectedProfile = new ProfileInfo();
+    private ProfileInfo _selectedProfile = new();
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -92,7 +103,9 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
             _search = value;
 
-            StartDelayedSearch();
+            // Start searching...
+            IsSearching = true;
+            _searchDispatcherTimer.Start();
 
             OnPropertyChanged();
         }
@@ -170,32 +183,8 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
         TabItems = new ObservableCollection<DragablzTabItem>();
 
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
-        Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-        Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
-        Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
-        Profiles.Filter = o =>
-        {
-            if (!(o is ProfileInfo info))
-                return false;
-
-            if (string.IsNullOrEmpty(Search))
-                return info.TigerVNC_Enabled;
-
-            var search = Search.Trim();
-
-            // Search by: Tag=xxx (exact match, ignore case)
-            /*
-            if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                return !string.IsNullOrEmpty(info.Tags) && info.TigerVNC_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
-            */
-
-            // Search by: Name, TigerVNC_Host
-            return info.TigerVNC_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.TigerVNC_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
-        };
-
-        // This will select the first entry as selected item...
-        SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.TigerVNC_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+        // Profiles
+        SetProfilesView();
 
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
@@ -384,7 +373,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             FileName = SettingsManager.Current.TigerVNC_ApplicationFilePath,
             Arguments = TigerVNC.BuildCommandLine(NETworkManager.Profiles.Application.TigerVNC.CreateSessionInfo(SelectedProfile))
         });
-    }        
+    }
 
     private void Connect(TigerVNCSessionInfo sessionInfo, string header = null)
     {
@@ -415,30 +404,6 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
             return;
 
         SettingsManager.Current.TigerVNC_PortHistory = new ObservableCollection<int>(ListHelper.Modify(SettingsManager.Current.TigerVNC_PortHistory.ToList(), port, SettingsManager.Current.General_HistoryListEntries));
-    }
-
-    private void StartDelayedSearch()
-    {
-        if (!IsSearching)
-        {
-            IsSearching = true;
-
-            _searchDispatcherTimer.Start();
-        }
-        else
-        {
-            _searchDispatcherTimer.Stop();
-            _searchDispatcherTimer.Start();
-        }
-    }
-
-    private void StopDelayedSearch()
-    {
-        _searchDispatcherTimer.Stop();
-
-        RefreshProfiles();
-
-        IsSearching = false;
     }
 
     private void ResizeProfile(bool dueToChangedSize)
@@ -477,15 +442,48 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         _isViewActive = false;
     }
 
+    private void SetProfilesView(ProfileInfo profile = null)
+    {
+        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.TigerVNC_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+
+        Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+
+        Profiles.Filter = o =>
+        {
+            if (o is not ProfileInfo info)
+                return false;
+
+            if (string.IsNullOrEmpty(Search))
+                return true;
+
+            var search = Search.Trim();
+
+            // Search by: Tag=xxx (exact match, ignore case)
+            /*
+            if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
+                return !string.IsNullOrEmpty(info.Tags) && info.PingMonitor_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+            */
+
+            // Search by: Name, TigerVNC_Host
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.TigerVNC_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+        };
+
+        // Set specific profile or first if null
+        SelectedProfile = null;
+
+        if (profile != null)
+            SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
+                Profiles.Cast<ProfileInfo>().FirstOrDefault();
+        else
+            SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
+    }
+
     public void RefreshProfiles()
     {
         if (!_isViewActive)
             return;
 
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-        {
-            Profiles.Refresh();
-        }));
+        SetProfilesView(SelectedProfile);
     }
 
     public void OnProfileDialogOpen()
@@ -507,7 +505,11 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
     {
-        StopDelayedSearch();
+        _searchDispatcherTimer.Stop();
+
+        RefreshProfiles();
+
+        IsSearching = false;
     }
     #endregion
 }

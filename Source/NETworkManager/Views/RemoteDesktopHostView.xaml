@@ -277,8 +277,18 @@
                             </Rectangle>
                         </Button>
                     </Grid>
-
-                    <ListBox Grid.Row="2" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}">
+                    <ListBox Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Profiles}" Visibility="{Binding IsSearching, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedProfile}" Style="{StaticResource ProfileListBox}"
+                             ScrollViewer.CanContentScroll="True"
+                             VirtualizingPanel.IsVirtualizing="True"
+                             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                             VirtualizingPanel.IsContainerVirtualizable="True"
+                             VirtualizingPanel.VirtualizationMode="Recycling"
+                             VirtualizingPanel.ScrollUnit="Item">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel IsItemsHost="True" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
                         <ListBox.Resources>
                             <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{x:Static localization:Strings.Connect}" Command="{Binding ConnectProfileCommand}">

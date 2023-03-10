@@ -39,8 +39,13 @@ public partial class ProfilesView
         }
     }
 
-    public void Refresh()
+    public void OnViewVisible()
     {
-        _viewModel.RefreshProfiles();
+        _viewModel.OnViewVisible();
+    }
+
+    public void OnViewHide()
+    {
+        _viewModel.OnViewHide();
     }
 }

@@ -24,9 +24,4 @@ public partial class SettingsSettingsView
         if (window != null)
             _viewModel.CloseAction = window.Close;      
     }
-
-    public void OnVisible()
-    {
-
-    }
 }

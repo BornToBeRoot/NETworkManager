@@ -2,7 +2,6 @@
 using NETworkManager.Utilities;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Data;
 using System.Windows.Input;
 

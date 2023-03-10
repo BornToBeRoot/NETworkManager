@@ -50,7 +50,7 @@ public class GroupViewModel : ViewModelBase
                 return;
 
             // Check name for duplicate...
-            if (_groups.Contains(value) && !value.Equals(Group.Name))
+            if (_groups.Contains(value, StringComparer.OrdinalIgnoreCase) && !value.Equals(Group.Name, StringComparison.OrdinalIgnoreCase))
                 NameIsValid = false;
             else
                 NameIsValid = true;
