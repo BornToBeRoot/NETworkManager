@@ -672,16 +672,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 OnPropertyChanged(nameof(ResolveHostname));
                 break;
         }
-    }
-
-    public void OnProfileDialogOpen()
-    {
-        
-    }
-
-    public void OnProfileDialogClose()
-    {
-        
-    }
+    }    
     #endregion
 }

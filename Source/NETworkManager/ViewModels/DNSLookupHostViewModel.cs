@@ -350,17 +350,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
             return;
 
         SetProfilesView(SelectedProfile);
-    }
-
-    public void OnProfileDialogOpen()
-    {
-
-    }
-
-    public void OnProfileDialogClose()
-    {
-
-    }
+    }    
     #endregion
 
     #region Event
