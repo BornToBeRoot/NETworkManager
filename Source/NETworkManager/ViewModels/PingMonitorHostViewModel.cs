@@ -481,7 +481,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
                 return !string.IsNullOrEmpty(info.Tags) && info.PingMonitor_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
             */
 
-            // Search by: Name, Ping_Host
+            // Search by: Name, PingMonitor_Host
             return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.PingMonitor_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 

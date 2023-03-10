@@ -22,7 +22,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
     private readonly IDialogCoordinator _dialogCoordinator;
-    private readonly DispatcherTimer _searchDispatcherTimer = new DispatcherTimer();
+    private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
     public ObservableCollection<DragablzTabItem> TabItems { get; }
@@ -47,9 +47,21 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
     }
 
     #region Profiles
-    public ICollectionView Profiles { get; }
+    public ICollectionView _profiles;
+    public ICollectionView Profiles
+    {
+        get => _profiles;
+        set
+        {
+            if (value == _profiles)
+                return;
 
-    private ProfileInfo _selectedProfile = new ProfileInfo();
+            _profiles = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private ProfileInfo _selectedProfile = new();
     public ProfileInfo SelectedProfile
     {
         get => _selectedProfile;
@@ -74,7 +86,9 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
 
             _search = value;
 
-            StartDelayedSearch();
+            // Start searching...
+            IsSearching = true;
+            _searchDispatcherTimer.Start();
 
             OnPropertyChanged();
         }
@@ -153,32 +167,8 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
             new DragablzTabItem(Localization.Resources.Strings.NewTab, new DNSLookupView (_tabId), _tabId)
         };
 
-        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles) }.View;
-        Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-        Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Group), ListSortDirection.Ascending));
-        Profiles.SortDescriptions.Add(new SortDescription(nameof(ProfileInfo.Name), ListSortDirection.Ascending));
-        Profiles.Filter = o =>
-        {
-            if (!(o is ProfileInfo info))
-                return false;
-
-            if (string.IsNullOrEmpty(Search))
-                return info.DNSLookup_Enabled;
-
-            var search = Search.Trim();
-
-            // Search by: Tag=xxx (exact match, ignore case)
-            /*
-            if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
-                return !string.IsNullOrEmpty(info.Tags) && info.DNSLookup_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
-            */
-
-            // Search by: Name, DNSLookup_Host
-            return info.DNSLookup_Enabled && (info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.DNSLookup_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1);
-        };
-
-        // This will select the first entry as selected item...
-        SelectedProfile = Profiles.SourceCollection.Cast<ProfileInfo>().Where(x => x.DNSLookup_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name).FirstOrDefault();
+        // Profiles
+        SetProfilesView();
 
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
@@ -272,31 +262,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
     }
     #endregion
 
-    #region Methods
-    private void StartDelayedSearch()
-    {
-        if (!IsSearching)
-        {
-            IsSearching = true;
-
-            _searchDispatcherTimer.Start();
-        }
-        else
-        {
-            _searchDispatcherTimer.Stop();
-            _searchDispatcherTimer.Start();
-        }
-    }
-
-    private void StopDelayedSearch()
-    {
-        _searchDispatcherTimer.Stop();
-
-        RefreshProfiles();
-
-        IsSearching = false;
-    }
-
+    #region Methods    
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;
@@ -342,15 +308,48 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
         _isViewActive = false;
     }
 
+    private void SetProfilesView(ProfileInfo profile = null)
+    {
+        Profiles = new CollectionViewSource { Source = ProfileManager.Groups.SelectMany(x => x.Profiles).Where(x => x.DNSLookup_Enabled).OrderBy(x => x.Group).ThenBy(x => x.Name) }.View;
+
+        Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
+
+        Profiles.Filter = o =>
+        {
+            if (o is not ProfileInfo info)
+                return false;
+
+            if (string.IsNullOrEmpty(Search))
+                return true;
+
+            var search = Search.Trim();
+
+            // Search by: Tag=xxx (exact match, ignore case)
+            /*
+            if (search.StartsWith(ProfileManager.TagIdentifier, StringComparison.OrdinalIgnoreCase))
+                return !string.IsNullOrEmpty(info.Tags) && info.PingMonitor_Enabled && info.Tags.Replace(" ", "").Split(';').Any(str => search.Substring(ProfileManager.TagIdentifier.Length, search.Length - ProfileManager.TagIdentifier.Length).Equals(str, StringComparison.OrdinalIgnoreCase));
+            */
+
+            // Search by: Name, DNSLookup_Host
+            return info.Name.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1 || info.DNSLookup_Host.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
+        };
+
+        // Set specific profile or first if null
+        SelectedProfile = null;
+
+        if (profile != null)
+            SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
+                Profiles.Cast<ProfileInfo>().FirstOrDefault();
+        else
+            SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
+    }
+
     public void RefreshProfiles()
     {
         if (!_isViewActive)
             return;
 
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-        {
-            Profiles.Refresh();
-        }));
+        SetProfilesView(SelectedProfile);
     }
 
     public void OnProfileDialogOpen()
@@ -372,7 +371,11 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
 
     private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
     {
-        StopDelayedSearch();
+        _searchDispatcherTimer.Stop();
+
+        RefreshProfiles();
+
+        IsSearching = false;
     }
     #endregion
 }
