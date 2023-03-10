@@ -29,13 +29,13 @@ public static class ProfileDialogManager
         ProfileViewModel profileViewModel = new(async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.AddProfile(ParseProfileInfo(instance));                
         }, async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames(), group, ProfileEditMode.Add, profile, applicationName);
 
         customDialog.Content = new ProfileDialog
@@ -43,7 +43,7 @@ public static class ProfileDialogManager
             DataContext = profileViewModel
         };
 
-        viewModel.OnProfileDialogOpen();
+        viewModel.OnProfileManagerDialogOpen();
 
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
@@ -59,13 +59,13 @@ public static class ProfileDialogManager
         ProfileViewModel profileViewModel = new(async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.ReplaceProfile(profile, ParseProfileInfo(instance));
         }, async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Edit, profile);
 
         customDialog.Content = new ProfileDialog
@@ -73,7 +73,7 @@ public static class ProfileDialogManager
             DataContext = profileViewModel
         };
 
-        viewModel.OnProfileDialogOpen();
+        viewModel.OnProfileManagerDialogOpen();
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
@@ -88,13 +88,13 @@ public static class ProfileDialogManager
         ProfileViewModel profileViewModel = new(async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.AddProfile(ParseProfileInfo(instance));
         }, async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Copy, profile);
 
         customDialog.Content = new ProfileDialog
@@ -102,7 +102,7 @@ public static class ProfileDialogManager
             DataContext = profileViewModel
         };
 
-        viewModel.OnProfileDialogOpen();
+        viewModel.OnProfileManagerDialogOpen();
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
@@ -116,14 +116,14 @@ public static class ProfileDialogManager
         ConfirmDeleteViewModel confirmDeleteViewModel = new(async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.RemoveProfiles(profiles);
 
         }, async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
         }, profiles.Count == 1 ? Localization.Resources.Strings.DeleteProfileMessage : Localization.Resources.Strings.DeleteProfilesMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
@@ -131,7 +131,7 @@ public static class ProfileDialogManager
             DataContext = confirmDeleteViewModel
         };
 
-        viewModel.OnProfileDialogOpen();
+        viewModel.OnProfileManagerDialogOpen();
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
     #endregion
@@ -148,13 +148,13 @@ public static class ProfileDialogManager
         GroupViewModel groupViewModel = new(async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.AddGroup(ParseGroupInfo(instance));                
         }, async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames());
 
         customDialog.Content = new GroupDialog
@@ -162,7 +162,7 @@ public static class ProfileDialogManager
             DataContext = groupViewModel
         };
 
-        viewModel.OnProfileDialogOpen();
+        viewModel.OnProfileManagerDialogOpen();
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
@@ -177,13 +177,13 @@ public static class ProfileDialogManager
         GroupViewModel groupViewModel = new(async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.ReplaceGroup(instance.Group, ParseGroupInfo(instance));
         }, async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
         }, ProfileManager.GetGroupNames(), GroupEditMode.Edit, group);
 
         customDialog.Content = new GroupDialog
@@ -191,7 +191,7 @@ public static class ProfileDialogManager
             DataContext = groupViewModel
         };
 
-        viewModel.OnProfileDialogOpen();
+        viewModel.OnProfileManagerDialogOpen();
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
 
@@ -205,13 +205,13 @@ public static class ProfileDialogManager
         ConfirmDeleteViewModel confirmDeleteViewModel = new(async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
 
             ProfileManager.RemoveGroup(group);
         }, async instance =>
         {
             await dialogCoordinator.HideMetroDialogAsync(viewModel, customDialog);
-            viewModel.OnProfileDialogClose();
+            viewModel.OnProfileManagerDialogClose();
         }, Localization.Resources.Strings.DeleteGroupMessage);
 
         customDialog.Content = new ConfirmDeleteDialog
@@ -219,7 +219,7 @@ public static class ProfileDialogManager
             DataContext = confirmDeleteViewModel
         };
 
-        viewModel.OnProfileDialogOpen();
+        viewModel.OnProfileManagerDialogOpen();
         await dialogCoordinator.ShowMetroDialogAsync(viewModel, customDialog);
     }
     #endregion

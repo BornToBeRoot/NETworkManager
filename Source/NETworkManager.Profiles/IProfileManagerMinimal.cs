@@ -7,12 +7,18 @@
 public interface IProfileManagerMinimal
 {
     /// <summary>
-    /// Event is fired when the profile dialog is opened.
+    /// Event is fired when a dialog in the <see cref="ProfileManager"/> is opened.
     /// </summary>
-    void OnProfileDialogOpen();
+    public void OnProfileManagerDialogOpen()
+    {
+
+    }
 
     /// <summary>
-    /// Event is fired when the profile dialog is closed.
+    /// Event is fired when a dialog in the <see cref="ProfileManager"/> is closed.
     /// </summary>
-    void OnProfileDialogClose();
+    public void OnProfileManagerDialogClose()
+    {
+
+    }
 }

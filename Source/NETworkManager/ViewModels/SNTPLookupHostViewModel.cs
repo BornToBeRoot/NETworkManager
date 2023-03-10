@@ -110,16 +110,6 @@ public class SNTPLookupHostViewModel : ViewModelBase
         if (!_isViewActive)
             return;
     }
-
-    public void OnProfileDialogOpen()
-    {
-
-    }
-
-    public void OnProfileDialogClose()
-    {
-
-    }
     #endregion
 
     #region Event

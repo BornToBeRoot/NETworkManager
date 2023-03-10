@@ -502,16 +502,6 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
         SetProfilesView(SelectedProfile);
     }
-
-    public void OnProfileDialogOpen()
-    {
-
-    }
-
-    public void OnProfileDialogClose()
-    {
-
-    }
     
     /// <summary>
     /// Method to display the status message and append messages related to <see cref="DNSClientResult"/>.
