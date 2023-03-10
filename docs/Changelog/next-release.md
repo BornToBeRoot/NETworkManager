@@ -18,8 +18,12 @@ Release date: **xx.xx.2023**
 ## What's new?
 
 ## Improvements
+- (Re)loading of the profiles improved. Code has been optimized and user interface update calls have been reduced. WPF virtualizing explicitly activated. The scrollbar in the profile list is now always visible, because the size is calculated by WPF each time on mouse over. [#2014](https://github.com/BornToBeRoot/NETworkManager/pull/2014){:target="\_blank"}
+- Reselect profile or select first profile after (re)loading or search [#2014](https://github.com/BornToBeRoot/NETworkManager/pull/2014){:target="\_blank"}
+- Some designs have been improved (Error & Warning icons). [#2014](https://github.com/BornToBeRoot/NETworkManager/pull/2014){:target="\_blank"}
 
 ## Bugfixes
+- Group name check is now case insensitive and a group name can only be used once. If you create a group named `Test`, you cannot create a group named `test`. [#2014](https://github.com/BornToBeRoot/NETworkManager/pull/2014){:target="\_blank"}
 
 ## Other
 
