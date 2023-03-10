@@ -24,6 +24,8 @@ Release date: **xx.xx.2023**
 
 ## Bugfixes
 - Group name check is now case insensitive and a group name can only be used once. If you create a group named `Test`, you cannot create a group named `test`. [#2014](https://github.com/BornToBeRoot/NETworkManager/pull/2014){:target="\_blank"}
+- Profile dialog
+  - Validate AWS Session Manager input (instance ID, profile, region) [#2025](https://github.com/BornToBeRoot/NETworkManager/pull/2025){:target="\_blank"}
 
 ## Other
 - Code cleanup [#2024](https://github.com/BornToBeRoot/NETworkManager/pull/2024){:target="\_blank"}
