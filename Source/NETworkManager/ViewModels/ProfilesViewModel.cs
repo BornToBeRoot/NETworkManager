@@ -277,16 +277,6 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
         _lastSelectedProfileOnRefresh = null;
     }
-
-    public void OnProfileDialogOpen()
-    {
-
-    }
-
-    public void OnProfileDialogClose()
-    {
-
-    }
     #endregion
 
     #region Event

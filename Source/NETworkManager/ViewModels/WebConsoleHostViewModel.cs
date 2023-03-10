@@ -464,12 +464,12 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         SetProfilesView(SelectedProfile);
     }
 
-    public void OnProfileDialogOpen()
+    public void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.Current.IsDialogOpen = true;
     }
 
-    public void OnProfileDialogClose()
+    public void OnProfileManagerDialogClose()
     {
         ConfigurationManager.Current.IsDialogOpen = false;
     }

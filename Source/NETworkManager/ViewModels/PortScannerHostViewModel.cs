@@ -357,16 +357,6 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
         SetProfilesView(SelectedProfile);
     }
-
-    public void OnProfileDialogOpen()
-    {
-
-    }
-
-    public void OnProfileDialogClose()
-    {
-
-    }
     #endregion
 
     #region Event
