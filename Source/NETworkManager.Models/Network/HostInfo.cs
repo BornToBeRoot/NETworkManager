@@ -10,6 +10,8 @@ public class HostInfo
 
     public string Hostname { get; set; }
 
+    public bool PortStatus { get; set; } = true;
+
     public PhysicalAddress MACAddress { get; set; }
 
     public string Vendor { get; set; }

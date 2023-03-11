@@ -130,8 +130,8 @@
         </Setter>
     </Style>
     -->
-    
-    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+
+    <!-- @FutureMe Don't touch this! Converter "ConnectionStateToRectangleStyleConverter" returns to the x:Key -->
     <Style x:Key="InfoRectangle" TargetType="{x:Type Rectangle}">
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
@@ -144,8 +144,36 @@
         </Setter>
     </Style>
 
-    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+    <!-- @FutureMe Don't touch this! Converter "ConnectionStateToRectangleStyleConverter" returns to the x:Key -->
     <Style x:Key="HiddenRectangle" TargetType="{x:Type Rectangle}">
         <Setter Property="Visibility" Value="Hidden" />
     </Style>
+
+
+    <!-- @FutureMe Don't touch this! Converter "HostUpStyleConverter" returns to the x:Key -->
+    <Style x:Key="HostUpRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="#badc58" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=LanConnect}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- @FutureMe Don't touch this! Converter "HostUpStyleConverter" returns to the x:Key -->
+    <Style x:Key="HostDownRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="Red" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=LanDisconnect}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

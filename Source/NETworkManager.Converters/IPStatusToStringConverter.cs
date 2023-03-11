@@ -21,7 +21,7 @@ public sealed class IPStatusToStringConverter : IValueConverter
     /// <returns>Translated <see cref="IPStatus"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     { 
-        if (!(value is IPStatus ipStatus))
+        if (value is not IPStatus ipStatus)
             return "-/-";
                     
         return IPStatusTranslator.GetInstance().Translate(ipStatus);
