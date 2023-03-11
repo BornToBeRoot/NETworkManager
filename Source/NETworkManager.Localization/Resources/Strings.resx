@@ -3283,4 +3283,7 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="SettingsHaveBeenReset" xml:space="preserve">
     <value>Settings have been reset!</value>
   </data>
+  <data name="PingStatus" xml:space="preserve">
+    <value>Ping Status</value>
+  </data>
 </root>

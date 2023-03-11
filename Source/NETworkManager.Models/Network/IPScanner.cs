@@ -77,8 +77,9 @@ public class IPScanner
 
                 Parallel.ForEach(ipAddresses, parallelOptions, ipAddress =>
                  {
+                     var isReachable = false;
+
                      var pingInfo = new PingInfo();
-                     var pingable = false;
 
                      // PING
                      using (var ping = new System.Net.NetworkInformation.Ping())
@@ -96,7 +97,7 @@ public class IPScanner
                                      else
                                          pingInfo = new PingInfo(pingReply.Address, pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Status);
 
-                                     pingable = true;
+                                     isReachable = true;
                                      break; // Continue with the next checks...
                                  }
 
@@ -112,7 +113,12 @@ public class IPScanner
                          }
                      }
 
-                     if (pingable || ShowScanResultForAllIPAddresses)
+                     // Port scan
+
+
+
+                     // DNS & ARP
+                     if (isReachable || ShowScanResultForAllIPAddresses)
                      {
                          // DNS
                          var hostname = string.Empty;
@@ -162,7 +168,7 @@ public class IPScanner
                              }
                          }
 
-                         OnHostFound(new HostFoundArgs(pingInfo, hostname, macAddress, vendor));
+                         OnHostFound(new HostFoundArgs(isReachable, pingInfo, hostname, macAddress, vendor));
                      }
 
                      IncreaseProgess();

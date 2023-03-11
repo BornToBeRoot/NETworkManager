@@ -5812,6 +5812,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ping Status ähnelt.
+        /// </summary>
+        public static string PingStatus {
+            get {
+                return ResourceManager.GetString("PingStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Pink ähnelt.
         /// </summary>
         public static string Pink {

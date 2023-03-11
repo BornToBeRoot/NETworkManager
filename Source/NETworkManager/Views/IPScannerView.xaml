@@ -21,6 +21,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter"/>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
+        <converters:IPScannerIsReachableStyleConverter x:Key="IPScannerIsReachableStyleConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
@@ -423,6 +424,13 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
+                <DataGridTemplateColumn Header="" SortMemberPath="IsReachable">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="16" Height="16" Style="{Binding (network:HostInfo.IsReachable), Converter={StaticResource IPScannerIsReachableStyleConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" Binding="{Binding (network:HostInfo.PingInfo).IPAddress}" SortMemberPath="PingInfo.IPAddressInt32" MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding (network:HostInfo.Hostname)}" SortMemberPath="Hostname" Visibility="{Binding Data.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" Binding="{Binding (network:HostInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}" SortMemberPath="MACAddressString" Visibility="{Binding Data.ResolveMACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" MinWidth="150" />
@@ -437,7 +445,7 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.TTL}" Binding="{Binding (network:HostInfo.PingInfo).TTL, Converter={StaticResource IntToStringConverter}}" MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Status}" Binding="{Binding (network:HostInfo.PingInfo).Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.PingStatus}" Binding="{Binding (network:HostInfo.PingInfo).Status, Converter={StaticResource IPStatusToStringConverter}}" MinWidth="150" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>

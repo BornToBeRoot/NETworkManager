@@ -4,9 +4,14 @@ namespace NETworkManager.Models.Network;
 
 public class HostInfo
 {
+    public bool IsReachable { get; set; }
+
     public PingInfo PingInfo { get; set; }
+
     public string Hostname { get; set; }
+
     public PhysicalAddress MACAddress { get; set; }
+
     public string Vendor { get; set; }
 
     public string MACAddressString => MACAddress?.ToString();
@@ -16,8 +21,9 @@ public class HostInfo
 
     }
 
-    public HostInfo(PingInfo pingInfo, string hostname, PhysicalAddress macAddress, string vendor)
+    public HostInfo(bool isReachable, PingInfo pingInfo, string hostname, PhysicalAddress macAddress, string vendor)
     {
+        IsReachable = isReachable;
         PingInfo = pingInfo;
         Hostname = hostname;
         MACAddress = macAddress;
@@ -26,6 +32,6 @@ public class HostInfo
 
     public static HostInfo Parse(HostFoundArgs e)
     {
-        return new HostInfo(e.PingInfo, e.Hostname, e.MACAddress, e.Vendor);
+        return new HostInfo(e.IsReachable, e.PingInfo, e.Hostname, e.MACAddress, e.Vendor);
     }
 }

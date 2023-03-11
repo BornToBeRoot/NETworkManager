@@ -77,7 +77,7 @@
         </Style.Triggers>
     </Style>
 
-    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+    <!-- @FutureMe Don't touch this! Converter "ConnectionStateToRectangleStyleConverter" returns to the x:Key -->
     <Style x:Key="CheckRectangle" TargetType="{x:Type Rectangle}">
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
@@ -90,7 +90,7 @@
         </Setter>
     </Style>
 
-    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+    <!-- @FutureMe Don't touch this! Converter "ConnectionStateToRectangleStyleConverter" returns to the x:Key -->
     <Style x:Key="AlertRectangle" TargetType="{x:Type Rectangle}">
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
@@ -103,7 +103,7 @@
         </Setter>
     </Style>
 
-    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+    <!-- @FutureMe Don't touch this! Converter "ConnectionStateToRectangleStyleConverter" returns to the x:Key -->
     <Style x:Key="ErrorRectangle" TargetType="{x:Type Rectangle}">
         <Style.Resources>
             <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
@@ -115,8 +115,8 @@
             </Setter.Value>
         </Setter>
     </Style>
- 
-    <!-- @FutureMe Don't touch this! Converter "RectangleConnectionStateStyleConverter" returns to the x:Key -->
+
+    <!-- @FutureMe Don't touch this! Converter "ConnectionStateToRectangleStyleConverter" returns to the x:Key -->
     <!--
     <Style x:Key="HelpRectangle" TargetType="{x:Type Rectangle}">
         <Style.Resources>
