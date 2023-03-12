@@ -14,15 +14,7 @@ public class IPScanner
     #region Variables
     private int _progressValue;
 
-    public int Threads = 256;
-    public int ICMPTimeout = 4000;
-    public byte[] ICMPBuffer = new byte[32];
-    public int ICMPAttempts = 2;
-    public bool ResolveHostname = true;
-    public bool DNSShowErrorMessage = false;
-
-    public bool ResolveMACAddress = false;
-    public bool ShowScanResultForAllIPAddresses = false;
+    private readonly IPScannerOptions _options;       
     #endregion
 
     #region Events
@@ -55,6 +47,13 @@ public class IPScanner
     }
     #endregion
 
+    #region Constructor
+    public IPScanner(IPScannerOptions options)
+    {
+        _options = options;
+    }
+    #endregion
+
     #region Methods
     public void ScanAsync(IPAddress[] ipAddresses, CancellationToken cancellationToken)
     {
@@ -63,16 +62,12 @@ public class IPScanner
         {
             _progressValue = 0;
 
-            // Modify the ThreadPool for better performance
-            ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);
-            ThreadPool.SetMinThreads(workerThreads + Threads, completionPortThreads + Threads);
-
             try
             {
                 var parallelOptions = new ParallelOptions
                 {
                     CancellationToken = cancellationToken,
-                    MaxDegreeOfParallelism = Threads
+                    MaxDegreeOfParallelism = _options.MaxHostThreads
                 };
 
                 Parallel.ForEach(ipAddresses, parallelOptions, ipAddress =>
@@ -84,11 +79,11 @@ public class IPScanner
                      // PING
                      using (var ping = new System.Net.NetworkInformation.Ping())
                      {
-                         for (var i = 0; i < ICMPAttempts; i++)
+                         for (var i = 0; i < _options.ICMPAttempts; i++)
                          {
                              try
                              {
-                                 var pingReply = ping.Send(ipAddress, ICMPTimeout, ICMPBuffer);
+                                 var pingReply = ping.Send(ipAddress, _options.ICMPTimeout, _options.ICMPBuffer);
 
                                  if (pingReply != null && IPStatus.Success == pingReply.Status)
                                  {
@@ -118,12 +113,12 @@ public class IPScanner
 
 
                      // DNS & ARP
-                     if (isReachable || ShowScanResultForAllIPAddresses)
+                     if (isReachable || _options.ShowAllResults)
                      {
                          // DNS
                          var hostname = string.Empty;
 
-                         if (ResolveHostname)
+                         if (_options.ResolveHostname)
                          {
                              // Don't use await in Paralle.ForEach, this will break
                              var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
@@ -134,14 +129,14 @@ public class IPScanner
                              if (!dnsResolverTask.Result.HasError)
                                  hostname = dnsResolverTask.Result.Value;
                              else
-                                 hostname = DNSShowErrorMessage ? dnsResolverTask.Result.ErrorMessage : string.Empty;
+                                 hostname = _options.DNSShowErrorMessage ? dnsResolverTask.Result.ErrorMessage : string.Empty;
                          }
 
                          // ARP
                          PhysicalAddress macAddress = null;
                          var vendor = string.Empty;
 
-                         if (ResolveMACAddress)
+                         if (_options.ResolveMACAddress)
                          {
                              // Get info from arp table
                              var arpTableInfo = ARP.GetTable().FirstOrDefault(p => p.IPAddress.ToString() == ipAddress.ToString());
@@ -174,16 +169,12 @@ public class IPScanner
                      IncreaseProgess();
                  });
             }
-            catch (OperationCanceledException)  // If user has canceled
+            catch (OperationCanceledException)
             {
                 OnUserHasCanceled();
             }
             finally
             {
-                // Reset the ThreadPool to default
-                ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
-                ThreadPool.SetMinThreads(workerThreads - Threads, completionPortThreads - Threads);
-
                 OnScanComplete();
             }
         }, cancellationToken);

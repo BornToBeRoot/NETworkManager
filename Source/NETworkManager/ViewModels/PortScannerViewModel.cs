@@ -440,14 +440,13 @@ public class PortScannerViewModel : ViewModelBase
         AddHostToHistory(Hosts);
         AddPortToHistory(Ports);
 
-        var portScanner = new PortScanner
-        {
-            ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname,
-            HostThreads = SettingsManager.Current.PortScanner_HostThreads,
-            PortThreads = SettingsManager.Current.PortScanner_PortThreads,
-            ShowClosed = SettingsManager.Current.PortScanner_ShowClosed,
-            Timeout = SettingsManager.Current.PortScanner_Timeout
-        };
+        var portScanner = new PortScanner(new PortScannerOptions(
+            SettingsManager.Current.PortScanner_MaxHostThreads,
+            SettingsManager.Current.PortScanner_MaxPortThreads,
+            SettingsManager.Current.PortScanner_Timeout,
+            SettingsManager.Current.PortScanner_ResolveHostname,
+            SettingsManager.Current.PortScanner_ShowAllResults
+        ));
 
         portScanner.PortScanned += PortScanned;
         portScanner.ScanComplete += ScanComplete;

@@ -392,7 +392,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     public ICommand ExportCommand => new RelayCommand(p => ExportAction());
-    
+
     private void ExportAction()
     {
         Export();
@@ -468,18 +468,19 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Add host(s) to the history
         AddHostToHistory(Hosts);
-
-        var ipScanner = new IPScanner
-        {
-            Threads = SettingsManager.Current.IPScanner_Threads,
-            ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
-            ICMPBuffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
-            ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
-            ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
-            DNSShowErrorMessage = SettingsManager.Current.IPScanner_DNSShowErrorMessage,
-            ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
-            ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses
-        };
+        
+        var ipScanner = new IPScanner(new IPScannerOptions(SettingsManager.Current.IPScanner_MaxHostThreads, 
+            2,
+            SettingsManager.Current.IPScanner_ICMPAttempts,
+            SettingsManager.Current.IPScanner_ICMPTimeout,
+            new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
+            true,
+            new List<int>() { 22 },
+            SettingsManager.Current.IPScanner_ResolveHostname,
+            SettingsManager.Current.IPScanner_DNSShowErrorMessage,
+            SettingsManager.Current.IPScanner_ResolveMACAddress,
+            SettingsManager.Current.IPScanner_ShowAllResults
+        ));
 
         ipScanner.HostFound += HostFound;
         ipScanner.ScanComplete += ScanComplete;
@@ -672,6 +673,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 OnPropertyChanged(nameof(ResolveHostname));
                 break;
         }
-    }    
+    }
     #endregion
 }

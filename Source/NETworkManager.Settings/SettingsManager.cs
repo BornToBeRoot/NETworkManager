@@ -228,22 +228,22 @@ public static class SettingsManager
         Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
 
         // Update some default settings values, if necessary
-        if (Current.IPScanner_Threads > 1024)
+        if (Current.IPScanner_MaxHostThreads > 1024)
         {
             _log.Info("Change \"IPScanner_Threads\" to \"1024\"...");
-            Current.IPScanner_Threads = 1024;
+            Current.IPScanner_MaxHostThreads = 1024;
         }
 
-        if (Current.PortScanner_HostThreads > 256)
+        if (Current.PortScanner_MaxHostThreads > 256)
         {
             _log.Info("Change \"PortScanner_HostThreads\" to \"256\"...");
-            Current.PortScanner_HostThreads = 256;
+            Current.PortScanner_MaxHostThreads = 256;
         }
 
-        if (Current.PortScanner_PortThreads > 1024)
+        if (Current.PortScanner_MaxPortThreads > 1024)
         {
             _log.Info("Change \"PortScanner_PortThreads\" to \"1024\"...");
-            Current.PortScanner_PortThreads = 1024;
+            Current.PortScanner_MaxPortThreads = 1024;
         }
 
         // Add IP Scanner custom commands

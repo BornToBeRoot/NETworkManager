@@ -3849,6 +3849,22 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die This setting sets the minimum number of threads used by the application&apos;s ThreadPool. This can improve the performance of e.g. the IP scanner or port scanner.
+        ///The value is added to the default settings.
+        ///
+        ///The value 0 leaves the default settings (number of CPU threads).
+        ///
+        ///If the value is too high, performance problems may occur.
+        ///
+        ///Changes to this value will take effect after the application is restarted. Whether the value was set successfully can be seen in the log file under %LocalAppData%\NETworkManager\NETwo [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        public static string HelpMessage_ThreadPoolAdditionalMinThreads {
+            get {
+                return ResourceManager.GetString("HelpMessage_ThreadPoolAdditionalMinThreads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Hidden applications ähnelt.
         /// </summary>
         public static string HiddenApplications {
@@ -3953,15 +3969,6 @@ namespace NETworkManager.Localization.Resources {
         public static string Hosts {
             get {
                 return ResourceManager.GetString("Hosts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Host threads ähnelt.
-        /// </summary>
-        public static string HostThreads {
-            get {
-                return ResourceManager.GetString("HostThreads", resourceCulture);
             }
         }
         
@@ -4875,6 +4882,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Max. concurrent host threads ähnelt.
+        /// </summary>
+        public static string MaxHostThreads {
+            get {
+                return ResourceManager.GetString("MaxHostThreads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Maximum ähnelt.
         /// </summary>
         public static string Maximum {
@@ -4898,6 +4914,24 @@ namespace NETworkManager.Localization.Resources {
         public static string MaximumNumberOfHopsReached {
             get {
                 return ResourceManager.GetString("MaximumNumberOfHopsReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Max. concurrent port threads ähnelt.
+        /// </summary>
+        public static string MaxPortThreads {
+            get {
+                return ResourceManager.GetString("MaxPortThreads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die These settings only change the maximum number of concurrently executed threads per host/port scan. Go to Settings &gt; General &gt; General to adjust the (min) threads of the application. ähnelt.
+        /// </summary>
+        public static string MaxThreadsOnlyGoToSettingsGeneralGeneral {
+            get {
+                return ResourceManager.GetString("MaxThreadsOnlyGoToSettingsGeneralGeneral", resourceCulture);
             }
         }
         
@@ -5920,15 +5954,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Port threads ähnelt.
-        /// </summary>
-        public static string PortThreads {
-            get {
-                return ResourceManager.GetString("PortThreads", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die PowerShell ähnelt.
         /// </summary>
         public static string PowerShell {
@@ -5938,11 +5963,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The color of the PowerShell console can be changed to the application theme under General &gt; Appearance ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The color of the PowerShell console can be changed to the application theme under Settings &gt; General &gt; Appearance ähnelt.
         /// </summary>
-        public static string PowerShellConsoleColorCanBeChangedUnderGeneralApperance {
+        public static string PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance {
             get {
-                return ResourceManager.GetString("PowerShellConsoleColorCanBeChangedUnderGeneralApperance", resourceCulture);
+                return ResourceManager.GetString("PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance", resourceCulture);
             }
         }
         
@@ -7855,15 +7880,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show scan result for all IP addresses ähnelt.
-        /// </summary>
-        public static string ShowScanResultForAllIPAddresses {
-            get {
-                return ResourceManager.GetString("ShowScanResultForAllIPAddresses", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Show SplashScreen on start ähnelt.
         /// </summary>
         public static string ShowSplashScreenOnStart {
@@ -7896,6 +7912,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ShowTheFollowingApplicationOnStartup {
             get {
                 return ResourceManager.GetString("ShowTheFollowingApplicationOnStartup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show unreachable IP addresses ähnelt.
+        /// </summary>
+        public static string ShowUnreachableIPAddresses {
+            get {
+                return ResourceManager.GetString("ShowUnreachableIPAddresses", resourceCulture);
             }
         }
         
@@ -8562,6 +8587,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ThisWillResetAllSettings {
             get {
                 return ResourceManager.GetString("ThisWillResetAllSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ThreadPool additional min. threads ähnelt.
+        /// </summary>
+        public static string ThreadPoolAdditionalMinThreads {
+            get {
+                return ResourceManager.GetString("ThreadPoolAdditionalMinThreads", resourceCulture);
             }
         }
         

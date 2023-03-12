@@ -126,7 +126,17 @@
         <mah:NumericUpDown Value="{Binding BackgroundJobInterval}" Maximum="120" Minimum="0" Interval="1" Margin="0,0,0,20" />
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.History}" />
         <TextBlock Text="{x:Static localization:Strings.NumberOfStoredEntries}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding HistoryListEntries}" Maximum="25" Minimum="0" Interval="1" />
+        <mah:NumericUpDown Value="{Binding HistoryListEntries}" Maximum="25" Minimum="0" Interval="1" Margin="0,0,0,20" />
+        <TextBlock Text="{x:Static localization:Strings.Multithreading}" Style="{StaticResource HeaderTextBlock}" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="{x:Static localization:Strings.ThreadPoolAdditionalMinThreads}" Style="{StaticResource DefaultTextBlock}" />
+            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_ThreadPoolAdditionalMinThreads}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
+        <mah:NumericUpDown Value="{Binding ThreadPoolAdditionalMinThreads}" Maximum="1024" Minimum="0" Interval="1" />
     </StackPanel>
 </UserControl>
 

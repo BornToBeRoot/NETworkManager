@@ -17,8 +17,7 @@ public static class GlobalStaticConfiguration
 {
     // Type to search (average type speed --> 187 chars/min)
     public static TimeSpan SearchDispatcherTimerTimeSpan => new(0, 0, 0, 0, 750);
-    public static TimeSpan CredentialsUILockTime => new(0, 0, 120);
-
+    
     // Filter
     public static string ApplicationFileExtensionFilter => "Application (*.exe)|*.exe";
     public static string PuTTYPrivateKeyFileExtensionFilter => "PuTTY Private Key Files (*.ppk)|*.ppk";
@@ -28,12 +27,12 @@ public static class GlobalStaticConfiguration
     // Settings
     public static ApplicationName General_DefaultApplicationViewName => ApplicationName.Dashboard;
     public static int General_BackgroundJobInterval => 5;
+    public static int General_ThreadPoolAdditionalMinThreads => 512;
     public static int General_HistoryListEntries => 10;
     public static bool SplashScreen_Enabled => true;
     public static string Appearance_Theme => "Dark";
     public static string Appearance_Accent => "Lime";
     public static bool Appearance_UseCustomTheme => false;
-
     public static bool Network_ResolveHostnamePreferIPv4 => true;
     public static bool Status_ShowWindowOnNetworkChange => true;
     public static int Status_WindowCloseTime => 10;
@@ -67,16 +66,17 @@ public static class GlobalStaticConfiguration
     public static ExportManager.ExportFileType WiFi_ExportFileType => ExportManager.ExportFileType.CSV;
 
     // Application: IP Scanner
-    public static int IPScanner_Threads => 256;
+    public static int IPScanner_MaxHostThreads => 256;
+    public static int IPScanner_MaxPortThreads => 5;
     public static int IPScanner_ICMPAttempts => 2;
-    public static int IPScanner_ICMPBuffer => 32;        
-    public static bool IPScanner_DNSShowErrorMessage => false;
     public static int IPScanner_ICMPTimeout => 4000;
+    public static int IPScanner_ICMPBuffer => 32;    
+    public static bool IPScanner_DNSShowErrorMessage => false;    
     public static ExportManager.ExportFileType IPScanner_ExportFileType => ExportManager.ExportFileType.CSV;
 
     // Application: Port Scanner 
-    public static int PortScanner_HostThreads => 5;
-    public static int PortScanner_PortThreads => 100;
+    public static int PortScanner_MaxHostThreads => 5;
+    public static int PortScanner_MaxPortThreads => 256;
     public static int PortScanner_Timeout => 4000;
     public static ExportManager.ExportFileType PortScanner_ExportFileType => ExportManager.ExportFileType.CSV;
 

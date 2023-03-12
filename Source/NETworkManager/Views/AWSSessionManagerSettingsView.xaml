@@ -204,7 +204,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Rectangle Grid.Column="0" Style="{StaticResource InfoImageRectangle}" Width="24" Height="24" HorizontalAlignment="Right" />
-            <TextBlock Grid.Column="2" Text="{x:Static localization:Strings.PowerShellConsoleColorCanBeChangedUnderGeneralApperance}" TextWrapping="Wrap" Style="{StaticResource InfoTextBlock}" />
+            <TextBlock Grid.Column="2" Text="{x:Static localization:Strings.PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance}" TextWrapping="Wrap" Style="{StaticResource InfoTextBlock}" />
         </Grid>
     </StackPanel>
 </UserControl>

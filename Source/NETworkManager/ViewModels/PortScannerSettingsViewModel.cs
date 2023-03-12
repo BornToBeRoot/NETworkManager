@@ -33,54 +33,20 @@ public class PortScannerSettingsViewModel : ViewModelBase
         }
 
     }
-
-    private int _hostThreads;
-    public int HostThreads
+    
+    private bool _showAllResults;
+    public bool ShowAllResults
     {
-        get => _hostThreads;
+        get => _showAllResults;
         set
         {
-            if (value == _hostThreads)
+            if (value == _showAllResults)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.PortScanner_HostThreads = value;
+                SettingsManager.Current.PortScanner_ShowAllResults = value;
 
-            _hostThreads = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private int _portThreads;
-    public int PortThreads
-    {
-        get => _portThreads;
-        set
-        {
-            if (value == _portThreads)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.PortScanner_PortThreads = value;
-
-            _portThreads = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private bool _showClosed;
-    public bool ShowClosed
-    {
-        get => _showClosed;
-        set
-        {
-            if (value == _showClosed)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.PortScanner_ShowClosed = value;
-
-            _showClosed = value;
+            _showAllResults = value;
             OnPropertyChanged();
         }
     }
@@ -118,6 +84,40 @@ public class PortScannerSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    private int _maxHostThreads;
+    public int MaxHostThreads
+    {
+        get => _maxHostThreads;
+        set
+        {
+            if (value == _maxHostThreads)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PortScanner_MaxHostThreads = value;
+
+            _maxHostThreads = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _maxPortThreads;
+    public int MaxPortThreads
+    {
+        get => _maxPortThreads;
+        set
+        {
+            if (value == _maxPortThreads)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PortScanner_MaxPortThreads = value;
+
+            _maxPortThreads = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Constructor, load settings
@@ -137,11 +137,11 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        HostThreads = SettingsManager.Current.PortScanner_HostThreads;
-        PortThreads = SettingsManager.Current.PortScanner_PortThreads;
-        ShowClosed = SettingsManager.Current.PortScanner_ShowClosed;
+        ShowAllResults = SettingsManager.Current.PortScanner_ShowAllResults;
         Timeout = SettingsManager.Current.PortScanner_Timeout;
         ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname;
+        MaxHostThreads = SettingsManager.Current.PortScanner_MaxHostThreads;
+        MaxPortThreads = SettingsManager.Current.PortScanner_MaxPortThreads;
     }
     #endregion
 

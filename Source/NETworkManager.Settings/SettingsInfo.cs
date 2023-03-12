@@ -94,6 +94,22 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    
+    private int _general_ThreadPoolAdditionalMinThreads = GlobalStaticConfiguration.General_ThreadPoolAdditionalMinThreads;
+    public int General_ThreadPoolAdditionalMinThreads
+    {
+        get => _general_ThreadPoolAdditionalMinThreads;
+        set
+        {
+            if (value == _general_ThreadPoolAdditionalMinThreads)
+                return;
+
+            _general_ThreadPoolAdditionalMinThreads = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
     private int _general_HistoryListEntries = GlobalStaticConfiguration.General_HistoryListEntries;
     public int General_HistoryListEntries
     {
@@ -806,31 +822,31 @@ public class SettingsInfo : INotifyPropertyChanged
     #endregion
 
     #region IPScanner        
-    private bool _ipScanner_ShowScanResultForAllIPAddresses;
-    public bool IPScanner_ShowScanResultForAllIPAddresses
+    private bool _ipScanner_ShowAllResults;
+    public bool IPScanner_ShowAllResults
     {
-        get => _ipScanner_ShowScanResultForAllIPAddresses;
+        get => _ipScanner_ShowAllResults;
         set
         {
-            if (value == _ipScanner_ShowScanResultForAllIPAddresses)
+            if (value == _ipScanner_ShowAllResults)
                 return;
 
-            _ipScanner_ShowScanResultForAllIPAddresses = value;
+            _ipScanner_ShowAllResults = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
     }
 
-    private int _ipScanner_Threads = GlobalStaticConfiguration.IPScanner_Threads;
-    public int IPScanner_Threads
+    private int _ipScanner_ICMPTimeout = GlobalStaticConfiguration.IPScanner_ICMPTimeout;
+    public int IPScanner_ICMPTimeout
     {
-        get => _ipScanner_Threads;
+        get => _ipScanner_ICMPTimeout;
         set
         {
-            if (value == _ipScanner_Threads)
+            if (value == _ipScanner_ICMPTimeout)
                 return;
 
-            _ipScanner_Threads = value;
+            _ipScanner_ICMPTimeout = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -850,7 +866,7 @@ public class SettingsInfo : INotifyPropertyChanged
             SettingsChanged = true;
         }
     }
-
+        
     private int _ipScanner_ICMPBuffer = GlobalStaticConfiguration.IPScanner_ICMPBuffer;
     public int IPScanner_ICMPBuffer
     {
@@ -925,22 +941,7 @@ public class SettingsInfo : INotifyPropertyChanged
             SettingsChanged = true;
         }
     }
-
-    private int _ipScanner_ICMPTimeout = GlobalStaticConfiguration.IPScanner_ICMPTimeout;
-    public int IPScanner_ICMPTimeout
-    {
-        get => _ipScanner_ICMPTimeout;
-        set
-        {
-            if (value == _ipScanner_ICMPTimeout)
-                return;
-
-            _ipScanner_ICMPTimeout = value;
-            OnPropertyChanged();
-            SettingsChanged = true;
-        }
-    }
-
+    
     private ObservableCollection<CustomCommandInfo> _ipScanner_CustomCommands = new();
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {
@@ -951,6 +952,36 @@ public class SettingsInfo : INotifyPropertyChanged
                 return;
 
             _ipScanner_CustomCommands = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private int _ipScanner_MaxHostThreads = GlobalStaticConfiguration.IPScanner_MaxHostThreads;
+    public int IPScanner_MaxHostThreads
+    {
+        get => _ipScanner_MaxHostThreads;
+        set
+        {
+            if (value == _ipScanner_MaxHostThreads)
+                return;
+
+            _ipScanner_MaxHostThreads = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private int _ipScanner_MaxPortThreads = GlobalStaticConfiguration.IPScanner_MaxPortThreads;
+    public int IPScanner_MaxPortThreads
+    {
+        get => _ipScanner_MaxPortThreads;
+        set
+        {
+            if (value == _ipScanner_MaxPortThreads)
+                return;
+
+            _ipScanner_MaxPortThreads = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -1078,45 +1109,16 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private int _portScanner_HostThreads = GlobalStaticConfiguration.PortScanner_HostThreads;
-    public int PortScanner_HostThreads
+    private bool _portScanner_ShowAllResults;
+    public bool PortScanner_ShowAllResults
     {
-        get => _portScanner_HostThreads;
+        get => _portScanner_ShowAllResults;
         set
         {
-            if (value == _portScanner_HostThreads)
+            if (value == _portScanner_ShowAllResults)
                 return;
 
-            _portScanner_HostThreads = value;
-            OnPropertyChanged();
-            SettingsChanged = true;
-        }
-    }
-
-    private int _portScanner_PortThreads = GlobalStaticConfiguration.PortScanner_PortThreads;
-    public int PortScanner_PortThreads
-    {
-        get => _portScanner_PortThreads;
-        set
-        {
-            if (value == _portScanner_PortThreads)
-                return;
-
-            _portScanner_PortThreads = value;
-            SettingsChanged = true;
-        }
-    }
-
-    private bool _portScanner_ShowClosed;
-    public bool PortScanner_ShowClosed
-    {
-        get => _portScanner_ShowClosed;
-        set
-        {
-            if (value == _portScanner_ShowClosed)
-                return;
-
-            _portScanner_ShowClosed = value;
+            _portScanner_ShowAllResults = value;
             OnPropertyChanged();
             SettingsChanged = true;
         }
@@ -1133,6 +1135,35 @@ public class SettingsInfo : INotifyPropertyChanged
 
             _portScanner_Timeout = value;
             OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private int _portScanner_MaxHostThreads = GlobalStaticConfiguration.PortScanner_MaxHostThreads;
+    public int PortScanner_MaxHostThreads
+    {
+        get => _portScanner_MaxHostThreads;
+        set
+        {
+            if (value == _portScanner_MaxHostThreads)
+                return;
+
+            _portScanner_MaxHostThreads = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private int _portScanner_MaxPortThreads = GlobalStaticConfiguration.PortScanner_MaxPortThreads;
+    public int PortScanner_MaxPortThreads
+    {
+        get => _portScanner_MaxPortThreads;
+        set
+        {
+            if (value == _portScanner_MaxPortThreads)
+                return;
+
+            _portScanner_MaxPortThreads = value;
             SettingsChanged = true;
         }
     }

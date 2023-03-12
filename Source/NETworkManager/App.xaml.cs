@@ -179,6 +179,15 @@ public partial class App
                 _log.Info("Background job is disabled.");
             }
 
+            // Modify the thread pool to increase performance for IP Scanner & Port Scanner
+            ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);            
+            var setMinThreadsResult = ThreadPool.SetMinThreads(workerThreads + SettingsManager.Current.General_ThreadPoolAdditionalMinThreads, completionPortThreads + SettingsManager.Current.General_ThreadPoolAdditionalMinThreads);
+
+            if (setMinThreadsResult)
+                _log.Info($"ThreadPool min threads set to workerThreads: {workerThreads} + {SettingsManager.Current.General_ThreadPoolAdditionalMinThreads}, completionPortThreads: {completionPortThreads} + {SettingsManager.Current.General_ThreadPoolAdditionalMinThreads}.");
+            else
+                _log.Warn($"ThreadPool min thread could not be set to workerThreads: {workerThreads} + {SettingsManager.Current.General_ThreadPoolAdditionalMinThreads}, completionPortThreads: {completionPortThreads} + {SettingsManager.Current.General_ThreadPoolAdditionalMinThreads}.");
+
             // Show splash screen
             if (SettingsManager.Current.SplashScreen_Enabled)
             {
@@ -218,7 +227,7 @@ public partial class App
 
                 if (File.Exists(oldSettingsFile))
                 {
-                    _log.Info($"Migrate settings file from \"{oldSettingsFile}\" to \"{SettingsManager.GetSettingsFilePath()}\"...");                        
+                    _log.Info($"Migrate settings file from \"{oldSettingsFile}\" to \"{SettingsManager.GetSettingsFilePath()}\"...");
                     Directory.CreateDirectory(SettingsManager.GetSettingsFolderLocation());
 
                     try
