@@ -43,6 +43,11 @@ public class IPScannerOptions
     public List<int> Ports { get; set; }
 
     /// <summary>
+    /// Timeout in milliseconds after which a port is considered closed.
+    /// </summary>
+    public int PortScanTimeout { get; set; }
+
+    /// <summary>
     /// Resolve the hostname for an IP address.
     /// </summary>
     public bool ResolveHostname { get; set; }
@@ -72,11 +77,12 @@ public class IPScannerOptions
     /// <param name="icmpBuffer">Size of the buffer used in the ping in bytes.</param>
     /// <param name="scanPorts">Scan the ports of the host.</param>
     /// <param name="ports">List of ports to scan.</param>
+    /// <param name="portScanTimeout">Timeout in milliseconds after which a port is considered closed.</param>
     /// <param name="resolveHostname">Resolve the hostname for an IP address.</param>
     /// <param name="dnsShowErrorMessage">Show the error message if the hostname could not be resolved.</param>
     /// <param name="resolveMACAddress">Resolve the MAC address for the host from ARP.</param>
     /// <param name="showAllResults">Include unreachable IP addresses in the result.</param>
-    public IPScannerOptions(int maxHostThreads, int maxPortThreads, int icmpAttempts, int icmpTimeout, byte[] icmpBuffer, bool scanPorts, List<int> ports, bool resolveHostname, bool dnsShowErrorMessage, bool resolveMACAddress, bool showAllResults)
+    public IPScannerOptions(int maxHostThreads, int maxPortThreads, int icmpAttempts, int icmpTimeout, byte[] icmpBuffer, bool scanPorts, List<int> ports, int portScanTimeout, bool resolveHostname, bool dnsShowErrorMessage, bool resolveMACAddress, bool showAllResults)
     {
         MaxHostThreads = maxHostThreads;
         MaxPortThreads = maxPortThreads;
@@ -85,6 +91,7 @@ public class IPScannerOptions
         ICMPBuffer = icmpBuffer;
         ScanPorts = scanPorts;
         Ports = ports;
+        PortScanTimeout = portScanTimeout;
         ResolveHostname = resolveHostname;
         DNSShowErrorMessage = dnsShowErrorMessage;
         ResolveMACAddress = resolveMACAddress;

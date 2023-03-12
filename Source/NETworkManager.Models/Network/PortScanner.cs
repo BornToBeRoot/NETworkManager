@@ -18,9 +18,9 @@ public class PortScanner
     #endregion
 
     #region Events
-    public event EventHandler<PortScannedArgs> PortScanned;
+    public event EventHandler<PortScannerPortScannedArgs> PortScanned;
 
-    protected virtual void OnPortScanned(PortScannedArgs e)
+    protected virtual void OnPortScanned(PortScannerPortScannedArgs e)
     {
         PortScanned?.Invoke(this, e);
     }
@@ -118,7 +118,7 @@ public class PortScanner
                                 tcpClient?.Close();
 
                                 if (_options.ShowAllResults || portState == PortState.Open)
-                                    OnPortScanned(new PortScannedArgs(ipAddress, hostname, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp), portState));
+                                    OnPortScanned(new PortScannerPortScannedArgs(ipAddress, hostname, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp), portState));
                             }
                         }
 

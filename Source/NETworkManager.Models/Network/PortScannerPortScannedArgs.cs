@@ -4,7 +4,7 @@ using System.Net;
 
 namespace NETworkManager.Models.Network;
 
-public class PortScannedArgs : EventArgs
+public class PortScannerPortScannedArgs : EventArgs
 {
     public IPAddress IPAddress { get; set; }
     public string Hostname { get; set; }
@@ -12,12 +12,12 @@ public class PortScannedArgs : EventArgs
     public PortLookupInfo LookupInfo { get; set; }
     public PortState State { get; set; }
 
-    public PortScannedArgs()
+    public PortScannerPortScannedArgs()
     {
 
     }
 
-    public PortScannedArgs(IPAddress ipAddres, string hostname, int port, PortLookupInfo lookupInfo, PortState state)
+    public PortScannerPortScannedArgs(IPAddress ipAddres, string hostname, int port, PortLookupInfo lookupInfo, PortState state)
     {
         IPAddress = ipAddres;
         Hostname = hostname;

@@ -99,8 +99,8 @@ public class PortScannerViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<PortInfo> _results = new();
-    public ObservableCollection<PortInfo> Results
+    private ObservableCollection<PortScannerPortInfo> _results = new();
+    public ObservableCollection<PortScannerPortInfo> Results
     {
         get => _results;
         set
@@ -114,8 +114,8 @@ public class PortScannerViewModel : ViewModelBase
 
     public ICollectionView ResultsView { get; }
 
-    private PortInfo _selectedResult;
-    public PortInfo SelectedResult
+    private PortScannerPortInfo _selectedResult;
+    public PortScannerPortInfo SelectedResult
     {
         get => _selectedResult;
         set
@@ -232,8 +232,8 @@ public class PortScannerViewModel : ViewModelBase
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
-        ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortInfo.IPAddress)));
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(PortInfo.IPAddressInt32), ListSortDirection.Descending));
+        ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortScannerPortInfo.IPAddress)));
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(PortScannerPortInfo.IPAddressInt32), ListSortDirection.Descending));
 
         LoadSettings();
 
@@ -481,7 +481,7 @@ public class PortScannerViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<PortInfo>(SelectedResults.Cast<PortInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<PortScannerPortInfo>(SelectedResults.Cast<PortScannerPortInfo>().ToArray()));
             }
             catch (Exception ex)
             {
@@ -532,7 +532,7 @@ public class PortScannerViewModel : ViewModelBase
     public void SortResultByPropertyName(string sortDescription)
     {
         ResultsView.SortDescriptions.Clear();
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(PortInfo.IPAddressInt32), ListSortDirection.Descending));
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(PortScannerPortInfo.IPAddressInt32), ListSortDirection.Descending));
 
         if (_lastSortDescriptionAscending.Equals(sortDescription))
         {
@@ -574,9 +574,9 @@ public class PortScannerViewModel : ViewModelBase
         ScanFinished();
     }
 
-    private void PortScanned(object sender, PortScannedArgs e)
+    private void PortScanned(object sender, PortScannerPortScannedArgs e)
     {
-        var portInfo = PortInfo.Parse(e);
+        var portInfo = PortScannerPortInfo.Parse(e);
 
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate ()
         {

@@ -477,6 +477,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
             true,
             new List<int>() { 22, 53, 80, 139, 389, 636, 443, 445, 3389 },
+            4000,
             SettingsManager.Current.IPScanner_ResolveHostname,
             SettingsManager.Current.IPScanner_DNSShowErrorMessage,
             SettingsManager.Current.IPScanner_ResolveMACAddress,

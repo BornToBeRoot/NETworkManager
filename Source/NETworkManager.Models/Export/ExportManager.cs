@@ -74,12 +74,12 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Method to export objects from type <see cref="PortInfo"/> to a file.
+    /// Method to export objects from type <see cref="PortScannerPortInfo"/> to a file.
     /// </summary>
     /// <param name="filePath">Path to the export file.</param>
     /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
-    /// <param name="collection">Objects as <see cref="ObservableCollection{PortInfo}"/> to export.</param>
-    public static void Export(string filePath, ExportFileType fileType, ObservableCollection<PortInfo> collection)
+    /// <param name="collection">Objects as <see cref="ObservableCollection{PortScannerPortInfo}"/> to export.</param>
+    public static void Export(string filePath, ExportFileType fileType, ObservableCollection<PortScannerPortInfo> collection)
     {
         switch (fileType)
         {
@@ -397,11 +397,11 @@ public static partial class ExportManager
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
-    private static void CreateCSV(IEnumerable<PortInfo> collection, string filePath)
+    private static void CreateCSV(IEnumerable<PortScannerPortInfo> collection, string filePath)
     {
         var stringBuilder = new StringBuilder();
 
-        stringBuilder.AppendLine($"{nameof(PortInfo.IPAddress)},{nameof(PortInfo.Hostname)},{nameof(PortInfo.Port)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)},{nameof(PortInfo.State)}");
+        stringBuilder.AppendLine($"{nameof(PortScannerPortInfo.IPAddress)},{nameof(PortScannerPortInfo.Hostname)},{nameof(PortScannerPortInfo.Port)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)},{nameof(PortScannerPortInfo.State)}");
 
         foreach (var info in collection)
             stringBuilder.AppendLine($"{info.IPAddress},{info.Hostname},{info.Port},{info.LookupInfo.Protocol},{info.LookupInfo.Service},{info.LookupInfo.Description},{info.State}");
@@ -591,23 +591,23 @@ public static partial class ExportManager
         document.Save(filePath);
     }
 
-    public static void CreateXML(IEnumerable<PortInfo> collection, string filePath)
+    public static void CreateXML(IEnumerable<PortScannerPortInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
 
             new XElement(ApplicationName.PortScanner.ToString(),
-                new XElement(nameof(PortInfo) + "s",
+                new XElement(nameof(PortScannerPortInfo) + "s",
 
                     from info in collection
                     select
-                        new XElement(nameof(PortInfo),
-                            new XElement(nameof(PortInfo.IPAddress), info.IPAddress),
-                            new XElement(nameof(PortInfo.Hostname), info.Hostname),
-                            new XElement(nameof(PortInfo.Port), info.Port),
+                        new XElement(nameof(PortScannerPortInfo),
+                            new XElement(nameof(PortScannerPortInfo.IPAddress), info.IPAddress),
+                            new XElement(nameof(PortScannerPortInfo.Hostname), info.Hostname),
+                            new XElement(nameof(PortScannerPortInfo.Port), info.Port),
                             new XElement(nameof(PortLookupInfo.Protocol), info.LookupInfo.Protocol),
                             new XElement(nameof(PortLookupInfo.Service), info.LookupInfo.Service),
                             new XElement(nameof(PortLookupInfo.Description), info.LookupInfo.Description),
-                            new XElement(nameof(PortInfo.State), info.State)))));
+                            new XElement(nameof(PortScannerPortInfo.State), info.State)))));
 
         document.Save(filePath);
     }
@@ -875,7 +875,7 @@ public static partial class ExportManager
         System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 
-    public static void CreateJSON(ObservableCollection<PortInfo> collection, string filePath)
+    public static void CreateJSON(ObservableCollection<PortScannerPortInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
 
