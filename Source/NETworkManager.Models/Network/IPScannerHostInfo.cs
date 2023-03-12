@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Management.Automation.Language;
 using System.Net.NetworkInformation;
 
 namespace NETworkManager.Models.Network;

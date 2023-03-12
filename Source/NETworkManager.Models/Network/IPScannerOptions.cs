@@ -35,12 +35,12 @@ public class IPScannerOptions
     /// <summary>
     /// Scan the ports of the host.
     /// </summary>
-    public bool ScanPorts { get; set; }
+    public bool PortScanEnabled { get; set; }
 
     /// <summary>
     /// Ports to scan.
     /// </summary>
-    public int[] Ports { get; set; }
+    public int[] PortScanPorts { get; set; }
 
     /// <summary>
     /// Timeout in milliseconds after which a port is considered closed.
@@ -75,22 +75,22 @@ public class IPScannerOptions
     /// <param name="icmpAttempts">Number of attempts to ping a host.</param>
     /// <param name="icmpTimeout">Timeout in milliseconds after which a ping is considered lost.</param>
     /// <param name="icmpBuffer">Size of the buffer used in the ping in bytes.</param>
-    /// <param name="scanPorts">Scan the ports of the host.</param>
-    /// <param name="ports">List of ports to scan.</param>
+    /// <param name="portScanEnabled">Scan the ports of the host.</param>
+    /// <param name="portScanPorts">List of ports to scan.</param>
     /// <param name="portScanTimeout">Timeout in milliseconds after which a port is considered closed.</param>
     /// <param name="resolveHostname">Resolve the hostname for an IP address.</param>
     /// <param name="dnsShowErrorMessage">Show the error message if the hostname could not be resolved.</param>
     /// <param name="resolveMACAddress">Resolve the MAC address for the host from ARP.</param>
     /// <param name="showAllResults">Include unreachable IP addresses in the result.</param>
-    public IPScannerOptions(int maxHostThreads, int maxPortThreads, int icmpAttempts, int icmpTimeout, byte[] icmpBuffer, bool scanPorts, int[] ports, int portScanTimeout, bool resolveHostname, bool dnsShowErrorMessage, bool resolveMACAddress, bool showAllResults)
+    public IPScannerOptions(int maxHostThreads, int maxPortThreads, int icmpAttempts, int icmpTimeout, byte[] icmpBuffer, bool portScanEnabled, int[] portScanPorts, int portScanTimeout, bool resolveHostname, bool dnsShowErrorMessage, bool resolveMACAddress, bool showAllResults)
     {
         MaxHostThreads = maxHostThreads;
         MaxPortThreads = maxPortThreads;
         ICMPAttempts = icmpAttempts;
         ICMPTimeout = icmpTimeout;
         ICMPBuffer = icmpBuffer;
-        ScanPorts = scanPorts;
-        Ports = ports;
+        PortScanEnabled = portScanEnabled;
+        PortScanPorts = portScanPorts;
         PortScanTimeout = portScanTimeout;
         ResolveHostname = resolveHostname;
         DNSShowErrorMessage = dnsShowErrorMessage;

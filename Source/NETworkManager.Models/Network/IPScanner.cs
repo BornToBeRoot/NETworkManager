@@ -91,9 +91,9 @@ public class IPScanner
                     // PORT SCAN
                     ConcurrentBag<PortInfo> portResults = new();
 
-                    if (_options.ScanPorts)
+                    if (_options.PortScanEnabled)
                     {
-                        Parallel.ForEach(_options.Ports, portParallelOptions, port =>
+                        Parallel.ForEach(_options.PortScanPorts, portParallelOptions, port =>
                         {
                             // Test if port is open
                             using var tcpClient = new TcpClient(ipAddress.AddressFamily);
