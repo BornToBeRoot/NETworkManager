@@ -63,14 +63,6 @@ public class IPScannerOptions
     public bool ShowAllResults { get; set; }
 
     /// <summary>
-    /// Create an instance of <see cref="IPScannerOptions"/>.
-    /// </summary>
-    public IPScannerOptions()
-    {
-
-    }
-
-    /// <summary>
     /// Create an instance of <see cref="IPScannerOptions"/> with parameters.
     /// </summary>
     /// <param name="maxHostThreads">Max cuncurrent threads for the host scan.</param>

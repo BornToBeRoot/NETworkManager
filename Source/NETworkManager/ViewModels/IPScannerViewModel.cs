@@ -468,14 +468,15 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Add host(s) to the history
         AddHostToHistory(Hosts);
-        
-        var ipScanner = new IPScanner(new IPScannerOptions(SettingsManager.Current.IPScanner_MaxHostThreads, 
-            2,
+
+        var ipScanner = new IPScanner(new IPScannerOptions(
+            SettingsManager.Current.IPScanner_MaxHostThreads,
+            SettingsManager.Current.IPScanner_MaxPortThreads,
             SettingsManager.Current.IPScanner_ICMPAttempts,
             SettingsManager.Current.IPScanner_ICMPTimeout,
             new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
             true,
-            new List<int>() { 22 },
+            new List<int>() { 22, 53, 80, 139, 389, 636, 443, 445, 3389 },
             SettingsManager.Current.IPScanner_ResolveHostname,
             SettingsManager.Current.IPScanner_DNSShowErrorMessage,
             SettingsManager.Current.IPScanner_ResolveMACAddress,

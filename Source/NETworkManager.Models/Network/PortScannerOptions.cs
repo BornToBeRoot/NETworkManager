@@ -31,14 +31,6 @@ public class PortScannerOptions
     public bool ShowAllResults { get; set; }
 
     /// <summary>
-    /// Create an instance of <see cref="PortScannerOptions"/>.
-    /// </summary>
-    public PortScannerOptions()
-    {
-
-    }
-
-    /// <summary>
     /// Create an instance of <see cref="PortScannerOptions"/> with parameters.
     /// </summary>
     /// <param name="maxHostThreads">Max cuncurrent threads for the host scan.</param>

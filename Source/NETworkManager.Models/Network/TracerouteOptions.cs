@@ -31,14 +31,6 @@ public class TracerouteOptions
     public bool ResolveHostname { get; set; }
 
     /// <summary>
-    /// Create an instance of <see cref="TracerouteOptions"/>.
-    /// </summary>
-    public TracerouteOptions()
-    {
-
-    }
-
-    /// <summary>
     /// Create an instance of <see cref="TracerouteOptions"/> with parameters.
     /// </summary>
     /// <param name="timeout">Timeout in milliseconds after which a ping is considered lost.</param>
