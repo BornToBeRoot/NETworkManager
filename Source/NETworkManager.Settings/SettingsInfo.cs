@@ -94,7 +94,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    
+
     private int _general_ThreadPoolAdditionalMinThreads = GlobalStaticConfiguration.General_ThreadPoolAdditionalMinThreads;
     public int General_ThreadPoolAdditionalMinThreads
     {
@@ -866,7 +866,7 @@ public class SettingsInfo : INotifyPropertyChanged
             SettingsChanged = true;
         }
     }
-        
+
     private int _ipScanner_ICMPBuffer = GlobalStaticConfiguration.IPScanner_ICMPBuffer;
     public int IPScanner_ICMPBuffer
     {
@@ -927,6 +927,54 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    private bool _ipScanner_PortScanEnabled = GlobalStaticConfiguration.IPScanner_PortScanEnabled;
+
+    public bool IPScanner_PortScanEnabled
+    {
+        get => _ipScanner_PortScanEnabled;
+        set
+        {
+            if (value == IPScanner_PortScanEnabled)
+                return;
+
+            _ipScanner_PortScanEnabled = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private string _ipScanner_PortScanPorts = GlobalStaticConfiguration.IPScanner_PortScanPorts;
+
+    public string IPScanner_PortScanPorts
+    {
+        get => _ipScanner_PortScanPorts;
+        set
+        {
+            if (value == _ipScanner_PortScanPorts)
+                return;
+
+            _ipScanner_PortScanPorts = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
+    private int _ipScanner_PortScanTimeout = GlobalStaticConfiguration.IPScanner_PortScanTimeout;
+
+    public int IPScanner_PortScanTimeout
+    {
+        get => _ipScanner_PortScanTimeout;
+        set
+        {
+            if (value == _ipScanner_PortScanTimeout)
+                return;
+
+            _ipScanner_PortScanTimeout = value;
+            OnPropertyChanged();
+            SettingsChanged = true;
+        }
+    }
+
     private bool _ipScanner_ResolveMACAddress;
     public bool IPScanner_ResolveMACAddress
     {
@@ -941,7 +989,7 @@ public class SettingsInfo : INotifyPropertyChanged
             SettingsChanged = true;
         }
     }
-    
+
     private ObservableCollection<CustomCommandInfo> _ipScanner_CustomCommands = new();
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {

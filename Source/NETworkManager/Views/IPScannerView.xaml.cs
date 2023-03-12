@@ -75,5 +75,5 @@ public partial class IPScannerView
                 ((MenuItem)menu.Items[index]).Items.Add(new MenuItem { Header = info.Name, Command = _viewModel.CustomCommandCommand, CommandParameter = info.ID });
             }
         }
-    }
+    }        
 }

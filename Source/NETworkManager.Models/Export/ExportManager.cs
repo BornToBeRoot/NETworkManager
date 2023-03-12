@@ -50,12 +50,12 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Method to export objects from type <see cref="HostInfo"/> to a file.
+    /// Method to export objects from type <see cref="IPScannerHostInfo"/> to a file.
     /// </summary>
     /// <param name="filePath">Path to the export file.</param>
     /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
     /// <param name="collection">Objects as <see cref="ObservableCollection{HostInfo}"/> to export.</param>
-    public static void Export(string filePath, ExportFileType fileType, ObservableCollection<HostInfo> collection)
+    public static void Export(string filePath, ExportFileType fileType, ObservableCollection<IPScannerHostInfo> collection)
     {
         switch (fileType)
         {
@@ -385,11 +385,11 @@ public static partial class ExportManager
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
-    private static void CreateCSV(IEnumerable<HostInfo> collection, string filePath)
+    private static void CreateCSV(IEnumerable<IPScannerHostInfo> collection, string filePath)
     {
         var stringBuilder = new StringBuilder();
 
-        stringBuilder.AppendLine($"{nameof(PingInfo.IPAddress)},{nameof(HostInfo.Hostname)},{nameof(HostInfo.MACAddress)},{nameof(HostInfo.Vendor)},{nameof(PingInfo.Bytes)},{nameof(PingInfo.Time)},{nameof(PingInfo.TTL)},{nameof(PingInfo.Status)}");
+        stringBuilder.AppendLine($"{nameof(PingInfo.IPAddress)},{nameof(IPScannerHostInfo.Hostname)},{nameof(IPScannerHostInfo.MACAddress)},{nameof(IPScannerHostInfo.Vendor)},{nameof(PingInfo.Bytes)},{nameof(PingInfo.Time)},{nameof(PingInfo.TTL)},{nameof(PingInfo.Status)}");
 
         foreach (var info in collection)
             stringBuilder.AppendLine($"{info.PingInfo.IPAddress},{info.Hostname},{info.MACAddress},{info.Vendor},{info.PingInfo.Bytes},{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)},{info.PingInfo.TTL},{info.PingInfo.Status}");
@@ -548,11 +548,11 @@ public static partial class ExportManager
         var document = new XDocument(DefaultXDeclaration,
 
             new XElement(ApplicationName.IPScanner.ToString(),
-                new XElement(nameof(HostInfo) + "s",
+                new XElement(nameof(IPScannerHostInfo) + "s",
 
                 from info in collection
                 select
-                    new XElement(nameof(HostInfo),
+                    new XElement(nameof(IPScannerHostInfo),
                         new XElement(nameof(WiFiNetworkInfo.BSSID), info.BSSID),
                         new XElement(nameof(WiFiNetworkInfo.SSID), info.SSID),
                         new XElement(nameof(WiFiNetworkInfo.ChannelCenterFrequencyInKilohertz), info.ChannelCenterFrequencyInKilohertz),
@@ -569,20 +569,20 @@ public static partial class ExportManager
         document.Save(filePath);
     }
 
-    public static void CreateXML(IEnumerable<HostInfo> collection, string filePath)
+    public static void CreateXML(IEnumerable<IPScannerHostInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
 
             new XElement(ApplicationName.IPScanner.ToString(),
-                new XElement(nameof(HostInfo) + "s",
+                new XElement(nameof(IPScannerHostInfo) + "s",
 
                 from info in collection
                 select
-                    new XElement(nameof(HostInfo),
+                    new XElement(nameof(IPScannerHostInfo),
                         new XElement(nameof(PingInfo.IPAddress), info.PingInfo.IPAddress),
-                        new XElement(nameof(HostInfo.Hostname), info.Hostname),
-                        new XElement(nameof(HostInfo.MACAddress), info.MACAddress),
-                        new XElement(nameof(HostInfo.Vendor), info.Vendor),
+                        new XElement(nameof(IPScannerHostInfo.Hostname), info.Hostname),
+                        new XElement(nameof(IPScannerHostInfo.MACAddress), info.MACAddress),
+                        new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor),
                         new XElement(nameof(PingInfo.Bytes), info.PingInfo.Bytes),
                         new XElement(nameof(PingInfo.Time), Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)),
                         new XElement(nameof(PingInfo.TTL), info.PingInfo.TTL),
@@ -853,7 +853,7 @@ public static partial class ExportManager
         System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 
-    public static void CreateJSON(ObservableCollection<HostInfo> collection, string filePath)
+    public static void CreateJSON(ObservableCollection<IPScannerHostInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
 

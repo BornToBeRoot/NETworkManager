@@ -65,13 +65,16 @@ public static class GlobalStaticConfiguration
     public static AutoRefreshTimeInfo WiFi_AutoRefreshTime => AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
     public static ExportManager.ExportFileType WiFi_ExportFileType => ExportManager.ExportFileType.CSV;
 
-    // Application: IP Scanner
-    public static int IPScanner_MaxHostThreads => 256;
-    public static int IPScanner_MaxPortThreads => 5;
+    // Application: IP Scanner    
     public static int IPScanner_ICMPAttempts => 2;
     public static int IPScanner_ICMPTimeout => 4000;
     public static int IPScanner_ICMPBuffer => 32;    
-    public static bool IPScanner_DNSShowErrorMessage => false;    
+    public static bool IPScanner_DNSShowErrorMessage => false;
+    public static bool IPScanner_PortScanEnabled => true;
+    public static string IPScanner_PortScanPorts => "22; 53; 80; 139; 389; 636; 443; 445; 3389";
+    public static int IPScanner_PortScanTimeout => 4000;
+    public static int IPScanner_MaxHostThreads => 256;
+    public static int IPScanner_MaxPortThreads => 5;
     public static ExportManager.ExportFileType IPScanner_ExportFileType => ExportManager.ExportFileType.CSV;
 
     // Application: Port Scanner 

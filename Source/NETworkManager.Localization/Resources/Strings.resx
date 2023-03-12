@@ -1114,8 +1114,8 @@ Profile files are not affected!</value>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
     <value>Show only most common query types</value>
   </data>
-  <data name="ShowUnreachableIPAddresses" xml:space="preserve">
-    <value>Show unreachable IP addresses</value>
+  <data name="ShowUnreachableIPAddressesAndPorts" xml:space="preserve">
+    <value>Show unreachable IP addresses and ports</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
     <value>Show statistics</value>
@@ -3284,7 +3284,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Settings have been reset!</value>
   </data>
   <data name="PingStatus" xml:space="preserve">
-    <value>Ping Status</value>
+    <value>Ping status</value>
   </data>
   <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
     <value>ThreadPool additional min. threads</value>
@@ -3301,5 +3301,17 @@ Changes to this value will take effect after the application is restarted. Wheth
   </data>
   <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
     <value>These settings only change the maximum number of concurrently executed threads per host/port scan. Go to Settings &gt; General &gt; General to adjust the (min) threads of the application.</value>
+  </data>
+  <data name="PortStatus" xml:space="preserve">
+    <value>Port status</value>
+  </data>
+  <data name="PingDetails" xml:space="preserve">
+    <value>Ping details</value>
+  </data>
+  <data name="CommonPorts" xml:space="preserve">
+    <value>Common ports</value>
+  </data>
+  <data name="ScanCommonPorts" xml:space="preserve">
+    <value>Scan common ports</value>
   </data>
 </root>

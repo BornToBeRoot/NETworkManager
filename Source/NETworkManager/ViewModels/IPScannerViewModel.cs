@@ -100,8 +100,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
     }
 
-    private ObservableCollection<HostInfo> _results = new();
-    public ObservableCollection<HostInfo> Results
+    private ObservableCollection<IPScannerHostInfo> _results = new();
+    public ObservableCollection<IPScannerHostInfo> Results
     {
         get => _results;
         set
@@ -115,8 +115,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     public ICollectionView ResultsView { get; }
 
-    private HostInfo _selectedResult;
-    public HostInfo SelectedResult
+    private IPScannerHostInfo _selectedResult;
+    public IPScannerHostInfo SelectedResult
     {
         get => _selectedResult;
         set
@@ -235,7 +235,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(HostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(IPScannerHostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
 
         LoadSettings();
 
@@ -475,9 +475,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             SettingsManager.Current.IPScanner_ICMPAttempts,
             SettingsManager.Current.IPScanner_ICMPTimeout,
             new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
-            true,
-            new List<int>() { 22, 53, 80, 139, 389, 636, 443, 445, 3389 },
-            4000,
+            SettingsManager.Current.IPScanner_PortScanEnabled,
+            await PortRangeHelper.ConvertPortRangeToIntArrayAsync(SettingsManager.Current.IPScanner_PortScanPorts),
+            SettingsManager.Current.IPScanner_PortScanTimeout,
             SettingsManager.Current.IPScanner_ResolveHostname,
             SettingsManager.Current.IPScanner_DNSShowErrorMessage,
             SettingsManager.Current.IPScanner_ResolveMACAddress,
@@ -595,7 +595,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<HostInfo>(SelectedResults.Cast<HostInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>().ToArray()));
             }
             catch (Exception ex)
             {
@@ -627,9 +627,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     #endregion
 
     #region Events
-    private void HostFound(object sender, HostFoundArgs e)
+    private void HostFound(object sender, IPScannerHostFoundArgs e)
     {
-        var ipScannerHostInfo = HostInfo.Parse(e);
+        var ipScannerHostInfo = IPScannerHostInfo.Parse(e);
 
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {

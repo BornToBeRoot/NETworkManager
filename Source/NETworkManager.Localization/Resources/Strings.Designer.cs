@@ -1591,6 +1591,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Common ports ähnelt.
+        /// </summary>
+        public static string CommonPorts {
+            get {
+                return ResourceManager.GetString("CommonPorts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Community ähnelt.
         /// </summary>
         public static string Community {
@@ -5837,6 +5846,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ping details ähnelt.
+        /// </summary>
+        public static string PingDetails {
+            get {
+                return ResourceManager.GetString("PingDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Ping Monitor ähnelt.
         /// </summary>
         public static string PingMonitor {
@@ -5846,7 +5864,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ping Status ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ping status ähnelt.
         /// </summary>
         public static string PingStatus {
             get {
@@ -5950,6 +5968,15 @@ namespace NETworkManager.Localization.Resources {
         public static string PortState_TimedOut {
             get {
                 return ResourceManager.GetString("PortState_TimedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Port status ähnelt.
+        /// </summary>
+        public static string PortStatus {
+            get {
+                return ResourceManager.GetString("PortStatus", resourceCulture);
             }
         }
         
@@ -7462,6 +7489,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Scan common ports ähnelt.
+        /// </summary>
+        public static string ScanCommonPorts {
+            get {
+                return ResourceManager.GetString("ScanCommonPorts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Scanned ähnelt.
         /// </summary>
         public static string Scanned {
@@ -7916,11 +7952,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show unreachable IP addresses ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show unreachable IP addresses and ports ähnelt.
         /// </summary>
-        public static string ShowUnreachableIPAddresses {
+        public static string ShowUnreachableIPAddressesAndPorts {
             get {
-                return ResourceManager.GetString("ShowUnreachableIPAddresses", resourceCulture);
+                return ResourceManager.GetString("ShowUnreachableIPAddressesAndPorts", resourceCulture);
             }
         }
         

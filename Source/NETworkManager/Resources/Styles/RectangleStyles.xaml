@@ -176,4 +176,30 @@
         </Setter>
     </Style>
 
+    <!-- @FutureMe Don't touch this! Converter "PortOpenStyleConverter" returns to the x:Key -->
+    <Style x:Key="PortOpenRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="#badc58" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkPort}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- @FutureMe Don't touch this! Converter "PortOpenStyleConverter" returns to the x:Key -->
+    <Style x:Key="PortClosedRectangle" TargetType="{x:Type Rectangle}">
+        <Style.Resources>
+            <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+        </Style.Resources>
+        <Setter Property="Fill" Value="Red" />
+        <Setter Property="OpacityMask">
+            <Setter.Value>
+                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkPortDisconnect}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

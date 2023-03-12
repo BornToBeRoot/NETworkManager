@@ -117,6 +117,60 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    private bool _portScanEnabled;
+    public bool PortScanEnabled
+    {
+        get => _portScanEnabled;
+        set
+        {
+            if (value == _portScanEnabled) 
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_PortScanEnabled = value;
+
+            _portScanEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _portScanPorts;
+    public string PortScanPorts
+    {
+        get => _portScanPorts;
+        set
+        {
+            if(value == _portScanPorts)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_PortScanPorts = value;
+
+            _portScanPorts = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _portScanTimeout;
+    public int PortScanTimeout
+
+    {
+        get => _portScanTimeout;
+
+        set
+        {
+            if (value == _portScanTimeout)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_PortScanTimeout = value;
+
+                        _portScanTimeout = value;
+            OnPropertyChanged();
+        }
+
+    }
+
     private bool _resolveMACAddress;
     public bool ResolveMACAddress
     {
@@ -208,6 +262,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
         ICMPBuffer = SettingsManager.Current.IPScanner_ICMPBuffer;        
         ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname;            
         DNSShowErrorMessage = SettingsManager.Current.IPScanner_DNSShowErrorMessage;
+        PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled;
+        PortScanPorts = SettingsManager.Current.IPScanner_PortScanPorts;
+        PortScanTimeout = SettingsManager.Current.IPScanner_PortScanTimeout;
         ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
         MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads;

@@ -38,9 +38,9 @@ public class IPScannerOptions
     public bool ScanPorts { get; set; }
 
     /// <summary>
-    /// List of ports to scan.
+    /// Ports to scan.
     /// </summary>
-    public List<int> Ports { get; set; }
+    public int[] Ports { get; set; }
 
     /// <summary>
     /// Timeout in milliseconds after which a port is considered closed.
@@ -82,7 +82,7 @@ public class IPScannerOptions
     /// <param name="dnsShowErrorMessage">Show the error message if the hostname could not be resolved.</param>
     /// <param name="resolveMACAddress">Resolve the MAC address for the host from ARP.</param>
     /// <param name="showAllResults">Include unreachable IP addresses in the result.</param>
-    public IPScannerOptions(int maxHostThreads, int maxPortThreads, int icmpAttempts, int icmpTimeout, byte[] icmpBuffer, bool scanPorts, List<int> ports, int portScanTimeout, bool resolveHostname, bool dnsShowErrorMessage, bool resolveMACAddress, bool showAllResults)
+    public IPScannerOptions(int maxHostThreads, int maxPortThreads, int icmpAttempts, int icmpTimeout, byte[] icmpBuffer, bool scanPorts, int[] ports, int portScanTimeout, bool resolveHostname, bool dnsShowErrorMessage, bool resolveMACAddress, bool showAllResults)
     {
         MaxHostThreads = maxHostThreads;
         MaxPortThreads = maxPortThreads;
