@@ -26,8 +26,8 @@
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsOn="{Binding ResolveHostname}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowErrorMessage}" IsOn="{Binding DNSShowErrorMessage}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.PortScanner}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ScanCommonPorts}" IsOn="{Binding PortScanEnabled}" Margin="0,0,0,10"/>
-        <TextBlock  Text="{x:Static localization:Strings.CommonPorts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ScanPorts}" IsOn="{Binding PortScanEnabled}" Margin="0,0,0,10"/>
+        <TextBlock  Text="{x:Static localization:Strings.Ports}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <TextBox mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="PortScanPorts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
