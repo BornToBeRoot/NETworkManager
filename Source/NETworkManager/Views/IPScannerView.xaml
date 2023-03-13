@@ -24,7 +24,7 @@
         <converters:HostUpStyleConverter x:Key="HostUpStyleConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
         <converters:IntZeroReverseToVisibilityCollapsedConverter x:Key="IntZeroReverseToVisibilityCollapsedConverter" />
-        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />        
+        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:NullableDateTimeToStringConverter x:Key="NullableDateTimeToStringConverter" />
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
@@ -499,24 +499,79 @@
             </controls:MultiSelectDataGrid.Columns>
             <controls:MultiSelectDataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <Grid Margin="46,10,10,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="10" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Ports}" Style="{StaticResource HeaderTextBlock}" />
-                            <StackPanel Grid.Row="1" VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Data.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                                <Rectangle Width="16" Height="16" Style="{StaticResource InfoImageRectangle}" />
-                                <TextBlock Text="{x:Static localization:Strings.PortScanIsDisabled}" Style="{StaticResource InfoTextBlock}" Margin="10,0,0,0" />
-                            </StackPanel>
-                            <Grid Grid.Row="1" Visibility="{Binding Data.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                                <ListView Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsSource="{Binding (network:IPScannerHostInfo.Ports)}" Visibility="{Binding Path=Ports.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
+                    <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="1" Background="{DynamicResource MahApps.Brushes.Window.Background}">
+                        <Grid Margin="46,10,10,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.Ports}" Style="{StaticResource BoldTextBlock}" />
+                                <StackPanel Grid.Row="2" VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Data.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                                    <Rectangle Width="16" Height="16" Style="{StaticResource InfoImageRectangle}" />
+                                    <TextBlock Text="{x:Static localization:Strings.PortScanIsDisabled}" Style="{StaticResource InfoTextBlock}" Margin="10,0,0,0" />
+                                </StackPanel>
+                                <Grid Grid.Row="2" Visibility="{Binding Data.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                    <ListView Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Disabled" ItemsSource="{Binding (network:IPScannerHostInfo.Ports)}" Visibility="{Binding Path=Ports.Count, Converter={StaticResource IntZeroReverseToVisibilityCollapsedConverter}}">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="Background" Value="Transparent" />
+                                                <Setter Property="Focusable" Value="False" />
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.Template>
+                                            <ControlTemplate>
+                                                <ItemsPresenter />
+                                            </ControlTemplate>
+                                        </ListView.Template>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="24" />
+                                                        <ColumnDefinition Width="10" />
+                                                        <ColumnDefinition Width="100" />
+                                                        <ColumnDefinition Width="10" />
+                                                        <ColumnDefinition Width="150" />
+                                                        <ColumnDefinition Width="10" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Rectangle Grid.Column="0" Width="16" Height="16" Style="{Binding State, Converter={StaticResource PortOpenStyleConverter}}" />
+                                                    <TextBlock Grid.Column="2">
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0}/{1}">
+                                                                <Binding Path="Port" />
+                                                                <Binding Path="LookupInfo.Protocol" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                    <TextBlock Grid.Column="4" Text="{Binding LookupInfo.Service}" />
+                                                    <TextBlock Grid.Column="6" Text="{Binding LookupInfo.Description}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <StackPanel VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Path=Ports.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
+                                        <Rectangle Width="16" Height="16" Style="{StaticResource InfoImageRectangle}" />
+                                        <TextBlock Text="{x:Static localization:Strings.NoOpenPortsFound}" Style="{StaticResource InfoTextBlock}" Margin="10,0,0,0" />
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.PingDetails}" Style="{StaticResource BoldTextBlock}" />
+                                <ListView Grid.Row="2" Background="Transparent">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
                                             <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
@@ -529,101 +584,50 @@
                                             <ItemsPresenter />
                                         </ControlTemplate>
                                     </ListView.Template>
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="24" />
-                                                    <ColumnDefinition Width="10" />
-                                                    <ColumnDefinition Width="100" />
-                                                    <ColumnDefinition Width="10" />
-                                                    <ColumnDefinition Width="150" />
-                                                    <ColumnDefinition Width="10" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Rectangle Grid.Column="0" Width="16" Height="16" Style="{Binding State, Converter={StaticResource PortOpenStyleConverter}}" />
-                                                <TextBlock Grid.Column="2">
-                                                    <TextBlock.Text>
-                                                        <MultiBinding StringFormat="{}{0}/{1}">
-                                                            <Binding Path="Port" />
-                                                            <Binding Path="LookupInfo.Protocol" />
-                                                        </MultiBinding>
-                                                    </TextBlock.Text>
-                                                </TextBlock>
-                                                <TextBlock Grid.Column="4" Text="{Binding LookupInfo.Service}" />
-                                                <TextBlock Grid.Column="6" Text="{Binding LookupInfo.Description}" />
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Time}" />
+                                            <TextBlock Grid.Column="2">
+                                                <TextBlock.Text>
+                                                    <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                                                        <Binding Path="(network:IPScannerHostInfo.PingInfo).Status" />
+                                                        <Binding Path="(network:IPScannerHostInfo.PingInfo).Time" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.TTL}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding (network:IPScannerHostInfo.PingInfo).TTL, Converter={StaticResource IntToStringConverter}}" />
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Bytes}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding (network:IPScannerHostInfo.PingInfo).Bytes, Converter={StaticResource IntToStringConverter}}" />
+                                        </Grid>
+                                    </ListViewItem>
                                 </ListView>
-                                <StackPanel VerticalAlignment="Top" Orientation="Horizontal" Visibility="{Binding Path=Ports.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
-                                    <Rectangle Width="16" Height="16" Style="{StaticResource InfoImageRectangle}" />
-                                    <TextBlock Text="{x:Static localization:Strings.NoOpenPortsFound}" Style="{StaticResource InfoTextBlock}" Margin="10,0,0,0" />
-                                </StackPanel>
                             </Grid>
                         </Grid>
-                        <Grid Grid.Column="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="{x:Static localization:Strings.PingDetails}" Style="{StaticResource HeaderTextBlock}" />
-                            <ListView Grid.Row="1" Background="Transparent">
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                        <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                        <Setter Property="Background" Value="Transparent" />
-                                        <Setter Property="Focusable" Value="False" />
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-                                <ListView.Template>
-                                    <ControlTemplate>
-                                        <ItemsPresenter />
-                                    </ControlTemplate>
-                                </ListView.Template>
-                                <ListViewItem>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="10" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Time}" />
-                                        <TextBlock Grid.Column="2">
-                                            <TextBlock.Text>
-                                                <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
-                                                    <Binding Path="(network:IPScannerHostInfo.PingInfo).Status" />
-                                                    <Binding Path="(network:IPScannerHostInfo.PingInfo).Time" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </Grid>
-                                </ListViewItem>
-                                <ListViewItem>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="10" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.TTL}" />
-                                        <TextBlock Grid.Column="2" Text="{Binding (network:IPScannerHostInfo.PingInfo).TTL, Converter={StaticResource IntToStringConverter}}" />
-                                    </Grid>
-                                </ListViewItem>
-                                <ListViewItem>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="10" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Bytes}" />
-                                        <TextBlock Grid.Column="2" Text="{Binding (network:IPScannerHostInfo.PingInfo).Bytes, Converter={StaticResource IntToStringConverter}}" />
-                                    </Grid>
-                                </ListViewItem>
-                            </ListView>
-                        </Grid>
-                    </Grid>
+                    </Border>
                 </DataTemplate>
             </controls:MultiSelectDataGrid.RowDetailsTemplate>
         </controls:MultiSelectDataGrid>
