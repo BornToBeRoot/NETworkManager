@@ -176,7 +176,7 @@ public class WhoisViewModel : ViewModelBase
 
             SettingsManager.Current.Whois_ExportFileType = instance.FileType;
             SettingsManager.Current.Whois_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.TXT}, false, SettingsManager.Current.Whois_ExportFileType, SettingsManager.Current.Whois_ExportFilePath);
+        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.TXT}, false, SettingsManager.Current.Whois_ExportFileType, SettingsManager.Current.Whois_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {

@@ -331,7 +331,7 @@ public class PingMonitorViewModel : ViewModelBase
 
             SettingsManager.Current.PingMonitor_ExportFileType = instance.FileType;
             SettingsManager.Current.PingMonitor_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.CSV, ExportManager.ExportFileType.XML, ExportManager.ExportFileType.JSON }, false, SettingsManager.Current.PingMonitor_ExportFileType, SettingsManager.Current.PingMonitor_ExportFilePath);
+        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, false, SettingsManager.Current.PingMonitor_ExportFileType, SettingsManager.Current.PingMonitor_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {

@@ -3865,7 +3865,7 @@ namespace NETworkManager.Localization.Resources {
         ///
         ///If the value is too high, performance problems may occur.
         ///
-        ///Changes to this value will take effect after the application is restarted. Whether the value was set successfully can be seen in the log file under %LocalAppData%\NETworkManager\NETwo [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///Changes to this value will take effect after the application is restarted. Whether the value was set successfully can be seen in the log file under %LocalAppData%\NETworkManage [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         public static string HelpMessage_ThreadPoolAdditionalMinThreads {
             get {

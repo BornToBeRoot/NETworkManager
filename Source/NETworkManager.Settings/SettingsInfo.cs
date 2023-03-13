@@ -805,8 +805,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _wiFi_ExportFileType = GlobalStaticConfiguration.WiFi_ExportFileType;
-    public ExportManager.ExportFileType WiFi_ExportFileType
+    private ExportFileType _wiFi_ExportFileType = GlobalStaticConfiguration.WiFi_ExportFileType;
+    public ExportFileType WiFi_ExportFileType
     {
         get => _wiFi_ExportFileType;
         set
@@ -1080,8 +1080,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _ipScanner_ExportFileType = GlobalStaticConfiguration.IPScanner_ExportFileType;
-    public ExportManager.ExportFileType IPScanner_ExportFileType
+    private ExportFileType _ipScanner_ExportFileType = GlobalStaticConfiguration.IPScanner_ExportFileType;
+    public ExportFileType IPScanner_ExportFileType
     {
         get => _ipScanner_ExportFileType;
         set
@@ -1261,8 +1261,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _portScanner_ExportFileType = GlobalStaticConfiguration.PortScanner_ExportFileType;
-    public ExportManager.ExportFileType PortScanner_ExportFileType
+    private ExportFileType _portScanner_ExportFileType = GlobalStaticConfiguration.PortScanner_ExportFileType;
+    public ExportFileType PortScanner_ExportFileType
     {
         get => _portScanner_ExportFileType;
         set
@@ -1383,8 +1383,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _pingMonitor_ExportFileType = GlobalStaticConfiguration.PingMonitor_ExportFileType;
-    public ExportManager.ExportFileType PingMonitor_ExportFileType
+    private ExportFileType _pingMonitor_ExportFileType = GlobalStaticConfiguration.PingMonitor_ExportFileType;
+    public ExportFileType PingMonitor_ExportFileType
     {
         get => _pingMonitor_ExportFileType;
         set
@@ -1550,8 +1550,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _traceroute_ExportFileType = GlobalStaticConfiguration.Traceroute_ExportFileType;
-    public ExportManager.ExportFileType Traceroute_ExportFileType
+    private ExportFileType _traceroute_ExportFileType = GlobalStaticConfiguration.Traceroute_ExportFileType;
+    public ExportFileType Traceroute_ExportFileType
     {
         get => _traceroute_ExportFileType;
         set
@@ -1822,8 +1822,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _dnsLookup_ExportFileType = GlobalStaticConfiguration.DNSLookup_ExportFileType;
-    public ExportManager.ExportFileType DNSLookup_ExportFileType
+    private ExportFileType _dnsLookup_ExportFileType = GlobalStaticConfiguration.DNSLookup_ExportFileType;
+    public ExportFileType DNSLookup_ExportFileType
     {
         get => _dnsLookup_ExportFileType;
         set
@@ -3291,8 +3291,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _snmp_ExportFileType = GlobalStaticConfiguration.SNMP_ExportFileType;
-    public ExportManager.ExportFileType SNMP_ExportFileType
+    private ExportFileType _snmp_ExportFileType = GlobalStaticConfiguration.SNMP_ExportFileType;
+    public ExportFileType SNMP_ExportFileType
     {
         get => _snmp_ExportFileType;
         set
@@ -3368,8 +3368,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _sntpLookup_ExportFileType = GlobalStaticConfiguration.SNTPLookup_ExportFileType;
-    public ExportManager.ExportFileType SNTPLookup_ExportFileType
+    private ExportFileType _sntpLookup_ExportFileType = GlobalStaticConfiguration.SNTPLookup_ExportFileType;
+    public ExportFileType SNTPLookup_ExportFileType
     {
         get => _sntpLookup_ExportFileType;
         set
@@ -3573,8 +3573,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _subnetCalculator_Subnetting_ExportFileType = GlobalStaticConfiguration.SubnetCalculator_Subnetting_ExportFileType;
-    public ExportManager.ExportFileType SubnetCalculator_Subnetting_ExportFileType
+    private ExportFileType _subnetCalculator_Subnetting_ExportFileType = GlobalStaticConfiguration.SubnetCalculator_Subnetting_ExportFileType;
+    public ExportFileType SubnetCalculator_Subnetting_ExportFileType
     {
         get => _subnetCalculator_Subnetting_ExportFileType;
         set
@@ -3702,8 +3702,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _lookup_OUI_ExportFileType = GlobalStaticConfiguration.Lookup_OUI_ExportFileType;
-    public ExportManager.ExportFileType Lookup_OUI_ExportFileType
+    private ExportFileType _lookup_OUI_ExportFileType = GlobalStaticConfiguration.Lookup_OUI_ExportFileType;
+    public ExportFileType Lookup_OUI_ExportFileType
     {
         get => _lookup_OUI_ExportFileType;
         set
@@ -3747,8 +3747,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _lookup_Port_ExportFileType = GlobalStaticConfiguration.Lookup_Port_ExportFileType;
-    public ExportManager.ExportFileType Lookup_Port_ExportFileType
+    private ExportFileType _lookup_Port_ExportFileType = GlobalStaticConfiguration.Lookup_Port_ExportFileType;
+    public ExportFileType Lookup_Port_ExportFileType
     {
         get => _lookup_Port_ExportFileType;
         set
@@ -3824,8 +3824,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _whois_ExportFileType = GlobalStaticConfiguration.Whois_ExportFileType;
-    public ExportManager.ExportFileType Whois_ExportFileType
+    private ExportFileType _whois_ExportFileType = GlobalStaticConfiguration.Whois_ExportFileType;
+    public ExportFileType Whois_ExportFileType
     {
         get => _whois_ExportFileType;
         set
@@ -3886,8 +3886,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _connections_ExportFileType = GlobalStaticConfiguration.Connections_ExportFileType;
-    public ExportManager.ExportFileType Connections_ExportFileType
+    private ExportFileType _connections_ExportFileType = GlobalStaticConfiguration.Connections_ExportFileType;
+    public ExportFileType Connections_ExportFileType
     {
         get => _connections_ExportFileType;
         set
@@ -3948,8 +3948,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _listeners_ExportFileType = GlobalStaticConfiguration.Listeners_ExportFileType;
-    public ExportManager.ExportFileType Listeners_ExportFileType
+    private ExportFileType _listeners_ExportFileType = GlobalStaticConfiguration.Listeners_ExportFileType;
+    public ExportFileType Listeners_ExportFileType
     {
         get => _listeners_ExportFileType;
         set
@@ -4010,8 +4010,8 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    private ExportManager.ExportFileType _arpTable_ExportFileType = GlobalStaticConfiguration.ARPTable_ExportFileType;
-    public ExportManager.ExportFileType ARPTable_ExportFileType
+    private ExportFileType _arpTable_ExportFileType = GlobalStaticConfiguration.ARPTable_ExportFileType;
+    public ExportFileType ARPTable_ExportFileType
     {
         get => _arpTable_ExportFileType;
         set

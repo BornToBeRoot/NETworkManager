@@ -27,11 +27,11 @@ public partial class PortInfo
     /// </summary>
     /// <param name="port"></param>
     /// <param name="lookupInfo"></param>
-    /// <param name="status"></param>            
-    public PortInfo(int port, PortLookupInfo lookupInfo, PortState status)
+    /// <param name="state"></param>            
+    public PortInfo(int port, PortLookupInfo lookupInfo, PortState state)
     {   
         Port = port;
         LookupInfo = lookupInfo;
-        State = status;
+        State = state;
     }
 }

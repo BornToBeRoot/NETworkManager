@@ -26,6 +26,7 @@ using NETworkManager.Localization.Translators;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace NETworkManager.ViewModels;
 
@@ -337,6 +338,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         await ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, profileInfo);
     }
 
+    public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
+
+    private void CopySelectedStatusAction()
+    {
+        ClipboardHelper.SetClipboard(SelectedResult.IsReachable.ToString());
+    }
+
     public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
     private void CopySelectedIPAddressAction()
@@ -351,6 +359,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ClipboardHelper.SetClipboard(SelectedResult.Hostname);
     }
 
+    public ICommand CopySelectedPortStatusCommand => new RelayCommand(p => CopySelectedPortStatusAction());
+
+    private void CopySelectedPortStatusAction()
+    {
+        ClipboardHelper.SetClipboard(PortStateTranslator.GetInstance().Translate(SelectedResult.IsAnyPortOpen ? PortState.Open : PortState.Closed));
+    }
+    
+    public ICommand CopySelectedPingStatusCommand => new RelayCommand(p => CopySelectedPingStatusAction());
+
+    private void CopySelectedPingStatusAction()
+    {
+        ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedResult.PingInfo.Status));
+    }
+
     public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
 
     private void CopySelectedMACAddressAction()
@@ -363,6 +385,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private void CopySelectedVendorAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.Vendor);
+    }
+
+    public ICommand CopySelectedPortsCommand => new RelayCommand(p => CopySelectedPortsAction());
+
+    private void CopySelectedPortsAction()
+    {
+        StringBuilder stringBuilder = new();
+
+        foreach(var port in SelectedResult.Ports)
+        {
+            stringBuilder.AppendLine($"{port.Port}/{port.LookupInfo.Protocol},{PortStateTranslator.GetInstance().Translate(port.State)},{port.LookupInfo.Service},{port.LookupInfo.Description}");
+        }
+
+        ClipboardHelper.SetClipboard(stringBuilder.ToString());
     }
 
     public ICommand CopySelectedBytesCommand => new RelayCommand(p => CopySelectedBytesAction());
@@ -385,14 +421,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         ClipboardHelper.SetClipboard(SelectedResult.PingInfo.TTL.ToString());
     }
-
-    public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
-
-    private void CopySelectedStatusAction()
-    {
-        ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedResult.PingInfo.Status));
-    }
-
+       
     public ICommand ExportCommand => new RelayCommand(p => ExportAction());
 
     private void ExportAction()
@@ -609,7 +638,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
             SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.CSV, ExportManager.ExportFileType.XML, ExportManager.ExportFileType.JSON }, true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
+        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
