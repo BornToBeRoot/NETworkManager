@@ -3308,16 +3308,13 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="PingDetails" xml:space="preserve">
     <value>Ping details</value>
   </data>
-  <data name="CommonPorts" xml:space="preserve">
-    <value>Common ports</value>
-  </data>
-  <data name="ScanCommonPorts" xml:space="preserve">
-    <value>Scan common ports</value>
-  </data>
   <data name="NoOpenPortsFound" xml:space="preserve">
     <value>No open ports found!</value>
   </data>
   <data name="PortScanIsDisabled" xml:space="preserve">
     <value>Port scan is disabled!</value>
+  </data>
+  <data name="ScanPorts" xml:space="preserve">
+    <value>Scan ports</value>
   </data>
 </root>

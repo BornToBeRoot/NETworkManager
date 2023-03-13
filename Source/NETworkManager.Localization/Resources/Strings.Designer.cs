@@ -1591,15 +1591,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Common ports ähnelt.
-        /// </summary>
-        public static string CommonPorts {
-            get {
-                return ResourceManager.GetString("CommonPorts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Community ähnelt.
         /// </summary>
         public static string Community {
@@ -7507,20 +7498,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Scan common ports ähnelt.
-        /// </summary>
-        public static string ScanCommonPorts {
-            get {
-                return ResourceManager.GetString("ScanCommonPorts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Scanned ähnelt.
         /// </summary>
         public static string Scanned {
             get {
                 return ResourceManager.GetString("Scanned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Scan ports ähnelt.
+        /// </summary>
+        public static string ScanPorts {
+            get {
+                return ResourceManager.GetString("ScanPorts", resourceCulture);
             }
         }
         
