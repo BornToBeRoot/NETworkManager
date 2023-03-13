@@ -5314,6 +5314,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No open ports found! ähnelt.
+        /// </summary>
+        public static string NoOpenPortsFound {
+            get {
+                return ResourceManager.GetString("NoOpenPortsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die No ports found. Check your input! ähnelt.
         /// </summary>
         public static string NoPortsFoundCheckYourInput {
@@ -5932,6 +5941,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Ports {
             get {
                 return ResourceManager.GetString("Ports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Port scan is disabled! ähnelt.
+        /// </summary>
+        public static string PortScanIsDisabled {
+            get {
+                return ResourceManager.GetString("PortScanIsDisabled", resourceCulture);
             }
         }
         

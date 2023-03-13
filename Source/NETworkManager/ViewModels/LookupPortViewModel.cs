@@ -152,7 +152,7 @@ public class LookupPortLookupViewModel : ViewModelBase
         {
             var portOrService1 = portOrService.Trim();
 
-            if (portOrService1.Contains("-"))
+            if (portOrService1.Contains('-'))
             {
                 var portRange = portOrService1.Split('-');
 
@@ -162,7 +162,7 @@ public class LookupPortLookupViewModel : ViewModelBase
                     {
                         for (var i = startPort; i < endPort + 1; i++)
                         {
-                            foreach (var info in await PortLookup.LookupAsync(i))
+                            foreach (var info in await PortLookup.SearchByPortAsync(i))
                             {
                                 PortLookupResults.Add(info);
                             }
@@ -185,7 +185,7 @@ public class LookupPortLookupViewModel : ViewModelBase
                 {
                     if (port > 0 && port < 65536)
                     {
-                        foreach (var info in await PortLookup.LookupAsync(port))
+                        foreach (var info in await PortLookup.SearchByPortAsync(port))
                         {
                             PortLookupResults.Add(info);
                         }
@@ -202,9 +202,12 @@ public class LookupPortLookupViewModel : ViewModelBase
             }
         }
 
-        foreach (var info in await PortLookup.LookupByServiceAsync(portsByService))
+        foreach (var search in portsByService)
         {
-            PortLookupResults.Add(info);
+            foreach (var info in await PortLookup.SearchByServiceOrDescriptionAsync(search))
+            {
+                PortLookupResults.Add(info);
+            }
         }
 
         if (PortLookupResults.Count == 0)

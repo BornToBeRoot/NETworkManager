@@ -118,7 +118,7 @@ public class PortScanner
                                 tcpClient?.Close();
 
                                 if (_options.ShowAllResults || portState == PortState.Open)
-                                    OnPortScanned(new PortScannerPortScannedArgs(ipAddress, hostname, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp), portState));
+                                    OnPortScanned(new PortScannerPortScannedArgs(ipAddress, hostname, port, PortLookup.GetByPortAndProtocol(port), portState));
                             }
                         }
 

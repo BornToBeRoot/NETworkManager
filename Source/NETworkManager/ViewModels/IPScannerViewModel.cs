@@ -145,6 +145,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     public bool ResolveHostname => SettingsManager.Current.IPScanner_ResolveHostname;
 
+    public bool PortScanEnabled => SettingsManager.Current.IPScanner_PortScanEnabled;
+
     public bool ResolveMACAddress => SettingsManager.Current.IPScanner_ResolveMACAddress;
 
     private int _hostsToScan;
@@ -668,12 +670,15 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.IPScanner_ResolveMACAddress):
-                OnPropertyChanged(nameof(ResolveMACAddress));
-                break;
             case nameof(SettingsInfo.IPScanner_ResolveHostname):
                 OnPropertyChanged(nameof(ResolveHostname));
                 break;
+            case nameof(SettingsInfo.IPScanner_PortScanEnabled):
+                OnPropertyChanged(nameof(PortScanEnabled));
+                break;
+            case nameof(SettingsInfo.IPScanner_ResolveMACAddress):
+                OnPropertyChanged(nameof(ResolveMACAddress));
+                break;            
         }
     }
     #endregion

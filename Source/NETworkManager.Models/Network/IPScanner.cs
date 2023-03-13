@@ -118,7 +118,7 @@ public class IPScanner
                                 tcpClient?.Close();
 
                                 if (portState == PortState.Open || _options.ShowAllResults)
-                                    portResults.Add(new PortInfo(port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp), portState));
+                                    portResults.Add(new PortInfo(port, PortLookup.GetByPortAndProtocol(port), portState));
                             }
                         });
                     }
