@@ -3849,14 +3849,13 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This setting sets the minimum number of threads used by the application&apos;s ThreadPool. This can improve the performance of e.g. the IP scanner or port scanner.
-        ///The value is added to the default settings.
-        ///
-        ///The value 0 leaves the default settings (number of CPU threads).
+        ///   Sucht eine lokalisierte Zeichenfolge, die This setting specifies the minimum number of threads that will be created from the application&apos;s ThreadPool on demand. This can improve the performance for example of the IP scanner or port scanner.
+        ///	
+        ///The value is added to the default min. threads (number of CPU threads). The value 0 leaves the default settings. If the value is higher than the default max. threads of the ThreadPool, this value is used.
         ///
         ///If the value is too high, performance problems may occur.
         ///
-        ///Changes to this value will take effect after the application is restarted. Whether the value was set successfully can be seen in the log file under %LocalAppData%\NETworkManage [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///Changes to this value will take effect a [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         public static string HelpMessage_ThreadPoolAdditionalMinThreads {
             get {
