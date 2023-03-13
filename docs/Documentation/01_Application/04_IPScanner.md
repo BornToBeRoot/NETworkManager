@@ -10,7 +10,7 @@ permalink: /Documentation/Application/IPScanner
 
 # IP Scanner
 
-With the **IP Scanner** you can scan for active devices in subnets or IP ranges that are reachable via icmp.
+With the **IP Scanner** you can scan for active devices in subnets or IP ranges that are reachable via icmp or have a common tcp port open.
 
 Possible inputs are:
 
