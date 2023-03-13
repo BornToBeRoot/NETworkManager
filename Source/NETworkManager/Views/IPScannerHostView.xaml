@@ -15,7 +15,7 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerHostViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
-        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />        
         <converters:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter" />
     </UserControl.Resources>
     <UserControl.InputBindings>

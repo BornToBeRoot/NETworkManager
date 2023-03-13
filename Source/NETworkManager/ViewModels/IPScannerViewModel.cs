@@ -26,6 +26,7 @@ using NETworkManager.Localization.Translators;
 using NETworkManager.Models;
 using NETworkManager.Models.EventSystem;
 using System.Threading.Tasks;
+using System.Text;
 
 namespace NETworkManager.ViewModels;
 
@@ -100,8 +101,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
     }
 
-    private ObservableCollection<HostInfo> _results = new();
-    public ObservableCollection<HostInfo> Results
+    private ObservableCollection<IPScannerHostInfo> _results = new();
+    public ObservableCollection<IPScannerHostInfo> Results
     {
         get => _results;
         set
@@ -115,8 +116,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     public ICollectionView ResultsView { get; }
 
-    private HostInfo _selectedResult;
-    public HostInfo SelectedResult
+    private IPScannerHostInfo _selectedResult;
+    public IPScannerHostInfo SelectedResult
     {
         get => _selectedResult;
         set
@@ -144,6 +145,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     public bool ResolveHostname => SettingsManager.Current.IPScanner_ResolveHostname;
+
+    public bool PortScanEnabled => SettingsManager.Current.IPScanner_PortScanEnabled;
 
     public bool ResolveMACAddress => SettingsManager.Current.IPScanner_ResolveMACAddress;
 
@@ -235,7 +238,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
-        ResultsView.SortDescriptions.Add(new SortDescription(nameof(HostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
+        ResultsView.SortDescriptions.Add(new SortDescription(nameof(IPScannerHostInfo.PingInfo) + "." + nameof(PingInfo.IPAddressInt32), ListSortDirection.Ascending));
 
         LoadSettings();
 
@@ -335,6 +338,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         await ProfileDialogManager.ShowAddProfileDialog(this, _dialogCoordinator, profileInfo);
     }
 
+    public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
+
+    private void CopySelectedStatusAction()
+    {
+        ClipboardHelper.SetClipboard(SelectedResult.IsReachable.ToString());
+    }
+
     public ICommand CopySelectedIPAddressCommand => new RelayCommand(p => CopySelectedIPAddressAction());
 
     private void CopySelectedIPAddressAction()
@@ -349,6 +359,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ClipboardHelper.SetClipboard(SelectedResult.Hostname);
     }
 
+    public ICommand CopySelectedPortStatusCommand => new RelayCommand(p => CopySelectedPortStatusAction());
+
+    private void CopySelectedPortStatusAction()
+    {
+        ClipboardHelper.SetClipboard(PortStateTranslator.GetInstance().Translate(SelectedResult.IsAnyPortOpen ? PortState.Open : PortState.Closed));
+    }
+    
+    public ICommand CopySelectedPingStatusCommand => new RelayCommand(p => CopySelectedPingStatusAction());
+
+    private void CopySelectedPingStatusAction()
+    {
+        ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedResult.PingInfo.Status));
+    }
+
     public ICommand CopySelectedMACAddressCommand => new RelayCommand(p => CopySelectedMACAddressAction());
 
     private void CopySelectedMACAddressAction()
@@ -361,6 +385,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private void CopySelectedVendorAction()
     {
         ClipboardHelper.SetClipboard(SelectedResult.Vendor);
+    }
+
+    public ICommand CopySelectedPortsCommand => new RelayCommand(p => CopySelectedPortsAction());
+
+    private void CopySelectedPortsAction()
+    {
+        StringBuilder stringBuilder = new();
+
+        foreach(var port in SelectedResult.Ports)
+        {
+            stringBuilder.AppendLine($"{port.Port}/{port.LookupInfo.Protocol},{PortStateTranslator.GetInstance().Translate(port.State)},{port.LookupInfo.Service},{port.LookupInfo.Description}");
+        }
+
+        ClipboardHelper.SetClipboard(stringBuilder.ToString());
     }
 
     public ICommand CopySelectedBytesCommand => new RelayCommand(p => CopySelectedBytesAction());
@@ -383,16 +421,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         ClipboardHelper.SetClipboard(SelectedResult.PingInfo.TTL.ToString());
     }
-
-    public ICommand CopySelectedStatusCommand => new RelayCommand(p => CopySelectedStatusAction());
-
-    private void CopySelectedStatusAction()
-    {
-        ClipboardHelper.SetClipboard(IPStatusTranslator.GetInstance().Translate(SelectedResult.PingInfo.Status));
-    }
-
+       
     public ICommand ExportCommand => new RelayCommand(p => ExportAction());
-    
+
     private void ExportAction()
     {
         Export();
@@ -469,17 +500,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // Add host(s) to the history
         AddHostToHistory(Hosts);
 
-        var ipScanner = new IPScanner
-        {
-            Threads = SettingsManager.Current.IPScanner_Threads,
-            ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
-            ICMPBuffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
-            ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
-            ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
-            DNSShowErrorMessage = SettingsManager.Current.IPScanner_DNSShowErrorMessage,
-            ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
-            ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses
-        };
+        var ipScanner = new IPScanner(new IPScannerOptions(
+            SettingsManager.Current.IPScanner_MaxHostThreads,
+            SettingsManager.Current.IPScanner_MaxPortThreads,
+            SettingsManager.Current.IPScanner_ICMPAttempts,
+            SettingsManager.Current.IPScanner_ICMPTimeout,
+            new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
+            SettingsManager.Current.IPScanner_PortScanEnabled,
+            await PortRangeHelper.ConvertPortRangeToIntArrayAsync(SettingsManager.Current.IPScanner_PortScanPorts),
+            SettingsManager.Current.IPScanner_PortScanTimeout,
+            SettingsManager.Current.IPScanner_ResolveHostname,
+            SettingsManager.Current.IPScanner_DNSShowErrorMessage,
+            SettingsManager.Current.IPScanner_ResolveMACAddress,
+            SettingsManager.Current.IPScanner_ShowAllResults
+        ));
 
         ipScanner.HostFound += HostFound;
         ipScanner.ScanComplete += ScanComplete;
@@ -592,7 +626,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<HostInfo>(SelectedResults.Cast<HostInfo>().ToArray()));
+                ExportManager.Export(instance.FilePath, instance.FileType, instance.ExportAll ? Results : new ObservableCollection<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>().ToArray()));
             }
             catch (Exception ex)
             {
@@ -604,7 +638,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             SettingsManager.Current.IPScanner_ExportFileType = instance.FileType;
             SettingsManager.Current.IPScanner_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.CSV, ExportManager.ExportFileType.XML, ExportManager.ExportFileType.JSON }, true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
+        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true, SettingsManager.Current.IPScanner_ExportFileType, SettingsManager.Current.IPScanner_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -624,9 +658,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     #endregion
 
     #region Events
-    private void HostFound(object sender, HostFoundArgs e)
+    private void HostFound(object sender, IPScannerHostFoundArgs e)
     {
-        var ipScannerHostInfo = HostInfo.Parse(e);
+        var ipScannerHostInfo = IPScannerHostInfo.Parse(e);
 
         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
         {
@@ -665,13 +699,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         switch (e.PropertyName)
         {
-            case nameof(SettingsInfo.IPScanner_ResolveMACAddress):
-                OnPropertyChanged(nameof(ResolveMACAddress));
-                break;
             case nameof(SettingsInfo.IPScanner_ResolveHostname):
                 OnPropertyChanged(nameof(ResolveHostname));
                 break;
+            case nameof(SettingsInfo.IPScanner_PortScanEnabled):
+                OnPropertyChanged(nameof(PortScanEnabled));
+                break;
+            case nameof(SettingsInfo.IPScanner_ResolveMACAddress):
+                OnPropertyChanged(nameof(ResolveMACAddress));
+                break;            
         }
-    }    
+    }
     #endregion
 }

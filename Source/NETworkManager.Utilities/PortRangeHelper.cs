@@ -17,7 +17,7 @@ public static class PortRangeHelper
 
         foreach (var portOrRange in portRange.Replace(" ", "").Split(';'))
         {
-            if (portOrRange.Contains("-"))
+            if (portOrRange.Contains('-'))
             {
                 var portRangeSplit = portOrRange.Split('-');
 

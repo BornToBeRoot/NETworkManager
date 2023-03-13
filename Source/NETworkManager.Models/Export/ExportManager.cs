@@ -50,12 +50,12 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Method to export objects from type <see cref="HostInfo"/> to a file.
+    /// Method to export objects from type <see cref="IPScannerHostInfo"/> to a file.
     /// </summary>
     /// <param name="filePath">Path to the export file.</param>
     /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
     /// <param name="collection">Objects as <see cref="ObservableCollection{HostInfo}"/> to export.</param>
-    public static void Export(string filePath, ExportFileType fileType, ObservableCollection<HostInfo> collection)
+    public static void Export(string filePath, ExportFileType fileType, ObservableCollection<IPScannerHostInfo> collection)
     {
         switch (fileType)
         {
@@ -74,12 +74,12 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    /// Method to export objects from type <see cref="PortInfo"/> to a file.
+    /// Method to export objects from type <see cref="PortScannerPortInfo"/> to a file.
     /// </summary>
     /// <param name="filePath">Path to the export file.</param>
     /// <param name="fileType">Allowed <see cref="ExportFileType"/> are CSV, XML or JSON.</param>
-    /// <param name="collection">Objects as <see cref="ObservableCollection{PortInfo}"/> to export.</param>
-    public static void Export(string filePath, ExportFileType fileType, ObservableCollection<PortInfo> collection)
+    /// <param name="collection">Objects as <see cref="ObservableCollection{PortScannerPortInfo}"/> to export.</param>
+    public static void Export(string filePath, ExportFileType fileType, ObservableCollection<PortScannerPortInfo> collection)
     {
         switch (fileType)
         {
@@ -385,26 +385,33 @@ public static partial class ExportManager
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
-    private static void CreateCSV(IEnumerable<HostInfo> collection, string filePath)
+    private static void CreateCSV(IEnumerable<IPScannerHostInfo> collection, string filePath)
     {
         var stringBuilder = new StringBuilder();
 
-        stringBuilder.AppendLine($"{nameof(PingInfo.IPAddress)},{nameof(HostInfo.Hostname)},{nameof(HostInfo.MACAddress)},{nameof(HostInfo.Vendor)},{nameof(PingInfo.Bytes)},{nameof(PingInfo.Time)},{nameof(PingInfo.TTL)},{nameof(PingInfo.Status)}");
+        stringBuilder.AppendLine($"Status,{nameof(PingInfo.IPAddress)},{nameof(IPScannerHostInfo.Hostname)},PortStatus,PingStatus,{nameof(IPScannerHostInfo.MACAddress)},{nameof(IPScannerHostInfo.Vendor)},{nameof(IPScannerHostInfo.Ports)},{nameof(PingInfo.Bytes)},{nameof(PingInfo.Time)},{nameof(PingInfo.TTL)}");
 
         foreach (var info in collection)
-            stringBuilder.AppendLine($"{info.PingInfo.IPAddress},{info.Hostname},{info.MACAddress},{info.Vendor},{info.PingInfo.Bytes},{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)},{info.PingInfo.TTL},{info.PingInfo.Status}");
+        {
+            var stringBuilderPorts = new StringBuilder();
+
+            foreach (var port in info.Ports)
+                stringBuilderPorts.Append($"{port.Port}/{port.LookupInfo.Protocol}/{port.LookupInfo.Service}/{port.LookupInfo.Description}/{port.State};");
+
+            stringBuilder.AppendLine($"{info.IsReachable},{info.PingInfo.IPAddress},{info.Hostname},{(info.IsAnyPortOpen ? PortState.Open : PortState.Closed)},{info.PingInfo.Status},{info.MACAddress},\"{info.Vendor}\",\"{stringBuilderPorts.ToString().TrimEnd(';')}\",{info.PingInfo.Bytes},{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)},{info.PingInfo.TTL}");
+        }
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
 
-    private static void CreateCSV(IEnumerable<PortInfo> collection, string filePath)
+    private static void CreateCSV(IEnumerable<PortScannerPortInfo> collection, string filePath)
     {
         var stringBuilder = new StringBuilder();
 
-        stringBuilder.AppendLine($"{nameof(PortInfo.IPAddress)},{nameof(PortInfo.Hostname)},{nameof(PortInfo.Port)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)},{nameof(PortInfo.State)}");
+        stringBuilder.AppendLine($"{nameof(PortScannerPortInfo.IPAddress)},{nameof(PortScannerPortInfo.Hostname)},{nameof(PortScannerPortInfo.Port)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)},{nameof(PortScannerPortInfo.State)}");
 
         foreach (var info in collection)
-            stringBuilder.AppendLine($"{info.IPAddress},{info.Hostname},{info.Port},{info.LookupInfo.Protocol},{info.LookupInfo.Service},{info.LookupInfo.Description},{info.State}");
+            stringBuilder.AppendLine($"{info.IPAddress},{info.Hostname},{info.Port},{info.LookupInfo.Protocol},{info.LookupInfo.Service},\"{info.LookupInfo.Description}\",{info.State}");
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -488,7 +495,7 @@ public static partial class ExportManager
         stringBuilder.AppendLine($"{nameof(OUIInfo.MACAddress)},{nameof(OUIInfo.Vendor)}");
 
         foreach (var info in collection)
-            stringBuilder.AppendLine($"{info.MACAddress},{info.Vendor}");
+            stringBuilder.AppendLine($"{info.MACAddress},\"{info.Vendor}\"");
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -500,7 +507,7 @@ public static partial class ExportManager
         stringBuilder.AppendLine($"{nameof(PortLookupInfo.Number)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)}");
 
         foreach (var info in collection)
-            stringBuilder.AppendLine($"{info.Number},{info.Protocol},{info.Service},{info.Description}");
+            stringBuilder.AppendLine($"{info.Number},{info.Protocol},{info.Service},\"{info.Description}\"");
 
         System.IO.File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -548,11 +555,11 @@ public static partial class ExportManager
         var document = new XDocument(DefaultXDeclaration,
 
             new XElement(ApplicationName.IPScanner.ToString(),
-                new XElement(nameof(HostInfo) + "s",
+                new XElement(nameof(IPScannerHostInfo) + "s",
 
                 from info in collection
                 select
-                    new XElement(nameof(HostInfo),
+                    new XElement(nameof(IPScannerHostInfo),
                         new XElement(nameof(WiFiNetworkInfo.BSSID), info.BSSID),
                         new XElement(nameof(WiFiNetworkInfo.SSID), info.SSID),
                         new XElement(nameof(WiFiNetworkInfo.ChannelCenterFrequencyInKilohertz), info.ChannelCenterFrequencyInKilohertz),
@@ -569,45 +576,54 @@ public static partial class ExportManager
         document.Save(filePath);
     }
 
-    public static void CreateXML(IEnumerable<HostInfo> collection, string filePath)
+    public static void CreateXML(IEnumerable<IPScannerHostInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
 
             new XElement(ApplicationName.IPScanner.ToString(),
-                new XElement(nameof(HostInfo) + "s",
+                new XElement(nameof(IPScannerHostInfo) + "s",
 
                 from info in collection
                 select
-                    new XElement(nameof(HostInfo),
+                    new XElement(nameof(IPScannerHostInfo),
+                        new XElement("Status", info.IsReachable),
                         new XElement(nameof(PingInfo.IPAddress), info.PingInfo.IPAddress),
-                        new XElement(nameof(HostInfo.Hostname), info.Hostname),
-                        new XElement(nameof(HostInfo.MACAddress), info.MACAddress),
-                        new XElement(nameof(HostInfo.Vendor), info.Vendor),
+                        new XElement(nameof(IPScannerHostInfo.Hostname), info.Hostname),
+                        new XElement("PortStatus", info.IsAnyPortOpen ? PortState.Open : PortState.Closed),
+                        new XElement("PingStatus", info.PingInfo.Status),
+                        new XElement(nameof(IPScannerHostInfo.MACAddress), info.MACAddress),
+                        new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor),
+                        from port in info.Ports
+                        select new XElement(nameof(PortInfo),
+                            new XElement(nameof(PortInfo.Port), port.Port),
+                            new XElement(nameof(PortInfo.LookupInfo.Protocol), port.LookupInfo.Protocol),
+                            new XElement(nameof(PortInfo.LookupInfo.Service), port.LookupInfo.Service),
+                            new XElement(nameof(PortInfo.LookupInfo.Description), port.LookupInfo.Description),
+                            new XElement(nameof(PortInfo.State), port.State)),
                         new XElement(nameof(PingInfo.Bytes), info.PingInfo.Bytes),
                         new XElement(nameof(PingInfo.Time), Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)),
-                        new XElement(nameof(PingInfo.TTL), info.PingInfo.TTL),
-                        new XElement(nameof(PingInfo.Status), info.PingInfo.Status)))));
+                        new XElement(nameof(PingInfo.TTL), info.PingInfo.TTL)))));
 
         document.Save(filePath);
     }
 
-    public static void CreateXML(IEnumerable<PortInfo> collection, string filePath)
+    public static void CreateXML(IEnumerable<PortScannerPortInfo> collection, string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
 
             new XElement(ApplicationName.PortScanner.ToString(),
-                new XElement(nameof(PortInfo) + "s",
+                new XElement(nameof(PortScannerPortInfo) + "s",
 
                     from info in collection
                     select
-                        new XElement(nameof(PortInfo),
-                            new XElement(nameof(PortInfo.IPAddress), info.IPAddress),
-                            new XElement(nameof(PortInfo.Hostname), info.Hostname),
-                            new XElement(nameof(PortInfo.Port), info.Port),
+                        new XElement(nameof(PortScannerPortInfo),
+                            new XElement(nameof(PortScannerPortInfo.IPAddress), info.IPAddress),
+                            new XElement(nameof(PortScannerPortInfo.Hostname), info.Hostname),
+                            new XElement(nameof(PortScannerPortInfo.Port), info.Port),
                             new XElement(nameof(PortLookupInfo.Protocol), info.LookupInfo.Protocol),
                             new XElement(nameof(PortLookupInfo.Service), info.LookupInfo.Service),
                             new XElement(nameof(PortLookupInfo.Description), info.LookupInfo.Description),
-                            new XElement(nameof(PortInfo.State), info.State)))));
+                            new XElement(nameof(PortScannerPortInfo.State), info.State)))));
 
         document.Save(filePath);
     }
@@ -853,29 +869,46 @@ public static partial class ExportManager
         System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 
-    public static void CreateJSON(ObservableCollection<HostInfo> collection, string filePath)
+    public static void CreateJSON(ObservableCollection<IPScannerHostInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
 
         for (var i = 0; i < collection.Count; i++)
         {
+            var jsonDataPorts = new object[collection[i].Ports.Count];
+
+            for (var j = 0; j < collection[i].Ports.Count; j++)
+            {
+                jsonDataPorts[j] = new
+                {
+                    collection[i].Ports[j].Port,
+                    Protocol = collection[i].Ports[j].LookupInfo.Protocol.ToString(),
+                    collection[i].Ports[j].LookupInfo.Service,
+                    collection[i].Ports[j].LookupInfo.Description,
+                    State = collection[i].Ports[j].State.ToString()
+                };
+            }
+
             jsonData[i] = new
             {
+                Status = collection[i].IsReachable.ToString(),
                 IPAddress = collection[i].PingInfo.IPAddress.ToString(),
                 collection[i].Hostname,
+                PortStatus = collection[i].IsAnyPortOpen ? PortState.Open.ToString() : PortState.Closed.ToString(),
+                PingStatus = collection[i].PingInfo.Status.ToString(),
                 MACAddress = collection[i].MACAddress?.ToString(),
                 collection[i].Vendor,
+                Ports = jsonDataPorts,
                 collection[i].PingInfo.Bytes,
                 Time = Ping.TimeToString(collection[i].PingInfo.Status, collection[i].PingInfo.Time, true),
-                collection[i].PingInfo.TTL,
-                Status = collection[i].PingInfo.Status.ToString()
+                collection[i].PingInfo.TTL
             };
         }
 
         System.IO.File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 
-    public static void CreateJSON(ObservableCollection<PortInfo> collection, string filePath)
+    public static void CreateJSON(ObservableCollection<PortScannerPortInfo> collection, string filePath)
     {
         var jsonData = new object[collection.Count];
 

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"        
+        xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
@@ -13,20 +14,32 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.IPScanner}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowScanResultForAllIPAddresses}" IsOn="{Binding ShowScanResultForAllIPAddresses}" Margin="0,0,0,20"/>
-        <TextBlock Text="{x:Static localization:Strings.Multithreading}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock  Text="{x:Static localization:Strings.Threads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding Threads}" Maximum="1024" Minimum="1" Interval="1" Margin="0,0,0,20" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowUnreachableIPAddressesAndPorts}" IsOn="{Binding ShowAllResults}" Margin="0,0,0,20"/>        
         <TextBlock Text="{x:Static localization:Strings.Ping}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock  Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding ICMPAttempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown  Value="{Binding ICMPTimeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Buffer}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown  Value="{Binding ICMPBuffer}" Minimum="1" Maximum="65535" Interval="1" Margin="0,0,0,10" />
-        <TextBlock  Text="{x:Static localization:Strings.Attempts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding ICMPAttempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,20" />
+        <mah:NumericUpDown  Value="{Binding ICMPBuffer}" Minimum="1" Maximum="65535" Interval="1" Margin="0,0,0,20" />        
         <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsOn="{Binding ResolveHostname}" Margin="0,0,0,10"/>        
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsOn="{Binding ResolveHostname}" Margin="0,0,0,10"/>
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowErrorMessage}" IsOn="{Binding DNSShowErrorMessage}" Margin="0,0,0,20" />
+        <TextBlock Text="{x:Static localization:Strings.PortScanner}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ScanCommonPorts}" IsOn="{Binding PortScanEnabled}" Margin="0,0,0,10"/>
+        <TextBlock  Text="{x:Static localization:Strings.CommonPorts}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <TextBox mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,10">
+            <TextBox.Text>
+                <Binding Path="PortScanPorts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:PortRangeValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown  Value="{Binding PortScanTimeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,10" />        
         <TextBlock Text="{x:Static localization:Strings.ARP}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveMACAddressAndVendor}" IsOn="{Binding ResolveMACAddress}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.CustomCommands}" Style="{StaticResource HeaderTextBlock}" />
@@ -74,7 +87,7 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,20">
             <Button Command="{Binding DeleteCustomCommandCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
@@ -154,5 +167,19 @@
                 </Button.Content>
             </Button>
         </StackPanel>
+        <TextBlock Text="{x:Static localization:Strings.Multithreading}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.MaxHostThreads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding MaxHostThreads}" Maximum="512" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.MaxPortThreads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding MaxPortThreads}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Style="{StaticResource InfoImageRectangle}" Width="24" Height="24" HorizontalAlignment="Right" />
+            <TextBlock Grid.Column="2" Text="{x:Static localization:Strings.MaxThreadsOnlyGoToSettingsGeneralGeneral}" TextWrapping="Wrap" Style="{StaticResource InfoTextBlock}" />
+        </Grid>
     </StackPanel>
 </UserControl>

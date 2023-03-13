@@ -1,32 +1,32 @@
-﻿using NETworkManager.Localization.Translators;
-using System;
+﻿using System;
 using System.Globalization;
-using System.Net.NetworkInformation;
 using System.Windows.Data;
+using NETworkManager.Localization.Translators;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Converters;
 
 /// <summary>
-/// Convert <see cref="IPStatus"/> to translated <see cref="string"/> or wise versa.
+/// Convert a <see cref="bool"/> that indicates if a port is open to a translated <see cref="string"/> or wise versa.
 /// </summary>
-public sealed class IPStatusToStringConverter : IValueConverter
+public sealed class PortOpenToStringConverter : IValueConverter
 {
     /// <summary>
-    /// Convert <see cref="IPStatus"/> to translated <see cref="string"/>. 
+    /// Convert a <see cref="bool"/> that indicates if a port is open to a translated <see cref="string"/>. 
     /// </summary>
-    /// <param name="value">Object from type <see cref="IPStatus"/>.</param>
+    /// <param name="value">Port up as <see cref="bool"/>.</param>
     /// <param name="targetType"></param>
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
-    /// <returns>Translated <see cref="IPStatus"/>.</returns>
+    /// <returns>Translated <see cref="PortState"/>.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    { 
-        if (value is not IPStatus ipStatus)
+    {
+        if (value is not bool portState)
             return "-/-";
-                    
-        return IPStatusTranslator.GetInstance().Translate(ipStatus);
-    }
 
+        return portState ? PortStateTranslator.GetInstance().Translate(PortState.Open) : PortStateTranslator.GetInstance().Translate(PortState.Closed);
+    }
+    
     /// <summary>
     /// !!! Method not implemented !!!
     /// </summary>

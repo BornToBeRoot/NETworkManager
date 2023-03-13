@@ -113,6 +113,23 @@ public class SettingsGeneralViewModel : ViewModelBase
         }
     }
 
+    private int _threadPoolAdditionalMinThreads;
+    public int ThreadPoolAdditionalMinThreads
+    {
+        get => _threadPoolAdditionalMinThreads;
+        set
+        {
+            if(value == _threadPoolAdditionalMinThreads) 
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.General_ThreadPoolAdditionalMinThreads = value;
+
+            _threadPoolAdditionalMinThreads = value;
+            OnPropertyChanged();
+        }
+    }
+
     private int _historyListEntries;
     public int HistoryListEntries
     {
@@ -155,7 +172,7 @@ public class SettingsGeneralViewModel : ViewModelBase
         ApplicationsVisible.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
         ApplicationsVisible.Filter = o =>
         {
-            if (!(o is ApplicationInfo info))
+            if (o is not ApplicationInfo info)
                 return false;
 
             return info.IsVisible;
@@ -165,7 +182,7 @@ public class SettingsGeneralViewModel : ViewModelBase
         ApplicationsHidden.SortDescriptions.Add(new SortDescription(nameof(ApplicationInfo.Name), ListSortDirection.Ascending));
         ApplicationsHidden.Filter = o =>
         {
-            if (!(o is ApplicationInfo info))
+            if (o is not ApplicationInfo info)
                 return false;
 
             return !info.IsVisible;
@@ -175,6 +192,7 @@ public class SettingsGeneralViewModel : ViewModelBase
 
         DefaultApplicationSelectedItem = ApplicationsVisible.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == SettingsManager.Current.General_DefaultApplicationViewName);
         BackgroundJobInterval = SettingsManager.Current.General_BackgroundJobInterval;
+        ThreadPoolAdditionalMinThreads = SettingsManager.Current.General_ThreadPoolAdditionalMinThreads;
         HistoryListEntries = SettingsManager.Current.General_HistoryListEntries;
     }
     #endregion
@@ -186,21 +204,7 @@ public class SettingsGeneralViewModel : ViewModelBase
     }
 
     private void VisibleToHideApplicationAction()
-    {
-        /*
-        var index = 0;
-
-        for (var i = 0; i < SettingsManager.Current.General_ApplicationList.Count; i++)
-        {
-            if (SettingsManager.Current.General_ApplicationList[i].Name != VisibleApplicationSelectedItem.Name)
-                continue;
-
-            index = i;
-
-            break;
-        }
-        */
-
+    {        
         var newDefaultApplication = DefaultApplicationSelectedItem.Name == VisibleApplicationSelectedItem.Name;
 
         // Remove and add will fire a collection changed event --> detected in MainWindow
@@ -224,19 +228,6 @@ public class SettingsGeneralViewModel : ViewModelBase
 
     private void HideToVisibleApplicationAction()
     {
-        /*
-        var index = 0;
-
-        for (var i = 0; i < SettingsManager.Current.General_ApplicationList.Count; i++)
-        {
-            if (SettingsManager.Current.General_ApplicationList[i].Name == HiddenApplicationSelectedItem.Name)
-            {
-                index = i;
-                break;
-            }
-        }
-        */
-
         // Remove and add will fire a collection changed event --> detected in MainWindow
         var info = SettingsManager.Current.General_ApplicationList.First(x => HiddenApplicationSelectedItem.Name.Equals(x.Name));
 

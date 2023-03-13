@@ -1114,8 +1114,8 @@ Profile files are not affected!</value>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
     <value>Show only most common query types</value>
   </data>
-  <data name="ShowScanResultForAllIPAddresses" xml:space="preserve">
-    <value>Show scan result for all IP addresses</value>
+  <data name="ShowUnreachableIPAddressesAndPorts" xml:space="preserve">
+    <value>Show unreachable IP addresses and ports</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
     <value>Show statistics</value>
@@ -1864,11 +1864,11 @@ Profile files are not affected!</value>
   <data name="AddIPv4Address" xml:space="preserve">
     <value>Add IPv4 address</value>
   </data>
-  <data name="HostThreads" xml:space="preserve">
-    <value>Host threads</value>
+  <data name="MaxHostThreads" xml:space="preserve">
+    <value>Max. concurrent host threads</value>
   </data>
-  <data name="PortThreads" xml:space="preserve">
-    <value>Port threads</value>
+  <data name="MaxPortThreads" xml:space="preserve">
+    <value>Max. concurrent port threads</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -3118,8 +3118,8 @@ If not set, the default AWS CLI settings are used.</value>
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>Apply theme to PowerShell console</value>
   </data>
-  <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
-    <value>The color of the PowerShell console can be changed to the application theme under General &gt; Appearance</value>
+  <data name="PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance" xml:space="preserve">
+    <value>The color of the PowerShell console can be changed to the application theme under Settings &gt; General &gt; Appearance</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
@@ -3282,5 +3282,42 @@ If the option is disabled again, the values are no longer modified. However, the
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
     <value>Settings have been reset!</value>
+  </data>
+  <data name="PingStatus" xml:space="preserve">
+    <value>Ping status</value>
+  </data>
+  <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
+    <value>ThreadPool additional min. threads</value>
+  </data>
+  <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
+    <value>This setting sets the minimum number of threads used by the application's ThreadPool. This can improve the performance of e.g. the IP scanner or port scanner.
+The value is added to the default settings.
+
+The value 0 leaves the default settings (number of CPU threads).
+
+If the value is too high, performance problems may occur.
+
+Changes to this value will take effect after the application is restarted. Whether the value was set successfully can be seen in the log file under %LocalAppData%\NETworkManager\NETworkManager.log</value>
+  </data>
+  <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
+    <value>These settings only change the maximum number of concurrently executed threads per host/port scan. Go to Settings &gt; General &gt; General to adjust the (min) threads of the application.</value>
+  </data>
+  <data name="PortStatus" xml:space="preserve">
+    <value>Port status</value>
+  </data>
+  <data name="PingDetails" xml:space="preserve">
+    <value>Ping details</value>
+  </data>
+  <data name="CommonPorts" xml:space="preserve">
+    <value>Common ports</value>
+  </data>
+  <data name="ScanCommonPorts" xml:space="preserve">
+    <value>Scan common ports</value>
+  </data>
+  <data name="NoOpenPortsFound" xml:space="preserve">
+    <value>No open ports found!</value>
+  </data>
+  <data name="PortScanIsDisabled" xml:space="preserve">
+    <value>Port scan is disabled!</value>
   </data>
 </root>

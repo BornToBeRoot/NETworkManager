@@ -15,36 +15,36 @@ public class IPScannerSettingsViewModel : ViewModelBase
 
     private readonly IDialogCoordinator _dialogCoordinator;
 
-    private bool _showScanResultForAllIPAddresses;
-    public bool ShowScanResultForAllIPAddresses
+    private bool _showAllResults;
+    public bool ShowAllResults
     {
-        get => _showScanResultForAllIPAddresses;
+        get => _showAllResults;
         set
         {
-            if (value == _showScanResultForAllIPAddresses)
+            if (value == _showAllResults)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses = value;
+                SettingsManager.Current.IPScanner_ShowAllResults = value;
 
-            _showScanResultForAllIPAddresses = value;
+            _showAllResults = value;
             OnPropertyChanged();
         }
     }
 
-    private int _threads;
-    public int Threads
+    private int _icmpAttempts;
+    public int ICMPAttempts
     {
-        get => _threads;
+        get => _icmpAttempts;
         set
         {
-            if (value == _threads)
+            if (value == _icmpAttempts)
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.IPScanner_Threads = value;
+                SettingsManager.Current.IPScanner_ICMPAttempts = value;
 
-            _threads = value;
+            _icmpAttempts = value;
             OnPropertyChanged();
         }
     }
@@ -82,24 +82,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    private int _icmpAttempts;
-    public int ICMPAttempts
-    {
-        get => _icmpAttempts;
-        set
-        {
-            if (value == _icmpAttempts)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.IPScanner_ICMPAttempts = value;
-
-            _icmpAttempts = value;
-            OnPropertyChanged();
-        }
-    }
-
+    
     private bool _resolveHostname;
     public bool ResolveHostname
     {
@@ -134,6 +117,60 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    private bool _portScanEnabled;
+    public bool PortScanEnabled
+    {
+        get => _portScanEnabled;
+        set
+        {
+            if (value == _portScanEnabled) 
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_PortScanEnabled = value;
+
+            _portScanEnabled = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _portScanPorts;
+    public string PortScanPorts
+    {
+        get => _portScanPorts;
+        set
+        {
+            if(value == _portScanPorts)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_PortScanPorts = value;
+
+            _portScanPorts = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _portScanTimeout;
+    public int PortScanTimeout
+
+    {
+        get => _portScanTimeout;
+
+        set
+        {
+            if (value == _portScanTimeout)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_PortScanTimeout = value;
+
+                        _portScanTimeout = value;
+            OnPropertyChanged();
+        }
+
+    }
+
     private bool _resolveMACAddress;
     public bool ResolveMACAddress
     {
@@ -166,6 +203,40 @@ public class IPScannerSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    private int _maxHostThreads;
+    public int MaxHostThreads
+    {
+        get => _maxHostThreads;
+        set
+        {
+            if (value == _maxHostThreads)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_MaxHostThreads = value;
+
+            _maxHostThreads = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private int _maxPortThreads;
+    public int MaxPortThreads
+    {
+        get => _maxPortThreads;
+        set
+        {
+            if (value == _maxPortThreads)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_MaxPortThreads = value;
+
+            _maxPortThreads = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 
     #region Constructor, load settings
@@ -185,14 +256,18 @@ public class IPScannerSettingsViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        ShowScanResultForAllIPAddresses = SettingsManager.Current.IPScanner_ShowScanResultForAllIPAddresses;
-        Threads = SettingsManager.Current.IPScanner_Threads;
-        ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout;
-        ICMPBuffer = SettingsManager.Current.IPScanner_ICMPBuffer;
+        ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults;
         ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts;
+        ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout;
+        ICMPBuffer = SettingsManager.Current.IPScanner_ICMPBuffer;        
         ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname;            
         DNSShowErrorMessage = SettingsManager.Current.IPScanner_DNSShowErrorMessage;
+        PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled;
+        PortScanPorts = SettingsManager.Current.IPScanner_PortScanPorts;
+        PortScanTimeout = SettingsManager.Current.IPScanner_PortScanTimeout;
         ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
+        MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads;
+        MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads;
     }
     #endregion
 

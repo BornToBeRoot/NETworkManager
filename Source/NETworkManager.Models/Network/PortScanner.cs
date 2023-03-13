@@ -14,17 +14,13 @@ public class PortScanner
     #region Variables
     private int _progressValue;
 
-    public bool ResolveHostname = true;
-    public int HostThreads = 5;
-    public int PortThreads = 100;
-    public bool ShowClosed = false;
-    public int Timeout = 4000;
+    private readonly PortScannerOptions _options;
     #endregion
 
     #region Events
-    public event EventHandler<PortScannedArgs> PortScanned;
+    public event EventHandler<PortScannerPortScannedArgs> PortScanned;
 
-    protected virtual void OnPortScanned(PortScannedArgs e)
+    protected virtual void OnPortScanned(PortScannerPortScannedArgs e)
     {
         PortScanned?.Invoke(this, e);
     }
@@ -51,14 +47,17 @@ public class PortScanner
     }
     #endregion
 
+    #region Constructor
+    public PortScanner(PortScannerOptions options)
+    {
+        _options = options;
+    }
+    #endregion
+
     #region Methods
     public void ScanAsync(IPAddress[] ipAddresses, int[] ports, CancellationToken cancellationToken)
     {
         _progressValue = 0;
-
-        // Modify the ThreadPool for better performance
-        ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);
-        ThreadPool.SetMinThreads(workerThreads + HostThreads + PortThreads, completionPortThreads + HostThreads + PortThreads);
 
         Task.Run(() =>
         {
@@ -67,13 +66,13 @@ public class PortScanner
                 var hostParallelOptions = new ParallelOptions
                 {
                     CancellationToken = cancellationToken,
-                    MaxDegreeOfParallelism = HostThreads
+                    MaxDegreeOfParallelism = _options.MaxHostThreads
                 };
 
                 var portParallelOptions = new ParallelOptions
                 {
                     CancellationToken = cancellationToken,
-                    MaxDegreeOfParallelism = PortThreads / HostThreads
+                    MaxDegreeOfParallelism = _options.MaxPortThreads
                 };
 
                 Parallel.ForEach(ipAddresses, hostParallelOptions, ipAddress =>
@@ -81,7 +80,7 @@ public class PortScanner
                     // Resolve Hostname (PTR)
                     var hostname = string.Empty;
 
-                    if (ResolveHostname)
+                    if (_options.ResolveHostname)
                     {
                         // Don't use await in Paralle.ForEach, this will break
                         var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(ipAddress);
@@ -100,15 +99,15 @@ public class PortScanner
                         using (var tcpClient = new TcpClient(ipAddress.AddressFamily))
                         {
                             PortState portState = PortState.None;
-                            
+
                             try
                             {
                                 var task = tcpClient.ConnectAsync(ipAddress, port);
 
-                                if (task.Wait(Timeout))
+                                if (task.Wait(_options.Timeout))
                                     portState = tcpClient.Connected ? PortState.Open : PortState.Closed;
                                 else
-                                    portState = PortState.TimedOut;                                    
+                                    portState = PortState.TimedOut;
                             }
                             catch
                             {
@@ -118,8 +117,8 @@ public class PortScanner
                             {
                                 tcpClient?.Close();
 
-                                if (ShowClosed || portState == PortState.Open)
-                                    OnPortScanned(new PortScannedArgs(ipAddress, hostname, port, PortLookup.Lookup(port).FirstOrDefault(x => x.Protocol == PortLookup.Protocol.Tcp), portState));
+                                if (_options.ShowAllResults || portState == PortState.Open)
+                                    OnPortScanned(new PortScannerPortScannedArgs(ipAddress, hostname, port, PortLookup.GetByPortAndProtocol(port), portState));
                             }
                         }
 
@@ -127,16 +126,12 @@ public class PortScanner
                     });
                 });
             }
-            catch (OperationCanceledException) // If user has canceled
+            catch (OperationCanceledException)
             {
                 OnUserHasCanceled();
             }
             finally
             {
-                // Reset the ThreadPool to defaul
-                ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
-                ThreadPool.SetMinThreads(workerThreads - HostThreads + PortThreads, completionPortThreads - HostThreads + PortThreads);
-
                 OnScanComplete();
             }
         }, cancellationToken);

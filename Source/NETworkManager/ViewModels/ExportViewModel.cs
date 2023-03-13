@@ -80,7 +80,7 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    public ExportManager.ExportFileType FileType { get; set; }
+    public ExportFileType FileType { get; set; }
 
     private bool _showCSV;
     public bool ShowCSV
@@ -107,7 +107,7 @@ public class ExportViewModel : ViewModelBase
 
             if (value)
             {
-                FileType = ExportManager.ExportFileType.CSV;
+                FileType = ExportFileType.CSV;
                 ChangeFilePathExtension(FileType);
             }
 
@@ -141,7 +141,7 @@ public class ExportViewModel : ViewModelBase
 
             if (value)
             {
-                FileType = ExportManager.ExportFileType.XML;
+                FileType = ExportFileType.XML;
                 ChangeFilePathExtension(FileType);
             }
 
@@ -176,7 +176,7 @@ public class ExportViewModel : ViewModelBase
 
             if (value)
             {
-                FileType = ExportManager.ExportFileType.JSON;
+                FileType = ExportFileType.JSON;
                 ChangeFilePathExtension(FileType);
             }
 
@@ -210,7 +210,7 @@ public class ExportViewModel : ViewModelBase
 
             if (value)
             {
-                FileType = ExportManager.ExportFileType.TXT;
+                FileType = ExportFileType.TXT;
                 ChangeFilePathExtension(FileType);
             }
 
@@ -233,36 +233,36 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportManager.ExportFileType[] showFilesTypes, bool showExportSelected)
+    public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportFileType[] showFilesTypes, bool showExportSelected)
     {
         ExportCommand = new RelayCommand(p => deleteCommand(this));
         CancelCommand = new RelayCommand(p => cancelHandler(this));
 
-        ShowCSV = showFilesTypes.Contains(ExportManager.ExportFileType.CSV);
-        ShowXML = showFilesTypes.Contains(ExportManager.ExportFileType.XML);
-        ShowJSON = showFilesTypes.Contains(ExportManager.ExportFileType.JSON);
-        ShowTXT = showFilesTypes.Contains(ExportManager.ExportFileType.TXT);
+        ShowCSV = showFilesTypes.Contains(ExportFileType.CSV);
+        ShowXML = showFilesTypes.Contains(ExportFileType.XML);
+        ShowJSON = showFilesTypes.Contains(ExportFileType.JSON);
+        ShowTXT = showFilesTypes.Contains(ExportFileType.TXT);
 
         ShowExportSelected = showExportSelected;
     }
 
-    public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportManager.ExportFileType[] showFilesTypes, bool showExportSelected, ExportManager.ExportFileType fileType, string filePath) :
+    public ExportViewModel(Action<ExportViewModel> deleteCommand, Action<ExportViewModel> cancelHandler, ExportFileType[] showFilesTypes, bool showExportSelected, ExportFileType fileType, string filePath) :
         this(deleteCommand, cancelHandler, showFilesTypes, showExportSelected)
     {
         FilePath = filePath;
 
         switch (fileType)
         {
-            case ExportManager.ExportFileType.CSV:
+            case ExportFileType.CSV:
                 UseCSV = true;
                 break;
-            case ExportManager.ExportFileType.XML:
+            case ExportFileType.XML:
                 UseXML = true;
                 break;
-            case ExportManager.ExportFileType.JSON:
+            case ExportFileType.JSON:
                 UseJSON = true;
                 break;
-            case ExportManager.ExportFileType.TXT:
+            case ExportFileType.TXT:
                 UseTXT = true;                    
                 break;
             default:
@@ -286,7 +286,7 @@ public class ExportViewModel : ViewModelBase
         }
     }
 
-    private void ChangeFilePathExtension(ExportManager.ExportFileType fileType)
+    private void ChangeFilePathExtension(ExportFileType fileType)
     {
         if (string.IsNullOrEmpty(FilePath))
             return;

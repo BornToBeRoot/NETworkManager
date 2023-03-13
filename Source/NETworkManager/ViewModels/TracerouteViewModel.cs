@@ -333,21 +333,20 @@ public class TracerouteViewModel : ViewModelBase
 
         try
         {
-            var traceroute = new Traceroute(new TracerouteOptions
-            {
-                Timeout = SettingsManager.Current.Traceroute_Timeout,
-                Buffer = new byte[SettingsManager.Current.Traceroute_Buffer],
-                MaximumHops = SettingsManager.Current.Traceroute_MaximumHops,
-                DontFragment = true,
-                ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname                    
-            });
+            var traceroute = new Traceroute(new TracerouteOptions(
+                SettingsManager.Current.Traceroute_Timeout,
+                new byte[SettingsManager.Current.Traceroute_Buffer],
+                SettingsManager.Current.Traceroute_MaximumHops,
+                true,
+                SettingsManager.Current.Traceroute_ResolveHostname
+            ));
 
             traceroute.HopReceived += Traceroute_HopReceived;
             traceroute.TraceComplete += Traceroute_TraceComplete;
             traceroute.MaximumHopsReached += Traceroute_MaximumHopsReached;
             traceroute.TraceError += Traceroute_TraceError;
             traceroute.UserHasCanceled += Traceroute_UserHasCanceled;
-            
+
             traceroute.TraceAsync(ipAddress, _cancellationTokenSource.Token);
 
             // Add the host to history
@@ -360,7 +359,7 @@ public class TracerouteViewModel : ViewModelBase
             IsRunning = false;
         }
     }
-    
+
     private void UserHasCanceled()
     {
         CancelTrace = false;
@@ -392,7 +391,7 @@ public class TracerouteViewModel : ViewModelBase
 
             SettingsManager.Current.Traceroute_ExportFileType = instance.FileType;
             SettingsManager.Current.Traceroute_ExportFilePath = instance.FilePath;
-        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportManager.ExportFileType[] { ExportManager.ExportFileType.CSV, ExportManager.ExportFileType.XML, ExportManager.ExportFileType.JSON }, true, SettingsManager.Current.Traceroute_ExportFileType, SettingsManager.Current.Traceroute_ExportFilePath);
+        }, instance => { _dialogCoordinator.HideMetroDialogAsync(this, customDialog); }, new ExportFileType[] { ExportFileType.CSV, ExportFileType.XML, ExportFileType.JSON }, true, SettingsManager.Current.Traceroute_ExportFileType, SettingsManager.Current.Traceroute_ExportFilePath);
 
         customDialog.Content = new ExportDialog
         {
@@ -440,7 +439,7 @@ public class TracerouteViewModel : ViewModelBase
         IsStatusMessageDisplayed = true;
         IsRunning = false;
     }
-    
+
     private void Traceroute_UserHasCanceled(object sender, EventArgs e)
     {
         CancelTrace = false;

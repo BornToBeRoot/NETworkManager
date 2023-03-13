@@ -1,34 +1,37 @@
 ﻿using NETworkManager.Models.Lookup;
-using System.Net;
 
 namespace NETworkManager.Models.Network;
 
+/// <summary>
+/// Class representing a port info.
+/// </summary>
 public partial class PortInfo
 {
-    public IPAddress IPAddress { get; set; }
-    public string Hostname { get; set; }
+    /// <summary>
+    /// Port number.
+    /// </summary>
     public int Port { get; set; }
+
+    /// <summary>
+    /// Port lookup info like service and description.
+    /// </summary>
     public PortLookupInfo LookupInfo { get; set; }
+
+    /// <summary>
+    /// State if the port.
+    /// </summary>
     public PortState State { get; set; }
 
-    public int IPAddressInt32 => IPAddress != null && IPAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork ? IPv4Address.ToInt32(IPAddress) : 0;
-
-    public PortInfo()
-    {
-
-    }
-
-    public PortInfo(IPAddress ipAddress, string hostname, int port, PortLookupInfo lookupInfo, PortState status)
-    {
-        IPAddress = ipAddress;
-        Hostname = hostname;
+    /// <summary>
+    /// Create an instance of <see cref="PortInfo"/> with parameters.
+    /// </summary>
+    /// <param name="port"></param>
+    /// <param name="lookupInfo"></param>
+    /// <param name="state"></param>            
+    public PortInfo(int port, PortLookupInfo lookupInfo, PortState state)
+    {   
         Port = port;
         LookupInfo = lookupInfo;
-        State = status;
-    }
-
-    public static PortInfo Parse(PortScannedArgs e)
-    {
-        return new PortInfo(e.IPAddress, e.Hostname, e.Port, e.LookupInfo, e.State);
+        State = state;
     }
 }

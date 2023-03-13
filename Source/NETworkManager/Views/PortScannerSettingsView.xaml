@@ -13,7 +13,8 @@
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerSettingsViewModel}">
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.PortScanner}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{x:Static localization:Strings.PortProfiles}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowClosedPorts}" IsOn="{Binding ShowAllResults}" Margin="0,0,0,10"/>
+        <TextBlock Text="{x:Static localization:Strings.PortProfiles}" Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />        
         <DataGrid x:Name="DataGridPortProfiles" ItemsSource="{Binding PortProfiles}" SelectionMode="Single" SelectedItem="{Binding SelectedPortProfile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource DataGridScrollBar}" />
@@ -137,17 +138,23 @@
                 </Button.Content>
             </Button>
         </StackPanel>
-        <TextBlock Text="{x:Static localization:Strings.Multithreading}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock  Text="{x:Static localization:Strings.HostThreads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding HostThreads}" Maximum="256" Minimum="1" Interval="1" Margin="0,0,0,10" />
-        <TextBlock  Text="{x:Static localization:Strings.PortThreads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding PortThreads}" Maximum="1024" Minimum="1" Interval="1" Margin="0,0,0,20" />
-        <TextBlock Text="{x:Static localization:Strings.PortScanner}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowClosedPorts}" IsOn="{Binding ShowClosed}" Margin="0,0,0,20"/>
-        <TextBlock Text="{x:Static localization:Strings.Socket}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock  Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown  Value="{Binding Timeout}" Maximum="15000" Minimum="100" Interval="100" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsOn="{Binding ResolveHostname}"/>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsOn="{Binding ResolveHostname}" Margin="0,0,0,20" />
+        <TextBlock Text="{x:Static localization:Strings.Multithreading}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock  Text="{x:Static localization:Strings.MaxHostThreads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding MaxHostThreads}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <TextBlock  Text="{x:Static localization:Strings.MaxPortThreads}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding MaxPortThreads}" Maximum="512" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Style="{StaticResource InfoImageRectangle}" Width="24" Height="24" HorizontalAlignment="Right" />
+            <TextBlock Grid.Column="2" Text="{x:Static localization:Strings.MaxThreadsOnlyGoToSettingsGeneralGeneral}" TextWrapping="Wrap" Style="{StaticResource InfoTextBlock}" />
+        </Grid>
     </StackPanel>
 </UserControl>
