@@ -3321,16 +3321,14 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
     <value>ThreadPool aggiuntivo min. thread</value>
   </data>
   <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>Questa impostazione imposta il numero minimo di thread usati dal ThreadPool dell'applicazione. 
-Questo può migliorare le prestazioni di ad es. lo scanner IP o il port scanner.
-Il valore viene aggiunto alle impostazioni predefinite.
-
-Il valore 0 lascia le impostazioni predefinite (numero di thread della CPU).
-
+    <value>Questa impostazione specifica il numero minimo di thread che verranno creati dal ThreadPool dell'applicazione su richiesta.
+Ciò può migliorare le prestazioni, ad esempio, dello scanner IP o del port scanner.
+Il valore viene aggiunto al n. min. predefinito thread (numero thread CPU). 
+Il valore 0 lascia le impostazioni predefinite. 
+Se il valore è superiore a quello predefinito max. thread del ThreadPool, verrà usato  questo valore.
 Se il valore è troppo alto, potrebbero verificarsi problemi di prestazioni.
-
 Le modifiche a questo valore avranno effetto dopo il riavvio dell'applicazione. 
-Se il valore è stato impostato correttamente, è possibile verificarlo nel file di registro in %LocalAppData%\NETworkManager\NETworkManager.log</value>
+Se il valore è stato impostato correttamente, è possibile verificarlo nel file  registro in %LocalAppData%\NETworkManager\NETworkManager.log</value>
   </data>
   <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
     <value>Queste impostazioni modificano solo il numero massimo di thread eseguiti contemporaneamente per scansione host/porta. 
@@ -3342,16 +3340,13 @@ Vai in Impostazioni &gt; Generali &gt; Generali per regolare i thread minimi  de
   <data name="PingDetails" xml:space="preserve">
     <value>Dettagli ping</value>
   </data>
-  <data name="CommonPorts" xml:space="preserve">
-    <value>Porte comuni</value>
-  </data>
-  <data name="ScanCommonPorts" xml:space="preserve">
-    <value>Scansione porte comuni</value>
-  </data>
   <data name="NoOpenPortsFound" xml:space="preserve">
     <value>Nessuna porta aperta trovata!</value>
   </data>
   <data name="PortScanIsDisabled" xml:space="preserve">
     <value>La scansione delle porte è disabilitata!</value>
+  </data>
+  <data name="ScanPorts" xml:space="preserve">
+    <value>Scansione porte</value>
   </data>
 </root>
