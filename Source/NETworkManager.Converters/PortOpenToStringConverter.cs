@@ -14,7 +14,7 @@ public sealed class PortOpenToStringConverter : IValueConverter
     /// <summary>
     /// Convert a <see cref="bool"/> that indicates if a port is open to a translated <see cref="string"/>. 
     /// </summary>
-    /// <param name="value">Object from type <see cref="PortState"/>.</param>
+    /// <param name="value">Port up as <see cref="bool"/>.</param>
     /// <param name="targetType"></param>
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
