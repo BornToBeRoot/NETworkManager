@@ -1124,8 +1124,8 @@ I file del profilo non sono interessati dal problema!</value>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
     <value>Visualizza solo i tipi di interrogazione più comuni</value>
   </data>
-  <data name="ShowScanResultForAllIPAddresses" xml:space="preserve">
-    <value>Visualizza risultati scansione per tutti gli indirizzi IP</value>
+  <data name="ShowUnreachableIPAddressesAndPorts" xml:space="preserve">
+    <value>Visualizza indirizzi IP e porte non raggiungibili</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
     <value>Visualizza statistiche</value>
@@ -1879,11 +1879,11 @@ Per ulteriori dettagli visualizza il messaggio di errore:</value>
   <data name="AddIPv4Address" xml:space="preserve">
     <value>Aggiungi indirizzo IPv4...</value>
   </data>
-  <data name="HostThreads" xml:space="preserve">
-    <value>Thread host</value>
+  <data name="MaxHostThreads" xml:space="preserve">
+    <value>N. max thread host simultanei</value>
   </data>
-  <data name="PortThreads" xml:space="preserve">
-    <value>Thread porta</value>
+  <data name="MaxPortThreads" xml:space="preserve">
+    <value>N. amx thread porta simultanei</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -3145,8 +3145,8 @@ Se non viene impostata, verranno usate le impostazioni predefinite della CLI AWS
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>Applica tema alla console PowerShell</value>
   </data>
-  <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
-    <value>Il colore della console di PowerShell può essere modificato nel tema dell'applicazione in Generali -&gt; Aspetto</value>
+  <data name="PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance" xml:space="preserve">
+    <value>Il colore della console di PowerShell può essere modificato nel tema dell'applicazione in Impostazioni &gt; Generale &gt; Aspetto</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>Se si abilita questa opzione, le impostazioni della console di PowerShell predefinite nel registro in HKCU:\Console vengono sovrascritte in modo che la finestra della console di PowerShell corrisponda al tema dell'applicazione. Si tratta di un'impostazione di sistema globale che potrebbe influire sull'aspetto della normale finestra di PowerShell.
@@ -3313,5 +3313,45 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
     <value>Le impostazioni sono state ripristinate!</value>
+  </data>
+  <data name="PingStatus" xml:space="preserve">
+    <value>Stato ping</value>
+  </data>
+  <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
+    <value>ThreadPool aggiuntivo min. thread</value>
+  </data>
+  <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
+    <value>Questa impostazione imposta il numero minimo di thread usati dal ThreadPool dell'applicazione. 
+Questo può migliorare le prestazioni di ad es. lo scanner IP o il port scanner.
+Il valore viene aggiunto alle impostazioni predefinite.
+
+Il valore 0 lascia le impostazioni predefinite (numero di thread della CPU).
+
+Se il valore è troppo alto, potrebbero verificarsi problemi di prestazioni.
+
+Le modifiche a questo valore avranno effetto dopo il riavvio dell'applicazione. 
+Se il valore è stato impostato correttamente, è possibile verificarlo nel file di registro in %LocalAppData%\NETworkManager\NETworkManager.log</value>
+  </data>
+  <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
+    <value>Queste impostazioni modificano solo il numero massimo di thread eseguiti contemporaneamente per scansione host/porta. 
+Vai in Impostazioni &gt; Generali &gt; Generali per regolare i thread minimi  dell'applicazione.</value>
+  </data>
+  <data name="PortStatus" xml:space="preserve">
+    <value>Stato porta</value>
+  </data>
+  <data name="PingDetails" xml:space="preserve">
+    <value>Dettagli ping</value>
+  </data>
+  <data name="CommonPorts" xml:space="preserve">
+    <value>Porte comuni</value>
+  </data>
+  <data name="ScanCommonPorts" xml:space="preserve">
+    <value>Scansione porte comuni</value>
+  </data>
+  <data name="NoOpenPortsFound" xml:space="preserve">
+    <value>Nessuna porta aperta trovata!</value>
+  </data>
+  <data name="PortScanIsDisabled" xml:space="preserve">
+    <value>La scansione delle porte è disabilitata!</value>
   </data>
 </root>
