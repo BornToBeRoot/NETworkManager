@@ -67,7 +67,7 @@ if(-not(Test-Path -Path $MSBuildPath -PathType Leaf))
 }
 
 # Build with msbuild
-Start-Process -FilePath $MSBuildPath -ArgumentList "$PSScriptRoot\Source\NETworkManager.sln /restore /t:Clean,Build /p:Configuration=Release /p:TargetFramework=$TargetFramework /p:RuntimeIdentifier=$RuntimeIdentifier" -Wait -NoNewWindow
+Start-Process -FilePath $MSBuildPath -ArgumentList "$PSScriptRoot\Source\NETworkManager.sln /restore /t:Clean,Build /p:Configuration=Release /p:TargetFramework=$TargetFramework /p:RuntimeIdentifier=$RuntimeIdentifier /p:WarningLevel=0" -Wait -NoNewWindow
 
 # Test if build is available
 if(-not(Test-Path -Path "$PSScriptRoot\Source\NETworkManager\bin\Release\$TargetFramework\$RuntimeIdentifier\NETworkManager.exe" -PathType Leaf))

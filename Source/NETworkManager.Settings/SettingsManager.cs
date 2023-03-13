@@ -170,9 +170,13 @@ public static class SettingsManager
     {
         _log.Info($"Start settings upgrade from {fromVersion} to {toVersion}...");
 
-        // 2022.12.22.0
-        if (fromVersion < new Version(2022, 12, 22, 0))
-            UpgradeTo202212220();
+        // 2022.12.20.0
+        if (fromVersion < new Version(2022, 12, 20, 0))
+            UpgradeTo_2022_12_20_0();
+
+        // 2023.3.7.0
+        if (fromVersion < new Version(2023, 3, 7, 0))
+            UpgradeTo_2023_3_7_0();
 
         // Latest
         if (fromVersion < toVersion)
@@ -186,11 +190,11 @@ public static class SettingsManager
     }
 
     /// <summary>
-    /// Method to apply changes for version 2022.12.22.0.
+    /// Method to apply changes for version 2022.12.20.0.
     /// </summary>
-    private static void UpgradeTo202212220()
+    private static void UpgradeTo_2022_12_20_0()
     {
-        _log.Info("Apply update to 2022.12.22.0...");
+        _log.Info("Apply update to 2022.12.20.0...");
 
         // Add AWS Session Manager application
         _log.Info("Add new app \"AWSSessionManager\"...");
@@ -215,43 +219,23 @@ public static class SettingsManager
     }
 
     /// <summary>
-    /// Method to apply changes for the latest version.
+    /// Method to apply changes for version 2023.3.7.0.
     /// </summary>
-    /// <param name="version">Latest version.</param>
-    private static void UpgradeToLatest(Version version)
+    private static void UpgradeTo_2023_3_7_0()
     {
-        _log.Info($"Apply upgrade to {version}...");
-
+        _log.Info("Apply update to 2023.3.7.0...");
+        
         // Add NTP Lookup application
         _log.Info($"Add new app \"SNTPLookup\"...");
         Current.General_ApplicationList.Add(ApplicationManager.GetList().First(x => x.Name == ApplicationName.SNTPLookup));
         Current.SNTPLookup_SNTPServers = new ObservableCollection<ServerConnectionInfoProfile>(SNTPServer.GetDefaultList());
-
-        // Update some default settings values, if necessary
-        if (Current.IPScanner_MaxHostThreads > 1024)
-        {
-            _log.Info("Change \"IPScanner_Threads\" to \"1024\"...");
-            Current.IPScanner_MaxHostThreads = 1024;
-        }
-
-        if (Current.PortScanner_MaxHostThreads > 256)
-        {
-            _log.Info("Change \"PortScanner_HostThreads\" to \"256\"...");
-            Current.PortScanner_MaxHostThreads = 256;
-        }
-
-        if (Current.PortScanner_MaxPortThreads > 1024)
-        {
-            _log.Info("Change \"PortScanner_PortThreads\" to \"1024\"...");
-            Current.PortScanner_MaxPortThreads = 1024;
-        }
-
+        
         // Add IP Scanner custom commands
-        foreach(var customCommand in IPScannerCustomCommand.GetDefaultList())
+        foreach (var customCommand in IPScannerCustomCommand.GetDefaultList())
         {
             var customCommandFound = Current.IPScanner_CustomCommands.FirstOrDefault(x => x.Name == customCommand.Name);
 
-            if(customCommandFound == null)
+            if (customCommandFound == null)
             {
                 _log.Info($"Add \"{customCommand.Name}\" to \"IPScanner_CustomCommands\"...");
                 Current.IPScanner_CustomCommands.Add(customCommand);
@@ -280,6 +264,14 @@ public static class SettingsManager
         _log.Info("Init \"DNSLookup_DNSServers_v2\" with default DNS servers...");
         Current.DNSLookup_DNSServers_v2 = new ObservableCollection<DNSServerConnectionInfoProfile>(DNSServer.GetDefaultList());
     }
-    #endregion
 
+    /// <summary>
+    /// Method to apply changes for the latest version.
+    /// </summary>
+    /// <param name="version">Latest version.</param>
+    private static void UpgradeToLatest(Version version)
+    {
+        _log.Info($"Apply upgrade to {version}...");
+    }
+    #endregion
 }
