@@ -3713,7 +3713,7 @@ namespace NETworkManager.Localization.Resources {
         ///
         ///Value 0 will disable this feature.
         ///
-        ///Changing this value requires a restart of the application to take effect. ähnelt.
+        ///Changes to this value will take effect after restarting the application. ähnelt.
         /// </summary>
         public static string HelpMessage_BackgroundJob {
             get {

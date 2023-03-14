@@ -1926,7 +1926,7 @@ Profile files are not affected!</value>
 
 Value 0 will disable this feature.
 
-Changing this value requires a restart of the application to take effect.</value>
+Changes to this value will take effect after restarting the application.</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
     <value>Run background job every x-minute</value>
