@@ -11,7 +11,7 @@
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
     </Style>
 
-    <!-- Apply the default design to all text boxes -->
+    <!-- Apply the default design to all TextBox -->
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
 
     <Style x:Key="ConsoleTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">

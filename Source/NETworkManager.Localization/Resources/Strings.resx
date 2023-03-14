@@ -3316,4 +3316,7 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="ScanPorts" xml:space="preserve">
     <value>Scan ports</value>
   </data>
+  <data name="CouldNotFindApplicationXXXMessage" xml:space="preserve">
+    <value>Could not find the application "{0}". Maybe the application was hidden in the settings?</value>
+  </data>
 </root>

@@ -1861,6 +1861,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not find the application &quot;{0}&quot;. Maybe the application was hidden in the settings? ähnelt.
+        /// </summary>
+        public static string CouldNotFindApplicationXXXMessage {
+            get {
+                return ResourceManager.GetString("CouldNotFindApplicationXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Could not get public ip address via WebRequest (http/https) from &quot;{0}&quot;! Check your network connection (firewall, proxy, etc.). ähnelt.
         /// </summary>
         public static string CouldNotGetPublicIPAddressFromXXXMessage {
