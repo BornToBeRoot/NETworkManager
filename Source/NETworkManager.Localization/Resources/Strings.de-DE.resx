@@ -1114,8 +1114,8 @@ Profildateien sind nicht betroffen!</value>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
     <value>Nur die häufigsten Abfragetypen anzeigen</value>
   </data>
-  <data name="ShowScanResultForAllIPAddresses" xml:space="preserve">
-    <value>Zeige Scan-Ergebnis für alle IP-Adressen</value>
+  <data name="ShowUnreachableIPAddressesAndPorts" xml:space="preserve">
+    <value>Nicht erreichbare IP-Adressen und Ports anzeigen</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
     <value>Statistiken anzeigen</value>
@@ -1864,11 +1864,11 @@ Profildateien sind nicht betroffen!</value>
   <data name="AddIPv4Address" xml:space="preserve">
     <value>IPv4-Adresse hinzufügen</value>
   </data>
-  <data name="HostThreads" xml:space="preserve">
-    <value>Host Threads</value>
+  <data name="MaxHostThreads" xml:space="preserve">
+    <value>Max. gleichzeitige Host-Threads</value>
   </data>
-  <data name="PortThreads" xml:space="preserve">
-    <value>Port Threads</value>
+  <data name="MaxPortThreads" xml:space="preserve">
+    <value>Max. gleichzeitige Port-Threads</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -1922,11 +1922,11 @@ Profildateien sind nicht betroffen!</value>
     <value>Hintergrundjob</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>Der Hintergrundjob speichert Einstellungen und Profile alle x Minuten.
+    <value>Der Hintergrundjob speichert Einstellungen und Profile alle x-Minuten.
 
-Der Wert 0 deaktiviert dieses Feature.
+Der Wert 0 deaktiviert diese Funktion.
 
-Änderungen an diesem Wert erfordern einen Neustart der Anwendung, um wirksam zu werden.</value>
+Änderungen an diesem Wert werden erst nach einem Neustart der Anwendung wirksam.</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
     <value>Hintergrundjob alle x-Minuten ausführen</value>
@@ -3118,8 +3118,8 @@ Wenn nicht festgelegt, werden die Standardeinstellungen für AWS CLI verwendet.<
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>Thema auf PowerShell-Konsole anwenden</value>
   </data>
-  <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
-    <value>Die Farbe der PowerShell-Konsole kann unter Allgemein &gt; Aussehen an das Thema der Anwendung angepasst werden</value>
+  <data name="PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance" xml:space="preserve">
+    <value>Die Farbe der PowerShell-Konsole kann unter Einstellungen &gt; Allgemein &gt; Aussehen an das Anwendungsthema angepasst werden</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>Wenn Sie diese Option aktivieren, werden die Standardeinstellungen für die PowerShell-Konsole in der Registrierung unter HKCU:\Console überschrieben, sodass das PowerShell-Konsolenfenster dem Anwendungsthema entspricht. Dies ist eine globale Systemeinstellung, die sich auf das Aussehen des normalen PowerShell-Fensters auswirken kann.
@@ -3282,5 +3282,44 @@ Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert.
   </data>
   <data name="SettingsHaveBeenReset" xml:space="preserve">
     <value>Einstellungen wurden zurückgesetzt!</value>
+  </data>
+  <data name="PingStatus" xml:space="preserve">
+    <value>Ping-Status</value>
+  </data>
+  <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
+    <value>ThreadPool zusätzliche min. Threads</value>
+  </data>
+  <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
+    <value>Diese Einstellung legt die Mindestanzahl von Threads fest, die bei Bedarf aus dem ThreadPool der Anwendung erstellt werden. Dies kann die Leistung z.B. des IP-Scanners oder Port-Scanners verbessern.
+
+Der Wert wird zum Standardwert min. Threads (Anzahl der CPU-Threads) addiert. Der Wert 0 belässt die Standardeinstellungen. Ist der Wert höher als die standardmäßige Anzahl der Threads des ThreadPools, wird dieser Wert verwendet.
+
+Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
+
+Änderungen an diesem Wert werden erst nach einem Neustart der Anwendung wirksam. Ob der Wert erfolgreich gesetzt wurde, kann in der Protokolldatei unter %LocalAppData%\NETworkManager\NETworkManager.log eingesehen werden</value>
+  </data>
+  <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
+    <value>Diese Einstellungen ändern nur die maximale Anzahl der gleichzeitig ausgeführten Threads pro Host-/Port-Scan. Gehen Sie zu Einstellungen &gt; Allgemein &gt; Allgemein, um die (minimalen) Threads der Anwendung anzupassen.</value>
+  </data>
+  <data name="PortStatus" xml:space="preserve">
+    <value>Port-Status</value>
+  </data>
+  <data name="PingDetails" xml:space="preserve">
+    <value>Ping-Details</value>
+  </data>
+  <data name="NoOpenPortsFound" xml:space="preserve">
+    <value>Keine offenen Ports gefunden!</value>
+  </data>
+  <data name="PortScanIsDisabled" xml:space="preserve">
+    <value>Port-Scan ist deaktiviert!</value>
+  </data>
+  <data name="ScanPorts" xml:space="preserve">
+    <value>Scan Ports</value>
+  </data>
+  <data name="CouldNotFindApplicationXXXMessage" xml:space="preserve">
+    <value>Die Anwendung "{0}" konnte nicht gefunden werden. Eventuell wurde die Anwendung in den Einstellungen ausgeblendet?</value>
+  </data>
+  <data name="StatusWindow" xml:space="preserve">
+    <value>Status-Fenster</value>
   </data>
 </root>
