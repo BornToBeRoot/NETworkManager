@@ -8,7 +8,7 @@
         xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsUpdateViewModel}">
     <StackPanel>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.DNS}" />
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Update}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10" >
             <mahAppsControls:ToggleSwitch Header="{x:Static localization:Strings.CheckForUpdatesAtStartup}" IsOn="{Binding CheckForUpdatesAtStartup}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top" ToolTip="{x:Static localization:Strings.HelpMessage_CheckForUpdatesAtStartup}" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">

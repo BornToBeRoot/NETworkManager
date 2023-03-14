@@ -8221,6 +8221,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status window ähnelt.
+        /// </summary>
+        public static string StatusWindow {
+            get {
+                return ResourceManager.GetString("StatusWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Steel ähnelt.
         /// </summary>
         public static string Steel {
