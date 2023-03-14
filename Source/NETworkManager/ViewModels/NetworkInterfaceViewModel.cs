@@ -20,6 +20,7 @@ using MahApps.Metro.Controls;
 using NETworkManager.Profiles;
 using System.Windows.Threading;
 using NETworkManager.Models;
+using NETworkManager.Models.EventSystem;
 
 namespace NETworkManager.ViewModels;
 
@@ -681,7 +682,20 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         OpenNetworkConnectionsAsync();
     }
-    
+
+    public ICommand IPScannerCommand => new RelayCommand(p => IPScannerAction(), AdditionalCommands_CanExecute);
+
+    private void IPScannerAction()
+    {
+        var ipTuple = SelectedNetworkInterface?.IPv4Address.FirstOrDefault();
+
+        // ToDo: Log error in the future
+        if (ipTuple == null)
+            return;
+        
+        EventSystem.RedirectToApplication(ApplicationName.IPScanner, $"{ipTuple.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(ipTuple.Item2)}");
+    }
+
     public ICommand FlushDNSCommand => new RelayCommand(p => FlushDNSAction(), AdditionalCommands_CanExecute);
 
     private void FlushDNSAction()

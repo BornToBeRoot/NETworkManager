@@ -52,8 +52,13 @@
 
     <Style x:Key="StatusMessageTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource WrapTextBlock}" />
 
-    <Style x:Key="CenterTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" >
-        <Setter Property="Margin"  Value="0,0,10,0" />
+    <!-- TextBlock style for buttons with images and text -->
+    <Style x:Key="ButtonWithImageTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" >
+        <Setter Property="Margin" Value="10,5" />
+        <Setter Property="TextAlignment" Value="Center" />
+    </Style>
+    
+    <Style x:Key="CenterTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" >        
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
