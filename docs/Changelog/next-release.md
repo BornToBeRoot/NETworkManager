@@ -26,6 +26,8 @@ Release date: **xx.xx.2023**
 - Reselect profile or select first profile after (re)loading or search [#2014](https://github.com/BornToBeRoot/NETworkManager/pull/2014){:target="\_blank"}
 - Some designs have been improved (Error & Warning icons). [#2014](https://github.com/BornToBeRoot/NETworkManager/pull/2014){:target="\_blank"}
 - You can now configure the application wide [ThreadPool](https://learn.microsoft.com/en-us/dotnet/standard/threading/the-managed-thread-pool) under `Settings > General > Multithreading`, which is used for the IP scanner and the port scanner. The default value for min. threads are CPU threads + 512. Depending on the hardware, this can improve the performance of the scan. [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"}
+- **Network Interface**
+  - Add a button to redirect the the IPv4 address and subnetmask of the selected network interface to the IP scanner [#2046](https://github.com/BornToBeRoot/NETworkManager/pull/2046){:target="\_blank"}
 - **IP Scanner**
   - Option added to limit the number of concurrent threads per host scan (256) & port scan (5). Increasing the values can speed up the scan, but can also lead to resource problems. [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"}
 - **Port Scanner**
@@ -33,6 +35,7 @@ Release date: **xx.xx.2023**
 
 ## Bugfixes
 
+- Show error message when redirecting to another application, but the application is hidden in the settings or somehow invalid [#2046](https://github.com/BornToBeRoot/NETworkManager/pull/2046){:target="\_blank"}
 - Group name check is now case insensitive and a group name can only be used once. If you create a group named `Test`, you cannot create a group named `test`. [#2014](https://github.com/BornToBeRoot/NETworkManager/pull/2014){:target="\_blank"}
 - Profile dialog
   - Validate AWS Session Manager input (instance ID, profile, region) [#2025](https://github.com/BornToBeRoot/NETworkManager/pull/2025){:target="\_blank"}
