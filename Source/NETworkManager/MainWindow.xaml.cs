@@ -936,13 +936,26 @@ public partial class MainWindow : INotifyPropertyChanged
         ListViewApplication.ScrollIntoView(SelectedApplication);
     }
 
-    private void EventSystem_RedirectDataToApplicationEvent(object sender, EventArgs e)
+    private async void EventSystem_RedirectDataToApplicationEvent(object sender, EventArgs e)
     {
         if (e is not EventSystemRedirectArgs data)
             return;
 
         // Change view
-        SelectedApplication = Applications.SourceCollection.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == data.Application);
+        var application = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == data.Application);
+
+        if (application == null)
+        {
+            var settings = AppearanceManager.MetroDialog;
+            settings.AffirmativeButtonText = Localization.Resources.Strings.OK;
+
+            await this.ShowMessageAsync(Localization.Resources.Strings.Error, string.Format(Localization.Resources.Strings.CouldNotFindApplicationXXXMessage, data.Application.ToString()));
+
+            return;
+        }
+
+        // Change view
+        SelectedApplication = application;               
 
         // Crate a new tab / perform action
         switch (data.Application)
