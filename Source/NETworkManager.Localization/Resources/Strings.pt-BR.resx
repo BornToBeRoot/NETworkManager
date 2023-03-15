@@ -3316,4 +3316,10 @@ As alterações nesse valor entrarão em vigor depois que o aplicativo for reini
   <data name="ScanPorts" xml:space="preserve">
     <value>Verificar portas</value>
   </data>
+  <data name="CouldNotFindApplicationXXXMessage" xml:space="preserve">
+    <value>Não foi possível encontrar o aplicativo "{0}". Talvez o aplicativo foi ocultado nas configurações?</value>
+  </data>
+  <data name="StatusWindow" xml:space="preserve">
+    <value>Janela de status</value>
+  </data>
 </root>
