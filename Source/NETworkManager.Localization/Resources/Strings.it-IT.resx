@@ -1937,11 +1937,11 @@ Per ulteriori dettagli visualizza il messaggio di errore:</value>
     <value>Attività in background</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>L'attività in background salverà impostazioni e profili ogni x minuti.
+    <value>l'attività in background salverà impostazioni e profili ogni x minuti.
 
 Il valore 0 disabiliterà questa funzione.
 
-Affinché abbia effetto la modifica di questo valore richiede il riavvio dell'applicazione.</value>
+Le modifiche a questo valore avranno effetto dopo il riavvio dell'applicazione.</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
     <value>Esegui le attività in background ogni x minuti</value>
@@ -3348,5 +3348,12 @@ Vai in Impostazioni &gt; Generali &gt; Generali per regolare i thread minimi  de
   </data>
   <data name="ScanPorts" xml:space="preserve">
     <value>Scansione porte</value>
+  </data>
+  <data name="CouldNotFindApplicationXXXMessage" xml:space="preserve">
+    <value>Impossibile trovare l'applicazione "{0}". 
+Forse l'applicazione era nascosta nelle impostazioni?</value>
+  </data>
+  <data name="StatusWindow" xml:space="preserve">
+    <value>Finestra di stato</value>
   </data>
 </root>
