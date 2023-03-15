@@ -166,7 +166,6 @@ In the arguments you can use the following placeholders:
 | `$$ipaddress$$` | IP address  |
 | `$$hostname$$`  | Hostname    |
 
-
 ### Max. concurrent host threads
 
 Maximal number of threads that are used to scan for active hosts (IP addresses).
@@ -178,6 +177,9 @@ Maximal number of threads that are used to scan for active hosts (IP addresses).
 {: .note }
 Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.<br/><br/>Too many threads can also cause performance problems on the device.
 
+{: .note }
+This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](/Documentation/Settings/General) settings to configure the application wide thread pool.
+
 ### Max. concurrent port threads
 
 Maximal number of threads that are used to scan for open ports for each host (IP address).
@@ -188,3 +190,6 @@ Maximal number of threads that are used to scan for open ports for each host (IP
 
 {: .note }
 Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.<br/><br/>Too many threads can also cause performance problems on the device.
+
+{: .note }
+This setting only change the maximum number of concurrently executed threads per port scan. See also the [General](/Documentation/Settings/General) settings to configure the application wide thread pool.
