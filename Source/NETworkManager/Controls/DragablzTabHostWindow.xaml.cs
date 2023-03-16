@@ -115,16 +115,8 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    #region RemoteDesktop Commands
-    private bool RemoteDesktop_Disconnected_CanExecute(object view)
-    {
-        if (view is RemoteDesktopControl control)
-            return !control.IsConnected;
-
-        return false;
-    }
-
-    private bool RemoteDesktop_Connected_CanExecute(object view)
+    #region RemoteDesktop Commands  
+    private bool RemoteDesktop_IsConnected_CanExecute(object view)
     {
         if (view is RemoteDesktopControl control)
             return control.IsConnected;
@@ -132,18 +124,15 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
         return false;
     }
 
-    public ICommand RemoteDesktop_ReconnectCommand => new RelayCommand(RemoteDesktop_ReconnectAction, RemoteDesktop_Disconnected_CanExecute);
-
-    private void RemoteDesktop_ReconnectAction(object view)
+    private bool RemoteDesktop_IsDisconnected_CanExecute(object view)
     {
         if (view is RemoteDesktopControl control)
-        {
-            if (control.ReconnectCommand.CanExecute(null))
-                control.ReconnectCommand.Execute(null);
-        }
+            return !control.IsConnected;
+
+        return false;
     }
 
-    public ICommand RemoteDesktop_DisconnectCommand => new RelayCommand(RemoteDesktop_DisconnectAction, RemoteDesktop_Connected_CanExecute);
+    public ICommand RemoteDesktop_DisconnectCommand => new RelayCommand(RemoteDesktop_DisconnectAction, RemoteDesktop_IsConnected_CanExecute);
 
     private void RemoteDesktop_DisconnectAction(object view)
     {
@@ -154,7 +143,18 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    public ICommand RemoteDesktop_FullscreenCommand => new RelayCommand(RemoteDesktop_FullscreenAction, RemoteDesktop_Connected_CanExecute);
+    public ICommand RemoteDesktop_ReconnectCommand => new RelayCommand(RemoteDesktop_ReconnectAction, RemoteDesktop_IsDisconnected_CanExecute);
+
+    private void RemoteDesktop_ReconnectAction(object view)
+    {
+        if (view is RemoteDesktopControl control)
+        {
+            if (control.ReconnectCommand.CanExecute(null))
+                control.ReconnectCommand.Execute(null);
+        }
+    }
+
+    public ICommand RemoteDesktop_FullscreenCommand => new RelayCommand(RemoteDesktop_FullscreenAction, RemoteDesktop_IsConnected_CanExecute);
 
     private void RemoteDesktop_FullscreenAction(object view)
     {
@@ -162,7 +162,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
             control.FullScreen();
     }
 
-    public ICommand RemoteDesktop_AdjustScreenCommand => new RelayCommand(RemoteDesktop_AdjustScreenAction, RemoteDesktop_Connected_CanExecute);
+    public ICommand RemoteDesktop_AdjustScreenCommand => new RelayCommand(RemoteDesktop_AdjustScreenAction, RemoteDesktop_IsConnected_CanExecute);
 
     private void RemoteDesktop_AdjustScreenAction(object view)
     {
@@ -170,7 +170,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
             control.AdjustScreen();
     }
 
-    public ICommand RemoteDesktop_SendCtrlAltDelCommand => new RelayCommand(RemoteDesktop_SendCtrlAltDelAction, RemoteDesktop_Connected_CanExecute);
+    public ICommand RemoteDesktop_SendCtrlAltDelCommand => new RelayCommand(RemoteDesktop_SendCtrlAltDelAction, RemoteDesktop_IsConnected_CanExecute);
 
     private async void RemoteDesktop_SendCtrlAltDelAction(object view)
     {
@@ -314,6 +314,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
     #endregion
     #endregion
 
+    #region Methods
     private async void FocusEmbeddedWindow()
     {
         // Delay the focus to prevent blocking the ui
@@ -336,6 +337,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
                 break;
         }
     }
+    #endregion
 
     #region Events
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

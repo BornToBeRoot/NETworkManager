@@ -65,7 +65,7 @@
                             <Grid Height="32">
                                 <Grid.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.RemoteDesktop_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                        <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                             <MenuItem.Icon>
                                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                     <Rectangle.OpacityMask>
@@ -74,7 +74,7 @@
                                                 </Rectangle>
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                        <MenuItem Header="{x:Static localization:Strings.Disconnect}" Command="{Binding Data.RemoteDesktop_DisconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                        <MenuItem Header="{x:Static localization:Strings.Disconnect}" Command="{Binding Data.DisconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                             <MenuItem.Icon>
                                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                     <Rectangle.OpacityMask>
@@ -84,7 +84,7 @@
                                             </MenuItem.Icon>
                                         </MenuItem>
                                         <Separator />
-                                        <MenuItem Header="{x:Static localization:Strings.Fullscreen}" Command="{Binding Data.RemoteDesktop_FullscreenCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                        <MenuItem Header="{x:Static localization:Strings.Fullscreen}" Command="{Binding Data.FullscreenCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                             <MenuItem.Icon>
                                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                     <Rectangle.OpacityMask>
@@ -93,7 +93,7 @@
                                                 </Rectangle>
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                        <MenuItem Header="{x:Static localization:Strings.AdjustScreen}" Command="{Binding Data.RemoteDesktop_AdjustScreenCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                        <MenuItem Header="{x:Static localization:Strings.AdjustScreen}" Command="{Binding Data.AdjustScreenCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                             <MenuItem.Icon>
                                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                     <Rectangle.OpacityMask>
@@ -111,7 +111,7 @@
                                                     </Rectangle.OpacityMask>
                                                 </Rectangle>
                                             </MenuItem.Icon>
-                                            <MenuItem Header="{x:Static localization:Strings.CtrlAltDel}" Command="{Binding Data.RemoteDesktop_SendCtrlAltDelCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}" />
+                                            <MenuItem Header="{x:Static localization:Strings.CtrlAltDel}" Command="{Binding Data.SendCtrlAltDelCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}" />
                                         </MenuItem>
                                     </ContextMenu>
                                 </Grid.ContextMenu>

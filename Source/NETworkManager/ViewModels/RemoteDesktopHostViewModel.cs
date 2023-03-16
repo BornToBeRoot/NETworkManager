@@ -196,15 +196,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         Connect();
     }
 
-    private bool RemoteDesktop_Disconnected_CanExecute(object view)
-    {
-        if (view is RemoteDesktopControl control)
-            return !control.IsConnected;
-
-        return false;
-    }
-
-    private bool RemoteDesktop_Connected_CanExecute(object view)
+    private bool IsConnected_CanExecute(object view)
     {
         if (view is RemoteDesktopControl control)
             return control.IsConnected;
@@ -212,9 +204,17 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         return false;
     }
 
-    public ICommand RemoteDesktop_ReconnectCommand => new RelayCommand(RemoteDesktop_ReconnectAction, RemoteDesktop_Disconnected_CanExecute);
+    private bool IsDisconnected_CanExecute(object view)
+    {
+        if (view is RemoteDesktopControl control)
+            return !control.IsConnected;
 
-    private void RemoteDesktop_ReconnectAction(object view)
+        return false;
+    }
+
+    public ICommand ReconnectCommand => new RelayCommand(ReconnectAction, IsDisconnected_CanExecute);
+
+    private void ReconnectAction(object view)
     {
         if (view is RemoteDesktopControl control)
         {
@@ -223,9 +223,9 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    public ICommand RemoteDesktop_DisconnectCommand => new RelayCommand(RemoteDesktop_DisconnectAction, RemoteDesktop_Connected_CanExecute);
+    public ICommand DisconnectCommand => new RelayCommand(DisconnectAction, IsConnected_CanExecute);
 
-    private void RemoteDesktop_DisconnectAction(object view)
+    private void DisconnectAction(object view)
     {
         if (view is RemoteDesktopControl control)
         {
@@ -234,25 +234,25 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    public ICommand RemoteDesktop_FullscreenCommand => new RelayCommand(RemoteDesktop_FullscreenAction, RemoteDesktop_Connected_CanExecute);
+    public ICommand FullscreenCommand => new RelayCommand(FullscreenAction, IsConnected_CanExecute);
 
-    private void RemoteDesktop_FullscreenAction(object view)
+    private void FullscreenAction(object view)
     {
         if (view is RemoteDesktopControl control)
             control.FullScreen();
     }
 
-    public ICommand RemoteDesktop_AdjustScreenCommand => new RelayCommand(RemoteDesktop_AdjustScreenAction, RemoteDesktop_Connected_CanExecute);
+    public ICommand AdjustScreenCommand => new RelayCommand(AdjustScreenAction, IsConnected_CanExecute);
 
-    private void RemoteDesktop_AdjustScreenAction(object view)
+    private void AdjustScreenAction(object view)
     {
         if (view is RemoteDesktopControl control)
             control.AdjustScreen();
     }
 
-    public ICommand RemoteDesktop_SendCtrlAltDelCommand => new RelayCommand(RemoteDesktop_SendCtrlAltDelAction, RemoteDesktop_Connected_CanExecute);
+    public ICommand SendCtrlAltDelCommand => new RelayCommand(SendCtrlAltDelAction, IsConnected_CanExecute);
 
-    private async void RemoteDesktop_SendCtrlAltDelAction(object view)
+    private async void SendCtrlAltDelAction(object view)
     {
         if (view is RemoteDesktopControl control)
         {
