@@ -222,7 +222,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
     #endregion
 
     #region PuTTY commands
-    private bool PuTTY_Connected_CanExecute(object view)
+    private bool PuTTY_IsConnected_CanExecute(object view)
     {
         if (view is PuTTYControl control)
             return control.IsConnected;
@@ -241,7 +241,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    public ICommand PuTTY_ResizeWindowCommand => new RelayCommand(PuTTY_ResizeWindowAction, PuTTY_Connected_CanExecute);
+    public ICommand PuTTY_ResizeWindowCommand => new RelayCommand(PuTTY_ResizeWindowAction, PuTTY_IsConnected_CanExecute);
 
     private void PuTTY_ResizeWindowAction(object view)
     {
@@ -249,7 +249,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
             control.ResizeEmbeddedWindow();
     }
 
-    public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction, PuTTY_Connected_CanExecute);
+    public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction, PuTTY_IsConnected_CanExecute);
 
     private void PuTTY_RestartSessionAction(object view)
     {
