@@ -163,7 +163,7 @@
                                                                 </MenuItem.Icon>
                                                             </MenuItem>
                                                             <Separator />
-                                                            <MenuItem Header="{x:Static localization:Strings.Resize}" Command="{Binding Data.PuTTY_ResizeWindowCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
+                                                            <MenuItem Header="{x:Static localization:Strings.Resize}" Command="{Binding Data.PowerShell_ResizeWindowCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
                                                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                                         <Rectangle.OpacityMask>

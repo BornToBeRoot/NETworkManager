@@ -115,7 +115,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    #region RemoteDesktop Commands  
+    #region RemoteDesktop commands  
     private bool RemoteDesktop_IsConnected_CanExecute(object view)
     {
         if (view is RemoteDesktopControl control)
@@ -192,11 +192,11 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
     }
     #endregion
 
-    #region PowerShell Commands
-    private bool PowerShell_Disconnected_CanExecute(object view)
+    #region PowerShell commands
+    private bool PowerShell_IsConnected_CanExecute(object view)
     {
         if (view is PowerShellControl control)
-            return !control.IsConnected;
+            return control.IsConnected;
 
         return false;
     }
@@ -212,7 +212,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    public ICommand PowerShell_ResizeWindowCommand => new RelayCommand(PowerShell_ResizeWindowAction, PowerShell_Disconnected_CanExecute);
+    public ICommand PowerShell_ResizeWindowCommand => new RelayCommand(PowerShell_ResizeWindowAction, PowerShell_IsConnected_CanExecute);
 
     private void PowerShell_ResizeWindowAction(object view)
     {
@@ -221,7 +221,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
     }
     #endregion
 
-    #region PuTTY Commands
+    #region PuTTY commands
     private bool PuTTY_Connected_CanExecute(object view)
     {
         if (view is PuTTYControl control)
@@ -258,7 +258,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
     }
     #endregion
 
-    #region AWSSessionManager Commands
+    #region AWSSessionManager commands
     private bool AWSSessionManager_Disconnected_CanExecute(object view)
     {
         if (view is AWSSessionManagerControl control)
@@ -287,7 +287,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
     }
     #endregion
 
-    #region TigerVNC Commands
+    #region TigerVNC commands
     public ICommand TigerVNC_ReconnectCommand => new RelayCommand(TigerVNC_ReconnectAction);
 
     private void TigerVNC_ReconnectAction(object view)
@@ -300,7 +300,7 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
     }
     #endregion
 
-    #region WebConsole Commands
+    #region WebConsole commands
     public ICommand WebConsole_ReloadCommand => new RelayCommand(WebConsole_RefreshAction);
 
     private void WebConsole_RefreshAction(object view)

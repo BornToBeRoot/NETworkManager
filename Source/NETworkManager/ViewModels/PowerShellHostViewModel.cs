@@ -266,13 +266,22 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     #region ICommand & Actions
     public ItemActionCallback CloseItemCommand => CloseItemAction;
-
+        
     private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
     {
         ((args.DragablzItem.Content as DragablzTabItem)?.View as PowerShellControl)?.CloseTab();
     }
 
-    private bool PowerShell_Connected_CanExecute(object view)
+    private bool Connect_CanExecute(object obj) => IsConfigured;
+
+    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
+
+    private void ConnectAction()
+    {
+        Connect();
+    }
+
+    private bool IsConnected_CanExecute(object view)
     {
         if (view is PowerShellControl control)
             return control.IsConnected;
@@ -280,9 +289,9 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         return false;
     }
 
-    public ICommand PowerShell_ReconnectCommand => new RelayCommand(PowerShell_ReconnectAction);
+    public ICommand ReconnectCommand => new RelayCommand(ReconnectAction);
 
-    private void PowerShell_ReconnectAction(object view)
+    private void ReconnectAction(object view)
     {
         if (view is PowerShellControl control)
         {
@@ -291,23 +300,14 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    public ICommand PowerShell_ResizeWindowCommand => new RelayCommand(PowerShell_ResizeWindowAction, PowerShell_Connected_CanExecute);
+    public ICommand ResizeWindowCommand => new RelayCommand(ResizeWindowAction, IsConnected_CanExecute);
 
-    private void PowerShell_ResizeWindowAction(object view)
+    private void ResizeWindowAction(object view)
     {
         if (view is PowerShellControl control)
             control.ResizeEmbeddedWindow();
     }
-
-    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
-
-    private bool Connect_CanExecute(object obj) => IsConfigured;
-
-    private void ConnectAction()
-    {
-        Connect();
-    }
-
+   
     public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
