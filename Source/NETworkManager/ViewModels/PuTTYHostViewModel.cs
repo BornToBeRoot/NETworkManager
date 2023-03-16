@@ -98,7 +98,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
             OnPropertyChanged();
         }
     }
-    
+
     private ProfileInfo _selectedProfile = new();
     public ProfileInfo SelectedProfile
     {
@@ -247,7 +247,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
 
         _isLoading = false;
     }
-         
+
     private void LoadSettings()
     {
         ExpandProfileView = SettingsManager.Current.PuTTY_ExpandProfileView;
@@ -271,8 +271,20 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
     {
         ((args.DragablzItem.Content as DragablzTabItem)?.View as PuTTYControl)?.CloseTab();
     }
+    
+    private bool Connect_CanExecute(object obj)
+    {
+        return IsConfigured;
+    }
 
-    private bool PuTTY_Connected_CanExecute(object view)
+    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
+
+    private void ConnectAction()
+    {
+        Connect();
+    }
+
+    private bool IsConnected_CanExecute(object view)
     {
         if (view is PuTTYControl control)
             return control.IsConnected;
@@ -280,9 +292,9 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         return false;
     }
 
-    public ICommand PuTTY_ReconnectCommand => new RelayCommand(PuTTY_ReconnectAction);
+    public ICommand ReconnectCommand => new RelayCommand(ReconnectAction);
 
-    private void PuTTY_ReconnectAction(object view)
+    private void ReconnectAction(object view)
     {
         if (view is PuTTYControl control)
         {
@@ -291,34 +303,22 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    public ICommand PuTTY_ResizeWindowCommand => new RelayCommand(PuTTY_ResizeWindowAction, PuTTY_Connected_CanExecute);
+    public ICommand ResizeWindowCommand => new RelayCommand(ResizeWindowAction, IsConnected_CanExecute);
 
-    private void PuTTY_ResizeWindowAction(object view)
+    private void ResizeWindowAction(object view)
     {
         if (view is PuTTYControl control)
             control.ResizeEmbeddedWindow();
     }
 
-    public ICommand PuTTY_RestartSessionCommand => new RelayCommand(PuTTY_RestartSessionAction, PuTTY_Connected_CanExecute);
+    public ICommand RestartSessionCommand => new RelayCommand(RestartSessionAction, IsConnected_CanExecute);
 
-    private void PuTTY_RestartSessionAction(object view)
+    private void RestartSessionAction(object view)
     {
         if (view is PuTTYControl control)
             control.RestartSession();
     }
-
-    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
-
-    private bool Connect_CanExecute(object obj)
-    {
-        return IsConfigured;
-    }
-
-    private void ConnectAction()
-    {
-        Connect();
-    }
-
+    
     public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
@@ -416,7 +416,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         IsConfigured = !string.IsNullOrEmpty(SettingsManager.Current.PuTTY_ApplicationFilePath) && File.Exists(SettingsManager.Current.PuTTY_ApplicationFilePath);
 
         // Create default PuTTY profile for NETworkManager
-        WriteDefaultProfileToRegistry();            
+        WriteDefaultProfileToRegistry();
     }
 
     private async Task Connect(string host = null)
@@ -654,7 +654,7 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
-    
+
     public void RefreshProfiles()
     {
         if (!_isViewActive)

@@ -199,7 +199,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
         // Profiles
         SetProfilesView();
-        
+
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
         _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
@@ -234,17 +234,6 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         ((args.DragablzItem.Content as DragablzTabItem)?.View as WebConsoleControl)?.CloseTab();
     }
 
-    public ICommand WebConsole_RefreshCommand => new RelayCommand(WebConsole_RefreshAction);
-
-    private void WebConsole_RefreshAction(object view)
-    {
-        if (view is WebConsoleControl control)
-        {
-            if (control.ReloadCommand.CanExecute(null))
-                control.ReloadCommand.Execute(null);
-        }
-    }
-
     public ICommand ConnectCommand => new RelayCommand(p => ConnectAction());
 
     private void ConnectAction()
@@ -252,6 +241,17 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         Connect();
     }
 
+    public ICommand ReloadCommand => new RelayCommand(ReloadAction);
+
+    private void ReloadAction(object view)
+    {
+        if (view is WebConsoleControl control)
+        {
+            if (control.ReloadCommand.CanExecute(null))
+                control.ReloadCommand.Execute(null);
+        }
+    }
+    
     public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
@@ -381,9 +381,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         if (string.IsNullOrEmpty(url))
             return;
 
-         SettingsManager.Current.WebConsole_UrlHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), url, SettingsManager.Current.General_HistoryListEntries));
+        SettingsManager.Current.WebConsole_UrlHistory = new ObservableCollection<string>(ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), url, SettingsManager.Current.General_HistoryListEntries));
     }
-    
+
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;
@@ -455,7 +455,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         else
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
-    
+
     public void RefreshProfiles()
     {
         if (!_isViewActive)

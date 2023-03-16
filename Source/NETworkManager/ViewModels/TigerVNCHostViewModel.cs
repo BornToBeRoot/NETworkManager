@@ -222,9 +222,18 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
         ((args.DragablzItem.Content as DragablzTabItem)?.View as TigerVNCControl)?.CloseTab();
     }
 
-    public ICommand TigerVNC_ReconnectCommand => new RelayCommand(TigerVNC_ReconnectAction);
+    private bool Connect_CanExecute(object obj) => IsConfigured;
 
-    private void TigerVNC_ReconnectAction(object view)
+    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
+
+    private void ConnectAction()
+    {
+        Connect();
+    }
+
+    public ICommand ReconnectCommand => new RelayCommand(ReconnectAction);
+
+    private void ReconnectAction(object view)
     {
         if (view is TigerVNCControl control)
         {
@@ -232,16 +241,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
                 control.ReconnectCommand.Execute(null);
         }
     }
-
-    public ICommand ConnectCommand => new RelayCommand(p => ConnectAction(), Connect_CanExecute);
-
-    private bool Connect_CanExecute(object obj) => IsConfigured;
-
-    private void ConnectAction()
-    {
-        Connect();
-    }
-
+    
     public ICommand ConnectProfileCommand => new RelayCommand(p => ConnectProfileAction(), ConnectProfile_CanExecute);
 
     private bool ConnectProfile_CanExecute(object obj)
