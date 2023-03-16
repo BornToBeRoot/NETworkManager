@@ -11,6 +11,7 @@ using MahApps.Metro.Controls.Dialogs;
 using NETworkManager.Localization.Translators;
 using NETworkManager.Models;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace NETworkManager.Controls;
 
@@ -38,6 +39,20 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
                 return;
 
             _applicationName = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _headerContextMenuIsOpen;
+    public bool HeaderContextMenuIsOpen
+    {
+        get => _headerContextMenuIsOpen;
+        set
+        {
+            if (value == _headerContextMenuIsOpen)
+                return;
+
+            _headerContextMenuIsOpen = value;
             OnPropertyChanged();
         }
     }
@@ -318,10 +333,17 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
     private async void FocusEmbeddedWindow()
     {
         // Delay the focus to prevent blocking the ui
+        // Detect if window is resizing
         do
         {
             await Task.Delay(250);
-        } while (Mouse.LeftButton == MouseButtonState.Pressed);
+        } while (Control.MouseButtons == MouseButtons.Left);
+
+        /* Don't continue if
+           - Header ContextMenu is opened        
+        */
+        if (HeaderContextMenuIsOpen)
+            return;
 
         // Switch by name
         switch (ApplicationName)
