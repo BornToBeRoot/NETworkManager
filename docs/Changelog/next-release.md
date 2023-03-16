@@ -45,8 +45,12 @@ Release date: **xx.xx.2023**
   - Show port and protocol if service (and desciption) is not available [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"}
   - Export to CSV fixed if `Description` contains a comma [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"}
 - **PowerShell**
+  - ContextMenu in TabControl in a dragged out window was closed automatically due to a focus problem right after opening it [#2064](https://github.com/BornToBeRoot/NETworkManager/pull/2064){:target="\_blank"}
   - Resize command in TabControl context menu in a dragged out window not working [#2060](https://github.com/BornToBeRoot/NETworkManager/pull/2060){:target="\_blank"}
+- **PuTTY**
+  - ContextMenu in TabControl in a dragged out window was closed automatically due to a focus problem right after opening it [#2064](https://github.com/BornToBeRoot/NETworkManager/pull/2064){:target="\_blank"}
 - **AWS Session Manager**
+  - ContextMenu in TabControl in a dragged out window was closed automatically due to a focus problem right after opening it [#2064](https://github.com/BornToBeRoot/NETworkManager/pull/2064){:target="\_blank"}
   - Resize command in TabControl context menu in a dragged out window not working [#2060](https://github.com/BornToBeRoot/NETworkManager/pull/2060){:target="\_blank"}
 - **Web Console**
   - Reload command in TabControl context menu in main window not working [#2060](https://github.com/BornToBeRoot/NETworkManager/pull/2060){:target="\_blank"}
