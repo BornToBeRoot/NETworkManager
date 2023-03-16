@@ -152,7 +152,7 @@
                                             <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
                                                 <Grid Height="32">
                                                     <Grid.ContextMenu>
-                                                        <ContextMenu>
+                                                        <ContextMenu IsOpen="{Binding Data.HeaderContextMenuIsOpen, Source={StaticResource BindingProxy}, Mode=OneWayToSource}">
                                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.PowerShell_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
                                                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -230,7 +230,7 @@
                                             <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
                                                 <Grid Height="32">
                                                     <Grid.ContextMenu>
-                                                        <ContextMenu>
+                                                        <ContextMenu IsOpen="{Binding Data.HeaderContextMenuIsOpen, Source={StaticResource BindingProxy}, Mode=OneWayToSource}">
                                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.PuTTY_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
                                                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -317,7 +317,7 @@
                                             <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
                                                 <Grid Height="32">
                                                     <Grid.ContextMenu>
-                                                        <ContextMenu>
+                                                        <ContextMenu IsOpen="{Binding Data.HeaderContextMenuIsOpen, Source={StaticResource BindingProxy}, Mode=OneWayToSource}">
                                                             <MenuItem Header="{x:Static localization:Strings.Reconnect}" Command="{Binding Data.AWSSessionManager_ReconnectCommand, Source={StaticResource BindingProxy}}" CommandParameter="{Binding View}">
                                                                 <MenuItem.Icon>
                                                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">

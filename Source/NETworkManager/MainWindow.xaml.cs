@@ -1685,6 +1685,7 @@ public partial class MainWindow : INotifyPropertyChanged
     private async void FocusEmbeddedWindow()
     {
         // Delay the focus to prevent blocking the ui
+        // Detect if window is resizing
         do
         {
             await Task.Delay(250);
@@ -1695,8 +1696,7 @@ public partial class MainWindow : INotifyPropertyChanged
            - Settings are opened
            - Profile file drop down is opened
            - Application search textbox is opened
-           - Dialog over an embedded window is opened
-           - Window is resizing
+           - Dialog over an embedded window is opened           
         */
         if (SelectedApplication == null || ShowSettingsView || IsProfileFileDropDownOpened || IsTextBoxSearchFocused || ConfigurationManager.Current.IsDialogOpen)
             return;
