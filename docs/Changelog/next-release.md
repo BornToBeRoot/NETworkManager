@@ -44,6 +44,12 @@ Release date: **xx.xx.2023**
 - **Port Scanner**
   - Show port and protocol if service (and desciption) is not available [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"}
   - Export to CSV fixed if `Description` contains a comma [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"}
+- **PowerShell**
+  - Resize command in TabControl context menu in a dragged out window not working [#2060](https://github.com/BornToBeRoot/NETworkManager/pull/2060){:target="\_blank"}
+- **AWS Session Manager**
+  - Resize command in TabControl context menu in a dragged out window not working [#2060](https://github.com/BornToBeRoot/NETworkManager/pull/2060){:target="\_blank"}
+- **Web Console**
+  - Reload command in TabControl context menu in main window not working [#2060](https://github.com/BornToBeRoot/NETworkManager/pull/2060){:target="\_blank"}
 - **Lookup - OUI**
   - Export to CSV fixed if `Vendor` contains a comma [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"}
 - **Lookup - Port**
@@ -51,6 +57,6 @@ Release date: **xx.xx.2023**
 
 ## Other
 
-- Code cleanup [#2024](https://github.com/BornToBeRoot/NETworkManager/pull/2024){:target="\_blank"} [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"}
+- Code cleanup [#2024](https://github.com/BornToBeRoot/NETworkManager/pull/2024){:target="\_blank"} [#2026](https://github.com/BornToBeRoot/NETworkManager/pull/2026){:target="\_blank"} [#2060](https://github.com/BornToBeRoot/NETworkManager/pull/2060){:target="\_blank"}
 - Language files updated [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration){:target="\_blank"}
 - Dependencies updated [#dependencies](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot){:target="\_blank"}
