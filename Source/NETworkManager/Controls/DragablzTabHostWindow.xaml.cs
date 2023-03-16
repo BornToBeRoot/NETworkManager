@@ -259,10 +259,10 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
     #endregion
 
     #region AWSSessionManager commands
-    private bool AWSSessionManager_Disconnected_CanExecute(object view)
+    private bool AWSSessionManager_IsConnected_CanExecute(object view)
     {
         if (view is AWSSessionManagerControl control)
-            return !control.IsConnected;
+            return control.IsConnected;
 
         return false;
     }
@@ -278,11 +278,11 @@ public partial class DragablzTabHostWindow : INotifyPropertyChanged
         }
     }
 
-    public ICommand AWSSessionManager_ResizeWindowCommand => new RelayCommand(AWSSessionManager_ResizeWindowAction, AWSSessionManager_Disconnected_CanExecute);
+    public ICommand AWSSessionManager_ResizeWindowCommand => new RelayCommand(AWSSessionManager_ResizeWindowAction, AWSSessionManager_IsConnected_CanExecute);
 
     private void AWSSessionManager_ResizeWindowAction(object view)
     {
-        if (view is PowerShellControl control)
+        if (view is AWSSessionManagerControl control)
             control.ResizeEmbeddedWindow();
     }
     #endregion
