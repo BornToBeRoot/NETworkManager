@@ -200,12 +200,12 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
+                                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
+                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" Style="{StaticResource ButtonWithImageTextBlock}" />
                                 </Grid>
                             </Button.Content>
                         </Button>

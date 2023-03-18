@@ -184,12 +184,12 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
+                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" TextAlignment="Center" Margin="10,5" />
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}" Style="{StaticResource ButtonWithImageTextBlock}" />
                         </Grid>
                     </Button>
                     <WrapPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
@@ -199,12 +199,12 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
+                                <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddEntryDots}" TextAlignment="Center" Margin="10,5" />
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddEntryDots}" Style="{StaticResource ButtonWithImageTextBlock}" />
                             </Grid>
                         </Button>
                         <Button Command="{Binding DeleteEntryCommand}" Margin="0,0,10,0">
@@ -223,12 +223,12 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
+                                <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteEntry}" TextAlignment="Center" Margin="10,5" />
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteEntry}" Style="{StaticResource ButtonWithImageTextBlock}" />
                             </Grid>
                         </Button>
                         <Button Command="{Binding DeleteTableCommand}" Style="{StaticResource ImageWithTextButton}">
@@ -237,12 +237,12 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,5,0,5">
+                                <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteTable}" TextAlignment="Center" Margin="10,5" />
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteTable}" Style="{StaticResource ButtonWithImageTextBlock}" />
                             </Grid>
                         </Button>
                     </WrapPanel>

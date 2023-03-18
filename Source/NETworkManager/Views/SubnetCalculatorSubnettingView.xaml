@@ -97,20 +97,19 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Margin="10,5,0,5">
+                            <Rectangle>
                                 <Rectangle.Resources>
                                     <VisualBrush x:Key="VisualCalculator" Stretch="Uniform" Visual="{iconPacks:Material Kind=Calculator}"/>
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="OpacityMask" Value="{StaticResource VisualCalculator}" />
-                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
+                                        <Setter Property="OpacityMask" Value="{StaticResource VisualCalculator}" />                                      
                                     </Style>
                                 </Rectangle.Style>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center">
+                            <TextBlock>
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ButtonWithImageTextBlock}">
                                         <Setter Property="Text" Value="{x:Static localization:Strings.Calculate}"/>
                                     </Style>
                                 </TextBlock.Style>

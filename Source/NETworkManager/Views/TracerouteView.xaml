@@ -79,15 +79,14 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Margin="10,5,0,5">
+                            <Rectangle>
                                 <Rectangle.Resources>
                                     <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}" />
                                     <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
-                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
+                                        <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />                                        
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                                 <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
@@ -96,9 +95,9 @@
                                     </Style>
                                 </Rectangle.Style>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" FontSize="14" Margin="10,5" TextAlignment="Center">
+                            <TextBlock Grid.Column="1">
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ButtonWithImageTextBlock}">
                                         <Setter Property="Text" Value="{x:Static localization:Strings.Trace}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsRunning}" Value="True" >

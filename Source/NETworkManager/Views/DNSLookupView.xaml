@@ -27,7 +27,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />            
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Lookup}" />
         <Grid Grid.Row="1" Margin="0,0,0,20">
@@ -95,18 +95,17 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle Width="20" Height="20" Margin="10,5,0,5">
+                            <Rectangle>
                                 <Rectangle.Resources>
                                     <VisualBrush x:Key="VisualMagnify" Stretch="Uniform" Visual="{iconPacks:Material Kind=Magnify}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}">
+                                    <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualMagnify}" />
-                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                     </Style>
                                 </Rectangle.Style>
                             </Rectangle>
-                            <TextBlock Grid.Column="1" FontSize="14" Text="{x:Static localization:Strings.Lookup}" Margin="10,5" TextAlignment="Center" />
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Lookup}" Style="{StaticResource ButtonWithImageTextBlock}" />
                         </Grid>
                     </Button.Content>
                 </Button>
@@ -251,6 +250,6 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Type}" Binding="{Binding (network:DNSLookupRecordInfo.Type)}" SortMemberPath="Type" MinWidth="80" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Result}" Binding="{Binding (network:DNSLookupRecordInfo.Result)}" SortMemberPath="Result" MinWidth="200" />
             </controls:MultiSelectDataGrid.Columns>
-        </controls:MultiSelectDataGrid>       
+        </controls:MultiSelectDataGrid>
     </Grid>
 </UserControl>
