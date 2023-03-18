@@ -73,18 +73,18 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20" Margin="10,5,0,5">
+                                <Rectangle>
                                     <Rectangle.Resources>
                                         <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}"/>
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}">
+                                        <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
                                             <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
                                             <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Margin="10,5" TextAlignment="Center" Text="{x:Static localization:Strings.Query}" />
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Query}" Style="{StaticResource ButtonWithImageTextBlock}" />
                             </Grid>
                         </Button.Content>
                     </Button>

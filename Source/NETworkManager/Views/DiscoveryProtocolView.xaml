@@ -156,17 +156,7 @@
                             <Button Grid.Column="8" Command="{Binding CaptureCommand}">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                        <Style.Triggers>
-                                            <!--
-                                            <DataTrigger Binding="{Binding IsNetworkInterfaceLoading}" Value="True">
-                                                <Setter Property="IsEnabled" Value="False" />
-                                            </DataTrigger>
-                                            -->
-                                            <!--
-                                            <DataTrigger Binding="{Binding CanCapture}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False" />
-                                            </DataTrigger>
-                                            -->
+                                        <Style.Triggers>                                          
                                             <DataTrigger Binding="{Binding IsCapturing}" Value="True">
                                                 <Setter Property="IsEnabled" Value="False" />
                                             </DataTrigger>
@@ -179,12 +169,12 @@
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
-                                        <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=TimerRecord}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
-                                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Capture}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Capture}" Style="{StaticResource ButtonWithImageTextBlock}" />
                                     </Grid>
                                 </Button.Content>
                             </Button>
@@ -299,40 +289,8 @@
                             <TextBlock Text="{x:Static localization:Strings.CapturingNetworkPackagesDots}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
                             <TextBlock Text="{Binding TimeRemainingMessage}" Style="{StaticResource DefaultTextBlock}" Foreground="{DynamicResource MahApps.Brushes.Gray3}" HorizontalAlignment="Center" />                            
                         </StackPanel>
-                    </Grid>
-                    <!--
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
-                        <StackPanel.Style>
-                            <Style TargetType="{x:Type StackPanel}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding NetworkInterfaces.Count}" Value="0">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </StackPanel.Style>
-                        <TextBlock Text="{x:Static localization:Strings.NoEnabledNetworkAdaptersFound}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-                        <Button Command="{Binding OpenNetworkConnectionsCommand}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
-                            <Button.Content>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Rectangle Width="20" Height="20" Margin="10,5,0,5" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                        <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
-                                        </Rectangle.OpacityMask>
-                                    </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.NetworkConnectionsDots}" FontSize="14" Margin="10,5" TextAlignment="Center"/>
-                                </Grid>
-                            </Button.Content>
-                        </Button>
-                    </StackPanel>
-                    -->
-                </Grid>
-                
+                    </Grid>                    
+                </Grid>                
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                     <TextBlock Text="{x:Static localization:Strings.NetworkPacketsCaptureAdminMessage}" Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
                     <Button Command="{Binding RestartAsAdminCommand}" HorizontalAlignment="Center" Style="{StaticResource ImageWithTextButton}">
