@@ -3356,4 +3356,7 @@ Forse l'applicazione era nascosta nelle impostazioni?</value>
   <data name="StatusWindow" xml:space="preserve">
     <value>Finestra di stato</value>
   </data>
+  <data name="ShowAddressBar" xml:space="preserve">
+    <value>Show address bar</value>
+  </data>
 </root>
