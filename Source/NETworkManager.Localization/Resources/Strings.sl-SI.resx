@@ -348,9 +348,6 @@
   <data name="Settings" xml:space="preserve">
     <value>Nastavitve</value>
   </data>
-  <data name="SettingsHaveBeenReset" xml:space="preserve">
-    <value>Nastavitve so ponastavljene!</value>
-  </data>
   <data name="SNMP" xml:space="preserve">
     <value>SNMP</value>
   </data>
@@ -882,7 +879,7 @@
     <value>Ime gostitelja ali naslov IP</value>
   </data>
   <data name="Hosts" xml:space="preserve">
-    <value>Gostitelji</value>
+    <value>Host(s)</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>ID</value>
@@ -990,9 +987,6 @@ Ustvarite enega...</value>
   <data name="Override" xml:space="preserve">
     <value>preglasi</value>
   </data>
-  <data name="OverwriteSettingsInDestinationFolderMessage" xml:space="preserve">
-    <value>'Prepiši' bo prepisal datoteko z nastavitvami v ciljni mapi. 'Uporabi drugo' bo uporabil obstoječo nastavitveno datoteko v ciljni mapi in nato znova zagnal aplikacijo.</value>
-  </data>
   <data name="Password" xml:space="preserve">
     <value>Geslo</value>
   </data>
@@ -1092,18 +1086,6 @@ Ustvarite enega...</value>
   <data name="SelectAScreenResolution" xml:space="preserve">
     <value>Izberite ločljivost zaslona</value>
   </data>
-  <data name="SettingsAreOverwrittenMessage" xml:space="preserve">
-    <value>Nastavitve so prepisane!</value>
-  </data>
-  <data name="SettingsAreResetMessage" xml:space="preserve">
-    <value>Nastavitve so ponastavljene!</value>
-  </data>
-  <data name="SelectTheSettingsYouWantToExport" xml:space="preserve">
-    <value>Izberite nastavitve, ki jih želite izvoziti:</value>
-  </data>
-  <data name="SelectTheSettingsYouWantToImport" xml:space="preserve">
-    <value>Izberite nastavitve, ki jih želite uvoziti:</value>
-  </data>
   <data name="ThisWillResetAllSettings" xml:space="preserve">
     <value>To bo ponastavilo vse nastavitve!</value>
   </data>
@@ -1119,15 +1101,6 @@ Ustvarite enega...</value>
   <data name="SettingsFileFoundWasCorruptOrNotCompatibleMessage" xml:space="preserve">
     <value>Najdena datoteka z nastavitvami je bila poškodovana ali pa ni združljiva s to različico! To težavo lahko prijavite na GitHub. V mapi z nastavitvami je bila ustvarjena varnostna kopija datoteke z nastavitvami in nastavitve so bile ponastavljene. Datoteke profila niso prizadete!</value>
   </data>
-  <data name="SettingsSuccessfullyExported" xml:space="preserve">
-    <value>Nastavitve so bile uspešno izvožene!</value>
-  </data>
-  <data name="SettingsSuccessfullyImported" xml:space="preserve">
-    <value>Nastavitve so bile uspešno uvožene!</value>
-  </data>
-  <data name="SettingsSuccessfullyReset" xml:space="preserve">
-    <value>Nastavitve so bile uspešno ponastavljene!</value>
-  </data>
   <data name="ShowClosedPorts" xml:space="preserve">
     <value>Prikaži zaprta vrata</value>
   </data>
@@ -1137,8 +1110,8 @@ Ustvarite enega...</value>
   <data name="ShowOnlyMostCommonQueryTypes" xml:space="preserve">
     <value>Prikaži samo najpogostejše vrste poizvedb</value>
   </data>
-  <data name="ShowScanResultForAllIPAddresses" xml:space="preserve">
-    <value>Prikaži rezultate pregleda vseh naslovov IP</value>
+  <data name="ShowUnreachableIPAddressesAndPorts" xml:space="preserve">
+    <value>Show unreachable IP addresses and ports</value>
   </data>
   <data name="ShowStatistics" xml:space="preserve">
     <value>Prikaži statistiko</value>
@@ -1399,7 +1372,7 @@ Ustvarite enega...</value>
     <value>Povezave</value>
   </data>
   <data name="EnterValidIPScanRange" xml:space="preserve">
-    <value>Vnesite veljaven obseg naslovov IP!</value>
+    <value>Enter a valid IP range!</value>
   </data>
   <data name="EnterValidIPv4Address" xml:space="preserve">
     <value>Vnesite veljaven naslov IPv4! </value>
@@ -1752,9 +1725,6 @@ Ustvarite enega...</value>
   <data name="Yellow" xml:space="preserve">
     <value>Rumena</value>
   </data>
-  <data name="EnterValidValueBetween25and100" xml:space="preserve">
-    <value>Vnesite veljavno vrednost med 25 in 100!</value>
-  </data>
   <data name="ProfileWithThisNameAlreadyExists" xml:space="preserve">
     <value>Profil s tem imenom že obstaja!</value>
   </data>
@@ -1890,11 +1860,11 @@ Ustvarite enega...</value>
   <data name="AddIPv4Address" xml:space="preserve">
     <value>Dodaj naslov IPv4</value>
   </data>
-  <data name="HostThreads" xml:space="preserve">
-    <value>Gostiteljske niti</value>
+  <data name="MaxHostThreads" xml:space="preserve">
+    <value>Max. concurrent host threads</value>
   </data>
-  <data name="PortThreads" xml:space="preserve">
-    <value>Niti vrat</value>
+  <data name="MaxPortThreads" xml:space="preserve">
+    <value>Max. concurrent port threads</value>
   </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
@@ -1948,11 +1918,11 @@ Ustvarite enega...</value>
     <value>Posel v ozadju</value>
   </data>
   <data name="HelpMessage_BackgroundJob" xml:space="preserve">
-    <value>Posel v ozadju bo vsakih x minut shranil nastavitve, profile in poverilnice.
+    <value>The background job will save settings and profiles every x-minutes.
 
-Vrednost 0 bo to funkcijo onemogočila. 
+Value 0 will disable this feature.
 
-Uveljavitev sprememb te vrednosti zahteva ponovni zagon programa.</value>
+Changes to this value will take effect after restarting the application.</value>
   </data>
   <data name="RunBackgroundJobEveryXMinute" xml:space="preserve">
     <value>Zaženi posel v ozadju vsakih x-minut</value>
@@ -2081,8 +2051,8 @@ je onemogočeno!</value>
   <data name="UseCustomIPv4AddressAPI" xml:space="preserve">
     <value>Uporabi API poljubnega naslova IPv4</value>
   </data>
-  <data name="HelpMessage_CustomPublicIPAddressAPI" xml:space="preserve">
-    <value>URL naslov do spletne storitve, ki je lahko dosegljiva prek http ali https in kot odgovor vrne naslov IP.</value>
+  <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
+    <value>URL to a web service that can be reached via http or https and returns an IPv4 address like "xx.xx.xx.xx" as response.</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Javnega naslova IP ni bilo mogoče razčleniti iz "{0}"! Poskusite drugo storitev ali uporabite privzeto...</value>
@@ -2213,8 +2183,8 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="Restart" xml:space="preserve">
     <value>Znova zaženi</value>
   </data>
-  <data name="WarningMessage_CouldNotResolvIPAddressForHostname" xml:space="preserve">
-    <value>Ni bilo mogoče razrešiti! naslova IP za ime gostitelja!</value>
+  <data name="WarningMessage_CouldNotResolveIPAddressForHostname" xml:space="preserve">
+    <value>Could not resolve ip address for hostname!</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
@@ -2374,9 +2344,6 @@ $$hostname$$--&gt;Ime gostitelja</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>Program se bo znova zagnal...</value>
-  </data>
-  <data name="UseOtherFolder" xml:space="preserve">
-    <value>Uporabi drugo mapo</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
     <value>Ni bilo mogoče izvoziti datoteke! Glejte sporočilo o napaki: "{0}"</value>
@@ -2828,20 +2795,11 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="Merge" xml:space="preserve">
     <value>Združi</value>
   </data>
-  <data name="MergeProfileFilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Ciljna mapa že vsebuje datoteke. Če kliknete 'Združi', se trenutni profili kopirajo v mapo. </value>
-  </data>
-  <data name="OverwriteProfilesInDestinationFolderMessage" xml:space="preserve">
-    <value>Želite prepisati profile v ciljni mapi? 'Prepiši' kopira datoteke profila v ciljno mapo in prepiše obstoječe datoteke profila. 'Združi' bo kopiral datoteke profila v ciljno mapo, vendar ne bo prepisal obstoječih datotek profila. 'Uporabi drugo mapo' bo uporabil obstoječe datoteke profila v ciljni mapi.</value>
-  </data>
   <data name="UseOther" xml:space="preserve">
     <value>Uporabi drugo</value>
   </data>
   <data name="Move" xml:space="preserve">
     <value>Premakni</value>
-  </data>
-  <data name="ProfileFilesWillBeMovedMessage" xml:space="preserve">
-    <value>Datoteke profila bodo premaknjene v izbrano ciljno mapo. </value>
   </data>
   <data name="LastScanAtX" xml:space="preserve">
     <value>Zadnji pregled ob {0}</value>
@@ -2949,10 +2907,10 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Vnesite veljaven naslov IPv6!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Javno dostopen naslov IPv4.</value>
+    <value>Public IPv4 address reachable via ICMP.</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Javno dostopen naslov IPv6. </value>
+    <value>Public IPv6 address reachable via ICMP.</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Javni naslov IPv4.</value>
@@ -3038,17 +2996,11 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="CustomThemes" xml:space="preserve">
     <value>Teme po meri</value>
   </data>
-  <data name="ImportSettingsQuestion" xml:space="preserve">
-    <value>Želite uvoziti nastavitve?</value>
-  </data>
   <data name="ResetSettingsQuestion" xml:space="preserve">
     <value>Želite ponastaviti nastavitve?</value>
   </data>
   <data name="SettingsResetExclamationMark" xml:space="preserve">
     <value>Nastavitve so ponastavljene!</value>
-  </data>
-  <data name="OverwriteExistingSettingsFileQuestion" xml:space="preserve">
-    <value>Želite prepisati obstoječo datoteko z nastavitvami?</value>
   </data>
   <data name="ApplicationName_AWSSessionManager" xml:space="preserve">
     <value>Upravitelj sej AWS</value>
@@ -3152,8 +3104,8 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>Uporabi temo za konzolo PowerShell</value>
   </data>
-  <data name="PowerShellConsoleColorCanBeChangedUnderGeneralApperance" xml:space="preserve">
-    <value>Barvo konzole PowerShell lahko spremenite v temo aplikacije pod Splošno &gt; Videz</value>
+  <data name="PowerShellConsoleColorCanBeChangedUnderSettingsGeneralApperance" xml:space="preserve">
+    <value>The color of the PowerShell console can be changed to the application theme under Settings &gt; General &gt; Appearance</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>Če omogočite to možnost, se privzete nastavitve konzole PowerShell v registru pod HKCU:\Console preglasijo, tako da se okno konzole PowerShell ujema s temo aplikacije. To je globalna sistemska nastavitev, ki lahko vpliva na videz običajnega okna PowerShell. 
@@ -3238,5 +3190,125 @@ V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba z
   </data>
   <data name="NoValidTigerVNCPath" xml:space="preserve">
     <value>Veljavna pot do TigerVNC se mora končati z "vncviewer-*.exe" ali "vncviewer64-*.exe"!</value>
+  </data>
+  <data name="ApplicationName_SNTPLookup" xml:space="preserve">
+    <value>SNTP Lookup</value>
+  </data>
+  <data name="Library_nulastudioNetBeauty_Description" xml:space="preserve">
+    <value>Move a .NET Framework/.NET Core app runtime components and dependencies into a sub-directory and make it beauty.</value>
+  </data>
+  <data name="AddATabToPerformASNTPLookup" xml:space="preserve">
+    <value>Add a tab to perform a SNTP lookup...</value>
+  </data>
+  <data name="SNTPServers" xml:space="preserve">
+    <value>SNTP server(s)</value>
+  </data>
+  <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
+    <value>URL to a web service that can be reached via http or https and returns an IPv6 address like "xxxx:xx:xxx::xx" as response.</value>
+  </data>
+  <data name="IPEndPoint" xml:space="preserve">
+    <value>IP endpoint</value>
+  </data>
+  <data name="LocalEndTime" xml:space="preserve">
+    <value>Local end time</value>
+  </data>
+  <data name="LocalStartTime" xml:space="preserve">
+    <value>Local start time</value>
+  </data>
+  <data name="NetworkTime" xml:space="preserve">
+    <value>Network time</value>
+  </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="RoundTripDelay" xml:space="preserve">
+    <value>Round trip delay</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="SNTPLookup" xml:space="preserve">
+    <value>SNTP Lookup</value>
+  </data>
+  <data name="AddSNTPServer" xml:space="preserve">
+    <value>Add SNTP server</value>
+  </data>
+  <data name="DeleteSNTPServer" xml:space="preserve">
+    <value>Delete SNTP server</value>
+  </data>
+  <data name="DeleteSNTPServerMessage" xml:space="preserve">
+    <value>The selected SNTP server will be deleted permanently.</value>
+  </data>
+  <data name="EditSNTPServer" xml:space="preserve">
+    <value>Edit SNTP server</value>
+  </data>
+  <data name="SNTPServerWithThisNameAlreadyExists" xml:space="preserve">
+    <value>An SNTP server with this name already exists!</value>
+  </data>
+  <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
+    <value>Enter a valid hostname (like "server-01" or "example.com") or a valid IP address (like 192.168.178.1)!</value>
+  </data>
+  <data name="Servers" xml:space="preserve">
+    <value>Server(s)</value>
+  </data>
+  <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
+    <value>Enter master password to unlock the profile file:</value>
+  </data>
+  <data name="UnlockProfileFile" xml:space="preserve">
+    <value>Unlock profile file</value>
+  </data>
+  <data name="PortState_TimedOut" xml:space="preserve">
+    <value>Timed out</value>
+  </data>
+  <data name="Hostkey" xml:space="preserve">
+    <value>Hostkey</value>
+  </data>
+  <data name="SettingsAreResetAndApplicationWillBeRestartedMessage" xml:space="preserve">
+    <value>The settings will be reset and the application will be restarted afterwards!</value>
+  </data>
+  <data name="SettingsHaveBeenReset" xml:space="preserve">
+    <value>Nastavitve so ponastavljene!</value>
+  </data>
+  <data name="PingStatus" xml:space="preserve">
+    <value>Ping status</value>
+  </data>
+  <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
+    <value>ThreadPool additional min. threads</value>
+  </data>
+  <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
+    <value>This setting specifies the minimum number of threads that will be created from the application's ThreadPool on demand. This can improve the performance for example of the IP scanner or port scanner.
+	
+The value is added to the default min. threads (number of CPU threads). The value 0 leaves the default settings. If the value is higher than the default max. threads of the ThreadPool, this value is used.
+
+If the value is too high, performance problems may occur.
+
+Changes to this value will take effect after the application is restarted. Whether the value was set successfully can be seen in the log file under %LocalAppData%\NETworkManager\NETworkManager.log</value>
+  </data>
+  <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
+    <value>These settings only change the maximum number of concurrently executed threads per host/port scan. Go to Settings &gt; General &gt; General to adjust the (min) threads of the application.</value>
+  </data>
+  <data name="PortStatus" xml:space="preserve">
+    <value>Port status</value>
+  </data>
+  <data name="PingDetails" xml:space="preserve">
+    <value>Ping details</value>
+  </data>
+  <data name="NoOpenPortsFound" xml:space="preserve">
+    <value>No open ports found!</value>
+  </data>
+  <data name="PortScanIsDisabled" xml:space="preserve">
+    <value>Port scan is disabled!</value>
+  </data>
+  <data name="ScanPorts" xml:space="preserve">
+    <value>Scan ports</value>
+  </data>
+  <data name="CouldNotFindApplicationXXXMessage" xml:space="preserve">
+    <value>Could not find the application "{0}". Maybe the application was hidden in the settings?</value>
+  </data>
+  <data name="StatusWindow" xml:space="preserve">
+    <value>Status window</value>
+  </data>
+  <data name="ShowAddressBar" xml:space="preserve">
+    <value>Show address bar</value>
   </data>
 </root>
