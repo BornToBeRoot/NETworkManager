@@ -8,8 +8,8 @@ permalink: /Download
 
 # Download
 
-Version: **2023.3.7.0** <br />
-Release date: **07.03.2023**
+Version: **2023.3.19.0** <br />
+Release date: **19.03.2023**
 
 <table>
   <tr>
@@ -22,44 +22,44 @@ Release date: **07.03.2023**
   </tr>
   <tr>
     <td>
-      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.3.7.0/NETworkManager_2023.3.7.0_Setup.exe' style="text-decoration: none;" target="_blank">
+      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.3.19.0/NETworkManager_2023.3.19.0_Setup.exe' style="text-decoration: none;" target="_blank">
         <span class="fs-5">
           <button type="button" name="button" class="btn btn-primary">:package: Setup</button>
         </span>
       </a>
     </td>
     <td>
-      <code>26CCD741CB9F2B52056C91C94DF281C563886AC0E4799A3D167A0566448574F6</code>
+      <code>440287A5B44944D4BF5F4516EB7FEB953FE62605628DFFC8EFE9396791D388E2</code>
     </td>
   </tr>
   <tr>
     <td>
-      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.3.7.0/NETworkManager_2023.3.7.0_Portable.zip' style="text-decoration: none;" target="_blank">
+      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.3.19.0/NETworkManager_2023.3.19.0_Portable.zip' style="text-decoration: none;" target="_blank">
         <span class="fs-5">
           <button type="button" name="button" class="btn btn-primary">:package: Portable</button>
         </span>
       </a>
     </td>
     <td>
-      <code>B19782CAD036F1F1A64A204EAEBC762B4B519BB4C1836DCD5405C83F8488EB29</code>
+      <code>C4077E5B45A792860AE5C4448ED248DEFA8A56D2081ED9949AAFF262EFA2CA4A</code>
     </td>
   </tr>
   <tr>
     <td>
-      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.3.7.0/NETworkManager_2023.3.7.0_Archive.zip' style="text-decoration: none;" target="_blank">
+      <a href='https://github.com/BornToBeRoot/NETworkManager/releases/download/2023.3.19.0/NETworkManager_2023.3.19.0_Archive.zip' style="text-decoration: none;" target="_blank">
         <span class="fs-5">
           <button type="button" name="button" class="btn btn-primary">:package: Archive</button>
         </span>
       </a> 
     </td>
     <td>
-      <code>7787FE873DD2704487A5A065EA473127C888256CCE3ADA928EEE7CB4B2BF9B6F</code>
+      <code>82983DC69D2AEC39B9A08A65F966150C49F6F30988155000DD80BE117BD2AD1C</code>
     </td>
   </tr>
 </table>
 
 {: .note }
-If you don't see the new features like [AWS Session Manager](./Documentation/Application/AWSSessionManager) or [Bit Calculator](./Documentation/Application/BitCalculator), you need to reset the settings. You can do this under [`Settings > Settings > Reset`](Documentation/Settings/Settings#reset) or by starting the application with the following parameter [`NETworkManager.exe --reset-settings`](./Documentation/CommandLineArguments#--reset-settings). The profiles are not affected when the settings are reset.
+If you don't see the new features ([AWS Session Manager](./Documentation/Application/AWSSessionManager), [Bit Calculator](./Documentation/Application/BitCalculator) or [SNTP Lookup](./Documentation/Application/SNTPLookup)), try to reset the settings. You can do this under [`Settings > Settings > Reset`](./Documentation/Settings/Settings#reset) or by starting the application with the following parameter [`NETworkManager.exe --reset-settings`](./Documentation/CommandLineArguments#--reset-settings). The profiles are not affected when the settings are reset.
 
 Pre-release versions are available [here](https://github.com/BornToBeRoot/NETworkManager/releases){:target="\_blank"}.
 
