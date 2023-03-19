@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 12/19/2022 22:38:43-->
+Generated 03/19/2023 18:43:22-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -8778,6 +8778,32 @@ Generated 12/19/2022 22:38:43-->
     <Protocol>udp</Protocol>
     <Name>apex-edge</Name>
     <Description>APEX endpoint-relay service</Description>
+  </Port>
+  <Port>
+    <Number>914</Number>
+    <Protocol>tcp</Protocol>
+    <Name>
+    </Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>914</Number>
+    <Protocol>udp</Protocol>
+    <Name>rift-lies</Name>
+    <Description>Routing in Fat Trees Link Information Elements (TEMPORARY - registered 2023-02-17, expires 2024-02-17) </Description>
+  </Port>
+  <Port>
+    <Number>915</Number>
+    <Protocol>tcp</Protocol>
+    <Name>
+    </Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>915</Number>
+    <Protocol>udp</Protocol>
+    <Name>rift-ties</Name>
+    <Description>Routing in Fat Trees Topology Information Elements (TEMPORARY - registered 2023-02-17, expires 2024-02-17) </Description>
   </Port>
   <Port>
     <Number>953</Number>
@@ -24121,6 +24147,18 @@ Generated 12/19/2022 22:38:43-->
     <Protocol>udp</Protocol>
     <Name>rcts</Name>
     <Description>Rotorcraft Communications Test System</Description>
+  </Port>
+  <Port>
+    <Number>2259</Number>
+    <Protocol>tcp</Protocol>
+    <Name>bid-serv</Name>
+    <Description>BIF identifiers resolution service</Description>
+  </Port>
+  <Port>
+    <Number>2259</Number>
+    <Protocol>udp</Protocol>
+    <Name>bid-serv</Name>
+    <Description>BIF identifiers resolution service</Description>
   </Port>
   <Port>
     <Number>2260</Number>
@@ -71957,6 +71995,12 @@ Generated 12/19/2022 22:38:43-->
     <Description>Distributed Network Protocol - Secure</Description>
   </Port>
   <Port>
+    <Number>19999</Number>
+    <Protocol>sctp</Protocol>
+    <Name>dnp-sec</Name>
+    <Description>Distributed Network Protocol - secured</Description>
+  </Port>
+  <Port>
     <Number>20000</Number>
     <Protocol>tcp</Protocol>
     <Name>dnp</Name>
@@ -71967,6 +72011,12 @@ Generated 12/19/2022 22:38:43-->
     <Protocol>udp</Protocol>
     <Name>dnp</Name>
     <Description>DNP</Description>
+  </Port>
+  <Port>
+    <Number>20000</Number>
+    <Protocol>sctp</Protocol>
+    <Name>dnp</Name>
+    <Description>Distributed Network Protocol</Description>
   </Port>
   <Port>
     <Number>20001</Number>
