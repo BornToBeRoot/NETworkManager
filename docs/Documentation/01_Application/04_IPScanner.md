@@ -10,7 +10,7 @@ permalink: /Documentation/Application/IPScanner
 
 # IP Scanner
 
-With the **IP Scanner** you can scan for active devices in subnets or IP ranges that are reachable via icmp.
+With the **IP Scanner** you can scan for active devices in subnets or IP ranges that are reachable via icmp or have a common tcp port open.
 
 Possible inputs are:
 
@@ -59,24 +59,21 @@ IP range to scan for active devices.
 
 ## Settings
 
-### Show scan result for all IP addresses
+### Show unreachable IP addresses and ports
 
-Show the scan result for all IP addresses including the ones that are not active.
+Show the scan result for all IP addresses and ports including the ones that are not active.
 
 **Type:** `Boolean`
 
 **Default:** `Disabled`
 
-### Threads
+### Attempts
 
-Number of threads to use for scanning.
+Attempts how often an icmp request is retried for each IP address if the request has timed out.
 
-**Type:** `Integer` [Min `1`, Max `1024`]
+**Type:** `Integer` [Min `1`, Max `10`]
 
-**Default:** `256`
-
-{: note }
-Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.<br/><br/>Too many threads can also cause performance problems on the device.
+**Default:** `2`
 
 ### Timeout (ms)
 
@@ -94,14 +91,6 @@ Size of the buffer for each icmp request in bytes.
 
 **Default:** `32`
 
-### Attempts
-
-Attempts how often a request is retried for each IP address if the request has timed out.
-
-**Type:** `Integer` [Min `1`, Max `10`]
-
-**Default:** `2`
-
 ### Resolve hostname
 
 Resolve the hostname (PTR) for each IP address.
@@ -117,6 +106,33 @@ Show a detailed error message if the DNS resolution fails for an IP address.
 **Type:** `Boolean`
 
 **Default:** `Disabled`
+
+### Scan ports
+
+Scan each IP address for open `tcp` ports.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+### Ports
+
+List of `tcp` ports to scan for each IP address.
+
+**Type:** `String`
+
+**Default:** `22; 53; 80; 139; 389; 636; 443; 445; 3389`
+
+{: .note }
+Multiple ports and port ranges can be combined with a semicolon (e.g. `22; 80; 443`). Only common and known ports should be scanned to check if a host is reachable. Use the [Port Scanner](/Documentation/Application/PortScanner) for a detailed port scan.
+
+### Timeout (ms)
+
+Timeout in milliseconds after which a port is considered closed / timed out.
+
+**Type:** `Integer` [Min `100`, Max `15000`]
+
+**Default:** `4000`
 
 ### Resolve MAC address and vendor
 
@@ -149,3 +165,31 @@ In the arguments you can use the following placeholders:
 | --------------- | ----------- |
 | `$$ipaddress$$` | IP address  |
 | `$$hostname$$`  | Hostname    |
+
+### Max. concurrent host threads
+
+Maximal number of threads that are used to scan for active hosts (IP addresses).
+
+**Type:** `Integer` [Min `1`, Max `512`]
+
+**Default:** `256`
+
+{: .note }
+Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.<br/><br/>Too many threads can also cause performance problems on the device.
+
+{: .note }
+This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](/Documentation/Settings/General) settings to configure the application wide thread pool.
+
+### Max. concurrent port threads
+
+Maximal number of threads that are used to scan for open ports for each host (IP address).
+
+**Type:** `Integer` [Min `1`, Max `10`]
+
+**Default:** `5`
+
+{: .note }
+Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.<br/><br/>Too many threads can also cause performance problems on the device.
+
+{: .note }
+This setting only change the maximum number of concurrently executed threads per port scan. See also the [General](/Documentation/Settings/General) settings to configure the application wide thread pool.
